@@ -243,6 +243,8 @@
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
 
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+                <button class="tablinks hidden-tabs" data-id="HOLDTIMESTUDYPROTOCOL" onclick="openData(event, 'doc-htsp')">Hold Time Study Protocol</button>
+
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
 
@@ -1340,31 +1342,6 @@
                                     </div>
                                 </div>
 
-                {{-- <div class="col-md-12">
-                <div class="group-input">
-                    <label for="test">
-                        Revision History<button type="button" name="reporting2" onclick="addRevRow('revision')">+</button>
-                    </label>
-                    <div><small class="text-primary">Please mention brief summary</small></div>
-                    <table class="table-bordered table" id="revision">
-                        <thead>
-                            <tr>
-                                <th class="sop-num">SOP Revision No.</th>
-                                <th class="dcrf-num">Change Control No./ DCRF No.</th>
-                                <th class="changes">Changes</th>
-                                <th class="deleteRow">&nbsp;</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="text" id="rev-num0"></td>
-                                <td><input type="text" id="control0"></td>
-                                <td><input type="text" id="change0"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div> --}}
                             </div>
                         </div>
                         <div class="button-block">
@@ -4650,6 +4627,470 @@
 
                             </div>
                         </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    {{-- Hold Time Study Protocol Tabs --}}
+                    <div id="doc-htsp" class="tabcontent">
+                        <div class="orig-head">
+                            Hold Time Study Protocol</div>
+                            <div class="input-fields">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Purpose">Purpose</label>
+                                            <textarea name="htsp_purpose"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="scope">Scope</label>
+                                            <textarea name="htsp_scope"></textarea>
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+    
+                                            <label for="responsibilityhtps" id="responsibilityhtps">
+                                                Responsibility<button type="button" id="responsibilityhtpsbtnadd"
+                                                    name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                            </label>
+    
+                                            <div id="responsibilityhtpsdiv">
+                                                <div class="ResponsibilityBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_responsibility[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subresponsibilityhtpsAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="test">
+                                                Revision History
+                                            </label>
+                                            <div><small class="text-primary"></small></div>
+                                            <div class="table-responsive retrieve-table">
+                                            <table class="table-bordered table" id="">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sr. No.</th>
+                                                        <th class="copy-name">Revision No.</th>
+                                                        <th class="copy-name">Change Control No./ DCRF No</th>
+                                                        <th class="copy-name">Effective Date</th>
+                                                        <th class="copy-name">Reason of revision</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
+                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
+                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
+                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+    
+                                            <label for="htspdescription" id="htspdescription">
+                                                Description of SOP s To Be Followed<button type="button" id="htspdescriptionbtnadd"
+                                                    name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                            </label>
+    
+                                            <div id="htspdescriptiondiv">
+                                                <div class="htspdescriptionBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_description_of_sop[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subhtspdescriptionAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Specifications" id="Specifications">
+                                                Specifications<button type="button" id="Specificationsbtnadd">+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+                                            <div id="Specificationsdiv">
+                                                <div class="SpecificationsBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_specifications[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subSpecificationsAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    {{-- <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="abbreviation" id="abbreviation">
+                                                bulk stage<button type="button" id="abbreviationbtnadd"
+                                                    name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                            </label>
+    
+    
+                                            <div id="abbreviationdiv">
+                                                <div class="singleAbbreviationBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_bulk_stage[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subAbbreviationAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div> --}}
+    
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Samplinghtps" id="Samplinghtps">
+                                                Sampling & Analysis Plan<button type="button" id="Samplinghtpsbtnadd"
+                                                    name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                            </label>
+    
+    
+    
+                                            <div id="Samplinghtpsdiv">
+    
+                                                <div class="SamplinghtpsBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_sampling_analysis[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subSamplinghtpsAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+    
+                                            </div>
+    
+                                        </div>
+                                    </div>
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Environmentalhtsp" id="Environmentalhtspdiv">
+                                                Environmental Conditions During Hold Time<button type="button" id="Environmentalhtspbtnadd"
+                                                    name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                        does not require completion</small></div>
+                                            </label>
+    
+                                            <div id="Environmentalhtspdiv" >
+                                                <div class="EnvironmentalhtspBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_environmental_conditions[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button type="button" class="subEnvironmentalhtspAdd"
+                                                                name="button">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+    
+                                    {{-- <div class="col-md-12 mb-3">
+                                        <div class="group-input">
+                                            <label for="procedure">Procedure</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+                                            <textarea name="procedure" class="summernote">
+                                        </textarea>
+                                        </div>
+                                    </div> --}}
+    
+                                    <!-- <div class="col-md-12 mb-3">
+                                                                <div class="group-input">
+                                                                    <label for="procedure" id="newreport">
+                                                                    Procedure<button type="button" id="reportingbtadd" name="button">+</button>
+                                                                    </label>
+                                                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+    
+                                                                    <div id="reportingdiv">
+                                                                        <div class="singleReportingBlock">
+                                                                            <div class="row">
+                                                                                <div class="col-sm-10">
+                                                                                    <textarea name="procedure[]" class=""></textarea>
+                                                                                </div>
+                                                                                <div class="col-sm-1">
+                                                                                    <button class="btn btn-dark subReportingAdd">+</button>
+                                                                                </div>
+                                                                                <div class="col-sm-1">
+                                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+    
+                                                                </div>
+                                                            </div> -->
+    
+    
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Samplehtps" id="Samplehtps">
+                                                Sample Quantity Calculation<button type="button" id="Samplehtpsbtnadd"
+                                                    name="button">+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+    
+                                            <div id="Samplehtpsdiv">
+                                                <div class="SamplehtpsBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_sample_quantity_calculation[]" class=""></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subSamplehtpsAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Deviationhtps" id="Deviationhtps">
+                                                Deviation<button type="button" id="Deviationhtpsbtnadd">+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+    
+                                            <div id="Deviationhtpsdiv">
+                                                <div class="DeviationhtpsBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_deviation[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subDeviationhtpsAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
+    
+    
+    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Summaryhtps" id="Summaryhtps">
+                                                Summary<button type="button" id="Summaryhtpsbtnadd">+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+    
+                                            <div id="Summaryhtpsdiv">
+                                                <div class="SummaryhtpsBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_summary[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subSummaryhtpsAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="Conclusionhtps" id="Conclusionhtps">
+                                                Conclusion<button type="button" id="Conclusionhtpsbtnadd">+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                    not require completion</small></div>
+    
+                                            <div id="Conclusionhtpsdiv">
+                                                <div class="ConclusionhtpsBlock">
+                                                    <div class="row">
+                                                        <div class="col-sm-10">
+                                                            <textarea name="htsp_conclusion[]" class="myclassname"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-dark subConclusionhtpseAdd">+</button>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                        </div>
+                                    </div>
+
+
+    
+                                    {{-- <div class="input-fields">
+                                        <div class="group-input">
+                                            <label for="distribution-list" style="font-weight: bold;">
+                                                Distribution List
+                                            </label>
+                                            <div class="table-responsive retrieve-table">
+                                                <table class="table table-bordered" id="distribution-list">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row</th>
+                                                            <th class="copy-name">Copy</th>
+                                                            <th class="copy-name">No. of Copies</th>
+                                                            <th class="copy-name">User Department</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>1</td>
+                                                            <td style="font-weight: bold;">Master Copy</td>
+                                                            <td><input type="text" id="copies-master"
+                                                                    name="master_copy_number" value=""
+                                                                    class="form-control">
+                                                            </td>
+    
+                                                            <td>
+                                                                <div class="col-md-6">
+                                                                    <div class="group-input">
+                                                                        <input type="text" name="master_user_department">
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>2</td>
+                                                            <td style="font-weight: bold;">Controlled Copy</td>
+                                                            <td><input type="text" id="copies-controlled"
+                                                                    name="controlled_copy_number" value=""
+                                                                    class="form-control"></td>
+    
+                                                            <td>
+                                                                <div class="col-md-6">
+                                                                    <div class="group-input">
+                                                                    <input type="text" name="controlled_user_department">
+    
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+    
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td style="font-weight: bold;">Display Copy</td>
+                                                            <td><input type="text" id="copies-display"
+                                                                    name="display_copy_number" value=""
+                                                                    class="form-control">
+                                                            </td>
+                                                            <td>
+                                                                <div class="col-md-6">
+                                                                    <div class="group-input">
+                                                                        <input type="text" name="display_user_department">
+  
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+    
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+    
+                                    
+                                </div>
+                            </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>

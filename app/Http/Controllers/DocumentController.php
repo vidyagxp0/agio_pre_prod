@@ -745,6 +745,13 @@ class DocumentController extends Controller
             $content->description_sop_prvp = $request->description_sop_prvp;
             $content->prvp_procedure = $request->prvp_procedure;
 
+            // htsp
+            $content->htsp_purpose = $request->htsp_purpose;
+            $content->htsp_scope = $request->htsp_scope;
+
+
+
+
             
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
@@ -862,6 +869,44 @@ class DocumentController extends Controller
             if (!empty($request->training_prvp)) {
                 $content->training_prvp = serialize($request->training_prvp);
             }
+
+
+            // htps
+            if (!empty($request->htsp_responsibility)) {
+                $content->htsp_responsibility = serialize($request->htsp_responsibility);
+            }
+            if (!empty($request->htsp_description_of_sop)) {
+                $content->htsp_description_of_sop = serialize($request->htsp_description_of_sop);
+            }
+
+            if (!empty($request->htsp_specifications)) {
+                $content->htsp_specifications = serialize($request->htsp_specifications);
+            }
+
+            if (!empty($request->htsp_sampling_analysis)) {
+                $content->htsp_sampling_analysis = serialize($request->htsp_sampling_analysis);
+            }
+
+            if (!empty($request->htsp_environmental_conditions)) {
+                $content->htsp_environmental_conditions = serialize($request->htsp_environmental_conditions);
+            }
+
+            if (!empty($request->htsp_sample_quantity_calculation)) {
+                $content->htsp_sample_quantity_calculation = serialize($request->htsp_sample_quantity_calculation);
+            }
+            if (!empty($request->htsp_deviation)) {
+                $content->htsp_deviation = serialize($request->htsp_deviation);
+            }
+            if (!empty($request->htsp_summary)) {
+                $content->htsp_summary = serialize($request->htsp_summary);
+            }
+            if (!empty($request->htsp_conclusion)) {
+                $content->htsp_conclusion = serialize($request->htsp_conclusion);
+            }
+
+
+
+
             $content->save();
 
 
@@ -1903,6 +1948,21 @@ class DocumentController extends Controller
             $documentcontet->validation_po_prvp = $request->validation_po_prvp;
             $documentcontet->description_sop_prvp = $request->description_sop_prvp;
             $documentcontet->prvp_procedure = $request->prvp_procedure;
+
+             // htsp
+             $documentcontet->htsp_purpose = $request->htsp_purpose;
+             $documentcontet->htsp_scope = $request->htsp_scope;
+
+             $documentcontet->htsp_responsibility = $request->htsp_responsibility ? serialize($request->htsp_responsibility) : serialize([]);
+             $documentcontet->htsp_description_of_sop = $request->htsp_description_of_sop ? serialize($request->htsp_description_of_sop) : serialize([]);
+             $documentcontet->htsp_specifications = $request->htsp_specifications ? serialize($request->htsp_specifications) : serialize([]);
+             $documentcontet->htsp_sampling_analysis = $request->htsp_sampling_analysis ? serialize($request->htsp_sampling_analysis) : serialize([]);
+             $documentcontet->htsp_environmental_conditions = $request->htsp_environmental_conditions ? serialize($request->htsp_environmental_conditions) : serialize([]);
+             $documentcontet->htsp_sample_quantity_calculation = $request->htsp_sample_quantity_calculation ? serialize($request->htsp_sample_quantity_calculation) : serialize([]);
+             $documentcontet->htsp_deviation = $request->htsp_deviation ? serialize($request->htsp_deviation) : serialize([]);
+             $documentcontet->htsp_summary = $request->htsp_summary ? serialize($request->htsp_summary) : serialize([]);
+             $documentcontet->htsp_conclusion = $request->htsp_conclusion ? serialize($request->htsp_conclusion) : serialize([]);
+
            
             $documentcontet->responsibilityprvp = $request->responsibilityprvp ? serialize($request->responsibilityprvp) : serialize([]);
             $documentcontet->prvp_rawmaterial = $request->prvp_rawmaterial ? serialize($request->prvp_rawmaterial) : serialize([]);
@@ -1922,6 +1982,9 @@ class DocumentController extends Controller
             $documentcontet->summary_prvp = $request->summary_prvp ? serialize($request->summary_prvp) : serialize([]);
             $documentcontet->conclusion_prvp = $request->conclusion_prvp ? serialize($request->conclusion_prvp) : serialize([]);
             $documentcontet->training_prvp = $request->training_prvp ? serialize($request->training_prvp) : serialize([]);
+
+
+            
             //////PRVP End /////////////////
 
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);

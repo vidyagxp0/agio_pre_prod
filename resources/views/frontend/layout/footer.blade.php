@@ -464,6 +464,104 @@
             $('#definitiondiv').append(html);
 
         });
+        
+
+        
+
+        $('#responsibilityhtpsbtnadd').click(function(e) {
+
+           var html =
+               '<div class="ResponsibilityBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_responsibility[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subresponsibilityhtpsAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+         $('#responsibilityhtpsdiv').append(html);
+
+        });
+
+
+        $('#Specificationsbtnadd').click(function(e) {
+
+              var html =
+            '<div class="SpecificationsBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_specifications[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subSpecificationsAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+         $('#Specificationsdiv').append(html);
+
+       });
+
+
+        $('#Samplinghtpsbtnadd').click(function(e) {
+
+             var html =
+               '<div class="SamplinghtpsBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_sampling_analysis[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subSamplinghtpsAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+                 $('#Samplinghtpsdiv').append(html);
+
+                });
+
+        $('#Environmentalhtspbtnadd').click(function(e) {
+
+              var html =
+                 '<div class="EnvironmentalhtspBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_environmental_conditions[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subEnvironmentalhtspAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+           $('#Environmentalhtspdiv').append(html);
+
+});
+
+          $('#Samplehtpsbtnadd').click(function(e) {
+
+                  var html =
+                '<div class="SamplehtpsBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_sample_quantity_calculation[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subSamplehtpsAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+               $('#Samplehtpsdiv').append(html);
+
+});
+
+          $('#Deviationhtpsbtnadd').click(function(e) {
+
+         var html =
+       '<div class="DeviationhtpsBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_deviation[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subDeviationhtpsAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#Deviationhtpsdiv').append(html);
+
+});
+
+      $('#Summaryhtpsbtnadd').click(function(e) {
+
+            var html =
+          '<div class="SummaryhtpsBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_summary[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subSummaryhtpsAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+         $('#Summaryhtpsdiv').append(html);
+
+});
+
+     $('#Conclusionhtpsbtnadd').click(function(e) {
+
+        var html =
+       '<div class="ConclusionhtpsBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_conclusion[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subConclusionhtpseAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+       $('#Conclusionhtpsdiv').append(html);
+
+});
+
+
+        $('#htspdescriptionbtnadd').click(function(e) {
+
+          var html =
+              '<div class="htspdescriptionBlock"><div class="resrow row"><div class="col-10"><textarea name="htsp_description_of_sop[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subhtspdescriptionAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#htspdescriptiondiv').append(html);
+
+        });
+
+
+
+        
+       
+
+
+        
+
+        
+
 
         let subMaterialsAdd = 0;
         let subResponsibilityAdd = 0;
@@ -475,6 +573,18 @@
         let subResponsibilityprvpAdd = 0;
         let subAccountabilityprvpAdd = 0;
         let subDefinitionPrvpAdd = 0;
+        let subresponsibilityhtpsAdd=0;
+        let subhtspdescriptionAdd=0;
+        let subSpecificationsAdd=0;
+        let subSamplinghtpsAdd=0;
+        let subEnvironmentalhtspAdd=0;
+        let subSamplehtpsAdd=0;
+        let subDeviationhtpsAdd=0;
+        let subSummaryhtpsAdd=0;
+        let subConclusionhtpseAdd=0;
+        
+
+
 
 
 
@@ -520,6 +630,154 @@
             }
 
         });
+        $(document).on('click', '.subhtspdescriptionAdd', function(e) {
+            e.preventDefault();
+            subhtspdescriptionAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_description_of_sop[sub_'+ subhtspdescriptionAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.htspdescriptionBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.htspdescriptionBlock', '.subhtspdescriptionBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subhtspdescriptionBlock">' + html + '</div>');
+            }
+
+        });
+      
+
+        $(document).on('click', '.subresponsibilityhtpsAdd', function(e) {
+            e.preventDefault();
+            subresponsibilityhtpsAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_responsibility[sub_'+ subresponsibilityhtpsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.ResponsibilityBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.ResponsibilityBlock', '.subResponsibilityBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subResponsibilityBlock">' + html + '</div>');
+            }
+
+        });
+
+        $(document).on('click', '.subSpecificationsAdd', function(e) {
+            e.preventDefault();
+            subSpecificationsAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_specifications[sub_'+ subSpecificationsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.SpecificationsBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.SpecificationsBlock', '.subSpecificationsBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSpecificationsBlock">' + html + '</div>');
+            }
+
+        });
+
+        $(document).on('click', '.subSamplinghtpsAdd', function(e) {
+            e.preventDefault();
+            subSamplinghtpsAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_sampling_analysis[sub_'+ subSamplinghtpsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.SamplinghtpsBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.SamplinghtpsBlock', '.subSamplinghtpsBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSamplinghtpsBlock">' + html + '</div>');
+            }
+
+        });
+
+        $(document).on('click', '.subEnvironmentalhtspAdd', function(e) {
+            e.preventDefault();
+            subEnvironmentalhtspAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_environmental_conditions[sub_'+ subEnvironmentalhtspAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.EnvironmentalhtspBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.EnvironmentalhtspBlock', '.subEnvironmentalhtspBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subEnvironmentalhtspBlock">' + html + '</div>');
+            }
+
+        });
+
+        $(document).on('click', '.subSamplehtpsAdd', function(e) {
+            e.preventDefault();
+            subSamplehtpsAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_sample_quantity_calculation[sub_'+ subSamplehtpsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.SamplehtpsBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.SamplehtpsBlock', '.subSamplehtpsBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSamplehtpsBlock">' + html + '</div>');
+            }
+
+        });
+
+
+        
+        $(document).on('click', '.subDeviationhtpsAdd', function(e) {
+            e.preventDefault();
+            subDeviationhtpsAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_deviation[sub_'+ subDeviationhtpsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.DeviationhtpsBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.DeviationhtpsBlock', '.subDeviationhtpsBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subDeviationhtpsBlock">' + html + '</div>');
+            }
+
+        });
+
+        $(document).on('click', '.subSummaryhtpsAdd', function(e) {
+            e.preventDefault();
+            subSummaryhtpsAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_summary[sub_'+ subSummaryhtpsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.SummaryhtpsBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.SummaryhtpsBlock', '.subSummaryhtpsBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSummaryhtpsBlock">' + html + '</div>');
+            }
+
+        });
+
+
 
         $(document).on('click', '.subAccountabilityAdd', function(e) {
             e.preventDefault();
@@ -538,6 +796,26 @@
             }
 
         });
+
+
+        $(document).on('click', '.subConclusionhtpseAdd', function(e) {
+            e.preventDefault();
+            subConclusionhtpseAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="htsp_conclusion[sub_'+ subConclusionhtpseAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.ConclusionhtpsBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.ConclusionhtpsBlock', '.subConclusionhtpsBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subConclusionhtpsBlock">' + html + '</div>');
+            }
+
+        });
+
 
         $(document).on('click', '.subResponsibilityAdd', function(e) {
             e.preventDefault();
