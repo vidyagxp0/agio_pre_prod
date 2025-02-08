@@ -775,8 +775,18 @@ class Helpers
             'TEMPMAPPING' => 'Temperature Mapping Protocol Cum Report',
             'PROVALIDRE' => 'Process Validation Report',
             'PROVALIINTERRE'=>'Process Validation Interim Report',
+            'EQUIPMENTHOLDREPORT' => 'Equipment Hold Time Study Report',
+            'EQUIPMENTHOLDPROTOCOL' => 'Equipment Hold Time Study Protocol',
+            'STUDYPROTOCOL' => 'Study Protocol',
+            'ANNEQUALPROTO' => 'Annexure For Qualification Protocol',
+            'ANNEQUALREPORT' => 'Annexure For Qualification REPORT',
             'STUDY' => 'Study Report',
+            'AAEUSERREQUESPECI' => 'Annexure For User Requirement Specification',
             'PROCUMREPORT' => 'Protocol cum Report',
+            'CLEAVALIPROTODOC' => 'Cleaning  Validation Protocol.doc',
+            'CLEAVALIREPORTDOC' => 'Cleaning  Validation Report.doc',
+            
+
             'REQULIFICATION' => 'ReQualification Report',
             'PROVALIPROTOCOL'=>'Process Validation protocol',
             'REQULIFICATIONPROTOCOL'=>'Area Qualification Protocol',
