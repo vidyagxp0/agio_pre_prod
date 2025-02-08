@@ -867,7 +867,7 @@
                                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                     <div class="w-100">
                                         <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                            {!! $data->document_content ? nl2br($data->document_content->stprotocol_purpose) : '' !!}
                                         </div>
                                     </div>
                                 </div>
@@ -892,7 +892,7 @@
                                     <div class="w-100">
                                         <div class="text-justify"
                                             style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                            {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                            {!! $data->document_content ? nl2br($data->document_content->stprotocol_scope) : '' !!}
                                         </div>
                                     </div>
                                 </div>
@@ -921,9 +921,9 @@
                                         @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->responsibility) &&
-                                                is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->responsibility) as $key => $res)
+                                                !empty($data->document_content->stresponsibility) &&
+                                                is_array(unserialize($data->document_content->stresponsibility)))
+                                            @foreach (unserialize($data->document_content->stresponsibility) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -973,9 +973,9 @@
                                         @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->accountability) &&
-                                                is_array(unserialize($data->document_content->accountability)))
-                                            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                                !empty($data->document_content->stdefination) &&
+                                                is_array(unserialize($data->document_content->stdefination)))
+                                            @foreach (unserialize($data->document_content->stdefination) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1023,9 +1023,9 @@
                                         @php $i = 1; @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->references) &&
-                                                is_array(unserialize($data->document_content->references)))
-                                            @foreach (unserialize($data->document_content->references) as $key => $res)
+                                                !empty($data->document_content->streferences) &&
+                                                is_array(unserialize($data->document_content->streferences)))
+                                            @foreach (unserialize($data->document_content->streferences) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1074,9 +1074,9 @@
                                         @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->abbreviation) &&
-                                                is_array(unserialize($data->document_content->abbreviation)))
-                                            @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+                                                !empty($data->document_content->stbackground) &&
+                                                is_array(unserialize($data->document_content->stbackground)))
+                                            @foreach (unserialize($data->document_content->stbackground) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1123,7 +1123,7 @@
                                         @php
                                             $i = 1;
                                             $definitions = $data->document_content
-                                                ? unserialize($data->document_content->defination)
+                                                ? unserialize($data->document_content->stassessment)
                                                 : [];
                                         @endphp
                                         @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
@@ -1176,8 +1176,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->ststrategy)))
+                                            @foreach (unserialize($data->document_content->ststrategy) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1226,8 +1226,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->stsummary)))
+                                            @foreach (unserialize($data->document_content->stsummary) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1276,8 +1276,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->stconclusion)))
+                                            @foreach (unserialize($data->document_content->stconclusion) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1326,8 +1326,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->stannexure)))
+                                            @foreach (unserialize($data->document_content->stannexure) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1376,8 +1376,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->Referencedocunum)))
+                                            @foreach (unserialize($data->document_content->Referencedocunum) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
