@@ -560,7 +560,7 @@
         }
     </style>
 
-   
+
 
 
 </head>
@@ -591,7 +591,7 @@
                                 {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;  font-weight:bold;border-top: 1px solid #686868; padding-top: 10px;">QUALITY ASSURANCE DEPARTMENT</p>
                     </td>
-                   
+
                 </tr>
             </tbody>
         </table>
@@ -600,7 +600,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num">
-                         Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) 
+                         Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type)
                         STANDARD OPERATING PROCEDURE
                     </td>
                 </tr>
@@ -622,7 +622,7 @@
         </table>
 
 
-        
+
 
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
@@ -650,9 +650,9 @@
     <div>
         <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
     </div>
-   
 
-   
+
+
 
 
 
@@ -671,7 +671,7 @@
         <h3 class="" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS:</h3>
     </div>
 
-    
+
     <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
@@ -727,7 +727,7 @@
             <td class="custom-design">Result Of Bulk Stage</td>
             <td class="custom-design"></td>
            </tr>
- 
+
 
            <tr>
             <td class="custom-design">7.</td>
@@ -746,7 +746,7 @@
             <td class="custom-design"> Conclusion</td>
             <td class="custom-design"></td>
            </tr>
-          
+
 
 
            </tbody>
@@ -779,7 +779,7 @@
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
                         <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            {!! $data->document_content ? nl2br($data->document_content->Purpose_HoTiStRe) : '' !!}
                         </div>
                     </div>
                 </div>
@@ -804,7 +804,7 @@
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
                         <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            {!! $data->document_content ? nl2br($data->document_content->Scope_HoTiStRe) : '' !!}
                         </div>
                     </div>
                 </div>
@@ -818,7 +818,7 @@
                 <tr>
                     <th class="w-5">3.0</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;"> 	
+                        <div style="font-weight: bold;">
                                 BATCH DETAILS:
                          </div>
                     </th>
@@ -830,7 +830,7 @@
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
                         <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            {!! $data->document_content ? nl2br($data->document_content->BatchDetails_HoTiStRe) : '' !!}
                         </div>
                     </div>
                 </div>
@@ -854,7 +854,7 @@
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
                         <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            {!! $data->document_content ? nl2br($data->document_content->ReferenceDocument_HoTiStRe) : '' !!}
                         </div>
                     </div>
                 </div>
@@ -873,7 +873,7 @@
                     </th>
                 </tr>
             </thead>
-            
+
         </table>
 
         <table>
@@ -935,7 +935,7 @@
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
                         <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            {!! $data->document_content ? nl2br($data->document_content->ResultBulkStage_HoTiStRe) : '' !!}
                         </div>
                     </div>
                 </div>
@@ -959,7 +959,7 @@
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
                         <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            {!! $data->document_content ? nl2br($data->document_content->DeviationIfAny_HoTiStRe) : '' !!}
                         </div>
                     </div>
                 </div>
@@ -990,7 +990,7 @@
                     <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                         <div class="w-100">
                             <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                {!! $data->document_content ? nl2br($data->document_content->Summary_HoTiStRe) : '' !!}
                             </div>
                         </div>
                     </div>
@@ -1022,7 +1022,7 @@
                         <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    {!! $data->document_content ? nl2br($data->document_content->Conclusion_HoTiStRe) : '' !!}
                                 </div>
                             </div>
                         </div>

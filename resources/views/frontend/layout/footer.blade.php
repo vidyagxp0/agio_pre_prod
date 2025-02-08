@@ -488,6 +488,81 @@
 
         });
 
+        // hold time  study report
+
+        $('#Purpose_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlePurpose_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="Purpose_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPurpose_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Purpose_HoTiStRediv').append(html);
+
+        });
+
+        $('#Scope_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleScope_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="Scope_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subScope_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Scope_HoTiStRediv').append(html);
+
+        });
+
+        $('#BatchDetails_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleBatchDetails_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="BatchDetails_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subBatchDetails_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#BatchDetails_HoTiStRediv').append(html);
+
+        });
+
+        $('#ReferenceDocument_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleReferenceDocument_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="ReferenceDocument_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReferenceDocument_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ReferenceDocument_HoTiStRediv').append(html);
+
+        });
+
+        $('#ResultBulkStage_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleResultBulkStage_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="ResultBulkStage_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subResultBulkStage_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ResultBulkStage_HoTiStRediv').append(html);
+
+        });
+
+        $('#DeviationIfAny_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleDeviationIfAny_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="DeviationIfAny_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subDeviationIfAny_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#DeviationIfAny_HoTiStRediv').append(html);
+
+        });
+
+        $('#Summary_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleSummary_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="Summary_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subSummary_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Summary_HoTiStRediv').append(html);
+
+        });
+
+        $('#Conclusion_HoTiStRebtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleConclusion_HoTiStReBlock"><div class="resrow row"><div class="col-10"><textarea name="Conclusion_HoTiStRe[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subConclusion_HoTiStReAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Conclusion_HoTiStRediv').append(html);
+
+        });
+
+
 
 
 
@@ -687,6 +762,14 @@
         let subConclusion_TemperMapAdd = 0;
         let subAttachmentList_TemperMapAdd = 0;
         let subPostApproval_TemperMapAdd = 0;
+        let subPurpose_HoTiStReAdd = 0;
+        let subScope_HoTiStReAdd = 0;
+        let subBatchDetails_HoTiStReAdd = 0;
+        let subReferenceDocument_HoTiStReAdd = 0;
+        let subResultBulkStage_HoTiStReAdd = 0;
+        let subDeviationIfAny_HoTiStReAdd = 0;
+        let subSummary_HoTiStReAdd = 0;
+        let subConclusion_HoTiStReAdd = 0;
         let subAbbreviationAdd = 0;
         let subDefinitionAdd = 0;
         let subReferencesAdd = 0;
@@ -1134,6 +1217,144 @@
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subsinglePostApproval_TemperMapBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subPurpose_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subPurpose_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Purpose_HoTiStRe[sub_'+ subPurpose_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePurpose_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePurpose_HoTiStReBlock', '.subsinglePurpose_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePurpose_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subScope_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subScope_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Scope_HoTiStRe[sub_'+ subScope_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleScope_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleScope_HoTiStReBlock', '.subsingleScope_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleScope_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subBatchDetails_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subBatchDetails_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="BatchDetails_HoTiStRe[sub_'+ subBatchDetails_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleBatchDetails_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleBatchDetails_HoTiStReBlock', '.subsingleBatchDetails_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleBatchDetails_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+       
+
+        $(document).on('click', '.subReferenceDocument_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subReferenceDocument_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ReferenceDocument_HoTiStRe[sub_'+ subReferenceDocument_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReferenceDocument_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferenceDocument_HoTiStReBlock', '.subsingleReferenceDocument_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReferenceDocument_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subResultBulkStage_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subResultBulkStage_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ResultBulkStage_HoTiStRe[sub_'+ subResultBulkStage_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleResultBulkStage_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleResultBulkStage_HoTiStReBlock', '.subsingleResultBulkStage_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleResultBulkStage_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subDeviationIfAny_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subDeviationIfAny_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="DeviationIfAny_HoTiStRe[sub_'+ DeviationIfAny_HoTiStRebtnadd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDeviationIfAny_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDeviationIfAny_HoTiStReBlock', '.subsingleDeviationIfAny_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDeviationIfAny_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subSummary_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subSummary_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Summary_HoTiStRe[sub_'+ subSummary_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleSummary_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleSummary_HoTiStReBlock', '.subsingleSummary_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleSummary_HoTiStReBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subConclusion_HoTiStReAdd', function(e) {
+            e.preventDefault();
+            subConclusion_HoTiStReAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Conclusion_HoTiStRe[sub_'+ subConclusion_HoTiStReAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleConclusion_HoTiStReBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleConclusion_HoTiStReBlock', '.subsingleConclusion_HoTiStReBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleConclusion_HoTiStReBlock">' + html + '</div>');
             }
         });
 

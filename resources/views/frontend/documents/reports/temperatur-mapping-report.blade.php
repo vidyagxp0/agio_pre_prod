@@ -469,7 +469,7 @@
         .main-section {
             text-align: left;
         }
-        
+
     </style>
 
     <style>
@@ -494,7 +494,7 @@
             #isPasted th:last-child {
                 width: auto; /* Take remaining space */
                 vertical-align: top;
-                
+
             }
 
             /* Common Table Cell Styling */
@@ -582,7 +582,7 @@
                     <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Document Name</td>
                     <td style="width: 65%; padding: 5px; text-align: left">
                         {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
-               
+
                 </tr>
             </tbody>
         </table>
@@ -662,12 +662,12 @@
                             @endif
                         @endif
                     </td>
-                    
+
                 </tr>
             </tbody>
         </table>
     </header>
-    
+
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
         {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <thead>
@@ -691,14 +691,14 @@
                     @endphp
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  
+                    <td style="padding: 10px; border: 1px solid #ddd;">
                     @if ($inreviews->isEmpty())
                         <div>Yet Not Performed</div>
                     @else
                         @foreach ($inreviews as $temp)
                             <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                         @endforeach
-                    @endif          
+                    @endif
                     @php
                         $inreview = DB::table('stage_manages')
                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
@@ -709,14 +709,14 @@
                             ->get();
 
                     @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">  
+                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">
                     @if ($inreview->isEmpty())
                         <div>Yet Not Performed</div>
                     @else
                         @foreach ($inreview as $temp)
                             <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
                         @endforeach
-                    @endif                    
+                    @endif
                 </tr>
                 <tr style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
@@ -730,7 +730,7 @@
                         @foreach ($inreviews as $temp)
                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                         @endforeach
-                    @endif 
+                    @endif
                     </td>
 
                     <td style="padding: 10px; border: 1px solid #ddd;">
@@ -740,14 +740,14 @@
                         @foreach ($inreview as $temp)
                            <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
                         @endforeach
-                    @endif                    
+                    @endif
                     </td>
-                </tr> 
+                </tr>
             </tbody>
         </table> --}}
         <span>Format No.: QA/055/F1-00</span>
     </footer>
-    
+
     <div>
         <section class="main-section" id="pdf-page">
             <h4 style="font-size: 16px; font-weight: bold; text-align:center">NAME OF EQUIPMENT / AREA DEPARTMENT AND ROOM NO / EQUIPMENT ID:</h4>
@@ -792,28 +792,28 @@
                                 <td style="font-size: 16px; font-weight: bold;">6.0</td>
                                 <td style="font-weight: bold; text-align:left">Reference</td>
                                 <td style="font-weight: bold;"></td>
-                            </tr>                        
+                            </tr>
                             <tr>
                                 <td style="font-size: 16px; font-weight: bold;">7.0</td>
                                 <td style="font-weight: bold; text-align:left">Document to be Followed</td>
                                 <td style="font-weight: bold;"></td>
-                            </tr>                        
+                            </tr>
                             <tr>
                                 <td style="font-size: 16px; font-weight: bold;">8.0</td>
                                 <td style="font-weight: bold; text-align:left">Study Rationale</td>
                                 <td style="font-weight: bold;"></td>
-                            </tr>                        
+                            </tr>
                             <tr>
                                 <td style="font-size: 16px; font-weight: bold;">9.0</td>
                                 <td style="font-weight: bold; text-align:left">Procedure</td>
                                 <td style="font-weight: bold;"></td>
-                            </tr> 
+                            </tr>
                             <tr>
                                 <td style="font-size: 16px; font-weight: bold;">10</td>
                                 <td style="font-weight: bold; text-align:left">Criteria for revalidation </td>
                                 <td style="font-weight: bold;"></td>
                             </tr>
-                            
+
                             <tr>
                                 <td style="font-size: 16px; font-weight: bold;">11</td>
                                 <td style="font-weight: bold; text-align:left">Material and document required</td>
@@ -876,7 +876,7 @@
                     </table>
                 </div>
 
-                    
+
                 <div class="other-container" style="margin-top:1.5rem">
                         <table>
                             <thead>
@@ -893,7 +893,7 @@
                                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                     <div class="w-100">
                                         <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                            {!! $data->document_content ? nl2br($data->document_content->ProtocolApproval_TemperMap) : '' !!}
                                         </div>
                                     </div>
                                 </div>
@@ -918,7 +918,7 @@
                                     <div class="w-100">
                                         <div class="text-justify"
                                             style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                            {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                            {!! $data->document_content ? nl2br($data->document_content->Objective_TemperMap) : '' !!}
                                         </div>
                                     </div>
                                 </div>
@@ -947,9 +947,9 @@
                                         @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->responsibility) &&
+                                                !empty($data->document_content->Scope_TemperMap) &&
                                                 is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->responsibility) as $key => $res)
+                                            @foreach (unserialize($data->document_content->Scope_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -999,9 +999,9 @@
                                         @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->accountability) &&
-                                                is_array(unserialize($data->document_content->accountability)))
-                                            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                                !empty($data->document_content->AreaValidated_TemperMap) &&
+                                                is_array(unserialize($data->document_content->AreaValidated_TemperMap)))
+                                            @foreach (unserialize($data->document_content->AreaValidated_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1049,9 +1049,9 @@
                                         @php $i = 1; @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->references) &&
-                                                is_array(unserialize($data->document_content->references)))
-                                            @foreach (unserialize($data->document_content->references) as $key => $res)
+                                                !empty($data->document_content->ValidationTeamResponsibilities_TemperMap) &&
+                                                is_array(unserialize($data->document_content->ValidationTeamResponsibilities_TemperMap)))
+                                            @foreach (unserialize($data->document_content->ValidationTeamResponsibilities_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1100,9 +1100,9 @@
                                         @endphp
                                         @if (
                                             $data->document_content &&
-                                                !empty($data->document_content->abbreviation) &&
-                                                is_array(unserialize($data->document_content->abbreviation)))
-                                            @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+                                                !empty($data->document_content->Reference_TemperMap) &&
+                                                is_array(unserialize($data->document_content->Reference_TemperMap)))
+                                            @foreach (unserialize($data->document_content->Reference_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1149,10 +1149,10 @@
                                         @php
                                             $i = 1;
                                             $definitions = $data->document_content
-                                                ? unserialize($data->document_content->defination)
+                                                ? unserialize($data->document_content->DocumentFollowed_TemperMap)
                                                 : [];
                                         @endphp
-                                        @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
+                                        @if ($data->document_content && !empty($data->document_content->DocumentFollowed_TemperMap) && is_array($definitions))
                                             @foreach ($definitions as $key => $definition)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
@@ -1202,8 +1202,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->StudyRationale_TemperMap)))
+                                            @foreach (unserialize($data->document_content->StudyRationale_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1252,8 +1252,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->Procedure_TemperMap)))
+                                            @foreach (unserialize($data->document_content->Procedure_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1302,8 +1302,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->CriteriaRevalidation_TemperMap)))
+                                            @foreach (unserialize($data->document_content->CriteriaRevalidation_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1352,8 +1352,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->MaterialDocumentRequired_TemperMap)))
+                                            @foreach (unserialize($data->document_content->MaterialDocumentRequired_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1402,8 +1402,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->AcceptanceCriteria_TemperMap)))
+                                            @foreach (unserialize($data->document_content->AcceptanceCriteria_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1452,8 +1452,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->TypeofValidation_TemperMap)))
+                                            @foreach (unserialize($data->document_content->TypeofValidation_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1502,8 +1502,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->ObservationResult_TemperMap)))
+                                            @foreach (unserialize($data->document_content->ObservationResult_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1552,8 +1552,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->Abbreviations_TemperMap)))
+                                            @foreach (unserialize($data->document_content->Abbreviations_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1600,7 +1600,7 @@
                                     <div class="custom-procedure-content">
                                         <div class="custom-content-wrapper">
                                             @if ($data->document_content)
-                                                {!! strip_tags($data->document_content->procedure, 
+                                                {!! strip_tags($data->document_content->DeviationAny_TemperMap,
                                                 '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                             @endif
                                         </div>
@@ -1633,8 +1633,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->ChangeControl_TemperMap)))
+                                            @foreach (unserialize($data->document_content->ChangeControl_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1683,8 +1683,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->Summary_TemperMap)))
+                                            @foreach (unserialize($data->document_content->Summary_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1733,8 +1733,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->Conclusion_TemperMap)))
+                                            @foreach (unserialize($data->document_content->Conclusion_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1783,8 +1783,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->AttachmentList_TemperMap)))
+                                            @foreach (unserialize($data->document_content->AttachmentList_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
@@ -1833,8 +1833,8 @@
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                        @if ($data->document_content && is_array(unserialize($data->document_content->PostApproval_TemperMap)))
+                                            @foreach (unserialize($data->document_content->PostApproval_TemperMap) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp

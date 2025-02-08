@@ -242,6 +242,7 @@
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
 
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+                <button class="tablinks hidden-tabs" data-id="HOLDTIMESTUDYREPORT" onclick="openData(event, 'doc-holdtimstduy')">Hold Time Study Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
 
@@ -467,24 +468,7 @@
                                     </div>
                                 </div>
 
-                                {{-- @php
-            use Illuminate\Support\Facades\DB;
 
-            $actionItems = DB::table('action_items')->get();
-        @endphp
-
-        <div class="col-md-6">
-            <div class="group-input">
-                <label for="link-doc">Parent Child Record</label>
-                <select multiple name="parent_child[]" placeholder="Select Parent Child Records" data-search="false" data-silent-initial-value-set="true" id="parent_child">
-                    @foreach ($actionItems as $item)
-                        <option value="{{ $item->id }}">
-                            {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -1330,10 +1314,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1401,7 +1385,7 @@
 
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -1472,7 +1456,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -1518,7 +1502,7 @@
                                 let table = document.getElementById("specifications-testing").getElementsByTagName('tbody')[0];
                                 let rowCount = table.rows.length;
                                 let newRow = table.insertRow();
-                                
+
                                 newRow.innerHTML = `
                                     <td>${rowCount + 1}</td>
                                     <td><input type="text" name="specifications_testing[${rowCount}][tests]"></td>
@@ -2050,8 +2034,8 @@
                             </button>
                         </div>
                     </div>
-             
-                    
+
+
     <!-----------------MASTER FINISHED PRODUCT SPECIFICATION Tab ---------------------->
                     <div id="doc-mfps" class="tabcontent">
                         <div class="orig-head">
@@ -2423,7 +2407,7 @@
                  <!--Process Validation Protocol  -->
                 <div id="doc_prvp" class="tabcontent">
                     <div class="orig-head">
-                        PROCESS VALIDATION PROTOCOL 
+                        PROCESS VALIDATION PROTOCOL
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -2726,7 +2710,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
@@ -3978,7 +3962,7 @@
                 <div class="group-input">
 
                     <label for="ProtocolApproval_TemperMap" id="ProtocolApproval_TemperMap">
-                        ProtocolApproval_TemperMap<button type="button" id="ProtocolApproval_TemperMapbtnadd"
+                        ProtocolApproval TemperMap<button type="button" id="ProtocolApproval_TemperMapbtnadd"
                             name="button">+</button>
                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                 does not require completion</small></div>
@@ -4604,12 +4588,380 @@
         </button>
     </div>
 </div>
+{{-- hold study report tabs  --}}
 
-    <!-- Cleaning Validation Specification -->
+<div id="doc-holdtimstduy" class="tabcontent">
+    <div class="orig-head">
+        Hold Time Study Report
+    </div>
+    <div class="input-fields">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Purpose_HoTiStRe" id="Purpose_HoTiStRe">
+                        Purpose<button type="button" id="Purpose_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Purpose_HoTiStRediv">
+                        <div class="singlePurpose_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Purpose_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subPurpose_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Scope_HoTiStRe" id="Scope_HoTiStRe">
+                        Scope<button type="button" id="Scope_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Scope_HoTiStRediv">
+                        <div class="singleScope_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Scope_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subScope_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="BatchDetails_HoTiStRe" id="BatchDetails_HoTiStRe">
+                        Batch Details<button type="button" id="BatchDetails_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="BatchDetails_HoTiStRediv">
+                        <div class="singleBatchDetails_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="BatchDetails_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subBatchDetails_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ReferenceDocument_HoTiStRe" id="ReferenceDocument_HoTiStRe">
+                        Reference Document<button type="button" id="ReferenceDocument_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ReferenceDocument_HoTiStRediv">
+                        <div class="singleReferenceDocument_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ReferenceDocument_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subReferenceDocument_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            {{-- <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="CalibrationQualificationStatus_HoTiStRe" id="CalibrationQualificationStatus_HoTiStRe">
+                        Calibration And Qualification Status<button type="button" id="CalibrationQualificationStatus_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="CalibrationQualificationStatus_HoTiStRediv">
+                        <div class="singleCalibrationQualificationStatus_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="CalibrationQualificationStatus_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subCalibrationQualificationStatus_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> --}}
+
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Quality Control">
+                        CALIBRATION AND QUALIFICATION STATUS
+                        <button type="button" name="add_quality_control_1"
+                            id="add_calibrationandqualifc">+</button>
+                    </label>
+                    <table class="table table-bordered" id="calibrationandqualifc_details">
+                        <thead>
+                            <tr>
+                                <th>Sr. No.</th>
+                                <th>Equipment Name</th>
+                                <th>Location</th>
+                                <th>Equipment No</th>
+                                <th>Qualification Status</th>
+                                <th>Valid Upto</th>
+                                <th>Remark</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Default first row -->
+                            <tr>
+                                <td><input disabled type="text" name="qualitycontrol_1[0][serial]"
+                                        value="1"></td>
+                                <td><input type="text" name="qualitycontrol_1[0][Equipment_Name]"></td>
+                                <td><input type="text" name="qualitycontrol_1[0][Location]">
+                                </td>
+                                <td><input type="text"
+                                        name="qualitycontrol_1[0][Equipment_No]"></td>
+                                <td><input type="text" name="qualitycontrol_1[0][Qualification_Status]">
+                                </td>
+                                <td><input type="text" name="qualitycontrol_1[0][Valid_Upto]"></td>
+                                <td><input type="text" name="qualitycontrol_1[0][remark]"></td>
+                                </td>
+                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <script>
+                $(document).ready(function() {
+                    // Add new row in Quality Control 1 table
+                    $('#add_calibrationandqualifc').click(function(e) {
+                        e.preventDefault();
+
+                        function generateQualityTableRow(serialNumber) {
+                            var html =
+                                '<tr>' +
+                                '<td><input disabled type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber + '][Equipment_Name]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Location]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Equipment_No]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Qualification_Status]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Valid_Upto]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][remark]"></td>' +
+                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                '</tr>';
+                            return html;
+                        }
+
+                        var tableBody = $('#calibrationandqualifc_details tbody');
+                        var rowCount = tableBody.children('tr').length;
+                        var newRow = generateQualityTableRow(rowCount);
+                        tableBody.append(newRow);
+                    });
+
+                    // Remove row in Quality Control 1 table
+                    $(document).on('click', '.removeRowBtn', function() {
+                        $(this).closest('tr').remove();
+                    });
+                });
+            </script>
+
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="ResultBulkStage_HoTiStRe" id="ResultBulkStage_HoTiStRe">
+                        Results of Bulk Stage<button type="button" id="ResultBulkStage_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="ResultBulkStage_HoTiStRediv">
+                        <div class="singleResultBulkStage_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="ResultBulkStage_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subResultBulkStage_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="DeviationIfAny_HoTiStRe" id="DeviationIfAny_HoTiStRe">
+                        Deviation If Any <button type="button" id="DeviationIfAny_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="DeviationIfAny_HoTiStRediv">
+                        <div class="singleDeviationIfAny_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="DeviationIfAny_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subDeviationIfAny_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Summary_HoTiStRe" id="Summary_HoTiStRe">
+                        Summary<button type="button" id="Summary_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Summary_HoTiStRediv">
+                        <div class="singleSummary_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Summary_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subSummary_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Conclusion_HoTiStRe" id="Conclusion_HoTiStRe">
+                        Conclusion <button type="button" id="Conclusion_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Conclusion_HoTiStRediv">
+                        <div class="singleConclusion_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Conclusion_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subConclusion_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="button-block">
+        <button type="submit" value="save" name="submit" id="DocsaveButton"
+            class="saveButton">Save</button>
+        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+            </a>
+        </button>
+    </div>
+</div>
+
+
             <!-- Cleaning Validation Specification -->
-                <div id="doc_CVS" class="tabcontent">
+                    <div id="doc_CVS" class="tabcontent">
+                        <div class="orig-head">
                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
+
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-6">
@@ -4813,12 +5165,6 @@
                                 });
                             </script>
 
-
-
-
-
-
-                            </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
@@ -4831,6 +5177,8 @@
                             </button>
                         </div>
                 </div>
+
+
 
 
 
