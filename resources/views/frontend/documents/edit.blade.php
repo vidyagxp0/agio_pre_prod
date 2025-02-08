@@ -145,12 +145,15 @@
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
 
                 <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-tempmapping')">Temperature Mapping Report</button>
+                <button class="tablinks hidden-tabs" data-id="HOLDTIMESTUDYREPORT" onclick="openData(event, 'doc-holdtimstduy')">Hold Time Study Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure SOP</button>
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PACKING MATERIAL SPECIFICATION</button>
+                <button class="tablinks hidden-tabs" data-id="PROCUMREPORT" onclick="openData(event, 'doc_PCR')">Protocol Cum Report</button>
+                {{-- <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-temper_maping')">Temperature Mapping Protocol Cum Report</button> --}}
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
@@ -382,7 +385,7 @@
                                     <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                     </div>
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_dateDoc" 
+                                        <input type="text" id="due_dateDoc"
                                             value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}"
                                             placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc"
@@ -2473,7 +2476,7 @@
                             @endif
 
 
-                            
+
                             <div class="col-md-12">
                                 <div class="group-input">
 
@@ -2554,7 +2557,7 @@
                                 </div>
                             </div>
 
-                            
+
                             @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
                                     class="comment">
                                     <div>
@@ -2569,6 +2572,48 @@
                             @endif
                         </div>
 
+                        <div class="col-md-12">
+                            <div class="group-input">
+                                <label for="test">
+                                    Revision History
+                                </label>
+                                <div><small class="text-primary"></small></div>
+                                <div class="table-responsive retrieve-table">
+                                <table class="table-bordered table" id="">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th class="copy-name">Revision No.</th>
+                                            <th class="copy-name">Change Control No./ DCRF No</th>
+                                            <th class="copy-name">Effective Date</th>
+                                            <th class="copy-name">Reason of revision</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- <tr>
+                                            <td>1</td>
+                                            <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                            <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                            <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                            <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
+                                        </tr> --}}
+                                        @if($document->revised == 'Yes' && isset($document->revisions))
+    @foreach($document->revisions as $key => $revision)
+        <tr>
+            <td>{{ $key + 1 }}</td>
+            <td><input type="text" name="revision_number[]" value="{{ $revision->revision_number }}" class="form-control"></td>
+            <td><input type="text" name="cc_no[]" value="{{ $revision->cc_no }}" class="form-control"></td>
+            <td><input type="text" name="effective_date[]" value="{{ $revision->effective_date }}" class="form-control"></td>
+            <td><input type="text" name="reason[]" value="{{ $revision->reason }}" class="form-control"></td>
+        </tr>
+    @endforeach
+@endif
+
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="input-fields">
@@ -2736,18 +2781,18 @@
                                         @if($document->revised == 'Yes')
                                             <tr>
                                                 <td>1</td>
-                                                <td><input type="text" name="revision_number[]" value="{{ $document->revised_doc }}" class="form-control"></td>                                                    
-                                                <td><input type="text" name="cc_no[]" value="{{ $document->cc_no }}" class="form-control"></td>                                                    
-                                                <td><input type="text" name="effective_date[]" value="{{ Helpers::getDateFormat($document->effective_date) }}" class="form-control"></td>                 
-                                                <td><input type="text" name="reason[]" value="{{ $document->reason }}" class="form-control"></td>                                                                                        
+                                                <td><input type="text" name="revision_number[]" value="{{ $document->revised_doc }}" class="form-control"></td>
+                                                <td><input type="text" name="cc_no[]" value="{{ $document->cc_no }}" class="form-control"></td>
+                                                <td><input type="text" name="effective_date[]" value="{{ Helpers::getDateFormat($document->effective_date) }}" class="form-control"></td>
+                                                <td><input type="text" name="reason[]" value="{{ $document->reason }}" class="form-control"></td>
                                             </tr>
                                         @else
                                             <tr>
                                                 <td>1</td>
-                                                <td><input type="text" name="revision_number[]" value="" class="form-control">NA</td>                                                    
-                                                <td><input type="text" name="cc_no[]" value="" class="form-control">NA</td>                                                    
-                                                <td><input type="text" name="effective_date[]" value="" class="form-control">NA</td>                 
-                                                <td><input type="text" name="reason[]" value="" class="form-control">NA</td>    
+                                                <td><input type="text" name="revision_number[]" value="" class="form-control">NA</td>
+                                                <td><input type="text" name="cc_no[]" value="" class="form-control">NA</td>
+                                                <td><input type="text" name="effective_date[]" value="" class="form-control">NA</td>
+                                                <td><input type="text" name="reason[]" value="" class="form-control">NA</td>
                                             </tr>
                                         @endif
                                     </tbody>
@@ -2934,7 +2979,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -2983,7 +3028,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <script>
                             function addSpecifications() {
                             let table = document.getElementById("specifications-grid").getElementsByTagName('tbody')[0];
@@ -3004,7 +3049,7 @@
                             }
                             });
                         </script>
-                                                
+
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3013,7 +3058,7 @@
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a>
                             </button>
-                        </div>  
+                        </div>
                     </div>
 
                     <!-- mfpstp -->
@@ -3043,7 +3088,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -3435,7 +3480,7 @@
                                                         value="Yes">Yes</option>
                                             <option {{ $document->balance_quantity_destructed == 'No' ? 'selected' : '' }}
                                                         value="No">No</option>
-                                   
+
                                         </select>
                                     </div>
                                 </div>
@@ -3732,6 +3777,2439 @@
                     </div>
                 </div>
 
+                 {{-- protocal and crump tabs  --}}
+                 <div id="doc_PCR" class="tabcontent">
+                    <div class="orig-head">PROTOCOL CUM REPORT
+                    </div>
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+{{-- temperature mapping protcal tabs edirt blade  --}}
+
+<div id="doc-tempmapping" class="tabcontent">
+    <div class="orig-head">
+        Temperature Mapping Protocal
+    </div>
+    <div class="input-fields">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ProtocolApproval_TemperMap" id="ProtocolApproval_TemperMap">
+                        ProtocolApproval_TemperMap<button type="button" id="ProtocolApproval_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ProtocolApproval_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->ProtocolApproval_TemperMap))
+                            @foreach (unserialize($document->document_content->ProtocolApproval_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleProtocolApproval_TemperMapBlock' : 'singleProtocolApproval_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ProtocolApproval_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ProtocolApproval_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subProtocolApproval_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleProtocolApproval_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ProtocolApproval_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subProtocolApproval_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ProtocolApproval_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Objective_TemperMap" id="Objective_TemperMap">
+                        Objective TemperMap<button type="button" id="Objective_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Objective_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Objective_TemperMap))
+                            @foreach (unserialize($document->document_content->Objective_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleObjective_TemperMapBlock' : 'singleObjective_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Objective_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Objective_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subObjective_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleObjective_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Objective_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subObjective_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Objective_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Scope_TemperMap" id="Scope_TemperMap">
+                        Scope<button type="button" id="Scope_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Scope_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Scope_TemperMap))
+                            @foreach (unserialize($document->document_content->Scope_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleScope_TemperMapBlock' : 'singleScope_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Scope_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Scope_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subScope_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleScope_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Scope_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subScope_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Scope_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="AreaValidated_TemperMap" id="AreaValidated_TemperMap">
+                        Area to be Validated<button type="button" id="AreaValidated_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="AreaValidated_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->AreaValidated_TemperMap))
+                            @foreach (unserialize($document->document_content->AreaValidated_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleAreaValidated_TemperMapBlock' : 'singleAreaValidated_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="AreaValidated_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="AreaValidated_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subAreaValidated_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleAreaValidated_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="AreaValidated_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subAreaValidated_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'AreaValidated_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ValidationTeamResponsibilities_TemperMap" id="ValidationTeamResponsibilities_TemperMap">
+                        Validation Team & its Responsibilities<button type="button" id="ValidationTeamResponsibilities_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ValidationTeamResponsibilities_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->ValidationTeamResponsibilities_TemperMap))
+                            @foreach (unserialize($document->document_content->ValidationTeamResponsibilities_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleValidationTeamResponsibilities_TemperMapBlock' : 'singleValidationTeamResponsibilities_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ValidationTeamResponsibilities_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ValidationTeamResponsibilities_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subValidationTeamResponsibilities_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleValidationTeamResponsibilities_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ValidationTeamResponsibilities_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subValidationTeamResponsibilities_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ValidationTeamResponsibilities_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Reference_TemperMap" id="Reference_TemperMap">
+                        Reference<button type="button" id="Reference_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Reference_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Reference_TemperMap))
+                            @foreach (unserialize($document->document_content->Reference_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleReference_TemperMapBlock' : 'singleReference_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Reference_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Reference_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subReference_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleReference_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Reference_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subReference_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Reference_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="DocumentFollowed_TemperMap" id="DocumentFollowed_TemperMap">
+                        Document to be Followed<button type="button" id="DocumentFollowed_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="DocumentFollowed_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->DocumentFollowed_TemperMap))
+                            @foreach (unserialize($document->document_content->DocumentFollowed_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleDocumentFollowed_TemperMapBlock' : 'singleDocumentFollowed_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="DocumentFollowed_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="DocumentFollowed_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subDocumentFollowed_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleDocumentFollowed_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="DocumentFollowed_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subDocumentFollowed_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'DocumentFollowed_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="StudyRationale_TemperMap" id="StudyRationale_TemperMap">
+                        Study Rationale<button type="button" id="StudyRationale_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="StudyRationale_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->StudyRationale_TemperMap))
+                            @foreach (unserialize($document->document_content->StudyRationale_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleStudyRationale_TemperMapBlock' : 'singleStudyRationale_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="StudyRationale_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="StudyRationale_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subStudyRationale_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleStudyRationale_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="StudyRationale_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subStudyRationale_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'StudyRationale_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Procedure_TemperMap" id="Procedure_TemperMap">
+                        Procedure<button type="button" id="Procedure_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Procedure_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Procedure_TemperMap))
+                            @foreach (unserialize($document->document_content->Procedure_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleProcedure_TemperMapBlock' : 'singleProcedure_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Procedure_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Procedure_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subProcedure_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleProcedure_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Procedure_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subProcedure_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Procedure_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="CriteriaRevalidation_TemperMap" id="CriteriaRevalidation_TemperMap">
+                        Criteria for Revalidation <button type="button" id="CriteriaRevalidation_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="CriteriaRevalidation_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->CriteriaRevalidation_TemperMap))
+                            @foreach (unserialize($document->document_content->CriteriaRevalidation_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleCriteriaRevalidation_TemperMapBlock' : 'singleCriteriaRevalidation_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="CriteriaRevalidation_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="CriteriaRevalidation_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subCriteriaRevalidation_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleCriteriaRevalidation_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="CriteriaRevalidation_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subCriteriaRevalidation_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'CriteriaRevalidation_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="MaterialDocumentRequired_TemperMap" id="MaterialDocumentRequired_TemperMap">
+                        Material and Document Required <button type="button" id="MaterialDocumentRequired_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="MaterialDocumentRequired_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->MaterialDocumentRequired_TemperMap))
+                            @foreach (unserialize($document->document_content->MaterialDocumentRequired_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleMaterialDocumentRequired_TemperMapBlock' : 'singleMaterialDocumentRequired_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="MaterialDocumentRequired_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="MaterialDocumentRequired_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subMaterialDocumentRequired_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleMaterialDocumentRequired_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="MaterialDocumentRequired_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subMaterialDocumentRequired_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'MaterialDocumentRequired_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="AcceptanceCriteria_TemperMap" id="AcceptanceCriteria_TemperMap">
+                        Acceptance Criteria <button type="button" id="AcceptanceCriteria_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="AcceptanceCriteria_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->AcceptanceCriteria_TemperMap))
+                            @foreach (unserialize($document->document_content->AcceptanceCriteria_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleAcceptanceCriteria_TemperMapBlock' : 'singleAcceptanceCriteria_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="AcceptanceCriteria_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="AcceptanceCriteria_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subAcceptanceCriteria_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleAcceptanceCriteria_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="AcceptanceCriteria_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subAcceptanceCriteria_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'AcceptanceCriteria_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="TypeofValidation_TemperMap" id="TypeofValidation_TemperMap">
+                        Type of Validation <button type="button" id="TypeofValidation_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="TypeofValidation_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->TypeofValidation_TemperMap))
+                            @foreach (unserialize($document->document_content->TypeofValidation_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleTypeofValidation_TemperMapBlock' : 'singleTypeofValidation_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="TypeofValidation_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="TypeofValidation_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subTypeofValidation_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleTypeofValidation_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="TypeofValidation_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subTypeofValidation_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'AcceptanceCriteria_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ObservationResult_TemperMap" id="ObservationResult_TemperMap">
+                        Observation and Result <button type="button" id="ObservationResult_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ObservationResult_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->ObservationResult_TemperMap))
+                            @foreach (unserialize($document->document_content->ObservationResult_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleObservationResult_TemperMapBlock' : 'singleObservationResult_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ObservationResult_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ObservationResult_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subObservationResult_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleObservationResult_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ObservationResult_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subObservationResult_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ObservationResult_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Abbreviations_TemperMap" id="Abbreviations_TemperMap">
+                        Abbreviations <button type="button" id="Abbreviations_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Abbreviations_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Abbreviations_TemperMap))
+                            @foreach (unserialize($document->document_content->Abbreviations_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleAbbreviations_TemperMapBlock' : 'singleAbbreviations_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Abbreviations_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Abbreviations_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subAbbreviations_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleAbbreviations_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Abbreviations_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subAbbreviations_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Abbreviations_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="DeviationAny_TemperMap" id="DeviationAny_TemperMap">
+                        Deviation if Any <button type="button" id="DeviationAny_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="DeviationAny_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->DeviationAny_TemperMap))
+                            @foreach (unserialize($document->document_content->DeviationAny_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleDeviationAny_TemperMapBlock' : 'singleDeviationAny_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="DeviationAny_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="DeviationAny_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subDeviationAny_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleDeviationAny_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="DeviationAny_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subDeviationAny_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'DeviationAny_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ChangeControl_TemperMap" id="ChangeControl_TemperMap">
+                        Change Control  <button type="button" id="ChangeControl_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ChangeControl_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->ChangeControl_TemperMap))
+                            @foreach (unserialize($document->document_content->ChangeControl_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleChangeControl_TemperMapBlock' : 'singleChangeControl_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ChangeControl_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ChangeControl_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subChangeControl_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleChangeControl_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ChangeControl_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subChangeControl_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ChangeControl_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Summary_TemperMap" id="Summary_TemperMap">
+                        Summary  <button type="button" id="Summary_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Summary_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Summary_TemperMap))
+                            @foreach (unserialize($document->document_content->Summary_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleSummary_TemperMapBlock' : 'singleSummary_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Summary_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Summary_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subSummary_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleSummary_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Summary_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subSummary_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Summary_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Conclusion_TemperMap" id="Conclusion_TemperMap">
+                        Conclusion  <button type="button" id="Conclusion_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Conclusion_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->Conclusion_TemperMap))
+                            @foreach (unserialize($document->document_content->Conclusion_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleConclusion_TemperMapBlock' : 'singleConclusion_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Conclusion_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Conclusion_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subConclusion_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleConclusion_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Conclusion_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subConclusion_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Conclusion_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="AttachmentList_TemperMap" id="AttachmentList_TemperMap">
+                        Attachment list  <button type="button" id="AttachmentList_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="AttachmentList_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->AttachmentList_TemperMap))
+                            @foreach (unserialize($document->document_content->AttachmentList_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleAttachmentList_TemperMapBlock' : 'singleAttachmentList_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="AttachmentList_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="AttachmentList_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subAttachmentList_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleAttachmentList_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="AttachmentList_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subAttachmentList_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'AttachmentList_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="PostApproval_TemperMap" id="PostApproval_TemperMap">
+                        Post Approval  <button type="button" id="PostApproval_TemperMapbtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="PostApproval_TemperMapdiv">
+                        @if ($document->document_content && !empty($document->document_content->PostApproval_TemperMap))
+                            @foreach (unserialize($document->document_content->PostApproval_TemperMap) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSinglePostApproval_TemperMapBlock' : 'singlePostApproval_TemperMapBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="PostApproval_TemperMap[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="PostApproval_TemperMap[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subPostApproval_TemperMapAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singlePostApproval_TemperMapBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="PostApproval_TemperMap[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subPostApproval_TemperMapAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'PostApproval_TemperMap' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="button-block">
+        <button type="submit" value="save" name="submit" id="DocsaveButton"
+            class="saveButton">Save</button>
+        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+            </a>
+        </button>
+    </div>
+</div>
+
+
+
+{{-- hold study report tabs  --}}
+
+<div id="doc-holdtimstduy" class="tabcontent">
+    <div class="orig-head">
+        Hold Time Study Report
+    </div>
+    <div class="input-fields">
+        <div class="row">
+
+            {{-- <div class="col-md-12">
+                <div class="group-input">
+
+                    <label for="Purpose_HoTiStRe" id="Purpose_HoTiStRe">
+                        Purpose<button type="button" id="Purpose_HoTiStRebtnadd"
+                            name="button">+</button>
+                        <div><small class="text-primary">Please insert "NA" in the data field if it
+                                does not require completion</small></div>
+                    </label>
+
+                    <div id="Purpose_HoTiStRediv">
+                        <div class="singlePurpose_HoTiStReBlock">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <textarea name="Purpose_HoTiStRe[]" class="myclassname"></textarea>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-dark subPurpose_HoTiStReAdd">+</button>
+                                </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div> --}}
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Purpose_HoTiStRe" id="Purpose_HoTiStRe">
+                        Purpose  <button type="button" id="Purpose_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Purpose_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->Purpose_HoTiStRe))
+                            @foreach (unserialize($document->document_content->Purpose_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSinglePurpose_HoTiStReBlock' : 'singlePurpose_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Purpose_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Purpose_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subPurpose_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singlePurpose_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Purpose_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subPurpose_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Purpose_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Scope_HoTiStRe" id="Scope_HoTiStRe">
+                        Scope  <button type="button" id="Scope_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Scope_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->Scope_HoTiStRe))
+                            @foreach (unserialize($document->document_content->Scope_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleScope_HoTiStReBlock' : 'singleScope_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Scope_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Scope_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subScope_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleScope_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Scope_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subScope_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Scope_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="BatchDetails_HoTiStRe" id="BatchDetails_HoTiStRe">
+                         Batch Details  <button type="button" id="BatchDetails_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="BatchDetails_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->BatchDetails_HoTiStRe))
+                            @foreach (unserialize($document->document_content->BatchDetails_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleBatchDetails_HoTiStReBlock' : 'singleBatchDetails_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="BatchDetails_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="BatchDetails_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subBatchDetails_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleBatchDetails_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="BatchDetails_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subBatchDetails_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'BatchDetails_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ReferenceDocument_HoTiStRe" id="ReferenceDocument_HoTiStRe">
+                        Reference Document  <button type="button" id="ReferenceDocument_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ReferenceDocument_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->ReferenceDocument_HoTiStRe))
+                            @foreach (unserialize($document->document_content->ReferenceDocument_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleReferenceDocument_HoTiStReBlock' : 'singleReferenceDocument_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ReferenceDocument_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ReferenceDocument_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subReferenceDocument_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleReferenceDocument_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ReferenceDocument_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subReferenceDocument_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ReferenceDocument_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-12">
+                <div class="group-input">
+                    <label for="Quality Control 1">
+                        Quality Control 1
+                        <button type="button" id="quality_add_1">+</button>
+                    </label>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="quality_details_1"
+                            style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>Sr. No.</th>
+                                    <th>Equipment Name</th>
+                                    <th>Location</th>
+                                    <th>Equipment No</th>
+                                    <th>Qualification Status</th>
+                                    <th>Valid Upto</th>
+                                    <th>Remark</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!empty($CalibrationQualificationstatus) && is_array($CalibrationQualificationstatus->data))
+                                    @foreach ($CalibrationQualificationstatus->data as $index => $detail)
+                                        <tr>
+                                            <td><input disabled type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][serial]"
+                                                    value="{{ $index + 1 }}"></td>
+                                            <td><input type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][Equipment_Name]"
+                                                    value="{{ $detail['Equipment_Name'] }}"></td>
+                                            <td><input type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][Location]"
+                                                    value="{{ $detail['Location'] }}">
+                                            </td>
+                                            <td><input type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][Equipment_No]"
+                                                    value="{{ $detail['Equipment_No'] }}">
+                                            </td>
+                                            <td><input type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][Qualification_Status]"
+                                                    value="{{ $detail['Qualification_Status'] }}">
+                                            </td>
+                                            <td><input type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][Valid_Upto]"
+                                                    value="{{ $detail['Valid_Upto'] }}"></td>
+                                            <td><input type="text"
+                                                    name="qualitycontrol_1[{{ $index }}][remark]"
+                                                    value="{{ $detail['remark'] }}"></td>
+                                            <td><button type="button"
+                                                    class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="9">No data found</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    // Add new row in Quality Control 1 table
+                    $('#quality_add_1').click(function(e) {
+                        e.preventDefault();
+
+                        function generateQualityTableRow1(serialNumber) {
+                            return (
+                                '<tr>' +
+                                '<td><input disabled type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Equipment_Name]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Location]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Equipment_No]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Qualification_Status]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][Valid_Upto]"></td>' +
+                                '<td><input type="text" name="qualitycontrol_1[' + serialNumber +
+                                '][remark]"></td>' +
+                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                '</tr>'
+                            );
+                        }
+
+                        var tableBody = $('#quality_details_1 tbody');
+                        var rowCount = tableBody.children('tr').length;
+                        var newRow = generateQualityTableRow1(rowCount);
+                        tableBody.append(newRow);
+                    });
+
+                    // Remove row in Quality Control 1 table
+                    $(document).on('click', '.removeRowBtn', function() {
+                        $(this).closest('tr').remove();
+                    });
+                });
+            </script>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ResultBulkStage_HoTiStRe" id="ResultBulkStage_HoTiStRe">
+                        Results of Bulk Stage  <button type="button" id="ResultBulkStage_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ResultBulkStage_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->ResultBulkStage_HoTiStRe))
+                            @foreach (unserialize($document->document_content->ResultBulkStage_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleResultBulkStage_HoTiStReBlock' : 'singleResultBulkStage_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ResultBulkStage_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ResultBulkStage_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subResultBulkStage_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleResultBulkStage_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ResultBulkStage_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subResultBulkStage_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ResultBulkStage_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Summary_HoTiStRe" id="Summary_HoTiStRe">
+                        Summary  <button type="button" id="Summary_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Summary_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->Summary_HoTiStRe))
+                            @foreach (unserialize($document->document_content->Summary_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleSummary_HoTiStReBlock' : 'singleSummary_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Summary_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Summary_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subSummary_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleSummary_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Summary_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subSummary_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Summary_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="Conclusion_HoTiStRe" id="Conclusion_HoTiStRe">
+                        Conclusion  <button type="button" id="Conclusion_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="Conclusion_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->Conclusion_HoTiStRe))
+                            @foreach (unserialize($document->document_content->Conclusion_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleConclusion_HoTiStReBlock' : 'singleConclusion_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="Conclusion_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="Conclusion_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subConclusion_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleConclusion_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="Conclusion_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subConclusion_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'Conclusion_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="group-input">
+                    <label for="ReportApproval_HoTiStRe" id="ReportApproval_HoTiStRe">
+                        Report Approval  <button type="button" id="ReportApproval_HoTiStRebtnadd" name="button"
+                            {{ Helpers::isRevised($document->stage) }}>+</button>
+                    </label>
+                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                            require completion</small></div>
+                    <div id="ReportApproval_HoTiStRediv">
+                        @if ($document->document_content && !empty($document->document_content->ReportApproval_HoTiStRe))
+                            @foreach (unserialize($document->document_content->ReportApproval_HoTiStRe) as $key => $data)
+                                <div
+                                    class="{{ str_contains($key, 'sub') ? 'subSingleReportApproval_HoTiStReBlock' : 'singleReportApproval_HoTiStReBlock' }}">
+                                    @if (str_contains($key, 'sub'))
+                                        <div class="resrow row">
+                                            <div class="col-6">
+                                                <textarea name="ReportApproval_HoTiStRe[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-1">
+                                                <button
+                                                    class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-sm-10">
+                                                <textarea name="ReportApproval_HoTiStRe[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-dark subReportApproval_HoTiStReAdd">+</button>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button
+                                                    class="btn btn-danger removeAllBlocks">Remove</button>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="singleReportApproval_HoTiStReBlock">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <textarea name="ReportApproval_HoTiStRe[]" class="myclassname"></textarea>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-dark subReportApproval_HoTiStReAdd">+</button>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button
+                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+
+                    @foreach ($history as $tempHistory)
+                        @if ($tempHistory->activity_type == 'ReportApproval_HoTiStRe' && !empty($tempHistory->comment))
+                            @php
+                                $users_name = DB::table('users')
+                                    ->where('id', $tempHistory->user_id)
+                                    ->value('name');
+                            @endphp
+                            <p style="color: blue">Modify by {{ $users_name }} at
+                                {{ $tempHistory->created_at }}
+                            </p>
+                            <input class="input-field"
+                                style="background: #ffff0061;
+                    color: black;"
+                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="button-block">
+        <button type="submit" value="save" name="submit" id="DocsaveButton"
+            class="saveButton">Save</button>
+        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+            </a>
+        </button>
+    </div>
+</div>
+
+
                 <!-- Cleaning Validation Specificatiom -->
 
                 <div id="doc_CVS" class="tabcontent">
@@ -4015,7 +6493,7 @@
 
 
 
-                
+
                 <div id="doc_INPS" class="tabcontent">
                         <div class="orig-head"> INPROCESS VALIDATION SPECIFICATION
                              (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
@@ -4333,8 +6811,8 @@
                                             <tbody>
                                             @php
                                                     $serialNumber = 1;
-                                                    $Finished_Product_data = isset($Finished_Product->data) && is_string($Finished_Product->data) 
-                                                        ? json_decode($Finished_Product->data, true) 
+                                                    $Finished_Product_data = isset($Finished_Product->data) && is_string($Finished_Product->data)
+                                                        ? json_decode($Finished_Product->data, true)
                                                         : (is_array($Finished_Product->data) ? $Finished_Product->data : []);
                                                 @endphp
                                                 @if(!empty($Finished_Product_data))
@@ -4441,12 +6919,12 @@
                                             </thead>
                                             <tbody>
                                                 <!-- Initial Row Placeholder (Optional) -->
-                                               
+
 
                                                 @php
                                                     $serialNumber = 1;
-                                                    $Inprocess_standard_data = isset($Inprocess_standard->data) && is_string($Inprocess_standard->data) 
-                                                        ? json_decode($Inprocess_standard->data, true) 
+                                                    $Inprocess_standard_data = isset($Inprocess_standard->data) && is_string($Inprocess_standard->data)
+                                                        ? json_decode($Inprocess_standard->data, true)
                                                         : (is_array($Inprocess_standard->data) ? $Inprocess_standard->data : []);
                                                 @endphp
                                                 @if(!empty($Inprocess_standard_data))
@@ -4551,12 +7029,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               
+
 
                                             @php
                                                     $serialNumber = 1;
-                                                    $CLEANING_VALIDATION_Data = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data) 
-                                                        ? json_decode($CLEANING_VALIDATION->data, true) 
+                                                    $CLEANING_VALIDATION_Data = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data)
+                                                        ? json_decode($CLEANING_VALIDATION->data, true)
                                                         : (is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data : []);
                                                 @endphp
                                                 @if(!empty($CLEANING_VALIDATION_Data))
@@ -4564,7 +7042,7 @@
                                                         <tr>
                                                             <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
                                                             <td><input type="text" name="cleaning_validation[{{ $key }}][data_test]" value="{{ $cleaning_validation['data_test'] ?? '' }}"></td>
-                                                           
+
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
@@ -4662,10 +7140,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @php 
-                                                    $serialNumber = 1; 
-                                                    $GtpData = isset($GtpGridData->data) && is_string($GtpGridData->data) 
-                                                        ? json_decode($GtpGridData->data, true) 
+                                                @php
+                                                    $serialNumber = 1;
+                                                    $GtpData = isset($GtpGridData->data) && is_string($GtpGridData->data)
+                                                        ? json_decode($GtpGridData->data, true)
                                                         : (is_array($GtpGridData->data) ? $GtpGridData->data : []);
                                                 @endphp
 
@@ -4718,7 +7196,7 @@
                                     <td><input type="text" name="gtp[${serialNumber - 1}][test_gtp]" value=""></td>
                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                 </tr>`;
-                            
+
                             $('#Details-table-gtp tbody').append(newRow);
                         });
 
@@ -4745,7 +7223,7 @@
                     </div>
                 <div class="input-fields">
                     <div class="row">
-                        
+
                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
@@ -4778,8 +7256,8 @@
 
                                         @php
                                             $serialNumber = 1;
-                                            $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data) 
-                                                ? json_decode($testDataDecoded->data, true) 
+                                            $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
+                                                ? json_decode($testDataDecoded->data, true)
                                                 : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
                                         @endphp
                                         @if(!empty($decodedData))
@@ -4836,10 +7314,12 @@
                         <!-- <div class="col-md-12">
                             <div class="group-input">
                                 <label for="short-desc">STP No.</label>
-                                
+
                                 <input type="text" id="" name="stp_no" value="{{$document->stp_no}}">
                             </div>
-                                    
+
+                        </div>
+
                         </div> -->
 
                     <div class="button-block">
@@ -4857,7 +7337,7 @@
                 <!--Process Validation Protocol  -->
                 <div id="doc_prvp" class="tabcontent">
                     <div class="orig-head">
-                        PROCESS VALIDATION PROTOCOL 
+                        PROCESS VALIDATION PROTOCOL
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -5354,7 +7834,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
@@ -5668,11 +8148,11 @@
                 <!------------------------ Packing Material Specification - tab ------------------------------------>
                 <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
-                        PACKING MATERIAL SPECIFICATION 
+                        PACKING MATERIAL SPECIFICATION
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                            
+
                         <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
@@ -5743,8 +8223,8 @@
 
                             @php
                                 $serialNumber = 1;
-                                $decodedPackingData = isset($PackingGridData->data) && is_string($PackingGridData->data) 
-                                    ? json_decode($PackingGridData->data, true) 
+                                $decodedPackingData = isset($PackingGridData->data) && is_string($PackingGridData->data)
+                                    ? json_decode($PackingGridData->data, true)
                                     : (is_array($PackingGridData->data) ? $PackingGridData->data : []);
                             @endphp
 
@@ -6007,12 +8487,12 @@
                     </div>
                     <div class="input-fields">
                        <div class="row">
-                                                    
+
 
                         @php
                             $serialNumber = 1;
-                            $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) 
-                                ? json_decode($ProductSpecification->data, true) 
+                            $decodedProductData = isset($ProductSpecification->data) && is_string($ProductSpecification->data)
+                                ? json_decode($ProductSpecification->data, true)
                                 : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
                         @endphp
 
@@ -6128,8 +8608,8 @@
 
                         @php
                             $serialNumber = 1;
-                            $decodedMaterialData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) 
-                                ? json_decode($MaterialSpecification->data, true) 
+                            $decodedMaterialData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data)
+                                ? json_decode($MaterialSpecification->data, true)
                                 : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
                         @endphp
 

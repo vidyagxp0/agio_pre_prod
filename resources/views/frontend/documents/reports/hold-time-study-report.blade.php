@@ -560,7 +560,7 @@
         }
     </style>
 
-   
+
 
 
 </head>
@@ -591,7 +591,7 @@
                                 {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;  font-weight:bold;border-top: 1px solid #686868; padding-top: 10px;">QUALITY ASSURANCE DEPARTMENT</p>
                     </td>
-                   
+
                 </tr>
             </tbody>
         </table>
@@ -600,7 +600,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num">
-                         Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type) 
+                         Helpers::SOPtype($data->sop_type) ? Helpers::SOPtype($data->sop_type)
                         STANDARD OPERATING PROCEDURE
                     </td>
                 </tr>
@@ -622,7 +622,7 @@
         </table>
 
 
-        
+
 
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
@@ -650,9 +650,9 @@
     <div>
         <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
     </div>
-   
 
-   
+
+
 
 
 
@@ -671,7 +671,7 @@
         <h3 class="" style=" font-weight: bold; margin-bottom: 50px;">PRODUCT DETAILS:</h3>
     </div>
 
-    
+
     <table class="border" style="width: 100%;">
             <tbody>
                 <tr>
@@ -727,7 +727,7 @@
             <td class="custom-design">Result Of Bulk Stage</td>
             <td class="custom-design"></td>
            </tr>
- 
+
 
            <tr>
             <td class="custom-design">7.</td>
@@ -746,7 +746,7 @@
             <td class="custom-design"> Conclusion</td>
             <td class="custom-design"></td>
            </tr>
-          
+
 
 
            </tbody>
@@ -778,8 +778,40 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        {{-- <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
+                            {!! $data->document_content ? nl2br($data->document_content->Purpose_HoTiStRe) : '' !!}
+                        </div> --}}
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @php
+                                $i = 1;
+                            @endphp
+                            @if (
+                                $data->document_content &&
+                                    !empty($data->document_content->Purpose_HoTiStRe) &&
+                                    is_array(unserialize($data->document_content->Purpose_HoTiStRe)))
+                                @foreach (unserialize($data->document_content->Purpose_HoTiStRe) as $key => $res)
+                                    @php
+                                        $isSub = str_contains($key, 'sub');
+                                    @endphp
+                                    @if (!empty($res))
+                                        <div style="position: relative;">
+                                            <span
+                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                            {!! nl2br($res) !!} <br>
+                                        </div>
+                                    @endif
+                                    @php
+                                        if (!$isSub) {
+                                            $i++;
+                                            $sub_index = 1;
+                                        } else {
+                                            $sub_index++;
+                                        }
+                                    @endphp
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -803,8 +835,37 @@
             <div class="w-100" style="font-weight: bold;">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @php
+                                $i = 1;
+                            @endphp
+                            @if (
+                                $data->document_content &&
+                                    !empty($data->document_content->Scope_HoTiStRe) &&
+                                    is_array(unserialize($data->document_content->Scope_HoTiStRe)))
+                                @foreach (unserialize($data->document_content->Scope_HoTiStRe) as $key => $res)
+                                    @php
+                                        $isSub = str_contains($key, 'sub');
+                                    @endphp
+                                    @if (!empty($res))
+                                        <div style="position: relative;">
+                                            <span
+                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                            {!! nl2br($res) !!} <br>
+                                        </div>
+                                    @endif
+                                    @php
+                                        if (!$isSub) {
+                                            $i++;
+                                            $sub_index = 1;
+                                        } else {
+                                            $sub_index++;
+                                        }
+                                    @endphp
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -818,7 +879,7 @@
                 <tr>
                     <th class="w-5">3.0</th>
                     <th class="text-left">
-                        <div style="font-weight: bold;"> 	
+                        <div style="font-weight: bold;">
                                 BATCH DETAILS:
                          </div>
                     </th>
@@ -829,8 +890,41 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        {{-- <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                            {!! isset($data->document_content->BatchDetails_HoTiStRe) ? nl2br(e($data->document_content->BatchDetails_HoTiStRe[0])) : '' !!}
+
+                        </div> --}}
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @php
+                                $i = 1;
+                            @endphp
+                            @if (
+                                $data->document_content &&
+                                    !empty($data->document_content->BatchDetails_HoTiStRe) &&
+                                    is_array(unserialize($data->document_content->BatchDetails_HoTiStRe)))
+                                @foreach (unserialize($data->document_content->BatchDetails_HoTiStRe) as $key => $res)
+                                    @php
+                                        $isSub = str_contains($key, 'sub');
+                                    @endphp
+                                    @if (!empty($res))
+                                        <div style="position: relative;">
+                                            <span
+                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                            {!! nl2br($res) !!} <br>
+                                        </div>
+                                    @endif
+                                    @php
+                                        if (!$isSub) {
+                                            $i++;
+                                            $sub_index = 1;
+                                        } else {
+                                            $sub_index++;
+                                        }
+                                    @endphp
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -853,8 +947,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @php
+                                $i = 1;
+                            @endphp
+                            @if (
+                                $data->document_content &&
+                                    !empty($data->document_content->ReferenceDocument_HoTiStRe) &&
+                                    is_array(unserialize($data->document_content->ReferenceDocument_HoTiStRe)))
+                                @foreach (unserialize($data->document_content->ReferenceDocument_HoTiStRe) as $key => $res)
+                                    @php
+                                        $isSub = str_contains($key, 'sub');
+                                    @endphp
+                                    @if (!empty($res))
+                                        <div style="position: relative;">
+                                            <span
+                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                            {!! nl2br($res) !!} <br>
+                                        </div>
+                                    @endif
+                                    @php
+                                        if (!$isSub) {
+                                            $i++;
+                                            $sub_index = 1;
+                                        } else {
+                                            $sub_index++;
+                                        }
+                                    @endphp
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -873,18 +997,54 @@
                     </th>
                 </tr>
             </thead>
-            
-        </table>
 
+        </table>
         <table>
-        <tbody>
-                  <tr>
-                     <td><p>Verified the equipment calibration and qualification status as follows</p></td>
+            <tbody>
+                      <tr>
+                         <td><p>Verified the equipment calibration and qualification status as follows</p></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        <table class="table table-bordered" id="product_details" style="width: 100%;">
+            <thead>
+                <tr class="table_bg">
+                    <th style="width: 15px;">Row #</th>
+                    <th style="width: 150px;">Equipment Name</th>
+                    <th style="width: 150px;">Location</th>
+                    <th style="width: 200px;">Equipment No.</th>
+                    <th style="width: 200px;">Qualification Status</th>
+                    <th style="width: 200px;">Valid Upto</th>
                 </tr>
+            </thead>
+            <tbody>
+                @if($calibrationdata && is_array($calibrationdata))
+                    @php $serialNumber = 1; @endphp
+                    @foreach($calibrationdata as $key => $detail)
+                        <tr>
+                            <td>{{ $serialNumber++ }}</td>
+                            <td>{{ $detail['Equipment_Name'] ?? 'Not Applicable' }}</td>
+                            <td>{{ $detail['Location'] ?? 'Not Applicable' }}</td>
+                            <td>{{ $detail['Equipment_No'] ?? 'Not Applicable' }}</td>
+                            <td>{{ $detail['Qualification_Status'] ?? 'Not Applicable' }}</td>
+                            <td>{{ $detail['Valid_Upto'] ?? 'Not Applicable' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>1</td>
+                        <td>Not Applicable</td>
+                        <td>Not Applicable</td>
+                        <td>Not Applicable</td>
+                    </tr>
+                @endif
             </tbody>
         </table>
 
-        <table class="border" border="1">
+
+
+        {{-- <table class="border" border="1">
             <thead>
                 <tr>
                 <th class="custom-style">Equipment Name</th>
@@ -905,7 +1065,7 @@
                 </tr>
 
             </tbody>
-        </table>
+        </table> --}}
         <div class="scope-block">
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
@@ -934,8 +1094,37 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @php
+                                $i = 1;
+                            @endphp
+                            @if (
+                                $data->document_content &&
+                                    !empty($data->document_content->ResultBulkStage_HoTiStRe) &&
+                                    is_array(unserialize($data->document_content->ResultBulkStage_HoTiStRe)))
+                                @foreach (unserialize($data->document_content->ResultBulkStage_HoTiStRe) as $key => $res)
+                                    @php
+                                        $isSub = str_contains($key, 'sub');
+                                    @endphp
+                                    @if (!empty($res))
+                                        <div style="position: relative;">
+                                            <span
+                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                            {!! nl2br($res) !!} <br>
+                                        </div>
+                                    @endif
+                                    @php
+                                        if (!$isSub) {
+                                            $i++;
+                                            $sub_index = 1;
+                                        } else {
+                                            $sub_index++;
+                                        }
+                                    @endphp
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -958,8 +1147,37 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                            @php
+                                $i = 1;
+                            @endphp
+                            @if (
+                                $data->document_content &&
+                                    !empty($data->document_content->DeviationIfAny_HoTiStRe) &&
+                                    is_array(unserialize($data->document_content->DeviationIfAny_HoTiStRe)))
+                                @foreach (unserialize($data->document_content->DeviationIfAny_HoTiStRe) as $key => $res)
+                                    @php
+                                        $isSub = str_contains($key, 'sub');
+                                    @endphp
+                                    @if (!empty($res))
+                                        <div style="position: relative;">
+                                            <span
+                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                            {!! nl2br($res) !!} <br>
+                                        </div>
+                                    @endif
+                                    @php
+                                        if (!$isSub) {
+                                            $i++;
+                                            $sub_index = 1;
+                                        } else {
+                                            $sub_index++;
+                                        }
+                                    @endphp
+                                @endforeach
+                            @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -989,8 +1207,37 @@
                 <div class="w-100">
                     <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                         <div class="w-100">
-                            <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @if (
+                                    $data->document_content &&
+                                        !empty($data->document_content->Summary_HoTiStRe) &&
+                                        is_array(unserialize($data->document_content->Summary_HoTiStRe)))
+                                    @foreach (unserialize($data->document_content->Summary_HoTiStRe) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
+                                        @if (!empty($res))
+                                            <div style="position: relative;">
+                                                <span
+                                                    style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;
+                                                $sub_index = 1;
+                                            } else {
+                                                $sub_index++;
+                                            }
+                                        @endphp
+                                    @endforeach
+                                @endif
+
+
                             </div>
                         </div>
                     </div>
@@ -1021,8 +1268,37 @@
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                             <div class="w-100">
-                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->Conclusion_HoTiStRe) &&
+                                            is_array(unserialize($data->document_content->Conclusion_HoTiStRe)))
+                                        @foreach (unserialize($data->document_content->Conclusion_HoTiStRe) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
                                 </div>
                             </div>
                         </div>
@@ -1052,8 +1328,37 @@
                         <div class="w-100">
                             <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                 <div class="w-100">
-                                    <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @if (
+                                            $data->document_content &&
+                                                !empty($data->document_content->ReportApproval_HoTiStRe) &&
+                                                is_array(unserialize($data->document_content->ReportApproval_HoTiStRe)))
+                                            @foreach (unserialize($data->document_content->ReportApproval_HoTiStRe) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+                                                @if (!empty($res))
+                                                    <div style="position: relative;">
+                                                        <span
+                                                            style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                        {!! nl2br($res) !!} <br>
+                                                    </div>
+                                                @endif
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+
+
                                     </div>
                                 </div>
                             </div>
