@@ -569,7 +569,7 @@
                             <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                 <div class="w-100">
                                     <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                        {!! $data->document_content ? nl2br($data->document_content->study_purpose) : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -594,7 +594,7 @@
                                 <div class="w-100">
                                     <div class="text-justify"
                                         style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                        {!! $data->document_content ? nl2br($data->document_content->study_scope) : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -624,9 +624,9 @@
                                     @endphp
                                     @if (
                                         $data->document_content &&
-                                            !empty($data->document_content->responsibility) &&
-                                            is_array(unserialize($data->document_content->materials_and_equipments)))
-                                        @foreach (unserialize($data->document_content->responsibility) as $key => $res)
+                                            !empty($data->document_content->responsibilities) &&
+                                            is_array(unserialize($data->document_content->responsibilities)))
+                                        @foreach (unserialize($data->document_content->responsibilities) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -676,9 +676,9 @@
                                     @endphp
                                     @if (
                                         $data->document_content &&
-                                            !empty($data->document_content->accountability) &&
-                                            is_array(unserialize($data->document_content->accountability)))
-                                        @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                            !empty($data->document_content->referencesss) &&
+                                            is_array(unserialize($data->document_content->referencesss)))
+                                        @foreach (unserialize($data->document_content->referencesss) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -707,7 +707,6 @@
                     </div>
                 </div>
 
-                {{-- REFERENCES START --}}
                 <table class="mb-15">
                     <tbody>
                         <tr>
@@ -726,9 +725,9 @@
                                     @php $i = 1; @endphp
                                     @if (
                                         $data->document_content &&
-                                            !empty($data->document_content->references) &&
-                                            is_array(unserialize($data->document_content->references)))
-                                        @foreach (unserialize($data->document_content->references) as $key => $res)
+                                            !empty($data->document_content->assessment) &&
+                                            is_array(unserialize($data->document_content->assessment)))
+                                        @foreach (unserialize($data->document_content->assessment) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -754,7 +753,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- REFERENCES END --}}
 
                 <table class="mb-15">
                     <tbody>
@@ -777,9 +775,9 @@
                                     @endphp
                                     @if (
                                         $data->document_content &&
-                                            !empty($data->document_content->abbreviation) &&
-                                            is_array(unserialize($data->document_content->abbreviation)))
-                                        @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+                                            !empty($data->document_content->strategy) &&
+                                            is_array(unserialize($data->document_content->strategy)))
+                                        @foreach (unserialize($data->document_content->strategy) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -806,7 +804,7 @@
                     </div>
                 </div>
 
-                {{-- DEFINITIONS START --}}
+                
                 <table class="mb-15">
                     <tbody>
                         <tr>
@@ -826,10 +824,10 @@
                                     @php
                                         $i = 1;
                                         $definitions = $data->document_content
-                                            ? unserialize($data->document_content->defination)
+                                            ? unserialize($data->document_content->summary_and_findings)
                                             : [];
                                     @endphp
-                                    @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
+                                    @if ($data->document_content && !empty($data->document_content->summary_and_findings) && is_array($definitions))
                                         @foreach ($definitions as $key => $definition)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
@@ -856,9 +854,9 @@
                         </div>
                     </div>
                 </div>
-                {{-- DEFINITIONS END --}}
+                
 
-                {{-- MATERIALS AND EQUIPMENTS START --}}
+                
                 <table class="mb-15">
                     <tbody>
                         <tr>
@@ -879,8 +877,8 @@
                                         $i = 1;
                                         $sub_index = 1;
                                     @endphp
-                                    @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                        @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                    @if ($data->document_content && is_array(unserialize($data->document_content->conclusion_and_recommendations)))
+                                        @foreach (unserialize($data->document_content->conclusion_and_recommendations) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -906,9 +904,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- MATERIALS AND EQUIPMENTS END --}}
 
-                {{-- PROCEDURE START --}}
                 <div class="other-container ">
                     <table>
                         <thead>
@@ -926,7 +922,7 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->procedure, 
+                                            {!! strip_tags($data->document_content->study_attachments, 
                                             '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         @endif
                                     </div>
@@ -935,7 +931,6 @@
                         </div>
                     </div>
                 </div>
-                {{-- PROCEDURE END --}}
             
         </section>
     </div>

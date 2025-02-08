@@ -753,6 +753,21 @@ class DocumentController extends Controller
 
 
 
+             //study report
+            $content->study_purpose = $request->study_purpose;
+            $content->study_scope = $request->study_scope;
+            $content->study_attachments = $request->study_attachments;
+  
+            // study protocol
+            $content->stprotocol_purpose = $request->stprotocol_purpose;
+            $content->stprotocol_scope = $request->stprotocol_scope;
+
+            //Equipment hold time study
+
+            $content->equipment_objective = $request->equipment_objective;
+            $content->equipment_scope = $request->equipment_scope;
+            $content->equipment_purpose = $request->equipment_purpose;
+            
             
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
@@ -766,6 +781,98 @@ class DocumentController extends Controller
                 $content->hod_attachments = json_encode($files);
             }
 
+            if (!empty($request->euipmentresponsibility)) {
+                $content->euipmentresponsibility = serialize($request->euipmentresponsibility);
+            }
+
+            if (!empty($request->eqpAnalyticalReport)) {
+                $content->eqpAnalyticalReport = serialize($request->eqpAnalyticalReport);
+            }
+
+            if (!empty($request->eqpdeviation)) {
+                $content->eqpdeviation = serialize($request->eqpdeviation);
+            }
+
+            
+            if (!empty($request->eqpchangecontrol)) {
+                $content->eqpchangecontrol = serialize($request->eqpchangecontrol);
+            }
+
+            if (!empty($request->eqpsummary)) {
+                $content->eqpsummary = serialize($request->eqpsummary);
+            }
+
+            if (!empty($request->eqpconclusion)) {
+                $content->eqpconclusion = serialize($request->eqpconclusion);
+            }
+
+            if (!empty($request->eqpreportapproval)) {
+                $content->eqpreportapproval = serialize($request->eqpreportapproval);
+            }
+
+            if (!empty($request->stresponsibility)) {
+                $content->stresponsibility = serialize($request->stresponsibility);
+            }
+
+            if (!empty($request->stdefination)) {
+                $content->stdefination = serialize($request->stdefination);
+            }
+
+            if (!empty($request->streferences)) {
+                $content->streferences = serialize($request->streferences);
+            }
+
+            if (!empty($request->stbackground)) {
+                $content->stbackground = serialize($request->stbackground);
+            }
+
+            if (!empty($request->stassessment)) {
+                $content->stassessment = serialize($request->stassessment);
+            }
+
+            if (!empty($request->ststrategy)) {
+                $content->ststrategy = serialize($request->ststrategy);
+            }
+
+            if (!empty($request->stsummary)) {
+                $content->stsummary = serialize($request->stsummary);
+            }
+
+            if (!empty($request->stconclusion)) {
+                $content->stconclusion = serialize($request->stconclusion);
+            }
+
+            if (!empty($request->stannexure)) {
+                $content->stannexure = serialize($request->stannexure);
+            }
+            if (!empty($request->Referencedocunum)) {
+                $content->Referencedocunum = serialize($request->Referencedocunum);
+            }
+
+
+            if (!empty($request->responsibilities)) {
+                $content->responsibilities = serialize($request->responsibilities);
+            }
+
+            if (!empty($request->referencesss)) {
+                $content->referencesss = serialize($request->referencesss);
+            }
+
+            if (!empty($request->assessment)) {
+                $content->assessment = serialize($request->assessment);
+            }
+
+            if (!empty($request->strategy)) {
+                $content->strategy = serialize($request->strategy);
+            }
+
+            if (!empty($request->summary_and_findings)) {
+                $content->summary_and_findings = serialize($request->summary_and_findings);
+            }
+
+            if (!empty($request->conclusion_and_recommendations)) {
+                $content->conclusion_and_recommendations = serialize($request->conclusion_and_recommendations);
+            }
 
             if (!empty($request->materials_and_equipments)) {
                 $content->materials_and_equipments = serialize($request->materials_and_equipments);
@@ -1655,8 +1762,9 @@ class DocumentController extends Controller
                 $document->revision_type = $request->revision_type;
                 $document->major = $request->major;
                 // $document->minor = $request->minor;
-
-
+                
+                
+                
                 if (!empty($request->reviewers)) {
                     $document->reviewers = implode(',', $request->reviewers);
                 }
@@ -2131,6 +2239,115 @@ class DocumentController extends Controller
             $documentcontet->revision_summary = $request->revision_summary;
             $documentcontet->safety_precautions = $request->safety_precautions;
 
+            //study report start
+            $documentcontet->study_purpose = $request->study_purpose;
+            $documentcontet->study_scope = $request->study_scope;
+            $documentcontet->study_attachments = $request->study_attachments;
+
+            if (!empty($request->responsibilities)) {
+                $documentcontet->responsibilities = serialize($request->responsibilities);
+            }
+
+            if (!empty($request->referencesss)) {
+                $documentcontet->referencesss = serialize($request->referencesss);
+            }
+
+            if (!empty($request->assessment)) {
+                $documentcontet->assessment = serialize($request->assessment);
+            }
+
+            if (!empty($request->strategy)) {
+                $documentcontet->strategy = serialize($request->strategy);
+            }
+
+            if (!empty($request->summary_and_findings)) {
+                $documentcontet->summary_and_findings = serialize($request->summary_and_findings);
+            }
+
+            if (!empty($request->conclusion_and_recommendations)) {
+                $documentcontet->conclusion_and_recommendations = serialize($request->conclusion_and_recommendations);
+            }
+            //study report end
+
+            //study protocol start
+            $documentcontet->stprotocol_purpose = $request->stprotocol_purpose;
+            $documentcontet->stprotocol_scope = $request->stprotocol_scope;
+
+            if (!empty($request->stresponsibility)) {
+                $documentcontet->stresponsibility = serialize($request->stresponsibility);
+            }
+
+            if (!empty($request->stdefination)) {
+                $documentcontet->stdefination = serialize($request->stdefination);
+            }
+
+            if (!empty($request->streferences)) {
+                $documentcontet->streferences = serialize($request->streferences);
+            }
+
+            if (!empty($request->stbackground)) {
+                $documentcontet->stbackground = serialize($request->stbackground);
+            }
+
+            if (!empty($request->stassessment)) {
+                $documentcontet->stassessment = serialize($request->stassessment);
+            }
+
+            if (!empty($request->ststrategy)) {
+                $documentcontet->ststrategy = serialize($request->ststrategy);
+            }
+
+            if (!empty($request->stsummary)) {
+                $documentcontet->stsummary = serialize($request->stsummary);
+            }
+
+            if (!empty($request->stconclusion)) {
+                $documentcontet->stconclusion = serialize($request->stconclusion);
+            }
+
+            if (!empty($request->stannexure)) {
+                $documentcontet->stannexure = serialize($request->stannexure);
+            }
+            if (!empty($request->Referencedocunum)) {
+                $documentcontet->Referencedocunum = serialize($request->Referencedocunum);
+            }
+            //study protocol end
+
+
+            $documentcontet->equipment_objective = $request->equipment_objective;
+            $documentcontet->equipment_scope = $request->equipment_scope;
+            $documentcontet->equipment_purpose = $request->equipment_purpose;
+
+            if (!empty($request->euipmentresponsibility)) {
+                $documentcontet->euipmentresponsibility = serialize($request->euipmentresponsibility);
+            }
+
+            if (!empty($request->eqpAnalyticalReport)) {
+                $documentcontet->eqpAnalyticalReport = serialize($request->eqpAnalyticalReport);
+            }
+
+            if (!empty($request->eqpdeviation)) {
+                $documentcontet->eqpdeviation = serialize($request->eqpdeviation);
+            }
+
+            
+            if (!empty($request->eqpchangecontrol)) {
+                $documentcontet->eqpchangecontrol = serialize($request->eqpchangecontrol);
+            }
+
+            if (!empty($request->eqpsummary)) {
+                $documentcontet->eqpsummary = serialize($request->eqpsummary);
+            }
+
+            if (!empty($request->eqpconclusion)) {
+                $documentcontet->eqpconclusion = serialize($request->eqpconclusion);
+            }
+
+            if (!empty($request->eqpreportapproval)) {
+                $documentcontet->eqpreportapproval = serialize($request->eqpreportapproval);
+            }
+        
+           
             //Process Validation Protocol
             $documentcontet->generic_prvp = $request->generic_prvp;
             $documentcontet->prvp_product_code = $request->prvp_product_code;

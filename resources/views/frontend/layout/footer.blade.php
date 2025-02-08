@@ -577,6 +577,61 @@
 
 
 
+        $('#responsibilitiesbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleResponsibilitiesBlock"><div class="resrow row"><div class="col-10"><textarea name="responsibilities[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subResponsibilitiesAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#responsibilitiesdiv').append(html);
+
+        });
+
+        $('#stresponsibilitybtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleStResponsibilityBlock"><div class="resrow row"><div class="col-10"><textarea name="stresponsibility[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark substResponsibilityAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stresponsibilitydiv').append(html);
+
+        });
+
+        $('#stdefinationbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singlestdefinationBlock"><div class="resrow row"><div class="col-10"><textarea name="stdefination[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark substdefinationAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stdefinationdiv').append(html);
+
+        });
+
+        $('#streferencesbtadd').click(function(e) {
+
+            var html =
+                '<div class="singlestreferencesBlock"><div class="resrow row"><div class="col-10"><textarea name="streferences[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark substreferencesAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#streferencesdiv').append(html);
+
+        });
+
+        $('#stbackgroundbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singlestbackgroundBlock"><div class="resrow row"><div class="col-10"><textarea name="stbackground[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark substbackgroundAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stbackgrounddiv').append(html);
+
+        });
+
+        $('#stassessmentbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singlestassessmentBlock"><div class="resrow row"><div class="col-10"><textarea name="stassessment[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark substassessmentAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stassessmentdiv').append(html);
+
+        });
+
+        
         $('#accountabilitybtnadd').click(function(e) {
 
             var html =
@@ -976,6 +1031,151 @@
 
 
 
+        $('#assessmentbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleAssessmentBlock"><div class="resrow row"><div class="col-10"><textarea name="assessment[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subAssessmentAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#assessmentdiv').append(html);
+
+        });
+
+        $('#newSummarybtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleSummaryBlock"><div class="resrow row"><div class="col-10"><textarea name="summary_and_findings[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subSummaryAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#summarydiv').append(html);
+
+        });
+
+        $('#Strategybtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleStrategyBlock"><div class="resrow row"><div class="col-10"><textarea name="strategy[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subStrategyAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#strategydiv').append(html);
+
+        });
+        
+
+        $('#ststrategybtadd').click(function(e) {
+
+            var html =
+                '<div class="singleststrategyBlock"><div class="resrow row"><div class="col-10"><textarea name="ststrategy[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subststrategyAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#ststrategyBlock').append(html);
+
+        });
+
+        $('#stsummarybtadd').click(function(e) {
+
+        var html =
+            '<div class="singlestsummaryBlock"><div class="resrow row"><div class="col-10"><textarea name="stsummary[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark substsummaryAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#stsummarydiv').append(html);
+
+        });
+
+        $('#stconclusionbtadd').click(function(e) {
+
+            var html =
+                '<div class="singlestconclusionBlock"><div class="resrow row"><div class="col-10"><textarea name="stconclusion[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark substconclusionAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stconclusiondiv').append(html);
+
+        });
+
+        $('#stannexurebtadd').click(function(e) {
+
+            var html =
+                '<div class="singlestannexureBlock"><div class="resrow row"><div class="col-10"><textarea name="stannexure[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark substannexureAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#stannexurediv').append(html);
+
+        });
+
+        $('#Referencedocunumadd').click(function(e) {
+
+            var html =
+                '<div class="singleReferencedocunumBlock"><div class="resrow row"><div class="col-10"><textarea name="Referencedocunum[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark substReferencedocunumAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#Referencedocunumdiv').append(html);
+
+        });
+
+
+        $('#conclusionbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleConclusionBlock"><div class="resrow row"><div class="col-10"><textarea name="conclusion_and_recommendations[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subConclusionAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#conclusiondiv').append(html);
+
+        });
+
+        $('#euipmentresponsibilitybtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleEuipmentResponsibilityBlock"><div class="resrow row"><div class="col-10"><textarea name="euipmentresponsibility[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subEuipmentResponsibilityAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#euipmentresponsibilitydiv').append(html);
+
+        });
+
+        $('#eqpAnalyticalReportbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleEqpAnalyticalReportBlock"><div class="resrow row"><div class="col-10"><textarea name="eqpAnalyticalReport[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subEqpAnalyticalReportAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#eqpAnalyticalReportdiv').append(html);
+
+        });
+
+        $('#eqpdeviationbtadd').click(function(e) {
+
+            var html =
+                '<div class="singleEqpdeviationBlock"><div class="resrow row"><div class="col-10"><textarea name="eqpdeviation[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subEqpdeviationAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#eqpdeviationdiv').append(html);
+
+        });
+
+        $('#eqpchangecontrolbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleEqpchangecontrolBlock"><div class="resrow row"><div class="col-10"><textarea name="eqpchangecontrol[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subEqpchangecontrolAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#eqpchangecontroldiv').append(html);
+
+        });
+
+        $('#eqpsummarybtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleEqpsummaryBlock"><div class="resrow row"><div class="col-10"><textarea name="eqpsummary[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subEqpsummaryAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#eqpsummarydiv').append(html);
+
+        });
+
+        $('#eqpconclusionbtadd').click(function(e) {
+
+            var html =
+                '<div class="singleEqpconclusionBlock"><div class="resrow row"><div class="col-10"><textarea name="eqpconclusion[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subeqpconclusionAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#eqpconclusiondiv').append(html);
+
+        });
+
+        $('#eqpreportapprovalbtadd').click(function(e) {
+
+            var html =
+                '<div class="singleEqpreportapprovalBlock"><div class="resrow row"><div class="col-10"><textarea name="eqpreportapproval[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subeqpreportapprovalAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#eqpreportapprovaldiv').append(html);
+
+        });
 
 
         $(document).on('click', '.abbreviationbtnRemove', function(e) {
@@ -1158,6 +1358,30 @@
         
 
 
+        let subResponsibilitiesAdd = 0;
+        let subReferencesssAdd = 0;
+        let subAssessmentAdd = 0;
+        let subStrategyAdd = 0;
+        let subSummaryAdd = 0;
+        let subConclusionAdd = 0;
+        let substResponsibilityAdd= 0;
+        let substdefinationAdd= 0;
+        let substreferencesAdd= 0;
+        let substbackgroundAdd= 0;
+        let substassessmentAdd= 0;
+        let subststrategyAdd= 0;
+        let substsummaryAdd= 0;
+        let substconclusionAdd= 0;
+        let substannexureAdd= 0;
+        let substReferencedocunumAdd= 0;
+        let subEuipmentResponsibilityAdd= 0;
+        let subEqpAnalyticalReportAdd= 0;
+        let subEqpdeviationAdd= 0;
+        let subEqpchangecontrolAdd= 0;
+        let subEqpsummaryAdd= 0;
+        let subeqpconclusionAdd= 0;
+        let subeqpreportapprovalAdd= 0;
+        
 
 
 
@@ -1451,6 +1675,16 @@
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleResponsibilityBlock', '.subSingleResponsibilityBlock');
 
+        $(document).on('click', '.subResponsibilitiesAdd', function(e) {
+            e.preventDefault();
+            subResponsibilitiesAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="responsibilities[sub_'+ subResponsibilitiesAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleResponsibilitiesBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleResponsibilitiesBlock', '.subSingleResponsibilitiesBlock');
+
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
@@ -1467,6 +1701,19 @@
             var closestSingleBlock = $(this).closest('.singleObjective_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleObjective_TemperMapBlock', '.subsingleObjective_TemperMapBlock');
+                closestSingleBlock.after('<div class="subSingleResponsibilitiesBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substResponsibilityAdd', function(e) {
+            e.preventDefault();
+            substResponsibilityAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stresponsibility[sub_'+ substResponsibilityAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleStResponsibilityBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleStResponsibilityBlock', '.subSingleStResponsibilityBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1484,6 +1731,19 @@
             var closestSingleBlock = $(this).closest('.singleScope_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleScope_TemperMapBlock', '.subsingleScope_TemperMapBlock');
+                closestSingleBlock.after('<div class="subSingleStResponsibilityBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substdefinationAdd', function(e) {
+            e.preventDefault();
+            substdefinationAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stdefination[sub_'+ substdefinationAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestdefinationBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestdefinationBlock', '.subSinglestdefinationBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1501,6 +1761,19 @@
             var closestSingleBlock = $(this).closest('.singleAreaValidated_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleAreaValidated_TemperMapBlock', '.subsingleAreaValidated_TemperMapBlock');
+                closestSingleBlock.after('<div class="subSinglestdefinationBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substreferencesAdd', function(e) {
+            e.preventDefault();
+            substreferencesAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="streferences[sub_'+ substreferencesAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestreferencesBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestreferencesBlock', '.subSinglestreferencesBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1518,11 +1791,25 @@
             var closestSingleBlock = $(this).closest('.singleValidationTeamResponsibilities_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleValidationTeamResponsibilities_TemperMapBlock', '.subsingleValidationTeamResponsibilities_TemperMapBlock');
+                closestSingleBlock.after('<div class="subSinglestreferencesBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substbackgroundAdd', function(e) {
+            e.preventDefault();
+            substbackgroundAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stbackground[sub_'+ substbackgroundAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestbackgroundBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestbackgroundBlock', '.subSinglestbackgroundBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subsingleValidationTeamResponsibilities_TemperMapBlock">' + html + '</div>');
+                closestSingleBlock.after('<div class="subSinglestbackgroundBlock">' + html + '</div>');
             }
         });
 
@@ -1536,6 +1823,15 @@
             var closestSingleBlock = $(this).closest('.singleReference_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleReference_TemperMapBlock', '.subsingleReference_TemperMapBlock');
+        $(document).on('click', '.substassessmentAdd', function(e) {
+            e.preventDefault();
+            substassessmentAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stassessment[sub_'+ substassessmentAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestassessmentBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestassessmentBlock', '.subSinglestassessmentBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1553,6 +1849,19 @@
             var closestSingleBlock = $(this).closest('.singleDocumentFollowed_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleDocumentFollowed_TemperMapBlock', '.subsingleDocumentFollowed_TemperMapBlock');
+                closestSingleBlock.after('<div class="subSinglestassessmentBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subststrategyAdd', function(e) {
+            e.preventDefault();
+            subststrategyAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ststrategy[sub_'+ subststrategyAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleststrategyBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleststrategyBlock', '.subSingleststrategyBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1571,6 +1880,19 @@
             var closestSingleBlock = $(this).closest('.singleStudyRationale_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleStudyRationale_TemperMapBlock', '.subsingleStudyRationale_TemperMapBlock');
+                closestSingleBlock.after('<div class="subSingleststrategyBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substsummaryAdd', function(e) {
+            e.preventDefault();
+            substsummaryAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stsummary[sub_'+ substsummaryAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestsummaryBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestsummaryBlock', '.subsinglestsummaryBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1588,6 +1910,19 @@
             var closestSingleBlock = $(this).closest('.singleProcedure_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleProcedure_TemperMapBlock', '.subsingleProcedure_TemperMapBlock');
+                closestSingleBlock.after('<div class="subsinglestsummaryBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substconclusionAdd', function(e) {
+            e.preventDefault();
+            substconclusionAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stconclusion[sub_'+ substconclusionAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestconclusionBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestconclusionBlock', '.subsinglestconclusionBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1606,6 +1941,19 @@
             var closestSingleBlock = $(this).closest('.singleCriteriaRevalidation_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleCriteriaRevalidation_TemperMapBlock', '.subsingleCriteriaRevalidation_TemperMapBlock');
+                closestSingleBlock.after('<div class="subsinglestconclusionBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substannexureAdd', function(e) {
+            e.preventDefault();
+            substannexureAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="stannexure[sub_'+ substannexureAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlestannexureBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlestannexureBlock', '.subsinglestannexureBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -1623,6 +1971,19 @@
             var closestSingleBlock = $(this).closest('.singleMaterialDocumentRequired_TemperMapBlock');
 
             var nextSubBlocks = closestSingleBlock.nextUntil('.singleMaterialDocumentRequired_TemperMapBlock', '.subsingleMaterialDocumentRequired_TemperMapBlock');
+                closestSingleBlock.after('<div class="subsinglestannexureBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.substReferencedocunumAdd', function(e) {
+            e.preventDefault();
+            substReferencedocunumAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Referencedocunum[sub_'+ substReferencedocunumAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReferencedocunumBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferencedocunumBlock', '.subsingleReferencedocunumBlock');
 
             if (nextSubBlocks.length > 0) {
                 nextSubBlocks.last().append(html);
@@ -2061,6 +2422,7 @@
             } else {
                 closestSingleBlock.after('<div class="subsingleReportApproval_HoTiStReBlock">' + html + '</div>');
                 closestSingleBlock.after('<div class="subsingleactive_raw_material_pvrBlock">' + html + '</div>');
+                closestSingleBlock.after('<div class="subsingleReferencedocunumBlock">' + html + '</div>');
             }
         });
 
@@ -2364,6 +2726,9 @@
         //----------------------
 
 
+
+
+
         $(document).on('click', '.subAbbreviationAdd', function(e) {
             e.preventDefault();
             subAbbreviationAdd = Math.round(Math.random() * 10000);
@@ -2380,6 +2745,79 @@
                 closestSingleBlock.after('<div class="subSingleAbbreviationBlock">' + html + '</div>');
             }
         });
+
+
+        $(document).on('click', '.subAssessmentAdd', function(e) {
+            e.preventDefault();
+            subAssessmentAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="assessment[sub_'+ subAssessmentAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAssessmentBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAssessmentBlock', '.subSingleAssessmentBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleAssessmentBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subStrategyAdd', function(e) {
+            e.preventDefault();
+            subStrategyAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="strategy[sub_'+ subStrategyAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleStrategyBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleStrategyBlock', '.subSingleStrategyBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleStrategyBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subSummaryAdd', function(e) {
+            e.preventDefault();
+            subSummaryAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="summary_and_findings[sub_'+ subSummaryAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleSummaryBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleSummaryBlock', '.subSingleSummaryBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleSummaryBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subConclusionAdd', function(e) {
+            e.preventDefault();
+            subConclusionAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="conclusion_and_recommendations[sub_'+ subConclusionAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleConclusionBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleConclusionBlock', '.subSingleConclusionBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleConclusionBlock">' + html + '</div>');
+            }
+        });
+
+
+
+
 
         $(document).on('click', '.subDefinitionAdd', function(e) {
             e.preventDefault();
@@ -2415,6 +2853,25 @@
             }
         });
 
+
+        $(document).on('click', '.subReferencesssAdd', function(e) {
+            e.preventDefault();
+            subReferencesssAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="referencesss[sub_'+ subReferencesssAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReferencesssBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferencesssBlock', '.subSingleReferencesssBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleReferencesssBlock">' + html + '</div>');
+            }
+        });
+
+
         $(document).on('click', '.subAnnexureAdd', function(e) {
             e.preventDefault();
             subAnnexureAdd = Math.round(Math.random() * 10000);
@@ -2431,6 +2888,130 @@
                 closestSingleBlock.after('<div class="subSingleAnnexureBlock">' + html + '</div>');
             }
         });
+
+        $(document).on('click', '.subEuipmentResponsibilityAdd', function(e) {
+            e.preventDefault();
+            subEuipmentResponsibilityAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="euipmentresponsibility[sub_'+ subEuipmentResponsibilityAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEuipmentResponsibilityBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEuipmentResponsibilityBlock', '.subSingleEuipmentResponsibilityBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEuipmentResponsibilityBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subEqpAnalyticalReportAdd', function(e) {
+            e.preventDefault();
+            subEqpAnalyticalReportAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="eqpAnalyticalReport[sub_'+ subEqpAnalyticalReportAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEqpAnalyticalReportBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEqpAnalyticalReportBlock', '.subSingleEqpAnalyticalReportBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEqpAnalyticalReportBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subEqpdeviationAdd', function(e) {
+            e.preventDefault();
+            subEqpdeviationAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="eqpdeviation[sub_'+ subEqpdeviationAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEqpdeviationBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEqpdeviationBlock', '.subSingleEqpdeviationBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEqpdeviationBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subEqpchangecontrolAdd', function(e) {
+            e.preventDefault();
+            subEqpchangecontrolAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="eqpchangecontrol[sub_'+ subEqpchangecontrolAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEqpchangecontrolBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEqpchangecontrolBlock', '.subSingleEqpchangecontrolBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEqpchangecontrolBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subEqpsummaryAdd', function(e) {
+            e.preventDefault();
+            subEqpsummaryAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="eqpsummary[sub_'+ subEqpsummaryAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEqpsummaryBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEqpsummaryBlock', '.subSingleEqpsummaryBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEqpsummaryBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subeqpconclusionAdd', function(e) {
+            e.preventDefault();
+            subeqpconclusionAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="eqpconclusion[sub_'+ subeqpconclusionAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEqpconclusionBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEqpconclusionBlock', '.subSingleEqpconclusionBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEqpconclusionBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subeqpreportapprovalAdd', function(e) {
+            e.preventDefault();
+            subeqpreportapprovalAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="eqpreportapproval[sub_'+ subeqpreportapprovalAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleEqpreportapprovalBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleEqpreportapprovalBlock', '.subSingleEqpreportapprovalBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleEqpreportapprovalBlock">' + html + '</div>');
+            }
+        });
+
+
+
+
 
         $(document).on('click', '.subReportingAdd', function(e) {
             e.preventDefault();
@@ -2475,6 +3056,17 @@
             $('#referencesdiv').append(html);
 
         });
+
+
+        $('#referencesssbtadd').click(function(e) {
+
+            var html =
+                '<div class="singleReferencesssBlock"><div class="resrow row"><div class="col-10"><textarea name="referencesss[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subReferencesssAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#referencesssdiv').append(html);
+
+        });
+
 
         $('#annbtadd').click(function(e) {
 
