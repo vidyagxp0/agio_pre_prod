@@ -750,6 +750,10 @@ class DocumentController extends Controller
             $content->htsp_purpose = $request->htsp_purpose;
             $content->htsp_scope = $request->htsp_scope;
 
+            // pvp
+            $content->pvp_purpose = $request->pvp_purpose;
+            $content->pvp_scope = $request->pvp_scope;
+
 
 
 
@@ -1196,6 +1200,71 @@ class DocumentController extends Controller
             if (!empty($request->htsp_conclusion)) {
                 $content->htsp_conclusion = serialize($request->htsp_conclusion);
             }
+
+
+            // pvp
+
+            if (!empty($request->reasonfor_validationpvp)) {
+                $content->reasonfor_validationpvp = serialize($request->reasonfor_validationpvp);
+            }
+            if (!empty($request->pvp_responsibility)) {
+                $content->pvp_responsibility = serialize($request->pvp_responsibility);
+            }
+
+            if (!empty($request->pvp_validationpvp)) {
+                $content->pvp_validationpvp = serialize($request->pvp_validationpvp);
+            }
+
+            if (!empty($request->descriptionsop_pvp)) {
+                $content->descriptionsop_pvp = serialize($request->descriptionsop_pvp);
+            }
+
+            if (!empty($request->packingmaterial_pvp)) {
+                $content->packingmaterial_pvp = serialize($request->packingmaterial_pvp);
+            }
+
+            if (!empty($request->equipment_pvp)) {
+                $content->equipment_pvp = serialize($request->equipment_pvp);
+            }
+            if (!empty($request->rationale_pvp)) {
+                $content->rationale_pvp = serialize($request->rationale_pvp);
+            }
+            if (!empty($request->sampling_pvp)) {
+                $content->sampling_pvp = serialize($request->sampling_pvp);
+            }
+            if (!empty($request->critical_pvp)) {
+                $content->critical_pvp = serialize($request->critical_pvp);
+            }
+            if (!empty($request->product_acceptancepvp)) {
+                $content->product_acceptancepvp = serialize($request->product_acceptancepvp);
+            }
+            if (!empty($request->Holdtime_pvp)) {
+                $content->Holdtime_pvp = serialize($request->Holdtime_pvp);
+            }
+
+            if (!empty($request->cleaning_validationpvp)) {
+                $content->cleaning_validationpvp = serialize($request->cleaning_validationpvp);
+            }
+
+            if (!empty($request->Stability_studypvp)) {
+                $content->Stability_studypvp = serialize($request->Stability_studypvp);
+            }
+
+            if (!empty($request->Deviation_pvp)) {
+                $content->Deviation_pvp = serialize($request->Deviation_pvp);
+            }
+
+            if (!empty($request->Change_controlpvp)) {
+                $content->Change_controlpvp = serialize($request->Change_controlpvp);
+            }
+            if (!empty($request->Summary_pvp)) {
+                $content->Summary_pvp = serialize($request->Summary_pvp);
+            }
+            if (!empty($request->Conclusion_pvp)) {
+                $content->Conclusion_pvp = serialize($request->Conclusion_pvp);
+            }
+            
+
 
 
 
@@ -2369,6 +2438,11 @@ class DocumentController extends Controller
              $documentcontet->htsp_purpose = $request->htsp_purpose;
              $documentcontet->htsp_scope = $request->htsp_scope;
 
+            //  pvp
+            $documentcontet->pvp_purpose = $request->pvp_purpose;
+            $documentcontet->pvp_scope = $request->pvp_scope;
+
+// htsp
              $documentcontet->htsp_responsibility = $request->htsp_responsibility ? serialize($request->htsp_responsibility) : serialize([]);
              $documentcontet->htsp_description_of_sop = $request->htsp_description_of_sop ? serialize($request->htsp_description_of_sop) : serialize([]);
              $documentcontet->htsp_specifications = $request->htsp_specifications ? serialize($request->htsp_specifications) : serialize([]);
@@ -2378,6 +2452,26 @@ class DocumentController extends Controller
              $documentcontet->htsp_deviation = $request->htsp_deviation ? serialize($request->htsp_deviation) : serialize([]);
              $documentcontet->htsp_summary = $request->htsp_summary ? serialize($request->htsp_summary) : serialize([]);
              $documentcontet->htsp_conclusion = $request->htsp_conclusion ? serialize($request->htsp_conclusion) : serialize([]);
+
+            //  pvp
+             $documentcontet->reasonfor_validationpvp = $request->reasonfor_validationpvp ? serialize($request->reasonfor_validationpvp) : serialize([]);
+             $documentcontet->pvp_responsibility = $request->pvp_responsibility ? serialize($request->pvp_responsibility) : serialize([]);
+             $documentcontet->pvp_validationpvp = $request->pvp_validationpvp ? serialize($request->pvp_validationpvp) : serialize([]);
+             $documentcontet->descriptionsop_pvp = $request->descriptionsop_pvp ? serialize($request->descriptionsop_pvp) : serialize([]);
+             $documentcontet->packingmaterial_pvp = $request->packingmaterial_pvp ? serialize($request->packingmaterial_pvp) : serialize([]);
+             $documentcontet->equipment_pvp = $request->equipment_pvp ? serialize($request->equipment_pvp) : serialize([]);
+             $documentcontet->rationale_pvp = $request->rationale_pvp ? serialize($request->rationale_pvp) : serialize([]);
+             $documentcontet->sampling_pvp = $request->sampling_pvp ? serialize($request->sampling_pvp) : serialize([]);
+             $documentcontet->critical_pvp = $request->critical_pvp ? serialize($request->critical_pvp) : serialize([]);
+             $documentcontet->product_acceptancepvp = $request->product_acceptancepvp ? serialize($request->product_acceptancepvp) : serialize([]);
+             $documentcontet->Holdtime_pvp = $request->Holdtime_pvp ? serialize($request->Holdtime_pvp) : serialize([]);
+             $documentcontet->cleaning_validationpvp = $request->cleaning_validationpvp ? serialize($request->cleaning_validationpvp) : serialize([]);
+             $documentcontet->Stability_studypvp = $request->Stability_studypvp ? serialize($request->Stability_studypvp) : serialize([]);
+             $documentcontet->Deviation_pvp = $request->Deviation_pvp ? serialize($request->Deviation_pvp) : serialize([]);
+             $documentcontet->Change_controlpvp = $request->Change_controlpvp ? serialize($request->Change_controlpvp) : serialize([]);
+             $documentcontet->Summary_pvp = $request->Summary_pvp ? serialize($request->Summary_pvp) : serialize([]);
+             $documentcontet->Conclusion_pvp = $request->Conclusion_pvp ? serialize($request->Conclusion_pvp) : serialize([]);
+            
 
            
             $documentcontet->responsibilityprvp = $request->responsibilityprvp ? serialize($request->responsibilityprvp) : serialize([]);
