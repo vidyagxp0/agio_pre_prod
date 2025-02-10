@@ -999,7 +999,7 @@ class DocumentController extends Controller
 
 
 
-    //-----------------------Process Validation Report--------------------------------------- 
+        //-----------------------Process Validation Report--------------------------------------- 
 
             $content->generic_pvr = $request->generic_pvr;
             $content->product_code_pvr = $request->product_code_pvr;
@@ -1080,7 +1080,115 @@ class DocumentController extends Controller
                 $content->report_approval_pvr = serialize($request->report_approval_pvr);
             }
 
-    //-----------------------END Process Validation Report--------------------------------------- 
+        //-----------------------END Process Validation Report--------------------------------------- 
+
+
+
+        //-----------------------Cleaning Validation protocol-doc --------------------------------------- 
+
+    
+            
+            if (!empty($request->objective_cvpd)) {
+                    $content->objective_cvpd = serialize($request->objective_cvpd);
+                }
+                if (!empty($request->scope_cvpd)) {
+                    $content->scope_cvpd = serialize($request->scope_cvpd);
+                }
+                if (!empty($request->purpose_cvpd)) {
+                    $content->purpose_cvpd = serialize($request->purpose_cvpd);
+                }
+
+                if (!empty($request->responsibilities_cvpd)) {
+                    $content->responsibilities_cvpd = serialize($request->responsibilities_cvpd);
+                }
+                if (!empty($request->identification_sensitive_product_contamination_cvpd)) {
+                    $content->identification_sensitive_product_contamination_cvpd = serialize($request->identification_sensitive_product_contamination_cvpd);
+                }
+                if (!empty($request->matrix_worstcase_approach_cvpd)) {
+                    $content->matrix_worstcase_approach_cvpd = serialize($request->matrix_worstcase_approach_cvpd);
+                }
+                if (!empty($request->acceptance_criteria_cvpd)) {
+                    $content->acceptance_criteria_cvpd = serialize($request->acceptance_criteria_cvpd);
+                }
+                if (!empty($request->list_equipment_internal_surface_cvpd)) {
+                    $content->list_equipment_internal_surface_cvpd = serialize($request->list_equipment_internal_surface_cvpd);
+                }
+                if (!empty($request->identification_clean_surfaces_cvpd)) {
+                    $content->identification_clean_surfaces_cvpd = serialize($request->identification_clean_surfaces_cvpd);
+                }
+
+                if (!empty($request->sampling_method_cvpd)) {
+                    $content->sampling_method_cvpd = serialize($request->sampling_method_cvpd);
+                }
+                if (!empty($request->recovery_studies_cvpd)) {
+                    $content->recovery_studies_cvpd = serialize($request->recovery_studies_cvpd);
+                }
+                if (!empty($request->calculating_carry_over_cvpd)) {
+                    $content->calculating_carry_over_cvpd = serialize($request->calculating_carry_over_cvpd);
+                }
+                if (!empty($request->calculating_rinse_analysis_cvpd)) {
+                    $content->calculating_rinse_analysis_cvpd = serialize($request->calculating_rinse_analysis_cvpd);
+                }
+                if (!empty($request->general_procedure_clean_cvpd)) {
+                    $content->general_procedure_clean_cvpd = serialize($request->general_procedure_clean_cvpd);
+                }
+                if (!empty($request->analytical_method_validation_cvpd)) {
+                    $content->analytical_method_validation_cvpd = serialize($request->analytical_method_validation_cvpd);
+                }
+                if (!empty($request->list_cleaning_sop_cvpd)) {
+                    $content->list_cleaning_sop_cvpd = serialize($request->list_cleaning_sop_cvpd);
+                }
+                if (!empty($request->clean_validation_exercise_cvpd)) {
+                    $content->clean_validation_exercise_cvpd = serialize($request->clean_validation_exercise_cvpd);
+                }
+
+            if (!empty($request->evaluation_analytical_result_cvpd)) {
+                    $content->evaluation_analytical_result_cvpd = serialize($request->evaluation_analytical_result_cvpd);
+                }
+                if (!empty($request->summary_conclusion_cvpd)) {
+                    $content->summary_conclusion_cvpd = serialize($request->summary_conclusion_cvpd);
+                }
+                if (!empty($request->training_cvpd)) {
+                    $content->training_cvpd = serialize($request->training_cvpd);
+                }
+              
+
+             // cleaning validation report-doc
+
+             if (!empty($request->objective_cvrd)) {
+                $content->objective_cvrd = serialize($request->objective_cvrd);
+            }
+            if (!empty($request->scope_cvrd)) {
+                $content->scope_cvrd = serialize($request->scope_cvrd);
+            }
+            if (!empty($request->purpose_cvrd)) {
+                $content->purpose_cvrd = serialize($request->purpose_cvrd);
+            }
+
+            if (!empty($request->responsibilities_cvrd)) {
+                $content->responsibilities_cvrd = serialize($request->responsibilities_cvrd);
+            }
+            if (!empty($request->analysis_methodology_cvrd)) {
+                $content->analysis_methodology_cvrd = serialize($request->analysis_methodology_cvrd);
+            }
+            if (!empty($request->recovery_study_report_cvrd)) {
+                $content->recovery_study_report_cvrd = serialize($request->recovery_study_report_cvrd);
+            }
+            if (!empty($request->acceptance_critria_cvrd)) {
+                $content->acceptance_critria_cvrd = serialize($request->acceptance_critria_cvrd);
+            }
+            if (!empty($request->analytical_report_cvrd)) {
+                $content->analytical_report_cvrd = serialize($request->analytical_report_cvrd);
+            }
+            if (!empty($request->physical_procedure_conformance_check_cvrd)) {
+                $content->physical_procedure_conformance_check_cvrd = serialize($request->physical_procedure_conformance_check_cvrd);
+            }
+            if (!empty($request->conclusion_cvrd)) {
+                $content->conclusion_cvrd = serialize($request->conclusion_cvrd);
+            }
+
+
+        //-----------------------END Cleaning validation protocol doc--------------------------------------- 
 
             // if ($request->hasfile('references')) {
 
@@ -2443,8 +2551,50 @@ class DocumentController extends Controller
             $documentcontet->proposed_parameter_upcoming_batch_pvr = $request->proposed_parameter_upcoming_batch_pvr ? serialize($request->proposed_parameter_upcoming_batch_pvr) : serialize([]);
             $documentcontet->report_approval_pvr = $request->report_approval_pvr ? serialize($request->report_approval_pvr) : serialize([]);
 
-//---------------------------process Validation Report--------------------------------------------
+        //---------------------------process Validation Report--------------------------------------------
 
+
+        //-----------------------Cleaning Validation protocol-doc --------------------------------------- 
+
+            $documentcontet->objective_cvpd = $request->objective_cvpd ? serialize($request->objective_cvpd) : serialize([]);
+            $documentcontet->scope_cvpd = $request->scope_cvpd ? serialize($request->scope_cvpd) : serialize([]);
+            $documentcontet->purpose_cvpd = $request->purpose_cvpd ? serialize($request->purpose_cvpd) : serialize([]);
+
+            $documentcontet->responsibilities_cvpd = $request->responsibilities_cvpd ? serialize($request->responsibilities_cvpd) : serialize([]);
+            $documentcontet->identification_sensitive_product_contamination_cvpd = $request->identification_sensitive_product_contamination_cvpd ? serialize($request->identification_sensitive_product_contamination_cvpd) : serialize([]);
+            $documentcontet->matrix_worstcase_approach_cvpd = $request->matrix_worstcase_approach_cvpd ? serialize($request->matrix_worstcase_approach_cvpd) : serialize([]);
+            $documentcontet->acceptance_criteria_cvpd = $request->acceptance_criteria_cvpd ? serialize($request->acceptance_criteria_cvpd) : serialize([]);
+
+
+            $documentcontet->list_equipment_internal_surface_cvpd = $request->list_equipment_internal_surface_cvpd ? serialize($request->list_equipment_internal_surface_cvpd) : serialize([]);
+            $documentcontet->identification_clean_surfaces_cvpd = $request->identification_clean_surfaces_cvpd ? serialize($request->identification_clean_surfaces_cvpd) : serialize([]);
+            $documentcontet->sampling_method_cvpd = $request->sampling_method_cvpd ? serialize($request->sampling_method_cvpd) : serialize([]);
+            $documentcontet->recovery_studies_cvpd = $request->recovery_studies_cvpd ? serialize($request->recovery_studies_cvpd) : serialize([]);
+            $documentcontet->calculating_carry_over_cvpd = $request->calculating_carry_over_cvpd ? serialize($request->calculating_carry_over_cvpd) : serialize([]);
+            $documentcontet->calculating_rinse_analysis_cvpd = $request->calculating_rinse_analysis_cvpd ? serialize($request->calculating_rinse_analysis_cvpd) : serialize([]);
+
+            $documentcontet->general_procedure_clean_cvpd = $request->general_procedure_clean_cvpd ? serialize($request->general_procedure_clean_cvpd) : serialize([]);
+            $documentcontet->analytical_method_validation_cvpd = $request->analytical_method_validation_cvpd ? serialize($request->analytical_method_validation_cvpd) : serialize([]);
+            $documentcontet->list_cleaning_sop_cvpd = $request->list_cleaning_sop_cvpd ? serialize($request->list_cleaning_sop_cvpd) : serialize([]);
+            $documentcontet->clean_validation_exercise_cvpd = $request->clean_validation_exercise_cvpd ? serialize($request->clean_validation_exercise_cvpd) : serialize([]);
+            $documentcontet->evaluation_analytical_result_cvpd = $request->evaluation_analytical_result_cvpd ? serialize($request->evaluation_analytical_result_cvpd) : serialize([]);
+            $documentcontet->summary_conclusion_cvpd = $request->summary_conclusion_cvpd ? serialize($request->summary_conclusion_cvpd) : serialize([]);
+
+            $documentcontet->training_cvpd = $request->training_cvpd ? serialize($request->training_cvpd) : serialize([]);
+        //-----------------------END Cleaning validation protocol doc--------------------------------------- 
+        //-----------------------Cleaning Validation Report-doc --------------------------------------- 
+
+            $documentcontet->objective_cvrd = $request->objective_cvrd ? serialize($request->objective_cvrd) : serialize([]);
+            $documentcontet->scope_cvrd = $request->scope_cvrd ? serialize($request->scope_cvrd) : serialize([]);
+            $documentcontet->purpose_cvrd = $request->purpose_cvrd ? serialize($request->purpose_cvrd) : serialize([]);
+            $documentcontet->responsibilities_cvrd = $request->responsibilities_cvrd ? serialize($request->responsibilities_cvrd) : serialize([]);
+            $documentcontet->analysis_methodology_cvrd = $request->analysis_methodology_cvrd ? serialize($request->analysis_methodology_cvrd) : serialize([]);
+            $documentcontet->recovery_study_report_cvrd = $request->recovery_study_report_cvrd ? serialize($request->recovery_study_report_cvrd) : serialize([]);
+            $documentcontet->acceptance_critria_cvrd = $request->acceptance_critria_cvrd ? serialize($request->acceptance_critria_cvrd) : serialize([]);
+            $documentcontet->analytical_report_cvrd = $request->analytical_report_cvrd ? serialize($request->analytical_report_cvrd) : serialize([]);
+            $documentcontet->physical_procedure_conformance_check_cvrd = $request->physical_procedure_conformance_check_cvrd ? serialize($request->physical_procedure_conformance_check_cvrd) : serialize([]);
+            $documentcontet->conclusion_cvrd = $request->conclusion_cvrd ? serialize($request->conclusion_cvrd) : serialize([]);
+        //---------------------- END-Cleaning Validation Report-doc --------------------------------------- 
 
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);

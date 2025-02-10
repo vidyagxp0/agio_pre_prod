@@ -665,346 +665,51 @@
 
                     
                 <div class="other-container" style="margin-top:1.5rem">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="w-5">1.</th>
-                                    <th class="text-left">
-                                        <div class="bold">Objective :</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="scope-block">
-                            <div class="w-100">
-                                <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
-                                    <div class="w-100">
-                                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="other-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="w-5">2.</th>
-                                    <th class="text-left">
-                                        <div class="bold">Scope :</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="scope-block">
-                            <div class="w-100">
-                                <div class="w-100" style="display:inline-block;">
-                                    <div class="w-100">
-                                        <div class="text-justify"
-                                            style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                            {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                       
                     <table class="mb-15">
                         <tbody>
                             <tr>
-                                <th class="w-5 vertical-baseline">3.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold">Purpose :</div>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (
-                                            $data->document_content &&
-                                                !empty($data->document_content->responsibility) &&
-                                                is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->responsibility) as $key => $res)
-                                                @php
-                                                    $isSub = str_contains($key, 'sub');
-                                                @endphp
-                                                @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($res) !!} <br>
-                                                    </div>
-                                                @endif
-                                                @php
-                                                    if (!$isSub) {
-                                                        $i++;
-                                                        $sub_index = 1;
-                                                    } else {
-                                                        $sub_index++;
-                                                    }
-                                                @endphp
-                                            @endforeach
-                                        @endif
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <table class="mb-15">
-                        <tbody>
-                            <tr>
-                                <th class="w-5 vertical-baseline">4.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold">Responsibilities :</div>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (
-                                            $data->document_content &&
-                                                !empty($data->document_content->accountability) &&
-                                                is_array(unserialize($data->document_content->accountability)))
-                                            @foreach (unserialize($data->document_content->accountability) as $key => $res)
-                                                @php
-                                                    $isSub = str_contains($key, 'sub');
-                                                @endphp
-                                                @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($res) !!} <br>
-                                                    </div>
-                                                @endif
-                                                @php
-                                                    if (!$isSub) {
-                                                        $i++;
-                                                        $sub_index = 1;
-                                                    } else {
-                                                        $sub_index++;
-                                                    }
-                                                @endphp
-                                            @endforeach
-                                        @endif
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- REFERENCES START --}}
-                    <table class="mb-15">
-                        <tbody>
-                            <tr>
-                                <th class="w-5 vertical-baseline">5.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold"> Analysis Methodology :</div>
-                                </th>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>1.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold">Objective:</span>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="procedure-block">
                         <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        @php $i = 1; @endphp
-                                        @if (
-                                            $data->document_content &&
-                                                !empty($data->document_content->references) &&
-                                                is_array(unserialize($data->document_content->references)))
-                                            @foreach (unserialize($data->document_content->references) as $key => $res)
-                                                @php
-                                                    $isSub = str_contains($key, 'sub');
-                                                @endphp
-                                                @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($res) !!} <br>
-                                                    </div>
-                                                @endif
-                                                @php
-                                                    if (!$isSub) {
-                                                        $i++;
-                                                        $sub_index = 1;
-                                                    } else {
-                                                        $sub_index++;
-                                                    }
-                                                @endphp
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- REFERENCES END --}}
-
-                    <table class="mb-15">
-                        <tbody>
-                            <tr>
-                                <th class="w-5 vertical-baseline">6.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold">Recovery Study Report :</div>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (
-                                            $data->document_content &&
-                                                !empty($data->document_content->abbreviation) &&
-                                                is_array(unserialize($data->document_content->abbreviation)))
-                                            @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
-                                                @php
-                                                    $isSub = str_contains($key, 'sub');
-                                                @endphp
-                                                @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($res) !!} <br>
-                                                    </div>
-                                                @endif
-                                                @php
-                                                    if (!$isSub) {
-                                                        $i++;
-                                                        $sub_index = 1;
-                                                    } else {
-                                                        $sub_index++;
-                                                    }
-                                                @endphp
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- DEFINITIONS START --}}
-                    <table class="mb-15">
-                        <tbody>
-                            <tr>
-                                <th class="w-5 vertical-baseline">7.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold">Acceptance Criteria  :</div>
-                                </th>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        @php
-                                            $i = 1;
-                                            $definitions = $data->document_content
-                                                ? unserialize($data->document_content->defination)
-                                                : [];
-                                        @endphp
-                                        @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
-                                            @foreach ($definitions as $key => $definition)
-                                                @php
-                                                    $isSub = str_contains($key, 'sub');
-                                                @endphp
-                                                @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($definition) !!} <br>
-                                                    </div>
-                                                @endif
-                                                @php
-                                                    if (!$isSub) {
-                                                        $i++;
-                                                        $sub_index = 1;
-                                                    } else {
-                                                        $sub_index++;
-                                                    }
-                                                @endphp
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- DEFINITIONS END --}}
-
-                    {{-- MATERIALS AND EQUIPMENTS START --}}
-                    <table class="mb-15">
-                        <tbody>
-                            <tr>
-                                <th class="w-5 vertical-baseline">8.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold">Analytical  Report :</div>
-                                </th>
-                            </tr>
-                            <tr>
-                        </tbody>
-                    </table>
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
                                         @php
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->objective_cvrd) && 
+                                            is_array(unserialize($data->document_content->objective_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->objective_cvrd) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
+
                                                 @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($res) !!} <br>
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            1.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
                                                     </div>
                                                 @endif
+
                                                 @php
                                                     if (!$isSub) {
                                                         $i++;
-                                                        $sub_index = 1;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
                                                     } else {
                                                         $sub_index++;
                                                     }
@@ -1016,45 +721,50 @@
                             </div>
                         </div>
                     </div>
-                    {{-- MATERIALS AND EQUIPMENTS END --}}
-
-                    {{-- MATERIALS AND EQUIPMENTS START --}}
                     <table class="mb-15">
                         <tbody>
                             <tr>
-                                <th class="w-5 vertical-baseline">9.</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold"> Physical check & procedure conformance check :</div>
-                                </th>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>2.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold">Scope:</span>
+                                </td>
                             </tr>
-                            <tr>
                         </tbody>
                     </table>
                     <div class="procedure-block">
                         <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
                                         @php
                                             $i = 1;
                                             $sub_index = 1;
                                         @endphp
-                                        @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->scope_cvrd) && 
+                                            is_array(unserialize($data->document_content->scope_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->scope_cvrd) as $key => $res)
                                                 @php
                                                     $isSub = str_contains($key, 'sub');
                                                 @endphp
+
                                                 @if (!empty($res))
-                                                    <div style="position: relative;">
-                                                        <span
-                                                            style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                                        {!! nl2br($res) !!} <br>
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            2.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
                                                     </div>
                                                 @endif
+
                                                 @php
                                                     if (!$isSub) {
                                                         $i++;
-                                                        $sub_index = 1;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
                                                     } else {
                                                         $sub_index++;
                                                     }
@@ -1066,20 +776,474 @@
                             </div>
                         </div>
                     </div>
-                    {{-- MATERIALS AND EQUIPMENTS END --}}
 
-                    {{-- MATERIALS AND EQUIPMENTS START --}}
                     <table class="mb-15">
                         <tbody>
                             <tr>
-                                <th class="w-5 vertical-baseline">10</th>
-                                <th class="w-95 text-left">
-                                    <div class="bold">Conclusion :</div>
-                                </th>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>3.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold">Purpose:</span>
+                                </td>
                             </tr>
-                            <tr>
                         </tbody>
                     </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->purpose_cvrd) && 
+                                            is_array(unserialize($data->document_content->purpose_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->purpose_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            3.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>4.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold">Responsibilities:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->responsibilities_cvrd) && 
+                                            is_array(unserialize($data->document_content->responsibilities_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->responsibilities_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            4.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>5.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold">Analysis Methodology:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->analysis_methodology_cvrd) && 
+                                            is_array(unserialize($data->document_content->analysis_methodology_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->analysis_methodology_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            5.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>6.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold"> Recovery Study Report:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->recovery_study_report_cvrd) && 
+                                            is_array(unserialize($data->document_content->recovery_study_report_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->recovery_study_report_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            6.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>7.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold"> Acceptance Criteria:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->acceptance_critria_cvrd) && 
+                                            is_array(unserialize($data->document_content->acceptance_critria_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->acceptance_critria_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            7.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>8.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold"> Analytical  Report:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->analytical_report_cvrd) && 
+                                            is_array(unserialize($data->document_content->analytical_report_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->analytical_report_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            8.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>9.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold"> Physical check & procedure conformance check:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->physical_procedure_conformance_check_cvrd) && 
+                                            is_array(unserialize($data->document_content->physical_procedure_conformance_check_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->physical_procedure_conformance_check_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            9.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <table class="mb-15">
+                        <tbody>
+                            <tr>
+                                <td class="w-5 vertical-baseline" style="vertical-align: top; white-space: nowrap;"> 
+                                    <span>10.</span> 
+                                </td>
+                                <td class="w-95 text-left">
+                                    <span class="bold"> Conclusion:</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display: flex; flex-wrap: wrap;">
+                                <div class="w-100" style="width: 100%;">
+                                    <div style="height: auto; overflow-x: auto; width: 650px; margin-left: 2.5rem;">
+                                        @php
+                                            $i = 1;
+                                            $sub_index = 1;
+                                        @endphp
+
+                                        @if ($data->document_content && 
+                                            !empty($data->document_content->conclusion_cvrd) && 
+                                            is_array(unserialize($data->document_content->conclusion_cvrd)))
+                                            
+                                            @foreach (unserialize($data->document_content->conclusion_cvrd) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+
+                                                @if (!empty($res))
+                                                    <div style="position: relative; padding-left: 2.5rem; margin-bottom: 5px;">
+                                                        <span style="position: absolute; left: -2rem; top: 0;">
+                                                            10.{{ $isSub ? ($i - 1) . '.' . $sub_index : $i }}
+                                                        </span>
+                                                        {!! nl2br(e($res)) !!} <br>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;  // Reset sub-index for new main item
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                   
                  
                     {{-- MATERIALS AND EQUIPMENTS END --}}
 
