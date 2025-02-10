@@ -1001,7 +1001,7 @@ class DocumentController extends Controller
         if (!empty($request->ReportApproval_HoTiStRe)) {
             $content->ReportApproval_HoTiStRe = serialize($request->ReportApproval_HoTiStRe);
         }
-// -----------------------packing validation rwport tABS store -------------------
+// ----------------Start-------packing validation rwport tABS store -------------------
 
         if (!empty($request->Purpose_PaVaReKp)) {
             $content->Purpose_PaVaReKp = serialize($request->Purpose_PaVaReKp);
@@ -1058,6 +1058,55 @@ class DocumentController extends Controller
         if (!empty($request->ReportApproval_PaVaReKp)) {
             $content->ReportApproval_PaVaReKp = serialize($request->ReportApproval_PaVaReKp);
         }
+// ---------------END--------packing validation rwport tABS store -------------------
+
+// ---------------start--------Format air and nitrogen es systs protocal tABS store -------------------
+
+
+        if (!empty($request->Protocolapproval_FoCompAaNirogenkp)) {
+            $content->Protocolapproval_FoCompAaNirogenkp = serialize($request->Protocolapproval_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Objective_FoCompAaNirogenkp)) {
+            $content->Objective_FoCompAaNirogenkp = serialize($request->Objective_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Purpose_FoCompAaNirogenkp)) {
+            $content->Purpose_FoCompAaNirogenkp = serialize($request->Purpose_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Scope_FoCompAaNirogenkp)) {
+            $content->Scope_FoCompAaNirogenkp = serialize($request->Scope_FoCompAaNirogenkp);
+        }
+        if (!empty($request->ExcutionTeamResp_FoCompAaNirogenkp)) {
+            $content->ExcutionTeamResp_FoCompAaNirogenkp = serialize($request->ExcutionTeamResp_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Abbreviations_FoCompAaNirogenkp)) {
+            $content->Abbreviations_FoCompAaNirogenkp = serialize($request->Abbreviations_FoCompAaNirogenkp);
+        }
+        if (!empty($request->EquipmentSystemIde_FoCompAaNirogenkp)) {
+            $content->EquipmentSystemIde_FoCompAaNirogenkp = serialize($request->EquipmentSystemIde_FoCompAaNirogenkp);
+        }
+        if (!empty($request->DocumentFollowed_FoCompAaNirogenkp)) {
+            $content->DocumentFollowed_FoCompAaNirogenkp = serialize($request->DocumentFollowed_FoCompAaNirogenkp);
+        }
+        if (!empty($request->GenralConsPre_FoCompAaNirogenkp)) {
+            $content->GenralConsPre_FoCompAaNirogenkp = serialize($request->GenralConsPre_FoCompAaNirogenkp);
+        }
+        if (!empty($request->RevalidCrite_FoCompAaNirogenkp)) {
+            $content->RevalidCrite_FoCompAaNirogenkp = serialize($request->RevalidCrite_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Precautions_FoCompAaNirogenkp)) {
+            $content->Precautions_FoCompAaNirogenkp = serialize($request->Precautions_FoCompAaNirogenkp);
+        }
+        if (!empty($request->RevalidProcess_FoCompAaNirogenkp)) {
+            $content->RevalidProcess_FoCompAaNirogenkp = serialize($request->RevalidProcess_FoCompAaNirogenkp);
+        }
+        if (!empty($request->AcceptanceCrite_FoCompAaNirogenkp)) {
+            $content->AcceptanceCrite_FoCompAaNirogenkp = serialize($request->AcceptanceCrite_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Annexure_FoCompAaNirogenkp)) {
+            $content->Annexure_FoCompAaNirogenkp = serialize($request->Annexure_FoCompAaNirogenkp);
+        }
+       
+
 
 
 
@@ -3320,96 +3369,240 @@ $documentcontet->ReportApproval_PaVaReKp = $request->ReportApproval_PaVaReKp ? s
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
 
-        $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
-        $FinishedData = isset($Finished_Product->data) && is_string($Finished_Product->data)
-        ? json_decode($Finished_Product->data, true) :(is_array($Finished_Product->data) ? $Finished_Product->data:[]);
-
-        $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
-        $Inprocess_standardData = isset($Inprocess_standard->data) && is_string($Inprocess_standard->data)
-        ? json_decode($Inprocess_standard->data, true) :(is_array($Inprocess_standard->data) ? $Inprocess_standard->data:[]);
-
-        $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id)->where('identifier', "CLEANING_VALIDATION")->first();
-        $CLEANING_VALIDATIONData = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data)
-        ? json_decode($CLEANING_VALIDATION->data, true) :(is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data:[]);
 
 
-        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
-            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
-            ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
+        $Finished_Product = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Finished_Product")->first();
+        $FinishedData = [];
+
+         if (!empty($Finished_Product) && isset($Finished_Product->data)) {
+             if (is_string($Finished_Product->data)) {
+                 $FinishedData = json_decode($Finished_Product->data, true);
+             } elseif (is_array($Finished_Product->data)) {
+                 $FinishedData = $Finished_Product->data;
+             }
+         }
+
+         $Inprocess_standard = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Inprocess_standard")->first();
+         $Inprocess_standardData = [];
+
+          if (!empty($Inprocess_standard) && isset($Inprocess_standard->data)) {
+              if (is_string($Inprocess_standard->data)) {
+                  $Inprocess_standardData = json_decode($Inprocess_standard->data, true);
+              } elseif (is_array($Inprocess_standard->data)) {
+                  $Inprocess_standardData = $Inprocess_standard->data;
+              }
+          }
+
+          $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id) ->where('identifier', "CLEANING_VALIDATION")->first();
+          $CLEANING_VALIDATIONData = [];
+
+           if (!empty($CLEANING_VALIDATION) && isset($CLEANING_VALIDATION->data)) {
+               if (is_string($CLEANING_VALIDATION->data)) {
+                   $CLEANING_VALIDATIONData = json_decode($CLEANING_VALIDATION->data, true);
+               } elseif (is_array($CLEANING_VALIDATION->data)) {
+                   $CLEANING_VALIDATIONData = $CLEANING_VALIDATION->data;
+               }
+           }
 
 
-        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data)
-            ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
+           $testDataDecoded = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Rowmaterialtest")->first();
+        $testData = [];
 
-        $GtpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
-        $GtpGridData = isset($GtpData->data) && is_string($GtpData->data)
-            ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
+         if (!empty($testDataDecoded) && isset($testDataDecoded->data)) {
+             if (is_string($testDataDecoded->data)) {
+                 $testData = json_decode($testDataDecoded->data, true);
+             } elseif (is_array($testDataDecoded->data)) {
+                 $testData = $testDataDecoded->data;
+             }
+         }
+
+
+         $PackingGridData = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Packingmaterialdata")->first();
+         $PackingDataGrid = [];
+
+          if (!empty($PackingGridData) && isset($PackingGridData->data)) {
+              if (is_string($PackingGridData->data)) {
+                  $PackingDataGrid = json_decode($PackingGridData->data, true);
+              } elseif (is_array($PackingGridData->data)) {
+                  $PackingDataGrid = $PackingGridData->data;
+              }
+          }
+
+
+          $GtpData = DocumentGrid::where('document_type_id', $id) ->where('identifier', "GtpData")->first();
+        $FinishedData = [];
+
+         if (!empty($GtpData) && isset($GtpData->data)) {
+             if (is_string($GtpData->data)) {
+                 $FinishedData = json_decode($GtpData->data, true);
+             } elseif (is_array($GtpData->data)) {
+                 $FinishedData = $GtpData->data;
+             }
+         }
+
 
         // $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
         // $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data)
         //     ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
 
-        $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
+        $RevisionData = DocumentGrid::where('document_type_id', $id) ->where('identifier', "revision_history")->first();
+        $RevisionGridData = [];
 
-        $RevisionGridData = !empty($RevisionData) && isset($RevisionData->data) && is_string($RevisionData->data)
-        ? json_decode($RevisionData->data, true)
-        : (is_array($RevisionData->data ?? []) ? $RevisionData->data : []);
+         if (!empty($RevisionData) && isset($RevisionData->data)) {
+             if (is_string($RevisionData->data)) {
+                 $RevisionGridData = json_decode($RevisionData->data, true);
+             } elseif (is_array($RevisionData->data)) {
+                 $RevisionGridData = $RevisionData->data;
+             }
+         }
 
-        $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
-        $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data)
-            ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
+         $summaryResult = TDSDocumentGrid::where('tds_id', $id) ->where('identifier', "summaryResult")->first();
+         $SummaryDataGrid = [];
 
-        $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
-        $sampleReconcilationDataGrid = isset($sampleReconcilation->data) && is_string($sampleReconcilation->data)
-            ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);
+          if (!empty($summaryResult) && isset($summaryResult->data)) {
+              if (is_string($summaryResult->data)) {
+                  $SummaryDataGrid = json_decode($summaryResult->data, true);
+              } elseif (is_array($summaryResult->data)) {
+                  $SummaryDataGrid = $summaryResult->data;
+              }
+          }
 
-        $specificationsGridData = specifications::where('specification_id', $id)->where('identifier', "specifications_testing")->first();
-        $SpecificationDataGrid = isset($specificationsGridData->data) && is_string($specificationsGridData->data)
-            ? json_decode($specificationsGridData->data, true) :(is_array($specificationsGridData->data) ? $specificationsGridData->data:[]);
+          $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id) ->where('identifier', "sampleReconcilation")->first();
+          $sampleReconcilationDataGrid = [];
 
-        $specifications = specifications::where('specification_id', $id)->where('identifier', "specifications")->first();
-        $SpecificationGrid = isset($specifications->data) && is_string($specifications->data)
-            ? json_decode($specifications->data, true) :(is_array($specifications->data) ? $specifications->data:[]);
-
-        $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
-
-        $ProductSpecificationData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) ? json_decode($ProductSpecification->data,true) : (is_array($ProductSpecification->data) ? $ProductSpecification->data :[]);
-
-        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
-        $MaterialSpecificationData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) ? json_decode($MaterialSpecification->data,true) : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
-
-
-
-        $Finished_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION')->first();
-        $finishedProductSpecificationData = isset($Finished_product_specification->data) && is_string($Finished_product_specification->data) ? json_decode($Finished_product_specification->data) : (is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
-
-
-        $specificationValidation = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION')->first();
-        $specificationValidationData = isset($specificationValidation->data)&& is_string($specificationValidation->data) ? json_decode($specificationValidation->data,true) :(is_array($specificationValidation->data) ? $specificationValidation->data:[]);
-
-        $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id)->where('identifier', "CalibrationQualificationStatus")->first();
+           if (!empty($sampleReconcilation) && isset($sampleReconcilation->data)) {
+               if (is_string($sampleReconcilation->data)) {
+                   $sampleReconcilationDataGrid = json_decode($sampleReconcilation->data, true);
+               } elseif (is_array($sampleReconcilation->data)) {
+                   $sampleReconcilationDataGrid = $sampleReconcilation->data;
+               }
+           }
 
 
-        $calibrationdata = isset($CalibrationQualificationstatus->data) && is_string($CalibrationQualificationstatus->data) ? json_decode($CalibrationQualificationstatus->data) : (is_array($CalibrationQualificationstatus->data) ? $CalibrationQualificationstatus->data : []);
+           $specificationsGridData = specifications::where('specification_id', $id) ->where('identifier', "specifications_testing")->first();
+           $SpecificationDataGrid = [];
+
+            if (!empty($specificationsGridData) && isset($specificationsGridData->data)) {
+                if (is_string($specificationsGridData->data)) {
+                    $SpecificationDataGrid = json_decode($specificationsGridData->data, true);
+                } elseif (is_array($specificationsGridData->data)) {
+                    $SpecificationDataGrid = $specificationsGridData->data;
+                }
+            }
 
 
-        $Finished_product_specification_cvs  = DocumentGrid::where('document_type_id',$id)->where('identifier','SpecificationCleaningValidationSpecification')->first();
-        $finishedProductSpecificationData_CVS = isset($Finished_product_specification_cvs->data) && is_string($Finished_product_specification_cvs->data) ? json_decode($Finished_product_specification_cvs->data) : (is_array($Finished_product_specification_cvs->data) ? $Finished_product_specification_cvs->data : []);
+            $specifications = specifications::where('specification_id', $id) ->where('identifier', "specifications")->first();
+            $SpecificationGrid = [];
 
-        $specificationValidation_cvs = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
-        $specificationValidationData_cvs = isset($specificationValidation_cvs->data)&& is_string($specificationValidation_cvs->data) ? json_decode($specificationValidation_cvs->data,true) :(is_array($specificationValidation_cvs->data) ? $specificationValidation_cvs->data:[]);
-
-
-        //  dd($specificationValidation);
-
-
-       $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','specificationInprocessValidationSpecification')->first();
-        $data_inproces_specification = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
+             if (!empty($specifications) && isset($specifications->data)) {
+                 if (is_string($specifications->data)) {
+                     $SpecificationGrid = json_decode($specifications->data, true);
+                 } elseif (is_array($specifications->data)) {
+                     $SpecificationGrid = $specifications->data;
+                 }
+             }
 
 
-        $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
-        $specificationValidationData_inps = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
+             $ProductSpecification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "ProductSpecification")->first();
+             $ProductSpecificationData = [];
+
+              if (!empty($ProductSpecification) && isset($ProductSpecification->data)) {
+                  if (is_string($ProductSpecification->data)) {
+                      $ProductSpecificationData = json_decode($ProductSpecification->data, true);
+                  } elseif (is_array($ProductSpecification->data)) {
+                      $ProductSpecificationData = $ProductSpecification->data;
+                  }
+              }
+
+              $MaterialSpecification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "MaterialSpecification")->first();
+             $MaterialSpecificationData = [];
+
+              if (!empty($MaterialSpecification) && isset($MaterialSpecification->data)) {
+                  if (is_string($MaterialSpecification->data)) {
+                      $MaterialSpecificationData = json_decode($MaterialSpecification->data, true);
+                  } elseif (is_array($MaterialSpecification->data)) {
+                      $MaterialSpecificationData = $MaterialSpecification->data;
+                  }
+              }
+
+              $Finished_product_specification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION")->first();
+             $finishedProductSpecificationData = [];
+
+              if (!empty($Finished_product_specification) && isset($Finished_product_specification->data)) {
+                  if (is_string($Finished_product_specification->data)) {
+                      $finishedProductSpecificationData = json_decode($Finished_product_specification->data, true);
+                  } elseif (is_array($Finished_product_specification->data)) {
+                      $finishedProductSpecificationData = $Finished_product_specification->data;
+                  }
+              }
+
+              $Finished_product_specification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION_VALIDATION")->first();
+              $specificationValidationData = [];
+
+               if (!empty($Finished_product_specification) && isset($Finished_product_specification->data)) {
+                   if (is_string($Finished_product_specification->data)) {
+                       $specificationValidationData = json_decode($Finished_product_specification->data, true);
+                   } elseif (is_array($Finished_product_specification->data)) {
+                       $specificationValidationData = $Finished_product_specification->data;
+                   }
+               }
+
+               $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id) ->where('identifier', "CalibrationQualificationStatus")->first();
+              $calibrationdata = [];
+
+               if (!empty($CalibrationQualificationstatus) && isset($CalibrationQualificationstatus->data)) {
+                   if (is_string($CalibrationQualificationstatus->data)) {
+                       $calibrationdata = json_decode($CalibrationQualificationstatus->data, true);
+                   } elseif (is_array($CalibrationQualificationstatus->data)) {
+                       $calibrationdata = $CalibrationQualificationstatus->data;
+                   }
+               }
+
+               $Finished_product_specification_cvs = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SpecificationCleaningValidationSpecification")->first();
+               $finishedProductSpecificationData_CVS = [];
+
+                if (!empty($Finished_product_specification_cvs) && isset($Finished_product_specification_cvs->data)) {
+                    if (is_string($Finished_product_specification_cvs->data)) {
+                        $finishedProductSpecificationData_CVS = json_decode($Finished_product_specification_cvs->data, true);
+                    } elseif (is_array($Finished_product_specification_cvs->data)) {
+                        $finishedProductSpecificationData_CVS = $Finished_product_specification_cvs->data;
+                    }
+                }
+
+                $specificationValidation_cvs = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION_VALIDATION_CleaningValidationSpecification")->first();
+                $specificationValidationData_cvs = [];
+
+                 if (!empty($specificationValidation_cvs) && isset($specificationValidation_cvs->data)) {
+                     if (is_string($specificationValidation_cvs->data)) {
+                         $specificationValidationData_cvs = json_decode($specificationValidation_cvs->data, true);
+                     } elseif (is_array($specificationValidation_cvs->data)) {
+                         $specificationValidationData_cvs = $specificationValidation_cvs->data;
+                     }
+                 }
+
+                 $specificationValidation_inps = DocumentGrid::where('document_type_id', $id) ->where('identifier', "specificationInprocessValidationSpecification")->first();
+                 $data_inproces_specification = [];
+
+                  if (!empty($specificationValidation_inps) && isset($specificationValidation_inps->data)) {
+                      if (is_string($specificationValidation_inps->data)) {
+                          $data_inproces_specification = json_decode($specificationValidation_inps->data, true);
+                      } elseif (is_array($specificationValidation_inps->data)) {
+                          $data_inproces_specification = $specificationValidation_inps->data;
+                      }
+                  }
+
+                  $specificationValidation_inps = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION_VALIDATION_Inprocess_Validation_Specification")->first();
+                  $specificationValidationData_inps = [];
+
+                   if (!empty($specificationValidation_inps) && isset($specificationValidation_inps->data)) {
+                       if (is_string($specificationValidation_inps->data)) {
+                           $specificationValidationData_inps = json_decode($specificationValidation_inps->data, true);
+                       } elseif (is_array($specificationValidation_inps->data)) {
+                           $specificationValidationData_inps = $specificationValidation_inps->data;
+                       }
+                   }
+
+
 
 
 
