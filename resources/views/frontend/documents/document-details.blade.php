@@ -3,6 +3,8 @@
     {{-- ======================================
                     DOCUMENT TRACKER
     ======================================= --}}
+
+    
     <div id="document-tracker">
         <div class="container-fluid">
             <div class="tracker-container">
@@ -1230,10 +1232,8 @@
                 @if ($document->revised === 'Yes')
 
                     <form method="POST" action="{{ url('revision', $document->revised_doc) }}">
-                    @else
-                        <form method="POST" action="{{ url('revision', $document->id) }}">
-
-
+                @else
+                    <form method="POST" action="{{ url('revision', $document->id) }}">
                 @endif
 
                 @csrf

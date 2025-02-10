@@ -329,7 +329,7 @@
 
         body {
             margin-top: 220px;
-            margin-bottom: 160px;
+            margin-bottom: 170px;
         }
 
         footer {
@@ -470,6 +470,66 @@
         }
     </style>
 
+    <style>
+        /*Main Table Styling */
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: auto; /* Adjusts column width dynamically */
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -513,7 +573,7 @@
               <tr>
                 <td style="width: 42%; padding: 5px; text-align: left" class="doc-num">
                     PRODUCT/MATERIAL NAME  :   <span>{{$data->product_material_name}}</span><br><br>
-                    Reference Standard/General Testing Procedure No. :  <span>{{$data->Reference_Standard}}</span>
+                    Reference Standard/GTP No. :  <span>{{$data->Reference_Standard}}</span>
                 </td>
                 <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
                     <span>
@@ -523,16 +583,16 @@
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                     @else
                         
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                             @else
-                                TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                             @endif
                     @endif
                     </span>
@@ -622,7 +682,7 @@
                     </tbody>
                 </table>
 
-                <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+                {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
                     <tbody>
                         <tr style="border-bottom: 1px solid #ddd;">
                             @php
@@ -639,16 +699,20 @@
                             <td style="padding: 5px; border: 1px solid #ddd;">  </td>        
                         </tr>
                     </tbody>
-                </table>
-        </footer>
+                </table> --}}
+                <div></div>
+                    <span style="text-align:center">Format No. QA/097/F9-00</span> 
+                    <span style="text-align:right; margin-left:250px">Page No. :-</span>  
+                </div>                             
+                </footer>
 
         <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
             <tbody>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"> </td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->batch_no}} </td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">A.R. No.</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"> </td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->ar_no}} </td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Mfg. Date</td>
@@ -676,7 +740,7 @@
     <div>
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
-                <div class="other-container">
+                {{-- <div class="other-container">
                     <table>
                         <thead>
                             <tr>
@@ -715,7 +779,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <p>Remark:The above product complies/does not comply as per specification:  {{$data->tds_remark}}</p>
+
+
+                    <p><span style="font-weight: bold;">Remark:-</span>The above product complies/does not comply as per specification:  {{$data->tds_remark}}</p>
 
                     <div style="margin-top: 20px;">
                       <table style="width: 100%; border: none;">
@@ -732,19 +798,65 @@
                      </table>
                     </div>
 
-                </div>
-                
-                <div class="other-container">
+                </div> --}}
+
+                {{-- PROCEDURE START --}}
+                <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
-                                <th class="w-5">B)</th>
                                 <th class="text-left">
-                                    <div class="bold">Test wise data and calculation:-</div>
+                                    <div class="bold">A) Summary of Results</div>
                                 </th>
                             </tr>
                         </thead>
                     </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->tds_result, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- PROCEDURE END --}}
+                
+
+                {{-- Test wise data Start --}}
+                    <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">B) Test wise data and calculation:-</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->tds_test_wise, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- Test wise data End --}}
+
                     {{-- <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
                             <thead>
                                 <tr>
@@ -1149,7 +1261,7 @@
                             <thead>
                                 <tr>
                                     <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                                    {{-- <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th> --}}
                                     <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                                     <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                                 </tr>
@@ -1159,14 +1271,14 @@
                                     @foreach ($RevisionGridData as $key => $item)
                                         <tr>
                                             <td>{{ $item['revision_number'] ?? '' }}</td>
-                                            <td>{{ $item['cc_no'] ?? '' }}</td>
+                                            {{-- <td>{{ $item['cc_no'] ?? '' }}</td> --}}
                                             <td>{{ $item['revised_effective_date'] ?? '' }}</td>
                                             <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                        <td colspan="3" style="text-align: center; font-weight: bold;">No Data Available</td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -1185,7 +1297,7 @@
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 775;
+                    $y = 785;
                     $x = 485;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }

@@ -496,6 +496,8 @@ class DocumentController extends Controller
             $document->balance_quantity = $request->balance_quantity;
             $document->balance_quantity_destructed = $request->balance_quantity_destructed;
 
+            
+
 
 
             // $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
@@ -726,6 +728,15 @@ class DocumentController extends Controller
             $content->revision_summary = $request->revision_summary;
             $content->safety_precautions = $request->safety_precautions;
             $content->hod_comments = $request->hod_comments;
+
+            //gtp
+            $content->gtp_product_material_name = $request->gtp_product_material_name;
+            $content->gtp_test = $request->gtp_test;
+
+            //tds
+            $content->tds_result = $request->tds_result;
+            $content->tds_test_wise = $request->tds_test_wise;
+
 
             //PRVProtocol
             $content->generic_prvp = $request->generic_prvp;
@@ -2364,6 +2375,14 @@ class DocumentController extends Controller
             $documentcontet->validation_po_prvp = $request->validation_po_prvp;
             $documentcontet->description_sop_prvp = $request->description_sop_prvp;
             $documentcontet->prvp_procedure = $request->prvp_procedure;
+
+            //gtp
+            $documentcontet->gtp_product_material_name = $request->gtp_product_material_name;
+            $documentcontet->gtp_test = $request->gtp_test;
+
+            //tds
+            $documentcontet->tds_result = $request->tds_result;
+            $documentcontet->tds_test_wise = $request->tds_test_wise;
 
              // htsp
              $documentcontet->htsp_purpose = $request->htsp_purpose;

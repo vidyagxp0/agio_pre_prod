@@ -253,6 +253,66 @@
         }
     </style>
 
+    <style>
+         /*Main Table Styling */
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: auto; /* Adjusts column width dynamically */
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+    </style>
+
 </head>
 <body>
     <header class="">
@@ -283,9 +343,13 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>
-                    { Material Name & Product Name}
-                    </td>
+                <td style="width: 50%; padding: 5px; text-align: center; font-weight: bold;" class="doc-num">
+                    @if(!empty($data->document_content->gtp_product_material_name))
+                        {{ $data->document_content->gtp_product_material_name }}
+                    @else
+                        NA
+                    @endif
+                </td>
                 </tr>
             </tbody>
         </table>
@@ -301,15 +365,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMGTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMGTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else                            
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                    PMGTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                    PM/GTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                    PMGTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -345,7 +409,7 @@
                         @if ($document->revised === 'Yes')
                         {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
-                        -
+                        Nill
                         @endif
                         </span>
                     </td>
@@ -437,54 +501,58 @@
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 20px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody>
-        </table>
+            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <tbody>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        @php
+                            $inreviews = DB::table('stage_manages')
+                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                ->select('stage_manages.*', 'users.name as user_name')
+                                ->where('document_id', $document->id)
+                                ->where('stage', 'Review-Submit')
+                                ->where('deleted_at', null)
+                                ->get();
+                        @endphp
+                        <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
+                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                        <td style="padding: 20px; border: 1px solid #ddd;">  </td>        
+                    </tr>
+                </tbody>
+            </table> --}}
+
         <span>Format No.: QA/097/F8-00</span>
     </footer>
     
     <div class="content">
         <section>
-          <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
-            <div class="table-responsive retrieve-table">
-                <table class="table table-bordered" id="distribution-list">
-                    <thead>
-                        <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (!empty($GtpGridData))
-                            @foreach ($GtpGridData as $key => $item)
-                                <tr>
-                                    <td>{{ $key + 1 }}</td>
-                                    <td>{{ $item['test_gtp'] ?? '' }}</td>
-                                </tr>
-                            @endforeach
-                        @else
+
+        {{-- PROCEDURE START --}}
+                <div class="other-container ">
+                    <table>
+                        <thead>
                             <tr>
-                                <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                <th class="text-left">
+                                    <div class="bold">GTP TEST :-</div>
+                                </th>
                             </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->gtp_test, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{-- PROCEDURE END --}}
         </section>
     </div>
 
@@ -538,8 +606,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 760;
-                $x = 450;
+                $y = 165;
+                $x = 400;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

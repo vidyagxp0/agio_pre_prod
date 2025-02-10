@@ -114,6 +114,66 @@
             evt.currentTarget.className += " active";
         }
     </script>
+    <style>
+
+/*Main Table Styling */
+#isPasted {
+    width: 650px !important;
+    border-collapse: collapse;
+    table-layout: auto; /* Adjusts column width dynamically */
+}
+
+/* First column adjusts to its content */
+#isPasted td:first-child,
+#isPasted th:first-child {
+    white-space: nowrap; /* Prevent wrapping */
+    width: 1%; /* Shrink to fit content */
+    vertical-align: top;
+}
+
+/* Second column takes remaining space */
+#isPasted td:last-child,
+#isPasted th:last-child {
+    width: auto; /* Take remaining space */
+    vertical-align: top;
+    
+}
+
+/* Common Table Cell Styling */
+#isPasted th,
+#isPasted td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    max-width: 500px;
+word-wrap: break-word;
+overflow-wrap: break-word;
+}
+
+/* Paragraph Styling Inside Table Cells */
+#isPasted td > p {
+    text-align: justify;
+    text-justify: inter-word;
+    margin: 0;
+    max-width: 500px;
+word-wrap: break-word;
+overflow-wrap: break-word;
+}
+
+#isPasted img {
+    max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+    height: 100%; /* Maintain image aspect ratio */
+    display: block; /* Remove extra space below the image */
+    margin: 5px auto; /* Add spacing and center align */
+}
+
+/* If you want larger images */
+#isPasted td img {
+    max-width: 400px !important; /* Adjust this to your preferred maximum width */
+    height: 300px;
+    margin: 5px auto;
+}
+</style>
 
     <div id="data-fields">
         <div class="container-fluid">
@@ -5658,10 +5718,33 @@
                                 </div>
 
 
-                                <div class="col-12 sub-head">
-                                        Summary of Results
-                                </div>
-                                <div class="group-input">
+                                    <div class="col-12 sub-head">
+                                        A) Summary of Results
+
+                                        <div class="group-input">
+                                            <label for="procedure"></label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <textarea name="tds_result" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->tds_result : '' }}</textarea>
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                {{-- <div class="group-input">
                                     <label for="audit-agenda-grid">
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
                                         <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -5700,7 +5783,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                             <script>
                                 $(document).ready(function() {
                                     $('#ObservationAdd').click(function(e) {
@@ -5732,6 +5815,33 @@
                                 <div class="group-input">
                                     <label for="tds_remark">Remark</label>
                                     <textarea name="tds_remark">{{$document->tds_remark}}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12 sub-head">
+                                B) Test wise data and calculation:-
+
+                                <div class="group-input">
+                                    <label for="procedure"></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea name="tds_test_wise" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->tds_test_wise : '' }}</textarea>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
 
@@ -9510,7 +9620,14 @@
                                     </div>
                                 </div>
 
-                                <div class="group-input">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Product/Material Name</label>
+                                        <input type="text" name="gtp_product_material_name" value="{{$document->gtp_product_material_name}}">
+                                    </div>
+                                </div>
+
+                                {{-- <div class="group-input">
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add_gtp">+</button>
@@ -9554,6 +9671,32 @@
                                                 @endif
                                             </tbody>
                                         </table>
+                                    </div>
+                                </div> --}}
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="procedure">Test</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                require completion</small></div>
+                                        <textarea name="gtp_test" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->gtp_test : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
 

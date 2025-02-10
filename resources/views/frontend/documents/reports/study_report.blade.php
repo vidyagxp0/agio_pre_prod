@@ -281,7 +281,7 @@
         /* Common Table Cell Styling */
         #isPasted th,
         #isPasted td {
-            border: 1px solid #000;
+            border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
             max-width: 500px;

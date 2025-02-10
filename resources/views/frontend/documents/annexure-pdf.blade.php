@@ -280,10 +280,10 @@
         /* Common Table Cell Styling */
         #isPasted th,
         #isPasted td {
-            border: 1px solid #000;
+            border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
+            max-width: 500px !important;
         word-wrap: break-word;
         overflow-wrap: break-word;
         }
@@ -293,7 +293,7 @@
             text-align: justify;
             text-justify: inter-word;
             margin: 0;
-            max-width: 500px;
+            max-width: 500px !important;
         word-wrap: break-word;
         overflow-wrap: break-word;
         }
@@ -362,32 +362,31 @@
     <div class="content">
         <section>
             
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;" id=table1>
-                        <div class="w-100">
-                            <div class="anne">
-                                @if (!empty($annexures))
-                                    <h3 style="text-align: center; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
-                                    @foreach ($annexures as $index => $annexure)
-                                        @if (!empty($annexure))
-                                            <div style="margin-bottom: 1rem;">
-                                                <h4>Annexure {{ $index + 1 }}</h4>
-                                                <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
-                                                    <div style="max-width: 100%; overflow-x: auto;">
-                                                        {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                                    </div>
+        <div class="procedure-block">
+            <div class="w-100">
+                <div class="w-100" style="display:inline-block;" id="table1">
+                    <div class="w-100">
+                        <div class="anne">
+                            @if (!empty($annexures))
+                                <h3 style="text-align: center; margin-bottom: 1rem; font-weight:bold">Annexures</h3>
+                                @foreach ($annexures as $index => $annexure)
+                                    @if (!empty($annexure))
+                                        <div style="{{ $index > 0 ? 'page-break-before: always;' : '' }} margin-bottom: 1rem;">
+                                            <h4 style="font-weight:bold">Annexure {{ $index + 1 }}</h4>
+                                            <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
+                                                <div style="max-width: 100%; overflow-x: auto;">
+                                                    {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                                 </div>
                                             </div>
-                                        @endif
-                                    @endforeach
-                                @endif
-                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
 
 
         </section>
