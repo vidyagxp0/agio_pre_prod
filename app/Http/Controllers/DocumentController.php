@@ -1105,7 +1105,7 @@ class DocumentController extends Controller
         if (!empty($request->Annexure_FoCompAaNirogenkp)) {
             $content->Annexure_FoCompAaNirogenkp = serialize($request->Annexure_FoCompAaNirogenkp);
         }
-       
+
 
 
 
@@ -2637,6 +2637,24 @@ $documentcontet->Summary_PaVaReKp = $request->Summary_PaVaReKp ? serialize($requ
 $documentcontet->Conclusion_PaVaReKp = $request->Conclusion_PaVaReKp ? serialize($request->Conclusion_PaVaReKp) : serialize([]);
 $documentcontet->ProposedParameters_PaVaReKp = $request->ProposedParameters_PaVaReKp ? serialize($request->ProposedParameters_PaVaReKp) : serialize([]);
 $documentcontet->ReportApproval_PaVaReKp = $request->ReportApproval_PaVaReKp ? serialize($request->ReportApproval_PaVaReKp) : serialize([]);
+
+//   --starts---------------formate air and nitrogen protcal update tab start
+
+$documentcontet->Protocolapproval_FoCompAaNirogenkp = $request->Protocolapproval_FoCompAaNirogenkp ? serialize($request->Protocolapproval_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->Objective_FoCompAaNirogenkp = $request->Objective_FoCompAaNirogenkp ? serialize($request->Objective_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->Purpose_FoCompAaNirogenkp = $request->Purpose_FoCompAaNirogenkp ? serialize($request->Purpose_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->Scope_FoCompAaNirogenkp = $request->Scope_FoCompAaNirogenkp ? serialize($request->Scope_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->ExcutionTeamResp_FoCompAaNirogenkp = $request->ExcutionTeamResp_FoCompAaNirogenkp ? serialize($request->ExcutionTeamResp_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->Abbreviations_FoCompAaNirogenkp = $request->Abbreviations_FoCompAaNirogenkp ? serialize($request->Abbreviations_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->EquipmentSystemIde_FoCompAaNirogenkp = $request->EquipmentSystemIde_FoCompAaNirogenkp ? serialize($request->EquipmentSystemIde_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->DocumentFollowed_FoCompAaNirogenkp = $request->DocumentFollowed_FoCompAaNirogenkp ? serialize($request->DocumentFollowed_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->GenralConsPre_FoCompAaNirogenkp = $request->GenralConsPre_FoCompAaNirogenkp ? serialize($request->GenralConsPre_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->RevalidCrite_FoCompAaNirogenkp = $request->RevalidCrite_FoCompAaNirogenkp ? serialize($request->RevalidCrite_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->Precautions_FoCompAaNirogenkp = $request->Precautions_FoCompAaNirogenkp ? serialize($request->Precautions_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->RevalidProcess_FoCompAaNirogenkp = $request->RevalidProcess_FoCompAaNirogenkp ? serialize($request->RevalidProcess_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->AcceptanceCrite_FoCompAaNirogenkp = $request->AcceptanceCrite_FoCompAaNirogenkp ? serialize($request->AcceptanceCrite_FoCompAaNirogenkp) : serialize([]);
+$documentcontet->Annexure_FoCompAaNirogenkp = $request->Annexure_FoCompAaNirogenkp ? serialize($request->Annexure_FoCompAaNirogenkp) : serialize([]);
+
 
             $documentcontet->hod_comments = $request->hod_comments;
 
