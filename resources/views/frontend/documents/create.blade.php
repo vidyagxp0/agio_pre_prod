@@ -262,7 +262,7 @@
                 <button class="tablinks hidden-tabs" data-id="STUDY" onclick="openData(event, 'doc-study')">Study Report</button>
                 <button class="tablinks hidden-tabs" data-id="STUDYPROTOCOL" onclick="openData(event, 'doc-stprotocol')">Study Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDREPORT" onclick="openData(event, 'doc-eqpreport')">Equipment Hold Time Study Report</button>
-                
+                <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDPROTOCOL" onclick="openData(event, 'doc-eqpprotocol')">Equipment Hold Time Study Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
              
 
@@ -2103,7 +2103,7 @@
                     </div>
 
 
-                    <!-- equipment report -->
+                    <!-- Equipment Hold Time Study Report -->
 
                     <div id="doc-eqpreport" class="tabcontent">
                         <div class="orig-head">
@@ -2335,6 +2335,375 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subeqpreportapprovalAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Equipment Hold Time Study Protocol -->
+
+                    <div id="doc-eqpprotocol" class="tabcontent">
+                        <div class="orig-head">
+                          Equipment Hold Time Study Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="objective">Report No.</label>
+                                        <textarea name="eqp_report"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="objective">Batch No.</label>
+                                        <textarea name="eqp_batch"></textarea>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Approval</label>
+                                        <textarea name="eqp_approval"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="objective">Objective</label>
+                                        <textarea name="eqp_objective"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Scope</label>
+                                        <textarea name="eqp_scope"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="eqpresponsibility" id="eqpresponsibility">
+                                            Responsibility<button type="button" id="eqpresponsibilitybtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="eqpresponsibilitydiv">
+                                            <div class="singleEqpresponsibilityBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpresponsibility[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEqpResponsibilityAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="eqpdetails" id="eqpdetails">
+                                            Equipment & Product details<button type="button" id="eqpdetailsbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="eqpdetailsdiv">
+                                            <div class="singleEqpDetailsBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpdetails[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEqpDetailsAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+
+                                        <label for="eqpsampling" id="eqpsampling">
+                                            Sampling plan<button type="button" id="eqpsamplingbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="eqpsamplingdiv">
+                                            <div class="singleEqpSamplingBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpsampling[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEqpSamplingAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Samplingprocedure" id="Samplingprocedure">
+                                           Sampling and analysis procedure<button type="button" id="Samplingprocedurebtadd">+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <div id="Samplingprocedurediv">
+                                            <div class="singleSamplingprocedureBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="Samplingprocedure[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subSamplingprocedureAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="AcceptenceCriteria" id="AcceptenceCriteria">
+                                           Acceptance Criteria<button type="button" id="AcceptenceCriteriabtadd">+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <div id="AcceptenceCriteriadiv">
+                                            <div class="singleAcceptenceCriteriaBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="AcceptenceCriteria[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subAcceptenceCriteriaAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="EnvironmentalConditions" id="EnvironmentalConditions">
+                                            Environmental Conditions<button type="button" id="EnvironmentalConditionsbtadd">+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <div id="EnvironmentalConditionsdiv">
+                                            <div class="singleEnvironmentalConditionsBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="EnvironmentalConditions[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEnvironmentalConditionsAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="eqpdetailsdeviation" id="eqpdetailsdeviation">
+                                            Deviation (if any)<button type="button" id="eqpdetailsdeviationbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+
+                                        <div id="eqpdetailsdeviationdiv">
+                                            <div class="singleEqpdetailsdeviationBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpdetailsdeviation[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEqpdetailsdeviationAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="eqpdetailschangecontrol" id="eqpdetailschangecontrol">
+                                            Change Control ( If Any)<button type="button" id="eqpdetailschangecontrolbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+
+                                        <div id="eqpdetailschangecontroldiv">
+                                            <div class="singleEqpdetailschangecontrolBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpdetailschangecontrol[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEqpdetailschangecontrolAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="eqpdetailssummary" id="eqpdetailssummary">
+                                            Summary<button type="button" id="eqpdetailssummarybtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+
+
+                                        <div id="eqpdetailssummarydiv">
+
+                                            <div class="singleEqpdetailssummaryBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpdetailssummary[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subEqpdetailssummaryAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="eqpdetailsconclusion" id="eqpdetailsconclusion">
+                                            Conclusion<button type="button" id="eqpdetailsconclusionbtadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+
+                                        <div id="eqpdetailsconclusiondiv">
+                                            <div class="singleEqpdetailsconclusionBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpdetailsconclusion[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button type="button" class="btn btn-dark subeqpdetailsconclusionAdd" >+</button>
+                                                            
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="eqpdetailstraining" id="eqpdetailstraining">
+                                            Training<button type="button" id="eqpdetailstrainingbtadd" name="button">+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+
+                                        <div id="eqpdetailstrainingdiv">
+                                            <div class="singleEqpdetailstrainingBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="eqpdetailstraining[]" class=""></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subeqpdetailstrainingAdd">+</button>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger removeAllBlocks">Remove</button>

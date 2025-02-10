@@ -1182,22 +1182,43 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        @if ($data->document_content)
-                                                                                {!! strip_tags(
-                                                $data->document_content->eqpconclusion,
-                                                '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>'
-                                            ) !!}
-                                        @endif
+                        <div class="procedure-block">
+                            <div class="w-100">
+                                <div class="w-100" style="display:inline-block;">
+                                    <div class="w-100">
+                                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                            @php $i = 1; @endphp
+                                            @if (
+                                                    $data->document_content &&
+                                                    !empty($data->document_content->eqpconclusion) &&
+                                                    is_array(unserialize($data->document_content->eqpconclusion))
+                                                )
+                                            @foreach (unserialize($data->document_content->eqpconclusion) as $key => $res)
+                                                @php
+                                                    $isSub = str_contains($key, 'sub');
+                                                @endphp
+                                                @if (!empty($res))
+                                                    <div style="position: relative;">
+                                                        <span
+                                                            style="position: absolute; left: -3rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                        {!! nl2br($res) !!} <br>
+                                                    </div>
+                                                @endif
+                                                @php
+                                                    if (!$isSub) {
+                                                        $i++;
+                                                        $sub_index = 1;
+                                                    } else {
+                                                        $sub_index++;
+                                                    }
+                                                @endphp
+                                            @endforeach
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
                 {{-- PROCEDURE END --}}
 
@@ -1297,10 +1318,10 @@
                                     @php $i = 1; @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->reporting) &&
-                                            is_array(unserialize($data->document_content->reporting))
+                                            !empty($data->document_content->eqpreportapproval) &&
+                                            is_array(unserialize($data->document_content->eqpreportapproval))
                                         )
-                 @foreach (unserialize($data->document_content->reporting) as $key => $res)
+                 @foreach (unserialize($data->document_content->eqpreportapproval) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1556,21 +1577,6 @@
 
 
                 <section class="doc-control" style="page-break-after: never;">
-                    <div class="head">
-                        <div>
-                            <h5>Content of Report not limited as per above table it may vary</h5>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div class="block mb-40">
-                            <div class="block-head">
-                                REPORT APPROVAL
-                            </div>
-                            <div class="block-content">
-                                <!-- Content goes here -->
-                            </div>
-                        </div>
-                    </div>
 
                     </thead>
 

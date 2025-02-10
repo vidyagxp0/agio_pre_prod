@@ -767,6 +767,12 @@ class DocumentController extends Controller
             $content->equipment_objective = $request->equipment_objective;
             $content->equipment_scope = $request->equipment_scope;
             $content->equipment_purpose = $request->equipment_purpose;
+
+            //Equipment hold time study protocol
+
+            $content->eqp_approval = $request->eqp_approval;
+            $content->eqp_objective = $request->eqp_objective;
+            $content->eqp_scope = $request->eqp_scope;
             
             
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
@@ -780,6 +786,50 @@ class DocumentController extends Controller
 
                 $content->hod_attachments = json_encode($files);
             }
+
+            if (!empty($request->eqpresponsibility)) {
+                $content->eqpresponsibility = serialize($request->eqpresponsibility);
+            }
+            if (!empty($request->eqpdetails)) {
+                $content->eqpdetails = serialize($request->eqpdetails);
+            }
+
+            if (!empty($request->eqpsampling)) {
+                $content->eqpsampling = serialize($request->eqpsampling);
+            }
+
+            if (!empty($request->Samplingprocedure)) {
+                $content->Samplingprocedure = serialize($request->Samplingprocedure);
+            }
+
+            if (!empty($request->AcceptenceCriteria)) {
+                $content->AcceptenceCriteria = serialize($request->AcceptenceCriteria);
+            }
+
+            if (!empty($request->EnvironmentalConditions)) {
+                $content->EnvironmentalConditions = serialize($request->EnvironmentalConditions);
+            }
+
+            if (!empty($request->eqpdetailsdeviation)) {
+                $content->eqpdetailsdeviation = serialize($request->eqpdetailsdeviation);
+            }
+
+            if (!empty($request->eqpdetailschangecontrol)) {
+                $content->eqpdetailschangecontrol = serialize($request->eqpdetailschangecontrol);
+            }
+
+            if (!empty($request->eqpdetailssummary)) {
+                $content->eqpdetailssummary = serialize($request->eqpdetailssummary);
+            }
+
+            if (!empty($request->eqpdetailsconclusion)) {
+                $content->eqpdetailsconclusion = serialize($request->eqpdetailsconclusion);
+            }
+
+            if (!empty($request->eqpdetailstraining)) {
+                $content->eqpdetailstraining = serialize($request->eqpdetailstraining);
+            }
+
 
             if (!empty($request->euipmentresponsibility)) {
                 $content->euipmentresponsibility = serialize($request->euipmentresponsibility);
@@ -2313,6 +2363,61 @@ class DocumentController extends Controller
             //study protocol end
 
 
+            //Equipment hold time study protocol
+
+            $documentcontet->eqp_approval = $request->eqp_approval;
+            $documentcontet->eqp_objective = $request->eqp_objective;
+            $documentcontet->eqp_scope = $request->eqp_scope;
+
+            if (!empty($request->eqpresponsibility)) {
+                $documentcontet->eqpresponsibility = serialize($request->eqpresponsibility);
+            }
+            if (!empty($request->eqpdetails)) {
+                $documentcontet->eqpdetails = serialize($request->eqpdetails);
+            }
+
+            if (!empty($request->eqpsampling)) {
+                $documentcontet->eqpsampling = serialize($request->eqpsampling);
+            }
+
+            if (!empty($request->Samplingprocedure)) {
+                $documentcontet->Samplingprocedure = serialize($request->Samplingprocedure);
+            }
+
+            if (!empty($request->AcceptenceCriteria)) {
+                $documentcontet->AcceptenceCriteria = serialize($request->AcceptenceCriteria);
+            }
+
+            if (!empty($request->EnvironmentalConditions)) {
+                $documentcontet->EnvironmentalConditions = serialize($request->EnvironmentalConditions);
+            }
+
+            if (!empty($request->eqpdetailsdeviation)) {
+                $documentcontet->eqpdetailsdeviation = serialize($request->eqpdetailsdeviation);
+            }
+
+            if (!empty($request->eqpdetailschangecontrol)) {
+                $documentcontet->eqpdetailschangecontrol = serialize($request->eqpdetailschangecontrol);
+            }
+
+            if (!empty($request->eqpdetailssummary)) {
+                $documentcontet->eqpdetailssummary = serialize($request->eqpdetailssummary);
+            }
+
+            if (!empty($request->eqpdetailsconclusion)) {
+                $documentcontet->eqpdetailsconclusion = serialize($request->eqpdetailsconclusion);
+            }
+
+            if (!empty($request->eqpdetailstraining)) {
+                $documentcontet->eqpdetailstraining = serialize($request->eqpdetailstraining);
+            }
+
+
+
+
+
+
+             //Equipment hold time study report
             $documentcontet->equipment_objective = $request->equipment_objective;
             $documentcontet->equipment_scope = $request->equipment_scope;
             $documentcontet->equipment_purpose = $request->equipment_purpose;
