@@ -995,6 +995,93 @@ class DocumentController extends Controller
 
 
 
+
+
+
+
+    //-----------------------Process Validation Report--------------------------------------- 
+
+            $content->generic_pvr = $request->generic_pvr;
+            $content->product_code_pvr = $request->product_code_pvr;
+            $content->std_batch_pvr = $request->std_batch_pvr;
+            $content->category_pvr = $request->category_pvr;
+            $content->label_claim_pvr = $request->label_claim_pvr;
+        
+            $content->market_pvr = $request->market_pvr;
+            $content->shelf_life_pvr = $request->shelf_life_pvr;
+            $content->bmr_no_pvr = $request->bmr_no_pvr;
+            $content->mfr_no_pvr = $request->mfr_no_pvr;
+            
+    
+           if (!empty($request->purpose_pvr)) {
+                $content->purpose_pvr = serialize($request->purpose_pvr);
+            }
+            if (!empty($request->scope_pvr)) {
+                $content->scope_pvr = serialize($request->scope_pvr);
+            }
+            if (!empty($request->batchdetail_pvr)) {
+                $content->batchdetail_pvr = serialize($request->batchdetail_pvr);
+            }
+
+            if (!empty($request->refrence_document_pvr)) {
+                $content->refrence_document_pvr = serialize($request->refrence_document_pvr);
+            }
+            if (!empty($request->active_raw_material_pvr)) {
+                $content->active_raw_material_pvr = serialize($request->active_raw_material_pvr);
+            }
+            if (!empty($request->primary_packingmaterial_pvr)) {
+                $content->primary_packingmaterial_pvr = serialize($request->primary_packingmaterial_pvr);
+            }
+            if (!empty($request->used_equipment_calibration_pvr)) {
+                $content->used_equipment_calibration_pvr = serialize($request->used_equipment_calibration_pvr);
+            }
+            if (!empty($request->result_of_intermediate_pvr)) {
+                $content->result_of_intermediate_pvr = serialize($request->result_of_intermediate_pvr);
+            }
+            if (!empty($request->result_of_finished_product_pvr)) {
+                $content->result_of_finished_product_pvr = serialize($request->result_of_finished_product_pvr);
+            }
+
+            if (!empty($request->result_of_packing_finished_pvr)) {
+                $content->result_of_packing_finished_pvr = serialize($request->result_of_packing_finished_pvr);
+            }
+            if (!empty($request->criticalprocess_parameter_pvr)) {
+                $content->criticalprocess_parameter_pvr = serialize($request->criticalprocess_parameter_pvr);
+            }
+            if (!empty($request->yield_at_various_stage_pvr)) {
+                $content->yield_at_various_stage_pvr = serialize($request->yield_at_various_stage_pvr);
+            }
+            if (!empty($request->hold_time_study_pvr)) {
+                $content->hold_time_study_pvr = serialize($request->hold_time_study_pvr);
+            }
+            if (!empty($request->cleaningvalidation_pvr)) {
+                $content->cleaningvalidation_pvr = serialize($request->cleaningvalidation_pvr);
+            }
+            if (!empty($request->stability_study_pvr)) {
+                $content->stability_study_pvr = serialize($request->stability_study_pvr);
+            }
+            if (!empty($request->deviation_if_any_pvr)) {
+                $content->deviation_if_any_pvr = serialize($request->deviation_if_any_pvr);
+            }
+            if (!empty($request->changecontrol_pvr)) {
+                $content->changecontrol_pvr = serialize($request->changecontrol_pvr);
+            }
+
+           if (!empty($request->summary_pvr)) {
+                $content->summary_pvr = serialize($request->summary_pvr);
+            }
+            if (!empty($request->conclusion_pvr)) {
+                $content->conclusion_pvr = serialize($request->conclusion_pvr);
+            }
+            if (!empty($request->proposed_parameter_upcoming_batch_pvr)) {
+                $content->proposed_parameter_upcoming_batch_pvr = serialize($request->proposed_parameter_upcoming_batch_pvr);
+            }
+            if (!empty($request->report_approval_pvr)) {
+                $content->report_approval_pvr = serialize($request->report_approval_pvr);
+            }
+
+    //-----------------------END Process Validation Report--------------------------------------- 
+
             // if ($request->hasfile('references')) {
 
             if (!empty($request->ann)) {
@@ -1447,6 +1534,9 @@ class DocumentController extends Controller
         //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
         //     ->get();
 
+
+
+        // dd($document);
         return view('frontend.documents.edit', compact(
             'document',
             'departments',
@@ -2313,6 +2403,49 @@ class DocumentController extends Controller
             
             //////PRVP End /////////////////
 
+
+//---------------------------process Validation Report--------------------------------------------
+
+            $documentcontet->generic_pvr = $request->generic_pvr;
+            $documentcontet->product_code_pvr = $request->product_code_pvr;
+            $documentcontet->std_batch_pvr = $request->std_batch_pvr;
+            $documentcontet->category_pvr = $request->category_pvr;
+            $documentcontet->label_claim_pvr = $request->label_claim_pvr;
+            $documentcontet->market_pvr = $request->market_pvr;
+            $documentcontet->shelf_life_pvr = $request->shelf_life_pvr;
+            $documentcontet->bmr_no_pvr = $request->bmr_no_pvr;
+            $documentcontet->mfr_no_pvr = $request->mfr_no_pvr;
+           
+            $documentcontet->purpose_pvr = $request->purpose_pvr ? serialize($request->purpose_pvr) : serialize([]);
+            $documentcontet->scope_pvr = $request->scope_pvr ? serialize($request->scope_pvr) : serialize([]);
+            $documentcontet->batchdetail_pvr = $request->batchdetail_pvr ? serialize($request->batchdetail_pvr) : serialize([]);
+
+            $documentcontet->refrence_document_pvr = $request->refrence_document_pvr ? serialize($request->refrence_document_pvr) : serialize([]);
+            $documentcontet->active_raw_material_pvr = $request->active_raw_material_pvr ? serialize($request->active_raw_material_pvr) : serialize([]);
+            $documentcontet->primary_packingmaterial_pvr = $request->primary_packingmaterial_pvr ? serialize($request->primary_packingmaterial_pvr) : serialize([]);
+            $documentcontet->used_equipment_calibration_pvr = $request->used_equipment_calibration_pvr ? serialize($request->used_equipment_calibration_pvr) : serialize([]);
+
+            
+            $documentcontet->result_of_intermediate_pvr = $request->result_of_intermediate_pvr ? serialize($request->result_of_intermediate_pvr) : serialize([]);
+            $documentcontet->result_of_finished_product_pvr = $request->result_of_finished_product_pvr ? serialize($request->result_of_finished_product_pvr) : serialize([]);
+            $documentcontet->result_of_packing_finished_pvr = $request->result_of_packing_finished_pvr ? serialize($request->result_of_packing_finished_pvr) : serialize([]);
+            $documentcontet->criticalprocess_parameter_pvr = $request->criticalprocess_parameter_pvr ? serialize($request->criticalprocess_parameter_pvr) : serialize([]);
+            $documentcontet->yield_at_various_stage_pvr = $request->yield_at_various_stage_pvr ? serialize($request->yield_at_various_stage_pvr) : serialize([]);
+            $documentcontet->hold_time_study_pvr = $request->hold_time_study_pvr ? serialize($request->hold_time_study_pvr) : serialize([]);
+
+            $documentcontet->cleaningvalidation_pvr = $request->cleaningvalidation_pvr ? serialize($request->cleaningvalidation_pvr) : serialize([]);
+            $documentcontet->stability_study_pvr = $request->stability_study_pvr ? serialize($request->stability_study_pvr) : serialize([]);
+            $documentcontet->deviation_if_any_pvr = $request->deviation_if_any_pvr ? serialize($request->deviation_if_any_pvr) : serialize([]);
+            $documentcontet->changecontrol_pvr = $request->changecontrol_pvr ? serialize($request->changecontrol_pvr) : serialize([]);
+            $documentcontet->summary_pvr = $request->summary_pvr ? serialize($request->summary_pvr) : serialize([]);
+            $documentcontet->conclusion_pvr = $request->conclusion_pvr ? serialize($request->conclusion_pvr) : serialize([]);
+
+            $documentcontet->proposed_parameter_upcoming_batch_pvr = $request->proposed_parameter_upcoming_batch_pvr ? serialize($request->proposed_parameter_upcoming_batch_pvr) : serialize([]);
+            $documentcontet->report_approval_pvr = $request->report_approval_pvr ? serialize($request->report_approval_pvr) : serialize([]);
+
+//---------------------------process Validation Report--------------------------------------------
+
+
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
@@ -2393,7 +2526,7 @@ $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? s
             if (!empty($request->distribution)) {
                 $documentcontet->distribution = serialize($request->distribution);
             }
-
+          //  dd($documentcontet);
 
             $documentcontet->save();
 
@@ -3176,6 +3309,7 @@ $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? s
 
 
         $documentContent = DocumentContent::where('document_id', $id)->first();
+        // dd($documentContent);
         $annexures = [];
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
@@ -3246,7 +3380,7 @@ $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? s
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
