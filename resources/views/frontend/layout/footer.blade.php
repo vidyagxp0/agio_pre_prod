@@ -571,6 +571,179 @@
 
         });
 
+        //Packing validation report by kp
+
+        $('#Purpose_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlePurpose_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Purpose_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPurpose_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Purpose_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#Scope_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleScope_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Scope_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subScope_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Scope_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#BatchDetails_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleBatchDetails_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="BatchDetails_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subBatchDetails_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Scope_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#ReferenceDocument_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleReferenceDocument_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ReferenceDocument_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReferenceDocument_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ReferenceDocument_PaVaReKpdiv').append(html);
+
+        });
+
+
+        $('#PackingMaterialApprovalVendDeat_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlePackingMaterialApprovalVendDeat_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="PackingMaterialApprovalVendDeat_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPackingMaterialApprovalVendDeat_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#PackingMaterialApprovalVendDeat_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#UsedEquipmentCalibrationQualiSta_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="UsedEquipmentCalibrationQualiSta_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#UsedEquipmentCalibrationQualiSta_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#ResultOfPacking_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleResultOfPacking_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ResultOfPacking_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subResultOfPacking_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ResultOfPacking_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#CriticalProcessParameters_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleCriticalProcessParameters_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="CriticalProcessParameters_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subCriticalProcessParameters_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ResultOfPacking_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#yield_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleyield_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="yield_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subyield_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#yield_PaVaReKpdiv').append(html);
+
+        });
+
+
+        $('#HoldTimeStudy_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleHoldTimeStudy_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="HoldTimeStudy_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subHoldTimeStudy_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#HoldTimeStudy_PaVaReKpdiv').append(html);
+
+        });
+
+        $('#CleaningValidation_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleCleaningValidation_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="CleaningValidation_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subCleaningValidation_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#CleaningValidation_PaVaReKpdiv').append(html);
+
+        });
+
+
+        $('#StabilityStudy_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleStabilityStudy_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="StabilityStudy_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subStabilityStudy_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#StabilityStudy_PaVaReKpdiv').append(html);
+
+        });
+
+
+        $('#DeviationIfAny_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleDeviationIfAny_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="DeviationIfAny_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subDeviationIfAny_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#DeviationIfAny_PaVaReKpdiv').append(html);
+
+        });
+
+
+        $('#ChangeControlifany_PaVaReKpbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleChangeControlifany_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ChangeControlifany_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subChangeControlifany_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#ChangeControlifany_PaVaReKpdiv').append(html);
+
+        });
+
+
+
+        $('#Summary_PaVaReKpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleSummary_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Summary_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subSummary_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#Summary_PaVaReKpdiv').append(html);
+
+            });
+
+
+            $('#Conclusion_PaVaReKpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleConclusion_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Conclusion_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subConclusion_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#Conclusion_PaVaReKpdiv').append(html);
+
+            });
+
+
+            $('#ProposedParameters_PaVaReKpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleProposedParameters_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ProposedParameters_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subProposedParameters_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#ProposedParameters_PaVaReKpdiv').append(html);
+
+            });
+
+            $('#ReportApproval_PaVaReKpbtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleReportApproval_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ReportApproval_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReportApproval_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#ReportApproval_PaVaReKpdiv').append(html);
+
+            });
+
 
 
 
@@ -731,7 +904,7 @@
 
         });
 
-       
+
 
         $(document).on('click', '.abbreviationbtnRemove', function(e) {
             e.preventDefault();
@@ -739,7 +912,7 @@
         })
 
 
-        //ashish code 
+        //ashish code
 
 
 
@@ -795,7 +968,7 @@
         });
 
 
-        
+
     $('#active_raw_material_pvrbtnadd').click(function(e) {
 
     var html =
@@ -806,7 +979,7 @@
     });
 
 
-                    
+
     $('#primary_packingmaterial_pvrbtnadd').click(function(e) {
 
     var html =
@@ -994,9 +1167,9 @@
             $('#definitiondiv').append(html);
 
         });
-        
 
-        
+
+
 
         $('#responsibilityhtpsbtnadd').click(function(e) {
 
@@ -1084,13 +1257,13 @@
 
 
 
-        
-       
 
 
-        
 
-        
+
+
+
+
 
 
         let subMaterialsAdd = 0;
@@ -1125,6 +1298,24 @@
         let subSummary_HoTiStReAdd = 0;
         let subConclusion_HoTiStReAdd = 0;
         let subReportApproval_HoTiStReAdd = 0;
+        let subPurpose_PaVaReKpAdd = 0;
+        let subScope_PaVaReKpAdd = 0;
+        let subBatchDetails_PaVaReKpAdd = 0;
+        let subReferenceDocument_PaVaReKpAdd = 0;
+        let subPackingMaterialApprovalVendDeat_PaVaReKpAdd = 0;
+        let subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd = 0;
+        let subResultOfPacking_PaVaReKpAdd = 0;
+        let subCriticalProcessParameters_PaVaReKpAdd = 0;
+        let subyield_PaVaReKpAdd = 0;
+        let subHoldTimeStudy_PaVaReKpAdd = 0;
+        let subCleaningValidation_PaVaReKpAdd = 0;
+        let subStabilityStudy_PaVaReKpAdd = 0;
+        let subDeviationIfAny_PaVaReKpAdd = 0;
+        let subChangeControlifany_PaVaReKpAdd = 0;
+        let subSummary_PaVaReKpAdd = 0;
+        let subConclusion_PaVaReKpAdd = 0;
+        let subProposedParameters_PaVaReKpAdd = 0;
+        let subReportApproval_PaVaReKpAdd = 0;
         let subAbbreviationAdd = 0;
         let subDefinitionAdd = 0;
         let subReferencesAdd = 0;
@@ -1167,7 +1358,7 @@
         let subconclusion_pvrAdd=0;
         let subproposed_parameter_upcoming_batch_pvrAdd=0;
         let subreport_approval_pvrAdd=0;
-        
+
 
         let subResponsibilitiesAdd = 0;
         let subReferencesssAdd = 0;
@@ -1254,7 +1445,7 @@
             }
 
         });
-      
+
 
         $(document).on('click', '.subresponsibilityhtpsAdd', function(e) {
             e.preventDefault();
@@ -1347,7 +1538,7 @@
         });
 
 
-        
+
         $(document).on('click', '.subDeviationhtpsAdd', function(e) {
             e.preventDefault();
             subDeviationhtpsAdd = Math.round(Math.random() * 10000);
@@ -1527,7 +1718,7 @@
         });
 
 
-        //saurav 
+        //saurav
         $(document).on('click', '.subResponsibilitiesAdd', function(e) {
             e.preventDefault();
             subResponsibilitiesAdd = Math.round(Math.random() * 10000);
@@ -2377,7 +2568,7 @@
 
             });
 
-        // saurav code end 
+        // saurav code end
 
 
         //ashish subcategory
@@ -2435,7 +2626,7 @@
                 closestSingleBlock.after('<div class="subSinglebatchdetail_pvrBlock">' + html + '</div>');
             }
         });
-       
+
 
 
 
@@ -2455,7 +2646,7 @@
                 closestSingleBlock.after('<div class="subSinglerefrence_document_pvrBlock">' + html + '</div>');
             }
         });
-       
+
 
 
 
@@ -2481,7 +2672,7 @@
         });
 
 
-        
+
         $(document).on('click', '.subactive_raw_material_pvrAdd', function(e) {
             e.preventDefault();
             subactive_raw_material_pvrAdd = Math.round(Math.random() * 10000);
@@ -2592,7 +2783,7 @@
                 closestSingleBlock.after('<div class="subSingleresult_of_packing_finished_pvrBlock">' + html + '</div>');
             }
         });
-        
+
 
 
         $(document).on('click', '.subcriticalprocess_parameter_pvrAdd', function(e) {
@@ -2650,7 +2841,7 @@
             }
         });
 
-        
+
         $(document).on('click', '.subcleaningvalidation_pvrAdd', function(e) {
             e.preventDefault();
             subcleaningvalidation_pvrAdd = Math.round(Math.random() * 10000);
@@ -2669,7 +2860,7 @@
         });
 
 
-        
+
         $(document).on('click', '.substability_study_pvrAdd', function(e) {
             e.preventDefault();
             substability_study_pvrAdd = Math.round(Math.random() * 10000);
@@ -2704,7 +2895,7 @@
             }
         });
 
-        
+
         $(document).on('click', '.subchangecontrol_pvrAdd', function(e) {
             e.preventDefault();
             subchangecontrol_pvrAdd = Math.round(Math.random() * 10000);
@@ -2986,6 +3177,325 @@
         });
 
 
+        // packing validation report by kp
+        $(document).on('click', '.subPurpose_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subPurpose_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Purpose_PaVaReKp[sub_'+ subPurpose_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePurpose_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePurpose_PaVaReKpBlock', '.subsinglePurpose_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePurpose_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subScope_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subScope_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Scope_PaVaReKp[sub_'+ subScope_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleScope_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleScope_PaVaReKpBlock', '.subsingleScope_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleScope_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subBatchDetails_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subBatchDetails_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="BatchDetails_PaVaReKp[sub_'+ subBatchDetails_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleBatchDetails_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleBatchDetails_PaVaReKpBlock', '.subsingleBatchDetails_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleBatchDetails_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subReferenceDocument_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subReferenceDocument_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ReferenceDocument_PaVaReKp[sub_'+ subReferenceDocument_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReferenceDocument_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferenceDocument_PaVaReKpBlock', '.subsingleReferenceDocument_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReferenceDocument_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subPackingMaterialApprovalVendDeat_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subPackingMaterialApprovalVendDeat_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="PackingMaterialApprovalVendDeat_PaVaReKp[sub_'+ subPackingMaterialApprovalVendDeat_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePackingMaterialApprovalVendDeat_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePackingMaterialApprovalVendDeat_PaVaReKpBlock', '.subsinglePackingMaterialApprovalVendDeat_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePackingMaterialApprovalVendDeat_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="UsedEquipmentCalibrationQualiSta_PaVaReKp[sub_'+ subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock', '.subsingleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subResultOfPacking_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subResultOfPacking_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ResultOfPacking_PaVaReKp[sub_'+ subResultOfPacking_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleResultOfPacking_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleResultOfPacking_PaVaReKpBlock', '.subsingleResultOfPacking_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleResultOfPacking_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subCriticalProcessParameters_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subCriticalProcessParameters_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="CriticalProcessParameters_PaVaReKp[sub_'+ subCriticalProcessParameters_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleCriticalProcessParameters_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleCriticalProcessParameters_PaVaReKpBlock', '.subsingleCriticalProcessParameters_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleCriticalProcessParameters_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subyield_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subyield_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="yield_PaVaReKp[sub_'+ subyield_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleyield_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleyield_PaVaReKpBlock', '.subsingleyield_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleyield_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subHoldTimeStudy_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subHoldTimeStudy_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="HoldTimeStudy_PaVaReKp[sub_'+ subHoldTimeStudy_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleHoldTimeStudy_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleHoldTimeStudy_PaVaReKpBlock', '.subsingleHoldTimeStudy_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleHoldTimeStudy_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subCleaningValidation_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subCleaningValidation_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="CleaningValidation_PaVaReKp[sub_'+ subCleaningValidation_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleCleaningValidation_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleCleaningValidation_PaVaReKpBlock', '.subsingleCleaningValidation_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleCleaningValidation_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subStabilityStudy_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subStabilityStudy_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="StabilityStudy_PaVaReKp[sub_'+ subStabilityStudy_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleStabilityStudy_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleStabilityStudy_PaVaReKpBlock', '.subsingleStabilityStudy_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleStabilityStudy_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subDeviationIfAny_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subDeviationIfAny_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="DeviationIfAny_PaVaReKp[sub_'+ subDeviationIfAny_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDeviationIfAny_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDeviationIfAny_PaVaReKpBlock', '.subsingleDeviationIfAny_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDeviationIfAny_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+
+        $(document).on('click', '.subChangeControlifany_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subChangeControlifany_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ChangeControlifany_PaVaReKp[sub_'+ subChangeControlifany_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleChangeControlifany_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleChangeControlifany_PaVaReKpBlock', '.subsingleChangeControlifany_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleChangeControlifany_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subSummary_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subSummary_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Summary_PaVaReKp[sub_'+ subSummary_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleSummary_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleSummary_PaVaReKpBlock', '.subsingleSummary_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleSummary_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subConclusion_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subConclusion_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Conclusion_PaVaReKp[sub_'+ subConclusion_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleConclusion_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleConclusion_PaVaReKpBlock', '.subsingleConclusion_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleConclusion_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subProposedParameters_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subProposedParameters_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ProposedParameters_PaVaReKp[sub_'+ subProposedParameters_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleProposedParameters_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleProposedParameters_PaVaReKpBlock', '.subsingleProposedParameters_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleProposedParameters_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subReportApproval_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subReportApproval_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ReportApproval_PaVaReKp[sub_'+ subReportApproval_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReportApproval_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReportApproval_PaVaReKpBlock', '.subsingleReportApproval_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReportApproval_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+
+
 
 
         $(document).on('click', '.subAbbreviationAdd', function(e) {
@@ -3006,7 +3516,6 @@
         });
 
 
-       
 
 
 
@@ -3046,7 +3555,7 @@
         });
 
 
-       
+
 
         $(document).on('click', '.subAnnexureAdd', function(e) {
             e.preventDefault();
@@ -3065,7 +3574,7 @@
             }
         });
 
-       
+
 
 
 
