@@ -854,7 +854,7 @@
                             <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                 <div class="w-100">
                                     <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                        {!! $data->document_content ? nl2br($data->document_content->equipment_objective) : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -879,7 +879,7 @@
                                 <div class="w-100">
                                     <div class="text-justify"
                                         style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                        {!! $data->document_content ? nl2br($data->document_content->equipment_scope) : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -887,58 +887,32 @@
                     </div>
                 </div>
 
-                <table class="mb-15">
+            <div class="other-container">
+                <table>
                     <tbody>
                         <tr>
 
-                            <th class="w-5 vertical-baseline">3.</th>
-                            <th class="w-95 text-left">
+                            <th class="w-5">3.</th>
+                            <th class="text-left">
                                 <div class="bold">Purpose</div>
                             </th>
                         </tr>
                     </tbody>
                 </table>
 
-                <div class="procedure-block">
-                    <div class="w-100">
-                        <div class="w-100" style="display:inline-block;">
-                            <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @if (
-                                            $data->document_content &&
-                                            !empty($data->document_content->responsibility) &&
-                                            is_array(unserialize($data->document_content->materials_and_equipments))
-                                        )
-    @foreach (unserialize($data->document_content->responsibility) as $key => $res)
-                                    @php
-                                        $isSub = str_contains($key, 'sub');
-                                    @endphp
-                                    @if (!empty($res))
-                                        <div style="position: relative;">
-                                            <span
-                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                            {!! nl2br($res) !!} <br>
-                                        </div>
-                                    @endif
-                                    @php
-                                        if (!$isSub) {
-                                            $i++;
-                                            $sub_index = 1;
-                                        } else {
-                                            $sub_index++;
-                                        }
-                                    @endphp
-                                     @endforeach
-                                    @endif
-
+                <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div class="text-justify"
+                                        style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        {!! $data->document_content ? nl2br($data->document_content->equipment_purpose) : '' !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                </div>                
+            </div>
 
                 <table class="mb-15">
                     <tbody>
@@ -961,10 +935,10 @@
                                     @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->accountability) &&
-                                            is_array(unserialize($data->document_content->accountability))
+                                            !empty($data->document_content->euipmentresponsibility) &&
+                                            is_array(unserialize($data->document_content->euipmentresponsibility))
 )
-            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+            @foreach (unserialize($data->document_content->euipmentresponsibility) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -1012,10 +986,10 @@
                                     @php $i = 1; @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->references) &&
-                                            is_array(unserialize($data->document_content->references))
+                                            !empty($data->document_content->eqpAnalyticalReport) &&
+                                            is_array(unserialize($data->document_content->eqpAnalyticalReport))
                                         )
-        @foreach (unserialize($data->document_content->references) as $key => $res)
+        @foreach (unserialize($data->document_content->eqpAnalyticalReport) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1064,10 +1038,10 @@
                                     @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->abbreviation) &&
-                                            is_array(unserialize($data->document_content->abbreviation))
+                                            !empty($data->document_content->eqpdeviation) &&
+                                            is_array(unserialize($data->document_content->eqpdeviation))
                                         )
-        @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+        @foreach (unserialize($data->document_content->eqpdeviation) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1114,7 +1088,7 @@
                                     @php
                                         $i = 1;
                                         $definitions = $data->document_content
-                                            ? unserialize($data->document_content->defination)
+                                            ? unserialize($data->document_content->eqpchangecontrol)
                                             : [];
                                     @endphp
                                     @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
@@ -1167,8 +1141,8 @@
                                         $i = 1;
                                         $sub_index = 1;
                                     @endphp
-                                    @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                                                    @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                    @if ($data->document_content && is_array(unserialize($data->document_content->eqpsummary)))
+                                                                    @foreach (unserialize($data->document_content->eqpsummary) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1215,7 +1189,7 @@
                                     <div class="custom-content-wrapper">
                                         @if ($data->document_content)
                                                                                 {!! strip_tags(
-                                                $data->document_content->procedure,
+                                                $data->document_content->eqpconclusion,
                                                 '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>'
                                             ) !!}
                                         @endif

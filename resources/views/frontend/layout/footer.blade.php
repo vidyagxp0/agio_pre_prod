@@ -731,6 +731,8 @@
 
         });
 
+       
+
         $(document).on('click', '.abbreviationbtnRemove', function(e) {
             e.preventDefault();
             $(this).closest('div.row').remove();
@@ -3003,6 +3005,12 @@
             }
         });
 
+
+       
+
+
+
+
         $(document).on('click', '.subDefinitionAdd', function(e) {
             e.preventDefault();
             subDefinitionAdd = Math.round(Math.random() * 10000);
@@ -3037,6 +3045,9 @@
             }
         });
 
+
+       
+
         $(document).on('click', '.subAnnexureAdd', function(e) {
             e.preventDefault();
             subAnnexureAdd = Math.round(Math.random() * 10000);
@@ -3053,6 +3064,11 @@
                 closestSingleBlock.after('<div class="subSingleAnnexureBlock">' + html + '</div>');
             }
         });
+
+       
+
+
+
 
         $(document).on('click', '.subReportingAdd', function(e) {
             e.preventDefault();
@@ -3097,6 +3113,9 @@
             $('#referencesdiv').append(html);
 
         });
+
+
+
 
         $('#annbtadd').click(function(e) {
 
