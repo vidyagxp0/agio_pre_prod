@@ -756,17 +756,7 @@ class DocumentController extends Controller
             $content->description_sop_prvp = $request->description_sop_prvp;
             $content->prvp_procedure = $request->prvp_procedure;
 
-// ----------------------packing validation report store data filed by kppatel
 
-            $content->generic_PacValRep = $request->generic_PacValRep;
-            $content->PacValRep_product_code = $request->PacValRep_product_code;
-            $content->PacValRep_std_batch = $request->PacValRep_std_batch;
-            $content->PacValRep_category = $request->PacValRep_category;
-            $content->PacValRep_label_claim = $request->PacValRep_label_claim;
-            $content->PacValRep_market = $request->PacValRep_market;
-            $content->PacValRep_shelf_life = $request->PacValRep_shelf_life;
-            $content->PacValRep_bmr_no = $request->PacValRep_bmr_no;
-            $content->PacValRep_mpr_no = $request->PacValRep_mpr_no;
             // htsp
             $content->htsp_purpose = $request->htsp_purpose;
             $content->htsp_scope = $request->htsp_scope;
@@ -782,7 +772,7 @@ class DocumentController extends Controller
             $content->study_purpose = $request->study_purpose;
             $content->study_scope = $request->study_scope;
             $content->study_attachments = $request->study_attachments;
-
+  
             // study protocol
             $content->stprotocol_purpose = $request->stprotocol_purpose;
             $content->stprotocol_scope = $request->stprotocol_scope;
@@ -792,8 +782,8 @@ class DocumentController extends Controller
             $content->equipment_objective = $request->equipment_objective;
             $content->equipment_scope = $request->equipment_scope;
             $content->equipment_purpose = $request->equipment_purpose;
-
-
+            
+            
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
 
@@ -818,7 +808,7 @@ class DocumentController extends Controller
                 $content->eqpdeviation = serialize($request->eqpdeviation);
             }
 
-
+            
             if (!empty($request->eqpchangecontrol)) {
                 $content->eqpchangecontrol = serialize($request->eqpchangecontrol);
             }
@@ -1016,110 +1006,6 @@ class DocumentController extends Controller
         if (!empty($request->ReportApproval_HoTiStRe)) {
             $content->ReportApproval_HoTiStRe = serialize($request->ReportApproval_HoTiStRe);
         }
-// ----------------Start-------packing validation rwport tABS store -------------------
-
-        if (!empty($request->Purpose_PaVaReKp)) {
-            $content->Purpose_PaVaReKp = serialize($request->Purpose_PaVaReKp);
-        }
-        if (!empty($request->Scope_PaVaReKp)) {
-            $content->Scope_PaVaReKp = serialize($request->Scope_PaVaReKp);
-        }
-        if (!empty($request->BatchDetails_PaVaReKp)) {
-            $content->BatchDetails_PaVaReKp = serialize($request->BatchDetails_PaVaReKp);
-        }
-        if (!empty($request->ReferenceDocument_PaVaReKp)) {
-            $content->ReferenceDocument_PaVaReKp = serialize($request->ReferenceDocument_PaVaReKp);
-        }
-        if (!empty($request->PackingMaterialApprovalVendDeat_PaVaReKp)) {
-            $content->PackingMaterialApprovalVendDeat_PaVaReKp = serialize($request->PackingMaterialApprovalVendDeat_PaVaReKp);
-        }
-        if (!empty($request->UsedEquipmentCalibrationQualiSta_PaVaReKp)) {
-            $content->UsedEquipmentCalibrationQualiSta_PaVaReKp = serialize($request->UsedEquipmentCalibrationQualiSta_PaVaReKp);
-        }
-        if (!empty($request->ResultOfPacking_PaVaReKp)) {
-            $content->ResultOfPacking_PaVaReKp = serialize($request->ResultOfPacking_PaVaReKp);
-        }
-        if (!empty($request->CriticalProcessParameters_PaVaReKp)) {
-            $content->CriticalProcessParameters_PaVaReKp = serialize($request->CriticalProcessParameters_PaVaReKp);
-        }
-        if (!empty($request->yield_PaVaReKp)) {
-            $content->yield_PaVaReKp = serialize($request->yield_PaVaReKp);
-        }
-        if (!empty($request->HoldTimeStudy_PaVaReKp)) {
-            $content->HoldTimeStudy_PaVaReKp = serialize($request->HoldTimeStudy_PaVaReKp);
-        }
-        if (!empty($request->CleaningValidation_PaVaReKp)) {
-            $content->CleaningValidation_PaVaReKp = serialize($request->CleaningValidation_PaVaReKp);
-        }
-        if (!empty($request->StabilityStudy_PaVaReKp)) {
-            $content->StabilityStudy_PaVaReKp = serialize($request->StabilityStudy_PaVaReKp);
-        }
-        if (!empty($request->DeviationIfAny_PaVaReKp)) {
-            $content->DeviationIfAny_PaVaReKp = serialize($request->DeviationIfAny_PaVaReKp);
-        }
-        if (!empty($request->ChangeControlifany_PaVaReKp)) {
-            $content->ChangeControlifany_PaVaReKp = serialize($request->ChangeControlifany_PaVaReKp);
-        }
-        if (!empty($request->Summary_PaVaReKp)) {
-            $content->Summary_PaVaReKp = serialize($request->Summary_PaVaReKp);
-        }
-        if (!empty($request->Conclusion_PaVaReKp)) {
-            $content->Conclusion_PaVaReKp = serialize($request->Conclusion_PaVaReKp);
-        }
-        if (!empty($request->ProposedParameters_PaVaReKp)) {
-            $content->ProposedParameters_PaVaReKp = serialize($request->ProposedParameters_PaVaReKp);
-        }
-
-        if (!empty($request->ReportApproval_PaVaReKp)) {
-            $content->ReportApproval_PaVaReKp = serialize($request->ReportApproval_PaVaReKp);
-        }
-// ---------------END--------packing validation rwport tABS store -------------------
-
-// ---------------start--------Format air and nitrogen es systs protocal tABS store -------------------
-
-
-        if (!empty($request->Protocolapproval_FoCompAaNirogenkp)) {
-            $content->Protocolapproval_FoCompAaNirogenkp = serialize($request->Protocolapproval_FoCompAaNirogenkp);
-        }
-        if (!empty($request->Objective_FoCompAaNirogenkp)) {
-            $content->Objective_FoCompAaNirogenkp = serialize($request->Objective_FoCompAaNirogenkp);
-        }
-        if (!empty($request->Purpose_FoCompAaNirogenkp)) {
-            $content->Purpose_FoCompAaNirogenkp = serialize($request->Purpose_FoCompAaNirogenkp);
-        }
-        if (!empty($request->Scope_FoCompAaNirogenkp)) {
-            $content->Scope_FoCompAaNirogenkp = serialize($request->Scope_FoCompAaNirogenkp);
-        }
-        if (!empty($request->ExcutionTeamResp_FoCompAaNirogenkp)) {
-            $content->ExcutionTeamResp_FoCompAaNirogenkp = serialize($request->ExcutionTeamResp_FoCompAaNirogenkp);
-        }
-        if (!empty($request->Abbreviations_FoCompAaNirogenkp)) {
-            $content->Abbreviations_FoCompAaNirogenkp = serialize($request->Abbreviations_FoCompAaNirogenkp);
-        }
-        if (!empty($request->EquipmentSystemIde_FoCompAaNirogenkp)) {
-            $content->EquipmentSystemIde_FoCompAaNirogenkp = serialize($request->EquipmentSystemIde_FoCompAaNirogenkp);
-        }
-        if (!empty($request->DocumentFollowed_FoCompAaNirogenkp)) {
-            $content->DocumentFollowed_FoCompAaNirogenkp = serialize($request->DocumentFollowed_FoCompAaNirogenkp);
-        }
-        if (!empty($request->GenralConsPre_FoCompAaNirogenkp)) {
-            $content->GenralConsPre_FoCompAaNirogenkp = serialize($request->GenralConsPre_FoCompAaNirogenkp);
-        }
-        if (!empty($request->RevalidCrite_FoCompAaNirogenkp)) {
-            $content->RevalidCrite_FoCompAaNirogenkp = serialize($request->RevalidCrite_FoCompAaNirogenkp);
-        }
-        if (!empty($request->Precautions_FoCompAaNirogenkp)) {
-            $content->Precautions_FoCompAaNirogenkp = serialize($request->Precautions_FoCompAaNirogenkp);
-        }
-        if (!empty($request->RevalidProcess_FoCompAaNirogenkp)) {
-            $content->RevalidProcess_FoCompAaNirogenkp = serialize($request->RevalidProcess_FoCompAaNirogenkp);
-        }
-        if (!empty($request->AcceptanceCrite_FoCompAaNirogenkp)) {
-            $content->AcceptanceCrite_FoCompAaNirogenkp = serialize($request->AcceptanceCrite_FoCompAaNirogenkp);
-        }
-        if (!empty($request->Annexure_FoCompAaNirogenkp)) {
-            $content->Annexure_FoCompAaNirogenkp = serialize($request->Annexure_FoCompAaNirogenkp);
-        }
 
 
 
@@ -1130,22 +1016,18 @@ class DocumentController extends Controller
 
         //-----------------------Process Validation Report--------------------------------------- 
 
-
-
-    //-----------------------Process Validation Report---------------------------------------
-
             $content->generic_pvr = $request->generic_pvr;
             $content->product_code_pvr = $request->product_code_pvr;
             $content->std_batch_pvr = $request->std_batch_pvr;
             $content->category_pvr = $request->category_pvr;
             $content->label_claim_pvr = $request->label_claim_pvr;
-
+        
             $content->market_pvr = $request->market_pvr;
             $content->shelf_life_pvr = $request->shelf_life_pvr;
             $content->bmr_no_pvr = $request->bmr_no_pvr;
             $content->mfr_no_pvr = $request->mfr_no_pvr;
-
-
+            
+    
            if (!empty($request->purpose_pvr)) {
                 $content->purpose_pvr = serialize($request->purpose_pvr);
             }
@@ -1789,7 +1671,7 @@ class DocumentController extends Controller
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
 
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
-
+        
         // dd($GtpGridData);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
@@ -1883,7 +1765,7 @@ class DocumentController extends Controller
             'Specification_Validation_Data_CVS',
             'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData',
             'CalibrationQualificationstatus'
-
+            
         ));
     }
 
@@ -2067,9 +1949,9 @@ class DocumentController extends Controller
                 $document->revision_type = $request->revision_type;
                 $document->major = $request->major;
                 // $document->minor = $request->minor;
-
-
-
+                
+                
+                
                 if (!empty($request->reviewers)) {
                     $document->reviewers = implode(',', $request->reviewers);
                 }
@@ -2635,7 +2517,7 @@ class DocumentController extends Controller
                 $documentcontet->eqpdeviation = serialize($request->eqpdeviation);
             }
 
-
+            
             if (!empty($request->eqpchangecontrol)) {
                 $documentcontet->eqpchangecontrol = serialize($request->eqpchangecontrol);
             }
@@ -2651,8 +2533,8 @@ class DocumentController extends Controller
             if (!empty($request->eqpreportapproval)) {
                 $documentcontet->eqpreportapproval = serialize($request->eqpreportapproval);
             }
-
-
+        
+           
             //Process Validation Protocol
             $documentcontet->generic_prvp = $request->generic_prvp;
             $documentcontet->prvp_product_code = $request->prvp_product_code;
@@ -2670,16 +2552,6 @@ class DocumentController extends Controller
             $documentcontet->validation_po_prvp = $request->validation_po_prvp;
             $documentcontet->description_sop_prvp = $request->description_sop_prvp;
             $documentcontet->prvp_procedure = $request->prvp_procedure;
-// Packing validation report tabs store data fuelds by kp
-            $documentcontet->generic_PacValRep = $request->generic_PacValRep;
-            $documentcontet->PacValRep_product_code = $request->PacValRep_product_code;
-            $documentcontet->PacValRep_std_batch = $request->PacValRep_std_batch;
-            $documentcontet->PacValRep_category = $request->PacValRep_category;
-            $documentcontet->PacValRep_label_claim = $request->PacValRep_label_claim;
-            $documentcontet->PacValRep_market = $request->PacValRep_market;
-            $documentcontet->PacValRep_shelf_life = $request->PacValRep_shelf_life;
-            $documentcontet->PacValRep_bmr_no = $request->PacValRep_bmr_no;
-            $documentcontet->PacValRep_mpr_no = $request->PacValRep_mpr_no;
 
             //gtp
             $documentcontet->gtp_product_material_name = $request->gtp_product_material_name;
@@ -2729,7 +2601,6 @@ class DocumentController extends Controller
             
 
            
-
             $documentcontet->responsibilityprvp = $request->responsibilityprvp ? serialize($request->responsibilityprvp) : serialize([]);
             $documentcontet->prvp_rawmaterial = $request->prvp_rawmaterial ? serialize($request->prvp_rawmaterial) : serialize([]);
             $documentcontet->pripackmaterial = $request->pripackmaterial ? serialize($request->pripackmaterial) : serialize([]);
@@ -2750,7 +2621,7 @@ class DocumentController extends Controller
             $documentcontet->training_prvp = $request->training_prvp ? serialize($request->training_prvp) : serialize([]);
 
 
-
+            
             //////PRVP End /////////////////
 
 
@@ -2765,7 +2636,7 @@ class DocumentController extends Controller
             $documentcontet->shelf_life_pvr = $request->shelf_life_pvr;
             $documentcontet->bmr_no_pvr = $request->bmr_no_pvr;
             $documentcontet->mfr_no_pvr = $request->mfr_no_pvr;
-
+           
             $documentcontet->purpose_pvr = $request->purpose_pvr ? serialize($request->purpose_pvr) : serialize([]);
             $documentcontet->scope_pvr = $request->scope_pvr ? serialize($request->scope_pvr) : serialize([]);
             $documentcontet->batchdetail_pvr = $request->batchdetail_pvr ? serialize($request->batchdetail_pvr) : serialize([]);
@@ -2775,7 +2646,7 @@ class DocumentController extends Controller
             $documentcontet->primary_packingmaterial_pvr = $request->primary_packingmaterial_pvr ? serialize($request->primary_packingmaterial_pvr) : serialize([]);
             $documentcontet->used_equipment_calibration_pvr = $request->used_equipment_calibration_pvr ? serialize($request->used_equipment_calibration_pvr) : serialize([]);
 
-
+            
             $documentcontet->result_of_intermediate_pvr = $request->result_of_intermediate_pvr ? serialize($request->result_of_intermediate_pvr) : serialize([]);
             $documentcontet->result_of_finished_product_pvr = $request->result_of_finished_product_pvr ? serialize($request->result_of_finished_product_pvr) : serialize([]);
             $documentcontet->result_of_packing_finished_pvr = $request->result_of_packing_finished_pvr ? serialize($request->result_of_packing_finished_pvr) : serialize([]);
@@ -2881,45 +2752,6 @@ $documentcontet->DeviationIfAny_HoTiStRe = $request->DeviationIfAny_HoTiStRe ? s
 $documentcontet->Summary_HoTiStRe = $request->Summary_HoTiStRe ? serialize($request->Summary_HoTiStRe) : serialize([]);
 $documentcontet->Conclusion_HoTiStRe = $request->Conclusion_HoTiStRe ? serialize($request->Conclusion_HoTiStRe) : serialize([]);
 $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? serialize($request->ReportApproval_HoTiStRe) : serialize([]);
-
-
-// ---------------packing valodation update tabs by kppatel---------------
-$documentcontet->Purpose_PaVaReKp = $request->Purpose_PaVaReKp ? serialize($request->Purpose_PaVaReKp) : serialize([]);
-$documentcontet->Scope_PaVaReKp = $request->Scope_PaVaReKp ? serialize($request->Scope_PaVaReKp) : serialize([]);
-$documentcontet->BatchDetails_PaVaReKp = $request->BatchDetails_PaVaReKp ? serialize($request->BatchDetails_PaVaReKp) : serialize([]);
-$documentcontet->ReferenceDocument_PaVaReKp = $request->ReferenceDocument_PaVaReKp ? serialize($request->ReferenceDocument_PaVaReKp) : serialize([]);
-$documentcontet->PackingMaterialApprovalVendDeat_PaVaReKp = $request->PackingMaterialApprovalVendDeat_PaVaReKp ? serialize($request->PackingMaterialApprovalVendDeat_PaVaReKp) : serialize([]);
-$documentcontet->UsedEquipmentCalibrationQualiSta_PaVaReKp = $request->UsedEquipmentCalibrationQualiSta_PaVaReKp ? serialize($request->UsedEquipmentCalibrationQualiSta_PaVaReKp) : serialize([]);
-$documentcontet->ResultOfPacking_PaVaReKp = $request->ResultOfPacking_PaVaReKp ? serialize($request->ResultOfPacking_PaVaReKp) : serialize([]);
-$documentcontet->CriticalProcessParameters_PaVaReKp = $request->CriticalProcessParameters_PaVaReKp ? serialize($request->CriticalProcessParameters_PaVaReKp) : serialize([]);
-$documentcontet->yield_PaVaReKp = $request->yield_PaVaReKp ? serialize($request->yield_PaVaReKp) : serialize([]);
-$documentcontet->HoldTimeStudy_PaVaReKp = $request->HoldTimeStudy_PaVaReKp ? serialize($request->HoldTimeStudy_PaVaReKp) : serialize([]);
-$documentcontet->CleaningValidation_PaVaReKp = $request->CleaningValidation_PaVaReKp ? serialize($request->CleaningValidation_PaVaReKp) : serialize([]);
-$documentcontet->StabilityStudy_PaVaReKp = $request->StabilityStudy_PaVaReKp ? serialize($request->StabilityStudy_PaVaReKp) : serialize([]);
-$documentcontet->DeviationIfAny_PaVaReKp = $request->DeviationIfAny_PaVaReKp ? serialize($request->DeviationIfAny_PaVaReKp) : serialize([]);
-$documentcontet->ChangeControlifany_PaVaReKp = $request->ChangeControlifany_PaVaReKp ? serialize($request->ChangeControlifany_PaVaReKp) : serialize([]);
-$documentcontet->Summary_PaVaReKp = $request->Summary_PaVaReKp ? serialize($request->Summary_PaVaReKp) : serialize([]);
-$documentcontet->Conclusion_PaVaReKp = $request->Conclusion_PaVaReKp ? serialize($request->Conclusion_PaVaReKp) : serialize([]);
-$documentcontet->ProposedParameters_PaVaReKp = $request->ProposedParameters_PaVaReKp ? serialize($request->ProposedParameters_PaVaReKp) : serialize([]);
-$documentcontet->ReportApproval_PaVaReKp = $request->ReportApproval_PaVaReKp ? serialize($request->ReportApproval_PaVaReKp) : serialize([]);
-
-//   --starts---------------formate air and nitrogen protcal update tab start
-
-$documentcontet->Protocolapproval_FoCompAaNirogenkp = $request->Protocolapproval_FoCompAaNirogenkp ? serialize($request->Protocolapproval_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->Objective_FoCompAaNirogenkp = $request->Objective_FoCompAaNirogenkp ? serialize($request->Objective_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->Purpose_FoCompAaNirogenkp = $request->Purpose_FoCompAaNirogenkp ? serialize($request->Purpose_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->Scope_FoCompAaNirogenkp = $request->Scope_FoCompAaNirogenkp ? serialize($request->Scope_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->ExcutionTeamResp_FoCompAaNirogenkp = $request->ExcutionTeamResp_FoCompAaNirogenkp ? serialize($request->ExcutionTeamResp_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->Abbreviations_FoCompAaNirogenkp = $request->Abbreviations_FoCompAaNirogenkp ? serialize($request->Abbreviations_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->EquipmentSystemIde_FoCompAaNirogenkp = $request->EquipmentSystemIde_FoCompAaNirogenkp ? serialize($request->EquipmentSystemIde_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->DocumentFollowed_FoCompAaNirogenkp = $request->DocumentFollowed_FoCompAaNirogenkp ? serialize($request->DocumentFollowed_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->GenralConsPre_FoCompAaNirogenkp = $request->GenralConsPre_FoCompAaNirogenkp ? serialize($request->GenralConsPre_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->RevalidCrite_FoCompAaNirogenkp = $request->RevalidCrite_FoCompAaNirogenkp ? serialize($request->RevalidCrite_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->Precautions_FoCompAaNirogenkp = $request->Precautions_FoCompAaNirogenkp ? serialize($request->Precautions_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->RevalidProcess_FoCompAaNirogenkp = $request->RevalidProcess_FoCompAaNirogenkp ? serialize($request->RevalidProcess_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->AcceptanceCrite_FoCompAaNirogenkp = $request->AcceptanceCrite_FoCompAaNirogenkp ? serialize($request->AcceptanceCrite_FoCompAaNirogenkp) : serialize([]);
-$documentcontet->Annexure_FoCompAaNirogenkp = $request->Annexure_FoCompAaNirogenkp ? serialize($request->Annexure_FoCompAaNirogenkp) : serialize([]);
-
 
             $documentcontet->hod_comments = $request->hod_comments;
 
@@ -3652,240 +3484,90 @@ $documentcontet->Annexure_FoCompAaNirogenkp = $request->Annexure_FoCompAaNirogen
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
 
+        $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
+        $FinishedData = isset($Finished_Product->data) && is_string($Finished_Product->data)
+        ? json_decode($Finished_Product->data, true) :(is_array($Finished_Product->data) ? $Finished_Product->data:[]);
+
+        $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
+        $Inprocess_standardData = isset($Inprocess_standard->data) && is_string($Inprocess_standard->data)
+        ? json_decode($Inprocess_standard->data, true) :(is_array($Inprocess_standard->data) ? $Inprocess_standard->data:[]);
+
+        $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id)->where('identifier', "CLEANING_VALIDATION")->first();
+        $CLEANING_VALIDATIONData = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data)
+        ? json_decode($CLEANING_VALIDATION->data, true) :(is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data:[]);
 
 
-        $Finished_Product = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Finished_Product")->first();
-        $FinishedData = [];
-
-         if (!empty($Finished_Product) && isset($Finished_Product->data)) {
-             if (is_string($Finished_Product->data)) {
-                 $FinishedData = json_decode($Finished_Product->data, true);
-             } elseif (is_array($Finished_Product->data)) {
-                 $FinishedData = $Finished_Product->data;
-             }
-         }
-
-         $Inprocess_standard = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Inprocess_standard")->first();
-         $Inprocess_standardData = [];
-
-          if (!empty($Inprocess_standard) && isset($Inprocess_standard->data)) {
-              if (is_string($Inprocess_standard->data)) {
-                  $Inprocess_standardData = json_decode($Inprocess_standard->data, true);
-              } elseif (is_array($Inprocess_standard->data)) {
-                  $Inprocess_standardData = $Inprocess_standard->data;
-              }
-          }
-
-          $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id) ->where('identifier', "CLEANING_VALIDATION")->first();
-          $CLEANING_VALIDATIONData = [];
-
-           if (!empty($CLEANING_VALIDATION) && isset($CLEANING_VALIDATION->data)) {
-               if (is_string($CLEANING_VALIDATION->data)) {
-                   $CLEANING_VALIDATIONData = json_decode($CLEANING_VALIDATION->data, true);
-               } elseif (is_array($CLEANING_VALIDATION->data)) {
-                   $CLEANING_VALIDATIONData = $CLEANING_VALIDATION->data;
-               }
-           }
+        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
+            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
+            ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
 
 
-           $testDataDecoded = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Rowmaterialtest")->first();
-        $testData = [];
+        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
+        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data)
+            ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
 
-         if (!empty($testDataDecoded) && isset($testDataDecoded->data)) {
-             if (is_string($testDataDecoded->data)) {
-                 $testData = json_decode($testDataDecoded->data, true);
-             } elseif (is_array($testDataDecoded->data)) {
-                 $testData = $testDataDecoded->data;
-             }
-         }
+        $GtpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
+        $GtpGridData = isset($GtpData->data) && is_string($GtpData->data)
+            ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
 
+        $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
+        $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data) 
+            ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
 
-         $PackingGridData = DocumentGrid::where('document_type_id', $id) ->where('identifier', "Packingmaterialdata")->first();
-         $PackingDataGrid = [];
+        $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
+        $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data)
+            ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
 
-          if (!empty($PackingGridData) && isset($PackingGridData->data)) {
-              if (is_string($PackingGridData->data)) {
-                  $PackingDataGrid = json_decode($PackingGridData->data, true);
-              } elseif (is_array($PackingGridData->data)) {
-                  $PackingDataGrid = $PackingGridData->data;
-              }
-          }
+        $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
+        $sampleReconcilationDataGrid = isset($sampleReconcilation->data) && is_string($sampleReconcilation->data)
+            ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);
 
+        $specificationsGridData = specifications::where('specification_id', $id)->where('identifier', "specifications_testing")->first();
+        $SpecificationDataGrid = isset($specificationsGridData->data) && is_string($specificationsGridData->data)
+            ? json_decode($specificationsGridData->data, true) :(is_array($specificationsGridData->data) ? $specificationsGridData->data:[]);
 
-          $GtpData = DocumentGrid::where('document_type_id', $id) ->where('identifier', "GtpData")->first();
-        $FinishedData = [];
+        $specifications = specifications::where('specification_id', $id)->where('identifier', "specifications")->first();
+        $SpecificationGrid = isset($specifications->data) && is_string($specifications->data)
+            ? json_decode($specifications->data, true) :(is_array($specifications->data) ? $specifications->data:[]);
 
-         if (!empty($GtpData) && isset($GtpData->data)) {
-             if (is_string($GtpData->data)) {
-                 $FinishedData = json_decode($GtpData->data, true);
-             } elseif (is_array($GtpData->data)) {
-                 $FinishedData = $GtpData->data;
-             }
-         }
+        $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
 
+        $ProductSpecificationData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) ? json_decode($ProductSpecification->data,true) : (is_array($ProductSpecification->data) ? $ProductSpecification->data :[]);
 
-        // $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
-        // $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data)
-        //     ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
-
-        $RevisionData = DocumentGrid::where('document_type_id', $id) ->where('identifier', "revision_history")->first();
-        $RevisionGridData = [];
-
-         if (!empty($RevisionData) && isset($RevisionData->data)) {
-             if (is_string($RevisionData->data)) {
-                 $RevisionGridData = json_decode($RevisionData->data, true);
-             } elseif (is_array($RevisionData->data)) {
-                 $RevisionGridData = $RevisionData->data;
-             }
-         }
-
-         $summaryResult = TDSDocumentGrid::where('tds_id', $id) ->where('identifier', "summaryResult")->first();
-         $SummaryDataGrid = [];
-
-          if (!empty($summaryResult) && isset($summaryResult->data)) {
-              if (is_string($summaryResult->data)) {
-                  $SummaryDataGrid = json_decode($summaryResult->data, true);
-              } elseif (is_array($summaryResult->data)) {
-                  $SummaryDataGrid = $summaryResult->data;
-              }
-          }
-
-          $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id) ->where('identifier', "sampleReconcilation")->first();
-          $sampleReconcilationDataGrid = [];
-
-           if (!empty($sampleReconcilation) && isset($sampleReconcilation->data)) {
-               if (is_string($sampleReconcilation->data)) {
-                   $sampleReconcilationDataGrid = json_decode($sampleReconcilation->data, true);
-               } elseif (is_array($sampleReconcilation->data)) {
-                   $sampleReconcilationDataGrid = $sampleReconcilation->data;
-               }
-           }
+        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
+        $MaterialSpecificationData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) ? json_decode($MaterialSpecification->data,true) : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
 
 
-           $specificationsGridData = specifications::where('specification_id', $id) ->where('identifier', "specifications_testing")->first();
-           $SpecificationDataGrid = [];
 
-            if (!empty($specificationsGridData) && isset($specificationsGridData->data)) {
-                if (is_string($specificationsGridData->data)) {
-                    $SpecificationDataGrid = json_decode($specificationsGridData->data, true);
-                } elseif (is_array($specificationsGridData->data)) {
-                    $SpecificationDataGrid = $specificationsGridData->data;
-                }
-            }
+        $Finished_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION')->first();
+        $finishedProductSpecificationData = isset($Finished_product_specification->data) && is_string($Finished_product_specification->data) ? json_decode($Finished_product_specification->data) : (is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
 
 
-            $specifications = specifications::where('specification_id', $id) ->where('identifier', "specifications")->first();
-            $SpecificationGrid = [];
+        $specificationValidation = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION')->first();
+        $specificationValidationData = isset($specificationValidation->data)&& is_string($specificationValidation->data) ? json_decode($specificationValidation->data,true) :(is_array($specificationValidation->data) ? $specificationValidation->data:[]);
 
-             if (!empty($specifications) && isset($specifications->data)) {
-                 if (is_string($specifications->data)) {
-                     $SpecificationGrid = json_decode($specifications->data, true);
-                 } elseif (is_array($specifications->data)) {
-                     $SpecificationGrid = $specifications->data;
-                 }
-             }
+        $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id)->where('identifier', "CalibrationQualificationStatus")->first();
 
 
-             $ProductSpecification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "ProductSpecification")->first();
-             $ProductSpecificationData = [];
-
-              if (!empty($ProductSpecification) && isset($ProductSpecification->data)) {
-                  if (is_string($ProductSpecification->data)) {
-                      $ProductSpecificationData = json_decode($ProductSpecification->data, true);
-                  } elseif (is_array($ProductSpecification->data)) {
-                      $ProductSpecificationData = $ProductSpecification->data;
-                  }
-              }
-
-              $MaterialSpecification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "MaterialSpecification")->first();
-             $MaterialSpecificationData = [];
-
-              if (!empty($MaterialSpecification) && isset($MaterialSpecification->data)) {
-                  if (is_string($MaterialSpecification->data)) {
-                      $MaterialSpecificationData = json_decode($MaterialSpecification->data, true);
-                  } elseif (is_array($MaterialSpecification->data)) {
-                      $MaterialSpecificationData = $MaterialSpecification->data;
-                  }
-              }
-
-              $Finished_product_specification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION")->first();
-             $finishedProductSpecificationData = [];
-
-              if (!empty($Finished_product_specification) && isset($Finished_product_specification->data)) {
-                  if (is_string($Finished_product_specification->data)) {
-                      $finishedProductSpecificationData = json_decode($Finished_product_specification->data, true);
-                  } elseif (is_array($Finished_product_specification->data)) {
-                      $finishedProductSpecificationData = $Finished_product_specification->data;
-                  }
-              }
-
-              $Finished_product_specification = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION_VALIDATION")->first();
-              $specificationValidationData = [];
-
-               if (!empty($Finished_product_specification) && isset($Finished_product_specification->data)) {
-                   if (is_string($Finished_product_specification->data)) {
-                       $specificationValidationData = json_decode($Finished_product_specification->data, true);
-                   } elseif (is_array($Finished_product_specification->data)) {
-                       $specificationValidationData = $Finished_product_specification->data;
-                   }
-               }
-
-               $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id) ->where('identifier', "CalibrationQualificationStatus")->first();
-              $calibrationdata = [];
-
-               if (!empty($CalibrationQualificationstatus) && isset($CalibrationQualificationstatus->data)) {
-                   if (is_string($CalibrationQualificationstatus->data)) {
-                       $calibrationdata = json_decode($CalibrationQualificationstatus->data, true);
-                   } elseif (is_array($CalibrationQualificationstatus->data)) {
-                       $calibrationdata = $CalibrationQualificationstatus->data;
-                   }
-               }
-
-               $Finished_product_specification_cvs = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SpecificationCleaningValidationSpecification")->first();
-               $finishedProductSpecificationData_CVS = [];
-
-                if (!empty($Finished_product_specification_cvs) && isset($Finished_product_specification_cvs->data)) {
-                    if (is_string($Finished_product_specification_cvs->data)) {
-                        $finishedProductSpecificationData_CVS = json_decode($Finished_product_specification_cvs->data, true);
-                    } elseif (is_array($Finished_product_specification_cvs->data)) {
-                        $finishedProductSpecificationData_CVS = $Finished_product_specification_cvs->data;
-                    }
-                }
-
-                $specificationValidation_cvs = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION_VALIDATION_CleaningValidationSpecification")->first();
-                $specificationValidationData_cvs = [];
-
-                 if (!empty($specificationValidation_cvs) && isset($specificationValidation_cvs->data)) {
-                     if (is_string($specificationValidation_cvs->data)) {
-                         $specificationValidationData_cvs = json_decode($specificationValidation_cvs->data, true);
-                     } elseif (is_array($specificationValidation_cvs->data)) {
-                         $specificationValidationData_cvs = $specificationValidation_cvs->data;
-                     }
-                 }
-
-                 $specificationValidation_inps = DocumentGrid::where('document_type_id', $id) ->where('identifier', "specificationInprocessValidationSpecification")->first();
-                 $data_inproces_specification = [];
-
-                  if (!empty($specificationValidation_inps) && isset($specificationValidation_inps->data)) {
-                      if (is_string($specificationValidation_inps->data)) {
-                          $data_inproces_specification = json_decode($specificationValidation_inps->data, true);
-                      } elseif (is_array($specificationValidation_inps->data)) {
-                          $data_inproces_specification = $specificationValidation_inps->data;
-                      }
-                  }
-
-                  $specificationValidation_inps = DocumentGrid::where('document_type_id', $id) ->where('identifier', "SPECIFICATION_VALIDATION_Inprocess_Validation_Specification")->first();
-                  $specificationValidationData_inps = [];
-
-                   if (!empty($specificationValidation_inps) && isset($specificationValidation_inps->data)) {
-                       if (is_string($specificationValidation_inps->data)) {
-                           $specificationValidationData_inps = json_decode($specificationValidation_inps->data, true);
-                       } elseif (is_array($specificationValidation_inps->data)) {
-                           $specificationValidationData_inps = $specificationValidation_inps->data;
-                       }
-                   }
+        $calibrationdata = isset($CalibrationQualificationstatus->data) && is_string($CalibrationQualificationstatus->data) ? json_decode($CalibrationQualificationstatus->data) : (is_array($CalibrationQualificationstatus->data) ? $CalibrationQualificationstatus->data : []);
 
 
+        $Finished_product_specification_cvs  = DocumentGrid::where('document_type_id',$id)->where('identifier','SpecificationCleaningValidationSpecification')->first();
+        $finishedProductSpecificationData_CVS = isset($Finished_product_specification_cvs->data) && is_string($Finished_product_specification_cvs->data) ? json_decode($Finished_product_specification_cvs->data) : (is_array($Finished_product_specification_cvs->data) ? $Finished_product_specification_cvs->data : []);
+
+        $specificationValidation_cvs = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
+        $specificationValidationData_cvs = isset($specificationValidation_cvs->data)&& is_string($specificationValidation_cvs->data) ? json_decode($specificationValidation_cvs->data,true) :(is_array($specificationValidation_cvs->data) ? $specificationValidation_cvs->data:[]);
+
+
+        //  dd($specificationValidation);
+
+
+       $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','specificationInprocessValidationSpecification')->first();
+        $data_inproces_specification = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
+
+
+        $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
+        $specificationValidationData_inps = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
 
 
 
