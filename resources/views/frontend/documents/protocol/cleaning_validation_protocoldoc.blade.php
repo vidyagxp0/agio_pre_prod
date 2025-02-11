@@ -545,12 +545,11 @@
                         <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
                             style="max-height: 100px; max-width: 60px;">
                     </td>
-                    <td class="title w-60"
+                    <td class="title w-50"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
-                        <p style="margin: 0; text-align: center; font-weight:bold  border-bottom: 1px solid #686868;" >TITTLE</p>
-                        {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
+                        <p style="margin: 0; text-align: left; font-weight:bold  border-bottom: 1px solid #686868;" >TITLE</p>
                         </td>
-                        <td style="border: 1px solid black; text-align: center;">
+                        <td style="border: 1px solid black; text-align: left;">
                          PROTOCOL NO.:
                         </td>
 
@@ -558,12 +557,12 @@
                
                 <tr>
                     <td style="border: 1px solid black;">CLEANING VALIDATION PROTOCOL</td>
-                    <td style="border: 1px solid black;">EFFECTIVE DATE:</td>
+                    <td style="border: 1px solid black; text-align: left;">EFFECTIVE DATE:</td>
                 </tr>
                 <tr>
-                   <td style="border: 1px solid black;">PAGE NO.</td>
-                   <td style="border: 1px solid black;">DEPARTMENT: </td>
-                   <td style="border: 1px solid black;">SUPERSEDES NO:</td>
+                   <td style="border: 1px solid black; text-align: left;">PAGE NO.</td>
+                   <td style="border: 1px solid black; text-align: left;">DEPARTMENT: </td>
+                   <td style="border: 1px solid black; text-align: left;">SUPERSEDES NO:</td>
 
                 </tr>
             </tbody>
@@ -2038,7 +2037,6 @@
             ');
         }
     </script> --}}
-    <h2  style="text-align: center;">Content of Protocol not limited as per above table it may vary </h2>
 </body>
 
 </html>
