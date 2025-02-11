@@ -757,6 +757,18 @@ class DocumentController extends Controller
             $content->prvp_procedure = $request->prvp_procedure;
 
 
+            // packing validation repo kp
+            $content->generic_PacValRep = $request->generic_PacValRep;
+            $content->PacValRep_product_code = $request->PacValRep_product_code;
+            $content->PacValRep_std_batch = $request->PacValRep_std_batch;
+            $content->PacValRep_category = $request->PacValRep_category;
+            $content->PacValRep_label_claim = $request->PacValRep_label_claim;
+            $content->PacValRep_market = $request->PacValRep_market;
+            $content->PacValRep_shelf_life = $request->PacValRep_shelf_life;
+            $content->PacValRep_bmr_no = $request->PacValRep_bmr_no;
+            $content->PacValRep_mpr_no = $request->PacValRep_mpr_no;
+
+
             // htsp
             $content->htsp_purpose = $request->htsp_purpose;
             $content->htsp_scope = $request->htsp_scope;
@@ -795,6 +807,66 @@ class DocumentController extends Controller
 
                 $content->hod_attachments = json_encode($files);
             }
+
+
+          // ----------- process validation interim report  start--------------------------
+
+          $content->pvir_dosage_form = $request->pvir_dosage_form;
+          $content->pvir_process_validation_interim_report = $request->pvir_process_validation_interim_report;
+          $content->pvir_product_name = $request->pvir_product_name;
+          $content->pvir_report_no = $request->pvir_report_no;
+          $content->pvir_batch_no = $request->pvir_batch_no;
+          $content->generic_pvir = $request->generic_pvir;
+          $content->pvir_product_code = $request->pvir_product_code;
+          $content->pvir_std_batch = $request->pvir_std_batch;
+          $content->pvir_category = $request->pvir_category;
+          $content->pvir_label_claim = $request->pvir_label_claim;
+          $content->pvir_market = $request->pvir_market;
+          $content->pvir_shelf_life = $request->pvir_shelf_life;
+          $content->pvir_bmr_no = $request->pvir_bmr_no;
+          $content->pvir_mfr_no = $request->pvir_mfr_no;
+
+          if (!empty($request->pvir_attachment)) {
+             $files = [];
+             if ($request->hasfile('pvir_attachment')) {
+                 foreach ($request->file('pvir_attachment') as $file) {
+                     $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                     $file->move('upload/', $name);
+                     $files[] = $name;
+                 }
+             }
+             $content->pvir_attachment = json_encode($files);
+         }
+
+          if (!empty($request->critical_pvir)) {
+             $content->critical_pvir = serialize($request->critical_pvir);
+         }
+         if (!empty($request->In_process_data_pvir)) {
+             $content->In_process_data_pvir = serialize($request->In_process_data_pvir);
+         }
+
+         if (!empty($request->various_stages_pvir)) {
+             $content->various_stages_pvir = serialize($request->various_stages_pvir);
+         }
+
+         if (!empty($request->deviation_pvir)) {
+             $content->deviation_pvir = serialize($request->deviation_pvir);
+         }
+
+         if (!empty($request->change_controlpvir)) {
+             $content->change_controlpvir = serialize($request->change_controlpvir);
+         }
+
+         if (!empty($request->Summary_pvir)) {
+             $content->Summary_pvir = serialize($request->Summary_pvir);
+         }
+         if (!empty($request->conclusion_pvir)) {
+             $content->conclusion_pvir = serialize($request->conclusion_pvir);
+         }
+         if (!empty($request->report_approvalpvir)) {
+             $content->report_approvalpvir = serialize($request->report_approvalpvir);
+         }
+
 
             if (!empty($request->euipmentresponsibility)) {
                 $content->euipmentresponsibility = serialize($request->euipmentresponsibility);
@@ -978,6 +1050,114 @@ class DocumentController extends Controller
         if (!empty($request->PostApproval_TemperMap)) {
             $content->PostApproval_TemperMap = serialize($request->PostApproval_TemperMap);
         }
+
+
+        // ----------------Start-------packing validation rwport tABS store -------------------
+
+        if (!empty($request->Purpose_PaVaReKp)) {
+            $content->Purpose_PaVaReKp = serialize($request->Purpose_PaVaReKp);
+        }
+        if (!empty($request->Scope_PaVaReKp)) {
+            $content->Scope_PaVaReKp = serialize($request->Scope_PaVaReKp);
+        }
+        if (!empty($request->BatchDetails_PaVaReKp)) {
+            $content->BatchDetails_PaVaReKp = serialize($request->BatchDetails_PaVaReKp);
+        }
+        if (!empty($request->ReferenceDocument_PaVaReKp)) {
+            $content->ReferenceDocument_PaVaReKp = serialize($request->ReferenceDocument_PaVaReKp);
+        }
+        if (!empty($request->PackingMaterialApprovalVendDeat_PaVaReKp)) {
+            $content->PackingMaterialApprovalVendDeat_PaVaReKp = serialize($request->PackingMaterialApprovalVendDeat_PaVaReKp);
+        }
+        if (!empty($request->UsedEquipmentCalibrationQualiSta_PaVaReKp)) {
+            $content->UsedEquipmentCalibrationQualiSta_PaVaReKp = serialize($request->UsedEquipmentCalibrationQualiSta_PaVaReKp);
+        }
+        if (!empty($request->ResultOfPacking_PaVaReKp)) {
+            $content->ResultOfPacking_PaVaReKp = serialize($request->ResultOfPacking_PaVaReKp);
+        }
+        if (!empty($request->CriticalProcessParameters_PaVaReKp)) {
+            $content->CriticalProcessParameters_PaVaReKp = serialize($request->CriticalProcessParameters_PaVaReKp);
+        }
+        if (!empty($request->yield_PaVaReKp)) {
+            $content->yield_PaVaReKp = serialize($request->yield_PaVaReKp);
+        }
+        if (!empty($request->HoldTimeStudy_PaVaReKp)) {
+            $content->HoldTimeStudy_PaVaReKp = serialize($request->HoldTimeStudy_PaVaReKp);
+        }
+        if (!empty($request->CleaningValidation_PaVaReKp)) {
+            $content->CleaningValidation_PaVaReKp = serialize($request->CleaningValidation_PaVaReKp);
+        }
+        if (!empty($request->StabilityStudy_PaVaReKp)) {
+            $content->StabilityStudy_PaVaReKp = serialize($request->StabilityStudy_PaVaReKp);
+        }
+        if (!empty($request->DeviationIfAny_PaVaReKp)) {
+            $content->DeviationIfAny_PaVaReKp = serialize($request->DeviationIfAny_PaVaReKp);
+        }
+        if (!empty($request->ChangeControlifany_PaVaReKp)) {
+            $content->ChangeControlifany_PaVaReKp = serialize($request->ChangeControlifany_PaVaReKp);
+        }
+        if (!empty($request->Summary_PaVaReKp)) {
+            $content->Summary_PaVaReKp = serialize($request->Summary_PaVaReKp);
+        }
+        if (!empty($request->Conclusion_PaVaReKp)) {
+            $content->Conclusion_PaVaReKp = serialize($request->Conclusion_PaVaReKp);
+        }
+        if (!empty($request->ProposedParameters_PaVaReKp)) {
+            $content->ProposedParameters_PaVaReKp = serialize($request->ProposedParameters_PaVaReKp);
+        }
+
+        if (!empty($request->ReportApproval_PaVaReKp)) {
+            $content->ReportApproval_PaVaReKp = serialize($request->ReportApproval_PaVaReKp);
+        }
+        // ---------------END--------packing validation rwport tABS store -------------------
+
+        // ---------------start--------Format air and nitrogen es systs protocal tABS store -------------------
+
+
+        if (!empty($request->Protocolapproval_FoCompAaNirogenkp)) {
+            $content->Protocolapproval_FoCompAaNirogenkp = serialize($request->Protocolapproval_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Objective_FoCompAaNirogenkp)) {
+            $content->Objective_FoCompAaNirogenkp = serialize($request->Objective_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Purpose_FoCompAaNirogenkp)) {
+            $content->Purpose_FoCompAaNirogenkp = serialize($request->Purpose_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Scope_FoCompAaNirogenkp)) {
+            $content->Scope_FoCompAaNirogenkp = serialize($request->Scope_FoCompAaNirogenkp);
+        }
+        if (!empty($request->ExcutionTeamResp_FoCompAaNirogenkp)) {
+            $content->ExcutionTeamResp_FoCompAaNirogenkp = serialize($request->ExcutionTeamResp_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Abbreviations_FoCompAaNirogenkp)) {
+            $content->Abbreviations_FoCompAaNirogenkp = serialize($request->Abbreviations_FoCompAaNirogenkp);
+        }
+        if (!empty($request->EquipmentSystemIde_FoCompAaNirogenkp)) {
+            $content->EquipmentSystemIde_FoCompAaNirogenkp = serialize($request->EquipmentSystemIde_FoCompAaNirogenkp);
+        }
+        if (!empty($request->DocumentFollowed_FoCompAaNirogenkp)) {
+            $content->DocumentFollowed_FoCompAaNirogenkp = serialize($request->DocumentFollowed_FoCompAaNirogenkp);
+        }
+        if (!empty($request->GenralConsPre_FoCompAaNirogenkp)) {
+            $content->GenralConsPre_FoCompAaNirogenkp = serialize($request->GenralConsPre_FoCompAaNirogenkp);
+        }
+        if (!empty($request->RevalidCrite_FoCompAaNirogenkp)) {
+            $content->RevalidCrite_FoCompAaNirogenkp = serialize($request->RevalidCrite_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Precautions_FoCompAaNirogenkp)) {
+            $content->Precautions_FoCompAaNirogenkp = serialize($request->Precautions_FoCompAaNirogenkp);
+        }
+        if (!empty($request->RevalidProcess_FoCompAaNirogenkp)) {
+            $content->RevalidProcess_FoCompAaNirogenkp = serialize($request->RevalidProcess_FoCompAaNirogenkp);
+        }
+        if (!empty($request->AcceptanceCrite_FoCompAaNirogenkp)) {
+            $content->AcceptanceCrite_FoCompAaNirogenkp = serialize($request->AcceptanceCrite_FoCompAaNirogenkp);
+        }
+        if (!empty($request->Annexure_FoCompAaNirogenkp)) {
+            $content->Annexure_FoCompAaNirogenkp = serialize($request->Annexure_FoCompAaNirogenkp);
+        }
+
+
         // hold sutdy time report tabs store
         if (!empty($request->Purpose_HoTiStRe)) {
             $content->Purpose_HoTiStRe = serialize($request->Purpose_HoTiStRe);
@@ -2426,10 +2606,63 @@ class DocumentController extends Controller
             $documentcontet->revision_summary = $request->revision_summary;
             $documentcontet->safety_precautions = $request->safety_precautions;
 
+            // packing validation repo kp
+            $documentcontet->generic_PacValRep = $request->generic_PacValRep;
+            $documentcontet->PacValRep_product_code = $request->PacValRep_product_code;
+            $documentcontet->PacValRep_std_batch = $request->PacValRep_std_batch;
+            $documentcontet->PacValRep_category = $request->PacValRep_category;
+            $documentcontet->PacValRep_label_claim = $request->PacValRep_label_claim;
+            $documentcontet->PacValRep_market = $request->PacValRep_market;
+            $documentcontet->PacValRep_shelf_life = $request->PacValRep_shelf_life;
+            $documentcontet->PacValRep_bmr_no = $request->PacValRep_bmr_no;
+            $documentcontet->PacValRep_mpr_no = $request->PacValRep_mpr_no;
+
             //study report start
             $documentcontet->study_purpose = $request->study_purpose;
             $documentcontet->study_scope = $request->study_scope;
             $documentcontet->study_attachments = $request->study_attachments;
+
+
+            //--------------------------- Process Validation Interim Update start ------------------------------------------------------
+                        
+            $documentcontet->pvir_dosage_form = $request->pvir_dosage_form;
+            $documentcontet->pvir_process_validation_interim_report = $request->pvir_process_validation_interim_report;
+            $documentcontet->pvir_product_name = $request->pvir_product_name;
+            $documentcontet->pvir_report_no = $request->pvir_report_no;
+            $documentcontet->pvir_batch_no = $request->pvir_batch_no;
+            $documentcontet->generic_pvir = $request->generic_pvir;
+            $documentcontet->pvir_product_code = $request->pvir_product_code;
+            $documentcontet->pvir_std_batch = $request->pvir_std_batch;
+            $documentcontet->pvir_category = $request->pvir_category;
+            $documentcontet->pvir_label_claim = $request->pvir_label_claim;
+            $documentcontet->pvir_market = $request->pvir_market;
+            $documentcontet->pvir_shelf_life = $request->pvir_shelf_life;
+            $documentcontet->pvir_bmr_no = $request->pvir_bmr_no;
+            $documentcontet->pvir_mfr_no = $request->pvir_mfr_no;
+
+            if (!empty($request->pvir_attachment)) {
+                $files = [];
+                if ($request->hasfile('pvir_attachment')) {
+                    foreach ($request->file('pvir_attachment') as $file) {
+                        $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $documentcontet->pvir_attachment = json_encode($files);
+            }
+
+            $documentcontet->critical_pvir = $request->critical_pvir ? serialize($request->critical_pvir) : serialize([]);
+            $documentcontet->In_process_data_pvir = $request->In_process_data_pvir ? serialize($request->In_process_data_pvir) : serialize([]);
+            $documentcontet->various_stages_pvir = $request->various_stages_pvir ? serialize($request->various_stages_pvir) : serialize([]);
+            $documentcontet->deviation_pvir = $request->deviation_pvir ? serialize($request->deviation_pvir) : serialize([]);
+            $documentcontet->change_controlpvir = $request->change_controlpvir ? serialize($request->change_controlpvir) : serialize([]);
+            $documentcontet->Summary_pvir = $request->Summary_pvir ? serialize($request->Summary_pvir) : serialize([]);
+            $documentcontet->conclusion_pvir = $request->conclusion_pvir ? serialize($request->conclusion_pvir) : serialize([]);
+            $documentcontet->report_approvalpvir = $request->report_approvalpvir ? serialize($request->report_approvalpvir) : serialize([]);
+
+            //--------------------------- Process Validation Interim Update end ------------------------------------------------------
+
 
             if (!empty($request->responsibilities)) {
                 $documentcontet->responsibilities = serialize($request->responsibilities);
@@ -2569,7 +2802,7 @@ class DocumentController extends Controller
             $documentcontet->pvp_purpose = $request->pvp_purpose;
             $documentcontet->pvp_scope = $request->pvp_scope;
 
-// htsp
+          // htsp
              $documentcontet->htsp_responsibility = $request->htsp_responsibility ? serialize($request->htsp_responsibility) : serialize([]);
              $documentcontet->htsp_description_of_sop = $request->htsp_description_of_sop ? serialize($request->htsp_description_of_sop) : serialize([]);
              $documentcontet->htsp_specifications = $request->htsp_specifications ? serialize($request->htsp_specifications) : serialize([]);
@@ -2598,9 +2831,46 @@ class DocumentController extends Controller
              $documentcontet->Change_controlpvp = $request->Change_controlpvp ? serialize($request->Change_controlpvp) : serialize([]);
              $documentcontet->Summary_pvp = $request->Summary_pvp ? serialize($request->Summary_pvp) : serialize([]);
              $documentcontet->Conclusion_pvp = $request->Conclusion_pvp ? serialize($request->Conclusion_pvp) : serialize([]);
-            
 
-           
+
+                        // ---------------packing valodation update tabs by kppatel---------------
+            $documentcontet->Purpose_PaVaReKp = $request->Purpose_PaVaReKp ? serialize($request->Purpose_PaVaReKp) : serialize([]);
+            $documentcontet->Scope_PaVaReKp = $request->Scope_PaVaReKp ? serialize($request->Scope_PaVaReKp) : serialize([]);
+            $documentcontet->BatchDetails_PaVaReKp = $request->BatchDetails_PaVaReKp ? serialize($request->BatchDetails_PaVaReKp) : serialize([]);
+            $documentcontet->ReferenceDocument_PaVaReKp = $request->ReferenceDocument_PaVaReKp ? serialize($request->ReferenceDocument_PaVaReKp) : serialize([]);
+            $documentcontet->PackingMaterialApprovalVendDeat_PaVaReKp = $request->PackingMaterialApprovalVendDeat_PaVaReKp ? serialize($request->PackingMaterialApprovalVendDeat_PaVaReKp) : serialize([]);
+            $documentcontet->UsedEquipmentCalibrationQualiSta_PaVaReKp = $request->UsedEquipmentCalibrationQualiSta_PaVaReKp ? serialize($request->UsedEquipmentCalibrationQualiSta_PaVaReKp) : serialize([]);
+            $documentcontet->ResultOfPacking_PaVaReKp = $request->ResultOfPacking_PaVaReKp ? serialize($request->ResultOfPacking_PaVaReKp) : serialize([]);
+            $documentcontet->CriticalProcessParameters_PaVaReKp = $request->CriticalProcessParameters_PaVaReKp ? serialize($request->CriticalProcessParameters_PaVaReKp) : serialize([]);
+            $documentcontet->yield_PaVaReKp = $request->yield_PaVaReKp ? serialize($request->yield_PaVaReKp) : serialize([]);
+            $documentcontet->HoldTimeStudy_PaVaReKp = $request->HoldTimeStudy_PaVaReKp ? serialize($request->HoldTimeStudy_PaVaReKp) : serialize([]);
+            $documentcontet->CleaningValidation_PaVaReKp = $request->CleaningValidation_PaVaReKp ? serialize($request->CleaningValidation_PaVaReKp) : serialize([]);
+            $documentcontet->StabilityStudy_PaVaReKp = $request->StabilityStudy_PaVaReKp ? serialize($request->StabilityStudy_PaVaReKp) : serialize([]);
+            $documentcontet->DeviationIfAny_PaVaReKp = $request->DeviationIfAny_PaVaReKp ? serialize($request->DeviationIfAny_PaVaReKp) : serialize([]);
+            $documentcontet->ChangeControlifany_PaVaReKp = $request->ChangeControlifany_PaVaReKp ? serialize($request->ChangeControlifany_PaVaReKp) : serialize([]);
+            $documentcontet->Summary_PaVaReKp = $request->Summary_PaVaReKp ? serialize($request->Summary_PaVaReKp) : serialize([]);
+            $documentcontet->Conclusion_PaVaReKp = $request->Conclusion_PaVaReKp ? serialize($request->Conclusion_PaVaReKp) : serialize([]);
+            $documentcontet->ProposedParameters_PaVaReKp = $request->ProposedParameters_PaVaReKp ? serialize($request->ProposedParameters_PaVaReKp) : serialize([]);
+            $documentcontet->ReportApproval_PaVaReKp = $request->ReportApproval_PaVaReKp ? serialize($request->ReportApproval_PaVaReKp) : serialize([]);
+
+            //   --starts---------------formate air and nitrogen protcal update tab start
+
+            $documentcontet->Protocolapproval_FoCompAaNirogenkp = $request->Protocolapproval_FoCompAaNirogenkp ? serialize($request->Protocolapproval_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->Objective_FoCompAaNirogenkp = $request->Objective_FoCompAaNirogenkp ? serialize($request->Objective_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->Purpose_FoCompAaNirogenkp = $request->Purpose_FoCompAaNirogenkp ? serialize($request->Purpose_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->Scope_FoCompAaNirogenkp = $request->Scope_FoCompAaNirogenkp ? serialize($request->Scope_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->ExcutionTeamResp_FoCompAaNirogenkp = $request->ExcutionTeamResp_FoCompAaNirogenkp ? serialize($request->ExcutionTeamResp_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->Abbreviations_FoCompAaNirogenkp = $request->Abbreviations_FoCompAaNirogenkp ? serialize($request->Abbreviations_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->EquipmentSystemIde_FoCompAaNirogenkp = $request->EquipmentSystemIde_FoCompAaNirogenkp ? serialize($request->EquipmentSystemIde_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->DocumentFollowed_FoCompAaNirogenkp = $request->DocumentFollowed_FoCompAaNirogenkp ? serialize($request->DocumentFollowed_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->GenralConsPre_FoCompAaNirogenkp = $request->GenralConsPre_FoCompAaNirogenkp ? serialize($request->GenralConsPre_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->RevalidCrite_FoCompAaNirogenkp = $request->RevalidCrite_FoCompAaNirogenkp ? serialize($request->RevalidCrite_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->Precautions_FoCompAaNirogenkp = $request->Precautions_FoCompAaNirogenkp ? serialize($request->Precautions_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->RevalidProcess_FoCompAaNirogenkp = $request->RevalidProcess_FoCompAaNirogenkp ? serialize($request->RevalidProcess_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->AcceptanceCrite_FoCompAaNirogenkp = $request->AcceptanceCrite_FoCompAaNirogenkp ? serialize($request->AcceptanceCrite_FoCompAaNirogenkp) : serialize([]);
+            $documentcontet->Annexure_FoCompAaNirogenkp = $request->Annexure_FoCompAaNirogenkp ? serialize($request->Annexure_FoCompAaNirogenkp) : serialize([]);
+                        
+
             $documentcontet->responsibilityprvp = $request->responsibilityprvp ? serialize($request->responsibilityprvp) : serialize([]);
             $documentcontet->prvp_rawmaterial = $request->prvp_rawmaterial ? serialize($request->prvp_rawmaterial) : serialize([]);
             $documentcontet->pripackmaterial = $request->pripackmaterial ? serialize($request->pripackmaterial) : serialize([]);
@@ -2624,8 +2894,7 @@ class DocumentController extends Controller
             
             //////PRVP End /////////////////
 
-
-//---------------------------process Validation Report--------------------------------------------
+         //---------------------------process Validation Report--------------------------------------------
 
             $documentcontet->generic_pvr = $request->generic_pvr;
             $documentcontet->product_code_pvr = $request->product_code_pvr;
@@ -2720,38 +2989,38 @@ class DocumentController extends Controller
 
             // temperture maping tabs updated
             $documentcontet->ProtocolApproval_TemperMap = $request->ProtocolApproval_TemperMap ? serialize($request->ProtocolApproval_TemperMap) : serialize([]);
-    $documentcontet->Objective_TemperMap = $request->Objective_TemperMap ? serialize($request->Objective_TemperMap) : serialize([]);
-    $documentcontet->Scope_TemperMap = $request->Scope_TemperMap ? serialize($request->Scope_TemperMap) : serialize([]);
-    $documentcontet->AreaValidated_TemperMap = $request->AreaValidated_TemperMap ? serialize($request->AreaValidated_TemperMap) : serialize([]);
-    $documentcontet->ValidationTeamResponsibilities_TemperMap = $request->ValidationTeamResponsibilities_TemperMap ? serialize($request->ValidationTeamResponsibilities_TemperMap) : serialize([]);
-    $documentcontet->Reference_TemperMap = $request->Reference_TemperMap ? serialize($request->Reference_TemperMap) : serialize([]);
-    $documentcontet->DocumentFollowed_TemperMap = $request->DocumentFollowed_TemperMap ? serialize($request->DocumentFollowed_TemperMap) : serialize([]);
-    $documentcontet->StudyRationale_TemperMap = $request->StudyRationale_TemperMap ? serialize($request->StudyRationale_TemperMap) : serialize([]);
-    $documentcontet->Procedure_TemperMap = $request->Procedure_TemperMap ? serialize($request->Procedure_TemperMap) : serialize([]);
-    $documentcontet->CriteriaRevalidation_TemperMap = $request->CriteriaRevalidation_TemperMap ? serialize($request->CriteriaRevalidation_TemperMap) : serialize([]);
-    $documentcontet->MaterialDocumentRequired_TemperMap = $request->MaterialDocumentRequired_TemperMap ? serialize($request->MaterialDocumentRequired_TemperMap) : serialize([]);
-    $documentcontet->AcceptanceCriteria_TemperMap = $request->AcceptanceCriteria_TemperMap ? serialize($request->AcceptanceCriteria_TemperMap) : serialize([]);
-    $documentcontet->TypeofValidation_TemperMap = $request->TypeofValidation_TemperMap ? serialize($request->TypeofValidation_TemperMap) : serialize([]);
-    $documentcontet->ObservationResult_TemperMap = $request->ObservationResult_TemperMap ? serialize($request->ObservationResult_TemperMap) : serialize([]);
-    $documentcontet->Abbreviations_TemperMap = $request->Abbreviations_TemperMap ? serialize($request->Abbreviations_TemperMap) : serialize([]);
-    $documentcontet->DeviationAny_TemperMap = $request->DeviationAny_TemperMap ? serialize($request->DeviationAny_TemperMap) : serialize([]);
-    $documentcontet->ChangeControl_TemperMap = $request->ChangeControl_TemperMap ? serialize($request->ChangeControl_TemperMap) : serialize([]);
-    $documentcontet->Summary_TemperMap = $request->Summary_TemperMap ? serialize($request->Summary_TemperMap) : serialize([]);
-    $documentcontet->Conclusion_TemperMap = $request->Conclusion_TemperMap ? serialize($request->Conclusion_TemperMap) : serialize([]);
-    $documentcontet->AttachmentList_TemperMap = $request->AttachmentList_TemperMap ? serialize($request->AttachmentList_TemperMap) : serialize([]);
-    $documentcontet->PostApproval_TemperMap = $request->PostApproval_TemperMap ? serialize($request->PostApproval_TemperMap) : serialize([]);
+            $documentcontet->Objective_TemperMap = $request->Objective_TemperMap ? serialize($request->Objective_TemperMap) : serialize([]);
+            $documentcontet->Scope_TemperMap = $request->Scope_TemperMap ? serialize($request->Scope_TemperMap) : serialize([]);
+            $documentcontet->AreaValidated_TemperMap = $request->AreaValidated_TemperMap ? serialize($request->AreaValidated_TemperMap) : serialize([]);
+            $documentcontet->ValidationTeamResponsibilities_TemperMap = $request->ValidationTeamResponsibilities_TemperMap ? serialize($request->ValidationTeamResponsibilities_TemperMap) : serialize([]);
+            $documentcontet->Reference_TemperMap = $request->Reference_TemperMap ? serialize($request->Reference_TemperMap) : serialize([]);
+            $documentcontet->DocumentFollowed_TemperMap = $request->DocumentFollowed_TemperMap ? serialize($request->DocumentFollowed_TemperMap) : serialize([]);
+            $documentcontet->StudyRationale_TemperMap = $request->StudyRationale_TemperMap ? serialize($request->StudyRationale_TemperMap) : serialize([]);
+            $documentcontet->Procedure_TemperMap = $request->Procedure_TemperMap ? serialize($request->Procedure_TemperMap) : serialize([]);
+            $documentcontet->CriteriaRevalidation_TemperMap = $request->CriteriaRevalidation_TemperMap ? serialize($request->CriteriaRevalidation_TemperMap) : serialize([]);
+            $documentcontet->MaterialDocumentRequired_TemperMap = $request->MaterialDocumentRequired_TemperMap ? serialize($request->MaterialDocumentRequired_TemperMap) : serialize([]);
+            $documentcontet->AcceptanceCriteria_TemperMap = $request->AcceptanceCriteria_TemperMap ? serialize($request->AcceptanceCriteria_TemperMap) : serialize([]);
+            $documentcontet->TypeofValidation_TemperMap = $request->TypeofValidation_TemperMap ? serialize($request->TypeofValidation_TemperMap) : serialize([]);
+            $documentcontet->ObservationResult_TemperMap = $request->ObservationResult_TemperMap ? serialize($request->ObservationResult_TemperMap) : serialize([]);
+            $documentcontet->Abbreviations_TemperMap = $request->Abbreviations_TemperMap ? serialize($request->Abbreviations_TemperMap) : serialize([]);
+            $documentcontet->DeviationAny_TemperMap = $request->DeviationAny_TemperMap ? serialize($request->DeviationAny_TemperMap) : serialize([]);
+            $documentcontet->ChangeControl_TemperMap = $request->ChangeControl_TemperMap ? serialize($request->ChangeControl_TemperMap) : serialize([]);
+            $documentcontet->Summary_TemperMap = $request->Summary_TemperMap ? serialize($request->Summary_TemperMap) : serialize([]);
+            $documentcontet->Conclusion_TemperMap = $request->Conclusion_TemperMap ? serialize($request->Conclusion_TemperMap) : serialize([]);
+            $documentcontet->AttachmentList_TemperMap = $request->AttachmentList_TemperMap ? serialize($request->AttachmentList_TemperMap) : serialize([]);
+            $documentcontet->PostApproval_TemperMap = $request->PostApproval_TemperMap ? serialize($request->PostApproval_TemperMap) : serialize([]);
 
-    // hold time  study report  updated
+            // hold time  study report  updated
 
-    $documentcontet->Purpose_HoTiStRe = $request->Purpose_HoTiStRe ? serialize($request->Purpose_HoTiStRe) : serialize([]);
-$documentcontet->Scope_HoTiStRe = $request->Scope_HoTiStRe ? serialize($request->Scope_HoTiStRe) : serialize([]);
-$documentcontet->BatchDetails_HoTiStRe = $request->BatchDetails_HoTiStRe ? serialize($request->BatchDetails_HoTiStRe) : serialize([]);
-$documentcontet->ReferenceDocument_HoTiStRe = $request->ReferenceDocument_HoTiStRe ? serialize($request->ReferenceDocument_HoTiStRe) : serialize([]);
-$documentcontet->ResultBulkStage_HoTiStRe = $request->ResultBulkStage_HoTiStRe ? serialize($request->ResultBulkStage_HoTiStRe) : serialize([]);
-$documentcontet->DeviationIfAny_HoTiStRe = $request->DeviationIfAny_HoTiStRe ? serialize($request->DeviationIfAny_HoTiStRe) : serialize([]);
-$documentcontet->Summary_HoTiStRe = $request->Summary_HoTiStRe ? serialize($request->Summary_HoTiStRe) : serialize([]);
-$documentcontet->Conclusion_HoTiStRe = $request->Conclusion_HoTiStRe ? serialize($request->Conclusion_HoTiStRe) : serialize([]);
-$documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? serialize($request->ReportApproval_HoTiStRe) : serialize([]);
+            $documentcontet->Purpose_HoTiStRe = $request->Purpose_HoTiStRe ? serialize($request->Purpose_HoTiStRe) : serialize([]);
+            $documentcontet->Scope_HoTiStRe = $request->Scope_HoTiStRe ? serialize($request->Scope_HoTiStRe) : serialize([]);
+            $documentcontet->BatchDetails_HoTiStRe = $request->BatchDetails_HoTiStRe ? serialize($request->BatchDetails_HoTiStRe) : serialize([]);
+            $documentcontet->ReferenceDocument_HoTiStRe = $request->ReferenceDocument_HoTiStRe ? serialize($request->ReferenceDocument_HoTiStRe) : serialize([]);
+            $documentcontet->ResultBulkStage_HoTiStRe = $request->ResultBulkStage_HoTiStRe ? serialize($request->ResultBulkStage_HoTiStRe) : serialize([]);
+            $documentcontet->DeviationIfAny_HoTiStRe = $request->DeviationIfAny_HoTiStRe ? serialize($request->DeviationIfAny_HoTiStRe) : serialize([]);
+            $documentcontet->Summary_HoTiStRe = $request->Summary_HoTiStRe ? serialize($request->Summary_HoTiStRe) : serialize([]);
+            $documentcontet->Conclusion_HoTiStRe = $request->Conclusion_HoTiStRe ? serialize($request->Conclusion_HoTiStRe) : serialize([]);
+            $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? serialize($request->ReportApproval_HoTiStRe) : serialize([]);
 
             $documentcontet->hod_comments = $request->hod_comments;
 

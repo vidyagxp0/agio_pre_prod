@@ -785,7 +785,7 @@ class Helpers
             'PROCUMREPORT' => 'Protocol cum Report',
             'CLEAVALIPROTODOC' => 'Cleaning  Validation Protocol.doc',
             'CLEAVALIREPORTDOC' => 'Cleaning  Validation Report.doc',
-            
+            'QUALIPROCUMREP' => 'Qualification Protocol Cum Report',
 
             'REQULIFICATION' => 'ReQualification Report',
             'PROVALIPROTOCOL'=>'Process Validation protocol',

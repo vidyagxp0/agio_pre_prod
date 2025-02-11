@@ -1462,8 +1462,317 @@ $('#purpose_cvpdbtnadd').click(function(e) {
     });
 
 
+    //   -------------Packing validation tabs start report by kp-----------
 
-//cleaning validation Report doc
+
+    $('#Purpose_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singlePurpose_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Purpose_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPurpose_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#Purpose_PaVaReKpdiv').append(html);
+
+});
+
+$('#Scope_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleScope_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Scope_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subScope_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#Scope_PaVaReKpdiv').append(html);
+
+});
+
+$('#BatchDetails_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleBatchDetails_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="BatchDetails_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subBatchDetails_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#Scope_PaVaReKpdiv').append(html);
+
+});
+
+$('#ReferenceDocument_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleReferenceDocument_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ReferenceDocument_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReferenceDocument_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#ReferenceDocument_PaVaReKpdiv').append(html);
+
+});
+
+
+$('#PackingMaterialApprovalVendDeat_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singlePackingMaterialApprovalVendDeat_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="PackingMaterialApprovalVendDeat_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPackingMaterialApprovalVendDeat_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#PackingMaterialApprovalVendDeat_PaVaReKpdiv').append(html);
+
+});
+
+$('#UsedEquipmentCalibrationQualiSta_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="UsedEquipmentCalibrationQualiSta_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#UsedEquipmentCalibrationQualiSta_PaVaReKpdiv').append(html);
+
+});
+
+$('#ResultOfPacking_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleResultOfPacking_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ResultOfPacking_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subResultOfPacking_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#ResultOfPacking_PaVaReKpdiv').append(html);
+
+});
+
+$('#CriticalProcessParameters_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleCriticalProcessParameters_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="CriticalProcessParameters_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subCriticalProcessParameters_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#ResultOfPacking_PaVaReKpdiv').append(html);
+
+});
+
+$('#yield_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleyield_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="yield_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subyield_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#yield_PaVaReKpdiv').append(html);
+
+});
+
+
+$('#HoldTimeStudy_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleHoldTimeStudy_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="HoldTimeStudy_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subHoldTimeStudy_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#HoldTimeStudy_PaVaReKpdiv').append(html);
+
+});
+
+$('#CleaningValidation_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleCleaningValidation_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="CleaningValidation_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subCleaningValidation_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#CleaningValidation_PaVaReKpdiv').append(html);
+
+});
+
+
+$('#StabilityStudy_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleStabilityStudy_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="StabilityStudy_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subStabilityStudy_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#StabilityStudy_PaVaReKpdiv').append(html);
+
+});
+
+
+$('#DeviationIfAny_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleDeviationIfAny_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="DeviationIfAny_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subDeviationIfAny_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#DeviationIfAny_PaVaReKpdiv').append(html);
+
+});
+
+
+$('#ChangeControlifany_PaVaReKpbtnadd').click(function(e) {
+
+var html =
+    '<div class="singleChangeControlifany_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ChangeControlifany_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subChangeControlifany_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+$('#ChangeControlifany_PaVaReKpdiv').append(html);
+
+});
+
+
+
+$('#Summary_PaVaReKpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleSummary_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Summary_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subSummary_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Summary_PaVaReKpdiv').append(html);
+
+    });
+
+
+    $('#Conclusion_PaVaReKpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleConclusion_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="Conclusion_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subConclusion_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Conclusion_PaVaReKpdiv').append(html);
+
+    });
+
+
+    $('#ProposedParameters_PaVaReKpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleProposedParameters_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ProposedParameters_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subProposedParameters_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#ProposedParameters_PaVaReKpdiv').append(html);
+
+    });
+
+    $('#ReportApproval_PaVaReKpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleReportApproval_PaVaReKpBlock"><div class="resrow row"><div class="col-10"><textarea name="ReportApproval_PaVaReKp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subReportApproval_PaVaReKpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#ReportApproval_PaVaReKpdiv').append(html);
+
+    });
+
+//   -------------Packing validation tabs end report by kp-----------
+
+//   -------------Format for commpressed air and nitrogen gas system protocal tabs start report by kp-----------
+
+$('#Protocolapproval_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleProtocolapproval_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Protocolapproval_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subProtocolapproval_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Protocolapproval_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#Objective_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleObjective_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Objective_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subObjective_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Objective_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+
+    $('#Purpose_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleExcutionTeamResp_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Purpose_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPurpose_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Purpose_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+
+    $('#Scope_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleScope_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Scope_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subScope_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Scope_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#ExcutionTeamResp_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleExcutionTeamResp_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="ExcutionTeamResp_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subExcutionTeamResp_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#ExcutionTeamResp_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#Abbreviations_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleAbbreviations_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Abbreviations_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAbbreviations_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Abbreviations_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+
+    $('#EquipmentSystemIde_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleEquipmentSystemIde_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="EquipmentSystemIde_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subEquipmentSystemIde_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#EquipmentSystemIde_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+
+    $('#DocumentFollowed_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleDocumentFollowed_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="DocumentFollowed_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subDocumentFollowed_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#DocumentFollowed_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#GenralConsPre_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleGenralConsPre_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="GenralConsPre_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subGenralConsPre_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#GenralConsPre_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#RevalidCrite_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleRevalidCrite_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="RevalidCrite_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subRevalidCrite_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#RevalidCrite_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#Precautions_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singlePrecautions_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Precautions_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subPrecautions_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Precautions_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#RevalidProcess_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleRevalidProcess_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="RevalidProcess_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subRevalidProcess_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#RevalidProcess_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#AcceptanceCrite_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleAcceptanceCrite_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="AcceptanceCrite_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAcceptanceCrite_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#AcceptanceCrite_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+    $('#Annexure_FoCompAaNirogenkpbtnadd').click(function(e) {
+
+    var html =
+        '<div class="singleAnnexure_FoCompAaNirogenkpBlock"><div class="resrow row"><div class="col-10"><textarea name="Annexure_FoCompAaNirogenkp[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAnnexure_FoCompAaNirogenkpAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+    $('#Annexure_FoCompAaNirogenkpdiv').append(html);
+
+    });
+
+
+
+    //cleaning validation Report doc
 
 
     $('#objective_cvrdbtnadd').click(function(e) {
@@ -1565,6 +1874,86 @@ $('#purpose_cvpdbtnadd').click(function(e) {
 
         });
 
+        // Process Validation Interim Report
+        // Critical process parameters & Critical quality attributes
+        $('#Critical_quality_pvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleCriticalPvirBlock"><div class="resrow row"><div class="col-10"><textarea name="critical_pvir[]" class="myclassname1"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subcritical_quality_pvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#critical_quality_pvirpdiv').append(html);
+
+        });
+
+        // Results of In process data
+        $('#In_process_data_pvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="single_In_process_data_PvirBlock"><div class="resrow row"><div class="col-10"><textarea name="In_process_data_pvir[]" class="myclassname2"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subIn_process_data_pvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#In_process_data_pvirdiv').append(html);
+
+        });
+
+        // Yield at various stages
+        $('#various_stages_pvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlevarious_stages_PvirBlock"><div class="resrow row"><div class="col-10"><textarea name="various_stages_pvir[]" class="myclassname3"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subvarious_stages_pvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#various_stages_pvirdiv').append(html);
+
+        });
+
+        // Deviation (If any)
+        $('#deviation_pvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleDeviationBlock"><div class="resrow row"><div class="col-10"><textarea name="deviation_pvir[]" class="myclassname4"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subdeviation_pvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#deviation_pvirdiv').append(html);
+
+        });
+
+        // Change Control ( If any)
+        $('#change_controlpvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlechange_controlPvirBlock"><div class="resrow row"><div class="col-10"><textarea name="change_controlpvir[]" class="myclassname5"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subchange_controlpvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#change_controlpvirdiv').append(html);
+
+        });
+
+        // Summary
+        $('#Summarypvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singleSummaryPvirBlock"><div class="resrow row"><div class="col-10"><textarea name="Summary_pvir[]" class="myclassname5"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subSummarypvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#Summarypvirdiv').append(html);
+
+        });
+
+        // Conclusion
+        $('#conclusionpvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="single_Conclusion_pvirBlock"><div class="resrow row"><div class="col-10"><textarea name="conclusion_pvir[]" class="myclassname5"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subConclusion_pvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#conclusion_pvirdiv').append(html);
+
+        });
+
+        // Report Approval
+        $('#report_approvalpvirbtnadd').click(function(e) {
+
+        var html =
+            '<div class="singlereport_approvalPvirBlock"><div class="resrow row"><div class="col-10"><textarea name="report_approvalpvir[]" class="myclassname5"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subreport_approvalpvirAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+        $('#report_approvalpvirdiv').append(html);
+
+        });
 
 
 
@@ -1583,10 +1972,48 @@ $('#purpose_cvpdbtnadd').click(function(e) {
         
        
 
-
+        //Process validation interim report
+        let subcritical_quality_pvirAdd = 0;
+        let subIn_process_data_pvirAdd = 0;
+        let subvarious_stages_pvirAdd = 0;
+        let subdeviation_pvirAdd = 0;
+        let subchange_controlpvirAdd = 0;
+        let subSummarypvirAdd = 0;
+        let subConclusion_pvirAdd = 0;
+        let subreport_approvalpvirAdd = 0;
         
 
-        
+        let subPurpose_PaVaReKpAdd = 0;
+        let subScope_PaVaReKpAdd = 0;
+        let subBatchDetails_PaVaReKpAdd = 0;
+        let subReferenceDocument_PaVaReKpAdd = 0;
+        let subPackingMaterialApprovalVendDeat_PaVaReKpAdd = 0;
+        let subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd = 0;
+        let subResultOfPacking_PaVaReKpAdd = 0;
+        let subCriticalProcessParameters_PaVaReKpAdd = 0;
+        let subyield_PaVaReKpAdd = 0;
+        let subHoldTimeStudy_PaVaReKpAdd = 0;
+        let subCleaningValidation_PaVaReKpAdd = 0;
+        let subStabilityStudy_PaVaReKpAdd = 0;
+        let subDeviationIfAny_PaVaReKpAdd = 0;
+        let subChangeControlifany_PaVaReKpAdd = 0;
+        let subSummary_PaVaReKpAdd = 0;
+        let subConclusion_PaVaReKpAdd = 0;
+        let subProposedParameters_PaVaReKpAdd = 0;
+        let subReportApproval_PaVaReKpAdd = 0;
+        let subProtocolapproval_FoCompAaNirogenkpAdd = 0;
+        let subObjective_FoCompAaNirogenkpAdd = 0;
+        let subPurpose_FoCompAaNirogenkpAdd = 0;
+        let subScope_FoCompAaNirogenkpAdd = 0;
+        let subExcutionTeamResp_FoCompAaNirogenkpAdd = 0;
+        let subAbbreviations_FoCompAaNirogenkpAdd = 0;
+        let subDocumentFollowed_FoCompAaNirogenkpAdd = 0;
+        let subGenralConsPre_FoCompAaNirogenkpAdd = 0;
+        let subRevalidCrite_FoCompAaNirogenkpAdd = 0;
+        let subPrecautions_FoCompAaNirogenkpAdd = 0;
+        let subRevalidProcess_FoCompAaNirogenkpAdd = 0;
+        let subAcceptanceCrite_FoCompAaNirogenkpAdd = 0;
+        let subAnnexure_FoCompAaNirogenkpAdd = 0;
 
 
         let subMaterialsAdd = 0;
@@ -1856,6 +2283,708 @@ $('#purpose_cvpdbtnadd').click(function(e) {
             }
 
         });
+
+
+        // packing validation report by kp
+        $(document).on('click', '.subPurpose_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subPurpose_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Purpose_PaVaReKp[sub_'+ subPurpose_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePurpose_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePurpose_PaVaReKpBlock', '.subsinglePurpose_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePurpose_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subScope_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subScope_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Scope_PaVaReKp[sub_'+ subScope_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleScope_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleScope_PaVaReKpBlock', '.subsingleScope_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleScope_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subBatchDetails_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subBatchDetails_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="BatchDetails_PaVaReKp[sub_'+ subBatchDetails_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleBatchDetails_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleBatchDetails_PaVaReKpBlock', '.subsingleBatchDetails_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleBatchDetails_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subReferenceDocument_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subReferenceDocument_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ReferenceDocument_PaVaReKp[sub_'+ subReferenceDocument_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReferenceDocument_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferenceDocument_PaVaReKpBlock', '.subsingleReferenceDocument_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReferenceDocument_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subPackingMaterialApprovalVendDeat_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subPackingMaterialApprovalVendDeat_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="PackingMaterialApprovalVendDeat_PaVaReKp[sub_'+ subPackingMaterialApprovalVendDeat_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePackingMaterialApprovalVendDeat_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePackingMaterialApprovalVendDeat_PaVaReKpBlock', '.subsinglePackingMaterialApprovalVendDeat_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePackingMaterialApprovalVendDeat_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="UsedEquipmentCalibrationQualiSta_PaVaReKp[sub_'+ subUsedEquipmentCalibrationQualiSta_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock', '.subsingleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleUsedEquipmentCalibrationQualiSta_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subResultOfPacking_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subResultOfPacking_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ResultOfPacking_PaVaReKp[sub_'+ subResultOfPacking_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleResultOfPacking_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleResultOfPacking_PaVaReKpBlock', '.subsingleResultOfPacking_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleResultOfPacking_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subCriticalProcessParameters_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subCriticalProcessParameters_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="CriticalProcessParameters_PaVaReKp[sub_'+ subCriticalProcessParameters_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleCriticalProcessParameters_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleCriticalProcessParameters_PaVaReKpBlock', '.subsingleCriticalProcessParameters_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleCriticalProcessParameters_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subyield_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subyield_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="yield_PaVaReKp[sub_'+ subyield_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleyield_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleyield_PaVaReKpBlock', '.subsingleyield_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleyield_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subHoldTimeStudy_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subHoldTimeStudy_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="HoldTimeStudy_PaVaReKp[sub_'+ subHoldTimeStudy_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleHoldTimeStudy_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleHoldTimeStudy_PaVaReKpBlock', '.subsingleHoldTimeStudy_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleHoldTimeStudy_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subCleaningValidation_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subCleaningValidation_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="CleaningValidation_PaVaReKp[sub_'+ subCleaningValidation_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleCleaningValidation_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleCleaningValidation_PaVaReKpBlock', '.subsingleCleaningValidation_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleCleaningValidation_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subStabilityStudy_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subStabilityStudy_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="StabilityStudy_PaVaReKp[sub_'+ subStabilityStudy_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleStabilityStudy_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleStabilityStudy_PaVaReKpBlock', '.subsingleStabilityStudy_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleStabilityStudy_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subDeviationIfAny_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subDeviationIfAny_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="DeviationIfAny_PaVaReKp[sub_'+ subDeviationIfAny_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDeviationIfAny_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDeviationIfAny_PaVaReKpBlock', '.subsingleDeviationIfAny_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDeviationIfAny_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+
+        $(document).on('click', '.subChangeControlifany_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subChangeControlifany_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ChangeControlifany_PaVaReKp[sub_'+ subChangeControlifany_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleChangeControlifany_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleChangeControlifany_PaVaReKpBlock', '.subsingleChangeControlifany_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleChangeControlifany_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subSummary_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subSummary_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Summary_PaVaReKp[sub_'+ subSummary_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleSummary_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleSummary_PaVaReKpBlock', '.subsingleSummary_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleSummary_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subConclusion_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subConclusion_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Conclusion_PaVaReKp[sub_'+ subConclusion_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleConclusion_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleConclusion_PaVaReKpBlock', '.subsingleConclusion_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleConclusion_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subProposedParameters_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subProposedParameters_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ProposedParameters_PaVaReKp[sub_'+ subProposedParameters_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleProposedParameters_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleProposedParameters_PaVaReKpBlock', '.subsingleProposedParameters_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleProposedParameters_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subReportApproval_PaVaReKpAdd', function(e) {
+            e.preventDefault();
+            subReportApproval_PaVaReKpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ReportApproval_PaVaReKp[sub_'+ subReportApproval_PaVaReKpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReportApproval_PaVaReKpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReportApproval_PaVaReKpBlock', '.subsingleReportApproval_PaVaReKpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleReportApproval_PaVaReKpBlock">' + html + '</div>');
+            }
+        });
+
+
+        //Process Validation Interim Report
+
+        // Critical process parameters & Critical quality attributes
+
+
+        $(document).on('click', '.subcritical_quality_pvirAdd', function(e) {
+            e.preventDefault();
+            subcritical_quality_pvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="critical_pvir[sub_'+ subcritical_quality_pvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger purpose_pvrbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleCriticalPvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleCriticalPvirBlock', '.subsingleCriticalPvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleCriticalPvirBlock">' + html + '</div>');
+            }
+
+        });
+
+        // Results of In process data
+
+        $(document).on('click', '.subIn_process_data_pvirAdd', function(e) {
+            e.preventDefault();
+            subIn_process_data_pvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="In_process_data_pvir[sub_'+ subIn_process_data_pvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.single_In_process_data_PvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.single_In_process_data_PvirBlock', '.subsingle_In_process_data_PvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingle_In_process_data_PvirBlock">' + html + '</div>');
+            }
+        });
+
+         // Yield at various stages
+
+        $(document).on('click', '.subvarious_stages_pvirAdd', function(e) {
+            e.preventDefault();
+            subvarious_stages_pvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="various_stages_pvir[sub_'+ subvarious_stages_pvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlevarious_stages_PvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlevarious_stages_PvirBlock', '.subsinglevarious_stages_PvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglevarious_stages_PvirBlock">' + html + '</div>');
+            }
+        });
+
+         // Deviation (If any)
+
+        $(document).on('click', '.subdeviation_pvirAdd', function(e) {
+            e.preventDefault();
+            subdeviation_pvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="deviation_pvir[sub_'+ subdeviation_pvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDeviationBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDeviationBlock', '.subsingleDeviationBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDeviationBlock">' + html + '</div>');
+            }
+        });
+
+       // Change Control ( If any)
+
+        $(document).on('click', '.subchange_controlpvirAdd', function(e) {
+            e.preventDefault();
+            subchange_controlpvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="change_controlpvir[sub_'+ subchange_controlpvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlechange_controlPvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlechange_controlPvirBlock', '.subsinglechange_controlPvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglechange_controlPvirBlock">' + html + '</div>');
+            }
+        });
+
+         // Summary
+
+        $(document).on('click', '.subSummarypvirAdd', function(e) {
+            e.preventDefault();
+            subSummarypvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Summary_pvir[sub_'+ subSummarypvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleSummaryPvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleSummaryPvirBlock', '.subsingleSummaryPvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleSummaryPvirBlock">' + html + '</div>');
+            }
+        });
+
+      
+      // Conclusion
+
+        $(document).on('click', '.subConclusion_pvirAdd', function(e) {
+            e.preventDefault();
+            subConclusion_pvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="conclusion_pvir[sub_'+ subConclusion_pvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.single_Conclusion_pvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.single_Conclusion_pvirBlock', '.subsingle_Conclusion_pvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingle_Conclusion_pvirBlock">' + html + '</div>');
+            }
+        });
+
+
+         // Report Approval
+
+        $(document).on('click', '.subreport_approvalpvirAdd', function(e) {
+            e.preventDefault();
+            subreport_approvalpvirAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="report_approvalpvir[sub_'+ subreport_approvalpvirAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlereport_approvalPvirBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlereport_approvalPvirBlock', '.subsinglereport_approvalPvirBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglereport_approvalPvirBlock">' + html + '</div>');
+            }
+        });
+
+      // ----------------------stat----format for comppress air and nitrogen tab start  gas sys protocal by kppatel--------------
+
+        $(document).on('click', '.subProtocolapproval_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subProtocolapproval_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Protocolapproval_FoCompAaNirogenkp[sub_'+ subProtocolapproval_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleProtocolapproval_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleProtocolapproval_FoCompAaNirogenkpBlock', '.subsingleProtocolapproval_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleProtocolapproval_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subObjective_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subObjective_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Objective_FoCompAaNirogenkp[sub_'+ subObjective_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleObjective_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleObjective_FoCompAaNirogenkpBlock', '.subsingleObjective_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleObjective_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subPurpose_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subPurpose_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Purpose_FoCompAaNirogenkp[sub_'+ subPurpose_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePurpose_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePurpose_FoCompAaNirogenkpBlock', '.subsinglePurpose_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePurpose_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subScope_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subScope_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Scope_FoCompAaNirogenkp[sub_'+ subScope_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleScope_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleScope_FoCompAaNirogenkpBlock', '.subsingleScope_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleScope_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subExcutionTeamResp_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subExcutionTeamResp_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="ExcutionTeamResp_FoCompAaNirogenkp[sub_'+ subExcutionTeamResp_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleExcutionTeamResp_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleExcutionTeamResp_FoCompAaNirogenkpBlock', '.subsingleExcutionTeamResp_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleExcutionTeamResp_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subAbbreviations_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subAbbreviations_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Abbreviations_FoCompAaNirogenkp[sub_'+ subAbbreviations_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAbbreviations_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAbbreviations_FoCompAaNirogenkpBlock', '.subsingleAbbreviations_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAbbreviations_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subDocumentFollowed_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subDocumentFollowed_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="DocumentFollowed_FoCompAaNirogenkp[sub_'+ subDocumentFollowed_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDocumentFollowed_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDocumentFollowed_FoCompAaNirogenkpBlock', '.subsingleDocumentFollowed_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleDocumentFollowed_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subGenralConsPre_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subGenralConsPre_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="GenralConsPre_FoCompAaNirogenkp[sub_'+ subGenralConsPre_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleGenralConsPre_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleGenralConsPre_FoCompAaNirogenkpBlock', '.subsingleGenralConsPre_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleGenralConsPre_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subRevalidCrite_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subRevalidCrite_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="RevalidCrite_FoCompAaNirogenkp[sub_'+ subRevalidCrite_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleRevalidCrite_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleRevalidCrite_FoCompAaNirogenkpBlock', '.subsingleRevalidCrite_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleRevalidCrite_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subPrecautions_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subPrecautions_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Precautions_FoCompAaNirogenkp[sub_'+ subPrecautions_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singlePrecautions_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singlePrecautions_FoCompAaNirogenkpBlock', '.subsinglePrecautions_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsinglePrecautions_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subRevalidProcess_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subRevalidProcess_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="RevalidProcess_FoCompAaNirogenkp[sub_'+ subRevalidProcess_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleRevalidProcess_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleRevalidProcess_FoCompAaNirogenkpBlock', '.subsingleRevalidProcess_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleRevalidProcess_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+        $(document).on('click', '.subAcceptanceCrite_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subAcceptanceCrite_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="AcceptanceCrite_FoCompAaNirogenkp[sub_'+ subAcceptanceCrite_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAcceptanceCrite_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAcceptanceCrite_FoCompAaNirogenkpBlock', '.subsingleAcceptanceCrite_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAcceptanceCrite_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
+
+        $(document).on('click', '.subAnnexure_FoCompAaNirogenkpAdd', function(e) {
+            e.preventDefault();
+            subAnnexure_FoCompAaNirogenkpAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="Annexure_FoCompAaNirogenkp[sub_'+ subAnnexure_FoCompAaNirogenkpAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAnnexure_FoCompAaNirogenkpBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAnnexure_FoCompAaNirogenkpBlock', '.subsingleAnnexure_FoCompAaNirogenkpBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subsingleAnnexure_FoCompAaNirogenkpBlock">' + html + '</div>');
+            }
+        });
+
 
         $(document).on('click', '.subEnvironmentalhtspAdd', function(e) {
             e.preventDefault();

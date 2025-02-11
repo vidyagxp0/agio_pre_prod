@@ -594,27 +594,6 @@
                     <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Document Number:</td>
                     <td style="width: 30%; padding: 5px; text-align: left" class="doc-num">Supersedes No.:</td>
                     <td style="width: 35%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
-
-                    <!-- <td style="width: 30%; padding: 5px; text-align: left">
-                     @if($document->revised == 'Yes')
-                        @php
-                            $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                        @endphp
-
-                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                            @endif
-                        {{-- {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }} --}}
-                        @else
-                        @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                            {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                        @else
-                            {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                        @endif
-                     @endif
-                    </td> -->
                 </tr>
                 <tr>
                     <td style="width: 35%; padding: 5px; text-align: left">
@@ -669,101 +648,16 @@
     </header>
 
     
-
     <div class="text-center">
-  <h1>NAME OF EQUIPMENT AND DEPARTMENT</h1>
-  <h1>EQUIPMENT ID:</h1>
-</div>
+        <h1>NAME OF EQUIPMENT AND DEPARTMENT</h1>
+        <h1>EQUIPMENT ID:</h1>
+    </div>
                  
       
     <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-        {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <thead>
-                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;"></th>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Prepared By</th>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Checked By</th>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Sign</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  
-                    @if ($inreviews->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreviews as $temp)
-                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif          
-                    @php
-                        $inreview = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Approval-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-
-                    @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">  
-                    @if ($inreview->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreview as $temp)
-                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif                    
-                </tr>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Date</td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">
-                     {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                    </td>
-                    <td style="padding: 10px; border: 1px solid #ddd;">
-                    @if ($inreviews->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreviews as $temp)
-                           <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif 
-                    </td>
-
-                    <td style="padding: 10px; border: 1px solid #ddd;">
-                    @if ($inreview->isEmpty())
-                        <div>Yet Not Performed</div>
-                    @else
-                        @foreach ($inreview as $temp)
-                           <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                        @endforeach
-                    @endif                    
-                    </td>
-                </tr> 
-            </tbody>
-
-
-
-           
-        </table> --}}
-
-       
         <span>Format No.: QA/067/F11-00</span>
     </footer>
     
-  
-
 
     {{-- <script type="text/php">
         if ( isset($pdf) ) {
