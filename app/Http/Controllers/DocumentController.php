@@ -996,8 +996,31 @@ class DocumentController extends Controller
 
 
 
+        //Stability study protocol
 
-
+        $content->product_name_ssp = $request->product_name_ssp;
+        $content->protocol_no_ssp = $request->protocol_no_ssp;
+        $content->brand_name_ssp = $request->brand_name_ssp;
+        $content->generic_name_ssp = $request->generic_name_ssp;
+        $content->label_claim_ssp = $request->label_claim_ssp;
+        $content->fg_code_ssp = $request->fg_code_ssp;
+        $content->pack_size_ssp = $request->pack_size_ssp;
+        $content->shelf_life_ssp = $request->shelf_life_ssp;
+        $content->market_ssp = $request->market_ssp;
+        $content->storage_condition_ssp = $request->storage_condition_ssp;
+        $content->purpose_ssp = $request->purpose_ssp;
+        $content->specify_ssp = $request->specify_ssp;
+        $content->scope_ssp = $request->scope_ssp;
+        $content->documentrefrence_ssp = $request->documentrefrence_ssp;
+        $content->reason_stability_ssp = $request->reason_stability_ssp;
+        $content->remark_if_any_ssp = $request->remark_if_any_ssp;
+        $content->stability_data_ssp = $request->stability_data_ssp;
+        $content->general_inst_ssp = $request->general_inst_ssp;
+        $content->stability_proto_ssp = $request->stability_proto_ssp;
+        $content->proto_no_ssp = $request->proto_no_ssp;
+        $content->product_ssp = $request->product_ssp;
+        $content->batchnumber_ssp = $request->batchnumber_ssp;
+     
 
         //-----------------------Process Validation Report--------------------------------------- 
 
@@ -1448,6 +1471,22 @@ class DocumentController extends Controller
 
 
 
+           $BATCH_DETAILS_ssp = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'BATCH_DETAILS_ssp'])->firstOrNew();;
+           $BATCH_DETAILS_ssp->document_type_id = $document->id;
+           $BATCH_DETAILS_ssp->identifier = 'BATCH_DETAILS_ssp';
+           $BATCH_DETAILS_ssp->data = $request->batch_details_ssp;
+        //   dd($BATCH_DETAILS_ssp);
+           $BATCH_DETAILS_ssp->save();
+
+
+           $DETAILS_ssp = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'DETAILS_ssp'])->firstOrNew();;
+           $DETAILS_ssp->document_type_id = $document->id;
+           $DETAILS_ssp->identifier = 'DETAILS_ssp';
+           $DETAILS_ssp->data = $request->batch_detaildata_ssp;
+// dd($DETAILS_ssp);
+           $DETAILS_ssp->save();
+
+
             toastr()->success('Document created');
 
             return redirect()->route('documents.index');
@@ -1626,6 +1665,14 @@ class DocumentController extends Controller
         $SpecificationData_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'specificationInprocessValidationSpecification')->first();
         $Specification_Validation_Data_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
 
+       
+
+
+
+        $DETAILS_ssp = DocumentGrid::where('document_type_id', $id)->where('identifier', 'DETAILS_ssp')->first();
+        $BATCH_DETAILS_ssp = DocumentGrid::where('document_type_id', $id)->where('identifier', 'BATCH_DETAILS_ssp')->first();
+
+    //   dd($BATCH_DETAILS_ssp);
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
 
@@ -1684,7 +1731,8 @@ class DocumentController extends Controller
             'currentId',
             'Specification_Validation_Data_CVS',
             'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData',
-            'CalibrationQualificationstatus'
+            'CalibrationQualificationstatus',
+            'BATCH_DETAILS_ssp','DETAILS_ssp'
             
         ));
     }
@@ -2582,6 +2630,8 @@ class DocumentController extends Controller
 
             $documentcontet->training_cvpd = $request->training_cvpd ? serialize($request->training_cvpd) : serialize([]);
         //-----------------------END Cleaning validation protocol doc--------------------------------------- 
+        
+        
         //-----------------------Cleaning Validation Report-doc --------------------------------------- 
 
             $documentcontet->objective_cvrd = $request->objective_cvrd ? serialize($request->objective_cvrd) : serialize([]);
@@ -2596,6 +2646,32 @@ class DocumentController extends Controller
             $documentcontet->conclusion_cvrd = $request->conclusion_cvrd ? serialize($request->conclusion_cvrd) : serialize([]);
         //---------------------- END-Cleaning Validation Report-doc --------------------------------------- 
 
+              //Stability study protocol
+
+                $documentcontet->product_name_ssp = $request->product_name_ssp;
+                $documentcontet->protocol_no_ssp = $request->protocol_no_ssp;
+                $documentcontet->brand_name_ssp = $request->brand_name_ssp;
+                $documentcontet->generic_name_ssp = $request->generic_name_ssp;
+                $documentcontet->label_claim_ssp = $request->label_claim_ssp;
+                $documentcontet->fg_code_ssp = $request->fg_code_ssp;
+                $documentcontet->pack_size_ssp = $request->pack_size_ssp;
+                $documentcontet->shelf_life_ssp = $request->shelf_life_ssp;
+                $documentcontet->market_ssp = $request->market_ssp;
+                $documentcontet->storage_condition_ssp = $request->storage_condition_ssp;
+                $documentcontet->purpose_ssp = $request->purpose_ssp;
+                $documentcontet->specify_ssp = $request->specify_ssp;
+                $documentcontet->scope_ssp = $request->scope_ssp;
+                $documentcontet->documentrefrence_ssp = $request->documentrefrence_ssp;
+                $documentcontet->reason_stability_ssp = $request->reason_stability_ssp;
+                $documentcontet->remark_if_any_ssp = $request->remark_if_any_ssp;
+                $documentcontet->stability_data_ssp = $request->stability_data_ssp;
+                $documentcontet->general_inst_ssp = $request->general_inst_ssp;
+                $documentcontet->stability_proto_ssp = $request->stability_proto_ssp;
+                $documentcontet->proto_no_ssp = $request->proto_no_ssp;
+                $documentcontet->product_ssp = $request->product_ssp;
+                $documentcontet->batchnumber_ssp = $request->batchnumber_ssp;
+     
+        
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
@@ -2951,6 +3027,26 @@ $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? s
             $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
             $Specification_Validation_Data_invs->save();
 
+
+
+
+
+            
+           $BATCH_DETAILS_ssp = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'BATCH_DETAILS_ssp']);
+           $BATCH_DETAILS_ssp->document_type_id = $document->id;
+           $BATCH_DETAILS_ssp->identifier = 'BATCH_DETAILS_ssp';
+
+           $BATCH_DETAILS_ssp->data = $request->batch_details_ssp;
+          // dd($BATCH_DETAILS_ssp);
+
+           $BATCH_DETAILS_ssp->save();
+
+
+           $DETAILS_ssp = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'DETAILS_ssp']);
+           $DETAILS_ssp->document_type_id = $document->id;
+           $DETAILS_ssp->identifier = 'DETAILS_ssp';
+           $DETAILS_ssp->data = $request->batch_detaildata_ssp;
+           $DETAILS_ssp->save();
 
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
