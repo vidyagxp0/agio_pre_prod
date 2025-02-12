@@ -132,7 +132,7 @@
         body {
             margin-top: 250px;
             margin-bottom: 160px;
-            padding-top: 60px;
+            padding-top: 80px;
             padding-bottom: 50px; 
         }
 
@@ -354,7 +354,7 @@ overflow-wrap: break-word;
             <tbody>
                 <tr>
                     <td>
-                      {Product Name}
+                      {{ $data->product_name_cvs }}
                     </td>
                 </tr>
             </tbody>
@@ -516,23 +516,10 @@ overflow-wrap: break-word;
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody>
+        
+            <span>
+                Format No.: QA/097/F2-01                               
+            </span>
         </table>
     </footer>
 
@@ -609,81 +596,7 @@ overflow-wrap: break-word;
         </section>
     </div>
 
-    
-    <table style="margin-top: 20px;">
-        <thead>
-            <tr>
-                <th class="text-left">
-                    <div class="bold">For Finished product specification use below table:</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-    
-    <table>
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <div class="bold">SPECIFICATION</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
-                <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
-            </tr>
-            <tr>
-                <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
-                <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
-            </tr>
-        </thead>
-        <tbody>
-                @if(!empty($finishedProductSpecificationData_CVS))
-                    @foreach($finishedProductSpecificationData_CVS as $key => $item)
-                        <tr>
-                            <td style="border: 1px solid black; font-size: 16px; font-weight: bold; text-align: center;">
-                                {{ $key+1 }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: left;">
-                                {{ $item['test'] ?? '' }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: center;">
-                                {{ $item['release'] ?? '' }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: center;">
-                                {{ $item['shelf_life'] ?? '' }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: left;">
-                                {{ $item['reference'] ?? '' }}
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                            No Data Available
-                        </td>
-                    </tr>
-                @endif
-            </tbody>
-    </table>
-
-    <table>
-        <thead>
-            <tr>
-                <th class="text-left">
-                    <div class="bold">For Inprocess / Cleaning validation specification use below table:</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-
+   
     <table>
         <thead>
             <tr>

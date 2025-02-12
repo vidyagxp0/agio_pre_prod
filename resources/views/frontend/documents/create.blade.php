@@ -7779,6 +7779,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="generic-name">Product Name</label>
+                                        <input type="text" name="fsproduct_name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
                                         <input type="text" name="generic_name">
                                     </div>
@@ -7804,7 +7810,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="storage-condition">Storage Condition</label>
-                                        <input type="text" name="storage_condition">
+                                        <input type="text" name="fsstorage_condition">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -7913,7 +7919,7 @@
                                         });
                                     });
                                 </script>
-                            <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                 Validation  Specification
                             </div>
                             <div class="col-12">
@@ -7946,8 +7952,8 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                            <script>
+                            </div> --}}
+                            {{-- <script>
                                 $(document).ready(function() {
                                     // Add new row in Specification Details table
                                     $('#specification_validation_add').click(function(e) {
@@ -7976,7 +7982,7 @@
                                         $(this).closest('tr').remove();
                                     });
                                 });
-                            </script>
+                            </script> --}}
 
 
 
@@ -8005,6 +8011,12 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Product Name</label>
+                                        <input type="text" name="product_name_cvs">
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
@@ -8071,7 +8083,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                     SPECIFICATION
                                 </div>
                                 <div class="col-12">
@@ -8140,7 +8152,7 @@
                                             $(this).closest('tr').remove();
                                         });
                                     });
-                                </script>
+                                </script> --}}
                             <div class="col-12 sub-head">
                                 Validation  Specification
                             </div>
@@ -8237,6 +8249,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="generic-name">Product Name</label>
+                                        <input type="text" name="product_name_inps">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
                                         <input type="text" name="generic_name_inps">
                                     </div>
@@ -8301,7 +8319,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                     SPECIFICATION
                                 </div>
                                 <div class="col-12">
@@ -8370,7 +8388,7 @@
                                             $(this).closest('tr').remove();
                                         });
                                     });
-                                </script>
+                                </script> --}}
                             <div class="col-12 sub-head">
                                 Validation  Specification
                             </div>
@@ -9987,6 +10005,15 @@
                                         <input type="text" name="cas_no_row_material">
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Material Name</label>
+                                        <input type="text" name="material_name">
+                                    </div>
+                                </div>
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="brand-name">Molecular Formula</label>
@@ -10053,13 +10080,13 @@
                                 </div>
 
 
-                            <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                 STANDARD TESTING PROCEDURE
-                            </div>
-                            <div class="col-12">
+                            </div> --}}
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
-                                        STANDARD TESTING PROCEDURE
+                                          SPECIFICATION
                                         <button type="button" id="row_material_add">+</button>
                                     </label>
                                     <div class="table-responsive">
@@ -10113,7 +10140,17 @@
                                         $(this).closest('tr').remove();
                                     });
                                 });
-                            </script>
+                            </script> --}}
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">Specifications</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="rawmaterials_specifications" class="summernote">
+                                    </textarea>
+                                    </div>
+                                </div>
 
 
 
