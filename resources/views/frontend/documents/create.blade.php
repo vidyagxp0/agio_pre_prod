@@ -189,10 +189,10 @@
 
         /* If you want larger images */
         #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
-            margin: 5px auto;
-        }
+                max-width: 400px !important; /* Adjust this to your preferred maximum width */
+                height: 300px;
+                margin: 5px auto;
+            }
     </style>
 
 
@@ -318,8 +318,8 @@
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
-                <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
-                <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
+                <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">Test Data Sheet</button>
+                <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">General Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
                 <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
                 <button class="tablinks hidden-tabs" data-id="STUDY" onclick="openData(event, 'doc-study')">Study Report</button>
@@ -370,9 +370,9 @@
                                     <div class="group-input">
                                         <label for="record-num">Record Number</label>
                                         <div class="default-name">{{ $recordNumber }}
-                        </div>
-                    </div>
-                </div> --}}
+                                </div>
+                            </div>
+                        </div> --}}
 
 
                                 <div class="col-lg-12">
@@ -383,7 +383,7 @@
                                                 value="{{ Helpers::getDivisionName($_GET['id']) }}">
                                             <input type="hidden" name="division_id" value="{{ $_GET['id'] }}">
                                             {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}
-                    </div> --}}
+                                    </div> --}}
                                         @else
                                             <label for="Division Code"><b>Site/Location Code </b></label>
                                             {{-- <input readonly type="text" name="division_id"
@@ -503,11 +503,11 @@
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-12">
-                <div class="group-input">
-                    <label for="description">Description</label>
-                    <textarea name="description"></textarea>
-                </div>
-            </div> --}}
+                                    <div class="group-input">
+                                        <label for="description">Description</label>
+                                        <textarea name="description"></textarea>
+                                    </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="orig-head">
@@ -548,23 +548,23 @@
                                 </div>
 
                                 {{-- @php
-            use Illuminate\Support\Facades\DB;
+                                    use Illuminate\Support\Facades\DB;
 
-            $actionItems = DB::table('action_items')->get();
-        @endphp
+                                    $actionItems = DB::table('action_items')->get();
+                                @endphp
 
-        <div class="col-md-6">
-            <div class="group-input">
-                <label for="link-doc">Parent Child Record</label>
-                <select multiple name="parent_child[]" placeholder="Select Parent Child Records" data-search="false" data-silent-initial-value-set="true" id="parent_child">
-                    @foreach ($actionItems as $item)
-                        <option value="{{ $item->id }}">
-                            {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-        </div> --}}
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="link-doc">Parent Child Record</label>
+                                        <select multiple name="parent_child[]" placeholder="Select Parent Child Records" data-search="false" data-silent-initial-value-set="true" id="parent_child">
+                                            @foreach ($actionItems as $item)
+                                                <option value="{{ $item->id }}">
+                                                    {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -576,8 +576,8 @@
                                             @endforeach
                                             {{-- @foreach ($departments as $department)
                                                 <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
-                    {{ $department->name }}</option>
-                    @endforeach --}}
+                                        {{ $department->name }}</option>
+                                        @endforeach --}}
                                         </select>
                                     </div>
                                     <p id="depart-nameError" style="color:red">** Department is required</p>
@@ -590,6 +590,7 @@
                                         <div class="default-name"> <span id="department-code">Not selected</span></div>
                                     </div>
                                 </div> --}}
+
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="major">Document Version <small>(Major)</small> <span
@@ -616,6 +617,7 @@
 
                                         </div>
                                     </div> --}}
+
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Type<span class="text-danger">*</span></label>
@@ -7481,6 +7483,19 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="comments">TDS Code</label>
+                                        <select name="tds_name_code" id="">
+                                            <option value="">Select here</option>
+                                            <option value="FP">Finished Product</option>
+                                            <option value="IP">Inprocess Product</option>
+                                            <option value="CV">Cleaning Validation</option>
+                                            <option value="RW">Raw Material</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
                                         <input type="text" name="Reference_Standard">
                                     </div>
@@ -7488,31 +7503,35 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="train-require">Total no. of pages in report</label>
+                                        <input type="text" name="total_no_pages">
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="ar_no">Mfg. Date</label>
                                         <input type="date" name="mfg_date">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Exp. Date</label>
                                         <input type="date" name="exp_date">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis start date</label>
                                         <input type="date" name="analysis_start_date">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis completion date </label>
                                         <input type="date" name="analysis_completion_date ">
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -7665,7 +7684,7 @@
                                                         <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
                                                         <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
                                                         <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
-                                                        <td><input type="date" name="sampleReconcilation[0][used_by]"></td>
+                                                        <td></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -7685,8 +7704,7 @@
                                                         '][quantity_test_stp]"></td>' +
                                                         '<td><input type="text" name="sampleReconcilation[' + serialNumber +
                                                         '][quantity_userd_test]"></td>' +
-                                                        '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
-                                                        serialNumber + '][used_by]"></td>' +
+                                                        '<td></td>' +
                                                         '</tr>';
                                                     return html;
                                                 }
@@ -7712,13 +7730,12 @@
                                         });
                                     </script>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Total Quantity Consumed</label>
                                         <input type="text" name="total_quantity_consumed">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Balance Quantity</label>
@@ -7734,7 +7751,8 @@
                                             <option value="No">No</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
                             </div>
 
                         <div class="button-block">

@@ -575,7 +575,7 @@
                     PRODUCT/MATERIAL NAME  :   <span>{{$data->product_material_name}}</span><br><br>
                     Reference Standard/GTP No. :  <span>{{$data->Reference_Standard}}</span>
                 </td>
-                <td style="width: 15%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
+                <td style="width: 18%; padding: 5px; text-align: left" class="doc-num">TDS No.: 
                     <span>
                     @if($document->revised == 'Yes')
                         @php
@@ -583,16 +583,16 @@
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                     @else
                         
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                             @else
-                                RMTDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                             @endif
                     @endif
                     </span>
@@ -702,7 +702,7 @@
                 </table> --}}
                 <div></div>
                     <span style="text-align:center">Format No. QA/097/F9-00</span> 
-                    <span style="text-align:right; margin-left:250px">Page No. :-</span>  
+                    <span style="text-align:right; margin-left:350px">Page No. :-</span>  
                 </div>                             
                 </footer>
 
@@ -710,21 +710,21 @@
             <tbody>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->batch_no}} </td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"> </td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">A.R. No.</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->ar_no}} </td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Mfg. Date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->mfg_date)}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Exp. Date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->exp_date)}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Analysis start date</td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->analysis_start_date)}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Analysis completion date </td>
-                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;">{{Helpers::getdateFormat($data->analysis_completion_date)}}</td>
+                    <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                 </tr>
                 <tr>
                     <td style="width: 25%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num" colspan="2">Specification No :-</td>
@@ -736,6 +736,8 @@
                 </tr>
             </tbody>
         </table>
+
+        <br>
         
     <div>
         <section class="main-section" id="pdf-page">
@@ -828,7 +830,7 @@
                 </div>
                 {{-- PROCEDURE END --}}
                 
-
+                <br>
                 {{-- Test wise data Start --}}
                     <div class="other-container ">
                     <table>
@@ -1040,11 +1042,11 @@
                         <tbody>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Name of Material/Sample:</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->name_of_material_sample}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;" class="doc-num">Batch No.</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_reconcilation_batchNo}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
 
                             </tr>
                             <tr>
@@ -1082,7 +1084,7 @@
                                         <td style="border: 1px solid black; text-align: left;">{{ $item['test_name'] ?? '' }}</td>
                                         <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_test_stp'] ?? 'N/A' }}</td>
                                         <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_userd_test'] ?? 'N/A' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['used_by'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;"></td>
                                     </tr>
                                     @php $count++; @endphp
                                 @endforeach
@@ -1100,16 +1102,16 @@
                         <tbody>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Total Quantity Consumed</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->total_quantity_consumed}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Balance Quantity</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->balance_quantity}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
 
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Balance Quantity Destructed</td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->balance_quantity_destructed}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -1127,123 +1129,6 @@
                         </tr>
                     </table>
                 </div>
-
-                {{-- <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                    <tbody>
-                        <tr>
-                            <td style="width: 10%; border: 1px solid black;"></td>
-                            <td>
-                                <table style="width: 90%; border: none;">
-                                    <tr>
-                                        <td style="width: 45%; text-align: left;">
-                                            <p>Individual Identification Test By IR:</p>
-                                        </td>
-                                        <td style="width: 45%; text-align: right;">
-                                            <p>Date:</p>
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                    <thead>
-                                        <tr>
-                                            <th style="border: 1px solid black; width: 35%; font-weight: bold;">Instrument Name</th>
-                                            <th style="border: 1px solid black; width: 30%; font-weight: bold;">ID Number</th>
-                                            <th style="border: 1px solid black; width: 35%; font-weight: bold;">Calibration Due On</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="border: 1px solid black;"></td>
-                                            <td style="border: 1px solid black;"></td>
-                                            <td style="border: 1px solid black;"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <table style="margin-top: 20px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                    <thead>
-                                        <tr>
-                                            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Chemical /Solvent Name </th>
-                                            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Make</th>
-                                            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Batch No</th>
-                                            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Valid upto</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="border: 1px solid black;"></td>
-                                            <td style="border: 1px solid black;"></td>
-                                            <td style="border: 1px solid black;"></td>
-                                            <td style="border: 1px solid black;"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <table style="width: 100%; border: none;">
-                                    <tr>
-                                        <td style="text-align: left; font-weight: bold;">
-                                           Sample preparation :- <p>Triturated ________mg of the sample with _______mg of finely powdered and dried potassium bromide. Carefully grinded the mixture in ceramic mortar and pestle and spread it uniformly in a die.</p> 
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <table style="width: 100%; border: none;">
-                                    <tr>
-                                        <td style="text-align: left; font-weight: bold;">
-                                            Observation Table: 
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                    <thead>
-                                        <tr>
-                                            <th style="border: 1px solid black; width: 35%; font-weight: bold;">Container No.</th>
-                                            <th style="border: 1px solid black; width: 30%; font-weight: bold;">Observation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td style="border: 1px solid black;"></td>
-                                            <td style="border: 1px solid black;"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                
-                                <table style="width: 100%; border: none;">
-                                    <tr>
-                                        <td style="text-align: left;">
-                                           Remark: Complies / does not comply
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <div style="margin-top: 20px;">
-                                    <table style="width: 100%; border: none;">
-                                        <tr>
-                                            <td style="width: 50%; text-align: left;">
-                                                <p><strong>Analyzed by/Date:</strong></p>
-                                                
-                                            </td>
-                                            <td style="width: 50%; text-align: right;">
-                                                <p><strong>Reviewed by/Date:</strong></p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table> --}}
-                {{-- <table style="width: 100%; border: none;">
-                    <tr>
-                        <td style="text-align: left;" class="bold">
-                           Note: Above table is applicable only for the raw material specification having IR test.
-                        </td>
-                    </tr>
-                </table> --}}
 
                 <div class="other-container">
                     <table>
@@ -1297,7 +1182,7 @@
                     $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                     $size = 12;
                     $pageText =  $PAGE_NUM . " of " . $PAGE_COUNT;
-                    $y = 785;
+                    $y = 790;
                     $x = 485;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }

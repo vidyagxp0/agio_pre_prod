@@ -116,64 +116,64 @@
     </script>
     <style>
 
-/*Main Table Styling */
-#isPasted {
-    width: 650px !important;
-    border-collapse: collapse;
-    table-layout: auto; /* Adjusts column width dynamically */
-}
+    /*Main Table Styling */
+    #isPasted {
+        width: 650px !important;
+        border-collapse: collapse;
+        table-layout: auto; /* Adjusts column width dynamically */
+    }
 
-/* First column adjusts to its content */
-#isPasted td:first-child,
-#isPasted th:first-child {
-    white-space: nowrap; /* Prevent wrapping */
-    width: 1%; /* Shrink to fit content */
-    vertical-align: top;
-}
+    /* First column adjusts to its content */
+    #isPasted td:first-child,
+    #isPasted th:first-child {
+        white-space: nowrap; /* Prevent wrapping */
+        width: 1%; /* Shrink to fit content */
+        vertical-align: top;
+    }
 
-/* Second column takes remaining space */
-#isPasted td:last-child,
-#isPasted th:last-child {
-    width: auto; /* Take remaining space */
-    vertical-align: top;
-    
-}
+    /* Second column takes remaining space */
+    #isPasted td:last-child,
+    #isPasted th:last-child {
+        width: auto; /* Take remaining space */
+        vertical-align: top;
+        
+    }
 
-/* Common Table Cell Styling */
-#isPasted th,
-#isPasted td {
-    border: 1px solid #000;
-    padding: 8px;
-    text-align: left;
-    max-width: 500px;
-word-wrap: break-word;
-overflow-wrap: break-word;
-}
+    /* Common Table Cell Styling */
+    #isPasted th,
+    #isPasted td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    }
 
-/* Paragraph Styling Inside Table Cells */
-#isPasted td > p {
-    text-align: justify;
-    text-justify: inter-word;
-    margin: 0;
-    max-width: 500px;
-word-wrap: break-word;
-overflow-wrap: break-word;
-}
+    /* Paragraph Styling Inside Table Cells */
+    #isPasted td > p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin: 0;
+        max-width: 500px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    }
 
-#isPasted img {
-    max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-    height: 100%; /* Maintain image aspect ratio */
-    display: block; /* Remove extra space below the image */
-    margin: 5px auto; /* Add spacing and center align */
-}
+    #isPasted img {
+        max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+        height: 100%; /* Maintain image aspect ratio */
+        display: block; /* Remove extra space below the image */
+        margin: 5px auto; /* Add spacing and center align */
+    }
 
-/* If you want larger images */
-#isPasted td img {
-    max-width: 400px !important; /* Adjust this to your preferred maximum width */
-    height: 300px;
-    margin: 5px auto;
-}
-</style>
+    /* If you want larger images */
+    #isPasted td img {
+        max-width: 400px !important; /* Adjust this to your preferred maximum width */
+        height: 300px;
+        margin: 5px auto;
+    }
+    </style>
 
     <div id="data-fields">
         <div class="container-fluid">
@@ -220,8 +220,8 @@ overflow-wrap: break-word;
                 <button class="tablinks hidden-tabs" data-id="PROCUMREPORT" onclick="openData(event, 'doc_PCR')">Protocol Cum Report</button>
                 {{-- <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-temper_maping')">Temperature Mapping Protocol Cum Report</button> --}}
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
-                <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">TDS</button>
-                <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">GTP</button>
+                <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">Test Data Sheet</button>
+                <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">General Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
                 <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
                 <button class="tablinks hidden-tabs" data-id="STUDY" onclick="openData(event, 'doc-study')">Study Report</button>
@@ -5663,10 +5663,27 @@ overflow-wrap: break-word;
 
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="comments">TDS Code</label>
+                                        <select name="tds_name_code" id="">
+                                            <option value="">Select here</option>
+                                            <option {{ $document->tds_name_code == 'FP' ? 'selected' : '' }}
+                                                        value="FP">Finished Product</option>
+                                            <option {{ $document->tds_name_code == 'IP' ? 'selected' : '' }}
+                                                        value="IP">Inprocess Product</option>
+                                            <option {{ $document->tds_name_code == 'CV' ? 'selected' : '' }}
+                                                        value="CV">Cleaning Validation</option>
+                                            <option {{ $document->tds_name_code == 'RW' ? 'selected' : '' }}
+                                                        value="RW">Raw Material</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                     <label for="train-require">TDS No.</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "TDS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "$document->tds_name_code TDS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="tds_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -5681,46 +5698,47 @@ overflow-wrap: break-word;
 
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="train-require">Total no. of pages in report</label>
+                                        <input type="text" name="total_no_pages" value="{{$document->total_no_pages}}">
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="batch_no">Batch No</label>
                                         <input type="text" name="batch_no" value="{{$document->batch_no}}">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">A.R. No.</label>
                                         <input type="text" name="ar_no" value="{{$document->ar_no}}">
                                     </div>
                                 </div>
-
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Mfg. Date</label>
                                         <input type="date" name="mfg_date" value="{{$document->mfg_date}}">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Exp. Date</label>
                                         <input type="date" name="exp_date" value="{{$document->exp_date}}">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis start date</label>
                                         <input type="date" name="analysis_start_date" value="{{$document->analysis_start_date}}">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="ar_no">Analysis completion date </label>
                                         <input type="date" name="analysis_completion_date" value="{{$document->analysis_completion_date}}">
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -5866,7 +5884,7 @@ overflow-wrap: break-word;
                                     <input type="text" name="name_of_material_sample" value="{{$document->name_of_material_sample}}">
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="name_of_material/sample">Batch No.</label>
                                     <input type="text" name="sample_reconcilation_batchNo" value="{{$document->sample_reconcilation_batchNo}}">
@@ -5885,7 +5903,7 @@ overflow-wrap: break-word;
                                     <label for="name_of_material/sample">Total Quantity Received</label>
                                     <input type="text" name="sample_quatity_received" value="{{$document->sample_quatity_received}}">
                                 </div>
-                            </div>
+                            </div> --}}
 
                                 <div class="col-12 sub-head">
                                         Sample Reconcilation
@@ -5921,7 +5939,7 @@ overflow-wrap: break-word;
                                                                 <td><input type="text" name="sampleReconcilation[{{$index}}][test_name]" value="{{ $detail['test_name'] ?? '' }}"></td>
                                                                 <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_test_stp]" value="{{ $detail['quantity_test_stp'] ?? '' }}"></td>
                                                                 <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_userd_test]" value="{{ $detail['quantity_userd_test'] ?? '' }}"></td>
-                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][used_by]" value="{{ $detail['used_by'] ?? '' }}"></td>
+                                                                <td></td>
                                                             </tr>
                                                         @endforeach
                                                     @else
@@ -5930,7 +5948,7 @@ overflow-wrap: break-word;
                                                             <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
                                                             <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
                                                             <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
-                                                            <td><input type="date" name="sampleReconcilation[0][used_by]"></td>
+                                                            <td></td>
                                                         </tr>
                                                     @endif
                                                 </tbody>
@@ -5955,8 +5973,7 @@ overflow-wrap: break-word;
                                                     '<td><input type="text" name="sampleReconcilation[' + serialNumber +
                                                     '][quantity_userd_test]"></td>' +
 
-                                                    '<td><input type="date" class="Document_Remarks" name="sampleReconcilation[' +
-                                                    serialNumber + '][used_by]"></td>' +
+                                                    '<td></td>' +
                                                     '</tr>';
 
                                                 return html;
@@ -5970,20 +5987,19 @@ overflow-wrap: break-word;
                                     });
                                 </script>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Total Quantity Consumed</label>
                                         <input type="text" name="total_quantity_consumed" value="{{$document->total_quantity_consumed}}">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="name_of_material/sample">Balance Quantity</label>
                                         <input type="text" name="balance_quantity" value="{{$document->balance_quantity}}">
                                     </div>
-                                </div>
-                                <!-- <div class="col-md-6">
+                                </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Balance Quantity Destructed</label>
                                         <select name="balance_quantity_destructed">
@@ -5995,7 +6011,7 @@ overflow-wrap: break-word;
 
                                         </select>
                                     </div>
-                                </div> -->
+                                </div> --}}
                             </div>
 
                         <div class="button-block">

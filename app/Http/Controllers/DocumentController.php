@@ -496,7 +496,9 @@ class DocumentController extends Controller
             $document->balance_quantity = $request->balance_quantity;
             $document->balance_quantity_destructed = $request->balance_quantity_destructed;
 
-            
+            $document->tds_name_code = $request->tds_name_code;
+            $document->total_no_pages = $request->total_no_pages;
+
 
 
 
@@ -2201,6 +2203,9 @@ class DocumentController extends Controller
                 $document->master_user_department = $request->master_user_department;
                 $document->controlled_user_department = $request->controlled_user_department;
                 $document->display_user_department = $request->display_user_department;
+                $document->tds_name_code = $request->tds_name_code;
+                $document->total_no_pages = $request->total_no_pages;
+
 
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
@@ -3965,6 +3970,22 @@ class DocumentController extends Controller
             }
         }
 
+
+
+        // 🔹 SOP Number Generate Karna
+    if ($document->revised == 'Yes') {
+        $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+    } else {
+        $revisionNumber = '00';
+    }
+
+    if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+        $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+    } else {
+        $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+    }
+
+
         if ($department) {
             $data['department_name'] = $department->name;
         } else {
@@ -4157,17 +4178,6 @@ class DocumentController extends Controller
 
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
-        // $canvas->page_text(
-        //     $width / 4,
-        //     $height / 2,
-        //     Helpers::getDocStatusByStage($data->stage),
-        //     null,
-        //     25,
-        //     [0, 0, 0],
-        //     2,
-        //     6,
-        //     -20
-        // );
 
         $canvas->page_text(
             $width / 2.4,
@@ -4354,6 +4364,7 @@ class DocumentController extends Controller
 
     public function printPDF($id)
     {
+
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
@@ -4383,11 +4394,22 @@ class DocumentController extends Controller
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
-
-
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
             }
+        }
+
+        // 🔹 SOP Number (Same As viewPDF)
+        if ($document->revised == 'Yes') {
+            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
+
+        if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+            $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+        } else {
+            $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
         }
 
 
@@ -4412,15 +4434,79 @@ class DocumentController extends Controller
                 $annexures = unserialize($documentContent->annexuredata);
             }
 
+        if (empty($data->document_type_id)) {
+            return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
+        }
+
+            $viewName = match ($data->document_type_id) {
+                'SOP' => 'frontend.documents.pdfpage',
+                'BOM' => 'frontend.documents.bom-pdf',
+                'FPS' => 'frontend.documents.finished-product-pdf',
+                'INPS' => 'frontend.documents.inprocess_s-pdf',
+                'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+                'RAWMS' => 'frontend.documents.raw_ms-pdf',
+                'PAMS' => 'frontend.documents.package_ms-pdf',
+                'PIAS' => 'frontend.documents.product_item-pdf',
+                'MFPS' => 'frontend.documents.mfps-pdf',
+                'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+                'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+                'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+                'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+                'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+                'BMR' => 'frontend.documents.bmr-pdf',
+                'BPR' => 'frontend.documents.bpr-pdf',
+                'SPEC' => 'frontend.documents.spec-pdf',
+                'STP' => 'frontend.documents.stp-pdf',
+                'TDS' => 'frontend.documents.tds-pdf',
+                'GTP' => 'frontend.documents.gtp-pdf',
+                'PROTO' => 'frontend.documents.proto-pdf',
+                'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
+                'STUDY' => 'frontend.documents.reports.study_report',
+                'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
+                'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
+                'REPORT' => 'frontend.documents.report-pdf',
+                'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
+                'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
+                'REQULIFICATION'=>'frontend.documents.reports.requlification',
+                'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
+                'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
+                'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
+                'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
+                'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
+                'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
+                'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
+                'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
+                'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
+                'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
+                'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
+                'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
+                'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
+                'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
+                'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
+                'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
+                'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
+                'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
+                'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
+                'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
+                'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
+                'SMF' => 'frontend.documents.smf-pdf',
+                'VMP' => 'frontend.documents.vmp-pdf',
+                'QM' => 'frontend.documents.qm-pdf',
+                default => 'frontend.documents.pdfpage',
+            };
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId','documents'))
+
+
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document','annexures','currentId','documents','sopNumber'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
                     'isRemoteEnabled' => true,
                     'isPhpEnabled' => true,
                 ]);
+
             $pdf->setPaper('A4');
 
             $pdf->render();

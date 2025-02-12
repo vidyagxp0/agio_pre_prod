@@ -298,7 +298,7 @@
                     <span>
                         @if($document->revised == 'Yes')
                             @php
-                                $revisionNumber = str_pad($document->revised_doc,, 2, '0', STR_PAD_LEFT);
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
