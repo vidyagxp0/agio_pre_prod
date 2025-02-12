@@ -844,7 +844,7 @@
                             <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                                 <div class="w-100">
                                     <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                        {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
+                                        {!! $data->document_content ? nl2br($data->document_content->eqp_approval) : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -869,7 +869,7 @@
                                 <div class="w-100">
                                     <div class="text-justify"
                                         style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
+                                        {!! $data->document_content ? nl2br($data->document_content->eqp_objective) : '' !!}
                                     </div>
                                 </div>
                             </div>
@@ -877,57 +877,34 @@
                     </div>
                 </div>
 
-                <table class="mb-15">
-                    <tbody>
-                        <tr>
 
-                            <th class="w-5 vertical-baseline">3.</th>
-                            <th class="w-95 text-left">
-                                <div class="bold">Scope </div>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="other-container">
+                    <table>
+                        <tbody>
+                            <tr>
 
-                <div class="procedure-block">
-                    <div class="w-100">
-                        <div class="w-100" style="display:inline-block;">
-                            <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    @php
-                                        $i = 1;
-                                    @endphp
-                                    @if (
-                                            $data->document_content &&
-                                            !empty($data->document_content->responsibility) &&
-                                            is_array(unserialize($data->document_content->materials_and_equipments))
-                                        )
-    @foreach (unserialize($data->document_content->responsibility) as $key => $res)
-                                    @php
-                                        $isSub = str_contains($key, 'sub');
-                                    @endphp
-                                    @if (!empty($res))
-                                        <div style="position: relative;">
-                                            <span
-                                                style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
-                                            {!! nl2br($res) !!} <br>
-                                        </div>
-                                    @endif
-                                    @php
-                                        if (!$isSub) {
-                                            $i++;
-                                            $sub_index = 1;
-                                        } else {
-                                            $sub_index++;
-                                        }
-                                    @endphp
-                                     @endforeach
-                                    @endif
+                                <th class="w-5 vertical-baseline">3.</th>
+                                <th class="w-95 text-left">
+                                    <div class="bold">Scope </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
 
+                    <div class="scope-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div class="text-justify"
+                                        style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        {!! $data->document_content ? nl2br($data->document_content->eqp_scope) : '' !!}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                
                 </div>
 
                 <table class="mb-15">
@@ -951,10 +928,10 @@
                                     @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->accountability) &&
-                                            is_array(unserialize($data->document_content->accountability))
+                                            !empty($data->document_content->eqpresponsibility) &&
+                                            is_array(unserialize($data->document_content->eqpresponsibility))
 )
-            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+            @foreach (unserialize($data->document_content->eqpresponsibility) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
@@ -1002,10 +979,10 @@
                                     @php $i = 1; @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->references) &&
-                                            is_array(unserialize($data->document_content->references))
+                                            !empty($data->document_content->eqpdetails) &&
+                                            is_array(unserialize($data->document_content->eqpdetails))
                                         )
-        @foreach (unserialize($data->document_content->references) as $key => $res)
+        @foreach (unserialize($data->document_content->eqpdetails) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1054,10 +1031,10 @@
                                     @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->abbreviation) &&
-                                            is_array(unserialize($data->document_content->abbreviation))
+                                            !empty($data->document_content->eqpsampling) &&
+                                            is_array(unserialize($data->document_content->eqpsampling))
                                         )
-        @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+        @foreach (unserialize($data->document_content->eqpsampling) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1104,7 +1081,7 @@
                                     @php
                                         $i = 1;
                                         $definitions = $data->document_content
-                                            ? unserialize($data->document_content->defination)
+                                            ? unserialize($data->document_content->Samplingprocedure)
                                             : [];
                                     @endphp
                                     @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
@@ -1157,8 +1134,8 @@
                                         $i = 1;
                                         $sub_index = 1;
                                     @endphp
-                                    @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
-                                                                    @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                    @if ($data->document_content && is_array(unserialize($data->document_content->AcceptenceCriteria)))
+                                                                    @foreach (unserialize($data->document_content->AcceptenceCriteria) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1198,22 +1175,44 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        @if ($data->document_content)
-                                                                                {!! strip_tags(
-                                                $data->document_content->procedure,
-                                                '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>'
-                                            ) !!}
+                     <div class="procedure-block">
+                          <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        @php $i = 1; @endphp
+                                        @if (
+                                                $data->document_content &&
+                                                !empty($data->document_content->EnvironmentalConditions) &&
+                                                is_array(unserialize($data->document_content->EnvironmentalConditions))
+                                            )
+                                        @foreach (unserialize($data->document_content->EnvironmentalConditions) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -3rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
                                         @endif
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
                 {{-- PROCEDURE END --}}
 
@@ -1313,10 +1312,10 @@
                                     @php $i = 1; @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->reporting) &&
-                                            is_array(unserialize($data->document_content->reporting))
+                                            !empty($data->document_content->eqpdetailsdeviation) &&
+                                            is_array(unserialize($data->document_content->eqpdetailsdeviation))
                                         )
-                 @foreach (unserialize($data->document_content->reporting) as $key => $res)
+                 @foreach (unserialize($data->document_content->eqpdetailsdeviation) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -1366,7 +1365,7 @@
                                     @php
                                         $i = 1;
                                         $definitions = $data->document_content
-                                            ? unserialize($data->document_content->defination)
+                                            ? unserialize($data->document_content->eqpdetailschangecontrol)
                                             : [];
                                     @endphp
                                     @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
@@ -1377,7 +1376,7 @@
                                             @if (!empty($res))
                                                 <div style="position: relative;">
                                                     <span
-                                                        style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                        style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
                                                     {!! nl2br($definition) !!} <br>
                                                 </div>
                                             @endif
@@ -1420,7 +1419,7 @@
                                     @php
                                         $i = 1;
                                         $definitions = $data->document_content
-                                            ? unserialize($data->document_content->defination)
+                                            ? unserialize($data->document_content->eqpdetailssummary)
                                             : [];
                                     @endphp
                                     @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
@@ -1431,7 +1430,7 @@
                                             @if (!empty($res))
                                                 <div style="position: relative;">
                                                     <span
-                                                        style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                        style="position: absolute; left: -2.5rem; top: 0;">12.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
                                                     {!! nl2br($definition) !!} <br>
                                                 </div>
                                             @endif
@@ -1477,17 +1476,17 @@
                                     @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->accountability) &&
-                                            is_array(unserialize($data->document_content->accountability))
+                                            !empty($data->document_content->eqpdetailsconclusion) &&
+                                            is_array(unserialize($data->document_content->eqpdetailsconclusion))
 )
-            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+            @foreach (unserialize($data->document_content->eqpdetailsconclusion) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
                                                     <span
-                                                        style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                        style="position: absolute; left: -2.5rem; top: 0;">13.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
                                                     {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
@@ -1533,17 +1532,17 @@
                                     @endphp
                                     @if (
                                             $data->document_content &&
-                                            !empty($data->document_content->accountability) &&
-                                            is_array(unserialize($data->document_content->accountability))
+                                            !empty($data->document_content->eqpdetailstraining) &&
+                                            is_array(unserialize($data->document_content->eqpdetailstraining))
 )
-            @foreach (unserialize($data->document_content->accountability) as $key => $res)
+            @foreach (unserialize($data->document_content->eqpdetailstraining) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
                                                     <span
-                                                        style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                        style="position: absolute; left: -2.5rem; top: 0;">14.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
                                                     {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
@@ -1799,9 +1798,7 @@
 
                 <section class="doc-control" style="page-break-after: never;">
                     <div class="head">
-                        <div>
-                            <h5>Content of Protocol not limited as per above table it may vary.    </h5>
-                        </div>
+
                     </div>
                     <div class="body">
                         <div class="block mb-40">
