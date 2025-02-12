@@ -605,7 +605,7 @@
                 <tr>
                     <td style="width: 20%; padding: 5px;" class="doc-num">Dosage Form</td>
                     <td style="width: 35%; padding: 5px;">
-                        : ________________
+                    :{{$documentContent->pvir_dosage_form}}
                         {{-- {{ Helpers::getFullDepartmentName($data->department_id) }}--}}
                     </td>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Page No.:</td>
@@ -622,7 +622,7 @@
                         Process Validation Interim Report
                     </td>
                     <td>
-                        _______________________________
+                        {{$documentContent->pvir_process_validation_interim_report}}
                     </td>
                 </tr>
             </tbody>
@@ -641,13 +641,13 @@
     </header>
 
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Product Name</h3>
+        <h3 class="text-center" style="font-weight: bold; margin-bottom: 50px;">Product Name: {{$documentContent->pvir_product_name}}</h3>
     </div>
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Report No.:</h3>
+        <h3 class="text-center" style="font-weight: bold; margin-bottom: 50px;">Report No.: {{$documentContent->pvir_report_no}}</h3>
     </div>
     <div>
-        <h3 class="text-center" style=" font-weight: bold; margin-bottom: 50px;">Batch No</h3>
+        <h3 class="text-center" style="font-weight: bold; margin-bottom: 50px;">Batch No: {{$documentContent->pvir_batch_no}}</h3>
     </div>
 
 
@@ -675,47 +675,47 @@
             <tr>
                 <td class="custom-style">Generic Name</td>
                 <td style="width:10%">:</td>
-                <td></td>
+                <td>{{$documentContent->generic_pvir}}</td>
             </tr>
             <tr>
                 <td class="custom-style">Product Code</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_product_code}}</td>
             </tr>
             <tr>
                 <td class="custom-style">Std.Batch size</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_std_batch}}</td>
             </tr>
             <tr>
                 <td class="custom-style">Category</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_category}}</td>
             </tr>
             <tr>
                 <td class="custom-style">Label Claim</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_label_claim}}</td>
             </tr>
             <tr>
                 <td class="custom-style">Market</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_market}}</td>
             </tr>
             <tr>
                 <td class="custom-style">Shelf Life</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_shelf_life}}</td>
             </tr>
             <tr>
                 <td class="custom-style">BMR No.</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_bmr_no}}</td>
             </tr>
             <tr>
                 <td class="custom-style">MFR No.</td>
                 <td>:</td>
-                <td></td>
+                <td>{{$documentContent->pvir_mfr_no}}</td>
             </tr>
         </tbody>
     </table>
@@ -745,9 +745,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                         <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->critical_pvir) &&
+                                            is_array(unserialize($data->document_content->critical_pvir)))
+                                        @foreach (unserialize($data->document_content->critical_pvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
@@ -770,9 +799,38 @@
             <div class="w-100" style="font-weight: bold;">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style=" overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->In_process_data_pvir) &&
+                                            is_array(unserialize($data->document_content->In_process_data_pvir)))
+                                        @foreach (unserialize($data->document_content->In_process_data_pvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
@@ -794,9 +852,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                           <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->various_stages_pvir) &&
+                                            is_array(unserialize($data->document_content->various_stages_pvir)))
+                                        @foreach (unserialize($data->document_content->various_stages_pvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
@@ -818,9 +905,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->deviation_pvir) &&
+                                            is_array(unserialize($data->document_content->deviation_pvir)))
+                                        @foreach (unserialize($data->document_content->deviation_pvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
@@ -843,9 +959,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->change_controlpvir) &&
+                                            is_array(unserialize($data->document_content->change_controlpvir)))
+                                        @foreach (unserialize($data->document_content->change_controlpvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
@@ -867,9 +1012,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->Summary_pvir) &&
+                                            is_array(unserialize($data->document_content->Summary_pvir)))
+                                        @foreach (unserialize($data->document_content->Summary_pvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
@@ -891,9 +1065,38 @@
             <div class="w-100">
                 <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                     <div class="w-100">
-                        <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                            {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
-                        </div>
+                        <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                    @endphp
+                                    @if (
+                                        $data->document_content &&
+                                            !empty($data->document_content->conclusion_pvir) &&
+                                            is_array(unserialize($data->document_content->conclusion_pvir)))
+                                        @foreach (unserialize($data->document_content->conclusion_pvir) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span
+                                                        style="position: absolute; left: -2.5rem; top: 0;">1.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span>
+                                                    {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;
+                                                    $sub_index = 1;
+                                                } else {
+                                                    $sub_index++;
+                                                }
+                                            @endphp
+                                        @endforeach
+                                    @endif
+
+
+                         </div>
                     </div>
                 </div>
             </div>
