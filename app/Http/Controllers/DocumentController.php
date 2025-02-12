@@ -773,6 +773,12 @@ class DocumentController extends Controller
             $content->eqp_approval = $request->eqp_approval;
             $content->eqp_objective = $request->eqp_objective;
             $content->eqp_scope = $request->eqp_scope;
+
+            //Format For Compressed Air And Nitrogen Gas System Report
+
+            $content->format_approval = $request->format_approval;
+            $content->format_objective = $request->format_objective;
+            $content->format_scope = $request->format_scope;
             
             
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
@@ -786,6 +792,71 @@ class DocumentController extends Controller
 
                 $content->hod_attachments = json_encode($files);
             }
+
+
+            if (!empty($request->formatidentification)) {
+                $content->formatidentification = serialize($request->formatidentification);
+            }
+
+            if (!empty($request->executiontteam)) {
+                $content->executiontteam = serialize($request->executiontteam);
+            }
+
+            if (!empty($request->formatdocuments)) {
+                $content->formatdocuments = serialize($request->formatdocuments);
+            }
+
+            if (!empty($request->revalidationtype)) {
+                $content->revalidationtype = serialize($request->revalidationtype);
+            }
+            if (!empty($request->RevalidationCriteria)) {
+                $content->RevalidationCriteria = serialize($request->RevalidationCriteria);
+            }
+
+            if (!empty($request->generalconsideration)) {
+                $content->generalconsideration = serialize($request->generalconsideration);
+            }
+
+            
+            if (!empty($request->precautions)) {
+                $content->precautions = serialize($request->precautions);
+            }
+
+            if (!empty($request->calibrationstatus)) {
+                $content->calibrationstatus = serialize($request->calibrationstatus);
+            }
+
+            
+            if (!empty($request->testobservation)) {
+                $content->testobservation = serialize($request->testobservation);
+            }
+
+            if (!empty($request->formatannexure)) {
+                $content->formatannexure = serialize($request->formatannexure);
+            }
+
+            if (!empty($request->formatdeviation)) {
+                $content->formatdeviation = serialize($request->formatdeviation);
+            }
+
+            if (!empty($request->formatcc)) {
+                $content->formatcc = serialize($request->formatcc);
+            }
+
+            if (!empty($request->formatsummary)) {
+                $content->formatsummary = serialize($request->formatsummary);
+            }
+
+            if (!empty($request->formatconclusion)) {
+                $content->formatconclusion = serialize($request->formatconclusion);
+            }
+
+
+
+
+
+
+
 
             if (!empty($request->eqpresponsibility)) {
                 $content->eqpresponsibility = serialize($request->eqpresponsibility);
@@ -2450,6 +2521,74 @@ class DocumentController extends Controller
             if (!empty($request->eqpreportapproval)) {
                 $documentcontet->eqpreportapproval = serialize($request->eqpreportapproval);
             }
+
+
+            //Format For Compressed Air And Nitrogen Gas System Report
+
+            $documentcontet->format_approval = $request->format_approval;
+            $documentcontet->format_objective = $request->format_objective;
+            $documentcontet->format_scope = $request->format_scope;
+
+            if (!empty($request->formatidentification)) {
+                $documentcontet->formatidentification = serialize($request->formatidentification);
+            }
+
+            if (!empty($request->executiontteam)) {
+                $documentcontet->executiontteam = serialize($request->executiontteam);
+            }
+
+            if (!empty($request->formatdocuments)) {
+                $documentcontet->formatdocuments = serialize($request->formatdocuments);
+            }
+
+            if (!empty($request->revalidationtype)) {
+                $documentcontet->revalidationtype = serialize($request->revalidationtype);
+            }
+            if (!empty($request->RevalidationCriteria)) {
+                $documentcontet->RevalidationCriteria = serialize($request->RevalidationCriteria);
+            }
+
+            if (!empty($request->generalconsideration)) {
+                $documentcontet->generalconsideration = serialize($request->generalconsideration);
+            }
+
+            
+            if (!empty($request->precautions)) {
+                $documentcontet->precautions = serialize($request->precautions);
+            }
+
+            if (!empty($request->calibrationstatus)) {
+                $documentcontet->calibrationstatus = serialize($request->calibrationstatus);
+            }
+
+            
+            if (!empty($request->testobservation)) {
+                $documentcontet->testobservation = serialize($request->testobservation);
+            }
+
+            if (!empty($request->formatannexure)) {
+                $documentcontet->formatannexure = serialize($request->formatannexure);
+            }
+
+            if (!empty($request->formatdeviation)) {
+                $documentcontet->formatdeviation = serialize($request->formatdeviation);
+            }
+
+            if (!empty($request->formatcc)) {
+                $documentcontet->formatcc = serialize($request->formatcc);
+            }
+
+            if (!empty($request->formatsummary)) {
+                $documentcontet->formatsummary = serialize($request->formatsummary);
+            }
+
+            if (!empty($request->formatconclusion)) {
+                $documentcontet->formatconclusion = serialize($request->formatconclusion);
+            }
+
+
+
+
         
            
             //Process Validation Protocol
