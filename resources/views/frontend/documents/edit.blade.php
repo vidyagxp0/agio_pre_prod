@@ -215,7 +215,7 @@ overflow-wrap: break-word;
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure SOP</button>
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PACKING MATERIAL SPECIFICATION</button>
                 <button class="tablinks hidden-tabs" data-id="PROCUMREPORT" onclick="openData(event, 'doc_PCR')">Protocol Cum Report</button>
                 {{-- <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-temper_maping')">Temperature Mapping Protocol Cum Report</button> --}}
@@ -6032,6 +6032,12 @@ overflow-wrap: break-word;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="generic-name">Product Name</label>
+                                        <input type="text" name="fsproduct_name" value="{{ $document->fsproduct_name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
                                         <input type="text" name="generic_name" value="{{ $document->generic_name }}">
                                     </div>
@@ -6057,7 +6063,7 @@ overflow-wrap: break-word;
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="storage-condition">Storage Condition</label>
-                                        <input type="text" name="storage_condition" value="{{ $document->storage_condition }}">
+                                        <input type="text" name="fsstorage_condition" value="{{ $document->fsstorage_condition }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -6189,7 +6195,7 @@ overflow-wrap: break-word;
                                 </script>
 
 
-                        <div class="col-12 sub-head">
+                        {{-- <div class="col-12 sub-head">
                             Validation Specification
                         </div>
                         <div class="col-12">
@@ -6229,9 +6235,9 @@ overflow-wrap: break-word;
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <script>
+                        {{-- <script>
                             $(document).ready(function() {
                                 // Add new row in Specification Validation table
                                 $('#specification_validation_add').click(function(e) {
@@ -6273,7 +6279,7 @@ overflow-wrap: break-word;
                                     }
                                 });
                             });
-                        </script>
+                        </script> --}}
 
                     </div>
                     </div>
@@ -9539,6 +9545,12 @@ overflow-wrap: break-word;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="generic-name">Product Name</label>
+                                        <input type="text" name="product_name_cvs" value="{{ $document->product_name_cvs }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
                                         <input type="text" name="generic_name_cvs" value="{{ $document->generic_name_cvs }}">
                                     </div>
@@ -9820,6 +9832,12 @@ overflow-wrap: break-word;
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
+                                        <label for="generic-name">Product Name</label>
+                                        <input type="text" name="product_name_inps" value="{{ $document->product_name_inps }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="generic-name">Generic Name</label>
                                         <input type="text" name="generic_name_inps" value="{{ $document->generic_name_inps }}">
                                     </div>
@@ -9884,7 +9902,7 @@ overflow-wrap: break-word;
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     SPECIFICATION
                                 </div>
                                 <div class="col-12">
@@ -9974,7 +9992,7 @@ overflow-wrap: break-word;
                                             }
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
 
                         <div class="col-12 sub-head">
@@ -23338,144 +23356,196 @@ overflow-wrap: break-word;
 
                 {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
-                        <div class="orig-head">
-                            RAW MATERIAL SPECIFICATION</div>
+                        <div class="orig-head">RAW MATERIAL SPECIFICATION</div>
                         <div class="input-fields">
                             <div class="row">
-
+                                
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="generic-name">CAS No.</label>
-                                        <input type="text" name="cas_no_row_material">
+                                        <input type="text" name="cas_no_row_material" value="{{$document->cas_no_row_material}}">
                                     </div>
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="generic-name">Material Name</label>
+                                        <input type="text" name="material_name" value="{{$document->material_name}}">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="brand-name">Molecular Formula</label>
-                                        <input type="text" name="molecular_formula_row_material">
+                                        <input type="text" name="molecular_formula_row_material" value="{{$document->molecular_formula_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Molecular Weight</label>
-                                        <input type="text" name="molecular_weight_row_material">
+                                        <input type="text" name="molecular_weight_row_material" value="{{$document->molecular_weight_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="product-code">Storage Condition</label>
-                                        <input type="text" name="storage_condition_row_material">
+                                        <input type="text" name="storage_condition_row_material" value="{{$document->storage_condition_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="retest-period">Retest Period</label>
-                                        <input type="text" name="retest_period_row_material">
+                                        <input type="text" name="retest_period_row_material" value="{{$document->retest_period_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sampling-procedure">Sampling Procedure</label>
-                                        <input type="text" name="sampling_procedure_row_material">
+                                        <input type="text" name="sampling_procedure_row_material" value="{{$document->sampling_procedure_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="item-code">Item Code</label>
-                                        <input type="text" name="item_code_row_material">
+                                        <input type="text" name="item_code_row_material" value="{{$document->item_code_row_material}}">
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity_row_material">
-                                            <option value="" selected>--Select--</option>
-                                            <option value="Chemical Analysis">Chemical Analysis</option>
-                                            <option value="Microbial Analysis">Microbial Analysis</option>
+                                            <option value="" disabled {{ empty($document->sample_quantity_row_material) ? 'selected' : '' }}>--Select--</option>
+                                            <option value="Chemical Analysis" {{ $document->sample_quantity_row_material == 'Chemical Analysis' ? 'selected' : '' }}>Chemical Analysis</option>
+                                            <option value="Microbial Analysis" {{ $document->sample_quantity_row_material == 'Microbial Analysis' ? 'selected' : '' }}>Microbial Analysis</option>
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="reserve-sample">Reserve Sample Quantity</label>
-                                        <input type="text" name="reserve_sample_quantity_row_material">
+                                        <input type="text" name="reserve_sample_quantity_row_material" value="{{$document->reserve_sample_quantity_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="retest-sample">Sample Quantity for Retest</label>
-                                        <input type="text" name="retest_sample_quantity_row_material">
+                                        <input type="text" name="retest_sample_quantity_row_material" value="{{$document->retest_sample_quantity_row_material}}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
-                                        <input type="text" name="sampling_instructions_row_material">
+                                        <input type="text" name="sampling_instructions_row_material" value="{{$document->sampling_instructions_row_material}}">
                                     </div>
                                 </div>
 
 
-                            <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Specification Details">
-                                        STANDARD TESTING PROCEDURE
-                                        <button type="button" id="row_material_add">+</button>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="row_material_details" style="width: 100%;">
-                                            <thead>
+                                {{-- <div class="col-12 sub-head">
+                                    STANDARD TESTING PROCEDURE
+                                </div> --}}
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Specification Details">
+                                            SPECIFICATION
+                                            <button type="button" id="row_material_add">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="row_material_details" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 100px;">Sr. No.</th>
+                                                        <th>Test</th>
+                                                        <th>Specification</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php $rowIndex = 0; @endphp
+                                                    @if(!empty($RowSpecification_Data) && is_array(json_decode($RowSpecification_Data->data, true)))
+                                                        @foreach(json_decode($RowSpecification_Data->data, true) as $index => $spec)
+                                                            <tr>
+                                                                <td>
+                                                                    <input disabled type="text" name="Row_Materail[{{ $rowIndex }}][serial]" value="{{ $rowIndex + 1 }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="Row_Materail[{{ $rowIndex }}][test]" value="{{ $spec['test'] ?? '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <input type="text" name="Row_Materail[{{ $rowIndex }}][specification_row_material]" value="{{ $spec['specification_row_material'] ?? '' }}">
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" class="removeRowBtn">Remove</button>
+                                                                </td>
+                                                            </tr>
+                                                            @php $rowIndex++; @endphp
+                                                        @endforeach
+                                                    @else
+                                                        <!-- Empty initial row -->
+                                                        <tr>
+                                                            <td>
+                                                                <input disabled type="text" name="Row_Materail[0][serial]" value="1">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="Row_Materail[0][test]" value="">
+                                                            </td>
+                                                            <td>
+                                                                <input type="text" name="Row_Materail[0][specification_row_material]" value="">
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="removeRowBtn">Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        // Add new row in Specification Details table
+                                        $('#row_material_add').click(function (e) {
+                                            e.preventDefault();
+                                            
+                                            var tableBody = $('#row_material_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            
+                                            var newRow = `
                                                 <tr>
-                                                    <th style="width: 100px;">Sr. No.</th>
-                                                    <th>Test</th>
-                                                    <th>Specification</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <!-- Initial Row Placeholder (Optional) -->
-                                                <tr>
-                                                    <td><input disabled type="text" name="Row_Materail[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="Row_Materail[0][specification_row_material]"></td>
-                                                    <td><input type="text" name="Row_Materail[0][test]"></td>
+                                                    <td><input disabled type="text" name="Row_Materail[${rowCount}][serial]" value="${rowCount + 1}"></td>
+                                                    <td><input type="text" name="Row_Materail[${rowCount}][test]"></td>
+                                                    <td><input type="text" name="Row_Materail[${rowCount}][specification_row_material]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
-                                            </tbody>
-                                        </table>
+                                            `;
+                                            tableBody.append(newRow);
+                                        });
+
+                                        // Remove row in Specification Details table
+                                        $(document).on('click', '.removeRowBtn', function () {
+                                            $(this).closest('tr').remove();
+
+                                            // Recalculate serial numbers
+                                            $('#row_material_details tbody tr').each(function (index) {
+                                                $(this).find('td:first input').val(index + 1);
+                                            });
+                                        });
+                                    });
+                                </script> --}}
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="rawmaterials_specifications">Specifications</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <textarea name="rawmaterials_specifications" class="summernote">
+                                            {{ $document->rawmaterials_specifications }}
+                                        </textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <script>
-                                $(document).ready(function() {
-                                    // Add new row in Specification Details table
-                                    $('#row_material_add').click(function(e) {
-                                        e.preventDefault();
 
-                                        function generateSpecificationTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="Row_Materail[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][specification_row_material]"></td>' +
-                                                '<td><input type="text" name="Row_Materail[' + serialNumber + '][test]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#row_material_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateSpecificationTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-
-                                    // Remove row in Specification Details table
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-                                });
-                            </script>
 
                             </div>
                         </div>

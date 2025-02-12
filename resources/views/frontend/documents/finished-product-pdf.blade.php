@@ -132,8 +132,8 @@
         body {
             margin-top: 250px;
             margin-bottom: 160px;
-            padding-top: 60px;
-            padding-bottom: 50px; 
+            padding-top: 70px;
+            padding-bottom: 60px; 
         }
 
         footer {
@@ -293,7 +293,7 @@
             <tbody>
                 <tr>
                     <td>
-                      {Product Name}
+                      {{ $data->fsproduct_name }}
                     </td>
                 </tr>
             </tbody>
@@ -456,24 +456,27 @@
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody>
-        </table>
+            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+                <tbody>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        @php
+                            $inreviews = DB::table('stage_manages')
+                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                ->select('stage_manages.*', 'users.name as user_name')
+                                ->where('document_id', $document->id)
+                                ->where('stage', 'Review-Submit')
+                                ->where('deleted_at', null)
+                                ->get();
+                        @endphp
+                        <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
+                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                        <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
+                    </tr>
+                </tbody>
+            </table> --}}
+            <span>
+                Format No.: QA/097/F2-01                               
+            </span>
     </footer>
 
     <div style="margin-top: 50px;">
@@ -515,7 +518,7 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->storage_condition}}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
@@ -550,7 +553,7 @@
     </div>
 
     
-    <table style="margin-top: 20px;">
+    {{-- <table style="margin-top: 20px;">
         <thead>
             <tr>
                 <th class="text-left">
@@ -558,7 +561,7 @@
                 </th>
             </tr>
         </thead>
-    </table>
+    </table> --}}
     
         <table>
             <thead>
@@ -615,7 +618,7 @@
         </table>
 
 
-        <table>
+        {{-- <table>
             <thead>
                 <tr>
                     <th class="text-left">
@@ -623,9 +626,9 @@
                     </th>
                 </tr>
             </thead>
-        </table>
+        </table> --}}
 
-        <table>
+        {{-- <table>
             <thead>
                 <tr>
                     <th class="text-center">
@@ -633,9 +636,9 @@
                     </th>
                 </tr>
             </thead>
-        </table>
+        </table> --}}
 
-        <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+        {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
             <tr>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Sr. No</th>
@@ -670,7 +673,7 @@
                 </tr>
             @endif
         </tbody>
-    </table>
+    </table> --}}
 
 
 

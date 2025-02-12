@@ -533,11 +533,12 @@ class DocumentController extends Controller
 
 
             // FPICVS SOP store
+            $document->fsproduct_name = $request->fsproduct_name;
             $document->generic_name = $request->generic_name;
             $document->brand_name = $request->brand_name;
             $document->label_claim = $request->label_claim;
             $document->product_code = $request->product_code;
-            $document->storage_condition = $request->storage_condition;
+            $document->fsstorage_condition = $request->fsstorage_condition;
             $document->sample_quantity = $request->sample_quantity;
             $document->reserve_sample = $request->reserve_sample;
             $document->custom_sample = $request->custom_sample;
@@ -545,7 +546,7 @@ class DocumentController extends Controller
             $document->sampling_instructions = $request->sampling_instructions;
 
            //Cleaning Validation Specification
-
+           $document->product_name_cvs = $request->product_name_cvs;
            $document->generic_name_cvs = $request->generic_name_cvs;
            $document->brand_name_cvs = $request->brand_name_cvs;
            $document->label_claim_cvs = $request->label_claim_cvs;
@@ -558,6 +559,7 @@ class DocumentController extends Controller
            $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
            //Inprocess Validation specification
+           $document->product_name_inps = $request->product_name_inps;
            $document->generic_name_inps = $request->generic_name_inps;
            $document->brand_name_inps = $request->brand_name_inps;
            $document->label_claim_inps = $request->label_claim_inps;
@@ -571,6 +573,7 @@ class DocumentController extends Controller
 
 
             // row  material store
+            $document->material_name = $request->material_name;
             $document->cas_no_row_material = $request->cas_no_row_material;
             $document->molecular_formula_row_material = $request->molecular_formula_row_material;
             $document->molecular_weight_row_material = $request->molecular_weight_row_material;
@@ -582,6 +585,7 @@ class DocumentController extends Controller
             $document->reserve_sample_quantity_row_material = $request->reserve_sample_quantity_row_material;
             $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
             $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
+            $document->rawmaterials_specifications = $request->rawmaterials_specifications;
 
 
             $document->name_pack_material = $request->name_pack_material;
@@ -1718,9 +1722,9 @@ class DocumentController extends Controller
             $specifications->save();
 
             // row matrial specification validation  grid
-            $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'ROW_SPECIFICATION'])->firstOrNew();
+            $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $griddata, 'identifier' => 'Row_Materail'])->firstOrNew();
             $RowSpecification_Data->document_type_id = $griddata;
-            $RowSpecification_Data->identifier = 'ROW_SPECIFICATION';
+            $RowSpecification_Data->identifier = 'Row_Materail';
             $RowSpecification_Data->data = $request->Row_Materail;
             $RowSpecification_Data->save();
 
@@ -1973,7 +1977,8 @@ class DocumentController extends Controller
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
         $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
-
+         
+        // $RowSpecification_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', "Row_Materail")->first();
 
         $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
 
@@ -2138,15 +2143,31 @@ class DocumentController extends Controller
                 $document->approved_vendor = $request->approved_vendor;
                 $document->stp_no = $request->stp_no;
 
+                //raw material specification
+                $document->material_name = $request->material_name;
+                $document->cas_no_row_material = $request->cas_no_row_material;
+                $document->molecular_formula_row_material = $request->molecular_formula_row_material;
+                $document->molecular_weight_row_material = $request->molecular_weight_row_material;
+                $document->storage_condition_row_material = $request->storage_condition_row_material;
+                $document->retest_period_row_material = $request->retest_period_row_material;
+                $document->sampling_procedure_row_material = $request->sampling_procedure_row_material;
+                $document->item_code_row_material = $request->item_code_row_material;
+                $document->sample_quantity_row_material = $request->sample_quantity_row_material;
+                $document->reserve_sample_quantity_row_material = $request->reserve_sample_quantity_row_material;
+                $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
+                $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
+                $document->rawmaterials_specifications = $request->rawmaterials_specifications;
+    
+
 
 
             // Finished Product Specification
-
+                $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
                 $document->brand_name = $request->brand_name;
                 $document->label_claim = $request->label_claim;
                 $document->product_code = $request->product_code;
-                $document->storage_condition = $request->storage_condition;
+                $document->fsstorage_condition = $request->fsstorage_condition;
                 $document->sample_quantity = $request->sample_quantity;
                 $document->reserve_sample = $request->reserve_sample;
                 $document->custom_sample = $request->custom_sample;
@@ -2155,7 +2176,7 @@ class DocumentController extends Controller
 
 
             //Cleaning Validation Specification
-
+                $document->product_name_cvs = $request->product_name_cvs;
                 $document->generic_name_cvs = $request->generic_name_cvs;
                 $document->brand_name_cvs = $request->brand_name_cvs;
                 $document->label_claim_cvs = $request->label_claim_cvs;
@@ -2168,7 +2189,7 @@ class DocumentController extends Controller
                 $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
             //Inprocess Validation specification
-
+                $document->product_name_inps = $request->product_name_inps;
                 $document->generic_name_inps = $request->generic_name_inps;
                 $document->brand_name_inps = $request->brand_name_inps;
                 $document->label_claim_inps = $request->label_claim_inps;
@@ -3306,6 +3327,12 @@ class DocumentController extends Controller
             $specifications->identifier = 'specifications_testing';
             $specifications->data = json_encode($request->specifications_testing);
             $specifications->save();
+
+            $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'Row_Materail'])->firstOrNew();
+            $RowSpecification_Data->document_type_id = $document->id;
+            $RowSpecification_Data->identifier = 'Row_Materail';
+            $RowSpecification_Data->data = $request->Row_Materail;
+            $RowSpecification_Data->save();
 
             if ($lastContent->purpose != $documentcontet->purpose || !empty($request->purpose_comment)) {
                 $history = new DocumentHistory;

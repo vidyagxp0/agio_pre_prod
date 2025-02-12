@@ -257,6 +257,66 @@
         }
     </style>
 
+    <style>
+        /*Main Table Styling */
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: auto; /* Adjusts column width dynamically */
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+    </style>
+
 </head>
 <body>
     <header class="">
@@ -288,7 +348,7 @@
             <tbody>
                 <tr>
                     <td>
-                      {Name of Material}
+                       {{ $document->material_name}}
                     </td>
                 </tr>
             </tbody>
@@ -298,10 +358,40 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                       <span>
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                            @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                    RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                        @else
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                   RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                   RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                        @endif
+                      </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
+                        <span>
+                            @if ($data->training_required == 'yes')
+                                @if ($data->stage >= 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @else
+                                @if ($data->stage > 7)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @endif
+                            @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -310,6 +400,20 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No.:
+                    <span>
+                   
+                            @php
+                                $temp = DB::table('document_types')
+                                    ->where('name', $document->document_type_name)
+                                    ->value('typecode');
+                            @endphp
+                            @if ($document->revised === 'Yes')
+                            RM/S/00{{ $document->revised_doc }}-0{{ $document->major }}
+                            @else
+                            -
+                            @endif
+                   </span>
+                
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -405,26 +509,12 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+                    </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>
-                </tr>
-            </tbody>
-        </table>
+            
+            <span>
+                Format No.: QA/097/F5-01                              
+            </span>
     </footer>
 
     <div style="margin-top: 40px;">
@@ -471,35 +561,34 @@
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling procedure
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Refer to “SOP ______”</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sampling_procedure_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Item Code
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">Refer to “Details of Item Code” {{ $data->item_code_row_material }}</td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->item_code_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis{{ $data->sample_quantity_row_material }}
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
-                                    Chemical Analysis: ______<br>
-                                    Microbial Analysis: ______
+                                    {{ $data->sample_quantity_row_material }}
                                 </td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_quantity_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Retest
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;"></td>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_row_material }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -508,7 +597,7 @@
         </section>
     </div>
 
-    <table>
+    {{-- <table>
         <thead>
             <tr>
                 <th class="text-center">
@@ -516,9 +605,36 @@
                 </th>
             </tr>
         </thead>
-    </table>
+    </table> --}}
 
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">SPECIFICATION</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+        
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        @if ($document->rawmaterials_specifications)
+                                            {!! strip_tags($document->rawmaterials_specifications, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
             <tr>
                 <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
@@ -553,7 +669,7 @@
                 <td style="border: 1px solid black; text-align: center;"></td>
             </tr>
         </tbody>
-    </table>
+    </table> --}}
 
     <table>
         <thead>

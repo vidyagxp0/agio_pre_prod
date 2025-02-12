@@ -132,7 +132,7 @@
         body {
             margin-top: 250px;
             margin-bottom: 160px;
-            padding-top: 60px;
+            padding-top: 70px;
             padding-bottom: 50px; 
         }
 
@@ -355,7 +355,7 @@ overflow-wrap: break-word;
             <tbody>
                 <tr>
                     <td>
-                      {Product Name}
+                      {{ $data->product_name_inps }}
                     </td>
                 </tr>
             </tbody>
@@ -365,6 +365,25 @@ overflow-wrap: break-word;
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                        <span>
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                            @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                    IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                        @else
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                   IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                   IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                        @endif
+                        </span>
                        
                     </td>
                     <td class="w-50"
@@ -499,7 +518,7 @@ overflow-wrap: break-word;
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+        {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <tbody>
                 <tr style="border-bottom: 1px solid #ddd;">
                     @php
@@ -515,7 +534,11 @@ overflow-wrap: break-word;
                     <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
                 </tr>
-            </tbody>
+            </tbody> --}}
+
+            <span>
+                Format No.: QA/097/F2-01                               
+            </span>
         </table>
     </footer>
 
@@ -593,7 +616,7 @@ overflow-wrap: break-word;
     </div>
 
     
-    <table style="margin-top: 20px;">
+    {{-- <table style="margin-top: 20px;">
         <thead>
             <tr>
                 <th class="text-left">
@@ -601,9 +624,9 @@ overflow-wrap: break-word;
                 </th>
             </tr>
         </thead>
-    </table>
+    </table> --}}
     
-    <table>
+    {{-- <table>
         <thead>
             <tr>
                 <th class="text-center">
@@ -611,10 +634,10 @@ overflow-wrap: break-word;
                 </th>
             </tr>
         </thead>
-    </table>
+    </table> --}}
 
     
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+    {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
             <tr>
                 <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
@@ -656,10 +679,10 @@ overflow-wrap: break-word;
                     </tr>
                 @endif 
             </tbody>
-    </table>
+    </table> --}}
     
 
-    <table>
+    {{-- <table>
         <thead>
             <tr>
                 <th class="text-left">
@@ -667,7 +690,7 @@ overflow-wrap: break-word;
                 </th>
             </tr>
         </thead>
-    </table>
+    </table> --}}
 
     <table>
         <thead>
