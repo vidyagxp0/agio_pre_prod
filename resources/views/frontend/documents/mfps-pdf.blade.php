@@ -131,7 +131,7 @@
 
         body {
             margin-top: 250px;
-            margin-bottom: 180px;
+            margin-bottom: 200px;
             padding-top: 60px;
             padding-bottom: 50px; 
         }
@@ -288,7 +288,7 @@
             <tbody>
                 <tr>
                     <td>
-                      {Name Of Product / Material}
+                       {{ $document->mfproduct_name }}
                     </td>
                 </tr>
             </tbody>
@@ -297,7 +297,27 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.: <span>{{ $document->specification_mfps_no }}</span>
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                        <span>
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    MFPS /A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                  MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                            @else                        
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                            @endif
+                        </span>
+
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
@@ -330,7 +350,7 @@
                             @if ($document->revised === 'Yes')
                              {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
                             @else
-                            -
+                              Nill
                             @endif
                         </span>
                     </td>
@@ -345,25 +365,7 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
-                        <span>
-                            @if($document->revised == 'Yes')
-                                @php
-                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-                                @endphp
 
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    MFPS /A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                  MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                            @else                        
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                            @endif
-                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -510,7 +512,7 @@
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <tbody>
                 <tr style="border-bottom: 1px solid #ddd;">
                     @php
@@ -526,7 +528,7 @@
                     <th style="padding: 10px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
                 </tr>
-            </tbody>
+            </tbody> --}}
         </table>
         <span>Format No.: QA/095/F1-00</span>
     </footer>
@@ -621,9 +623,9 @@
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 760;
-                $x = 450;
+                $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+                $y = 175;
+                $x = 365;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

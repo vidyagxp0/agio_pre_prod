@@ -1452,18 +1452,25 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Specification No<span class="text-danger">*</span></label>
                                         <input type="text" id="specification" name="specification_mfps_no" maxlength="255">
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">STP No<span class="text-danger">*</span></label>
                                         <input type="text" id="stp" name="stp_mfps_no" maxlength="255">
                                     </div>
                                 </div> --}}
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Name of Product</label>
+                                        <input type="text" id="mfproduct" name="mfproduct_name" maxlength="255">
+                                    </div>
+                                </div>
 
                             </div>
                         </div>
@@ -6169,11 +6176,6 @@
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add_gtp">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            Row Increment
-                                        </span>
                                     </label>
                                 <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table-gtp">
@@ -6318,11 +6320,7 @@
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            Row Increment
-                                        </span>
+
                                     </label>
                                 <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table">
@@ -7035,6 +7033,19 @@
                     <div class="input-fields">
                         <div class="row">
 
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="packing_material_name">Material Name</label>
+                                    <input type="text" name="packing_material_name">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="item_code">Item Code</label>
+                                        <input type="text" name="item_code">
+                                    </div>
+                            </div>
 
                             <div class="col-md-12">
                                     <div class="group-input">
@@ -7095,82 +7106,72 @@
                             </div>
 
                             <div class="group-input">
-                                    <label for="action-plan-grid">
-                                        Details<button type="button" name="action-plan-grid"
-                                                id="Details_add_data">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            Row Increment
-                                        </span>
-                                    </label>
+                                <label for="action-plan-grid">
+                                    Details
+                                    <button type="button" id="Details_add_data">+</button>
+                                </label>
                                 <div class="table-responsive">
-                                        <table class="table table-bordered" id="Details-table-data">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 2%">Sr.No</th>
-                                                    <th style="width: 12%">Tests</th>
-                                                    <th style="width: 12%">Specifications</th>
-                                                    <th style="width: 12%">GTP No.</th>
-                                                    <th style="width: 3%">Action</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            @php
-                                                    $serialNumber = 1;
-                                                @endphp
-                                                <td disabled>{{ $serialNumber++ }}</td>
-
+                                    <table class="table table-bordered" id="Details_table_data">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 2%">Sr.No</th>
+                                                <th style="width: 12%">Tests</th>
+                                                <th style="width: 12%">Specifications</th>
+                                                <th style="width: 12%">GTP No.</th>
+                                                <th style="width: 3%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $serialNumber = 1; @endphp
+                                            <tr>
+                                                <td><input type="text" disabled value="{{ $serialNumber++ }}"></td>
                                                 <td><input type="text" name="packingtest[0][tests]"></td>
                                                 <td><input type="text" name="packingtest[0][specification]"></td>
                                                 <td><input type="text" name="packingtest[0][gtp_no]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                            </tbody>
-
-                                        </table>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
                             <script>
-                            $(document).ready(function() {
-                                let investdetails = 1;
-                                $('#Details_add_data').click(function(e) {
-                                    function generateTableRow(serialNumber) {
-                                        var users = @json($users);
-                                        console.log(users);
-                                        var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
-                                                '"></td>' +
-                                                '<td><input type="text" name="packingtest[' + investdetails +
-                                                '][tests]" value=""></td>' +
+                                $(document).ready(function() {
+                                    let investdetails = 1; // Start with 1 since we already have one row
 
-                                                '<td><input type="text" name="packingtest[' + investdetails +
-                                                '][specification]" value=""></td>' +
-                                                '<td><input type="text" name="packingtest[' + investdetails +
-                                                '][gtp_no]" value=""></td>' +
-                                                '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-
-
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#Details-table-data tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount + 1);
-                                        tableBody.append(newRow);
+                                    $('#Details_add_data').click(function() {
+                                        let rowCount = $('#Details_table_data tbody tr').length; // Get current row count
+                                        let newRow = `
+                                            <tr>
+                                                <td><input type="text" disabled value="${rowCount + 1}"></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][tests]" value=""></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][specification]" value=""></td>
+                                                <td><input type="text" name="packingtest[${investdetails}][gtp_no]" value=""></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>
+                                        `;
+                                        $('#Details_table_data tbody').append(newRow);
+                                        investdetails++; // Increment the index for next row
                                     });
+
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                        updateRowNumbers();
+                                    });
+
+                                    function updateRowNumbers() {
+                                        $('#Details_table_data tbody tr').each(function(index) {
+                                            $(this).find('td:first-child input').val(index + 1); // Update serial numbers
+                                            $(this).find('input[name^="packingtest"]').each(function() {
+                                                let fieldName = $(this).attr("name");
+                                                let updatedName = fieldName.replace(/\[\d+\]/, `[${index}]`);
+                                                $(this).attr("name", updatedName);
+                                            });
+                                        });
+                                        investdetails = $('#Details_table_data tbody tr').length; // Reset counter
+                                    }
                                 });
-                    </script>
-
-                    <script>
-                        $(document).on('click', '.removeRowBtn', function() {
-                            $(this).closest('tr').remove();
-                        })
-                    </script>
-
+                            </script>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -7203,16 +7204,39 @@
                                 <div class="input-fields">
                                     <div class="row">
 
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="packing_material_name">Product Name</label>
+                                                <input type="text" name="pia_name">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="comments">Code</label>
+                                                <select name="pia_name_code" id="">
+                                                    <option value="">Select here</option>
+                                                    <option value="FP">Finished Product</option>
+                                                    <option value="IP">Inprocess Product</option>
+                                                    <option value="CV">Cleaning Validation</option>
+                                                    <option value="RW">Raw Material</option>
+                                                    <option value="CM">Consumable</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="col-md-12">
+                                            <div class="group-input">
+                                                <label for="packing_material_name">Product Name</label>
+                                                <input type="text" name="pia_name">
+                                            </div>
+                                        </div> -->
+
 
                                 <div class="group-input">
                                     <label for="action-plan-grid">
                                     For Finished product specification use below table<button type="button" name="action-plan-grid"
                                                 id="addRowBtndata">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            Row Increment
-                                        </span>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="productDetailsTable">

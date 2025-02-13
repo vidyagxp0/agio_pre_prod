@@ -472,6 +472,8 @@ class DocumentController extends Controller
             //mfps
             $document->specification_mfps_no = $request->specification_mfps_no;
             $document->stp_mfps_no = $request->stp_mfps_no;
+
+            $document->mfproduct_name = $request->mfproduct_name;
             //mfstp
             $document->specification_mfpstp_no = $request->specification_mfpstp_no;
             $document->stp_mfpstp_no = $request->stp_mfpstp_no;
@@ -573,6 +575,11 @@ class DocumentController extends Controller
            $document->reference_inps = $request->reference_inps;
            $document->sampling_instructions_inps = $request->sampling_instructions_inps;
 
+           //PIAS store
+
+           $document->pia_name = $request->pia_name;
+           $document->pia_name_code = $request->pia_name_code;
+
 
             // row  material store
             $document->material_name = $request->material_name;
@@ -589,7 +596,9 @@ class DocumentController extends Controller
             $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
             $document->rawmaterials_specifications = $request->rawmaterials_specifications;
 
-
+            
+            $document->packing_material_name = $request->packing_material_name;
+            $document->item_code = $request->item_code;
             $document->name_pack_material = $request->name_pack_material;
             $document->standard_pack = $request->standard_pack;
             $document->sampling_plan = $request->sampling_plan;
@@ -1917,6 +1926,7 @@ class DocumentController extends Controller
             $PackingGridData->document_type_id = $document->id;
             $PackingGridData->identifier = 'Packingmaterialdata';
             $PackingGridData->data = $request->packingtest;
+            // dd($PackingGridData);
             $PackingGridData->save();
 
             $GtpGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'gtp'])->firstOrNew();
@@ -2136,6 +2146,7 @@ class DocumentController extends Controller
 
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
+    //    dd($PackingGridData);
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
 
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
@@ -2297,10 +2308,15 @@ class DocumentController extends Controller
                 $document->specification_mfps_no = $request->specification_mfps_no;
                 $document->stp_mfps_no = $request->stp_mfps_no;
 
+                $document->mfproduct_name = $request->mfproduct_name;
+
                 //mfpstp
                 $document->stp_mfpstp_no = $request->stp_mfpstp_no;
                 $document->specification_mfpstp_no = $request->specification_mfpstp_no;
 
+
+                $document->packing_material_name = $request->packing_material_name;
+                $document->item_code = $request->item_code;
                 $document->name_pack_material = $request->name_pack_material;
                 $document->standard_pack = $request->standard_pack;
                 $document->sampling_plan = $request->sampling_plan;
@@ -2326,10 +2342,11 @@ class DocumentController extends Controller
                 $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
                 $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
                 $document->rawmaterials_specifications = $request->rawmaterials_specifications;
-    
 
-
-
+            // PIAS 
+                $document->pia_name = $request->pia_name;
+                $document->pia_name_code = $request->pia_name_code;
+                
             // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
