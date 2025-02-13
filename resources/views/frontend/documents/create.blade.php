@@ -138,9 +138,9 @@
 
         /*Main Table Styling */
         #isPasted {
-            width: 650px !important;
+            width: 100% !important;
             border-collapse: collapse;
-            table-layout: auto; /* Adjusts column width dynamically */
+            table-layout: fixed; /* Adjusts column width dynamically */
         }
 
         /* First column adjusts to its content */
@@ -166,8 +166,7 @@
             padding: 8px;
             text-align: left;
             max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+
         }
 
         /* Paragraph Styling Inside Table Cells */
@@ -176,8 +175,7 @@
             text-justify: inter-word;
             margin: 0;
             max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+     
         }
 
         #isPasted img {
@@ -313,7 +311,7 @@
 
                 <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
 
-                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
@@ -337,6 +335,17 @@
                 <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'add-prcumrepo')">Qualification Protocol Cum Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
+
+                <button class="tablinks hidden-tabs" data-id="ANNIGxPASSES" onclick="openData(event, 'doc_Annexure_I')">Annexure I-Gxp Assessment</button>
+                <button class="tablinks hidden-tabs" data-id="ANNIIRiskASSES" onclick="openData(event, 'doc_Annexure_II')">Annexure II-Initial Risk Assessment</button>
+                <button class="tablinks hidden-tabs" data-id="ANNIIIERESASSES" onclick="openData(event, 'doc_Annexure_III')">Annexure III-ERES Assessment</button>
+                <button class="tablinks hidden-tabs" data-id="ANNIVPlanASSES" onclick="openData(event, 'doc_Annexure_IV')">Annexure IV-Validation Plan</button>
+                <button class="tablinks hidden-tabs" data-id="ANNVUserReqSpe" onclick="openData(event, 'doc_Annexure_V')">Annexure V-User Requirements Specification</button>
+                <button class="tablinks hidden-tabs" data-id="ANNVIFunReqSpe" onclick="openData(event, 'doc_Annexure_VI')">Annexure VI-Functional Requirement Specification</button>
+                <button class="tablinks hidden-tabs" data-id="ANNVIIFunSpe" onclick="openData(event, 'doc_Annexure_VII')">Annexure VII-Functional Specification</button>
+                <button class="tablinks hidden-tabs" data-id="ANNVIIITechSpe" onclick="openData(event, 'doc_Annexure_VIII')">Annexure VIII-Technical Specification</button>
+                <button class="tablinks hidden-tabs" data-id="ANNIXFunRiskASSES" onclick="openData(event, 'doc_Annexure_IX')">Annexure IX Functional Risk Assssment</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXDesignSpe" onclick="openData(event, 'doc_Annexure_X')">Annexure X-Design Specification</button>
              
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
@@ -1414,7 +1423,7 @@
                                                     <td>1</td>
                                                     <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
                                                     <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
+                                                    <td><input type="date" id="" name="revised_effective_date" value="" class="form-control"></td>                
                                                     <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
                                                 </tr>
                                             </tbody>
@@ -1520,6 +1529,12 @@
                                         <input type="text" id="stp" name="stp_mfpstp_no" maxlength="255" >
                                     </div>
                                 </div> --}}
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Product Name</label>
+                                        <input type="text" name="product_name_mstp">
+                                    </div>
+                                </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -2283,9 +2298,9 @@
                         </div>
                     </div>
 
-    <!-----------------MASTER FINISHED PRODUCT STANDARD TESTING PROCEDURE Tab ---------------------->
+               <!-----------------MASTER FINISHED PRODUCT STANDARD TESTING PROCEDURE Tab ---------------------->
 
-                    <div id="doc-mfpstp" class="tabcontent">
+                    {{-- <div id="doc-mfpstp" class="tabcontent">
                         <div class="orig-head">
                              Master Finished Product Standard Testing Procedure
                         </div>
@@ -2384,7 +2399,7 @@
 
                             window.addSpecificationsTesting = addSpecificationsTesting;
                         });
-                    </script>
+                    </script> --}}
 
                     <!-- equipment report -->
 
@@ -2641,381 +2656,6 @@
                             </button>
                         </div>
                     </div>
-
-                    <!--Process Validation Protocol Interim  -->
-                <div id="doc_proc_interim" class="tabcontent">
-                    <div class="orig-head">
-                        PROCESS VALIDATION INTERIM REPORT
-                        </div>
-                        <div class="input-fields">
-                            <div class="row">
-                                <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="purpose">Dosage Form</label>
-                                        <input type="text" name="pvir_dosage_form">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Process Validation Interim Report</label>
-                                        <input type="text" name="pvir_process_validation_interim_report">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Product Name</label>
-                                        <input type="text" name="pvir_product_name">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Report No</label>
-                                        <input type="number" name="pvir_report_no">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Batch No</label>
-                                        <input type="number" name="pvir_batch_no">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="purpose">Generic Name </label>
-                                        <input type="text" name="generic_pvir">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Product Code</label>
-                                        <input type="number" name="pvir_product_code">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Std. Batch size </label>
-                                        <input type="number" name="pvir_std_batch">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Category</label>
-                                        <input type="text" name="pvir_category">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Label Claim  </label>
-                                        <input type="text" name="pvir_label_claim">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Market</label>
-                                        <input type="text" name="pvir_market">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Shelf Life</label>
-                                        <input type="text" name="pvir_shelf_life">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">BMR No.</label>
-                                        <input type="number" name="pvir_bmr_no">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">MFR No.</label>
-                                        <input type="number" name="pvir_mfr_no">
-                                    </div>
-                                </div>
-
-
-                                
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Critical_Process_Parameters" id="Critical_quality_attributes">
-                                            Critical process parameters & Critical quality attributes<button type="button" id="Critical_quality_pvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="critical_quality_pvirpdiv">
-                                            <div class="singleCriticalPvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="critical_pvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subcritical_quality_pvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Results of In process data" id="result_In_process_data">
-                                            Results of In process data<button type="button" id="In_process_data_pvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="In_process_data_pvirdiv">
-                                            <div class="single_In_process_data_PvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="In_process_data_pvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subIn_process_data_pvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Yield at various stages" id="Various_stages">
-                                            % Yield at various stages<button type="button" id="various_stages_pvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="various_stages_pvirdiv">
-                                            <div class="singlevarious_stages_PvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="various_stages_pvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subvarious_stages_pvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="deviation" id="deviation_if_any">
-                                            Deviation (If any)
-                                            <button type="button" id="deviation_pvirbtnadd" name="button">+</button>
-                                            <div>
-                                                <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
-                                            </div>
-                                        </label>
-                                        <div id="deviation_pvirdiv">
-                                            <div class="singleDeviationBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="deviation_pvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subdeviation_pvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Change Control ( If any)" id="change_control_if_any">
-                                            Change Control ( If any)<button type="button" id="change_controlpvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="change_controlpvirdiv">
-                                            <div class="singlechange_controlPvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="change_controlpvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark controlpvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger change_control_removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Summary" id="Summary">
-                                            Summary<button type="button" id="Summarypvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="Summarypvirdiv">
-                                            <div class="singleSummaryPvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="Summary_pvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subSummarypvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Conclusion" id="conclusion">
-                                            Conclusion<button type="button" id="conclusionpvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="conclusion_pvirdiv">
-                                            <div class="single_Conclusion_pvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="conclusion_pvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subConclusion_pvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Report_Approval" id="report_approval">
-                                            Report Approval<button type="button" id="report_approvalpvirbtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-                                        <div id="report_approvalpvirdiv">
-                                            <div class="singlereport_approvalPvirBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="report_approvalpvir[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subreport_approvalpvirAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                   <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment">File Attachment</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="pvir_fileattachement"></div>
-                                    
-                                                <div class="add-btn">
-                                                    <label for="pvir_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="pvir_attachment" name="pvir_attachment[]" 
-                                                        oninput="addMultipleFiles(this, 'pvir_fileattachement')" multiple hidden>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                   
-                                    
-                                    <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
-                                        }
-                                    }
-                                    </script>
-
-                                    
-                                
-
-                                <div class="button-block">
-                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
-                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                        </a>
-                                    </button>
-                                </div>
-                         </div>
-                    </div>
-                </div>
-
-
-
-
-
 
                     {{-- Packing validation report by kpatel --}}
 
@@ -6667,7 +6307,14 @@
                     <div class="input-fields">
                         <div class="row">
 
-                            <div class="group-input">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Product Name</label>
+                                        <input type="text" name="product_name_rawmstp">
+                                    </div>
+                                </div>
+
+                                <div class="group-input">
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add">+</button>
@@ -8429,7 +8076,6 @@
                                                 </tr>
                                             </thead>
                                                 <tbody>
-                                                    <!-- Initial Row Placeholder (Optional) -->
                                                     <tr>
                                                         <td><input disabled type="text" name="specification_details_cvs[0][serial]" value="1"></td>
                                                         <td><input type="text" name="specification_details_cvs[0][test]"></td>
@@ -8560,8 +8206,7 @@
 
 
 
-            <!-- Inprocess Validation Specification -->
-
+               <!-- Inprocess Validation Specification -->
                 <div id="doc_INPS" class="tabcontent">
                         <div class="orig-head">INPROCESS VALIDATION SPECIFICATION
                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
@@ -8775,11 +8420,6 @@
                                 });
                             </script>
 
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -8795,6 +8435,970 @@
                 </div>
 
 
+                <!--Process Validation Protocol Interim  -->
+                <div id="doc_proc_interim" class="tabcontent">
+                    <div class="orig-head">
+                        PROCESS VALIDATION INTERIM REPORT
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br>
+
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Dosage Form</label>
+                                        <input type="text" name="pvir_dosage_form">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Process Validation Interim Report</label>
+                                        <input type="text" name="pvir_process_validation_interim_report">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Product Name</label>
+                                        <input type="text" name="pvir_product_name">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Report No</label>
+                                        <input type="number" name="pvir_report_no">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Batch No</label>
+                                        <input type="number" name="pvir_batch_no">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Generic Name </label>
+                                        <input type="text" name="generic_pvir">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Product Code</label>
+                                        <input type="number" name="pvir_product_code">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Std. Batch size </label>
+                                        <input type="number" name="pvir_std_batch">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Category</label>
+                                        <input type="text" name="pvir_category">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Label Claim  </label>
+                                        <input type="text" name="pvir_label_claim">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Market</label>
+                                        <input type="text" name="pvir_market">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Shelf Life</label>
+                                        <input type="text" name="pvir_shelf_life">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">BMR No.</label>
+                                        <input type="number" name="pvir_bmr_no">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">MFR No.</label>
+                                        <input type="number" name="pvir_mfr_no">
+                                    </div>
+                                </div>
+
+
+                                
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Critical_Process_Parameters" id="Critical_quality_attributes">
+                                            Critical process parameters & Critical quality attributes<button type="button" id="Critical_quality_pvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="critical_quality_pvirpdiv">
+                                            <div class="singleCriticalPvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="critical_pvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subcritical_quality_pvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Results of In process data" id="result_In_process_data">
+                                            Results of In process data<button type="button" id="In_process_data_pvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="In_process_data_pvirdiv">
+                                            <div class="single_In_process_data_PvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="In_process_data_pvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subIn_process_data_pvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Yield at various stages" id="Various_stages">
+                                            % Yield at various stages<button type="button" id="various_stages_pvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="various_stages_pvirdiv">
+                                            <div class="singlevarious_stages_PvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="various_stages_pvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subvarious_stages_pvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="deviation" id="deviation_if_any">
+                                            Deviation (If any)
+                                            <button type="button" id="deviation_pvirbtnadd" name="button">+</button>
+                                            <div>
+                                                <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                            </div>
+                                        </label>
+                                        <div id="deviation_pvirdiv">
+                                            <div class="singleDeviationBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="deviation_pvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subdeviation_pvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Change Control ( If any)" id="change_control_if_any">
+                                            Change Control ( If any)<button type="button" id="change_controlpvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="change_controlpvirdiv">
+                                            <div class="singlechange_controlPvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="change_controlpvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark controlpvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger change_control_removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Summary" id="Summary">
+                                            Summary<button type="button" id="Summarypvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="Summarypvirdiv">
+                                            <div class="singleSummaryPvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="Summary_pvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subSummarypvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Conclusion" id="conclusion">
+                                            Conclusion<button type="button" id="conclusionpvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="conclusion_pvirdiv">
+                                            <div class="single_Conclusion_pvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="conclusion_pvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subConclusion_pvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="Report_Approval" id="report_approval">
+                                            Report Approval<button type="button" id="report_approvalpvirbtnadd"
+                                                name="button">+</button>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                        </label>
+                                        <div id="report_approvalpvirdiv">
+                                            <div class="singlereport_approvalPvirBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="report_approvalpvir[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subreport_approvalpvirAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment">File Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="pvir_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="pvir_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="pvir_attachment" name="pvir_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'pvir_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+               <!-- Annexure I-Gxp Assessment start  -->
+                <div id="doc_Annexure_I" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure I-Gxp Assessment
+                        {{-- Annexure I-GXP ASSESSMENT --}}
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_I_gxp_attachment" name="annex_I_gxp_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure I-Gxp Assessment end  -->
+
+               <!-- Annexure II-Initial Risk Assessment start -->
+                <div id="doc_Annexure_II" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure II-Initial Risk Assessment
+                        {{-- Annexure II-INITIAL RISK ASSESSMENT --}}
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annexIIRisk_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_II_risk_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_II_risk_attachment" name="annex_II_risk_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annexIIRisk_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure II-Initial Risk Assessment end -->
+
+               <!-- Annexure III-ERES Assessment start -->
+                <div id="doc_Annexure_III" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure III-ERES Assessment
+                        {{-- Annexure III-ERES ASSESSMENT --}}
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annexIIIeres_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_III_eres_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_III_eres_attachment" name="annex_III_eres_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annexIIIeres_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure III-ERES Assessment end -->
+
+               <!-- Annexure IV-Validation Plan start -->
+                <div id="doc_Annexure_IV" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure IV-Validation Plan
+                        Annexure IV-VALIDATION PLAN
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annexIVPlan_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_IV_plan_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_IV_plan_attachment" name="annex_IV_plan_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annexIVPlan_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure IV-ERES Assessment end -->
+
+               <!-- Annexure V-User Requirements Specification -->
+                <div id="doc_Annexure_V" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure V-User Requirement Specification
+                        {{-- Annexure V-USER REQUIRED SPECIFICATION --}}
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annexVUser_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_V_user_attachment" name="annex_V_user_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annexVUser_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure V-ERES Assessment end -->
+
+               <!-- Annexure VI-Functional Requirement Specification start  -->
+                <div id="doc_Annexure_VI" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure VI-Functional Requirement Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_VIreq_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_VI_req_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_VI_req_attachment" name="annex_VI_req_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_VIreq_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure VI-Functional Requirement Specification  -->
+
+               <!-- Annexure VII-Functional Specification start -->
+                <div id="doc_Annexure_VII" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure VII-Functional Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_VII_fun_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_VII_fun_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_VII_fun_attachment" name="annex_VII_fun_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_VII_fun_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure VII-Functional Specification end -->
+
+               <!-- Annexure VIII-Technical Specification start -->
+                <div id="doc_Annexure_VIII" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure VIII-Technical Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annexVIII_tech_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_VIII_tech_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_VIII_tech_attachment" name="annex_VIII_tech_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annexVIII_tech_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure VIII-Technical Specification end -->
+
+               <!-- Annexure IX Functional Risk Assssment start -->
+                <div id="doc_Annexure_IX" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure IX Functional Risk Assssment
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_IX_risk_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_IX_risk_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_IX_risk_attachment" name="annex_IX_risk_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_IX_risk_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure IX Functional Risk Assssment end -->
+
+               <!-- Annexure X-Design Specification start -->
+                <div id="doc_Annexure_X" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure X-Design Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_X_Design_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_X_design_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_X_design_attachment" name="annex_X_design_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_X_Design_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure X-Design Specification end -->
+
+
                     {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
 
                     <div id="doc-fpstp" class="tabcontent">
@@ -8804,10 +9408,23 @@
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
-                            <div class="col-12">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Product Name</label>
+                                        <input type="text" name="product_name_fpstp">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">           
+                                    STANDARD TESTING PROCEDURE
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="fpstp_testfield" class="summernote"></textarea>
+                                    </div>
+                                </div>
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
                                         STANDARD TESTING PROCEDURE
@@ -8823,7 +9440,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Initial Row Placeholder (Optional) -->
                                                 <tr>
                                                     <td><input disabled type="text" name="finished_product[0][serial]" value="1"></td>
                                                     <td><input type="text" name="finished_product[0][testing]"></td>
@@ -8833,10 +9449,9 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
-                            <script>
+                            </div> --}}
+                            {{-- <script>
                                 $(document).ready(function() {
-                                    // Add new row in Specification Details table
                                     $('#Standard_Testing_add_1').click(function(e) {
                                         e.preventDefault();
 
@@ -8861,13 +9476,7 @@
                                         $(this).closest('tr').remove();
                                     });
                                 });
-                            </script>
-
-
-
-
-
-
+                            </script> --}}
                             </div>
                         </div>
                         <div class="button-block">
@@ -8889,10 +9498,24 @@
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
-                            <div class="col-12">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Product Name</label>
+                                        <input type="text" name="product_name_ipstp">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">           
+                                    STANDARD TESTING PROCEDURE
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="ipstp_testfield" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
                                         STANDARD TESTING PROCEDURE
@@ -8921,7 +9544,6 @@
                             </div>
                             <script>
                                 $(document).ready(function() {
-                                    // Add new row in Specification Details table
                                     $('#Standard_Testing_add_2').click(function(e) {
                                         e.preventDefault();
 
@@ -8941,18 +9563,11 @@
                                         tableBody.append(newRow);
                                     });
 
-                                    // Remove row in Specification Details table
                                     $(document).on('click', '.removeRowBtn', function() {
                                         $(this).closest('tr').remove();
                                     });
                                 });
-                            </script>
-
-
-
-
-
-
+                            </script> --}}
                             </div>
                         </div>
                         <div class="button-block">
@@ -8974,10 +9589,23 @@
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
-                            <div class="col-12">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reference">Product Name</label>
+                                        <input type="text" name="product_name_cvstp">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 sub-head">           
+                                    STANDARD TESTING PROCEDURE
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="cvstp_testfield" class="summernote"></textarea>
+                                    </div>
+                                </div>
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
                                         STANDARD TESTING PROCEDURE
@@ -8993,7 +9621,6 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!-- Initial Row Placeholder (Optional) -->
                                                 <tr>
                                                     <td><input disabled type="text" name="cleaning_validation[0][serial]" value="1"></td>
                                                     <td><input type="text" name="cleaning_validation[0][data_test]"></td>
@@ -9006,7 +9633,6 @@
                             </div>
                             <script>
                                 $(document).ready(function() {
-                                    // Add new row in Specification Details table
                                     $('#Standard_Testing_add_3').click(function(e) {
                                         e.preventDefault();
 
@@ -9026,18 +9652,11 @@
                                         tableBody.append(newRow);
                                     });
 
-                                    // Remove row in Specification Details table
                                     $(document).on('click', '.removeRowBtn', function() {
                                         $(this).closest('tr').remove();
                                     });
                                 });
-                            </script>
-
-
-
-
-
-
+                            </script> --}}
                             </div>
                         </div>
                         <div class="button-block">
@@ -9516,7 +10135,7 @@
                         </div>
                     </div>
 
-{{-- packing validation protocol --}}
+                    {{-- packing validation protocol --}}
                     <div id="doc-pvp" class="tabcontent">
                         <div class="orig-head">
                             Packing validation Protocol</div>

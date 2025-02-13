@@ -257,7 +257,7 @@
         }
     </style>
 
-    <style>
+    {{-- <style>
         /*Main Table Styling */
         #isPasted {
             width: 650px !important;
@@ -315,6 +315,30 @@
             height: 300px;
             margin: 5px auto;
         }
+    </style> --}}
+
+<style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+
     </style>
 
 </head>
@@ -623,10 +647,14 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        @if ($document->rawmaterials_specifications)
+                                        {{-- @if ($document->rawmaterials_specifications)
                                             {!! strip_tags($document->rawmaterials_specifications, 
                                             '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif
+                                        @endif --}}
+
+                                        <div class="table-containers">
+                                            {!! strip_tags($document->rawmaterials_specifications, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

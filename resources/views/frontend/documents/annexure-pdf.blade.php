@@ -253,7 +253,7 @@
         }
     </style>
     
-    <style>
+    {{-- <style>
          /*Main Table Styling */
         #isPasted {
             width: 650px !important;
@@ -311,6 +311,48 @@
             height: 300px;
             margin: 5px auto;
         }
+    </style> --}}
+
+    <style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+               /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+
+     
+
     </style>
 
 </head>
@@ -374,7 +416,10 @@
                                         <div style="{{ $index > 0 ? 'page-break-before: always;' : '' }} margin-bottom: 1rem;">
                                             <h4 style="font-weight:bold">Annexure {{ $index + 1 }}</h4>
                                             <div style="overflow-x: auto; width: 100%; box-sizing: border-box;">
-                                                <div style="max-width: 100%; overflow-x: auto;">
+                                                {{-- <div style="max-width: 100%; overflow-x: auto;">
+                                                    {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                </div> --}}
+                                                <div class="table-containers">
                                                     {!! strip_tags($annexure, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                                 </div>
                                             </div>
@@ -399,7 +444,7 @@
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
                 $y = 775;
-                $x = 485;
+                $x = 480;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

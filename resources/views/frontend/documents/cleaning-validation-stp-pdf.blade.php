@@ -253,6 +253,29 @@
         }
     </style>
 
+<style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+    </style>
+
 </head>
 <body>
     <header class="">
@@ -284,7 +307,7 @@
             <tbody>
                 <tr>
                     <td>
-                    { Material Name & Product Name}
+                    {{$data->document_content->product_name_cvstp }}
                     </td>
                 </tr>
             </tbody>
@@ -293,7 +316,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                     
                     <span>
                         @if($document->revised == 'Yes')
@@ -339,7 +362,7 @@
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Supersedes No:
                    <span>
-                   @php
+                        @php
                             $temp = DB::table('document_types')
                                 ->where('name', $document->document_type_name)
                                 ->value('typecode');
@@ -354,7 +377,7 @@
                    </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Page No.:
+                        
                     </td>
                 </tr>
             </tbody>
@@ -439,32 +462,13 @@
                     </tr> 
                 </tbody>
             </table>
-
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody>
-        </table>
         <span style="text-align:center">Format No.: QA/097/F4-00</span>                            
     </footer>
     
     <div class="content">
-        <section>
+    <section>
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
-            <div class="table-responsive retrieve-table">
+            {{-- <div class="table-responsive retrieve-table">
                 <table class="table table-bordered" id="distribution-list">
                     <thead style="width:20%">
                         <tr>
@@ -474,11 +478,11 @@
                         </tr>
                     </thead>
                     <tbody style="">
-                    @if (!empty($CLEANING_VALIDATIONData))
-                        @foreach ($CLEANING_VALIDATIONData as $key => $item)
+                    @if (!empty($FinishedData))
+                        @foreach ($FinishedData as $key => $item)
                             <tr>
                                 <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
-                                <td style="font-weight: bold;">{{ $item['data_test'] ?? '' }}</td>
+                                <td style="font-weight: bold;">{{ $item['testing'] ?? '' }}</td>
                             </tr>
                         @endforeach
                     @else
@@ -488,7 +492,28 @@
                     @endif
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
+
+                <div class="other-container ">
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        {{-- @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->cvstp_testfield, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif --}}
+
+                                                <div class="table-containers">
+                                                    {!! strip_tags($data->document_content->cvstp_testfield, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </section>
 
         <section>
@@ -530,8 +555,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 760;
-                $x = 485;
+                $y = 185;
+                $x = 405;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

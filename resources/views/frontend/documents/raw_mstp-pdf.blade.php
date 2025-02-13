@@ -284,7 +284,7 @@
             <tbody>
                 <tr>
                     <td>
-                    { Material Name & Product Name }
+                    {{$data->document_content->product_name_rawmstp} }
                     </td>
                 </tr>
             </tbody>
@@ -440,7 +440,7 @@
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
                 <tbody>
                     <tr style="border-bottom: 1px solid #ddd;">
                         @php
@@ -457,7 +457,7 @@
                         <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">  </td>        
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
             <span style="text-align:center">Format No.: QA/097/F6-00</span>                            
         </footer>
     
@@ -530,8 +530,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 760;
-                $x = 485;
+                $y = 150;
+                $x = 465;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

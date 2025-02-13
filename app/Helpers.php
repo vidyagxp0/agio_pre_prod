@@ -802,6 +802,18 @@ class Helpers
             'FOCONITOGENREPORT'=>'Format For Compressed Air And Nitrogen Gas System Report',
             'FOCONITOGENPROTOCOL'=>'Format For Compressed Air And Nitrogen Gas System Protocol',
             'STABILITYPROTOCOL'=>'Stability study protocol',
+
+            'ANNIGxPASSES'=>'Annexure I-Gxp Assessment',
+            'ANNIIRiskASSES'=>'Annexure II-Initial Risk Assessment',
+            'ANNIIIERESASSES'=>'Annexure III-ERES Assessment',
+            'ANNIVPlanASSES'=>'Annexure IV-Validation Plan',
+            'ANNVUserReqSpe'=>'Annexure V-User Requirements Specification',
+            'ANNVIFunReqSpe'=>'Annexure VI-Functional Requirement Specification',
+            'ANNVIIFunSpe'=>'Annexure VII-Functional Specification',
+            'ANNVIIITechSpe'=>'Annexure VIII-Technical Specification',
+            'ANNIXFunRiskASSES'=>'Annexure IX Functional Risk Assssment',
+            'ANNXDesignSpe'=>'Annexure X-Design Specification',
+            
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',

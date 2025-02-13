@@ -253,7 +253,7 @@
         }
     </style>
 
-    <style>
+    {{-- <style>
          /*Main Table Styling */
         #isPasted {
             width: 650px !important;
@@ -310,6 +310,29 @@
             max-width: 400px !important; /* Adjust this to your preferred maximum width */
             height: 300px;
             margin: 5px auto;
+        }
+    </style> --}}
+
+<style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
         }
     </style>
 
@@ -501,25 +524,6 @@
                 </tbody>
             </table>
 
-            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-                <tbody>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        @php
-                            $inreviews = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Review-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-                        @endphp
-                        <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                        <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                        <td style="padding: 20px; border: 1px solid #ddd;">  </td>        
-                    </tr>
-                </tbody>
-            </table> --}}
-
         <span>Format No.: QA/097/F8-00</span>
     </footer>
     
@@ -542,10 +546,14 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        @if ($data->document_content)
+                                        {{-- @if ($data->document_content)
                                             {!! strip_tags($data->document_content->gtp_test, 
                                             '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif
+                                        @endif --}}
+
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->document_content->gtp_test, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

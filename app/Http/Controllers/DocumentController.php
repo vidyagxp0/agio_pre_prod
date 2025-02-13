@@ -600,9 +600,7 @@ class DocumentController extends Controller
             $document->storage_condition = $request->storage_condition;
             $document->approved_vendor = $request->approved_vendor;
 
-
             $document->stp_no = $request->stp_no;
-
 
 
 
@@ -784,7 +782,12 @@ class DocumentController extends Controller
             $content->pvp_scope = $request->pvp_scope;
 
 
-
+            $content->product_name_fpstp = $request->product_name_fpstp;
+            $content->fpstp_testfield = $request->fpstp_testfield;
+            $content->product_name_ipstp = $request->product_name_ipstp;
+            $content->ipstp_testfield = $request->ipstp_testfield;
+            $content->product_name_cvstp = $request->product_name_cvstp;
+            $content->cvstp_testfield = $request->cvstp_testfield;
 
              //study report
             $content->study_purpose = $request->study_purpose;
@@ -800,6 +803,9 @@ class DocumentController extends Controller
             $content->equipment_objective = $request->equipment_objective;
             $content->equipment_scope = $request->equipment_scope;
             $content->equipment_purpose = $request->equipment_purpose;
+
+
+
             
             
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
@@ -815,149 +821,147 @@ class DocumentController extends Controller
             }
 
 
-          // ----------- process validation interim report  start--------------------------
+            // ----------- process validation interim report  start--------------------------
 
-          $content->pvir_dosage_form = $request->pvir_dosage_form;
-          $content->pvir_process_validation_interim_report = $request->pvir_process_validation_interim_report;
-          $content->pvir_product_name = $request->pvir_product_name;
-          $content->pvir_report_no = $request->pvir_report_no;
-          $content->pvir_batch_no = $request->pvir_batch_no;
-          $content->generic_pvir = $request->generic_pvir;
-          $content->pvir_product_code = $request->pvir_product_code;
-          $content->pvir_std_batch = $request->pvir_std_batch;
-          $content->pvir_category = $request->pvir_category;
-          $content->pvir_label_claim = $request->pvir_label_claim;
-          $content->pvir_market = $request->pvir_market;
-          $content->pvir_shelf_life = $request->pvir_shelf_life;
-          $content->pvir_bmr_no = $request->pvir_bmr_no;
-          $content->pvir_mfr_no = $request->pvir_mfr_no;
+            $content->pvir_dosage_form = $request->pvir_dosage_form;
+            $content->pvir_process_validation_interim_report = $request->pvir_process_validation_interim_report;
+            $content->pvir_product_name = $request->pvir_product_name;
+            $content->pvir_report_no = $request->pvir_report_no;
+            $content->pvir_batch_no = $request->pvir_batch_no;
+            $content->generic_pvir = $request->generic_pvir;
+            $content->pvir_product_code = $request->pvir_product_code;
+            $content->pvir_std_batch = $request->pvir_std_batch;
+            $content->pvir_category = $request->pvir_category;
+            $content->pvir_label_claim = $request->pvir_label_claim;
+            $content->pvir_market = $request->pvir_market;
+            $content->pvir_shelf_life = $request->pvir_shelf_life;
+            $content->pvir_bmr_no = $request->pvir_bmr_no;
+            $content->pvir_mfr_no = $request->pvir_mfr_no;
 
-          if (!empty($request->pvir_attachment)) {
-             $files = [];
-             if ($request->hasfile('pvir_attachment')) {
-                 foreach ($request->file('pvir_attachment') as $file) {
-                     $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                     $file->move('upload/', $name);
-                     $files[] = $name;
-                 }
-             }
-             $content->pvir_attachment = json_encode($files);
-         }
+            if (!empty($request->pvir_attachment)) {
+                $files = [];
+                if ($request->hasfile('pvir_attachment')) {
+                    foreach ($request->file('pvir_attachment') as $file) {
+                        $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $content->pvir_attachment = json_encode($files);
+            }
 
-    //Equipment hold time study protocol
+            //Equipment hold time study protocol
 
-    $content->eqp_approval = $request->eqp_approval;
-    $content->eqp_objective = $request->eqp_objective;
-    $content->eqp_scope = $request->eqp_scope;
-
-
-    if (!empty($request->eqpresponsibility)) {
-        $content->eqpresponsibility = serialize($request->eqpresponsibility);
-    }
-    if (!empty($request->eqpdetails)) {
-        $content->eqpdetails = serialize($request->eqpdetails);
-    }
-
-    if (!empty($request->eqpsampling)) {
-        $content->eqpsampling = serialize($request->eqpsampling);
-    }
-
-    if (!empty($request->Samplingprocedure)) {
-        $content->Samplingprocedure = serialize($request->Samplingprocedure);
-    }
-
-    if (!empty($request->AcceptenceCriteria)) {
-        $content->AcceptenceCriteria = serialize($request->AcceptenceCriteria);
-    }
-
-    if (!empty($request->EnvironmentalConditions)) {
-        $content->EnvironmentalConditions = serialize($request->EnvironmentalConditions);
-    }
-
-    if (!empty($request->eqpdetailsdeviation)) {
-        $content->eqpdetailsdeviation = serialize($request->eqpdetailsdeviation);
-    }
-
-    if (!empty($request->eqpdetailschangecontrol)) {
-        $content->eqpdetailschangecontrol = serialize($request->eqpdetailschangecontrol);
-    }
-
-    if (!empty($request->eqpdetailssummary)) {
-        $content->eqpdetailssummary = serialize($request->eqpdetailssummary);
-    }
-
-    if (!empty($request->eqpdetailsconclusion)) {
-        $content->eqpdetailsconclusion = serialize($request->eqpdetailsconclusion);
-    }
-
-    if (!empty($request->eqpdetailstraining)) {
-        $content->eqpdetailstraining = serialize($request->eqpdetailstraining);
-    }
+            $content->eqp_approval = $request->eqp_approval;
+            $content->eqp_objective = $request->eqp_objective;
+            $content->eqp_scope = $request->eqp_scope;
 
 
-    //Format For Compressed Air And Nitrogen Gas System Report
+            if (!empty($request->eqpresponsibility)) {
+                $content->eqpresponsibility = serialize($request->eqpresponsibility);
+            }
+            if (!empty($request->eqpdetails)) {
+                $content->eqpdetails = serialize($request->eqpdetails);
+            }
 
-    $content->format_approval = $request->format_approval;
-    $content->format_objective = $request->format_objective;
-    $content->format_scope = $request->format_scope;
-    if (!empty($request->formatidentification)) {
-        $content->formatidentification = serialize($request->formatidentification);
-    }
+            if (!empty($request->eqpsampling)) {
+                $content->eqpsampling = serialize($request->eqpsampling);
+            }
 
-    if (!empty($request->executiontteam)) {
-        $content->executiontteam = serialize($request->executiontteam);
-    }
+            if (!empty($request->Samplingprocedure)) {
+                $content->Samplingprocedure = serialize($request->Samplingprocedure);
+            }
 
-    if (!empty($request->formatdocuments)) {
-        $content->formatdocuments = serialize($request->formatdocuments);
-    }
+            if (!empty($request->AcceptenceCriteria)) {
+                $content->AcceptenceCriteria = serialize($request->AcceptenceCriteria);
+            }
 
-    if (!empty($request->revalidationtype)) {
-        $content->revalidationtype = serialize($request->revalidationtype);
-    }
-    if (!empty($request->RevalidationCriteria)) {
-        $content->RevalidationCriteria = serialize($request->RevalidationCriteria);
-    }
+            if (!empty($request->EnvironmentalConditions)) {
+                $content->EnvironmentalConditions = serialize($request->EnvironmentalConditions);
+            }
 
-    if (!empty($request->generalconsideration)) {
-        $content->generalconsideration = serialize($request->generalconsideration);
-    }
+            if (!empty($request->eqpdetailsdeviation)) {
+                $content->eqpdetailsdeviation = serialize($request->eqpdetailsdeviation);
+            }
 
+            if (!empty($request->eqpdetailschangecontrol)) {
+                $content->eqpdetailschangecontrol = serialize($request->eqpdetailschangecontrol);
+            }
 
-    if (!empty($request->precautions)) {
-        $content->precautions = serialize($request->precautions);
-    }
+            if (!empty($request->eqpdetailssummary)) {
+                $content->eqpdetailssummary = serialize($request->eqpdetailssummary);
+            }
 
-    if (!empty($request->calibrationstatus)) {
-        $content->calibrationstatus = serialize($request->calibrationstatus);
-    }
+            if (!empty($request->eqpdetailsconclusion)) {
+                $content->eqpdetailsconclusion = serialize($request->eqpdetailsconclusion);
+            }
 
-
-    if (!empty($request->testobservation)) {
-        $content->testobservation = serialize($request->testobservation);
-    }
-
-    if (!empty($request->formatannexure)) {
-        $content->formatannexure = serialize($request->formatannexure);
-    }
-
-    if (!empty($request->formatdeviation)) {
-        $content->formatdeviation = serialize($request->formatdeviation);
-    }
-
-    if (!empty($request->formatcc)) {
-        $content->formatcc = serialize($request->formatcc);
-    }
-
-    if (!empty($request->formatsummary)) {
-        $content->formatsummary = serialize($request->formatsummary);
-    }
-
-    if (!empty($request->formatconclusion)) {
-        $content->formatconclusion = serialize($request->formatconclusion);
-    }
+            if (!empty($request->eqpdetailstraining)) {
+                $content->eqpdetailstraining = serialize($request->eqpdetailstraining);
+            }
 
 
+            //Format For Compressed Air And Nitrogen Gas System Report
+
+            $content->format_approval = $request->format_approval;
+            $content->format_objective = $request->format_objective;
+            $content->format_scope = $request->format_scope;
+            if (!empty($request->formatidentification)) {
+                $content->formatidentification = serialize($request->formatidentification);
+            }
+
+            if (!empty($request->executiontteam)) {
+                $content->executiontteam = serialize($request->executiontteam);
+            }
+
+            if (!empty($request->formatdocuments)) {
+                $content->formatdocuments = serialize($request->formatdocuments);
+            }
+
+            if (!empty($request->revalidationtype)) {
+                $content->revalidationtype = serialize($request->revalidationtype);
+            }
+            if (!empty($request->RevalidationCriteria)) {
+                $content->RevalidationCriteria = serialize($request->RevalidationCriteria);
+            }
+
+            if (!empty($request->generalconsideration)) {
+                $content->generalconsideration = serialize($request->generalconsideration);
+            }
+
+
+            if (!empty($request->precautions)) {
+                $content->precautions = serialize($request->precautions);
+            }
+
+            if (!empty($request->calibrationstatus)) {
+                $content->calibrationstatus = serialize($request->calibrationstatus);
+            }
+
+
+            if (!empty($request->testobservation)) {
+                $content->testobservation = serialize($request->testobservation);
+            }
+
+            if (!empty($request->formatannexure)) {
+                $content->formatannexure = serialize($request->formatannexure);
+            }
+
+            if (!empty($request->formatdeviation)) {
+                $content->formatdeviation = serialize($request->formatdeviation);
+            }
+
+            if (!empty($request->formatcc)) {
+                $content->formatcc = serialize($request->formatcc);
+            }
+
+            if (!empty($request->formatsummary)) {
+                $content->formatsummary = serialize($request->formatsummary);
+            }
+
+            if (!empty($request->formatconclusion)) {
+                $content->formatconclusion = serialize($request->formatconclusion);
+            }
 
             if (!empty($request->critical_pvir)) {
                 $content->critical_pvir = serialize($request->critical_pvir);
@@ -1327,6 +1331,169 @@ class DocumentController extends Controller
             $content->shelf_life_pvr = $request->shelf_life_pvr;
             $content->bmr_no_pvr = $request->bmr_no_pvr;
             $content->mfr_no_pvr = $request->mfr_no_pvr;
+
+
+            // ----------- Annexure I-Gxp Assessment start--------------------------
+
+            if (!empty($request->annex_I_gxp_attachment)) {
+                $files = [];
+                if ($request->hasfile('annex_I_gxp_attachment')) {
+                    foreach ($request->file('annex_I_gxp_attachment') as $file) {
+                        $name = $request->name . 'annex_I_gxp_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $content->annex_I_gxp_attachment = json_encode($files);
+            }
+
+        // ----------- Annexure I-Gxp Assessment end--------------------------
+
+          // ----------- Annexure II-Initial Risk Assessment start--------------------------
+
+          if (!empty($request->annex_II_risk_attachment)) {
+            $files = [];
+            if ($request->hasfile('annex_II_risk_attachment')) {
+                foreach ($request->file('annex_II_risk_attachment') as $file) {
+                    $name = $request->name . 'annex_II_risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $content->annex_II_risk_attachment = json_encode($files);
+        }
+
+    // ----------- Annexure II-Initial Risk Assessment end--------------------------
+
+     // ----------- Annexure III-ERES Assessment start--------------------------
+
+     if (!empty($request->annex_III_eres_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_III_eres_attachment')) {
+            foreach ($request->file('annex_III_eres_attachment') as $file) {
+                $name = $request->name . 'annex_III_eres_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_III_eres_attachment = json_encode($files);
+    }
+
+    // ----------- Annexure III-ERES Assessment end--------------------------
+
+     // ----------- Annexure IV-Validation Plan start--------------------------
+
+     if (!empty($request->annex_IV_plan_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_IV_plan_attachment')) {
+            foreach ($request->file('annex_IV_plan_attachment') as $file) {
+                $name = $request->name . 'annex_IV_plan_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_IV_plan_attachment = json_encode($files);
+    }
+
+    // ----------- Annexure IV-Validation Plan end--------------------------
+
+    // ----------- Annexure V-User Requirements Specification start--------------------------
+
+    if (!empty($request->annex_V_user_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_V_user_attachment')) {
+            foreach ($request->file('annex_V_user_attachment') as $file) {
+                $name = $request->name . 'annex_V_user_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_V_user_attachment = json_encode($files);
+    }
+
+
+    // ----------- Annexure V-User Requirements Specification end--------------------------
+
+
+       // ----------- Annexure VI-Functional Requirement Specification start--------------------------
+
+       if (!empty($request->annex_VI_req_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_VI_req_attachment')) {
+            foreach ($request->file('annex_VI_req_attachment') as $file) {
+                $name = $request->name . 'annex_VI_req_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_VI_req_attachment = json_encode($files);
+    }
+
+        // ----------- Annexure VI-Functional Requirement Specification end--------------------------
+
+        // ----------- Annexure VII-Functional Specification start--------------------------
+
+        if (!empty($request->annex_VII_fun_attachment)) {
+            $files = [];
+            if ($request->hasfile('annex_VII_fun_attachment')) {
+                foreach ($request->file('annex_VII_fun_attachment') as $file) {
+                    $name = $request->name . 'annex_VII_fun_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $content->annex_VII_fun_attachment = json_encode($files);
+        }
+
+        // ----------- Annexure VII-Functional Specification end--------------------------
+
+        // ----------- Annexure VIII-Technical Specification start--------------------------
+
+        if (!empty($request->annex_VIII_tech_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_VIII_tech_attachment')) {
+            foreach ($request->file('annex_VIII_tech_attachment') as $file) {
+                $name = $request->name . 'annex_VIII_tech_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_VIII_tech_attachment = json_encode($files);
+        }
+
+        // ----------- Annexure VIII-Technical Specification end--------------------------
+
+        // ----------- Annexure IX Functional Risk Assssment start--------------------------
+
+        if (!empty($request->annex_IX_risk_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_IX_risk_attachment')) {
+            foreach ($request->file('annex_IX_risk_attachment') as $file) {
+                $name = $request->name . 'annex_IX_risk_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_IX_risk_attachment = json_encode($files);
+        }
+
+        // ----------- Annexure IX Functional Risk Assssment end--------------------------
+
+        // ----------- Annexure X-Design Specification start--------------------------
+
+        if (!empty($request->annex_X_design_attachment)) {
+        $files = [];
+        if ($request->hasfile('annex_X_design_attachment')) {
+            foreach ($request->file('annex_X_design_attachment') as $file) {
+                $name = $request->name . 'annex_X_design_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+        $content->annex_X_design_attachment = json_encode($files);
+        }
+
+        // ----------- Annexure X-Design Specification end--------------------------
             
     
            if (!empty($request->purpose_pvr)) {
@@ -2228,6 +2395,7 @@ class DocumentController extends Controller
                 $document->total_no_pages = $request->total_no_pages;
 
 
+
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
                 }
@@ -2763,6 +2931,13 @@ class DocumentController extends Controller
             $documentcontet->study_scope = $request->study_scope;
             $documentcontet->study_attachments = $request->study_attachments;
 
+            $documentcontet->product_name_fpstp = $request->product_name_fpstp;
+            $documentcontet->fpstp_testfield = $request->fpstp_testfield;
+            $documentcontet->product_name_ipstp = $request->product_name_ipstp;
+            $documentcontet->ipstp_testfield = $request->ipstp_testfield;
+            $documentcontet->product_name_cvstp = $request->product_name_cvstp;
+            $documentcontet->cvstp_testfield = $request->cvstp_testfield;
+
 
             //--------------------------- Process Validation Interim Update start ------------------------------------------------------
                         
@@ -2781,17 +2956,31 @@ class DocumentController extends Controller
             $documentcontet->pvir_bmr_no = $request->pvir_bmr_no;
             $documentcontet->pvir_mfr_no = $request->pvir_mfr_no;
 
-            if (!empty($request->pvir_attachment)) {
-                $files = [];
-                if ($request->hasfile('pvir_attachment')) {
+            if (!empty($request->pvir_attachment) || !empty($request->deleted_file_attach)) {
+                $existingFiles = json_decode($documentcontet->pvir_attachment, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_file_attach)) {
+                    $filesToDelete = explode(',', $request->deleted_file_attach);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('pvir_attachment')) {
                     foreach ($request->file('pvir_attachment') as $file) {
-                        $name = $request->name . 'pvir_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                        $file->move('upload/', $name);
-                        $files[] = $name;
+                        $name = $request->name . 'pvir_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
                     }
                 }
-                $documentcontet->pvir_attachment = json_encode($files);
-            }
+        
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->pvir_attachment = json_encode($allFiles);
+                }
 
             $documentcontet->critical_pvir = $request->critical_pvir ? serialize($request->critical_pvir) : serialize([]);
             $documentcontet->In_process_data_pvir = $request->In_process_data_pvir ? serialize($request->In_process_data_pvir) : serialize([]);
@@ -2802,8 +2991,326 @@ class DocumentController extends Controller
             $documentcontet->conclusion_pvir = $request->conclusion_pvir ? serialize($request->conclusion_pvir) : serialize([]);
             $documentcontet->report_approvalpvir = $request->report_approvalpvir ? serialize($request->report_approvalpvir) : serialize([]);
 
+
+            
+
             //--------------------------- Process Validation Interim Update end ------------------------------------------------------
 
+
+
+            // ----------- Annexure I-Gxp Assessment start--------------------------
+            if (!empty($request->annex_I_gxp_attachment) || !empty($request->deleted_anne_attach1)) {
+                $existingFiles = json_decode($documentcontet->annex_I_gxp_attachment, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach1)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach1);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('annex_I_gxp_attachment')) {
+                    foreach ($request->file('annex_I_gxp_attachment') as $file) {
+                        $name = $request->name . 'annex_I_gxp_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+        
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_I_gxp_attachment = json_encode($allFiles);
+                }
+
+            // ----------- Annexure I-Gxp Assessment end--------------------------
+
+            // ----------- Annexure II-Initial Risk Assessment start--------------------------
+
+            if (!empty($request->annex_II_risk_attachment) || !empty($request->deleted_anne_attach2)) {
+                $existingFiles = json_decode($documentcontet->annex_II_risk_attachment, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach2)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach2);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('annex_II_risk_attachment')) {
+                    foreach ($request->file('annex_II_risk_attachment') as $file) {
+                        $name = $request->name . 'annex_II_risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+        
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_II_risk_attachment = json_encode($allFiles);
+                }
+
+
+            // ----------- Annexure II-Initial Risk Assessment end--------------------------
+
+            // ----------- Annexure III-ERES Assessment start--------------------------
+
+            if (!empty($request->annex_III_eres_attachment) || !empty($request->deleted_anne_attach3)) {
+                $existingFiles = json_decode($documentcontet->annex_III_eres_attachment, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach3)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach3);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('annex_III_eres_attachment')) {
+                    foreach ($request->file('annex_III_eres_attachment') as $file) {
+                        $name = $request->name . 'annex_III_eres_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+        
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_III_eres_attachment = json_encode($allFiles);
+                }
+
+
+
+            // ----------- Annexure III-ERES Assessment end--------------------------
+
+            // ----------- Annexure IV-Validation Plan start--------------------------
+
+
+            if (!empty($request->annex_IV_plan_attachment) || !empty($request->deleted_anne_attach4)) {
+                $existingFiles = json_decode($documentcontet->annex_IV_plan_attachment, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach4)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach4);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('annex_IV_plan_attachment')) {
+                    foreach ($request->file('annex_IV_plan_attachment') as $file) {
+                        $name = $request->name . 'annex_IV_plan_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+        
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_IV_plan_attachment = json_encode($allFiles);
+                }
+
+            // ----------- Annexure IV-Validation Plan end--------------------------
+
+            // ----------- Annexure V-User Requirements Specification start--------------------------
+
+            if (!empty($request->annex_V_user_attachment) || !empty($request->deleted_anne_attach5)) {
+                $existingFiles = json_decode($documentcontet->annex_V_user_attachment, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach5)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach5);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('annex_V_user_attachment')) {
+                    foreach ($request->file('annex_V_user_attachment') as $file) {
+                        $name = $request->name . 'annex_V_user_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+        
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_V_user_attachment = json_encode($allFiles);
+                }
+
+            
+
+            // ----------- Annexure V-User Requirements Specification end--------------------------
+
+            
+       // ----------- Annexure VI-Functional Requirement Specification start--------------------------
+
+       if (!empty($request->annex_VI_req_attachment) || !empty($request->deleted_anne_attach6)) {
+        $existingFiles = json_decode($documentcontet->annex_VI_req_attachment, true) ?? [];
+
+        // Handle deleted files
+        if (!empty($request->deleted_anne_attach6)) {
+            $filesToDelete = explode(',', $request->deleted_anne_attach6);
+            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                return !in_array($file, $filesToDelete);
+            });
+        }
+
+        // Handle new files
+        $newFiles = [];
+        if ($request->hasFile('annex_VI_req_attachment')) {
+            foreach ($request->file('annex_VI_req_attachment') as $file) {
+                $name = $request->name . 'annex_VI_req_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('upload/'), $name);
+                $newFiles[] = $name;
+            }
+        }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $documentcontet->annex_VI_req_attachment = json_encode($allFiles);
+        }
+
+    
+        // ----------- Annexure VI-Functional Requirement Specification end--------------------------
+
+        // ----------- Annexure VII-Functional Specification start--------------------------
+
+        if (!empty($request->annex_VII_fun_attachment) || !empty($request->deleted_anne_attach7)) {
+            $existingFiles = json_decode($documentcontet->annex_VII_fun_attachment, true) ?? [];
+    
+            // Handle deleted files
+            if (!empty($request->deleted_anne_attach7)) {
+                $filesToDelete = explode(',', $request->deleted_anne_attach7);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+    
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('annex_VII_fun_attachment')) {
+                foreach ($request->file('annex_VII_fun_attachment') as $file) {
+                    $name = $request->name . 'annex_VII_fun_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $documentcontet->annex_VII_fun_attachment = json_encode($allFiles);
+            }
+
+
+        // ----------- Annexure VII-Functional Specification end--------------------------
+
+        // ----------- Annexure VIII-Technical Specification start--------------------------
+
+        if (!empty($request->annex_VIII_tech_attachment) || !empty($request->deleted_anne_attach8)) {
+            $existingFiles = json_decode($documentcontet->annex_VIII_tech_attachment, true) ?? [];
+    
+            // Handle deleted files
+            if (!empty($request->deleted_anne_attach8)) {
+                $filesToDelete = explode(',', $request->deleted_anne_attach8);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+    
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('annex_VIII_tech_attachment')) {
+                foreach ($request->file('annex_VIII_tech_attachment') as $file) {
+                    $name = $request->name . 'annex_VIII_tech_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $documentcontet->annex_VIII_tech_attachment = json_encode($allFiles);
+            }
+
+
+
+        // ----------- Annexure VIII-Technical Specification end--------------------------
+
+        // ----------- Annexure IX Functional Risk Assssment start--------------------------
+
+        if (!empty($request->annex_IX_risk_attachment) || !empty($request->deleted_anne_attach9)) {
+            $existingFiles = json_decode($documentcontet->annex_IX_risk_attachment, true) ?? [];
+    
+            // Handle deleted files
+            if (!empty($request->deleted_anne_attach9)) {
+                $filesToDelete = explode(',', $request->deleted_anne_attach9);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+    
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('annex_IX_risk_attachment')) {
+                foreach ($request->file('annex_IX_risk_attachment') as $file) {
+                    $name = $request->name . 'annex_IX_risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $documentcontet->annex_IX_risk_attachment = json_encode($allFiles);
+            }
+
+
+        // ----------- Annexure IX Functional Risk Assssment end--------------------------
+
+        // ----------- Annexure X-Design Specification start--------------------------
+
+        if (!empty($request->annex_X_design_attachment) || !empty($request->deleted_anne_attach10)) {
+            $existingFiles = json_decode($documentcontet->annex_X_design_attachment, true) ?? [];
+    
+            // Handle deleted files
+            if (!empty($request->deleted_anne_attach10)) {
+                $filesToDelete = explode(',', $request->deleted_anne_attach10);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+    
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('annex_X_design_attachment')) {
+                foreach ($request->file('annex_X_design_attachment') as $file) {
+                    $name = $request->name . 'annex_X_design_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $documentcontet->annex_X_design_attachment = json_encode($allFiles);
+            }
+
+
+       
+
+        // ----------- Annexure X-Design Specification end--------------------------
 
              //Equipment hold time study protocol
 
@@ -3999,18 +4506,18 @@ class DocumentController extends Controller
 
 
 
-        // 🔹 SOP Number Generate Karna
-    if ($document->revised == 'Yes') {
-        $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-    } else {
-        $revisionNumber = '00';
-    }
+        // 🔹 SOP Number Generate 
+        if ($document->revised == 'Yes') {
+            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+        } else {
+            $revisionNumber = '00';
+        }
 
-    if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
-        $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
-    } else {
-        $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
-    }
+        if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+            $sopNumber = "{$document->department_id}/{$document->sop_type_short}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+        } else {
+            $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
+        }
 
 
         if ($department) {

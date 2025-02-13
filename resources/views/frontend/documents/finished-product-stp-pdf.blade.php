@@ -253,66 +253,89 @@
         }
     </style>
 
-<style>
+    {{-- <style>
 
-/*Main Table Styling */
-#isPasted {
-    width: 650px !important;
-    border-collapse: collapse;
-    table-layout: auto; /* Adjusts column width dynamically */
-}
+        /*Main Table Styling */
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: auto; /* Adjusts column width dynamically */
+        }
 
-/* First column adjusts to its content */
-#isPasted td:first-child,
-#isPasted th:first-child {
-    white-space: nowrap; /* Prevent wrapping */
-    width: 1%; /* Shrink to fit content */
-    vertical-align: top;
-}
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
 
-/* Second column takes remaining space */
-#isPasted td:last-child,
-#isPasted th:last-child {
-    width: auto; /* Take remaining space */
-    vertical-align: top;
-    
-}
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
 
-/* Common Table Cell Styling */
-#isPasted th,
-#isPasted td {
-    border: 1px solid #000 !important;
-    padding: 8px;
-    text-align: left;
-    max-width: 500px;
-word-wrap: break-word;
-overflow-wrap: break-word;
-}
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
 
-/* Paragraph Styling Inside Table Cells */
-#isPasted td > p {
-    text-align: justify;
-    text-justify: inter-word;
-    margin: 0;
-    max-width: 500px;
-word-wrap: break-word;
-overflow-wrap: break-word;
-}
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        }
 
-#isPasted img {
-    max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-    height: 100%; /* Maintain image aspect ratio */
-    display: block; /* Remove extra space below the image */
-    margin: 5px auto; /* Add spacing and center align */
-}
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
 
-/* If you want larger images */
-#isPasted td img {
-    max-width: 400px !important; /* Adjust this to your preferred maximum width */
-    height: 300px;
-    margin: 5px auto;
-}
-</style>
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+    </style> --}}
+
+    <style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+    </style>
 </head>
 <body>
     <header class="">
@@ -344,7 +367,7 @@ overflow-wrap: break-word;
             <tbody>
                 <tr>
                     <td>
-                    { Material Name & Product Name}
+                    {{$data->document_content->product_name_fpstp}}
                     </td>
                 </tr>
             </tbody>
@@ -353,7 +376,7 @@ overflow-wrap: break-word;
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">GTP No.:
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                         <span>
                         @if($document->revised == 'Yes')
                             @php
@@ -405,13 +428,13 @@ overflow-wrap: break-word;
                         @if ($document->revised === 'Yes')
                         FP/STP/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
-                        -
+                        Nill
                         @endif
                         </span>
                     </td>
                     <td class="w-50"
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        Page No.:
+                        
                     </td>
                 </tr>
             </tbody>
@@ -496,32 +519,13 @@ overflow-wrap: break-word;
                     </tr> 
                 </tbody>
             </table>
-
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding:7px 0 7px 0; border: 1px solid #ddd; font-size: 16px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding:7px 0 7px 0; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody>
-        </table>
         <span style="text-align:center">Format No.: QA/097/F4-00</span>                            
     </footer>
     
     <div class="content">
         <section>
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
-            <div class="table-responsive retrieve-table">
+            {{-- <div class="table-responsive retrieve-table">
                 <table class="table table-bordered" id="distribution-list">
                     <thead style="width:20%">
                         <tr>
@@ -545,7 +549,30 @@ overflow-wrap: break-word;
                     @endif
                     </tbody>
                 </table>
-            </div>
+            </div> --}}
+
+                <div class="other-container ">
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                        {{-- @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->fpstp_testfield, 
+                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif --}}
+
+                                                <div class="table-containers">
+                                                    {!! strip_tags($data->document_content->fpstp_testfield, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </section>
 
         <section>
@@ -587,8 +614,8 @@ overflow-wrap: break-word;
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 760;
-                $x = 485;
+                $y = 185;
+                $x = 405;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }
