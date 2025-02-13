@@ -813,7 +813,19 @@ class Helpers
             'ANNVIIITechSpe'=>'Annexure VIII-Technical Specification',
             'ANNIXFunRiskASSES'=>'Annexure IX Functional Risk Assssment',
             'ANNXDesignSpe'=>'Annexure X-Design Specification',
-            
+
+            'ANNXIConfiSpe'=>'Annexure XI-Configuration Specification',
+            'ANNXIIQualiProto'=>'Annexure XII Installation Infrastructure Operational Performance Qualification Protocol',
+            'ANNXIIIUnitInTest'=>'Annexure XIII Unit Integration Test Script',
+            'ANNXIVDataMigPro'=>'Annexure XIV Data Migration Protocol',
+            'ANNXVPerfQualif'=>'Annexure XV Data Qualification Protocol',
+
+            'AREAQUALIFICATIONREPORT'=>'Area Qualification Report',
+            'ANNEXUREXVIIITRACEABILITYMATRIX'=>'annexure-XVIII - Traceability Matrix',
+            'ANNEXUREXVIIVALIDATION'=>'annexure-XVII - Validation Summary Report',
+            'ANNEXUREXVIINSTALLATION'=>'annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification',
+            'ANNEXUREXIXSYSTEMRETIREMENT'=>'annexure-XIX - System Retirement.doc',
+                        
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',

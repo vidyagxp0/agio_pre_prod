@@ -346,6 +346,25 @@
                 <button class="tablinks hidden-tabs" data-id="ANNVIIITechSpe" onclick="openData(event, 'doc_Annexure_VIII')">Annexure VIII-Technical Specification</button>
                 <button class="tablinks hidden-tabs" data-id="ANNIXFunRiskASSES" onclick="openData(event, 'doc_Annexure_IX')">Annexure IX Functional Risk Assssment</button>
                 <button class="tablinks hidden-tabs" data-id="ANNXDesignSpe" onclick="openData(event, 'doc_Annexure_X')">Annexure X-Design Specification</button>
+
+                <button class="tablinks hidden-tabs" data-id="ANNXIConfiSpe" onclick="openData(event, 'doc_Annexure_XI')">Annexure XI Configuration Specification</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXIIQualiProto" onclick="openData(event, 'doc_Annexure_XII')">Annexure XII Installation Infrastructure Operational Performance Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXIIIUnitInTest" onclick="openData(event, 'doc_Annexure_XIII')">Annexure XIII Unit Integration Test Script</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXIVDataMigPro" onclick="openData(event, 'doc_Annexure_XIV')">Annexure XIV Data Migration Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXVPerfQualif" onclick="openData(event, 'doc_Annexure_XV')">Annexure XV Data Qualification Protocol</button>
+
+                <button class="tablinks hidden-tabs" data-id="ANNEQUALPROTO" onclick="openData(event, 'doc-afqp')">Annexure For Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNEQUALREPORT" onclick="openData(event, 'doc-afqr')">Annexure For Qualification Report</button>
+                <button class="tablinks hidden-tabs" data-id="AAEUSERREQUESPECI" onclick="openData(event, 'doc-afurs')">Annexure For User Requirement Specification</button>
+                <button class="tablinks hidden-tabs" data-id="REQULIFICATIONPROTOCOL" onclick="openData(event, 'doc-aqp')">Area Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="AREAQUALIFICATIONREPORT" onclick="openData(event, 'doc-aqr')">Area Qualification Report</button>
+                <button class="tablinks hidden-tabs" data-id="PROTOCOLFORMEDIAFILL" onclick="openData(event, 'doc-pfmf')">Protocol For Media Fill</button>
+                <button class="tablinks hidden-tabs" data-id="REPORTFORMEDIAFILL" onclick="openData(event, 'doc-rfmf')">Report For Media Fill</button>
+
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXIXSYSTEMRETIREMENT" onclick="openData(event, 'doc-asr')">annexure-XIX - System Retirement</button>
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIITRACEABILITYMATRIX" onclick="openData(event, 'doc-atm')">annexure-XVIII - Traceability Matrix</button>
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIVALIDATION" onclick="openData(event, 'doc-avsr')">annexure-XVII - Validation Summary Report </button>
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIINSTALLATION" onclick="openData(event, 'doc-aiiopq')">annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification</button>
              
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
@@ -9423,6 +9442,300 @@
                <!-- Annexure X-Design Specification end -->
 
 
+               <!-- Annexure XI-Configuration Specification start -->
+               <div id="doc_Annexure_XI" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XI-Configuration Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_XI_Config_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_XI_confi_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_XI_Config_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XI-Configuration Specification end -->
+
+            <!-- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start -->
+                <div id="doc_Annexure_XII" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XII Installation Infrastructure Operational Performance Qualification Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_XII_quaProto_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_XII_qua_proto_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_XII_quaProto_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end -->
+
+                 <!-- Annexure XIII Unit Integration Test Script start -->
+                <div id="doc_Annexure_XIII" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XIII Unit Integration Test Script
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_XIII_unitInteg_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_XIII_unit_integ_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_XIII_unitInteg_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XIII Unit Integration Test Script end -->
+
+               <!-- Annexure XIV Data Migration Protocol start -->
+                <div id="doc_Annexure_XIV" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XIV Data Migration Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_XIV_dataMigra_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_XIV_data_migra_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_XIV_dataMigra_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XIV Data Migration Protocol end -->
+
+               <!-- Annexure XV Data Qualification Protocol start -->
+                <div id="doc_Annexure_XV" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XV Data Qualification Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                   <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="annex_XV_dataQualif_fileattachement"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_XV_data_qualif_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]" 
+                                                        oninput="addMultipleFiles(this, 'annex_XV_dataQualif_fileattachement')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                                    
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XV Data Qualification Protocol end -->
+
+
                     {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
 
                     <div id="doc-fpstp" class="tabcontent">
@@ -9695,13 +10008,669 @@
                         </div>
                     </div>
 
+
+
+                    {{-- Rajendra code start here  --}}
+
+                    <div id="doc-afqp" class="tabcontent">
+                        <div class="orig-head">
+                            Annexure For Qualification Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                              <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments"> Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                   
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachement_afqp"></div>
+                                   
+                                                <div class="add-btn">
+                                                    <label for="afqpfile" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="afqpfile" name="afqpattachement[]"
+                                                        oninput="addMultipleFiles(this, 'attachement_afqp')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                   
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+                                   
+                                   
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-afqr" class="tabcontent">
+                        <div class="orig-head">
+                            Annexure For Qualification Report
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_afqr"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="afqrfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="afqrfile" name="afqrattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_afqr')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-afurs" class="tabcontent">
+                        <div class="orig-head">
+                            Annexure For User Requirement Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_afurs"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="afursfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="afursfile" name="afursattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_afurs')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-aqp" class="tabcontent">
+                        <div class="orig-head">
+                            Area Qualification Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_aqp"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="aqpfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="aqpfile" name="aqpattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_aqp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-aqr" class="tabcontent">
+                        <div class="orig-head">
+                            Area Qualification Report
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments">Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_aqr"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="aqrfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="aqrfile" name="aqrattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_aqr')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-pfmf" class="tabcontent">
+                        <div class="orig-head">
+                            Protocol For Media Fill
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_pfmf"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="pfmffile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="pfmffile" name="pfmfattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_pfmf')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-rfmf" class="tabcontent">
+                        <div class="orig-head">
+                            Report For Media Fill
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_rfmf"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="rfmffile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="rfmffile" name="rfmfattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_rfmf')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-asr" class="tabcontent">
+                        <div class="orig-head">
+                            annexure-XIX - System Retirement
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_asr"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="asrfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="asrfile" name="annex_XIX_syst_retir_attachment[]"
+                                                oninput="addMultipleFiles(this, 'attachement_asr')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-atm" class="tabcontent">
+                        <div class="orig-head">
+                            annexure-XVIII - Traceability Matrix
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_atm"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="atmfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="atmfile" name="annex_XVIII_trac_matri_attachment[]"
+                                                oninput="addMultipleFiles(this, 'attachement_atm')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-avsr" class="tabcontent">
+                        <div class="orig-head">
+                            annexure-XVII - Validation Summary Report
+
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_avsr"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="avsrfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="avsrfile" name="annex_XVII_valid_summ_attachment[]"
+                                                oninput="addMultipleFiles(this, 'attachement_avsr')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-aiiopq" class="tabcontent">
+                        <div class="orig-head">
+                            annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+                            <!-- <div class="col-12 sub-head">
+                                STANDARD TESTING PROCEDURE
+                            </div> -->
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Closure Attachments"> Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                           
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_aiiopq"></div>
+                           
+                                        <div class="add-btn">
+                                            <label for="aiiopqfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="aiiopqfile" name="annex_XVI_per_qualif_attachment[]"
+                                                oninput="addMultipleFiles(this, 'attachement_aiiopq')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <script>
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                           
+                                for (let file of input.files) {
+                                    let fileItem = document.createElement("div");
+                                    fileItem.textContent = file.name;
+                                    fileList.appendChild(fileItem);
+                                }
+                            }
+                            </script>
+
+
+
+
+
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
                     {{-- Hold Time Study Protocol Tabs --}}
                     <div id="doc-htsp" class="tabcontent">
                         <div class="orig-head">
                             Hold Time Study Protocol</div>
                             <div class="input-fields">
                                 <div class="row">
-                                    <div class="col-md-12">
+
+                                    {{-- comment for tempary --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Purpose">Purpose</label>
                                             <textarea name="htsp_purpose"></textarea>
@@ -9713,17 +10682,17 @@
                                             <textarea name="htsp_scope"></textarea>
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="responsibilityhtps" id="responsibilityhtps">
                                                 Responsibility<button type="button" id="responsibilityhtpsbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="responsibilityhtpsdiv">
                                                 <div class="ResponsibilityBlock">
                                                     <div class="row">
@@ -9739,9 +10708,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -9773,17 +10742,17 @@
                                             </div>
                                         </div>
                                     </div> --}}
-    
-                                    <div class="col-md-12">
+                                   {{-- coomment for tempary --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="htspdescription" id="htspdescription">
                                                 Description of SOP s To Be Followed<button type="button" id="htspdescriptionbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="htspdescriptiondiv">
                                                 <div class="htspdescriptionBlock">
                                                     <div class="row">
@@ -9799,10 +10768,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Specifications" id="Specifications">
@@ -9827,7 +10796,7 @@
                                             </div>
                                         </div>
                                     </div>
-    
+     --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="abbreviation" id="abbreviation">
@@ -9836,8 +10805,8 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
-    
+   
+   
                                             <div id="abbreviationdiv">
                                                 <div class="singleAbbreviationBlock">
                                                     <div class="row">
@@ -9853,12 +10822,12 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div> --}}
-    
-    
-                                    <div class="col-md-12">
+   
+                                {{-- comment for temp --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Samplinghtps" id="Samplinghtps">
                                                 Sampling & Analysis Plan<button type="button" id="Samplinghtpsbtnadd"
@@ -9866,11 +10835,11 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
-    
-    
+   
+   
+   
                                             <div id="Samplinghtpsdiv">
-    
+   
                                                 <div class="SamplinghtpsBlock">
                                                     <div class="row">
                                                         <div class="col-sm-10">
@@ -9884,12 +10853,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-    
+   
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Environmentalhtsp" id="Environmentalhtspdiv">
@@ -9898,7 +10867,7 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="Environmentalhtspdiv" >
                                                 <div class="EnvironmentalhtspBlock">
                                                     <div class="row">
@@ -9915,10 +10884,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+     --}}
                                     {{-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="procedure">Procedure</label>
@@ -9928,14 +10897,14 @@
                                         </textarea>
                                         </div>
                                     </div> --}}
-    
+   
                                     <!-- <div class="col-md-12 mb-3">
                                                                 <div class="group-input">
                                                                     <label for="procedure" id="newreport">
                                                                     Procedure<button type="button" id="reportingbtadd" name="button">+</button>
                                                                     </label>
                                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-    
+   
                                                                     <div id="reportingdiv">
                                                                         <div class="singleReportingBlock">
                                                                             <div class="row">
@@ -9951,13 +10920,12 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
+   
                                                                 </div>
                                                             </div> -->
-    
-    
-    
-                                    <div class="col-md-12">
+   
+   
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Samplehtps" id="Samplehtps">
                                                 Sample Quantity Calculation<button type="button" id="Samplehtpsbtnadd"
@@ -9965,7 +10933,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Samplehtpsdiv">
                                                 <div class="SamplehtpsBlock">
                                                     <div class="row">
@@ -9981,7 +10949,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
@@ -9992,7 +10960,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Deviationhtpsdiv">
                                                 <div class="DeviationhtpsBlock">
                                                     <div class="row">
@@ -10008,13 +10976,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
-    
-    
-    
+   
+   
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Summaryhtps" id="Summaryhtps">
@@ -10022,7 +10990,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Summaryhtpsdiv">
                                                 <div class="SummaryhtpsBlock">
                                                     <div class="row">
@@ -10038,7 +11006,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
@@ -10049,7 +11017,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Conclusionhtpsdiv">
                                                 <div class="ConclusionhtpsBlock">
                                                     <div class="row">
@@ -10065,12 +11033,42 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments"> Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                   
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachement_htsp"></div>
+                                   
+                                                <div class="add-btn">
+                                                    <label for="htpsfile" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="htpsfile" name="htspattachement[]"
+                                                        oninput="addMultipleFiles(this, 'attachement_htsp')" multiple hidden>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                   
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                   
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
 
 
-    
+   
                                     {{-- <div class="input-fields">
                                         <div class="group-input">
                                             <label for="distribution-list" style="font-weight: bold;">
@@ -10094,7 +11092,7 @@
                                                                     name="master_copy_number" value=""
                                                                     class="form-control">
                                                             </td>
-    
+   
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
@@ -10110,16 +11108,16 @@
                                                             <td><input type="text" id="copies-controlled"
                                                                     name="controlled_copy_number" value=""
                                                                     class="form-control"></td>
-    
+   
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                     <input type="text" name="controlled_user_department">
-    
+   
                                                                     </div>
                                                                 </div>
                                                             </td>
-    
+   
                                                         </tr>
                                                         <tr>
                                                             <td>3</td>
@@ -10132,19 +11130,19 @@
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                         <input type="text" name="display_user_department">
-  
+ 
                                                                     </div>
                                                                 </div>
                                                             </td>
-    
+   
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div> --}}
-    
-                                    
+   
+                                   
                                 </div>
                             </div>
                         <div class="button-block">
@@ -10159,12 +11157,116 @@
                         </div>
                     </div>
 
-                    {{-- packing validation protocol --}}
+                {{-- packing validation protocol --}}
                     <div id="doc-pvp" class="tabcontent">
                         <div class="orig-head">
                             Packing validation Protocol</div>
                             <div class="input-fields">
                                 <div class="row">
+                                    {{-- <div class="col-md-6">
+                                        <div class="group-input">
+                                            <label for="comments">Dosage Form</label>
+                                            <input type="text" name="dosageform_pvp">
+                                        </div>
+                                    </div>
+   
+                                    <div class="col-md-6">
+                                        <div class="group-input">
+                                            <label for="train-require">Packing Validation Protocol for</label>
+                                            <input type="text" name="packingvalidation_pvp">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="group-input">
+                                            <label for="comments">PRODUCT NAME</label>
+                                            <input type="text" name="productname_pvp">
+                                        </div>
+                                    </div>
+   
+                                    <div class="col-md-6">
+                                        <div class="group-input">
+                                            <label for="train-require">Protocol No</label>
+                                            <input type="text" name="protocolno_pvp">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="group-input">
+                                            <label for="comments">Batch No</label>
+                                            <input type="text" name="batchno_pvp">
+                                        </div>
+                                    </div>
+   
+                                 
+                                    <div class="">
+                                        PRODUCT DETAILS
+                                      </div>  <br>
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="purpose">Generic Name </label>
+                                              <input type="text" name="generic_pvp">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">Product Code</label>
+                                              <input type="text" name="pvp_product_code">
+                                          </div>
+                                      </div>
+     
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">Std. Batch size </label>
+                                              <input type="text" name="pvp_std_batch">
+                                          </div>
+                                      </div>
+     
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">Category</label>
+                                              <input type="text" name="pvp_category">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">Label Claim  </label>
+                                              <input type="text" name="pvp_label_claim">
+                                          </div>
+                                      </div>
+     
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">Market</label>
+                                              <input type="text" name="pvp_market">
+                                          </div>
+                                      </div>
+     
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">Shelf Life</label>
+                                              <input type="text" name="pvp_shelf_life">
+                                          </div>
+                                      </div>
+     
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">BMR No.</label>
+                                              <input type="text" name="pvp_bmr_no">
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="group-input">
+                                              <label for="scope">MFR No.</label>
+                                              <input type="text" name="pvp_mfr_no">
+                                          </div>
+                                      </div>
+     
+   
+
+                                       
+
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Purpose">Purpose</label>
@@ -10180,14 +11282,14 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="reasonforvalidationpvp" id="reasonforvalidationpvp">
-                                                	Reason for validation<button type="button" id="reasonforvalidationpvpbtnadd"
+                                                Reason for validation<button type="button" id="reasonforvalidationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="reasonforvalidationpvpdiv">
                                                 <div class="reasonforvalidationpvpBlock">
                                                     <div class="row">
@@ -10203,21 +11305,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="responsibilitypvp" id="responsibilitypvp">
                                                 Responsibility<button type="button" id="responsibilitypvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="responsibilitypvpdiv">
                                                 <div class="responsibilitypvpBlock">
                                                     <div class="row">
@@ -10233,9 +11335,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -10267,17 +11369,17 @@
                                             </div>
                                         </div>
                                     </div> --}}
-    
-                                    <div class="col-md-12">
+                                  {{-- comment for tempary --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="validationpvp" id="validationpvp">
-                                               	Validation Policy<button type="button" id="validationpvpbtnadd"
+                                                Validation Policy<button type="button" id="validationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="validationpvpdiv">
                                                 <div class="validationpvpBlock">
                                                     <div class="row">
@@ -10293,14 +11395,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="descriptionsoppvp" id="descriptionsoppvp">
-                                               	Description of SOP<button type="button" id="descriptionsoppvpbtnadd">+</button>
+                                                Description of SOP<button type="button" id="descriptionsoppvpbtnadd">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
@@ -10321,7 +11423,8 @@
                                             </div>
                                         </div>
                                     </div>
-    
+                                        --}}
+
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="abbreviation" id="abbreviation">
@@ -10330,8 +11433,8 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
-    
+   
+   
                                             <div id="abbreviationdiv">
                                                 <div class="singleAbbreviationBlock">
                                                     <div class="row">
@@ -10347,24 +11450,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div> --}}
-    
-    
-                                    <div class="col-md-12">
+   
+                                 {{-- comment for tempary --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="packingmaterialpvp" id="packingmaterialpvp">
-                                               	Packing material approved vendor details<button type="button" id="packingmaterialpvpbtnadd"
+                                                Packing material approved vendor details<button type="button" id="packingmaterialpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
-    
-    
+   
+   
+   
                                             <div id="packingmaterialpvpdiv">
-    
+   
                                                 <div class="packingmaterialpvpBlock">
                                                     <div class="row">
                                                         <div class="col-sm-10">
@@ -10378,21 +11481,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
-    
+   
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="equipmentpvp" id="equipmentpvp">
-                                              	Equipment Calibration & Qualification Status<button type="button" id="equipmentpvpbtnadd"
+                                              Equipment Calibration & Qualification Status<button type="button" id="equipmentpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="equipmentpvpdiv" >
                                                 <div class="equipmentpvpBlock">
                                                     <div class="row">
@@ -10409,10 +11512,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+     --}}
                                     {{-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="procedure">Procedure</label>
@@ -10422,14 +11525,14 @@
                                         </textarea>
                                         </div>
                                     </div> --}}
-    
+   
                                     <!-- <div class="col-md-12 mb-3">
                                                                 <div class="group-input">
                                                                     <label for="procedure" id="newreport">
                                                                     Procedure<button type="button" id="reportingbtadd" name="button">+</button>
                                                                     </label>
                                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-    
+   
                                                                     <div id="reportingdiv">
                                                                         <div class="singleReportingBlock">
                                                                             <div class="row">
@@ -10445,21 +11548,21 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
+   
                                                                 </div>
                                                             </div> -->
-    
-    
-    
-                                    <div class="col-md-12">
+   
+   
+                                   {{-- comment for tempary --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="rationalepvp" id="rationalepvp">
-                                               	Rationale for selection of critical steps<button type="button" id="rationalepvpbtnadd"
+                                                Rationale for selection of critical steps<button type="button" id="rationalepvpbtnadd"
                                                     name="button">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="rationalepvpdiv">
                                                 <div class="rationalepvpBlock">
                                                     <div class="row">
@@ -10475,18 +11578,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="samplingpvp" id="samplingpvp">
-                                              	Sampling Plan & Procedure<button type="button" id="samplingpvpbtnadd">+</button>
+                                              Sampling Plan & Procedure<button type="button" id="samplingpvpbtnadd">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="samplingpvpdiv">
                                                 <div class="samplingpvpBlock">
                                                     <div class="row">
@@ -10502,21 +11605,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
-    
-    
-    
+   
+   
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Criticalpvp" id="Criticalpvp">
-                                               	Critical Process Parameters & Critical quality Attributes<button type="button" id="Criticalpvpbtnadd">+</button>
+                                                Critical Process Parameters & Critical quality Attributes<button type="button" id="Criticalpvpbtnadd">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Criticalpvpdiv">
                                                 <div class="CriticalpvpBlock">
                                                     <div class="row">
@@ -10532,18 +11635,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="ProductAcceptancepvp" id="ProductAcceptancepvp">
-                                                	Product Acceptance Criteria<button type="button" id="ProductAcceptancepvpbtnadd">+</button>
+                                                Product Acceptance Criteria<button type="button" id="ProductAcceptancepvpbtnadd">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="ProductAcceptancepvpdiv">
                                                 <div class="ProductAcceptancepvpBlock">
                                                     <div class="row">
@@ -10559,20 +11662,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="Holdtimepvp" id="Holdtimepvp">
-                                               	Hold time study<button type="button" id="Holdtimepvpbtnadd"
+                                                Hold time study<button type="button" id="Holdtimepvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="Holdtimepvpdiv">
                                                 <div class="HoldtimepvpBlock">
                                                     <div class="row">
@@ -10588,9 +11691,9 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -10622,17 +11725,17 @@
                                             </div>
                                         </div>
                                     </div> --}}
-    
-                                    <div class="col-md-12">
+                                  {{-- comment for tempary --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
-    
+   
                                             <label for="Cleaningvalidationpvp" id="Cleaningvalidationpvp">
-                                              	Cleaning validation<button type="button" id="Cleaningvalidationpvpbtnadd"
+                                              Cleaning validation<button type="button" id="Cleaningvalidationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="Cleaningvalidationpvpdiv">
                                                 <div class="CleaningvalidationpvpBlock">
                                                     <div class="row">
@@ -10648,14 +11751,14 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Stabilitystudypvp" id="Stabilitystudypvp">
-                                                	Stability study<button type="button" id="Stabilitystudypvpbtnadd">+</button>
+                                                Stability study<button type="button" id="Stabilitystudypvpbtnadd">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
@@ -10676,7 +11779,7 @@
                                             </div>
                                         </div>
                                     </div>
-    
+                                 --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="abbreviation" id="abbreviation">
@@ -10685,8 +11788,8 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
-    
+   
+   
                                             <div id="abbreviationdiv">
                                                 <div class="singleAbbreviationBlock">
                                                     <div class="row">
@@ -10702,24 +11805,24 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div> --}}
-    
-    
-                                    <div class="col-md-12">
+   
+                                      {{-- comment for temapry --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Deviationpvp" id="Deviationpvp">
-                                                	Deviation<button type="button" id="Deviationpvpbtnadd"
+                                                Deviation<button type="button" id="Deviationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
-    
-    
+   
+   
+   
                                             <div id="Deviationpvpdiv">
-    
+   
                                                 <div class="DeviationpvpBlock">
                                                     <div class="row">
                                                         <div class="col-sm-10">
@@ -10733,21 +11836,21 @@
                                                         </div>
                                                     </div>
                                                 </div>
-    
+   
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+   
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Changecontrolpvp" id="Changecontrolpvp">
-                                                	Change control<button type="button" id="Changecontrolpvpbtnadd"
+                                                Change control<button type="button" id="Changecontrolpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-    
+   
                                             <div id="Changecontrolpvpdiv" >
                                                 <div class="ChangecontrolpvpBlock">
                                                     <div class="row">
@@ -10764,10 +11867,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
-    
+     --}}
                                     {{-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="procedure">Procedure</label>
@@ -10777,14 +11880,14 @@
                                         </textarea>
                                         </div>
                                     </div> --}}
-    
+   
                                     <!-- <div class="col-md-12 mb-3">
                                                                 <div class="group-input">
                                                                     <label for="procedure" id="newreport">
                                                                     Procedure<button type="button" id="reportingbtadd" name="button">+</button>
                                                                     </label>
                                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-    
+   
                                                                     <div id="reportingdiv">
                                                                         <div class="singleReportingBlock">
                                                                             <div class="row">
@@ -10800,21 +11903,21 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-    
+   
                                                                 </div>
                                                             </div> -->
-    
-    
-    
-                                    <div class="col-md-12">
+   
+   
+                                  {{-- comment for temp --}}
+                                    {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Summarypvp" id="Summarypvp">
-                                                	Summary<button type="button" id="Summarypvpbtnadd"
+                                                Summary<button type="button" id="Summarypvpbtnadd"
                                                     name="button">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Summarypvpdiv">
                                                 <div class="SummarypvpBlock">
                                                     <div class="row">
@@ -10830,18 +11933,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Conclusionpvp" id="Conclusionpvp">
-                                               	Conclusion<button type="button" id="Conclusionpvpbtnadd">+</button>
+                                                Conclusion<button type="button" id="Conclusionpvpbtnadd">+</button>
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-    
+   
                                             <div id="Conclusionpvpdiv">
                                                 <div class="ConclusionpvpBlock">
                                                     <div class="row">
@@ -10857,17 +11960,48 @@
                                                     </div>
                                                 </div>
                                             </div>
-    
+   
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments"> Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                   
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachement_pvp"></div>
+                                   
+                                                <div class="add-btn">
+                                                    <label for="pvpfile" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="pvpfile" name="pvpattachement[]"
+                                                        oninput="addMultipleFiles(this, 'attachement_pvp')" multiple hidden>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                   
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                   
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
 
-    
-    
-    
+
+   
+   
+   
                                    
 
 
-    
+   
                                     {{-- <div class="input-fields">
                                         <div class="group-input">
                                             <label for="distribution-list" style="font-weight: bold;">
@@ -10891,7 +12025,7 @@
                                                                     name="master_copy_number" value=""
                                                                     class="form-control">
                                                             </td>
-    
+   
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
@@ -10907,16 +12041,16 @@
                                                             <td><input type="text" id="copies-controlled"
                                                                     name="controlled_copy_number" value=""
                                                                     class="form-control"></td>
-    
+   
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                     <input type="text" name="controlled_user_department">
-    
+   
                                                                     </div>
                                                                 </div>
                                                             </td>
-    
+   
                                                         </tr>
                                                         <tr>
                                                             <td>3</td>
@@ -10929,19 +12063,19 @@
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                         <input type="text" name="display_user_department">
-  
+ 
                                                                     </div>
                                                                 </div>
                                                             </td>
-    
+   
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div> --}}
-    
-                                    
+   
+                                   
                                 </div>
                             </div>
                         <div class="button-block">
@@ -10955,6 +12089,9 @@
                             </button>
                         </div>
                     </div>
+
+                    {{-- Rajendra code end   --}}
+
 
                     {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">

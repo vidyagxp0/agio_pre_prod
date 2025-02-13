@@ -249,6 +249,26 @@
                 <button class="tablinks hidden-tabs" data-id="ANNVIIITechSpe" onclick="openData(event, 'doc_Annexure_VIII')">Annexure VIII-Technical Specification</button>
                 <button class="tablinks hidden-tabs" data-id="ANNIXFunRiskASSES" onclick="openData(event, 'doc_Annexure_IX')">Annexure IX Functional Risk Assssment</button>
                 <button class="tablinks hidden-tabs" data-id="ANNXDesignSpe" onclick="openData(event, 'doc_Annexure_X')">Annexure X-Design Specification</button>
+
+
+                <button class="tablinks hidden-tabs" data-id="ANNXIConfiSpe" onclick="openData(event, 'doc_Annexure_XI')">Annexure XI Configuration Specification</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXIIQualiProto" onclick="openData(event, 'doc_Annexure_XII')">Annexure XII Installation Infrastructure Operational Performance Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXIIIUnitInTest" onclick="openData(event, 'doc_Annexure_XIII')">Annexure XIII Unit Integration Test Script</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXIVDataMigPro" onclick="openData(event, 'doc_Annexure_XIV')">Annexure XIV Data Migration Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNXVPerfQualif" onclick="openData(event, 'doc_Annexure_XV')">Annexure XV Data Qualification Protocol</button>
+
+                <button class="tablinks hidden-tabs" data-id="ANNEQUALPROTO" onclick="openData(event, 'doc-afqp')">Annexure For Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNEQUALREPORT" onclick="openData(event, 'doc-afqr')">Annexure For Qualification Report</button>
+                <button class="tablinks hidden-tabs" data-id="AAEUSERREQUESPECI" onclick="openData(event, 'doc-afurs')">Annexure For User Requirement Specification</button>
+                <button class="tablinks hidden-tabs" data-id="REQULIFICATIONPROTOCOL" onclick="openData(event, 'doc-aqp')">Area Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="AREAQUALIFICATIONREPORT" onclick="openData(event, 'doc-aqr')">Area Qualification Report</button>
+                <button class="tablinks hidden-tabs" data-id="PROTOCOLFORMEDIAFILL" onclick="openData(event, 'doc-pfmf')">Protocol For Media Fill</button>
+                <button class="tablinks hidden-tabs" data-id="REPORTFORMEDIAFILL" onclick="openData(event, 'doc-rfmf')">Report For Media Fill</button>
+
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXIXSYSTEMRETIREMENT" onclick="openData(event, 'doc-asr')">annexure-XIX - System Retirement</button>
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIITRACEABILITYMATRIX" onclick="openData(event, 'doc-atm')">annexure-XVIII - Traceability Matrix</button>
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIVALIDATION" onclick="openData(event, 'doc-avsr')">annexure-XVII - Validation Summary Report </button>
+                <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIINSTALLATION" onclick="openData(event, 'doc-aiiopq')">annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification</button>
                
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
@@ -16395,6 +16415,560 @@
                 </div>
                <!-- Annexure X-Design Specification end -->
 
+
+               <!-- Annexure XI-Configuration Specification start -->
+               <div id="doc_Annexure_XI" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XI-Configuration Specification
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="annex_XI_Config_fileattachement">
+                                            @if ($document->document_content->annex_XI_confi_attachment)
+                                                @foreach(json_decode($document->document_content->annex_XI_confi_attachment) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_annefile_attach11[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_XI_confi_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]" 
+                                                oninput="addMultipleFiles(this, 'annex_XI_Config_fileattachement')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_anne_attach11" name="deleted_anne_attach11" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_anne_attach11');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+
+                                   
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XI-Configuration Specification end -->
+
+               <!-- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start -->
+                <div id="doc_Annexure_XII" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XII Installation Infrastructure Operational Performance Qualification Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="annex_XII_quaProto_fileattachement">
+                                            @if ($document->document_content->annex_XII_qua_proto_attachment)
+                                                @foreach(json_decode($document->document_content->annex_XII_qua_proto_attachment) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_annefile_attach12[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_XII_qua_proto_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]" 
+                                                oninput="addMultipleFiles(this, 'annex_XII_quaProto_fileattachement')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_anne_attach12" name="deleted_anne_attach12" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_anne_attach12');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+
+                                
+
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end -->
+
+                 <!-- Annexure XIII Unit Integration Test Script start -->
+                <div id="doc_Annexure_XIII" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XIII Unit Integration Test Script
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="annex_XIII_unitInteg_fileattachement">
+                                            @if ($document->document_content->annex_XIII_unit_integ_attachment)
+                                                @foreach(json_decode($document->document_content->annex_XIII_unit_integ_attachment) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_annefile_attach13[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_XIII_unit_integ_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]" 
+                                                oninput="addMultipleFiles(this, 'annex_XIII_unitInteg_fileattachement')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_anne_attach13" name="deleted_anne_attach13" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_anne_attach13');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                                               
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XIII Unit Integration Test Script end -->
+
+               <!-- Annexure XIV Data Migration Protocol start -->
+                <div id="doc_Annexure_XIV" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XIV Data Migration Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="annex_XIV_dataMigra_fileattachement">
+                                            @if ($document->document_content->annex_XIV_data_migra_attachment)
+                                                @foreach(json_decode($document->document_content->annex_XIV_data_migra_attachment) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_annefile_attach14[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_XIV_data_migra_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]" 
+                                                oninput="addMultipleFiles(this, 'annex_XIV_dataMigra_fileattachement')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_anne_attach14" name="deleted_anne_attach14" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_anne_attach14');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                   
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XIV Data Migration Protocol end -->
+
+               <!-- Annexure XV Data Qualification Protocol start -->
+                <div id="doc_Annexure_XV" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure XV Data Qualification Protocol
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                {{-- <div class="">
+                                  PRODUCT DETAILS
+                                </div>  <br> --}}
+
+                                 <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="annex_XV_dataQualif_fileattachement">
+                                            @if ($document->document_content->annex_XV_data_qualif_attachment)
+                                                @foreach(json_decode($document->document_content->annex_XV_data_qualif_attachment) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_annefile_attach15[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_XV_data_qualif_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]" 
+                                                oninput="addMultipleFiles(this, 'annex_XV_dataQualif_fileattachement')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_anne_attach15" name="deleted_anne_attach15" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_anne_attach15');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                   
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+               <!-- Annexure XV Data Qualification Protocol end -->
+
+
                     {{-- Finished product,  Inprocess,  Cleaning Validation Standard Testing Procedure (Commercial  registration , re-registration) TABS --}}
 
                     <div id="doc-fpstp" class="tabcontent">
@@ -22424,13 +22998,17 @@
                     </div>
                 </div>
 
-                  {{-- Hold Time Study Protocol Tabs --}}
+
+                <!-- rajendra start -->
+
+                {{-- Hold Time Study Protocol Tabs --}}
                   <div id="doc-htsp" class="tabcontent">
                     <div class="orig-head">
                         Hold Time Study Protocol</div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-12">
+                                {{-- comment for temp --}}
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Purpose">Purpose</label>
                                         <textarea name="htsp_purpose">{{$document->document_content->htsp_purpose}}</textarea>
@@ -22520,7 +23098,7 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 {{-- <div class="col-md-12">
                                     <div class="group-input">
@@ -22552,7 +23130,8 @@
                                         </div>
                                     </div>
                                 </div> --}}
-
+                                {{-- comment for temp --}}
+{{--
                                
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -23172,7 +23751,97 @@
                                             @endif
                                         @endforeach
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b> Attachment</b></label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+   
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachement_htsp">
+                                                @if ($document->document_content->htspattachement)
+                                                    @foreach(json_decode($document->document_content->htspattachement) as $file)
+                                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_htspattachement[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+   
+                                            <div class="add-btn">
+                                                <label for="htpsfile" style="cursor: pointer;">Add</label>
+                                                <input type="file" id="htpsfile" name="htspattachement[]"
+                                                    oninput="addMultipleFiles(this, 'attachement_htsp')" multiple hidden>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+   
+                                <!-- Hidden field to store deleted files -->
+                                <input type="hidden" id="deleted_htspattachement" name="deleted_htspattachement" value="">
+   
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        document.querySelectorAll('.remove-file').forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+   
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                   
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+   
+                                                    const deletedFilesInput = document.getElementById('deleted_htspattachement');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+   
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        for (let file of input.files) {
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+   
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+   
+                                            let removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = file.name;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function () {
+                                                fileContainer.style.display = 'none';
+                                            });
+   
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(removeLink);
+                                            fileList.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+   
+   
+   
+   
+
+
 
 
 
@@ -23250,9 +23919,1282 @@
                                     </div>
                                 </div> --}}
 
-                                
+                               
                             </div>
                         </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div id="doc-afqp" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure For Qualification Protocol
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                       
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b> Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_afqp">
+                                            @if ($document->document_content->afqpattachement)
+                                                @foreach(json_decode($document->document_content->afqpattachement) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_afqpattachement[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="afqpfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="afqpfile" name="afqpattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_afqp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_afqpattachement" name="deleted_afqpattachement" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                               
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_afqpattachement');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                <div id="doc-afqr" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure For Qualification Report
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                       
+                       
+
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b>File Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_afqr">
+                                        @if ($document->document_content->afqrattachement)
+                                            @foreach(json_decode($document->document_content->afqrattachement) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_afqrattachement[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="afqrfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="afqrfile" name="afqrattachement[]"
+                                            oninput="addMultipleFiles(this, 'attachement_afqr')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_afqrattachement" name="deleted_afqrattachement" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_afqrattachement');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="doc-afurs" class="tabcontent">
+                    <div class="orig-head">
+                        Annexure For User Requirement Specification
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                     
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_afurs">
+                                        @if ($document->document_content->afursattachement)
+                                            @foreach(json_decode($document->document_content->afursattachement) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_afursattachement[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="afursfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="afursfile" name="afursattachement[]"
+                                            oninput="addMultipleFiles(this, 'attachement_afurs')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_afursattachement" name="deleted_afursattachement" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_afursattachement');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="doc-aqp" class="tabcontent">
+                    <div class="orig-head">
+                        Area Qualification Protocol
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                       
+                       <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b> Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachement_aqp">
+                                            @if ($document->document_content->aqpattachement)
+                                                @foreach(json_decode($document->document_content->aqpattachement) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_aqpattachement[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="aqpfile" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="aqpfile" name="aqpattachement[]"
+                                                oninput="addMultipleFiles(this, 'attachement_aqp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_aqpattachement" name="deleted_aqpattachement" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                               
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_aqpattachement');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>  
+                <div id="doc-aqr" class="tabcontent">
+                    <div class="orig-head">
+                        Area Qualification Report
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                       
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_aqr">
+                                        @if ($document->document_content->aqrattachement)
+                                            @foreach(json_decode($document->document_content->aqrattachement) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_aqrattachement[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="aqrfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="aqrfile" name="aqrattachement[]"
+                                            oninput="addMultipleFiles(this, 'attachement_aqr')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_aqrattachement" name="deleted_aqrattachement" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_aqrattachement');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>  
+               
+                <div id="doc-pfmf" class="tabcontent">
+                    <div class="orig-head">
+                        Protocol For Media Fill
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                     
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_pfmf">
+                                        @if ($document->document_content->pfmfattachement)
+                                            @foreach(json_decode($document->document_content->pfmfattachement) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_pfmfattachement[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="pfmffile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="pfmffile" name="pfmfattachement[]"
+                                            oninput="addMultipleFiles(this, 'attachement_pfmf')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_pfmfattachement" name="deleted_pfmfattachement" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_pfmfattachement');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+                <div id="doc-rfmf" class="tabcontent">
+                    <div class="orig-head">
+                        Report For Media Fill
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                       
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_rfmf">
+                                        @if ($document->document_content->rfmfattachement)
+                                            @foreach(json_decode($document->document_content->rfmfattachement) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_rfmfattachement[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="rfmffile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="rfmffile" name="rfmfattachement[]"
+                                            oninput="addMultipleFiles(this, 'attachement_rfmf')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_rfmfattachement" name="deleted_rfmfattachement" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_rfmfattachement');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+
+                <div id="doc-asr" class="tabcontent">
+                    <div class="orig-head">
+                        annexure-XIX - System Retirement
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_asr">
+                                        @if ($document->document_content->annex_XIX_syst_retir_attachment)
+                                            @foreach(json_decode($document->document_content->annex_XIX_syst_retir_attachment) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_annex_XIX_syst_retir_attachment[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="asrfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="asrfile" name="annex_XIX_syst_retir_attachment[]"
+                                            oninput="addMultipleFiles(this, 'attachement_asr')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_annex_XIX_syst_retir_attachment" name="deleted_annex_XIX_syst_retir_attachment" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_annex_XIX_syst_retir_attachment');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="doc-atm" class="tabcontent">
+                    <div class="orig-head">
+                        annexure-XVIII - Traceability Matrix
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_atm">
+                                        @if ($document->document_content->annex_XVIII_trac_matri_attachment)
+                                            @foreach(json_decode($document->document_content->annex_XVIII_trac_matri_attachment) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_annex_XVIII_trac_matri_attachment[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="atmfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="atmfile" name="annex_XVIII_trac_matri_attachment[]"
+                                            oninput="addMultipleFiles(this, 'attachement_atm')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_annex_XVIII_trac_matri_attachment" name="deleted_annex_XVIII_trac_matri_attachment" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_annex_XVIII_trac_matri_attachment');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="doc-avsr" class="tabcontent">
+                    <div class="orig-head">
+                        annexure-XVII - Validation Summary Report
+
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_avsr">
+                                        @if ($document->document_content->annex_XVII_valid_summ_attachment)
+                                            @foreach(json_decode($document->document_content->annex_XVII_valid_summ_attachment) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_annex_XVII_valid_summ_attachment[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="avsrfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="avsrfile" name="annex_XVII_valid_summ_attachment[]"
+                                            oninput="addMultipleFiles(this, 'attachement_avsr')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_annex_XVII_valid_summ_attachment" name="deleted_annex_XVII_valid_summ_attachment" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_annex_XVII_valid_summ_attachment');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton"
+                            class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" id="DocnextButton"
+                            onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            </a>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="doc-aiiopq" class="tabcontent">
+                    <div class="orig-head">
+                        annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification
+                    </div>
+                    <div class="input-fields">
+                        <div class="row">
+
+                        <!-- <div class="col-12 sub-head">
+                            STANDARD TESTING PROCEDURE
+                        </div> -->
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="File_Attachment"><b> Attachment</b></label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="attachement_aiiopq">
+                                        @if ($document->document_content->annex_XVI_per_qualif_attachment)
+                                            @foreach(json_decode($document->document_content->annex_XVI_per_qualif_attachment) as $file)
+                                                <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                        <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                    </a>
+                                                    <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                        <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                    </a>
+                                                    <input type="hidden" name="existing_annex_XVI_per_qualif_attachment[]" value="{{ $file }}">
+                                                </h6>
+                                            @endforeach
+                                        @endif
+                                    </div>
+
+                                    <div class="add-btn">
+                                        <label for="aiiopqfile" style="cursor: pointer;">Add</label>
+                                        <input type="file" id="aiiopqfile" name="annex_XVI_per_qualif_attachment[]"
+                                            oninput="addMultipleFiles(this, 'attachement_aiiopq')" multiple hidden>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field to store deleted files -->
+                        <input type="hidden" id="deleted_annex_XVI_per_qualif_attachment" name="deleted_annex_XVI_per_qualif_attachment" value="">
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                document.querySelectorAll('.remove-file').forEach(button => {
+                                    button.addEventListener('click', function () {
+                                        const fileName = this.getAttribute('data-file-name');
+                                        const fileContainer = this.closest('.file-container');
+
+                                        if (fileContainer) {
+                                            fileContainer.style.display = 'none';
+                                           
+                                            const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                            if (hiddenInput) {
+                                                hiddenInput.remove();
+                                            }
+
+                                            const deletedFilesInput = document.getElementById('deleted_annex_XVI_per_qualif_attachment');
+                                            let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                            deletedFiles.push(fileName);
+                                            deletedFilesInput.value = deletedFiles.join(',');
+                                        }
+                                    });
+                                });
+                            });
+
+                            function addMultipleFiles(input, listId) {
+                                let fileList = document.getElementById(listId);
+                                for (let file of input.files) {
+                                    let fileContainer = document.createElement('h6');
+                                    fileContainer.classList.add('file-container', 'text-dark');
+                                    fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                    let fileText = document.createElement('b');
+                                    fileText.textContent = file.name;
+
+                                    let removeLink = document.createElement('a');
+                                    removeLink.classList.add('remove-file');
+                                    removeLink.dataset.fileName = file.name;
+                                    removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                    removeLink.addEventListener('click', function () {
+                                        fileContainer.style.display = 'none';
+                                    });
+
+                                    fileContainer.appendChild(fileText);
+                                    fileContainer.appendChild(removeLink);
+                                    fileList.appendChild(fileContainer);
+                                }
+                            }
+                        </script>
+
+
+
+
+
+
+                        </div>
+                    </div>
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" id="DocsaveButton"
                             class="saveButton">Save</button>
@@ -23271,6 +25213,106 @@
                         Packing validation Protocol</div>
                         <div class="input-fields">
                             <div class="row">
+{{--
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Dosage Form</label>
+                                        <input type="text" name="dosageform_pvp" value="{{$document->document_content->dosageform_pvp}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="train-require">Packing Validation Protocol for</label>
+                                        <input type="text" name="packingvalidation_pvp" value="{{$document->document_content->packingvalidation_pvp}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">PRODUCT NAME</label>
+                                        <input type="text" name="productname_pvp" value="{{$document->document_content->productname_pvp}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="train-require">Protocol No</label>
+                                        <input type="text" name="protocolno_pvp" value="{{$document->document_content->protocolno_pvp}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Batch No</label>
+                                        <input type="text" name="batchno_pvp" value="{{$document->document_content->batchno_pvp}}">
+                                    </div>
+                                </div>
+
+                             
+                                <div class="">
+                                    PRODUCT DETAILS
+                                  </div>  <br>
+                                  <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Generic Name </label>
+                                        <input type="text" name="generic_pvp" value="{{$document->document_content->generic_pvp}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Product Code</label>
+                                        <input type="text" name="pvp_product_code" value="{{$document->document_content->pvp_product_code}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Std. Batch size </label>
+                                        <input type="text" name="pvp_std_batch" value="{{$document->document_content->pvp_std_batch}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Category</label>
+                                        <input type="text" name="pvp_category" value="{{$document->document_content->pvp_category}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Label Claim  </label>
+                                        <input type="text" name="pvp_label_claim" value="{{$document->document_content->pvp_label_claim}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Market</label>
+                                        <input type="text" name="pvp_market" value="{{$document->document_content->pvp_market}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Shelf Life</label>
+                                        <input type="text" name="pvp_shelf_life" value="{{$document->document_content->pvp_shelf_life}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">BMR No.</label>
+                                        <input type="text" name="pvp_bmr_no" value="{{$document->document_content->pvp_bmr_no}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">MFR No.</label>
+                                        <input type="text" name="pvp_mfr_no" value="{{$document->document_content->pvp_mfr_no}}">
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Purpose">Purpose</label>
@@ -24576,8 +26618,8 @@
                                         @endforeach
                                     </div>
                                 </div>
+ --}}
                                
-
 
 
                                
@@ -24657,7 +26699,96 @@
                                     </div>
                                 </div> --}}
 
-                                
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b> Attachment</b></label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+   
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachement_pvp">
+                                                @if ($document->document_content->pvpattachement)
+                                                    @foreach(json_decode($document->document_content->pvpattachement) as $file)
+                                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_pvpattachement[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+   
+                                            <div class="add-btn">
+                                                <label for="pvpfile" style="cursor: pointer;">Add</label>
+                                                <input type="file" id="pvpfile" name="pvpattachement[]"
+                                                    oninput="addMultipleFiles(this, 'attachement_pvp')" multiple hidden>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+   
+                                <!-- Hidden field to store deleted files -->
+                                <input type="hidden" id="deleted_pvpattachement" name="deleted_pvpattachement" value="">
+   
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        document.querySelectorAll('.remove-file').forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+   
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                   
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+   
+                                                    const deletedFilesInput = document.getElementById('deleted_pvpattachement');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+   
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        for (let file of input.files) {
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+   
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+   
+                                            let removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = file.name;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function () {
+                                                fileContainer.style.display = 'none';
+                                            });
+   
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(removeLink);
+                                            fileList.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+   
+   
+   
+   
+
+                               
                             </div>
                         </div>
                     <div class="button-block">
@@ -24671,6 +26802,8 @@
                         </button>
                     </div>
                 </div>
+                <!-- rajendra end -->
+
 
 
 
