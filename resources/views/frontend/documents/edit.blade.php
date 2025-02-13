@@ -235,7 +235,8 @@
              
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
-
+                <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
+           
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
                
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
@@ -17556,9 +17557,10 @@
                     <div class="row">
 
 
+                    {{--  
 
 
-                    <div class="col-md-12">
+                         <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="objective_cvpd" id="objective_cvpd">
                                     Objective   <button type="button" id="objective_cvpdbtnadd" name="button"
@@ -19300,6 +19302,91 @@
                                     @endforeach
                                 </div>
                             </div>
+
+                     --}}     
+                     <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attach_cvpdData">
+                                            @if ($document->attach_cvpd)
+                                                @foreach(json_decode($document->attach_cvpd) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attach_cvpd[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_V_user_attachment" name="attach_cvpd[]" 
+                                                oninput="addMultipleFiles(this, 'attach_cvpdData')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attach_cvpd" name="deleted_attach_cvpd" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attach_cvpd');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>   
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -20131,6 +20218,527 @@
             </div>
         </div>
      
+   
+  <!---------------------------------------------- stability study protocol tab ----------------------------------------->
+
+
+             <div id="doc_ssp" class="tabcontent">
+                            <div class="orig-head">
+                            STABILITY STUDY PROTOCOL
+                            </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+
+
+                   {{-- 
+                     
+                                    <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="purpose">PRODUCT NAME  </label>
+                                                <input type="text" name="product_name_ssp" value="{{$document->document_content->product_name_ssp}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Protocol No.</label>
+                                                <input type="text" name="protocol_no_ssp" value="{{$document->document_content->protocol_no_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Brand Name </label>
+                                                <input type="text" name="brand_name_ssp" value="{{$document->document_content->brand_name_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Generic Name</label>
+                                                <input type="text" name="generic_name_ssp" value="{{$document->document_content->generic_name_ssp}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Label Claim  </label>
+                                                <input type="text" name="label_claim_ssp" value="{{$document->document_content->label_claim_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">FG Code</label>
+                                                <input type="text" name="fg_code_ssp" value="{{$document->document_content->fg_code_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Pack Size</label>
+                                                <input type="text" name="pack_size_ssp" value="{{$document->document_content->pack_size_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Shelf Life</label>
+                                                <input type="text" name="shelf_life_ssp" value="{{$document->document_content->shelf_life_ssp}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Market</label>
+                                                <input type="text" name="market_ssp" value="{{$document->document_content->market_ssp}}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Storage condition</label>
+                                                <input type="text" name="storage_condition_ssp" value="{{$document->document_content->storage_condition_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="change_related_to">PURPOSE</label>
+                                                <select name="purpose_ssp" id="change_related_to">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="New Product" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'New Product' ? 'selected' : '' }}>New Product</option>
+                                                    <option value="Change in Process" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Change in Process' ? 'selected' : '' }}>Change in Process</option>
+                                                    <option value="Change in batch size" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Change in batch size' ? 'selected' : '' }}>Change in batch size</option>
+                                                    <option value="Change in packing material" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Change in packing material' ? 'selected' : '' }}>Change in packing material</option>
+                                                    <option value="Ongoing batch" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Ongoing batch' ? 'selected' : '' }}>Ongoing batch</option>
+                                                    <option value="other" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                                    
+                                        <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                            <div class="group-input">
+                                                <label for="other_specify">Please specify</label>
+                                                <input type="text" name="specify_ssp" id="other_specify" value="{{ $document->document_content->specify_ssp ?? '' }}" placeholder="Specify if Other is selected">
+                                                
+                                            </div>
+                                        </div>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            function toggleOtherSpecifyField() {
+                                                                var changeRelatedTo = $('#change_related_to').val();
+                                                                if (changeRelatedTo === 'other') {
+                                                                    $('#other_specify_div').show();
+                                                                } else {
+                                                                    $('#other_specify_div').hide();
+                                                                }
+                                                            }
+
+                                                            toggleOtherSpecifyField(); 
+
+                                                            $('#change_related_to').change(function() {
+                                                                toggleOtherSpecifyField();
+                                                            });
+                                                        });
+                                                    </script>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="change_related_to">SCOPE
+                                            </label>
+                                                <select name="scope_ssp" id="change_related_to">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="Exhibit Batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Exhibit Batch' ? 'selected' : '' }}>Exhibit Batch</option>
+                                                    <option value="Commercial Validation batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Commercial Validation batch' ? 'selected' : '' }}>Commercial Validation batch</option>
+                                                    <option value="Commercial Annual batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Commercial Annual batch' ? 'selected' : '' }}>Commercial Annual batch</option>
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+
+
+
+                                        
+
+
+                                    <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="documentrefrence_ssp">DOCUMENT REFERENCES</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                        not require completion</small></div>
+                                                <textarea name="documentrefrence_ssp" class="summernote">
+                                                {{$document->document_content->documentrefrence_ssp}} </textarea>
+                                            </div>
+                                        </div>
+                                    <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">REASON FOR STABILITY</label>
+                                                <input type="text" name="reason_stability_ssp" value="{{$document->document_content->reason_stability_ssp}}">
+                                            </div>
+                                    </div>
+                         
+
+
+                                    <div class="col-12">
+                                <div class="group-input">
+                                    <label for="batch_details">
+                                        BATCH DETAILS
+                                        <button type="button" id="BatchRecordSSP">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="batch_detailData_ssp" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%">Sr.No</th>
+                                                    <th style="width: 20%">Batch Number</th>
+                                                    <th style="width: 20%">Batch Size</th>
+                                                    <th style="width: 20%">Manufacturing Date</th>
+                                                    <th style="width: 20%">Expiry Date</th>
+                                                    <th style="width: 10%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    // Ensure $BATCH_DETAILS_ssp->data is an array
+                                                    $batchData = !empty($BATCH_DETAILS_ssp) && is_string($BATCH_DETAILS_ssp->data) 
+                                                                ? json_decode($BATCH_DETAILS_ssp->data, true) 
+                                                                : (is_array($BATCH_DETAILS_ssp->data) ? $BATCH_DETAILS_ssp->data : []);
+                                                @endphp
+
+                                                @if (!empty($batchData))
+                                                    @foreach ($batchData as $index => $spec)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="batch_details_ssp[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                            <td><input type="text" name="batch_details_ssp[{{ $index }}][batch_no]" value="{{ $spec['batch_no'] ?? '' }}"></td>
+                                                            <td><input type="text" name="batch_details_ssp[{{ $index }}][batch_size]" value="{{ $spec['batch_size'] ?? '' }}"></td>
+                                                            <td><input type="text" class="datepicker" name="batch_details_ssp[{{ $index }}][manufacture_date]" placeholder="DD-MM-YYYY" value="{{ $spec['manufacture_date'] ?? '' }}"></td>
+                                                            <td><input type="text" class="datepicker" name="batch_details_ssp[{{ $index }}][expiry_date]" placeholder="DD-MM-YYYY" value="{{ $spec['expiry_date'] ?? '' }}"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr class="no-data">
+                                                        <td colspan="6" style="text-align: center;">No data found</td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    function initializeDatepickers() {
+                                        $(".datepicker").datepicker({
+                                            dateFormat: "dd-M-yy"
+                                        });
+                                    }
+
+                                    $('#BatchRecordSSP').click(function(e) {
+                                        e.preventDefault();
+                                        var tableBody = $('#batch_detailData_ssp tbody');
+                                        var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                        if (rowCount === 0) {
+                                            tableBody.find('.no-data').remove();
+                                        }
+
+                                        var newRow = `
+                                            <tr>
+                                                <td><input disabled type="text" name="batch_details_ssp[${rowCount}][serial]" value="${rowCount + 1}"></td>
+                                                <td><input type="text" name="batch_details_ssp[${rowCount}][batch_no]"></td>
+                                                <td><input type="text" name="batch_details_ssp[${rowCount}][batch_size]"></td>
+                                                <td><input type="text" class="datepicker" name="batch_details_ssp[${rowCount}][manufacture_date]" placeholder="DD-MM-YYYY"></td>
+                                                <td><input type="text" class="datepicker" name="batch_details_ssp[${rowCount}][expiry_date]" placeholder="DD-MM-YYYY"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>`;
+
+                                        tableBody.append(newRow);
+                                        initializeDatepickers(); // Apply datepicker to new row
+                                    });
+
+                                    // Remove row functionality
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                        
+                                        // Renumber serial numbers after removal
+                                        $('#batch_detailData_ssp tbody tr').each(function(index) {
+                                            $(this).find('td:first input').val(index + 1);
+                                        });
+
+                                        // If all rows are removed, show "No data found"
+                                        if ($('#batch_detailData_ssp tbody tr').length === 0) {
+                                            $('#batch_detailData_ssp tbody').append('<tr class="no-data"><td colspan="6" style="text-align: center;">No data found</td></tr>');
+                                        }
+                                    });
+
+                                    // Initialize datepickers on page load
+                                    initializeDatepickers();
+                                });
+                            </script>
+
+
+
+
+
+
+   
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Specification Details">
+                                                
+                                                DETAILS
+                                                <button type="button" id="SecondbatchDetailData_ssp">+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="batch_detailRecord_ssp" style="width: 100%;">
+                                                    <thead>
+                                                            <tr>
+                                                                <th style="width: 2%">Sr.No</th>
+                                                                <th style="width: 12%">Stability station</th>
+                                                                <th style="width: 12%">Required tests</th>
+                                                                
+                                                                <th style="width: 3%">Action</th>
+
+                                                            </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($DETAILS_ssp) && is_array($DETAILS_ssp->data))
+                                                            @foreach ($DETAILS_ssp->data as $index => $spec)
+                                                                <tr>
+                                                                    <td><input disabled type="text" name="batch_detaildata_ssp[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                                    <td><input type="text" name="batch_detaildata_ssp[{{ $index }}][stability_station]" value="{{ $spec['stability_station'] }}"></td>
+                                                                    <td><input type="text" name="batch_detaildata_ssp[{{ $index }}][req_test]" value="{{ $spec['req_test'] }}"></td>
+                                                                    
+                                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr class="no-data">
+                                                                <td colspan="5" style="text-align: center;">No data found</td>
+                                                            </tr>
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Add new row in Specification Validation table
+                                            $('#SecondbatchDetailData_ssp').click(function(e) {
+                                                e.preventDefault();
+
+                                                function generateSpecificationRow(serialNumber) {
+                                                    return (
+                                                        '<tr>' +
+                                                        '<td><input disabled type="text" name="batch_detaildata_ssp[' + serialNumber +
+                                                        '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                        '<td><input type="text" name="batch_detaildata_ssp[' + serialNumber + '][stability_station]"></td>' +
+                                                        '<td><input type="text" name="batch_detaildata_ssp[' + serialNumber + '][req_test]"></td>' +
+                                                    
+                                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>'
+                                                    );
+                                                }
+
+                                                var tableBody = $('#batch_detailRecord_ssp tbody');
+                                                var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                                // Remove "No data found" row if it exists
+                                                if (rowCount === 0) {
+                                                    tableBody.find('.no-data').remove();
+                                                    rowCount = 0; // Start count from 0 if no rows exist
+                                                }
+
+                                                var newRow = generateSpecificationRow(rowCount);
+                                                tableBody.append(newRow);
+                                            });
+
+                                            // Remove row in Specification Validation table
+                                            $(document).on('click', '.removeRowBtn', function() {
+                                                $(this).closest('tr').remove();
+
+                                                // Check if table is empty after deletion, add "No data found" row if so
+                                                if ($('#batch_detaildata_ssp tbody tr').length === 0) {
+                                                    $('#batch_detaildata_ssp tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+
+
+                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="others">Remark (if any)</label>
+                                        <textarea name="remark_if_any_ssp">{{$document->document_content->remark_if_any_ssp}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="documentrefrence_ssp">STABILITY DATA COMPILATION</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="stability_data_ssp" class="summernote">
+                                        {{$document->document_content->stability_data_ssp}} </textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">GENERAL INSTRUCTIONS</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="general_inst_ssp" class="summernote">
+                                        {{$document->document_content->general_inst_ssp}} </textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="orig-head">
+                                PROTOCOL CERTIFICATION
+                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Stability Protocol For </label>
+                                        <input type="text" name="stability_proto_ssp" value="{{$document->document_content->stability_proto_ssp}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Protocol No.</label>
+                                        <input type="text" name="proto_no_ssp" value="{{$document->document_content->proto_no_ssp}}">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Product</label>
+                                        <input type="text" name="product_ssp" value="{{$document->document_content->product_ssp}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Batch Number</label>
+                                        <input type="text" name="batchnumber_ssp" value="{{$document->document_content->batchnumber_ssp}}">
+                                    </div>
+                                </div> 
+
+                        --}}      
+                   
+                       
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attachDatassp">
+                                            @if ($document->file_attach)
+                                                @foreach(json_decode($document->file_attach) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_V_user_attachment" name="file_attach[]" 
+                                                oninput="addMultipleFiles(this, 'file_attachDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach" name="deleted_file_attach" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+
+
+
+                            
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
                 <!--Process Validation Protocol  -->

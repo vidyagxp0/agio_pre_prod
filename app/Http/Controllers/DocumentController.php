@@ -1829,6 +1829,111 @@ class DocumentController extends Controller
 
 
 
+
+           if (!empty($request->file_attach)) {
+            $files = [];
+            if ($request->hasfile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+
+                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->file_attach = json_encode($files);
+        }
+
+
+
+        if (!empty($request->attach_cvpd)) {
+            $files = [];
+            if ($request->hasfile('attach_cvpd')) {
+                foreach ($request->file('attach_cvpd') as $file) {
+
+                    $name = $request->name . 'attach_cvpd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attach_cvpd = json_encode($files);
+        }
+
+
+        if (!empty($request->attachment_srt)) {
+            $files = [];
+            if ($request->hasfile('attachment_srt')) {
+                foreach ($request->file('attachment_srt') as $file) {
+
+                    $name = $request->name . 'attachment_srt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attachment_srt = json_encode($files);
+        }
+       
+        if (!empty($request->attachment_spt)) {
+            $files = [];
+            if ($request->hasfile('attachment_spt')) {
+                foreach ($request->file('attachment_spt') as $file) {
+
+                    $name = $request->name . 'attachment_spt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attachment_spt = json_encode($files);
+        }
+       
+        if (!empty($request->attachment_ehtsr)) {
+            $files = [];
+            if ($request->hasfile('attachment_ehtsr')) {
+                foreach ($request->file('attachment_ehtsr') as $file) {
+
+                    $name = $request->name . 'attachment_ehtsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attachment_ehtsr = json_encode($files);
+        }
+
+        if (!empty($request->attachment_ehtsprt)) {
+            $files = [];
+            if ($request->hasfile('attachment_ehtsprt')) {
+                foreach ($request->file('attachment_ehtsprt') as $file) {
+
+                    $name = $request->name . 'attachment_ehtsprt' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attachment_ehtsprt = json_encode($files);
+        }
+        if (!empty($request->attachment_ehtsr)) {
+            $files = [];
+            if ($request->hasfile('attachment_ehtsr')) {
+                foreach ($request->file('attachment_ehtsr') as $file) {
+
+                    $name = $request->name . 'attachment_ehtsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attachment_ehtsr = json_encode($files);
+        }
+
+
+        $document->save();
+
+
             toastr()->success('Document created');
 
             return redirect()->route('documents.index');
@@ -3593,6 +3698,72 @@ class DocumentController extends Controller
             $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
             $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
             $Specification_Validation_Data_invs->save();
+
+
+            if (!empty($request->file_attach) || !empty($request->deleted_file_attach)) {
+                $existingFiles = json_decode($document->file_attach, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_file_attach)) {
+                    $filesToDelete = explode(',', $request->deleted_file_attach);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('file_attach')) {
+                    foreach ($request->file('file_attach') as $file) {
+                        $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->file_attach = json_encode($allFiles);
+            }
+    
+    
+            if (!empty($request->attach_cvpd) || !empty($request->deleted_attach_cvpd)) {
+                $existingFiles = json_decode($document->attach_cvpd, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_attach_cvpd)) {
+                    $filesToDelete = explode(',', $request->deleted_attach_cvpd);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('attach_cvpd')) {
+                    foreach ($request->file('attach_cvpd') as $file) {
+                        $name = $request->name . 'attach_cvpd' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->attach_cvpd = json_encode($allFiles);
+            }
+    
+           $document->save();
+    
+
+
+
+
+
+
+
+
+
 
 
             toastr()->success('Document Updated');
