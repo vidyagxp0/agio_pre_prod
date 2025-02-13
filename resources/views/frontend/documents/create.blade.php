@@ -332,7 +332,13 @@
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
              
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
-                <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'add-prcumrepo')">Qualification Protocol Cum Report</button>
+                <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'doc_qpcr')">Qualification Protocol Cum Report</button>
+           
+                <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
+                <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
+           
+                <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
+           
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
 
@@ -2336,6 +2342,7 @@
                         <div class="orig-head">
                             Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -2380,35 +2387,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-md-12">
-                                    <div class="group-input">
-
-                                        <label for="accountability" id="accountability">
-                                            Accountability<button type="button" id="accountabilitybtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-                                        <div id="accountabilitydiv">
-                                            <div class="singleAccountabilityBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="accountability[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subAccountabilityAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div> --}}
-
+                               
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="referencesss" id="referencesss">
@@ -2589,19 +2568,29 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        {{-- <div class="row reference-data">
-                                            <div class="col-lg-6">
-                                                <input type="text" name="reference-text">
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <input type="file" name="references" class="myclassname">
-                                            </div>
-                                        </div> --}}
+                                       
                                     </div>
                                 </div>
 
                             </div>
                         </div>
+                        --}}
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_srt"></div>
+                            
+                                        <div class="add-btn">
+                                            <label for="attachment_srtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_srtData" name="attachment_srt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_srt')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -2619,6 +2608,7 @@
                         <div class="orig-head">
                             Study Protocol
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -2923,6 +2913,24 @@
 
                             </div>
                         </div>
+
+                        --}}
+                                     <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachment_spt"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="attachment_sptData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="attachment_sptData" name="attachment_spt[]" 
+                                                        oninput="addMultipleFiles(this, 'attachment_spt')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3114,6 +3122,7 @@
                         <div class="orig-head">
                           Equipment Hold Time Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <!-- <div class="col-md-6">
@@ -3353,6 +3362,23 @@
                             
                             </div>
                         </div>
+                        --}}
+                                  <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachment_ehtsr"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]" 
+                                                        oninput="addMultipleFiles(this, 'attachment_ehtsr')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3965,21 +3991,15 @@
                         <div class="orig-head">
                           Equipment Hold Time Study Protocol
                         </div>
+
+
+                        {{--
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="objective">Report No.</label>
-                                        <textarea name="eqp_report"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="objective">Batch No.</label>
-                                        <textarea name="eqp_batch"></textarea>
-                                    </div>
-                                </div> --}}
 
+                            
+                            
+                          
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Approval</label>
@@ -4317,6 +4337,26 @@
                             
                             </div>
                         </div>
+
+                        --}}
+
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_ehtsprt"></div>
+                            
+                                        <div class="add-btn">
+                                            <label for="attachment_ehtsprtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_ehtsprtData" name="attachment_ehtsprt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_ehtsprt')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -4334,9 +4374,10 @@
                         <div class="orig-head">
                             Format for compressed air and Nitrogen gas system Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="col-md-6">
+                                 <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="objective">Report No.</label>
                                         <textarea name="eqp_report"></textarea>
@@ -4347,7 +4388,7 @@
                                         <label for="objective">Batch No.</label>
                                         <textarea name="eqp_batch"></textarea>
                                     </div>
-                                </div> --}}
+                                </div>  -->
 
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -4770,6 +4811,24 @@
                             
                             </div>
                         </div>
+                        --}}
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attach_comp_nitrogen"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="attach_comp_nitrogendata" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="attach_comp_nitrogendata" name="attach_comp_nitrogen[]" 
+                                                        oninput="addMultipleFiles(this, 'attach_comp_nitrogen')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -5213,7 +5272,7 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                        
+                     {{--   
                       <div class="col-md-6">
                               <div class="group-input">
                                   <label for="purpose">Generic Name </label>
@@ -5921,9 +5980,28 @@
 
                                     </div>
                                 </div>
+                                --}}
+                               
+                               
+                                
 
-                               
-                               
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_pvr"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_pvrData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_pvr')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -5947,7 +6025,8 @@
                     <div class="input-fields">
                         <div class="row">
                         
-                       <div class="col-md-12">
+                        {{--  
+                                 <div class="col-md-12">
                                     <div class="group-input">
 
                                         <label for="objective_cvpd" id="objective_cvpd">
@@ -6561,9 +6640,39 @@
                                     </div>
                                 </div>
 
+                         --}}
 
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attach_cvpd"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_I_gxp_attachment" name="attach_cvpd[]" 
+                                                        oninput="addMultipleFiles(this, 'attach_cvpd')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
 
                                
                                
@@ -6592,6 +6701,7 @@
                             <div class="input-fields">
                                 <div class="row">
                                         
+                             {{--
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -6904,9 +7014,27 @@
                                 </div>
 
 
-
+                              --}}
 
                                 
+
+
+                              <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_cvrd"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_cvrdData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_cvrd')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                
                                
@@ -6924,7 +7052,602 @@
          
 
 
+ <!------------------------ STABILITY STUDY PROTOCOL - tab ------------------------------------>
+          
 
+
+                <div id="doc_ssp" class="tabcontent">
+                            <div class="orig-head">
+                            STABILITY STUDY PROTOCOL
+                            </div>
+                            <div class="input-fields">
+                                <div class="row">
+                                        
+
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_I_gxp_attachment" name="file_attach[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
+
+                           
+                    {{--
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">PRODUCT NAME </label>
+                                        <input type="text" name="product_name_ssp">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Protocol No.</label>
+                                        <input type="text" name="protocol_no_ssp">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Brand Name </label>
+                                        <input type="text" name="brand_name_ssp">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Generic Name </label>
+                                        <input type="text" name="generic_name_ssp">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Label Claim </label>
+                                        <input type="text" name="label_claim_ssp">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">FG Code</label>
+                                        <input type="text" name="fg_code_ssp">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Pack Size </label>
+                                        <input type="text" name="pack_size_ssp">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Shelf Life</label>
+                                        <input type="text" name="shelf_life_ssp">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Market</label>
+                                        <input type="text" name="market_ssp">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Storage condition</label>
+                                        <input type="text" name="storage_condition_ssp">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="change_related_to">PURPOSE</label>
+
+                                        <select name="purpose_ssp" id="change_related_to">
+                                            <option value="">-- Select --</option>
+                                            <option value="New Product" {{ old('purpose_ssp', property_exists($data ?? (object)[], 'purpose_ssp') ? $data->purpose_ssp : '') == 'New Product' ? 'selected' : '' }}>New Product</option>
+                                            <option value="Change in Process" {{ old('purpose_ssp', property_exists($data ?? (object)[], 'purpose_ssp') ? $data->purpose_ssp : '') == 'Change in Process' ? 'selected' : '' }}>Change in Process</option>
+                                            <option value="Change in batch size" {{ old('purpose_ssp', property_exists($data ?? (object)[], 'purpose_ssp') ? $data->purpose_ssp : '') == 'Change in batch size' ? 'selected' : '' }}>Change in batch size</option>
+                                            <option value="Change in packing material" {{ old('purpose_ssp', property_exists($data ?? (object)[], 'purpose_ssp') ? $data->purpose_ssp : '') == 'Change in packing material' ? 'selected' : '' }}>Change in packing material</option>
+                                            <option value="Ongoing batch" {{ old('purpose_ssp', property_exists($data ?? (object)[], 'purpose_ssp') ? $data->purpose_ssp : '') == 'Ongoing batch' ? 'selected' : '' }}>Ongoing batch</option>
+                                            <option value="other" {{ old('purpose_ssp', property_exists($data ?? (object)[], 'purpose_ssp') ? $data->purpose_ssp : '') == 'other' ? 'selected' : '' }}>Other</option>
+                                        </select>
+
+
+                                    </div>
+                                </div>
+
+                               
+
+                                <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                    <div class="group-input">
+                                        <label for="other_specify">Please specify</label>
+                                        <input type="text" name="specify_ssp" id="other_specify" value="{{ property_exists($data ?? (object)[], 'specify_ssp') }}" placeholder="Specify if Other is selected">
+
+                                    </div>
+                                </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        function toggleOtherSpecifyField() {
+                                            var changeRelatedTo = $('#change_related_to').val();
+                                            if (changeRelatedTo === 'other') {
+                                                $('#other_specify_div').show();
+                                            } else {
+                                                $('#other_specify_div').hide();
+                                            }
+                                        }
+
+                                        toggleOtherSpecifyField(); // Initial check
+
+                                        // Update field visibility on dropdown change
+                                        $('#change_related_to').change(function() {
+                                            toggleOtherSpecifyField();
+                                        });
+                                    });
+                                </script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="change_related_to">SCOPE </label>
+
+                                        <select name="scope_ssp" id="change_related_to">
+                                            <option value="">-- Select --</option>
+                                            <option value="Exhibit Batch" {{ old('scope_ssp', property_exists($data ?? (object)[], 'scope_ssp') ? $data->scope_ssp : '') == 'Exhibit Batch' ? 'selected' : '' }}>Exhibit Batch</option>
+                                            <option value="Commercial Validation batch" {{ old('scope_ssp', property_exists($data ?? (object)[], 'scope_ssp') ? $data->scope_ssp : '') == 'Commercial Validation batch' ? 'selected' : '' }}>Commercial Validation batch</option>
+                                            <option value="Commercial Annual batch" {{ old('scope_ssp', property_exists($data ?? (object)[], 'scope_ssp') ? $data->scope_ssp : '') == 'Commercial Annual batch' ? 'selected' : '' }}>Commercial Annual batch</option>
+                                        </select>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">DOCUMENT REFERENCES</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="documentrefrence_ssp" class="summernote">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">REASON FOR STABILITY</label>
+                                        <input type="text" name="reason_stability_ssp">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="group-input">
+                            <label for="action-plan-grid">
+                                BATCH DETAILS
+                                <button type="button" id="batch_details_ssp">+</button>
+                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    Row Increment
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="batch_detailData_ssp">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%">Sr.No</th>
+                                            <th style="width: 20%">Batch Number</th>
+                                            <th style="width: 20%">Batch Size</th>
+                                            <th style="width: 20%">Manufacturing Date</th>
+                                            <th style="width: 20%">Expiry Date</th>
+                                            <th style="width: 10%">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $serialNumber = 1;
+                                        @endphp
+                                        <tr>
+                                            <td><input type="text" disabled value="{{ $serialNumber }}"></td>
+                                            <td><input type="text" name="batch_details_ssp[0][batch_no]"></td>
+                                            <td><input type="text" name="batch_details_ssp[0][batch_size]"></td>
+                                            <td><input type="text" class="datepicker" name="batch_details_ssp[0][manufacture_date]" placeholder="DD-MMM-YYYY"></td>
+                                            <td><input type="text" class="datepicker" name="batch_details_ssp[0][expiry_date]" placeholder="DD-MMM-YYYY"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <script>
+                            $(document).ready(function() {
+                                let investdetails = 1;
+
+                                function initializeDatepickers() {
+                                    $(".datepicker").datepicker({
+                                        dateFormat: "dd-M-yy"
+                                    });
+                                }
+
+                                $('#batch_details_ssp').click(function() {
+                                    let rowCount = $('#batch_detailData_ssp tbody tr').length;
+                                    let newRow = `
+                                        <tr>
+                                            <td><input type="text" disabled value="${rowCount + 1}"></td>
+                                            <td><input type="text" name="batch_details_ssp[${investdetails}][batch_no]"></td>
+                                            <td><input type="text" name="batch_details_ssp[${investdetails}][batch_size]"></td>
+                                            <td><input type="text" class="datepicker" name="batch_details_ssp[${investdetails}][manufacture_date]" placeholder="DD-MMM-YYYY"></td>
+                                            <td><input type="text" class="datepicker" name="batch_details_ssp[${investdetails}][expiry_date]" placeholder="DD-MMM-YYYY"></td>
+                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                        </tr>`;
+
+                                    $('#batch_detailData_ssp tbody').append(newRow);
+                                    initializeDatepickers();
+                                    investdetails++;
+                                });
+
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                    $('#batch_detailData_ssp tbody tr').each(function(index) {
+                                        $(this).find('td:first input').val(index + 1);
+                                    });
+                                });
+
+                                initializeDatepickers();
+                            });
+                        </script>
+
+                                
+
+                            <!-- <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">Storage Conditions</th>
+                                            <th rowspan="2">Orientation</th>
+                                            <th colspan="12">Interval (Month)</th>
+                                        </tr>
+                                        <tr>
+                                            @foreach([1, 2, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72] as $month)
+                                                <th>{{ $month }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $conditions = [
+                                                'Accelerated (40°C ± 2°C and 75% ± 5% RH)',
+                                                'Long Term (25°C ± 2°C and 60% ± 5% RH)',
+                                                'Long Term (30°C ± 2°C and 65% ± 5% RH)',
+                                                'Long Term (30°C ± 2°C and 75% ± 5% RH)',
+                                            ];
+                                        @endphp
+                                        
+                                        @foreach($conditions as $key => $condition)
+                                            <tr>
+                                                <td>{{ $condition }}</td>
+                                                <td><input type="text" name="orientation[{{ $key }}]" class="form-control"></td>
+                                                @foreach([1, 2, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72] as $month)
+                                                    <td>
+                                                        <input type="checkbox" name="intervals[{{ $key }}][{{ $month }}]" value="{{ $month }}">
+                                                    </td>
+                                                @endforeach
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                            </table>
+
+
+
+                            <div class="container">
+                                <h3 class="mb-3">Quantity Required</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">Storage Conditions</th>
+                                            <th colspan="12">Interval (Month)</th>
+                                            <th rowspan="2">Add. Qty.</th>
+                                            <th rowspan="2">Total Qty.</th>
+                                        </tr>
+                                        <tr>
+                                            @foreach([1, 2, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72] as $month)
+                                                <th>{{ $month }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $conditions = [
+                                                'Accelerated (40°C ± 2°C and 75% ± 5% RH)',
+                                                'Long Term (25°C ± 2°C and 60% ± 5% RH)',
+                                                'Long Term (30°C ± 2°C and 65% ± 5% RH)',
+                                                'Long Term (30°C ± 2°C and 75% ± 5% RH)',
+                                            ];
+                                        @endphp
+                                        
+                                        @foreach($conditions as $key => $condition)
+                                            <tr>
+                                                <td>{{ $condition }}</td>
+                                                @foreach([1, 2, 3, 6, 9, 12, 18, 24, 36, 48, 60, 72] as $month)
+                                                    <td>
+                                                        <input type="number" name="quantities[{{ $key }}][{{ $month }}]" class="form-control" min="0">
+                                                    </td>
+                                                @endforeach
+                                                <td>
+                                                    <input type="number" name="additional_qty[{{ $key }}]" class="form-control" min="0">
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="total_qty[{{ $key }}]" class="form-control" min="0" readonly>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        <tr>
+                                            <td><strong>Total</strong></td>
+                                            <td colspan="12" class="text-center"><strong>Not applicable</strong></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div> -->
+
+                            <div class="group-input">
+                                            <label for="action-plan-grid">
+                                            DETAILS<button type="button" name="action-plan-grid"
+                                                        id="Secondbatch_details_ssp">+</button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#observation-field-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                Row Increment
+                                                </span>
+                                            </label>
+                                        <div class="table-responsive">
+                                                <table class="table table-bordered" id="Secondbatch_detailData_ssp">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 2%">Sr.No</th>
+                                                            <th style="width: 12%">Stability station</th>
+                                                            <th style="width: 12%">Required tests</th>
+                                                            
+                                                            <th style="width: 3%">Action</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @php
+                                                            $serialNumber = 1;
+                                                        @endphp
+                                                        <td disabled>{{ $serialNumber++ }}</td>
+
+                                                        <td><input type="text" name="batch_detaildata_ssp[0][stability_station]"></td>
+                                                        <td><input type="text" name="batch_detaildata_ssp[0][req_test]"></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                    </tbody>
+
+                                                </table>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                    $(document).ready(function() {
+                                        let investdetails = 1;
+                                        $('#Secondbatch_details_ssp').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+                                                var users = @json($users);
+                                                console.log(users);
+                                                var html =
+                                                        '<tr>' +
+                                                        '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
+                                                        '"></td>' +
+                                                        '<td><input type="text" name="batch_detaildata_ssp[' + investdetails +
+                                                        '][stability_station]" value=""></td>' +
+
+                                                        '<td><input type="text" name="batch_detaildata_ssp[' + investdetails +
+                                                        '][req_test]" value=""></td>' +
+                                                    
+                                                    
+                                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>';
+
+
+                                                    return html;
+                                                }
+
+                                                var tableBody = $('#Secondbatch_detailData_ssp tbody');
+                                                var rowCount = tableBody.children('tr').length;
+                                                var newRow = generateTableRow(rowCount + 1);
+                                                tableBody.append(newRow);
+                                            });
+                                        });
+                            </script>
+
+                                
+
+                              
+                               
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="others">Remark (if any)</label>
+                                        <textarea name="remark_if_any_ssp"></textarea>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">STABILITY DATA COMPILATION</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="stability_data_ssp" class="summernote">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">GENERAL INSTRUCTIONS</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="general_inst_ssp" class="summernote">
+                                    </textarea>
+                                    </div>
+                                </div>
+
+
+                            <div class="orig-head">
+                                PROTOCOL CERTIFICATION
+                            </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Stability Protocol For </label>
+                                        <input type="text" name="stability_proto_ssp">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Protocol No.</label>
+                                        <input type="text" name="proto_no_ssp">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Product</label>
+                                        <input type="text" name="product_ssp">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Batch Number</label>
+                                        <input type="text" name="batchnumber_ssp">
+                                    </div>
+                                </div>
+                           
+                                --}}
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+<!------------------------ Validation Master Plan - tab ------------------------------------>
+          
+
+
+                <div id="doc_vmp" class="tabcontent">
+                            <div class="orig-head">
+                            Validation Master Plan 
+                            </div>
+                            <div class="input-fields">
+                                <div class="row">
+                                        
+
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_vmp"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_vmpData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_vmpData" name="file_attach_vmp[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_vmp')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                   
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+<!------------------------ Validation Master Plan - tab ------------------------------------>
+          
+
+
+                <div id="doc_qm" class="tabcontent">
+                            <div class="orig-head">
+                            Quality Manual  
+                            </div>
+                            <div class="input-fields">
+                                <div class="row">
+                                        
+
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_qm"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_qmData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_qmData" name="file_attach_qm[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_qm')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                   
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
                 <!-- GTP -->
                 <div id="doc-gtp" class="tabcontent">
                         <div class="orig-head">
@@ -7029,33 +7752,34 @@
 
 
                 <!-- Protocol Cum Report -->
-                    <div id="add-prcumrepo" class="tabcontent">
+                    <div id="doc_qpcr" class="tabcontent">
                         <div class="orig-head">
                             Qualification Protocol Cum Report
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="file_attach">File Attachments</label>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="procumrepo_file_attach[]"
-                                                    oninput="addMultipleFiles(this, 'procumrepo_file_attach')" multiple>
+                              
+                               
+
+                                
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="procumrepo_file_attach"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]" 
+                                                        oninput="addMultipleFiles(this, 'procumrepo_file_attach')" multiple hidden>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                               
                             
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="comments">Comments</label>
-                                        <textarea name="procumrep_comments"></textarea>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="button-block">

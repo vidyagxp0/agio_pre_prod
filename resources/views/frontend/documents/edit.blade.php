@@ -236,7 +236,11 @@
              
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
-
+                <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
+                <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
+                <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
+                <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'doc_qpcr')">Qualification Protocol Cum Report</button>
+           
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="ANNIGxPASSES" onclick="openData(event, 'doc_Annexure_I')">Annexure I-Gxp Assessment</button>
@@ -358,7 +362,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -408,7 +412,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -533,7 +537,7 @@
                                 </div>
                                 <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -587,7 +591,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -623,7 +627,7 @@
     @endforeach
                                                                 </div>
                                                             </div> -->
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -727,7 +731,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -804,7 +808,7 @@
                                 <p id="depart-nameError" style="color:red">**Department Name is required</p>
 
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -867,7 +871,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1024,7 +1028,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1143,7 +1147,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                   
                                     <div class="comment">
                                         <div>
 
@@ -1192,7 +1196,7 @@
                                 </script>
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                   
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1245,7 +1249,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                   
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1308,7 +1312,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1356,7 +1360,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1430,7 +1434,7 @@
                                 </div>
                                 <p id="reviewerError" style="color:red">**Reviewers are required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1492,7 +1496,7 @@
                                 </div>
                                 <p id="approverError" style="color:red">**Approvers are required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -3302,6 +3306,7 @@
                         <div class="orig-head">
                             Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -3327,7 +3332,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3363,7 +3368,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3453,7 +3458,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3554,7 +3559,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3629,7 +3634,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3704,7 +3709,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3800,7 +3805,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3892,7 +3897,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3933,6 +3938,91 @@
                                 
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_srtDatafield">
+                                            @if ($document->attachment_srt)
+                                                @foreach(json_decode($document->attachment_srt) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_srt[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_srtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_srtData" name="attachment_srt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_srtDatafield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_srt" name="deleted_attachment_srt" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_srt');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3947,6 +4037,7 @@
                         <div class="orig-head">
                             Study Protocol
                         </div>
+                       {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -3972,7 +4063,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4008,7 +4099,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4098,7 +4189,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4199,7 +4290,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4274,7 +4365,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4349,7 +4440,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4445,7 +4536,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4537,7 +4628,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4627,7 +4718,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4717,7 +4808,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4807,7 +4898,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4897,7 +4988,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4917,6 +5008,92 @@
                                 
                             </div>
                         </div>
+                         --}}
+
+
+                         <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_sptfield">
+                                            @if ($document->attachment_spt)
+                                                @foreach(json_decode($document->attachment_spt) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_spt[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_sptData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_sptData" name="attachment_spt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_sptfield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_spt" name="deleted_attachment_spt" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_spt');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -4931,6 +5108,7 @@
                         <div class="orig-head">
                             Equipment Hold Time Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -4956,7 +5134,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4992,7 +5170,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5028,7 +5206,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5119,7 +5297,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5220,7 +5398,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5295,7 +5473,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5370,7 +5548,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5466,7 +5644,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5558,7 +5736,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5648,7 +5826,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5669,6 +5847,91 @@
                                 
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_ehtsrfield">
+                                            @if ($document->attachment_ehtsr)
+                                                @foreach(json_decode($document->attachment_ehtsr) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_ehtsr[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_ehtsrfield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_ehtsr" name="deleted_attachment_ehtsr" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_ehtsr');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -15412,6 +15675,7 @@
                         <div class="orig-head">
                             Format for compressed air and Nitrogen gas system Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
 
@@ -15438,7 +15702,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15474,7 +15738,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15510,7 +15774,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15601,7 +15865,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15702,7 +15966,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15778,7 +16042,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15853,7 +16117,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15949,7 +16213,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16041,7 +16305,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16131,7 +16395,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16221,7 +16485,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16311,7 +16575,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16401,7 +16665,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16492,7 +16756,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16582,7 +16846,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16672,7 +16936,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16763,7 +17027,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -16778,6 +17042,91 @@
                                
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attach_comp_nitrogenDatafield">
+                                            @if ($document->attach_comp_nitrogen)
+                                                @foreach(json_decode($document->attach_comp_nitrogen) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attach_comp_nitrogen[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attach_comp_nitrogenData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attach_comp_nitrogenData" name="attach_comp_nitrogen[]" 
+                                                oninput="addMultipleFiles(this, 'attach_comp_nitrogenDatafield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attach_comp_nitrogen" name="deleted_attach_comp_nitrogen" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attach_comp_nitrogen');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -20016,1746 +20365,1833 @@
                     <div class="orig-head">
                     Process Validation Report
                     </div>
-                <div class="input-fields">
-                    <div class="row">
+                   
+
+                   
+                        <div class="input-fields">
+
+                                <div class="row">
+
+                                {{--
+                                    <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="purpose">Generic Name </label>
+                                                <input type="text" name="generic_pvr" value="{{$document->document_content->generic_pvr}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Product Code</label>
+                                                <input type="text" name="product_code_pvr" value="{{$document->document_content->product_code_pvr}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Std. Batch size </label>
+                                                <input type="text" name="std_batch_pvr" value="{{$document->document_content->std_batch_pvr}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Category</label>
+                                                <input type="text" name="category_pvr" value="{{$document->document_content->category_pvr}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Label Claim  </label>
+                                                <input type="text" name="label_claim_pvr" value="{{$document->document_content->label_claim_pvr}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Market</label>
+                                                <input type="text" name="market_pvr" value="{{$document->document_content->market_pvr}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Shelf Life</label>
+                                                <input type="text" name="shelf_life_pvr" value="{{$document->document_content->shelf_life_pvr}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">BMR No.</label>
+                                                <input type="text" name="bmr_no_pvr" value="{{$document->document_content->bmr_no_pvr}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">MFR No.</label>
+                                                <input type="text" name="mfr_no_pvr" value="{{$document->document_content->mfr_no_pvr}}">
+                                            </div>
+                                        </div>
 
 
 
+                                
 
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="purpose">Generic Name </label>
-                                        <input type="text" name="generic_pvr" value="{{$document->document_content->generic_pvr}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Product Code</label>
-                                        <input type="text" name="product_code_pvr" value="{{$document->document_content->product_code_pvr}}">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Std. Batch size </label>
-                                        <input type="text" name="std_batch_pvr" value="{{$document->document_content->std_batch_pvr}}">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Category</label>
-                                        <input type="text" name="category_pvr" value="{{$document->document_content->category_pvr}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Label Claim  </label>
-                                        <input type="text" name="label_claim_pvr" value="{{$document->document_content->label_claim_pvr}}">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Market</label>
-                                        <input type="text" name="market_pvr" value="{{$document->document_content->market_pvr}}">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">Shelf Life</label>
-                                        <input type="text" name="shelf_life_pvr" value="{{$document->document_content->shelf_life_pvr}}">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">BMR No.</label>
-                                        <input type="text" name="bmr_no_pvr" value="{{$document->document_content->bmr_no_pvr}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="scope">MFR No.</label>
-                                        <input type="text" name="mfr_no_pvr" value="{{$document->document_content->mfr_no_pvr}}">
-                                    </div>
-                                </div>
-
-
-
-                           
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="purpose_pvr" id="purpose_pvr">
-                                        Purpose  <button type="button" id="purpose_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="purpose_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->purpose_pvr))
-                                            @foreach (unserialize($document->document_content->purpose_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglepurpose_pvrBlock' : 'singlepurpose_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="purpose_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="purpose_pvr" id="purpose_pvr">
+                                                Purpose  <button type="button" id="purpose_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="purpose_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->purpose_pvr))
+                                                    @foreach (unserialize($document->document_content->purpose_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglepurpose_pvrBlock' : 'singlepurpose_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="purpose_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="purpose_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subpurpose_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlepurpose_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="purpose_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subpurpose_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="purpose_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subpurpose_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlepurpose_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="purpose_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subpurpose_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'purpose_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'purpose_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="scope_pvr" id="scope_pvr">
-                                        Scope  <button type="button" id="scope_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="scope_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->scope_pvr))
-                                            @foreach (unserialize($document->document_content->scope_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglescope_pvrBlock' : 'singlescope_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="scope_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="scope_pvr" id="scope_pvr">
+                                                Scope  <button type="button" id="scope_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="scope_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->scope_pvr))
+                                                    @foreach (unserialize($document->document_content->scope_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglescope_pvrBlock' : 'singlescope_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="scope_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="scope_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subscope_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlescope_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="scope_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subscope_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="scope_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subscope_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlescope_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="scope_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subscope_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'scope_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'scope_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="batchdetail_pvr" id="batchdetail_pvr">
-                                    Batch details  <button type="button" id="batchdetail_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="batchdetail_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->batchdetail_pvr))
-                                            @foreach (unserialize($document->document_content->batchdetail_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglebatchdetail_pvrBlock' : 'singlebatchdetail_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="batchdetail_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="batchdetail_pvr" id="batchdetail_pvr">
+                                            Batch details  <button type="button" id="batchdetail_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="batchdetail_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->batchdetail_pvr))
+                                                    @foreach (unserialize($document->document_content->batchdetail_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglebatchdetail_pvrBlock' : 'singlebatchdetail_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="batchdetail_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="batchdetail_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subbatchdetail_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlebatchdetail_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="batchdetail_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subbatchdetail_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="batchdetail_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subbatchdetail_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlebatchdetail_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="batchdetail_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subbatchdetail_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'batchdetail_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'batchdetail_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="refrence_document_pvr" id="refrence_document_pvr">
-                                    Reference Document <button type="button" id="refrence_document_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="refrence_document_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->refrence_document_pvr))
-                                            @foreach (unserialize($document->document_content->refrence_document_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglerefrence_document_pvrBlock' : 'singlerefrence_document_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="refrence_document_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="refrence_document_pvr" id="refrence_document_pvr">
+                                            Reference Document <button type="button" id="refrence_document_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="refrence_document_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->refrence_document_pvr))
+                                                    @foreach (unserialize($document->document_content->refrence_document_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglerefrence_document_pvrBlock' : 'singlerefrence_document_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="refrence_document_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="refrence_document_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subrefrence_document_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlerefrence_document_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="refrence_document_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subrefrence_document_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="refrence_document_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subrefrence_document_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlerefrence_document_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="refrence_document_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subrefrence_document_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'refrence_document_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'refrence_document_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="active_raw_material_pvr" id="active_raw_material_pvr">
-                                    Active raw material approved vendor details <button type="button" id="active_raw_material_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="active_raw_material_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->active_raw_material_pvr))
-                                            @foreach (unserialize($document->document_content->active_raw_material_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleactive_raw_material_pvrBlock' : 'singleactive_raw_material_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="active_raw_material_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="active_raw_material_pvr" id="active_raw_material_pvr">
+                                            Active raw material approved vendor details <button type="button" id="active_raw_material_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="active_raw_material_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->active_raw_material_pvr))
+                                                    @foreach (unserialize($document->document_content->active_raw_material_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleactive_raw_material_pvrBlock' : 'singleactive_raw_material_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="active_raw_material_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="active_raw_material_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subactive_raw_material_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleactive_raw_material_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="active_raw_material_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subactive_raw_material_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'active_raw_material_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    
+
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="primary_packingmaterial_pvr" id="primary_packingmaterial_pvr">
+                                            Primary packing material approved vendor details <button type="button" id="primary_packingmaterial_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="primary_packingmaterial_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->primary_packingmaterial_pvr))
+                                                    @foreach (unserialize($document->document_content->primary_packingmaterial_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleprimary_packingmaterial_pvrBlock' : 'singleprimary_packingmaterial_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="primary_packingmaterial_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="primary_packingmaterial_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subprimary_packingmaterial_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleprimary_packingmaterial_pvrBlock">
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="active_raw_material_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                <textarea name="primary_packingmaterial_pvr[]" class="myclassname"></textarea>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subactive_raw_material_pvrAdd">+</button>
+                                                                <button class="btn btn-dark subprimary_packingmaterial_pvrAdd">+</button>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleactive_raw_material_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="active_raw_material_pvr[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subactive_raw_material_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'active_raw_material_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                            
-
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="primary_packingmaterial_pvr" id="primary_packingmaterial_pvr">
-                                    Primary packing material approved vendor details <button type="button" id="primary_packingmaterial_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="primary_packingmaterial_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->primary_packingmaterial_pvr))
-                                            @foreach (unserialize($document->document_content->primary_packingmaterial_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleprimary_packingmaterial_pvrBlock' : 'singleprimary_packingmaterial_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="primary_packingmaterial_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="primary_packingmaterial_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subprimary_packingmaterial_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleprimary_packingmaterial_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="primary_packingmaterial_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subprimary_packingmaterial_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'primary_packingmaterial_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'primary_packingmaterial_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="used_equipment_calibration_pvr" id="used_equipment_calibration_pvr">
-                                    Used Equipment Calibration and  Qualification status <button type="button" id="used_equipment_calibration_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="used_equipment_calibration_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->used_equipment_calibration_pvr))
-                                            @foreach (unserialize($document->document_content->used_equipment_calibration_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleused_equipment_calibration_pvrBlock' : 'singleused_equipment_calibration_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="used_equipment_calibration_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="used_equipment_calibration_pvr" id="used_equipment_calibration_pvr">
+                                            Used Equipment Calibration and  Qualification status <button type="button" id="used_equipment_calibration_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="used_equipment_calibration_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->used_equipment_calibration_pvr))
+                                                    @foreach (unserialize($document->document_content->used_equipment_calibration_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleused_equipment_calibration_pvrBlock' : 'singleused_equipment_calibration_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="used_equipment_calibration_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="used_equipment_calibration_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subused_equipment_calibration_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleused_equipment_calibration_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="used_equipment_calibration_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subused_equipment_calibration_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="used_equipment_calibration_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subused_equipment_calibration_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleused_equipment_calibration_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="used_equipment_calibration_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subused_equipment_calibration_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'used_equipment_calibration_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'used_equipment_calibration_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="result_of_intermediate_pvr" id="result_of_intermediate_pvr">
-                                    Results of intermediate Product <button type="button" id="result_of_intermediate_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="result_of_intermediate_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->result_of_intermediate_pvr))
-                                            @foreach (unserialize($document->document_content->result_of_intermediate_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleresult_of_intermediate_pvrBlock' : 'singleresult_of_intermediate_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="result_of_intermediate_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="result_of_intermediate_pvr" id="result_of_intermediate_pvr">
+                                            Results of intermediate Product <button type="button" id="result_of_intermediate_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="result_of_intermediate_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->result_of_intermediate_pvr))
+                                                    @foreach (unserialize($document->document_content->result_of_intermediate_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleresult_of_intermediate_pvrBlock' : 'singleresult_of_intermediate_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="result_of_intermediate_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="result_of_intermediate_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subresult_of_intermediate_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleresult_of_intermediate_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="result_of_intermediate_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subresult_of_intermediate_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="result_of_intermediate_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subresult_of_intermediate_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleresult_of_intermediate_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="result_of_intermediate_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subresult_of_intermediate_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'result_of_intermediate_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'result_of_intermediate_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="result_of_finished_product_pvr" id="result_of_finished_product_pvr">
-                                    Result of Finished Product <button type="button" id="result_of_finished_product_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="result_of_finished_product_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->result_of_finished_product_pvr))
-                                            @foreach (unserialize($document->document_content->result_of_finished_product_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleresult_of_finished_product_pvrBlock' : 'singleresult_of_finished_product_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="result_of_finished_product_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="result_of_finished_product_pvr" id="result_of_finished_product_pvr">
+                                            Result of Finished Product <button type="button" id="result_of_finished_product_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="result_of_finished_product_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->result_of_finished_product_pvr))
+                                                    @foreach (unserialize($document->document_content->result_of_finished_product_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleresult_of_finished_product_pvrBlock' : 'singleresult_of_finished_product_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="result_of_finished_product_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="result_of_finished_product_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subresult_of_finished_product_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleresult_of_finished_product_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="result_of_finished_product_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subresult_of_finished_product_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="result_of_finished_product_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subresult_of_finished_product_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleresult_of_finished_product_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="result_of_finished_product_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subresult_of_finished_product_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'result_of_finished_product_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'result_of_finished_product_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="result_of_packing_finished_pvr" id="result_of_packing_finished_pvr">
-                                    Results Of Packing (Finished product) <button type="button" id="result_of_packing_finished_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="result_of_packing_finished_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->result_of_packing_finished_pvr))
-                                            @foreach (unserialize($document->document_content->result_of_packing_finished_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleresult_of_packing_finished_pvrBlock' : 'singleresult_of_packing_finished_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="result_of_packing_finished_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="result_of_packing_finished_pvr" id="result_of_packing_finished_pvr">
+                                            Results Of Packing (Finished product) <button type="button" id="result_of_packing_finished_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="result_of_packing_finished_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->result_of_packing_finished_pvr))
+                                                    @foreach (unserialize($document->document_content->result_of_packing_finished_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleresult_of_packing_finished_pvrBlock' : 'singleresult_of_packing_finished_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="result_of_packing_finished_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="result_of_packing_finished_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subresult_of_packing_finished_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleresult_of_packing_finished_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="result_of_packing_finished_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subresult_of_packing_finished_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="result_of_packing_finished_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subresult_of_packing_finished_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleresult_of_packing_finished_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="result_of_packing_finished_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subresult_of_packing_finished_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'result_of_packing_finished_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'result_of_packing_finished_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="criticalprocess_parameter_pvr" id="criticalprocess_parameter_pvr">
-                                    Critical process parameters & Critical quality attributes <button type="button" id="criticalprocess_parameter_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="criticalprocess_parameter_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->criticalprocess_parameter_pvr))
-                                            @foreach (unserialize($document->document_content->criticalprocess_parameter_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglecriticalprocess_parameter_pvrBlock' : 'singlecriticalprocess_parameter_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="criticalprocess_parameter_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="criticalprocess_parameter_pvr" id="criticalprocess_parameter_pvr">
+                                            Critical process parameters & Critical quality attributes <button type="button" id="criticalprocess_parameter_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="criticalprocess_parameter_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->criticalprocess_parameter_pvr))
+                                                    @foreach (unserialize($document->document_content->criticalprocess_parameter_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglecriticalprocess_parameter_pvrBlock' : 'singlecriticalprocess_parameter_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="criticalprocess_parameter_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="criticalprocess_parameter_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subcriticalprocess_parameter_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlecriticalprocess_parameter_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="criticalprocess_parameter_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subcriticalprocess_parameter_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="criticalprocess_parameter_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subcriticalprocess_parameter_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlecriticalprocess_parameter_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="criticalprocess_parameter_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subcriticalprocess_parameter_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'criticalprocess_parameter_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'criticalprocess_parameter_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
-
-      
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="yield_at_various_stage_pvr" id="yield_at_various_stage_pvr">
-                                    Yield at various stages <button type="button" id="yield_at_various_stage_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="yield_at_various_stage_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->yield_at_various_stage_pvr))
-                                            @foreach (unserialize($document->document_content->yield_at_various_stage_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleyield_at_various_stage_pvrBlock' : 'singleyield_at_various_stage_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="yield_at_various_stage_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+            
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="yield_at_various_stage_pvr" id="yield_at_various_stage_pvr">
+                                            Yield at various stages <button type="button" id="yield_at_various_stage_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="yield_at_various_stage_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->yield_at_various_stage_pvr))
+                                                    @foreach (unserialize($document->document_content->yield_at_various_stage_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleyield_at_various_stage_pvrBlock' : 'singleyield_at_various_stage_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="yield_at_various_stage_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="yield_at_various_stage_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subyield_at_various_stage_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleyield_at_various_stage_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="yield_at_various_stage_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subyield_at_various_stage_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="yield_at_various_stage_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subyield_at_various_stage_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleyield_at_various_stage_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="yield_at_various_stage_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subyield_at_various_stage_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'yield_at_various_stage_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'yield_at_various_stage_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="hold_time_study_pvr" id="hold_time_study_pvr">
-                                    Hold time study<button type="button" id="hold_time_study_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="hold_time_study_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->hold_time_study_pvr))
-                                            @foreach (unserialize($document->document_content->hold_time_study_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglehold_time_study_pvrBlock' : 'singlehold_time_study_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="hold_time_study_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="hold_time_study_pvr" id="hold_time_study_pvr">
+                                            Hold time study<button type="button" id="hold_time_study_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="hold_time_study_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->hold_time_study_pvr))
+                                                    @foreach (unserialize($document->document_content->hold_time_study_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglehold_time_study_pvrBlock' : 'singlehold_time_study_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="hold_time_study_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="hold_time_study_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subhold_time_study_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlehold_time_study_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="hold_time_study_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subhold_time_study_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="hold_time_study_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subhold_time_study_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlehold_time_study_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="hold_time_study_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subhold_time_study_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'hold_time_study_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'hold_time_study_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="cleaningvalidation_pvr" id="cleaningvalidation_pvr">
-                                    Cleaning validation<button type="button" id="cleaningvalidation_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="cleaningvalidation_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->cleaningvalidation_pvr))
-                                            @foreach (unserialize($document->document_content->cleaningvalidation_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglecleaningvalidation_pvrBlock' : 'singlecleaningvalidation_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="cleaningvalidation_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="cleaningvalidation_pvr" id="cleaningvalidation_pvr">
+                                            Cleaning validation<button type="button" id="cleaningvalidation_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="cleaningvalidation_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->cleaningvalidation_pvr))
+                                                    @foreach (unserialize($document->document_content->cleaningvalidation_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglecleaningvalidation_pvrBlock' : 'singlecleaningvalidation_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="cleaningvalidation_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="cleaningvalidation_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subcleaningvalidation_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlecleaningvalidation_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="cleaningvalidation_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subcleaningvalidation_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="cleaningvalidation_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subcleaningvalidation_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlecleaningvalidation_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="cleaningvalidation_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subcleaningvalidation_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'cleaningvalidation_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'cleaningvalidation_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="stability_study_pvr" id="stability_study_pvr">
-                                    Stability study<button type="button" id="stability_study_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="stability_study_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->stability_study_pvr))
-                                            @foreach (unserialize($document->document_content->stability_study_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglestability_study_pvrBlock' : 'singlestability_study_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="stability_study_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="stability_study_pvr" id="stability_study_pvr">
+                                            Stability study<button type="button" id="stability_study_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="stability_study_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->stability_study_pvr))
+                                                    @foreach (unserialize($document->document_content->stability_study_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglestability_study_pvrBlock' : 'singlestability_study_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="stability_study_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="stability_study_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark substability_study_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlestability_study_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="stability_study_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark substability_study_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="stability_study_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark substability_study_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlestability_study_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="stability_study_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark substability_study_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'stability_study_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'stability_study_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="deviation_if_any_pvr" id="deviation_if_any_pvr">
-                                    Deviation (If any)<button type="button" id="deviation_if_any_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="deviation_if_any_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->deviation_if_any_pvr))
-                                            @foreach (unserialize($document->document_content->deviation_if_any_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingledeviation_if_any_pvrBlock' : 'singledeviation_if_any_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="deviation_if_any_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="deviation_if_any_pvr" id="deviation_if_any_pvr">
+                                            Deviation (If any)<button type="button" id="deviation_if_any_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="deviation_if_any_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->deviation_if_any_pvr))
+                                                    @foreach (unserialize($document->document_content->deviation_if_any_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingledeviation_if_any_pvrBlock' : 'singledeviation_if_any_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="deviation_if_any_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="deviation_if_any_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subdeviation_if_any_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singledeviation_if_any_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="deviation_if_any_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subdeviation_if_any_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="deviation_if_any_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subdeviation_if_any_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singledeviation_if_any_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="deviation_if_any_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subdeviation_if_any_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'deviation_if_any_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'deviation_if_any_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="changecontrol_pvr" id="changecontrol_pvr">
-                                    Change Control ( If any)<button type="button" id="changecontrol_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="changecontrol_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->changecontrol_pvr))
-                                            @foreach (unserialize($document->document_content->changecontrol_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglechangecontrol_pvrBlock' : 'singlechangecontrol_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="changecontrol_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="changecontrol_pvr" id="changecontrol_pvr">
+                                            Change Control ( If any)<button type="button" id="changecontrol_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="changecontrol_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->changecontrol_pvr))
+                                                    @foreach (unserialize($document->document_content->changecontrol_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglechangecontrol_pvrBlock' : 'singlechangecontrol_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="changecontrol_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="changecontrol_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subchangecontrol_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlechangecontrol_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="changecontrol_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subchangecontrol_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="changecontrol_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subchangecontrol_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlechangecontrol_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="changecontrol_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subchangecontrol_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'changecontrol_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'changecontrol_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="summary_pvr" id="summary_pvr">
-                                    Summary<button type="button" id="summary_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="summary_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->summary_pvr))
-                                            @foreach (unserialize($document->document_content->summary_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglesummary_pvrBlock' : 'singlesummary_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="summary_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="summary_pvr" id="summary_pvr">
+                                            Summary<button type="button" id="summary_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="summary_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->summary_pvr))
+                                                    @foreach (unserialize($document->document_content->summary_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglesummary_pvrBlock' : 'singlesummary_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="summary_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="summary_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subsummary_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlesummary_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="summary_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subsummary_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="summary_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subsummary_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlesummary_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="summary_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subsummary_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'summary_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'summary_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                            
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="conclusion_pvr" id="conclusion_pvr">
-                                    Conclusion<button type="button" id="conclusion_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="conclusion_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->conclusion_pvr))
-                                            @foreach (unserialize($document->document_content->conclusion_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleconclusion_pvrBlock' : 'singleconclusion_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="conclusion_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="conclusion_pvr" id="conclusion_pvr">
+                                            Conclusion<button type="button" id="conclusion_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="conclusion_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->conclusion_pvr))
+                                                    @foreach (unserialize($document->document_content->conclusion_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleconclusion_pvrBlock' : 'singleconclusion_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="conclusion_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="conclusion_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subconclusion_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleconclusion_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="conclusion_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subconclusion_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="conclusion_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subconclusion_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleconclusion_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="conclusion_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subconclusion_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'conclusion_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'conclusion_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
 
-
-                                 
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="proposed_parameter_upcoming_batch_pvr" id="proposed_parameter_upcoming_batch_pvr">
-                                    Proposed parameters for upcoming batches<button type="button" id="proposed_parameter_upcoming_batch_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="proposed_parameter_upcoming_batch_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->proposed_parameter_upcoming_batch_pvr))
-                                            @foreach (unserialize($document->document_content->proposed_parameter_upcoming_batch_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSingleproposed_parameter_upcoming_batch_pvrBlock' : 'singleproposed_parameter_upcoming_batch_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="proposed_parameter_upcoming_batch_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                        
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="proposed_parameter_upcoming_batch_pvr" id="proposed_parameter_upcoming_batch_pvr">
+                                            Proposed parameters for upcoming batches<button type="button" id="proposed_parameter_upcoming_batch_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="proposed_parameter_upcoming_batch_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->proposed_parameter_upcoming_batch_pvr))
+                                                    @foreach (unserialize($document->document_content->proposed_parameter_upcoming_batch_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSingleproposed_parameter_upcoming_batch_pvrBlock' : 'singleproposed_parameter_upcoming_batch_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="proposed_parameter_upcoming_batch_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="proposed_parameter_upcoming_batch_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subproposed_parameter_upcoming_batch_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singleproposed_parameter_upcoming_batch_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="proposed_parameter_upcoming_batch_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subproposed_parameter_upcoming_batch_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="proposed_parameter_upcoming_batch_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subproposed_parameter_upcoming_batch_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singleproposed_parameter_upcoming_batch_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="proposed_parameter_upcoming_batch_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subproposed_parameter_upcoming_batch_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
+
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'proposed_parameter_upcoming_batch_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'proposed_parameter_upcoming_batch_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
 
-
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="report_approval_pvr" id="report_approval_pvr">
-                                    Report Approval<button type="button" id="report_approval_pvrbtnadd" name="button"
-                                            {{ Helpers::isRevised($document->stage) }}>+</button>
-                                    </label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                            require completion</small></div>
-                                    <div id="report_approval_pvrdiv">
-                                        @if ($document->document_content && !empty($document->document_content->report_approval_pvr))
-                                            @foreach (unserialize($document->document_content->report_approval_pvr) as $key => $data)
-                                                <div
-                                                    class="{{ str_contains($key, 'sub') ? 'subSinglereport_approval_pvrBlock' : 'singlereport_approval_pvrBlock' }}">
-                                                    @if (str_contains($key, 'sub'))
-                                                        <div class="resrow row">
-                                                            <div class="col-6">
-                                                                <textarea name="report_approval_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="report_approval_pvr" id="report_approval_pvr">
+                                            Report Approval<button type="button" id="report_approval_pvrbtnadd" name="button"
+                                                    {{ Helpers::isRevised($document->stage) }}>+</button>
+                                            </label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <div id="report_approval_pvrdiv">
+                                                @if ($document->document_content && !empty($document->document_content->report_approval_pvr))
+                                                    @foreach (unserialize($document->document_content->report_approval_pvr) as $key => $data)
+                                                        <div
+                                                            class="{{ str_contains($key, 'sub') ? 'subSinglereport_approval_pvrBlock' : 'singlereport_approval_pvrBlock' }}">
+                                                            @if (str_contains($key, 'sub'))
+                                                                <div class="resrow row">
+                                                                    <div class="col-6">
+                                                                        <textarea name="report_approval_pvr[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-1">
+                                                                        <button
+                                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="row">
+                                                                    <div class="col-sm-10">
+                                                                        <textarea name="report_approval_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-dark subreport_approval_pvrAdd">+</button>
+                                                                    </div>
+                                                                    <div class="col-sm-1">
+                                                                        <button
+                                                                            class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                    </div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="singlereport_approval_pvrBlock">
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea name="report_approval_pvr[]" class="myclassname"></textarea>
                                                             </div>
-                                                            <div class="col-1">
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subreport_approval_pvrAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
                                                                 <button
                                                                     class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else
-                                                        <div class="row">
-                                                            <div class="col-sm-10">
-                                                                <textarea name="report_approval_pvr[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-dark subreport_approval_pvrAdd">+</button>
-                                                            </div>
-                                                            <div class="col-sm-1">
-                                                                <button
-                                                                    class="btn btn-danger removeAllBlocks">Remove</button>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <div class="singlereport_approval_pvrBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="report_approval_pvr[]" class="myclassname"></textarea>
                                                     </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subreport_approval_pvrAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button
-                                                            class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
+                                                @endif
                                             </div>
-                                        @endif
-                                    </div>
 
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'report_approval_pvr' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'report_approval_pvr' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    --}}
+                                    <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_pvrDatassp">
+                                            @if ($document->file_attach_pvr)
+                                                @foreach(json_decode($document->file_attach_pvr) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach_pvr[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="file_attach_pvrData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]" 
+                                                oninput="addMultipleFiles(this, 'file_attach_pvrDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                    <div class="button-block">
-                        <button type="submit" value="save" name="submit" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                            </a>
-                        </button>
-                    </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach_pvr" name="deleted_file_attach_pvr" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach_pvr');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+                       
+                            <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
                 </div>
             </div>
         </div>
@@ -21771,9 +22207,10 @@
                     <div class="row">
 
 
+                    {{--  
 
 
-                    <div class="col-md-12">
+                         <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="objective_cvpd" id="objective_cvpd">
                                     Objective   <button type="button" id="objective_cvpdbtnadd" name="button"
@@ -23515,6 +23952,91 @@
                                     @endforeach
                                 </div>
                             </div>
+
+                     --}}     
+                     <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attach_cvpdData">
+                                            @if ($document->attach_cvpd)
+                                                @foreach(json_decode($document->attach_cvpd) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attach_cvpd[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_V_user_attachment" name="attach_cvpd[]" 
+                                                oninput="addMultipleFiles(this, 'attach_cvpdData')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attach_cvpd" name="deleted_attach_cvpd" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attach_cvpd');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>   
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -23526,6 +24048,7 @@
                 </div>
             </div>
         </div>
+        
         <!---------------------------------------------- cleaning validation Report-doc tab ----------------------------------------->
 
 
@@ -23538,7 +24061,7 @@
                     <div class="row">
 
 
-
+                   {{--
 
                     <div class="col-md-12">
                                 <div class="group-input">
@@ -24331,9 +24854,91 @@
                             </div>
 
 
-
+                    --}}
                          
-                            
+                    <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_cvrdDatassp">
+                                            @if ($document->file_attach_cvrd)
+                                                @foreach(json_decode($document->file_attach_cvrd) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach_cvrd[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="file_attach_cvrdData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]" 
+                                                oninput="addMultipleFiles(this, 'file_attach_cvrdDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach_cvrd" name="deleted_file_attach_cvrd" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach_cvrd');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -24346,6 +24951,527 @@
             </div>
         </div>
      
+   
+  <!---------------------------------------------- stability study protocol tab ----------------------------------------->
+
+
+             <div id="doc_ssp" class="tabcontent">
+                            <div class="orig-head">
+                            STABILITY STUDY PROTOCOL
+                            </div>
+                        <div class="input-fields">
+                            <div class="row">
+
+
+
+                   {{-- 
+                     
+                                    <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="purpose">PRODUCT NAME  </label>
+                                                <input type="text" name="product_name_ssp" value="{{$document->document_content->product_name_ssp}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Protocol No.</label>
+                                                <input type="text" name="protocol_no_ssp" value="{{$document->document_content->protocol_no_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Brand Name </label>
+                                                <input type="text" name="brand_name_ssp" value="{{$document->document_content->brand_name_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Generic Name</label>
+                                                <input type="text" name="generic_name_ssp" value="{{$document->document_content->generic_name_ssp}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Label Claim  </label>
+                                                <input type="text" name="label_claim_ssp" value="{{$document->document_content->label_claim_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">FG Code</label>
+                                                <input type="text" name="fg_code_ssp" value="{{$document->document_content->fg_code_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Pack Size</label>
+                                                <input type="text" name="pack_size_ssp" value="{{$document->document_content->pack_size_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Shelf Life</label>
+                                                <input type="text" name="shelf_life_ssp" value="{{$document->document_content->shelf_life_ssp}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Market</label>
+                                                <input type="text" name="market_ssp" value="{{$document->document_content->market_ssp}}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">Storage condition</label>
+                                                <input type="text" name="storage_condition_ssp" value="{{$document->document_content->storage_condition_ssp}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="change_related_to">PURPOSE</label>
+                                                <select name="purpose_ssp" id="change_related_to">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="New Product" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'New Product' ? 'selected' : '' }}>New Product</option>
+                                                    <option value="Change in Process" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Change in Process' ? 'selected' : '' }}>Change in Process</option>
+                                                    <option value="Change in batch size" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Change in batch size' ? 'selected' : '' }}>Change in batch size</option>
+                                                    <option value="Change in packing material" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Change in packing material' ? 'selected' : '' }}>Change in packing material</option>
+                                                    <option value="Ongoing batch" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'Ongoing batch' ? 'selected' : '' }}>Ongoing batch</option>
+                                                    <option value="other" {{ old('purpose_ssp', $document->document_content->purpose_ssp ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                                    
+                                        <div class="col-lg-6" id="other_specify_div" style="display:none;">
+                                            <div class="group-input">
+                                                <label for="other_specify">Please specify</label>
+                                                <input type="text" name="specify_ssp" id="other_specify" value="{{ $document->document_content->specify_ssp ?? '' }}" placeholder="Specify if Other is selected">
+                                                
+                                            </div>
+                                        </div>
+
+                                                    <script>
+                                                        $(document).ready(function() {
+                                                            function toggleOtherSpecifyField() {
+                                                                var changeRelatedTo = $('#change_related_to').val();
+                                                                if (changeRelatedTo === 'other') {
+                                                                    $('#other_specify_div').show();
+                                                                } else {
+                                                                    $('#other_specify_div').hide();
+                                                                }
+                                                            }
+
+                                                            toggleOtherSpecifyField(); 
+
+                                                            $('#change_related_to').change(function() {
+                                                                toggleOtherSpecifyField();
+                                                            });
+                                                        });
+                                                    </script>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="change_related_to">SCOPE
+                                            </label>
+                                                <select name="scope_ssp" id="change_related_to">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="Exhibit Batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Exhibit Batch' ? 'selected' : '' }}>Exhibit Batch</option>
+                                                    <option value="Commercial Validation batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Commercial Validation batch' ? 'selected' : '' }}>Commercial Validation batch</option>
+                                                    <option value="Commercial Annual batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Commercial Annual batch' ? 'selected' : '' }}>Commercial Annual batch</option>
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+
+
+
+                                        
+
+
+                                    <div class="col-md-12 mb-3">
+                                            <div class="group-input">
+                                                <label for="documentrefrence_ssp">DOCUMENT REFERENCES</label>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                        not require completion</small></div>
+                                                <textarea name="documentrefrence_ssp" class="summernote">
+                                                {{$document->document_content->documentrefrence_ssp}} </textarea>
+                                            </div>
+                                        </div>
+                                    <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="scope">REASON FOR STABILITY</label>
+                                                <input type="text" name="reason_stability_ssp" value="{{$document->document_content->reason_stability_ssp}}">
+                                            </div>
+                                    </div>
+                         
+
+
+                                    <div class="col-12">
+                                <div class="group-input">
+                                    <label for="batch_details">
+                                        BATCH DETAILS
+                                        <button type="button" id="BatchRecordSSP">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="batch_detailData_ssp" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%">Sr.No</th>
+                                                    <th style="width: 20%">Batch Number</th>
+                                                    <th style="width: 20%">Batch Size</th>
+                                                    <th style="width: 20%">Manufacturing Date</th>
+                                                    <th style="width: 20%">Expiry Date</th>
+                                                    <th style="width: 10%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    // Ensure $BATCH_DETAILS_ssp->data is an array
+                                                    $batchData = !empty($BATCH_DETAILS_ssp) && is_string($BATCH_DETAILS_ssp->data) 
+                                                                ? json_decode($BATCH_DETAILS_ssp->data, true) 
+                                                                : (is_array($BATCH_DETAILS_ssp->data) ? $BATCH_DETAILS_ssp->data : []);
+                                                @endphp
+
+                                                @if (!empty($batchData))
+                                                    @foreach ($batchData as $index => $spec)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="batch_details_ssp[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                            <td><input type="text" name="batch_details_ssp[{{ $index }}][batch_no]" value="{{ $spec['batch_no'] ?? '' }}"></td>
+                                                            <td><input type="text" name="batch_details_ssp[{{ $index }}][batch_size]" value="{{ $spec['batch_size'] ?? '' }}"></td>
+                                                            <td><input type="text" class="datepicker" name="batch_details_ssp[{{ $index }}][manufacture_date]" placeholder="DD-MM-YYYY" value="{{ $spec['manufacture_date'] ?? '' }}"></td>
+                                                            <td><input type="text" class="datepicker" name="batch_details_ssp[{{ $index }}][expiry_date]" placeholder="DD-MM-YYYY" value="{{ $spec['expiry_date'] ?? '' }}"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr class="no-data">
+                                                        <td colspan="6" style="text-align: center;">No data found</td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    function initializeDatepickers() {
+                                        $(".datepicker").datepicker({
+                                            dateFormat: "dd-M-yy"
+                                        });
+                                    }
+
+                                    $('#BatchRecordSSP').click(function(e) {
+                                        e.preventDefault();
+                                        var tableBody = $('#batch_detailData_ssp tbody');
+                                        var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                        if (rowCount === 0) {
+                                            tableBody.find('.no-data').remove();
+                                        }
+
+                                        var newRow = `
+                                            <tr>
+                                                <td><input disabled type="text" name="batch_details_ssp[${rowCount}][serial]" value="${rowCount + 1}"></td>
+                                                <td><input type="text" name="batch_details_ssp[${rowCount}][batch_no]"></td>
+                                                <td><input type="text" name="batch_details_ssp[${rowCount}][batch_size]"></td>
+                                                <td><input type="text" class="datepicker" name="batch_details_ssp[${rowCount}][manufacture_date]" placeholder="DD-MM-YYYY"></td>
+                                                <td><input type="text" class="datepicker" name="batch_details_ssp[${rowCount}][expiry_date]" placeholder="DD-MM-YYYY"></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                            </tr>`;
+
+                                        tableBody.append(newRow);
+                                        initializeDatepickers(); // Apply datepicker to new row
+                                    });
+
+                                    // Remove row functionality
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                        
+                                        // Renumber serial numbers after removal
+                                        $('#batch_detailData_ssp tbody tr').each(function(index) {
+                                            $(this).find('td:first input').val(index + 1);
+                                        });
+
+                                        // If all rows are removed, show "No data found"
+                                        if ($('#batch_detailData_ssp tbody tr').length === 0) {
+                                            $('#batch_detailData_ssp tbody').append('<tr class="no-data"><td colspan="6" style="text-align: center;">No data found</td></tr>');
+                                        }
+                                    });
+
+                                    // Initialize datepickers on page load
+                                    initializeDatepickers();
+                                });
+                            </script>
+
+
+
+
+
+
+   
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Specification Details">
+                                                
+                                                DETAILS
+                                                <button type="button" id="SecondbatchDetailData_ssp">+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="batch_detailRecord_ssp" style="width: 100%;">
+                                                    <thead>
+                                                            <tr>
+                                                                <th style="width: 2%">Sr.No</th>
+                                                                <th style="width: 12%">Stability station</th>
+                                                                <th style="width: 12%">Required tests</th>
+                                                                
+                                                                <th style="width: 3%">Action</th>
+
+                                                            </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($DETAILS_ssp) && is_array($DETAILS_ssp->data))
+                                                            @foreach ($DETAILS_ssp->data as $index => $spec)
+                                                                <tr>
+                                                                    <td><input disabled type="text" name="batch_detaildata_ssp[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
+                                                                    <td><input type="text" name="batch_detaildata_ssp[{{ $index }}][stability_station]" value="{{ $spec['stability_station'] }}"></td>
+                                                                    <td><input type="text" name="batch_detaildata_ssp[{{ $index }}][req_test]" value="{{ $spec['req_test'] }}"></td>
+                                                                    
+                                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr class="no-data">
+                                                                <td colspan="5" style="text-align: center;">No data found</td>
+                                                            </tr>
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            // Add new row in Specification Validation table
+                                            $('#SecondbatchDetailData_ssp').click(function(e) {
+                                                e.preventDefault();
+
+                                                function generateSpecificationRow(serialNumber) {
+                                                    return (
+                                                        '<tr>' +
+                                                        '<td><input disabled type="text" name="batch_detaildata_ssp[' + serialNumber +
+                                                        '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                        '<td><input type="text" name="batch_detaildata_ssp[' + serialNumber + '][stability_station]"></td>' +
+                                                        '<td><input type="text" name="batch_detaildata_ssp[' + serialNumber + '][req_test]"></td>' +
+                                                    
+                                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                        '</tr>'
+                                                    );
+                                                }
+
+                                                var tableBody = $('#batch_detailRecord_ssp tbody');
+                                                var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                                // Remove "No data found" row if it exists
+                                                if (rowCount === 0) {
+                                                    tableBody.find('.no-data').remove();
+                                                    rowCount = 0; // Start count from 0 if no rows exist
+                                                }
+
+                                                var newRow = generateSpecificationRow(rowCount);
+                                                tableBody.append(newRow);
+                                            });
+
+                                            // Remove row in Specification Validation table
+                                            $(document).on('click', '.removeRowBtn', function() {
+                                                $(this).closest('tr').remove();
+
+                                                // Check if table is empty after deletion, add "No data found" row if so
+                                                if ($('#batch_detaildata_ssp tbody tr').length === 0) {
+                                                    $('#batch_detaildata_ssp tbody').append('<tr class="no-data"><td colspan="5">No data found</td></tr>');
+                                                }
+                                            });
+                                        });
+                                    </script>
+
+
+
+                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="others">Remark (if any)</label>
+                                        <textarea name="remark_if_any_ssp">{{$document->document_content->remark_if_any_ssp}}</textarea>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="documentrefrence_ssp">STABILITY DATA COMPILATION</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="stability_data_ssp" class="summernote">
+                                        {{$document->document_content->stability_data_ssp}} </textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">GENERAL INSTRUCTIONS</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea name="general_inst_ssp" class="summernote">
+                                        {{$document->document_content->general_inst_ssp}} </textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="orig-head">
+                                PROTOCOL CERTIFICATION
+                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Stability Protocol For </label>
+                                        <input type="text" name="stability_proto_ssp" value="{{$document->document_content->stability_proto_ssp}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Protocol No.</label>
+                                        <input type="text" name="proto_no_ssp" value="{{$document->document_content->proto_no_ssp}}">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="purpose">Product</label>
+                                        <input type="text" name="product_ssp" value="{{$document->document_content->product_ssp}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="scope">Batch Number</label>
+                                        <input type="text" name="batchnumber_ssp" value="{{$document->document_content->batchnumber_ssp}}">
+                                    </div>
+                                </div> 
+
+                        --}}      
+                   
+                       
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attachDatassp">
+                                            @if ($document->file_attach)
+                                                @foreach(json_decode($document->file_attach) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_V_user_attachment" name="file_attach[]" 
+                                                oninput="addMultipleFiles(this, 'file_attachDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach" name="deleted_file_attach" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+
+
+
+                            
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
 
                 <!--Process Validation Protocol  -->
@@ -25161,6 +26287,327 @@
                     </div>
                 </div>
 
+
+                  <!-- Validation Master Plan  -->
+                <div id="doc_vmp" class="tabcontent">
+                       <div class="orig-head">
+                       Validation Master Plan
+                        </div>
+                    <div class="input-fields">
+                         <div class="row">
+                         <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_vmpData">
+                                            @if ($document->file_attach_vmp)
+                                                @foreach(json_decode($document->file_attach_vmp) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach_vmp[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="file_attach_vmpDatafiled" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attach_vmpDatafiled" name="file_attach_vmp[]" 
+                                                oninput="addMultipleFiles(this, 'file_attach_vmpData')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach_vmp" name="deleted_file_attach_vmp" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach_vmp');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+                  <!-- Validation Master Plan  -->
+                  <div id="doc_qm" class="tabcontent">
+                       <div class="orig-head">
+                       Quality Manual 
+                        </div>
+                    <div class="input-fields">
+                         <div class="row">
+                         <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_qmData">
+                                            @if ($document->file_attach_qm)
+                                                @foreach(json_decode($document->file_attach_qm) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach_qm[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="file_attach_qmDatafiled" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attach_qmDatafiled" name="file_attach_qm[]" 
+                                                oninput="addMultipleFiles(this, 'file_attach_qmData')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach_qm" name="deleted_file_attach_qm" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach_qm');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+                <!-- Protocol Cum Report -->
+                    <div id="doc_qpcr" class="tabcontent">
+                        <div class="orig-head">
+                            Qualification Protocol Cum Report
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                              
+                               
+
+                                
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attachDatassp">
+                                            @if ($document->procumrepo_file_attach)
+                                                @foreach(json_decode($document->procumrepo_file_attach) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_procumrepo_file_attach[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="annex_V_user_attachment" name="procumrepo_file_attach[]" 
+                                                oninput="addMultipleFiles(this, 'procumrepo_file_attachDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_procumrepo_file_attach" name="deleted_procumrepo_file_attach" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_procumrepo_file_attach');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                            
+                                
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                
                 <!------------------------ Packing Material Specification - tab ------------------------------------>
                 <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
