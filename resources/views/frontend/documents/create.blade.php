@@ -4856,7 +4856,7 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                        
+                     {{--   
                       <div class="col-md-6">
                               <div class="group-input">
                                   <label for="purpose">Generic Name </label>
@@ -5564,9 +5564,28 @@
 
                                     </div>
                                 </div>
+                                --}}
+                               
+                               
+                                
 
-                               
-                               
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_pvr"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_pvrData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_pvr')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -6266,6 +6285,7 @@
                             <div class="input-fields">
                                 <div class="row">
                                         
+                             {{--
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -6578,9 +6598,27 @@
                                 </div>
 
 
-
+                              --}}
 
                                 
+
+
+                              <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_cvrd"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_cvrdData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_cvrd')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                
                                

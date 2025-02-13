@@ -1978,6 +1978,35 @@ class DocumentController extends Controller
             $document->procumrepo_file_attach = json_encode($files);
         }
 
+
+        if (!empty($request->file_attach_pvr)) {
+            $files = [];
+            if ($request->hasfile('file_attach_pvr')) {
+                foreach ($request->file('file_attach_pvr') as $file) {
+
+                    $name = $request->name . 'file_attach_pvr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->file_attach_pvr = json_encode($files);
+        }
+
+        if (!empty($request->file_attach_cvrd)) {
+            $files = [];
+            if ($request->hasfile('file_attach_cvrd')) {
+                foreach ($request->file('file_attach_cvrd') as $file) {
+
+                    $name = $request->name . 'file_attach_cvrd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->file_attach_cvrd = json_encode($files);
+        }
+
         $document->save();
 
 
@@ -4012,6 +4041,60 @@ class DocumentController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->procumrepo_file_attach = json_encode($allFiles);
             }
+
+
+            if (!empty($request->file_attach_pvr) || !empty($request->deleted_file_attach_pvr)) {
+                $existingFiles = json_decode($document->file_attach_pvr, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_file_attach_pvr)) {
+                    $filesToDelete = explode(',', $request->deleted_file_attach_pvr);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('file_attach_pvr')) {
+                    foreach ($request->file('file_attach_pvr') as $file) {
+                        $name = $request->name . 'file_attach_pvr' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->file_attach_pvr = json_encode($allFiles);
+            }
+    
+            if (!empty($request->file_attach_cvrd) || !empty($request->deleted_file_attach_cvrd)) {
+                $existingFiles = json_decode($document->file_attach_cvrd, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_file_attach_cvrd)) {
+                    $filesToDelete = explode(',', $request->deleted_file_attach_cvrd);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('file_attach_cvrd')) {
+                    foreach ($request->file('file_attach_cvrd') as $file) {
+                        $name = $request->name . 'file_attach_cvrd' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->file_attach_cvrd = json_encode($allFiles);
+            }
+    
     
            $document->save();
     

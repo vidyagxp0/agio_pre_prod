@@ -24,6 +24,8 @@ return new class extends Migration
             $table->longText('file_attach_qm')->nullable();
             $table->longText('file_attach_vmp')->nullable();
             $table->longText('procumrepo_file_attach')->nullable();
+            $table->longText('file_attach_pvr')->nullable();
+            $table->longText('file_attach_cvrd')->nullable();
 
         });
     }
