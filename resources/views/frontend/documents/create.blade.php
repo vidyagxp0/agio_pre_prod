@@ -337,8 +337,10 @@
                 <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'add-prcumrepo')">Qualification Protocol Cum Report</button>
            
                 <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
+                <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
            
-
+                <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
+           
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
              
@@ -1618,10 +1620,9 @@
                         <div class="orig-head">
                             Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
-
-                            {{--
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Objective</label>
@@ -1664,35 +1665,7 @@
                                     </div>
                                 </div>
 
-                                 <!-- <div class="col-md-12">
-                                    <div class="group-input">
-
-                                        <label for="accountability" id="accountability">
-                                            Accountability<button type="button" id="accountabilitybtnadd"
-                                                name="button">+</button>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                    does not require completion</small></div>
-                                        </label>
-
-                                        <div id="accountabilitydiv">
-                                            <div class="singleAccountabilityBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="accountability[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subAccountabilityAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>  -->
-
+                               
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="referencesss" id="referencesss">
@@ -1873,31 +1846,29 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+                                       
                                     </div>
                                 </div>
 
                             </div>
                         </div>
                         --}}
-
-
-                                     <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="File_Attachment"><b>File Attachment</b></label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
-                                            <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="attachment_srt"></div>
-                                    
-                                                <div class="add-btn">
-                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="attachment_srt[]" 
-                                                        oninput="addMultipleFiles(this, 'attachment_srt')" multiple hidden>
-                                                </div>
-                                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_srt"></div>
+                            
+                                        <div class="add-btn">
+                                            <label for="attachment_srtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_srtData" name="attachment_srt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_srt')" multiple hidden>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -1915,10 +1886,9 @@
                         <div class="orig-head">
                             Study Protocol
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
-
-                            {{--
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Objective</label>
@@ -2223,8 +2193,7 @@
                         </div>
 
                         --}}
-
-                        <div class="col-12">
+                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -2233,14 +2202,13 @@
                                                 <div class="file-attachment-list" id="attachment_spt"></div>
                                     
                                                 <div class="add-btn">
-                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="attachment_spt[]" 
+                                                    <label for="attachment_sptData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="attachment_sptData" name="attachment_spt[]" 
                                                         oninput="addMultipleFiles(this, 'attachment_spt')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -2432,6 +2400,7 @@
                         <div class="orig-head">
                           Equipment Hold Time Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <!-- <div class="col-md-6">
@@ -2671,6 +2640,23 @@
                             
                             </div>
                         </div>
+                        --}}
+                                  <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachment_ehtsr"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]" 
+                                                        oninput="addMultipleFiles(this, 'attachment_ehtsr')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3621,21 +3607,15 @@
                         <div class="orig-head">
                           Equipment Hold Time Study Protocol
                         </div>
+
+
+                        {{--
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="objective">Report No.</label>
-                                        <textarea name="eqp_report"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="objective">Batch No.</label>
-                                        <textarea name="eqp_batch"></textarea>
-                                    </div>
-                                </div> --}}
 
+                            
+                            
+                          
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Approval</label>
@@ -3973,6 +3953,26 @@
                             
                             </div>
                         </div>
+
+                        --}}
+
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_ehtsprt"></div>
+                            
+                                        <div class="add-btn">
+                                            <label for="attachment_ehtsprtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_ehtsprtData" name="attachment_ehtsprt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_ehtsprt')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -3990,9 +3990,10 @@
                         <div class="orig-head">
                             Format for compressed air and Nitrogen gas system Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="col-md-6">
+                                 <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="objective">Report No.</label>
                                         <textarea name="eqp_report"></textarea>
@@ -4003,7 +4004,7 @@
                                         <label for="objective">Batch No.</label>
                                         <textarea name="eqp_batch"></textarea>
                                     </div>
-                                </div> --}}
+                                </div>  -->
 
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -4426,6 +4427,24 @@
                             
                             </div>
                         </div>
+                        --}}
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attach_comp_nitrogen"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="attach_comp_nitrogendata" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="attach_comp_nitrogendata" name="attach_comp_nitrogen[]" 
+                                                        oninput="addMultipleFiles(this, 'attach_comp_nitrogen')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -6188,7 +6207,7 @@
 
                          --}}
 
-                                    <div class="col-12">
+                                <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -6207,7 +6226,18 @@
 
                    
                                     
-                                   
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
 
                                
                                
@@ -7077,7 +7107,93 @@
                     </div>
                 </div>
 
+<!------------------------ Validation Master Plan - tab ------------------------------------>
+          
 
+
+                <div id="doc_vmp" class="tabcontent">
+                            <div class="orig-head">
+                            Validation Master Plan 
+                            </div>
+                            <div class="input-fields">
+                                <div class="row">
+                                        
+
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_vmp"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_vmpData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_vmpData" name="file_attach_vmp[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_vmp')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                   
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+<!------------------------ Validation Master Plan - tab ------------------------------------>
+          
+
+
+                <div id="doc_qm" class="tabcontent">
+                            <div class="orig-head">
+                            Quality Manual  
+                            </div>
+                            <div class="input-fields">
+                                <div class="row">
+                                        
+
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="file_attach_qm"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="file_attach_qmData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attach_qmData" name="file_attach_qm[]" 
+                                                        oninput="addMultipleFiles(this, 'file_attach_qm')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                   
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
                 <!-- GTP -->
                 <div id="doc-gtp" class="tabcontent">
                         <div class="orig-head">

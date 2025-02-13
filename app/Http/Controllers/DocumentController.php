@@ -1916,20 +1916,51 @@ class DocumentController extends Controller
             }
             $document->attachment_ehtsprt = json_encode($files);
         }
-        if (!empty($request->attachment_ehtsr)) {
+       
+        if (!empty($request->attach_comp_nitrogen)) {
             $files = [];
-            if ($request->hasfile('attachment_ehtsr')) {
-                foreach ($request->file('attachment_ehtsr') as $file) {
+            if ($request->hasfile('attach_comp_nitrogen')) {
+                foreach ($request->file('attach_comp_nitrogen') as $file) {
 
-                    $name = $request->name . 'attachment_ehtsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'attach_comp_nitrogen' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
 
             }
-            $document->attachment_ehtsr = json_encode($files);
+            $document->attach_comp_nitrogen = json_encode($files);
         }
 
+
+        if (!empty($request->file_attach_qm)) {
+            $files = [];
+            if ($request->hasfile('file_attach_qm')) {
+                foreach ($request->file('file_attach_qm') as $file) {
+
+                    $name = $request->name . 'file_attach_qm' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->file_attach_qm = json_encode($files);
+        }
+
+
+
+        if (!empty($request->file_attach_vmp)) {
+            $files = [];
+            if ($request->hasfile('file_attach_vmp')) {
+                foreach ($request->file('file_attach_vmp') as $file) {
+
+                    $name = $request->name . 'file_attach_vmp' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->file_attach_vmp = json_encode($files);
+        }
 
         $document->save();
 
@@ -3752,6 +3783,193 @@ class DocumentController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attach_cvpd = json_encode($allFiles);
             }
+
+
+
+            if (!empty($request->attachment_srt) || !empty($request->deleted_attachment_srt)) {
+                $existingFiles = json_decode($document->attachment_srt, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_attachment_srt)) {
+                    $filesToDelete = explode(',', $request->deleted_attachment_srt);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('attachment_srt')) {
+                    foreach ($request->file('attachment_srt') as $file) {
+                        $name = $request->name . 'attachment_srt' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->attachment_srt = json_encode($allFiles);
+            }
+    
+
+            if (!empty($request->attachment_spt) || !empty($request->deleted_attachment_spt)) {
+                $existingFiles = json_decode($document->attachment_spt, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_attachment_spt)) {
+                    $filesToDelete = explode(',', $request->deleted_attachment_spt);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('attachment_spt')) {
+                    foreach ($request->file('attachment_spt') as $file) {
+                        $name = $request->name . 'attachment_spt' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->attachment_spt = json_encode($allFiles);
+            }
+
+            if (!empty($request->attachment_ehtsr) || !empty($request->deleted_attachment_ehtsr)) {
+                $existingFiles = json_decode($document->attachment_ehtsr, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_attachment_ehtsr)) {
+                    $filesToDelete = explode(',', $request->deleted_attachment_ehtsr);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('attachment_ehtsr')) {
+                    foreach ($request->file('attachment_ehtsr') as $file) {
+                        $name = $request->name . 'attachment_ehtsr' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->attachment_ehtsr = json_encode($allFiles);
+            }
+
+
+            if (!empty($request->attachment_ehtsprt) || !empty($request->deleted_attachment_ehtsprt)) {
+                $existingFiles = json_decode($document->attachment_ehtsprt, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_attachment_ehtsprt)) {
+                    $filesToDelete = explode(',', $request->deleted_attachment_ehtsprt);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('attachment_ehtsprt')) {
+                    foreach ($request->file('attachment_ehtsprt') as $file) {
+                        $name = $request->name . 'attachment_ehtsprt' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->attachment_ehtsprt = json_encode($allFiles);
+            }
+
+            if (!empty($request->attach_comp_nitrogen) || !empty($request->deleted_attach_comp_nitrogen)) {
+                $existingFiles = json_decode($document->attach_comp_nitrogen, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_attach_comp_nitrogen)) {
+                    $filesToDelete = explode(',', $request->deleted_attach_comp_nitrogen);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('attach_comp_nitrogen')) {
+                    foreach ($request->file('attach_comp_nitrogen') as $file) {
+                        $name = $request->name . 'attach_comp_nitrogen' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->attach_comp_nitrogen = json_encode($allFiles);
+            }
+
+            if (!empty($request->file_attach_vmp) || !empty($request->deleted_file_attach_vmp)) {
+                $existingFiles = json_decode($document->file_attach_vmp, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_file_attach_vmp)) {
+                    $filesToDelete = explode(',', $request->deleted_file_attach_vmp);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('file_attach_vmp')) {
+                    foreach ($request->file('file_attach_vmp') as $file) {
+                        $name = $request->name . 'file_attach_vmp' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->file_attach_vmp = json_encode($allFiles);
+            }
+
+            if (!empty($request->file_attach_qm) || !empty($request->deleted_file_attach_qm)) {
+                $existingFiles = json_decode($document->file_attach_qm, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_file_attach_qm)) {
+                    $filesToDelete = explode(',', $request->deleted_file_attach_qm);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('file_attach_qm')) {
+                    foreach ($request->file('file_attach_qm') as $file) {
+                        $name = $request->name . 'file_attach_qm' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->file_attach_qm = json_encode($allFiles);
+            }
+
     
            $document->save();
     

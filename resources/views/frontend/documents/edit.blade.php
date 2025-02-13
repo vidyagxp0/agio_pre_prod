@@ -236,6 +236,8 @@
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
                 <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
+                <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
+                <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
            
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
                
@@ -321,7 +323,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -371,7 +373,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -496,7 +498,7 @@
                                 </div>
                                 <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -550,7 +552,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -586,7 +588,7 @@
     @endforeach
                                                                 </div>
                                                             </div> -->
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -690,7 +692,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -767,7 +769,7 @@
                                 <p id="depart-nameError" style="color:red">**Department Name is required</p>
 
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -830,7 +832,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -987,7 +989,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1106,7 +1108,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                   
                                     <div class="comment">
                                         <div>
 
@@ -1155,7 +1157,7 @@
                                 </script>
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                   
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1208,7 +1210,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                   
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1271,7 +1273,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1319,7 +1321,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1393,7 +1395,7 @@
                                 </div>
                                 <p id="reviewerError" style="color:red">**Reviewers are required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1455,7 +1457,7 @@
                                 </div>
                                 <p id="approverError" style="color:red">**Approvers are required</p>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -3263,6 +3265,7 @@
                         <div class="orig-head">
                             Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -3288,7 +3291,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3324,7 +3327,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3414,7 +3417,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3515,7 +3518,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3590,7 +3593,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3665,7 +3668,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3761,7 +3764,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3853,7 +3856,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3894,6 +3897,91 @@
                                 
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_srtDatafield">
+                                            @if ($document->attachment_srt)
+                                                @foreach(json_decode($document->attachment_srt) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_srt[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_srtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_srtData" name="attachment_srt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_srtDatafield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_srt" name="deleted_attachment_srt" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_srt');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3908,6 +3996,7 @@
                         <div class="orig-head">
                             Study Protocol
                         </div>
+                       {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -3933,7 +4022,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -3969,7 +4058,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4059,7 +4148,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4160,7 +4249,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4235,7 +4324,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4310,7 +4399,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4406,7 +4495,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4498,7 +4587,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4588,7 +4677,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4678,7 +4767,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4768,7 +4857,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4858,7 +4947,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4878,6 +4967,92 @@
                                 
                             </div>
                         </div>
+                         --}}
+
+
+                         <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_sptfield">
+                                            @if ($document->attachment_spt)
+                                                @foreach(json_decode($document->attachment_spt) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_spt[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_sptData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_sptData" name="attachment_spt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_sptfield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_spt" name="deleted_attachment_spt" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_spt');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -4892,6 +5067,7 @@
                         <div class="orig-head">
                             Equipment Hold Time Study Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -4917,7 +5093,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4953,7 +5129,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -4989,7 +5165,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5080,7 +5256,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5181,7 +5357,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5256,7 +5432,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5331,7 +5507,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5427,7 +5603,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5519,7 +5695,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5609,7 +5785,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -5630,6 +5806,91 @@
                                 
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_ehtsrfield">
+                                            @if ($document->attachment_ehtsr)
+                                                @foreach(json_decode($document->attachment_ehtsr) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_ehtsr[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_ehtsrfield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_ehtsr" name="deleted_attachment_ehtsr" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_ehtsr');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -12708,6 +12969,7 @@
                         <div class="orig-head">
                             Equipment Hold Time Study Protocol
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
 
@@ -12734,7 +12996,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -12770,7 +13032,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -12806,7 +13068,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -12897,7 +13159,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -12998,7 +13260,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13074,7 +13336,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13149,7 +13411,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13245,7 +13507,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13337,7 +13599,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13427,7 +13689,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13517,7 +13779,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13607,7 +13869,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13697,7 +13959,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13788,7 +14050,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13813,6 +14075,92 @@
                                
                             </div>
                         </div>
+                        --}}
+
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attachment_ehtsprtDatassp">
+                                            @if ($document->attachment_ehtsprt)
+                                                @foreach(json_decode($document->attachment_ehtsprt) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attachment_ehtsprt[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attachment_ehtsprtData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attachment_ehtsprtData" name="attachment_ehtsprt[]" 
+                                                oninput="addMultipleFiles(this, 'attachment_ehtsprtDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attachment_ehtsprt" name="deleted_attachment_ehtsprt" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attachment_ehtsprt');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -13826,6 +14174,7 @@
                         <div class="orig-head">
                             Format for compressed air and Nitrogen gas system Report
                         </div>
+                        {{--
                         <div class="input-fields">
                             <div class="row">
 
@@ -13852,7 +14201,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13888,7 +14237,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -13924,7 +14273,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14015,7 +14364,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14116,7 +14465,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14192,7 +14541,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14267,7 +14616,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14363,7 +14712,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14455,7 +14804,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14545,7 +14894,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14635,7 +14984,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14725,7 +15074,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14815,7 +15164,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14906,7 +15255,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -14996,7 +15345,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15086,7 +15435,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15177,7 +15526,7 @@
                                     </div>
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
+                                @if (Auth::user()->role != 3 && $document->stage < 8)  <div
                                         class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -15192,6 +15541,91 @@
                                
                             </div>
                         </div>
+                        --}}
+
+                        <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="attach_comp_nitrogenDatafield">
+                                            @if ($document->attach_comp_nitrogen)
+                                                @foreach(json_decode($document->attach_comp_nitrogen) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_attach_comp_nitrogen[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="attach_comp_nitrogenData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attach_comp_nitrogenData" name="attach_comp_nitrogen[]" 
+                                                oninput="addMultipleFiles(this, 'attach_comp_nitrogenDatafield')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_attach_comp_nitrogen" name="deleted_attach_comp_nitrogen" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_attach_comp_nitrogen');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
                         <div class="button-block">
                                     <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -19398,6 +19832,7 @@
                 </div>
             </div>
         </div>
+        
         <!---------------------------------------------- cleaning validation Report-doc tab ----------------------------------------->
 
 
@@ -21554,6 +21989,214 @@
                     </div>
                 </div>
 
+
+                  <!-- Validation Master Plan  -->
+                <div id="doc_vmp" class="tabcontent">
+                       <div class="orig-head">
+                       Validation Master Plan
+                        </div>
+                    <div class="input-fields">
+                         <div class="row">
+                         <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_vmpData">
+                                            @if ($document->file_attach_vmp)
+                                                @foreach(json_decode($document->file_attach_vmp) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach_vmp[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="file_attach_vmpDatafiled" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attach_vmpDatafiled" name="file_attach_vmp[]" 
+                                                oninput="addMultipleFiles(this, 'file_attach_vmpData')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach_vmp" name="deleted_file_attach_vmp" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach_vmp');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+
+                  <!-- Validation Master Plan  -->
+                  <div id="doc_qm" class="tabcontent">
+                       <div class="orig-head">
+                       Quality Manual 
+                        </div>
+                    <div class="input-fields">
+                         <div class="row">
+                         <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach_qmData">
+                                            @if ($document->file_attach_qm)
+                                                @foreach(json_decode($document->file_attach_qm) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_file_attach_qm[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="file_attach_qmDatafiled" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attach_qmDatafiled" name="file_attach_qm[]" 
+                                                oninput="addMultipleFiles(this, 'file_attach_qmData')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hidden field to store deleted files -->
+                            <input type="hidden" id="deleted_file_attach_qm" name="deleted_file_attach_qm" value="">
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    document.querySelectorAll('.remove-file').forEach(button => {
+                                        button.addEventListener('click', function () {
+                                            const fileName = this.getAttribute('data-file-name');
+                                            const fileContainer = this.closest('.file-container');
+
+                                            if (fileContainer) {
+                                                fileContainer.style.display = 'none';
+                                                
+                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                if (hiddenInput) {
+                                                    hiddenInput.remove();
+                                                }
+
+                                                const deletedFilesInput = document.getElementById('deleted_file_attach_qm');
+                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                deletedFiles.push(fileName);
+                                                deletedFilesInput.value = deletedFiles.join(',');
+                                            }
+                                        });
+                                    });
+                                });
+
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    for (let file of input.files) {
+                                        let fileContainer = document.createElement('h6');
+                                        fileContainer.classList.add('file-container', 'text-dark');
+                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                        let fileText = document.createElement('b');
+                                        fileText.textContent = file.name;
+
+                                        let removeLink = document.createElement('a');
+                                        removeLink.classList.add('remove-file');
+                                        removeLink.dataset.fileName = file.name;
+                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                        removeLink.addEventListener('click', function () {
+                                            fileContainer.style.display = 'none';
+                                        });
+
+                                        fileContainer.appendChild(fileText);
+                                        fileContainer.appendChild(removeLink);
+                                        fileList.appendChild(fileContainer);
+                                    }
+                                }
+                            </script>
+
+                                <div class="button-block">
+                                    <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                        </a>
+                                    </button>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+                
                 <!------------------------ Packing Material Specification - tab ------------------------------------>
                 <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
