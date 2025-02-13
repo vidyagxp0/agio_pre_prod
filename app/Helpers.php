@@ -825,6 +825,9 @@ class Helpers
             'ANNEXUREXVIIVALIDATION'=>'annexure-XVII - Validation Summary Report',
             'ANNEXUREXVIINSTALLATION'=>'annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification',
             'ANNEXUREXIXSYSTEMRETIREMENT'=>'annexure-XIX - System Retirement.doc',
+
+            'MAForRec' =>'Master Formula Record',
+            'MAPacRec' =>'Master Packing Record',
                         
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
