@@ -288,7 +288,7 @@
             <tbody>
                 <tr>
                     <td>
-                      {Product Name/Material Name}
+                      {{ $document->pia_name }}
                     </td>
                 </tr>
             </tbody>
@@ -296,7 +296,28 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.: 
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
+                        
+                    <span>
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                            @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    {{$document->pia_name_code}}/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @else
+                                    {{$document->pia_name_code}}/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                @endif
+                        @else
+                            
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    {{$document->pia_name_code}}/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @else
+                                    {{$document->pia_name_code}}/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                @endif
+                        @endif
+                    </span>
                     
                     
                     </td>
@@ -326,6 +347,9 @@
                 </tr>
             </tbody>
         </table>
+        <span>
+           Format No.: QA/097/F3-01                               
+        </span>
     </footer>
 
     <table style="margin-top: 15px;">
@@ -497,8 +521,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 485;
+                $y = 760;
+                $x = 480;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

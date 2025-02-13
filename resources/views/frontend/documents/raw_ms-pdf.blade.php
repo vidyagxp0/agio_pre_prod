@@ -365,15 +365,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   RM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                       </span>
@@ -408,9 +408,9 @@
                                     ->value('typecode');
                             @endphp
                             @if ($document->revised === 'Yes')
-                            RM/S/00{{ $document->revised_doc }}-0{{ $document->major }}
+                            RMS/00{{ $document->revised_doc }}-0{{ $document->major }}
                             @else
-                            -
+                             Nill
                             @endif
                    </span>
                 
@@ -717,9 +717,9 @@
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 485;
+                $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+                $y = 175;
+                $x = 380;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

@@ -125,15 +125,15 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 60px; /* Set a specific height for the header */
+            /* height: 60px; */
 
         }
 
         body {
-            margin-top: 250px;
-            margin-bottom: 160px;
-            padding-top: 60px;
-            padding-bottom: 50px; 
+            margin-top: 300px;
+            margin-bottom: 180px;
+            /* padding-top: 30px;
+            padding-bottom: 50px;  */
         }
 
         footer {
@@ -142,7 +142,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 170px; /* Set a specific height for the footer */
+            /* height: 170px; */
         }
 
         .table-responsive {
@@ -293,7 +293,7 @@
             <tbody>
                 <tr>
                     <td>
-                      {Name of Material}
+                       {{ $document->packing_material_name }}
                     </td>
                 </tr>
             </tbody>
@@ -311,15 +311,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    PM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   PM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   PM/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -355,9 +355,9 @@
                                 ->value('typecode');
                         @endphp
                         @if ($document->revised === 'Yes')
-                        PM/S/00{{ $document->revised_doc }}-0{{ $document->major }}
+                        PMS/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
-                        -
+                         Nill
                         @endif
                     </span> 
                 
@@ -372,7 +372,10 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Item Code: 
+                    <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Item Code:
+                        <span>
+                            {{ $document->item_code }}
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -458,7 +461,7 @@
                 </tbody>
             </table>
 
-            <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
             <tbody>
                 <tr style="border-bottom: 1px solid #ddd;">
                     @php
@@ -474,7 +477,10 @@
                     <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
                     <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
                 </tr>
-            </tbody>
+            </tbody> --}}
+            <span>
+                Format No.: QA/097/F7-00 
+            </span>
         </table>
     </footer>
 
@@ -630,9 +636,9 @@
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 485;
+                $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+                $y = 200;
+                $x = 400;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }

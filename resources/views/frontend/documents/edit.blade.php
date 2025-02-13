@@ -3040,20 +3040,26 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Specification No</label>
                                         <input type="text" id="specification" name="specification_mfps_no" value="{{ $document->specification_mfps_no }}" maxlength="255">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="stp">STP No</label>
+                                        <label for="stp">Specification No</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $stpNumber = "MFPS/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfps_no" value="{{ $stpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Name of Product</label>
+                                        <input type="text" id="mfproduct" name="mfproduct_name" value="{{ $document->mfproduct_name }}" maxlength="255">
                                     </div>
                                 </div>
                             </div>
@@ -6038,10 +6044,10 @@
 
                             <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        <label for="stp">Specification No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "FP/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "FPS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -9551,10 +9557,10 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        <label for="stp">Specification No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "CV/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "CVS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -9631,7 +9637,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     SPECIFICATION
                                 </div>
                                 <div class="col-12">
@@ -9721,7 +9727,7 @@
                                             }
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
 
                         <div class="col-12 sub-head">
@@ -9838,10 +9844,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        <label for="stp">Specification No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "IP/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "IPS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -20954,22 +20960,37 @@
                     <div class="input-fields">
                         <div class="row">
 
-                        <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="stp">STP No<span class="text-danger">*</span></label>
-                                        @php
-                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "PM/S/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
-                                        @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="stp">Specification No<span class="text-danger">*</span></label>
+                                    @php
+                                        $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                        $mfpstpNumber = "PMS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                    @endphp
+                                    <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                 </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Material Name</label>
+                                        <textarea name="packing_material_name">{{ $document->packing_material_name }}</textarea>
+                                    </div>
+                            </div>
+                            <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Item Code</label>
+                                        <textarea name="item_code">{{ $document->item_code }}</textarea>
+                                    </div>
+                            </div>
+
                             <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Name of packing material</label>
                                         <textarea name="name_pack_material">{{ $document->name_pack_material }}</textarea>
                                     </div>
                             </div>
+
                             <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="scope">Standard pack</label>
@@ -23375,6 +23396,17 @@
                         <div class="orig-head">RAW MATERIAL SPECIFICATION</div>
                         <div class="input-fields">
                             <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">Specification No</label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $stpNumber = "RMS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfps_no" value="{{ $stpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
                                 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -23590,6 +23622,29 @@
                     </div>
                     <div class="input-fields">
                        <div class="row">
+
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="packing_material_name">Product Name</label>
+                                    <input type="text" name="pia_name" value="{{ old('pia_name', $document->pia_name ?? '') }}">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Code</label>
+                                        <select name="pia_name_code" id="">
+                                            <option value="">Select here</option>
+                                            <option value="FP" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'FP' ? 'selected' : '' }}>Finished Product</option>
+                                            <option value="IP" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'IP' ? 'selected' : '' }}>Inprocess Product</option>
+                                            <option value="CV" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'CV' ? 'selected' : '' }}>Cleaning Validation</option>
+                                            <option value="RW" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'RW' ? 'selected' : '' }}>Raw Material</option>
+                                            <option value="CM" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'CM' ? 'selected' : '' }}>Consumable</option>
+                                        </select>
+                                    </div>
+                            </div>
+
 
 
                         @php

@@ -372,15 +372,15 @@ overflow-wrap: break-word;
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    IPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    IPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   IPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   IP/S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   IPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -415,9 +415,9 @@ overflow-wrap: break-word;
                            ->value('typecode');
                    @endphp
                    @if ($document->revised === 'Yes')
-                   CV/S/00{{ $document->revised_doc }}-0{{ $document->major }}
+                   IPS/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
-                   -
+                   Nill
                    @endif
                    </span>   
                 
@@ -785,9 +785,9 @@ overflow-wrap: break-word;
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 775;
-                $x = 485;
+                $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+                $y = 200;
+                $x = 380;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }
