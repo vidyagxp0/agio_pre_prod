@@ -334,7 +334,7 @@
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
              
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
-                <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'add-prcumrepo')">Qualification Protocol Cum Report</button>
+                <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'doc_qpcr')">Qualification Protocol Cum Report</button>
            
                 <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
                 <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
@@ -7303,33 +7303,34 @@
 
 
                 <!-- Protocol Cum Report -->
-                    <div id="add-prcumrepo" class="tabcontent">
+                    <div id="doc_qpcr" class="tabcontent">
                         <div class="orig-head">
                             Qualification Protocol Cum Report
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="file_attach">File Attachments</label>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="procumrepo_file_attach[]"
-                                                    oninput="addMultipleFiles(this, 'procumrepo_file_attach')" multiple>
+                              
+                               
+
+                                
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="procumrepo_file_attach"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]" 
+                                                        oninput="addMultipleFiles(this, 'procumrepo_file_attach')" multiple hidden>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                               
                             
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="comments">Comments</label>
-                                        <textarea name="procumrep_comments"></textarea>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="button-block">

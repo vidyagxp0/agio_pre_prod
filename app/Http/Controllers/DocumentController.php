@@ -1962,6 +1962,22 @@ class DocumentController extends Controller
             $document->file_attach_vmp = json_encode($files);
         }
 
+
+
+        if (!empty($request->procumrepo_file_attach)) {
+            $files = [];
+            if ($request->hasfile('procumrepo_file_attach')) {
+                foreach ($request->file('procumrepo_file_attach') as $file) {
+
+                    $name = $request->name . 'procumrepo_file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->procumrepo_file_attach = json_encode($files);
+        }
+
         $document->save();
 
 
@@ -3970,6 +3986,32 @@ class DocumentController extends Controller
                 $document->file_attach_qm = json_encode($allFiles);
             }
 
+
+            if (!empty($request->procumrepo_file_attach) || !empty($request->deleted_procumrepo_file_attach)) {
+                $existingFiles = json_decode($document->procumrepo_file_attach, true) ?? [];
+    
+                // Handle deleted files
+                if (!empty($request->deleted_procumrepo_file_attach)) {
+                    $filesToDelete = explode(',', $request->deleted_procumrepo_file_attach);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+    
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('procumrepo_file_attach')) {
+                    foreach ($request->file('procumrepo_file_attach') as $file) {
+                        $name = $request->name . 'procumrepo_file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $newFiles[] = $name;
+                    }
+                }
+    
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->procumrepo_file_attach = json_encode($allFiles);
+            }
     
            $document->save();
     
