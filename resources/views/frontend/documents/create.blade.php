@@ -3110,7 +3110,8 @@
                     <div class="input-fields">
                         <div class="row">
                         
-                       <div class="col-md-12">
+                        {{--
+                          <div class="col-md-12">
                                     <div class="group-input">
 
                                         <label for="objective_cvpd" id="objective_cvpd">
@@ -3725,9 +3726,40 @@
                                 </div>
 
 
-
+                        --}}
                                 
 
+                                <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="File_Attachment"><b>File Attachment</b></label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attach_cvpd"></div>
+                                    
+                                                <div class="add-btn">
+                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="annex_I_gxp_attachment" name="attach_cvpd[]" 
+                                                        oninput="addMultipleFiles(this, 'attach_cvpd')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                   
+                                    
+                                    <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                    
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
+                                    }
+                                    </script>
                                
                                
                                 <div class="button-block">
@@ -4104,12 +4136,12 @@
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     
                                             <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="annex_fileattachement"></div>
+                                                <div class="file-attachment-list" id="file_attach"></div>
                                     
                                                 <div class="add-btn">
                                                     <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
                                                     <input type="file" id="annex_I_gxp_attachment" name="file_attach[]" 
-                                                        oninput="addMultipleFiles(this, 'annex_fileattachement')" multiple hidden>
+                                                        oninput="addMultipleFiles(this, 'file_attach')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
@@ -4131,7 +4163,7 @@
                                     </script>
 
                            
-
+                    {{--
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">PRODUCT NAME </label>
@@ -4580,6 +4612,8 @@
                                         <input type="text" name="batchnumber_ssp">
                                     </div>
                                 </div>
+                           
+                                --}}
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>

@@ -1487,6 +1487,39 @@ class DocumentController extends Controller
            $DETAILS_ssp->save();
 
 
+
+
+           if (!empty($request->file_attach)) {
+            $files = [];
+            if ($request->hasfile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+
+                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->file_attach = json_encode($files);
+        }
+
+
+
+        if (!empty($request->attach_cvpd)) {
+            $files = [];
+            if ($request->hasfile('attach_cvpd')) {
+                foreach ($request->file('attach_cvpd') as $file) {
+
+                    $name = $request->name . 'attach_cvpd' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $document->attach_cvpd = json_encode($files);
+        }
+        $document->save();
+
             toastr()->success('Document created');
 
             return redirect()->route('documents.index');
@@ -3047,6 +3080,65 @@ $documentcontet->ReportApproval_HoTiStRe = $request->ReportApproval_HoTiStRe ? s
            $DETAILS_ssp->identifier = 'DETAILS_ssp';
            $DETAILS_ssp->data = $request->batch_detaildata_ssp;
            $DETAILS_ssp->save();
+
+
+
+           if (!empty($request->file_attach) || !empty($request->deleted_file_attach)) {
+            $existingFiles = json_decode($document->file_attach, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_file_attach)) {
+                $filesToDelete = explode(',', $request->deleted_file_attach);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+                    $name = $request->name . 'file_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $document->file_attach = json_encode($allFiles);
+        }
+
+
+        if (!empty($request->attach_cvpd) || !empty($request->deleted_attach_cvpd)) {
+            $existingFiles = json_decode($document->attach_cvpd, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_attach_cvpd)) {
+                $filesToDelete = explode(',', $request->deleted_attach_cvpd);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('attach_cvpd')) {
+                foreach ($request->file('attach_cvpd') as $file) {
+                    $name = $request->name . 'attach_cvpd' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $document->attach_cvpd = json_encode($allFiles);
+        }
+//   dd($document);
+       $document->save();
+
+
 
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
