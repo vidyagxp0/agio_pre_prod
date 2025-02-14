@@ -22599,7 +22599,7 @@
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="attach_cvpdData">
+                                        <div class="file-attachment-list" id="attach_cvpdDataField">
                                             @if ($document->attach_cvpd)
                                                 @foreach(json_decode($document->attach_cvpd) as $file)
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -22617,9 +22617,9 @@
                                         </div>
 
                                         <div class="add-btn">
-                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachment" name="attach_cvpd[]" 
-                                                oninput="addMultipleFiles(this, 'attach_cvpdData')" multiple hidden>
+                                            <label for="attach_cvpdData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="attach_cvpdData" name="attach_cvpd[]" 
+                                                oninput="addMultipleFiles(this, 'attach_cvpdDataField')" multiple hidden>
                                         </div>
                                     </div>
                                 </div>
@@ -24017,7 +24017,7 @@
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attachDatassp">
+                                        <div class="file-attachment-list" id="Stability_study_protocolField">
                                             @if ($document->file_attach)
                                                 @foreach(json_decode($document->file_attach) as $file)
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -24035,9 +24035,9 @@
                                         </div>
 
                                         <div class="add-btn">
-                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachment" name="file_attach[]" 
-                                                oninput="addMultipleFiles(this, 'file_attachDatassp')" multiple hidden>
+                                            <label for="file_attachDataSSP" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="file_attachDataSSP" name="file_attach[]" 
+                                                oninput="addMultipleFiles(this, 'Stability_study_protocolField')" multiple hidden>
                                         </div>
                                     </div>
                                 </div>
@@ -25152,7 +25152,7 @@
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="file_attachDatassp">
+                                        <div class="file-attachment-list" id="procumrepo_file_attachDatassp">
                                             @if ($document->procumrepo_file_attach)
                                                 @foreach(json_decode($document->procumrepo_file_attach) as $file)
                                                     <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -25170,8 +25170,8 @@
                                         </div>
 
                                         <div class="add-btn">
-                                            <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachment" name="procumrepo_file_attach[]" 
+                                            <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]" 
                                                 oninput="addMultipleFiles(this, 'procumrepo_file_attachDatassp')" multiple hidden>
                                         </div>
                                     </div>
