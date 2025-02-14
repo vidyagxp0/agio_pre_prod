@@ -156,7 +156,7 @@
         #isPasted th:last-child {
             width: auto; /* Take remaining space */
             vertical-align: top;
-            
+
         }
 
         /* Common Table Cell Styling */
@@ -175,7 +175,7 @@
             text-justify: inter-word;
             margin: 0;
             max-width: 500px;
-     
+
         }
 
         #isPasted img {
@@ -327,18 +327,18 @@
 
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDPROTOCOL" onclick="openData(event, 'doc-eqpprotocol')">Equipment Hold Time Study Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="FOCONITOGENREPORT" onclick="openData(event, 'doc-fcreport')">Format for compressed air and Nitrogen gas system Report</button>
-                
+
                 <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
-             
+
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
                 <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'doc_qpcr')">Qualification Protocol Cum Report</button>
-           
+
                 <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
                 <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
-           
+
                 <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
-           
+
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
 
@@ -378,7 +378,7 @@
                 <button class="tablinks hidden-tabs" data-id="MAForRec" onclick="openData(event, 'doc-masterformulaRecord')">Master Formula Record</button>
                 <button class="tablinks hidden-tabs" data-id="MAPacRec" onclick="openData(event, 'doc-masterPackingRecord')">Master Packing Record</button>
                 <button class="tablinks hidden-tabs" data-id="SMF" onclick="openData(event, 'doc-SiteMasterFile')">Site Master File (SMF)</button>
-             
+
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
@@ -1453,10 +1453,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="date" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                    <td><input type="date" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -1506,7 +1506,7 @@
 
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -2257,7 +2257,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
@@ -2303,7 +2303,7 @@
                                 let table = document.getElementById("specifications-testing").getElementsByTagName('tbody')[0];
                                 let rowCount = table.rows.length;
                                 let newRow = table.insertRow();
-                                
+
                                 newRow.innerHTML = `
                                     <td>${rowCount + 1}</td>
                                     <td><input type="text" name="specifications_testing[${rowCount}][tests]"></td>
@@ -2387,7 +2387,7 @@
                                     </div>
                                 </div>
 
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="referencesss" id="referencesss">
@@ -2568,7 +2568,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
 
@@ -2579,13 +2579,13 @@
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                            
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachment_srt"></div>
-                            
+
                                         <div class="add-btn">
                                             <label for="attachment_srtData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_srtData" name="attachment_srt[]" 
+                                            <input type="file" id="attachment_srtData" name="attachment_srt[]"
                                                 oninput="addMultipleFiles(this, 'attachment_srt')" multiple hidden>
                                         </div>
                                     </div>
@@ -2786,7 +2786,7 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="button" class="btn btn-dark subststrategyAdd" >+</button>
-                                                            
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -2919,13 +2919,13 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attachment_spt"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="attachment_sptData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="attachment_sptData" name="attachment_spt[]" 
+                                                    <input type="file" id="attachment_sptData" name="attachment_spt[]"
                                                         oninput="addMultipleFiles(this, 'attachment_spt')" multiple hidden>
                                                 </div>
                                             </div>
@@ -2941,8 +2941,8 @@
                             </button>
                         </div>
                     </div>
-             
-                    
+
+
     <!-----------------MASTER FINISHED PRODUCT SPECIFICATION Tab ---------------------->
                     <div id="doc-mfps" class="tabcontent">
                         <div class="orig-head">
@@ -3318,7 +3318,7 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="button" class="btn btn-dark subeqpconclusionAdd" >+</button>
-                                                            
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -3359,7 +3359,7 @@
 
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </div>
                         --}}
@@ -3367,13 +3367,13 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attachment_ehtsr"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]" 
+                                                    <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]"
                                                         oninput="addMultipleFiles(this, 'attachment_ehtsr')" multiple hidden>
                                                 </div>
                                             </div>
@@ -3997,9 +3997,9 @@
                         <div class="input-fields">
                             <div class="row">
 
-                            
-                            
-                          
+
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="purpose">Approval</label>
@@ -4294,7 +4294,7 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="button" class="btn btn-dark subeqpdetailsconclusionAdd" >+</button>
-                                                            
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -4334,7 +4334,7 @@
 
                                     </div>
                                 </div>
-                            
+
                             </div>
                         </div>
 
@@ -4345,13 +4345,13 @@
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                            
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachment_ehtsprt"></div>
-                            
+
                                         <div class="add-btn">
                                             <label for="attachment_ehtsprtData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_ehtsprtData" name="attachment_ehtsprt[]" 
+                                            <input type="file" id="attachment_ehtsprtData" name="attachment_ehtsprt[]"
                                                 oninput="addMultipleFiles(this, 'attachment_ehtsprt')" multiple hidden>
                                         </div>
                                     </div>
@@ -4684,7 +4684,7 @@
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="button" class="btn btn-dark subformatannexureAdd" >+</button>
-                                                            
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -4808,7 +4808,7 @@
 
 
 
-                            
+
                             </div>
                         </div>
                         --}}
@@ -4817,18 +4817,18 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attach_comp_nitrogen"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="attach_comp_nitrogendata" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="attach_comp_nitrogendata" name="attach_comp_nitrogen[]" 
+                                                    <input type="file" id="attach_comp_nitrogendata" name="attach_comp_nitrogen[]"
                                                         oninput="addMultipleFiles(this, 'attach_comp_nitrogen')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
@@ -5263,7 +5263,7 @@
                 </div>
 
         <!------------------------ Process validation Report - tab ------------------------------------>
-          
+
 
 
                 <div id="doc_pvr" class="tabcontent">
@@ -5272,7 +5272,7 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                     {{--   
+                     {{--
                       <div class="col-md-6">
                               <div class="group-input">
                                   <label for="purpose">Generic Name </label>
@@ -5396,7 +5396,7 @@
                                     </div>
                                 </div>
 
-                           
+
 
 
                                 <div class="col-md-12">
@@ -5466,7 +5466,7 @@
 
 
 
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -5890,7 +5890,7 @@
                                 </div>
 
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -5951,7 +5951,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -5981,21 +5981,21 @@
                                     </div>
                                 </div>
                                 --}}
-                               
-                               
-                                
+
+
+
 
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="file_attach_pvr"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="file_attach_pvrData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]" 
+                                                    <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]"
                                                         oninput="addMultipleFiles(this, 'file_attach_pvr')" multiple hidden>
                                                 </div>
                                             </div>
@@ -6015,7 +6015,7 @@
                 </div>
 
   <!------------------------ Process validation protocol - tab ------------------------------------>
-          
+
 
 
                  <div id="doc_cvpd" class="tabcontent">
@@ -6024,8 +6024,8 @@
                         </div>
                     <div class="input-fields">
                         <div class="row">
-                        
-                        {{--  
+
+                        {{--
                                  <div class="col-md-12">
                                     <div class="group-input">
 
@@ -6156,7 +6156,7 @@
                                     <div class="group-input">
 
                                         <label for="identification_sensitive_product_contamination_cvpd" id="identification_sensitive_product_contamination_cvpd">
-                                        Identification of most sensitive product for contamination on 
+                                        Identification of most sensitive product for contamination on
                                         the basis of maximum daily dose & minimum batch size<button type="button" id="identification_sensitive_product_contamination_cvpdbtnadd"
                                                 name="button">+</button>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -6186,7 +6186,7 @@
 
 
 
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -6610,7 +6610,7 @@
                                 </div>
 
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -6646,26 +6646,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attach_cvpd"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="attach_cvpd[]" 
+                                                    <input type="file" id="annex_I_gxp_attachment" name="attach_cvpd[]"
                                                         oninput="addMultipleFiles(this, 'attach_cvpd')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -6674,8 +6674,8 @@
                                     }
                                     </script>
 
-                               
-                               
+
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -6687,11 +6687,11 @@
                          </div>
                     </div>
                 </div>
-         
+
 
 
  <!------------------------ Process validation Report - tab ------------------------------------>
-          
+
 
 
                 <div id="doc_cvrd" class="tabcontent">
@@ -6700,7 +6700,7 @@
                             </div>
                             <div class="input-fields">
                                 <div class="row">
-                                        
+
                              {{--
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -6861,7 +6861,7 @@
 
 
 
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -7016,28 +7016,28 @@
 
                               --}}
 
-                                
+
 
 
                               <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="file_attach_cvrd"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="file_attach_cvrdData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]" 
+                                                    <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]"
                                                         oninput="addMultipleFiles(this, 'file_attach_cvrd')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                               
-                               
+
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -7049,11 +7049,11 @@
                          </div>
                     </div>
                 </div>
-         
+
 
 
  <!------------------------ STABILITY STUDY PROTOCOL - tab ------------------------------------>
-          
+
 
 
                 <div id="doc_ssp" class="tabcontent">
@@ -7062,32 +7062,32 @@
                             </div>
                             <div class="input-fields">
                                 <div class="row">
-                                        
+
 
                                 <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="file_attach"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="file_attach[]" 
+                                                    <input type="file" id="annex_I_gxp_attachment" name="file_attach[]"
                                                         oninput="addMultipleFiles(this, 'file_attach')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -7096,7 +7096,7 @@
                                     }
                                     </script>
 
-                           
+
                     {{--
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -7184,7 +7184,7 @@
                                     </div>
                                 </div>
 
-                               
+
 
                                 <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
@@ -7321,7 +7321,7 @@
                             });
                         </script>
 
-                                
+
 
                             <!-- <table class="table table-bordered">
                                     <thead>
@@ -7345,7 +7345,7 @@
                                                 'Long Term (30°C ± 2°C and 75% ± 5% RH)',
                                             ];
                                         @endphp
-                                        
+
                                         @foreach($conditions as $key => $condition)
                                             <tr>
                                                 <td>{{ $condition }}</td>
@@ -7387,7 +7387,7 @@
                                                 'Long Term (30°C ± 2°C and 75% ± 5% RH)',
                                             ];
                                         @endphp
-                                        
+
                                         @foreach($conditions as $key => $condition)
                                             <tr>
                                                 <td>{{ $condition }}</td>
@@ -7432,7 +7432,7 @@
                                                             <th style="width: 2%">Sr.No</th>
                                                             <th style="width: 12%">Stability station</th>
                                                             <th style="width: 12%">Required tests</th>
-                                                            
+
                                                             <th style="width: 3%">Action</th>
 
                                                         </tr>
@@ -7468,8 +7468,8 @@
 
                                                         '<td><input type="text" name="batch_detaildata_ssp[' + investdetails +
                                                         '][req_test]" value=""></td>' +
-                                                    
-                                                    
+
+
                                                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                                                         '</tr>';
 
@@ -7485,17 +7485,17 @@
                                         });
                             </script>
 
-                                
 
-                              
-                               
+
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Remark (if any)</label>
                                         <textarea name="remark_if_any_ssp"></textarea>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">STABILITY DATA COMPILATION</label>
@@ -7546,7 +7546,7 @@
                                         <input type="text" name="batchnumber_ssp">
                                     </div>
                                 </div>
-                           
+
                                 --}}
 
                                 <div class="button-block">
@@ -7562,36 +7562,36 @@
                 </div>
 
 <!------------------------ Validation Master Plan - tab ------------------------------------>
-          
+
 
 
                 <div id="doc_vmp" class="tabcontent">
                             <div class="orig-head">
-                            Validation Master Plan 
+                            Validation Master Plan
                             </div>
                             <div class="input-fields">
                                 <div class="row">
-                                        
+
 
                                 <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="file_attach_vmp"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="file_attach_vmpData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_vmpData" name="file_attach_vmp[]" 
+                                                    <input type="file" id="file_attach_vmpData" name="file_attach_vmp[]"
                                                         oninput="addMultipleFiles(this, 'file_attach_vmp')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                   
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -7606,36 +7606,36 @@
                 </div>
 
 <!------------------------ Validation Master Plan - tab ------------------------------------>
-          
+
 
 
                 <div id="doc_qm" class="tabcontent">
                             <div class="orig-head">
-                            Quality Manual  
+                            Quality Manual 
                             </div>
                             <div class="input-fields">
                                 <div class="row">
-                                        
+
 
                                 <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="file_attach_qm"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="file_attach_qmData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="file_attach_qmData" name="file_attach_qm[]" 
+                                                    <input type="file" id="file_attach_qmData" name="file_attach_qm[]"
                                                         oninput="addMultipleFiles(this, 'file_attach_qm')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                   
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -7758,28 +7758,28 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                              
-                               
 
-                                
+
+
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="procumrepo_file_attach"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]" 
+                                                    <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]"
                                                         oninput="addMultipleFiles(this, 'procumrepo_file_attach')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                            
-                                
+
+
                             </div>
                         </div>
                         <div class="button-block">
@@ -7902,14 +7902,14 @@
                  <!--Process Validation Protocol  -->
                 <div id="doc_prvp" class="tabcontent">
                     <div class="orig-head">
-                        PROCESS VALIDATION PROTOCOL 
+                        PROCESS VALIDATION PROTOCOL
                         </div>
                         <div class="input-fields">
                             <div class="row">
                                 <div class="">
                                   PRODUCT DETAILS
                                 </div>  <br>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Generic Name </label>
                                         <input type="text" name="generic_prvp">
@@ -8205,7 +8205,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
@@ -8501,8 +8501,36 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>Process Validation Protocol  File Attachment</b></label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="ProValProtocol"></div>
+
+                                            <div class="add-btn">
+                                                <label for="ProValProtocol_I_gxp_attachment" style="cursor: pointer;">Add</label>
+                                                <input type="file" id="ProValProtocol_I_gxp_attachment" name="ProValProtocol[]"
+                                                    oninput="addMultipleFiles(this, 'ProValProtocol')" multiple hidden>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script>
+                                function addMultipleFiles(input, listId) {
+                                    let fileList = document.getElementById(listId);
+                                    fileList.innerHTML = ""; // Clear previous files (if needed)
+
+                                    for (let file of input.files) {
+                                        let fileItem = document.createElement("div");
+                                        fileItem.textContent = file.name;
+                                        fileList.appendChild(fileItem);
+                                    }
+                                }
+                                </script>
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -9028,7 +9056,7 @@
 
                                 <div class="col-12 sub-head">
                                   A) Summary of Results:-
-                                
+
                                 {{-- <div class="group-input">
                                     <label for="audit-agenda-grid">
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
@@ -9056,7 +9084,7 @@
                                     </div>
                                 </div> --}}
 
-                                
+
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
@@ -10736,7 +10764,7 @@
                                 </div>
 
 
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Critical_Process_Parameters" id="Critical_quality_attributes">
@@ -10958,26 +10986,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment">File Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="pvir_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="pvir_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="pvir_attachment" name="pvir_attachment[]" 
+                                                    <input type="file" id="pvir_attachment" name="pvir_attachment[]"
                                                         oninput="addMultipleFiles(this, 'pvir_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -10986,8 +11014,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11018,26 +11046,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="annex_I_gxp_attachment[]" 
+                                                    <input type="file" id="annex_I_gxp_attachment" name="annex_I_gxp_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11046,8 +11074,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11078,26 +11106,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annexIIRisk_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_II_risk_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_II_risk_attachment" name="annex_II_risk_attachment[]" 
+                                                    <input type="file" id="annex_II_risk_attachment" name="annex_II_risk_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annexIIRisk_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11106,8 +11134,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11138,26 +11166,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annexIIIeres_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_III_eres_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_III_eres_attachment" name="annex_III_eres_attachment[]" 
+                                                    <input type="file" id="annex_III_eres_attachment" name="annex_III_eres_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annexIIIeres_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11166,8 +11194,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11198,26 +11226,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annexIVPlan_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_IV_plan_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_IV_plan_attachment" name="annex_IV_plan_attachment[]" 
+                                                    <input type="file" id="annex_IV_plan_attachment" name="annex_IV_plan_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annexIVPlan_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11226,8 +11254,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11258,26 +11286,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annexVUser_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_V_user_attachment" name="annex_V_user_attachment[]" 
+                                                    <input type="file" id="annex_V_user_attachment" name="annex_V_user_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annexVUser_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11286,8 +11314,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11317,26 +11345,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_VIreq_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_VI_req_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_VI_req_attachment" name="annex_VI_req_attachment[]" 
+                                                    <input type="file" id="annex_VI_req_attachment" name="annex_VI_req_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_VIreq_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11345,8 +11373,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11376,26 +11404,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_VII_fun_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_VII_fun_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_VII_fun_attachment" name="annex_VII_fun_attachment[]" 
+                                                    <input type="file" id="annex_VII_fun_attachment" name="annex_VII_fun_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_VII_fun_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11404,8 +11432,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11435,26 +11463,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annexVIII_tech_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_VIII_tech_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_VIII_tech_attachment" name="annex_VIII_tech_attachment[]" 
+                                                    <input type="file" id="annex_VIII_tech_attachment" name="annex_VIII_tech_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annexVIII_tech_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11463,8 +11491,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11494,26 +11522,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_IX_risk_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_IX_risk_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_IX_risk_attachment" name="annex_IX_risk_attachment[]" 
+                                                    <input type="file" id="annex_IX_risk_attachment" name="annex_IX_risk_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_IX_risk_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11522,8 +11550,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11553,26 +11581,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_X_Design_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_X_design_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_X_design_attachment" name="annex_X_design_attachment[]" 
+                                                    <input type="file" id="annex_X_design_attachment" name="annex_X_design_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_X_Design_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11610,26 +11638,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_XI_Config_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_XI_confi_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]" 
+                                                    <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_XI_Config_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11638,8 +11666,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11669,26 +11697,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_XII_quaProto_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_XII_qua_proto_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]" 
+                                                    <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_XII_quaProto_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11697,8 +11725,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11728,26 +11756,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_XIII_unitInteg_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_XIII_unit_integ_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]" 
+                                                    <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_XIII_unitInteg_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11756,8 +11784,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11787,26 +11815,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_XIV_dataMigra_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_XIV_data_migra_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]" 
+                                                    <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_XIV_dataMigra_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11815,8 +11843,8 @@
                                     }
                                     </script>
 
-                                    
-                                
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -11846,26 +11874,26 @@
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                    
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="annex_XV_dataQualif_fileattachement"></div>
-                                    
+
                                                 <div class="add-btn">
                                                     <label for="annex_XV_data_qualif_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]" 
+                                                    <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]"
                                                         oninput="addMultipleFiles(this, 'annex_XV_dataQualif_fileattachement')" multiple hidden>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                   
-                                    
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                    
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -11874,7 +11902,7 @@
                                     }
                                     </script>
 
-                                    
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -11905,7 +11933,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">           
+                                <div class="col-12 sub-head">
                                     STANDARD TESTING PROCEDURE
                                     <div class="group-input">
                                         <label for="procedure"></label>
@@ -11995,7 +12023,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">           
+                                <div class="col-12 sub-head">
                                     STANDARD TESTING PROCEDURE
                                     <div class="group-input">
                                         <label for="procedure"></label>
@@ -12086,7 +12114,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 sub-head">           
+                                <div class="col-12 sub-head">
                                     STANDARD TESTING PROCEDURE
                                     <div class="group-input">
                                         <label for="procedure"></label>
@@ -12179,10 +12207,10 @@
                                         <div class="group-input">
                                             <label for="Closure Attachments"> Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                   
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attachement_afqp"></div>
-                                   
+
                                                 <div class="add-btn">
                                                     <label for="afqpfile" style="cursor: pointer;">Add</label>
                                                     <input type="file" id="afqpfile" name="afqpattachement[]"
@@ -12191,12 +12219,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                   
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -12204,8 +12232,8 @@
                                         }
                                     }
                                     </script>
-                                   
-                                   
+
+
 
 
 
@@ -12239,10 +12267,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_afqr"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="afqrfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="afqrfile" name="afqrattachement[]"
@@ -12251,12 +12279,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12297,10 +12325,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_afurs"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="afursfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="afursfile" name="afursattachement[]"
@@ -12309,12 +12337,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12354,10 +12382,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_aqp"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="aqpfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="aqpfile" name="aqpattachement[]"
@@ -12366,12 +12394,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12413,10 +12441,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments">Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_aqr"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="aqrfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="aqrfile" name="aqrattachement[]"
@@ -12425,12 +12453,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12471,10 +12499,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_pfmf"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="pfmffile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="pfmffile" name="pfmfattachement[]"
@@ -12483,12 +12511,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12530,10 +12558,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_rfmf"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="rfmffile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="rfmffile" name="rfmfattachement[]"
@@ -12542,12 +12570,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12589,10 +12617,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_asr"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="asrfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="asrfile" name="annex_XIX_syst_retir_attachment[]"
@@ -12601,12 +12629,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12648,10 +12676,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_atm"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="atmfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="atmfile" name="annex_XVIII_trac_matri_attachment[]"
@@ -12660,12 +12688,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12708,10 +12736,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_avsr"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="avsrfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="avsrfile" name="annex_XVII_valid_summ_attachment[]"
@@ -12720,12 +12748,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12767,10 +12795,10 @@
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                           
+
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="attachement_aiiopq"></div>
-                           
+
                                         <div class="add-btn">
                                             <label for="aiiopqfile" style="cursor: pointer;">Add</label>
                                             <input type="file" id="aiiopqfile" name="annex_XVI_per_qualif_attachment[]"
@@ -12779,12 +12807,12 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
                                 fileList.innerHTML = ""; // Clear previous files (if needed)
-                           
+
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
                                     fileItem.textContent = file.name;
@@ -12835,17 +12863,17 @@
                                             <textarea name="htsp_scope"></textarea>
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="responsibilityhtps" id="responsibilityhtps">
                                                 Responsibility<button type="button" id="responsibilityhtpsbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="responsibilityhtpsdiv">
                                                 <div class="ResponsibilityBlock">
                                                     <div class="row">
@@ -12861,7 +12889,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
 
@@ -12885,10 +12913,10 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>1</td>
-                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -12898,14 +12926,14 @@
                                    {{-- coomment for tempary --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="htspdescription" id="htspdescription">
                                                 Description of SOP s To Be Followed<button type="button" id="htspdescriptionbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="htspdescriptiondiv">
                                                 <div class="htspdescriptionBlock">
                                                     <div class="row">
@@ -12921,10 +12949,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Specifications" id="Specifications">
@@ -12958,8 +12986,8 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
-   
+
+
                                             <div id="abbreviationdiv">
                                                 <div class="singleAbbreviationBlock">
                                                     <div class="row">
@@ -12975,10 +13003,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
-   
+
                                 {{-- comment for temp --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -12988,11 +13016,11 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
-   
-   
+
+
+
                                             <div id="Samplinghtpsdiv">
-   
+
                                                 <div class="SamplinghtpsBlock">
                                                     <div class="row">
                                                         <div class="col-sm-10">
@@ -13006,12 +13034,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-   
+
                                             </div>
-   
+
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Environmentalhtsp" id="Environmentalhtspdiv">
@@ -13020,7 +13048,7 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="Environmentalhtspdiv" >
                                                 <div class="EnvironmentalhtspBlock">
                                                     <div class="row">
@@ -13037,7 +13065,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
      --}}
@@ -13050,14 +13078,14 @@
                                         </textarea>
                                         </div>
                                     </div> --}}
-   
+
                                     <!-- <div class="col-md-12 mb-3">
                                                                 <div class="group-input">
                                                                     <label for="procedure" id="newreport">
                                                                     Procedure<button type="button" id="reportingbtadd" name="button">+</button>
                                                                     </label>
                                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-   
+
                                                                     <div id="reportingdiv">
                                                                         <div class="singleReportingBlock">
                                                                             <div class="row">
@@ -13073,11 +13101,11 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-   
+
                                                                 </div>
                                                             </div> -->
-   
-   
+
+
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Samplehtps" id="Samplehtps">
@@ -13086,7 +13114,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Samplehtpsdiv">
                                                 <div class="SamplehtpsBlock">
                                                     <div class="row">
@@ -13102,7 +13130,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
@@ -13113,7 +13141,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Deviationhtpsdiv">
                                                 <div class="DeviationhtpsBlock">
                                                     <div class="row">
@@ -13129,13 +13157,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
-   
-   
-   
+
+
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Summaryhtps" id="Summaryhtps">
@@ -13143,7 +13171,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Summaryhtpsdiv">
                                                 <div class="SummaryhtpsBlock">
                                                     <div class="row">
@@ -13159,7 +13187,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
@@ -13170,7 +13198,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Conclusionhtpsdiv">
                                                 <div class="ConclusionhtpsBlock">
                                                     <div class="row">
@@ -13186,7 +13214,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
 
@@ -13194,10 +13222,10 @@
                                         <div class="group-input">
                                             <label for="Closure Attachments"> Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                   
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attachement_htsp"></div>
-                                   
+
                                                 <div class="add-btn">
                                                     <label for="htpsfile" style="cursor: pointer;">Add</label>
                                                     <input type="file" id="htpsfile" name="htspattachement[]"
@@ -13206,12 +13234,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                   
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -13221,7 +13249,7 @@
                                     </script>
 
 
-   
+
                                     {{-- <div class="input-fields">
                                         <div class="group-input">
                                             <label for="distribution-list" style="font-weight: bold;">
@@ -13245,7 +13273,7 @@
                                                                     name="master_copy_number" value=""
                                                                     class="form-control">
                                                             </td>
-   
+
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
@@ -13261,16 +13289,16 @@
                                                             <td><input type="text" id="copies-controlled"
                                                                     name="controlled_copy_number" value=""
                                                                     class="form-control"></td>
-   
+
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                     <input type="text" name="controlled_user_department">
-   
+
                                                                     </div>
                                                                 </div>
                                                             </td>
-   
+
                                                         </tr>
                                                         <tr>
                                                             <td>3</td>
@@ -13283,19 +13311,19 @@
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                         <input type="text" name="display_user_department">
- 
+
                                                                     </div>
                                                                 </div>
                                                             </td>
-   
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div> --}}
-   
-                                   
+
+
                                 </div>
                             </div>
                         <div class="button-block">
@@ -13322,7 +13350,7 @@
                                             <input type="text" name="dosageform_pvp">
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="train-require">Packing Validation Protocol for</label>
@@ -13336,7 +13364,7 @@
                                             <input type="text" name="productname_pvp">
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="train-require">Protocol No</label>
@@ -13350,8 +13378,8 @@
                                             <input type="text" name="batchno_pvp">
                                         </div>
                                     </div>
-   
-                                 
+
+
                                     <div class="">
                                         PRODUCT DETAILS
                                       </div>  <br>
@@ -13367,14 +13395,14 @@
                                               <input type="text" name="pvp_product_code">
                                           </div>
                                       </div>
-     
+
                                       <div class="col-md-6">
                                           <div class="group-input">
                                               <label for="scope">Std. Batch size </label>
                                               <input type="text" name="pvp_std_batch">
                                           </div>
                                       </div>
-     
+
                                       <div class="col-md-6">
                                           <div class="group-input">
                                               <label for="scope">Category</label>
@@ -13387,21 +13415,21 @@
                                               <input type="text" name="pvp_label_claim">
                                           </div>
                                       </div>
-     
+
                                       <div class="col-md-6">
                                           <div class="group-input">
                                               <label for="scope">Market</label>
                                               <input type="text" name="pvp_market">
                                           </div>
                                       </div>
-     
+
                                       <div class="col-md-6">
                                           <div class="group-input">
                                               <label for="scope">Shelf Life</label>
                                               <input type="text" name="pvp_shelf_life">
                                           </div>
                                       </div>
-     
+
                                       <div class="col-md-6">
                                           <div class="group-input">
                                               <label for="scope">BMR No.</label>
@@ -13414,10 +13442,10 @@
                                               <input type="text" name="pvp_mfr_no">
                                           </div>
                                       </div>
-     
-   
 
-                                       
+
+
+
 
 
                                     <div class="col-md-12">
@@ -13435,14 +13463,14 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="reasonforvalidationpvp" id="reasonforvalidationpvp">
                                                 Reason for validation<button type="button" id="reasonforvalidationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="reasonforvalidationpvpdiv">
                                                 <div class="reasonforvalidationpvpBlock">
                                                     <div class="row">
@@ -13458,21 +13486,21 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="responsibilitypvp" id="responsibilitypvp">
                                                 Responsibility<button type="button" id="responsibilitypvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="responsibilitypvpdiv">
                                                 <div class="responsibilitypvpBlock">
                                                     <div class="row">
@@ -13488,7 +13516,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
 
@@ -13512,10 +13540,10 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>1</td>
-                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -13525,14 +13553,14 @@
                                   {{-- comment for tempary --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="validationpvp" id="validationpvp">
                                                 Validation Policy<button type="button" id="validationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="validationpvpdiv">
                                                 <div class="validationpvpBlock">
                                                     <div class="row">
@@ -13548,10 +13576,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="descriptionsoppvp" id="descriptionsoppvp">
@@ -13586,8 +13614,8 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
-   
+
+
                                             <div id="abbreviationdiv">
                                                 <div class="singleAbbreviationBlock">
                                                     <div class="row">
@@ -13603,10 +13631,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
-   
+
                                  {{-- comment for tempary --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -13616,11 +13644,11 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
-   
-   
+
+
+
                                             <div id="packingmaterialpvpdiv">
-   
+
                                                 <div class="packingmaterialpvpBlock">
                                                     <div class="row">
                                                         <div class="col-sm-10">
@@ -13634,12 +13662,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-   
+
                                             </div>
-   
+
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="equipmentpvp" id="equipmentpvp">
@@ -13648,7 +13676,7 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="equipmentpvpdiv" >
                                                 <div class="equipmentpvpBlock">
                                                     <div class="row">
@@ -13665,7 +13693,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
      --}}
@@ -13678,14 +13706,14 @@
                                         </textarea>
                                         </div>
                                     </div> --}}
-   
+
                                     <!-- <div class="col-md-12 mb-3">
                                                                 <div class="group-input">
                                                                     <label for="procedure" id="newreport">
                                                                     Procedure<button type="button" id="reportingbtadd" name="button">+</button>
                                                                     </label>
                                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-   
+
                                                                     <div id="reportingdiv">
                                                                         <div class="singleReportingBlock">
                                                                             <div class="row">
@@ -13701,11 +13729,11 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-   
+
                                                                 </div>
                                                             </div> -->
-   
-   
+
+
                                    {{-- comment for tempary --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -13715,7 +13743,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="rationalepvpdiv">
                                                 <div class="rationalepvpBlock">
                                                     <div class="row">
@@ -13731,7 +13759,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
@@ -13742,7 +13770,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="samplingpvpdiv">
                                                 <div class="samplingpvpBlock">
                                                     <div class="row">
@@ -13758,13 +13786,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
-   
-   
-   
+
+
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Criticalpvp" id="Criticalpvp">
@@ -13772,7 +13800,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Criticalpvpdiv">
                                                 <div class="CriticalpvpBlock">
                                                     <div class="row">
@@ -13788,7 +13816,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
@@ -13799,7 +13827,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="ProductAcceptancepvpdiv">
                                                 <div class="ProductAcceptancepvpBlock">
                                                     <div class="row">
@@ -13815,20 +13843,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="Holdtimepvp" id="Holdtimepvp">
                                                 Hold time study<button type="button" id="Holdtimepvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="Holdtimepvpdiv">
                                                 <div class="HoldtimepvpBlock">
                                                     <div class="row">
@@ -13844,7 +13872,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
 
@@ -13868,10 +13896,10 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>1</td>
-                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                        <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                        <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -13881,14 +13909,14 @@
                                   {{-- comment for tempary --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
-   
+
                                             <label for="Cleaningvalidationpvp" id="Cleaningvalidationpvp">
                                               Cleaning validation<button type="button" id="Cleaningvalidationpvpbtnadd"
                                                     name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="Cleaningvalidationpvpdiv">
                                                 <div class="CleaningvalidationpvpBlock">
                                                     <div class="row">
@@ -13904,10 +13932,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Stabilitystudypvp" id="Stabilitystudypvp">
@@ -13941,8 +13969,8 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
-   
+
+
                                             <div id="abbreviationdiv">
                                                 <div class="singleAbbreviationBlock">
                                                     <div class="row">
@@ -13958,10 +13986,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
-   
+
                                       {{-- comment for temapry --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -13971,11 +13999,11 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
-   
-   
+
+
+
                                             <div id="Deviationpvpdiv">
-   
+
                                                 <div class="DeviationpvpBlock">
                                                     <div class="row">
                                                         <div class="col-sm-10">
@@ -13989,12 +14017,12 @@
                                                         </div>
                                                     </div>
                                                 </div>
-   
+
                                             </div>
-   
+
                                         </div>
                                     </div>
-   
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Changecontrolpvp" id="Changecontrolpvp">
@@ -14003,7 +14031,7 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                             </label>
-   
+
                                             <div id="Changecontrolpvpdiv" >
                                                 <div class="ChangecontrolpvpBlock">
                                                     <div class="row">
@@ -14020,7 +14048,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
      --}}
@@ -14033,14 +14061,14 @@
                                         </textarea>
                                         </div>
                                     </div> --}}
-   
+
                                     <!-- <div class="col-md-12 mb-3">
                                                                 <div class="group-input">
                                                                     <label for="procedure" id="newreport">
                                                                     Procedure<button type="button" id="reportingbtadd" name="button">+</button>
                                                                     </label>
                                                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-   
+
                                                                     <div id="reportingdiv">
                                                                         <div class="singleReportingBlock">
                                                                             <div class="row">
@@ -14056,11 +14084,11 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
-   
+
                                                                 </div>
                                                             </div> -->
-   
-   
+
+
                                   {{-- comment for temp --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
@@ -14070,7 +14098,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Summarypvpdiv">
                                                 <div class="SummarypvpBlock">
                                                     <div class="row">
@@ -14086,7 +14114,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div>
 
@@ -14097,7 +14125,7 @@
                                             </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                     not require completion</small></div>
-   
+
                                             <div id="Conclusionpvpdiv">
                                                 <div class="ConclusionpvpBlock">
                                                     <div class="row">
@@ -14113,7 +14141,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-   
+
                                         </div>
                                     </div> --}}
 
@@ -14121,10 +14149,10 @@
                                         <div class="group-input">
                                             <label for="Closure Attachments"> Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                   
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="attachement_pvp"></div>
-                                   
+
                                                 <div class="add-btn">
                                                     <label for="pvpfile" style="cursor: pointer;">Add</label>
                                                     <input type="file" id="pvpfile" name="pvpattachement[]"
@@ -14133,12 +14161,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                   
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -14148,13 +14176,13 @@
                                     </script>
 
 
-   
-   
-   
-                                   
 
 
-   
+
+
+
+
+
                                     {{-- <div class="input-fields">
                                         <div class="group-input">
                                             <label for="distribution-list" style="font-weight: bold;">
@@ -14178,7 +14206,7 @@
                                                                     name="master_copy_number" value=""
                                                                     class="form-control">
                                                             </td>
-   
+
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
@@ -14194,16 +14222,16 @@
                                                             <td><input type="text" id="copies-controlled"
                                                                     name="controlled_copy_number" value=""
                                                                     class="form-control"></td>
-   
+
                                                             <td>
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                     <input type="text" name="controlled_user_department">
-   
+
                                                                     </div>
                                                                 </div>
                                                             </td>
-   
+
                                                         </tr>
                                                         <tr>
                                                             <td>3</td>
@@ -14216,19 +14244,19 @@
                                                                 <div class="col-md-6">
                                                                     <div class="group-input">
                                                                         <input type="text" name="display_user_department">
- 
+
                                                                     </div>
                                                                 </div>
                                                             </td>
-   
+
                                                         </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div> --}}
-   
-                                   
+
+
                                 </div>
                             </div>
                         <div class="button-block">
