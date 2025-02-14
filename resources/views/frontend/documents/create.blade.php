@@ -7073,8 +7073,8 @@
                                                 <div class="file-attachment-list" id="file_attach"></div>
 
                                                 <div class="add-btn">
-                                                    <label for="annex_I_gxp_attachment" style="cursor: pointer;">Add</label>
-                                                    <input type="file" id="annex_I_gxp_attachment" name="file_attach[]"
+                                                    <label for="file_attachDataSSP" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="file_attachDataSSP" name="file_attach[]"
                                                         oninput="addMultipleFiles(this, 'file_attach')" multiple hidden>
                                                 </div>
                                             </div>
