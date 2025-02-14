@@ -596,7 +596,7 @@ class DocumentController extends Controller
             $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
             $document->rawmaterials_specifications = $request->rawmaterials_specifications;
 
-            
+
             $document->packing_material_name = $request->packing_material_name;
             $document->item_code = $request->item_code;
             $document->name_pack_material = $request->name_pack_material;
@@ -763,6 +763,21 @@ class DocumentController extends Controller
                     }
 
                 $document->SiteMasterFileatt = json_encode($files);
+                }
+            }
+
+             // Process validation Protocol tabs of matrial tabs
+             if (!empty($request->ProValProtocol)) {
+                $files = [];
+                if ($request->hasfile('ProValProtocol')) {
+                    foreach ($request->file('ProValProtocol') as $file) {
+
+                        $name = $request->name . 'ProValProtocol' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+
+                $document->ProValProtocol = json_encode($files);
                 }
             }
 
@@ -941,7 +956,7 @@ class DocumentController extends Controller
             $content->study_purpose = $request->study_purpose;
             $content->study_scope = $request->study_scope;
             $content->study_attachments = $request->study_attachments;
-  
+
             // study protocol
             $content->stprotocol_purpose = $request->stprotocol_purpose;
             $content->stprotocol_scope = $request->stprotocol_scope;
@@ -954,8 +969,8 @@ class DocumentController extends Controller
 
 
 
-            
-            
+
+
             if ($request->has('hod_attachments') && $request->hasFile('hod_attachments')) {
                 $files = [];
 
@@ -1153,7 +1168,7 @@ class DocumentController extends Controller
                 $content->eqpdeviation = serialize($request->eqpdeviation);
             }
 
-            
+
             if (!empty($request->eqpchangecontrol)) {
                 $content->eqpchangecontrol = serialize($request->eqpchangecontrol);
             }
@@ -1467,14 +1482,14 @@ class DocumentController extends Controller
 
 
 
-        //-----------------------Process Validation Report--------------------------------------- 
+        //-----------------------Process Validation Report---------------------------------------
 
             $content->generic_pvr = $request->generic_pvr;
             $content->product_code_pvr = $request->product_code_pvr;
             $content->std_batch_pvr = $request->std_batch_pvr;
             $content->category_pvr = $request->category_pvr;
             $content->label_claim_pvr = $request->label_claim_pvr;
-        
+
             $content->market_pvr = $request->market_pvr;
             $content->shelf_life_pvr = $request->shelf_life_pvr;
             $content->bmr_no_pvr = $request->bmr_no_pvr;
@@ -1724,7 +1739,7 @@ class DocumentController extends Controller
         }
 
         // ----------- Annexure XV Data Qualification Protocol end--------------------------
-            
+
 
 
         //rajendra attachment
@@ -1755,7 +1770,7 @@ class DocumentController extends Controller
             }
             $content->pvpattachement = json_encode($files);
         }
-       
+
         if (!empty($request->afqpattachement)) {
             $files = [];
             if ($request->hasfile('afqpattachement')) {
@@ -1783,7 +1798,7 @@ class DocumentController extends Controller
             $content->afqrattachement = json_encode($files);
         }
 
-        
+
 
         if (!empty($request->afursattachement)) {
             $files = [];
@@ -1915,7 +1930,7 @@ class DocumentController extends Controller
             $content->annex_XIX_syst_retir_attachment = json_encode($files);
         }
 
-    
+
            if (!empty($request->purpose_pvr)) {
                 $content->purpose_pvr = serialize($request->purpose_pvr);
             }
@@ -1983,14 +1998,14 @@ class DocumentController extends Controller
                 $content->report_approval_pvr = serialize($request->report_approval_pvr);
             }
 
-        //-----------------------END Process Validation Report--------------------------------------- 
+        //-----------------------END Process Validation Report---------------------------------------
 
 
 
-        //-----------------------Cleaning Validation protocol-doc --------------------------------------- 
+        //-----------------------Cleaning Validation protocol-doc ---------------------------------------
 
-    
-            
+
+
             if (!empty($request->objective_cvpd)) {
                     $content->objective_cvpd = serialize($request->objective_cvpd);
                 }
@@ -2054,7 +2069,7 @@ class DocumentController extends Controller
                 if (!empty($request->training_cvpd)) {
                     $content->training_cvpd = serialize($request->training_cvpd);
                 }
-              
+
 
              // cleaning validation report-doc
 
@@ -2091,7 +2106,7 @@ class DocumentController extends Controller
             }
 
 
-        //-----------------------END Cleaning validation protocol doc--------------------------------------- 
+        //-----------------------END Cleaning validation protocol doc---------------------------------------
 
             // if ($request->hasfile('references')) {
 
@@ -2270,7 +2285,7 @@ class DocumentController extends Controller
             if (!empty($request->Conclusion_pvp)) {
                 $content->Conclusion_pvp = serialize($request->Conclusion_pvp);
             }
-            
+
 
 
 
@@ -2462,7 +2477,7 @@ class DocumentController extends Controller
             }
             $document->attachment_srt = json_encode($files);
         }
-       
+
         if (!empty($request->attachment_spt)) {
             $files = [];
             if ($request->hasfile('attachment_spt')) {
@@ -2476,7 +2491,7 @@ class DocumentController extends Controller
             }
             $document->attachment_spt = json_encode($files);
         }
-       
+
         if (!empty($request->attachment_ehtsr)) {
             $files = [];
             if ($request->hasfile('attachment_ehtsr')) {
@@ -2504,7 +2519,7 @@ class DocumentController extends Controller
             }
             $document->attachment_ehtsprt = json_encode($files);
         }
-       
+
         if (!empty($request->attach_comp_nitrogen)) {
             $files = [];
             if ($request->hasfile('attach_comp_nitrogen')) {
@@ -2742,14 +2757,14 @@ class DocumentController extends Controller
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
 
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
-        
+
         // dd($GtpGridData);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
         $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
-         
+
         // $RowSpecification_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', "Row_Materail")->first();
 
         $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
@@ -2837,7 +2852,7 @@ class DocumentController extends Controller
             'Specification_Validation_Data_CVS',
             'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData',
             'CalibrationQualificationstatus'
-            
+
         ));
     }
 
@@ -2935,10 +2950,10 @@ class DocumentController extends Controller
                 $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
                 $document->rawmaterials_specifications = $request->rawmaterials_specifications;
 
-            // PIAS 
+            // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
-                
+
             // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
@@ -3047,9 +3062,9 @@ class DocumentController extends Controller
                 $document->revision_type = $request->revision_type;
                 $document->major = $request->major;
                 // $document->minor = $request->minor;
-                
-                
-                
+
+
+
                 if (!empty($request->reviewers)) {
                     $document->reviewers = implode(',', $request->reviewers);
                 }
@@ -3319,6 +3334,35 @@ class DocumentController extends Controller
                         $allFiles = array_merge($existingFiles, $newFiles);
                         $document->SiteMasterFileatt = json_encode($allFiles);
                         }
+
+                         // Process vaidation Protocol tabs  of matrial tabs
+
+            if (!empty($request->ProValProtocol) || !empty($request->deleted_ProValProtocol)) {
+                $existingFiles = json_decode($document->ProValProtocol, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_ProValProtocol)) {
+                $filesToDelete = explode(',', $request->deleted_ProValProtocol);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+                }
+
+                // Handle new files
+                $newFiles = [];
+                if ($request->hasFile('ProValProtocol')) {
+                foreach ($request->file('ProValProtocol') as $file) {
+                    $name = $request->name . 'ProValProtocol' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+                }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $document->ProValProtocol = json_encode($allFiles);
+                }
+
 
             $document->update();
 
@@ -3802,7 +3846,7 @@ class DocumentController extends Controller
 
 
             //--------------------------- Process Validation Interim Update start ------------------------------------------------------
-                        
+
             $documentcontet->pvir_dosage_form = $request->pvir_dosage_form;
             $documentcontet->pvir_process_validation_interim_report = $request->pvir_process_validation_interim_report;
             $documentcontet->pvir_product_name = $request->pvir_product_name;
@@ -3820,7 +3864,7 @@ class DocumentController extends Controller
 
             if (!empty($request->pvir_attachment) || !empty($request->deleted_file_attach)) {
                 $existingFiles = json_decode($documentcontet->pvir_attachment, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_file_attach)) {
                     $filesToDelete = explode(',', $request->deleted_file_attach);
@@ -3828,7 +3872,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('pvir_attachment')) {
@@ -3838,7 +3882,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-        
+
                     // Merge existing and new files
                     $allFiles = array_merge($existingFiles, $newFiles);
                     $documentcontet->pvir_attachment = json_encode($allFiles);
@@ -3854,7 +3898,7 @@ class DocumentController extends Controller
             $documentcontet->report_approvalpvir = $request->report_approvalpvir ? serialize($request->report_approvalpvir) : serialize([]);
 
 
-            
+
 
             //--------------------------- Process Validation Interim Update end ------------------------------------------------------
 
@@ -3863,7 +3907,7 @@ class DocumentController extends Controller
             // ----------- Annexure I-Gxp Assessment start--------------------------
             if (!empty($request->annex_I_gxp_attachment) || !empty($request->deleted_anne_attach1)) {
                 $existingFiles = json_decode($documentcontet->annex_I_gxp_attachment, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_anne_attach1)) {
                     $filesToDelete = explode(',', $request->deleted_anne_attach1);
@@ -3871,7 +3915,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('annex_I_gxp_attachment')) {
@@ -3881,7 +3925,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-        
+
                     // Merge existing and new files
                     $allFiles = array_merge($existingFiles, $newFiles);
                     $documentcontet->annex_I_gxp_attachment = json_encode($allFiles);
@@ -3893,7 +3937,7 @@ class DocumentController extends Controller
 
             if (!empty($request->annex_II_risk_attachment) || !empty($request->deleted_anne_attach2)) {
                 $existingFiles = json_decode($documentcontet->annex_II_risk_attachment, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_anne_attach2)) {
                     $filesToDelete = explode(',', $request->deleted_anne_attach2);
@@ -3901,7 +3945,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('annex_II_risk_attachment')) {
@@ -3911,7 +3955,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-        
+
                     // Merge existing and new files
                     $allFiles = array_merge($existingFiles, $newFiles);
                     $documentcontet->annex_II_risk_attachment = json_encode($allFiles);
@@ -3924,7 +3968,7 @@ class DocumentController extends Controller
 
             if (!empty($request->annex_III_eres_attachment) || !empty($request->deleted_anne_attach3)) {
                 $existingFiles = json_decode($documentcontet->annex_III_eres_attachment, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_anne_attach3)) {
                     $filesToDelete = explode(',', $request->deleted_anne_attach3);
@@ -3932,7 +3976,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('annex_III_eres_attachment')) {
@@ -3942,7 +3986,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-        
+
                     // Merge existing and new files
                     $allFiles = array_merge($existingFiles, $newFiles);
                     $documentcontet->annex_III_eres_attachment = json_encode($allFiles);
@@ -3957,7 +4001,7 @@ class DocumentController extends Controller
 
             if (!empty($request->annex_IV_plan_attachment) || !empty($request->deleted_anne_attach4)) {
                 $existingFiles = json_decode($documentcontet->annex_IV_plan_attachment, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_anne_attach4)) {
                     $filesToDelete = explode(',', $request->deleted_anne_attach4);
@@ -3965,7 +4009,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('annex_IV_plan_attachment')) {
@@ -3975,7 +4019,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-        
+
                     // Merge existing and new files
                     $allFiles = array_merge($existingFiles, $newFiles);
                     $documentcontet->annex_IV_plan_attachment = json_encode($allFiles);
@@ -3987,7 +4031,7 @@ class DocumentController extends Controller
 
             if (!empty($request->annex_V_user_attachment) || !empty($request->deleted_anne_attach5)) {
                 $existingFiles = json_decode($documentcontet->annex_V_user_attachment, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_anne_attach5)) {
                     $filesToDelete = explode(',', $request->deleted_anne_attach5);
@@ -3995,7 +4039,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('annex_V_user_attachment')) {
@@ -4005,17 +4049,17 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-        
+
                     // Merge existing and new files
                     $allFiles = array_merge($existingFiles, $newFiles);
                     $documentcontet->annex_V_user_attachment = json_encode($allFiles);
                 }
 
-            
+
 
             // ----------- Annexure V-User Requirements Specification end--------------------------
 
-            
+
        // ----------- Annexure VI-Functional Requirement Specification start--------------------------
 
        if (!empty($request->annex_VI_req_attachment) || !empty($request->deleted_anne_attach6)) {
@@ -4044,14 +4088,14 @@ class DocumentController extends Controller
             $documentcontet->annex_VI_req_attachment = json_encode($allFiles);
         }
 
-    
+
         // ----------- Annexure VI-Functional Requirement Specification end--------------------------
 
         // ----------- Annexure VII-Functional Specification start--------------------------
 
         if (!empty($request->annex_VII_fun_attachment) || !empty($request->deleted_anne_attach7)) {
             $existingFiles = json_decode($documentcontet->annex_VII_fun_attachment, true) ?? [];
-    
+
             // Handle deleted files
             if (!empty($request->deleted_anne_attach7)) {
                 $filesToDelete = explode(',', $request->deleted_anne_attach7);
@@ -4059,7 +4103,7 @@ class DocumentController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-    
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('annex_VII_fun_attachment')) {
@@ -4069,7 +4113,7 @@ class DocumentController extends Controller
                     $newFiles[] = $name;
                 }
             }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $documentcontet->annex_VII_fun_attachment = json_encode($allFiles);
@@ -4082,7 +4126,7 @@ class DocumentController extends Controller
 
         if (!empty($request->annex_VIII_tech_attachment) || !empty($request->deleted_anne_attach8)) {
             $existingFiles = json_decode($documentcontet->annex_VIII_tech_attachment, true) ?? [];
-    
+
             // Handle deleted files
             if (!empty($request->deleted_anne_attach8)) {
                 $filesToDelete = explode(',', $request->deleted_anne_attach8);
@@ -4090,7 +4134,7 @@ class DocumentController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-    
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('annex_VIII_tech_attachment')) {
@@ -4100,7 +4144,7 @@ class DocumentController extends Controller
                     $newFiles[] = $name;
                 }
             }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $documentcontet->annex_VIII_tech_attachment = json_encode($allFiles);
@@ -4114,7 +4158,7 @@ class DocumentController extends Controller
 
         if (!empty($request->annex_IX_risk_attachment) || !empty($request->deleted_anne_attach9)) {
             $existingFiles = json_decode($documentcontet->annex_IX_risk_attachment, true) ?? [];
-    
+
             // Handle deleted files
             if (!empty($request->deleted_anne_attach9)) {
                 $filesToDelete = explode(',', $request->deleted_anne_attach9);
@@ -4122,7 +4166,7 @@ class DocumentController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-    
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('annex_IX_risk_attachment')) {
@@ -4132,7 +4176,7 @@ class DocumentController extends Controller
                     $newFiles[] = $name;
                 }
             }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $documentcontet->annex_IX_risk_attachment = json_encode($allFiles);
@@ -4145,7 +4189,7 @@ class DocumentController extends Controller
 
         if (!empty($request->annex_X_design_attachment) || !empty($request->deleted_anne_attach10)) {
             $existingFiles = json_decode($documentcontet->annex_X_design_attachment, true) ?? [];
-    
+
             // Handle deleted files
             if (!empty($request->deleted_anne_attach10)) {
                 $filesToDelete = explode(',', $request->deleted_anne_attach10);
@@ -4153,7 +4197,7 @@ class DocumentController extends Controller
                     return !in_array($file, $filesToDelete);
                 });
             }
-    
+
             // Handle new files
             $newFiles = [];
             if ($request->hasFile('annex_X_design_attachment')) {
@@ -4163,14 +4207,14 @@ class DocumentController extends Controller
                     $newFiles[] = $name;
                 }
             }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $documentcontet->annex_X_design_attachment = json_encode($allFiles);
             }
 
 
-       
+
 
         // ----------- Annexure X-Design Specification end--------------------------
 
@@ -4337,7 +4381,7 @@ class DocumentController extends Controller
 
         // ----------- Annexure XV Data Qualification Protocol end--------------------------
 
- 
+
         // rajendra start
 
         // if (!empty($request->afqpattachement) || !empty($request->deleted_afqpattachement)) {
@@ -4391,7 +4435,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->pvpattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->htspattachement) || !empty($request->deleted_htspattachement)) {
         //     $existingFiles = json_decode($documentcontet->htspattachement, true) ?? [];
@@ -4418,7 +4462,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->htspattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->afqrattachement) || !empty($request->deleted_afqrattachement)) {
         //     $existingFiles = json_decode($documentcontet->afqrattachement, true) ?? [];
@@ -4445,7 +4489,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->afqrattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->afursattachement) || !empty($request->deleted_afursattachement)) {
         //     $existingFiles = json_decode($documentcontet->afursattachement, true) ?? [];
@@ -4472,7 +4516,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->afursattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->aqpattachement) || !empty($request->deleted_aqpattachement)) {
         //     $existingFiles = json_decode($documentcontet->aqpattachement, true) ?? [];
@@ -4499,7 +4543,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->aqpattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->aqrattachement) || !empty($request->deleted_aqrattachement)) {
         //     $existingFiles = json_decode($documentcontet->aqrattachement, true) ?? [];
@@ -4526,7 +4570,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->aqrattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->pfmfattachement) || !empty($request->deleted_pfmfattachement)) {
         //     $existingFiles = json_decode($documentcontet->pfmfattachement, true) ?? [];
@@ -4553,7 +4597,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->pfmfattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->rfmfattachement) || !empty($request->deleted_rfmfattachement)) {
         //     $existingFiles = json_decode($documentcontet->rfmfattachement, true) ?? [];
@@ -4580,7 +4624,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->rfmfattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->annex_XVI_per_qualif_attachment) || !empty($request->deleted_annex_XVI_per_qualif_attachment)) {
         //     $existingFiles = json_decode($documentcontet->annex_XVI_per_qualif_attachment, true) ?? [];
@@ -4633,7 +4677,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->annex_XVII_valid_summ_attachment = json_encode($allFiles);
         // }
-      
+
 
         // if (!empty($request->annex_XVIII_trac_matri_attachment) || !empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
         //     $existingFiles = json_decode($documentcontet->annex_XVIII_trac_matri_attachment, true) ?? [];
@@ -4660,7 +4704,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->annex_XVIII_trac_matri_attachment = json_encode($allFiles);
         // }
-      
+
 
         // if (!empty($request->annex_XIX_syst_retir_attachment) || !empty($request->deleted_annex_XIX_syst_retir_attachment)) {
         //     $existingFiles = json_decode($documentcontet->annex_XIX_syst_retir_attachment, true) ?? [];
@@ -4737,7 +4781,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->pvpattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->htspattachement) || !empty($request->deleted_htspattachement)) {
         //     $existingFiles = json_decode($documentcontet->htspattachement, true) ?? [];
@@ -4764,7 +4808,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->htspattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->afqrattachement) || !empty($request->deleted_afqrattachement)) {
         //     $existingFiles = json_decode($documentcontet->afqrattachement, true) ?? [];
@@ -4791,7 +4835,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->afqrattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->afursattachement) || !empty($request->deleted_afursattachement)) {
         //     $existingFiles = json_decode($documentcontet->afursattachement, true) ?? [];
@@ -4818,7 +4862,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->afursattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->aqpattachement) || !empty($request->deleted_aqpattachement)) {
         //     $existingFiles = json_decode($documentcontet->aqpattachement, true) ?? [];
@@ -4845,7 +4889,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->aqpattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->aqrattachement) || !empty($request->deleted_aqrattachement)) {
         //     $existingFiles = json_decode($documentcontet->aqrattachement, true) ?? [];
@@ -4872,7 +4916,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->aqrattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->pfmfattachement) || !empty($request->deleted_pfmfattachement)) {
         //     $existingFiles = json_decode($documentcontet->pfmfattachement, true) ?? [];
@@ -4899,7 +4943,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->pfmfattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->rfmfattachement) || !empty($request->deleted_rfmfattachement)) {
         //     $existingFiles = json_decode($documentcontet->rfmfattachement, true) ?? [];
@@ -4926,7 +4970,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->rfmfattachement = json_encode($allFiles);
         // }
-        
+
 
         // if (!empty($request->annex_XVI_per_qualif_attachment) || !empty($request->deleted_annex_XVI_per_qualif_attachment)) {
         //     $existingFiles = json_decode($documentcontet->annex_XVI_per_qualif_attachment, true) ?? [];
@@ -4979,7 +5023,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->annex_XVII_valid_summ_attachment = json_encode($allFiles);
         // }
-      
+
 
         // if (!empty($request->annex_XVIII_trac_matri_attachment) || !empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
         //     $existingFiles = json_decode($documentcontet->annex_XVIII_trac_matri_attachment, true) ?? [];
@@ -5006,7 +5050,7 @@ class DocumentController extends Controller
         //     $allFiles = array_merge($existingFiles, $newFiles);
         //     $documentcontet->annex_XVIII_trac_matri_attachment = json_encode($allFiles);
         // }
-      
+
 
         // if (!empty($request->annex_XIX_syst_retir_attachment) || !empty($request->deleted_annex_XIX_syst_retir_attachment)) {
         //     $existingFiles = json_decode($documentcontet->annex_XIX_syst_retir_attachment, true) ?? [];
@@ -5042,113 +5086,113 @@ class DocumentController extends Controller
              $documentcontet->eqp_approval = $request->eqp_approval;
              $documentcontet->eqp_objective = $request->eqp_objective;
              $documentcontet->eqp_scope = $request->eqp_scope;
- 
+
              if (!empty($request->eqpresponsibility)) {
                  $documentcontet->eqpresponsibility = serialize($request->eqpresponsibility);
              }
              if (!empty($request->eqpdetails)) {
                  $documentcontet->eqpdetails = serialize($request->eqpdetails);
              }
- 
+
              if (!empty($request->eqpsampling)) {
                  $documentcontet->eqpsampling = serialize($request->eqpsampling);
              }
- 
+
              if (!empty($request->Samplingprocedure)) {
                  $documentcontet->Samplingprocedure = serialize($request->Samplingprocedure);
              }
- 
+
              if (!empty($request->AcceptenceCriteria)) {
                  $documentcontet->AcceptenceCriteria = serialize($request->AcceptenceCriteria);
              }
- 
+
              if (!empty($request->EnvironmentalConditions)) {
                  $documentcontet->EnvironmentalConditions = serialize($request->EnvironmentalConditions);
              }
- 
+
              if (!empty($request->eqpdetailsdeviation)) {
                  $documentcontet->eqpdetailsdeviation = serialize($request->eqpdetailsdeviation);
              }
- 
+
              if (!empty($request->eqpdetailschangecontrol)) {
                  $documentcontet->eqpdetailschangecontrol = serialize($request->eqpdetailschangecontrol);
              }
- 
+
              if (!empty($request->eqpdetailssummary)) {
                  $documentcontet->eqpdetailssummary = serialize($request->eqpdetailssummary);
              }
- 
+
              if (!empty($request->eqpdetailsconclusion)) {
                  $documentcontet->eqpdetailsconclusion = serialize($request->eqpdetailsconclusion);
              }
- 
+
              if (!empty($request->eqpdetailstraining)) {
                  $documentcontet->eqpdetailstraining = serialize($request->eqpdetailstraining);
              }
- 
+
              //Format For Compressed Air And Nitrogen Gas System Report
- 
+
              $documentcontet->format_approval = $request->format_approval;
              $documentcontet->format_objective = $request->format_objective;
              $documentcontet->format_scope = $request->format_scope;
- 
+
              if (!empty($request->formatidentification)) {
                  $documentcontet->formatidentification = serialize($request->formatidentification);
              }
- 
+
              if (!empty($request->executiontteam)) {
                  $documentcontet->executiontteam = serialize($request->executiontteam);
              }
- 
+
              if (!empty($request->formatdocuments)) {
                  $documentcontet->formatdocuments = serialize($request->formatdocuments);
              }
- 
+
              if (!empty($request->revalidationtype)) {
                  $documentcontet->revalidationtype = serialize($request->revalidationtype);
              }
              if (!empty($request->RevalidationCriteria)) {
                  $documentcontet->RevalidationCriteria = serialize($request->RevalidationCriteria);
              }
- 
+
              if (!empty($request->generalconsideration)) {
                  $documentcontet->generalconsideration = serialize($request->generalconsideration);
              }
- 
-            
+
+
              if (!empty($request->precautions)) {
                  $documentcontet->precautions = serialize($request->precautions);
              }
- 
+
              if (!empty($request->calibrationstatus)) {
                  $documentcontet->calibrationstatus = serialize($request->calibrationstatus);
              }
- 
-            
+
+
              if (!empty($request->testobservation)) {
                  $documentcontet->testobservation = serialize($request->testobservation);
              }
- 
+
              if (!empty($request->formatannexure)) {
                  $documentcontet->formatannexure = serialize($request->formatannexure);
              }
- 
+
              if (!empty($request->formatdeviation)) {
                  $documentcontet->formatdeviation = serialize($request->formatdeviation);
              }
- 
+
              if (!empty($request->formatcc)) {
                  $documentcontet->formatcc = serialize($request->formatcc);
              }
- 
+
              if (!empty($request->formatsummary)) {
                  $documentcontet->formatsummary = serialize($request->formatsummary);
              }
- 
+
              if (!empty($request->formatconclusion)) {
                  $documentcontet->formatconclusion = serialize($request->formatconclusion);
              }
- 
+
 
 
             if (!empty($request->responsibilities)) {
@@ -5237,7 +5281,7 @@ class DocumentController extends Controller
                 $documentcontet->eqpdeviation = serialize($request->eqpdeviation);
             }
 
-            
+
             if (!empty($request->eqpchangecontrol)) {
                 $documentcontet->eqpchangecontrol = serialize($request->eqpchangecontrol);
             }
@@ -5253,8 +5297,8 @@ class DocumentController extends Controller
             if (!empty($request->eqpreportapproval)) {
                 $documentcontet->eqpreportapproval = serialize($request->eqpreportapproval);
             }
-        
-           
+
+
             //Process Validation Protocol
             $documentcontet->generic_prvp = $request->generic_prvp;
             $documentcontet->prvp_product_code = $request->prvp_product_code;
@@ -5356,7 +5400,7 @@ class DocumentController extends Controller
             $documentcontet->RevalidProcess_FoCompAaNirogenkp = $request->RevalidProcess_FoCompAaNirogenkp ? serialize($request->RevalidProcess_FoCompAaNirogenkp) : serialize([]);
             $documentcontet->AcceptanceCrite_FoCompAaNirogenkp = $request->AcceptanceCrite_FoCompAaNirogenkp ? serialize($request->AcceptanceCrite_FoCompAaNirogenkp) : serialize([]);
             $documentcontet->Annexure_FoCompAaNirogenkp = $request->Annexure_FoCompAaNirogenkp ? serialize($request->Annexure_FoCompAaNirogenkp) : serialize([]);
-                        
+
 
             $documentcontet->responsibilityprvp = $request->responsibilityprvp ? serialize($request->responsibilityprvp) : serialize([]);
             $documentcontet->prvp_rawmaterial = $request->prvp_rawmaterial ? serialize($request->prvp_rawmaterial) : serialize([]);
@@ -5378,7 +5422,7 @@ class DocumentController extends Controller
             $documentcontet->training_prvp = $request->training_prvp ? serialize($request->training_prvp) : serialize([]);
 
 
-            
+
             //////PRVP End /////////////////
 
          //---------------------------process Validation Report--------------------------------------------
@@ -5392,7 +5436,7 @@ class DocumentController extends Controller
             $documentcontet->shelf_life_pvr = $request->shelf_life_pvr;
             $documentcontet->bmr_no_pvr = $request->bmr_no_pvr;
             $documentcontet->mfr_no_pvr = $request->mfr_no_pvr;
-           
+
             $documentcontet->purpose_pvr = $request->purpose_pvr ? serialize($request->purpose_pvr) : serialize([]);
             $documentcontet->scope_pvr = $request->scope_pvr ? serialize($request->scope_pvr) : serialize([]);
             $documentcontet->batchdetail_pvr = $request->batchdetail_pvr ? serialize($request->batchdetail_pvr) : serialize([]);
@@ -5402,7 +5446,7 @@ class DocumentController extends Controller
             $documentcontet->primary_packingmaterial_pvr = $request->primary_packingmaterial_pvr ? serialize($request->primary_packingmaterial_pvr) : serialize([]);
             $documentcontet->used_equipment_calibration_pvr = $request->used_equipment_calibration_pvr ? serialize($request->used_equipment_calibration_pvr) : serialize([]);
 
-            
+
             $documentcontet->result_of_intermediate_pvr = $request->result_of_intermediate_pvr ? serialize($request->result_of_intermediate_pvr) : serialize([]);
             $documentcontet->result_of_finished_product_pvr = $request->result_of_finished_product_pvr ? serialize($request->result_of_finished_product_pvr) : serialize([]);
             $documentcontet->result_of_packing_finished_pvr = $request->result_of_packing_finished_pvr ? serialize($request->result_of_packing_finished_pvr) : serialize([]);
@@ -5423,7 +5467,7 @@ class DocumentController extends Controller
         //---------------------------process Validation Report--------------------------------------------
 
 
-        //-----------------------Cleaning Validation protocol-doc --------------------------------------- 
+        //-----------------------Cleaning Validation protocol-doc ---------------------------------------
 
             $documentcontet->objective_cvpd = $request->objective_cvpd ? serialize($request->objective_cvpd) : serialize([]);
             $documentcontet->scope_cvpd = $request->scope_cvpd ? serialize($request->scope_cvpd) : serialize([]);
@@ -5450,8 +5494,8 @@ class DocumentController extends Controller
             $documentcontet->summary_conclusion_cvpd = $request->summary_conclusion_cvpd ? serialize($request->summary_conclusion_cvpd) : serialize([]);
 
             $documentcontet->training_cvpd = $request->training_cvpd ? serialize($request->training_cvpd) : serialize([]);
-        //-----------------------END Cleaning validation protocol doc--------------------------------------- 
-        //-----------------------Cleaning Validation Report-doc --------------------------------------- 
+        //-----------------------END Cleaning validation protocol doc---------------------------------------
+        //-----------------------Cleaning Validation Report-doc ---------------------------------------
 
             $documentcontet->objective_cvrd = $request->objective_cvrd ? serialize($request->objective_cvrd) : serialize([]);
             $documentcontet->scope_cvrd = $request->scope_cvrd ? serialize($request->scope_cvrd) : serialize([]);
@@ -5463,7 +5507,7 @@ class DocumentController extends Controller
             $documentcontet->analytical_report_cvrd = $request->analytical_report_cvrd ? serialize($request->analytical_report_cvrd) : serialize([]);
             $documentcontet->physical_procedure_conformance_check_cvrd = $request->physical_procedure_conformance_check_cvrd ? serialize($request->physical_procedure_conformance_check_cvrd) : serialize([]);
             $documentcontet->conclusion_cvrd = $request->conclusion_cvrd ? serialize($request->conclusion_cvrd) : serialize([]);
-        //---------------------- END-Cleaning Validation Report-doc --------------------------------------- 
+        //---------------------- END-Cleaning Validation Report-doc ---------------------------------------
 
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
@@ -5829,7 +5873,7 @@ class DocumentController extends Controller
 
             if (!empty($request->file_attach) || !empty($request->deleted_file_attach)) {
                 $existingFiles = json_decode($document->file_attach, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_file_attach)) {
                     $filesToDelete = explode(',', $request->deleted_file_attach);
@@ -5837,7 +5881,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('file_attach')) {
@@ -5847,16 +5891,16 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->file_attach = json_encode($allFiles);
             }
-    
-    
+
+
             if (!empty($request->attach_cvpd) || !empty($request->deleted_attach_cvpd)) {
                 $existingFiles = json_decode($document->attach_cvpd, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_attach_cvpd)) {
                     $filesToDelete = explode(',', $request->deleted_attach_cvpd);
@@ -5864,7 +5908,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('attach_cvpd')) {
@@ -5874,7 +5918,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attach_cvpd = json_encode($allFiles);
@@ -5884,7 +5928,7 @@ class DocumentController extends Controller
 
             if (!empty($request->attachment_srt) || !empty($request->deleted_attachment_srt)) {
                 $existingFiles = json_decode($document->attachment_srt, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_attachment_srt)) {
                     $filesToDelete = explode(',', $request->deleted_attachment_srt);
@@ -5892,7 +5936,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('attachment_srt')) {
@@ -5902,16 +5946,16 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attachment_srt = json_encode($allFiles);
             }
-    
+
 
             if (!empty($request->attachment_spt) || !empty($request->deleted_attachment_spt)) {
                 $existingFiles = json_decode($document->attachment_spt, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_attachment_spt)) {
                     $filesToDelete = explode(',', $request->deleted_attachment_spt);
@@ -5919,7 +5963,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('attachment_spt')) {
@@ -5929,7 +5973,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attachment_spt = json_encode($allFiles);
@@ -5937,7 +5981,7 @@ class DocumentController extends Controller
 
             if (!empty($request->attachment_ehtsr) || !empty($request->deleted_attachment_ehtsr)) {
                 $existingFiles = json_decode($document->attachment_ehtsr, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_attachment_ehtsr)) {
                     $filesToDelete = explode(',', $request->deleted_attachment_ehtsr);
@@ -5945,7 +5989,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('attachment_ehtsr')) {
@@ -5955,7 +5999,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attachment_ehtsr = json_encode($allFiles);
@@ -5964,7 +6008,7 @@ class DocumentController extends Controller
 
             if (!empty($request->attachment_ehtsprt) || !empty($request->deleted_attachment_ehtsprt)) {
                 $existingFiles = json_decode($document->attachment_ehtsprt, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_attachment_ehtsprt)) {
                     $filesToDelete = explode(',', $request->deleted_attachment_ehtsprt);
@@ -5972,7 +6016,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('attachment_ehtsprt')) {
@@ -5982,7 +6026,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attachment_ehtsprt = json_encode($allFiles);
@@ -5990,7 +6034,7 @@ class DocumentController extends Controller
 
             if (!empty($request->attach_comp_nitrogen) || !empty($request->deleted_attach_comp_nitrogen)) {
                 $existingFiles = json_decode($document->attach_comp_nitrogen, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_attach_comp_nitrogen)) {
                     $filesToDelete = explode(',', $request->deleted_attach_comp_nitrogen);
@@ -5998,7 +6042,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('attach_comp_nitrogen')) {
@@ -6008,7 +6052,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->attach_comp_nitrogen = json_encode($allFiles);
@@ -6016,7 +6060,7 @@ class DocumentController extends Controller
 
             if (!empty($request->file_attach_vmp) || !empty($request->deleted_file_attach_vmp)) {
                 $existingFiles = json_decode($document->file_attach_vmp, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_file_attach_vmp)) {
                     $filesToDelete = explode(',', $request->deleted_file_attach_vmp);
@@ -6024,7 +6068,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('file_attach_vmp')) {
@@ -6034,7 +6078,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->file_attach_vmp = json_encode($allFiles);
@@ -6042,7 +6086,7 @@ class DocumentController extends Controller
 
             if (!empty($request->file_attach_qm) || !empty($request->deleted_file_attach_qm)) {
                 $existingFiles = json_decode($document->file_attach_qm, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_file_attach_qm)) {
                     $filesToDelete = explode(',', $request->deleted_file_attach_qm);
@@ -6050,7 +6094,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('file_attach_qm')) {
@@ -6060,7 +6104,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->file_attach_qm = json_encode($allFiles);
@@ -6069,7 +6113,7 @@ class DocumentController extends Controller
 
             if (!empty($request->procumrepo_file_attach) || !empty($request->deleted_procumrepo_file_attach)) {
                 $existingFiles = json_decode($document->procumrepo_file_attach, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_procumrepo_file_attach)) {
                     $filesToDelete = explode(',', $request->deleted_procumrepo_file_attach);
@@ -6077,7 +6121,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('procumrepo_file_attach')) {
@@ -6087,7 +6131,7 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->procumrepo_file_attach = json_encode($allFiles);
@@ -6096,7 +6140,7 @@ class DocumentController extends Controller
 
             if (!empty($request->file_attach_pvr) || !empty($request->deleted_file_attach_pvr)) {
                 $existingFiles = json_decode($document->file_attach_pvr, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_file_attach_pvr)) {
                     $filesToDelete = explode(',', $request->deleted_file_attach_pvr);
@@ -6104,7 +6148,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('file_attach_pvr')) {
@@ -6114,15 +6158,15 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->file_attach_pvr = json_encode($allFiles);
             }
-    
+
             if (!empty($request->file_attach_cvrd) || !empty($request->deleted_file_attach_cvrd)) {
                 $existingFiles = json_decode($document->file_attach_cvrd, true) ?? [];
-    
+
                 // Handle deleted files
                 if (!empty($request->deleted_file_attach_cvrd)) {
                     $filesToDelete = explode(',', $request->deleted_file_attach_cvrd);
@@ -6130,7 +6174,7 @@ class DocumentController extends Controller
                         return !in_array($file, $filesToDelete);
                     });
                 }
-    
+
                 // Handle new files
                 $newFiles = [];
                 if ($request->hasFile('file_attach_cvrd')) {
@@ -6140,15 +6184,15 @@ class DocumentController extends Controller
                         $newFiles[] = $name;
                     }
                 }
-    
+
                 // Merge existing and new files
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->file_attach_cvrd = json_encode($allFiles);
             }
-    
-    
+
+
            $document->save();
-    
+
 
 
 
@@ -6564,7 +6608,7 @@ class DocumentController extends Controller
 
 
 
-        // 🔹 SOP Number Generate 
+        // 🔹 SOP Number Generate
         if ($document->revised == 'Yes') {
             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
         } else {
@@ -6622,7 +6666,7 @@ class DocumentController extends Controller
             ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
 
         $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
-        $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data) 
+        $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data)
             ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();

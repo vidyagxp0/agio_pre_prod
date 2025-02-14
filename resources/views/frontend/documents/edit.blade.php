@@ -71,7 +71,7 @@
             background: black;
         }
     </style>
-    
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -137,7 +137,7 @@
     #isPasted th:last-child {
         width: auto; /* Take remaining space */
         vertical-align: top;
-        
+
     }
 
     /* Common Table Cell Styling */
@@ -231,16 +231,16 @@
 
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDPROTOCOL" onclick="openData(event, 'doc-eqpprotocol')">Equipment Hold Time Study Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="FOCONITOGENREPORT" onclick="openData(event, 'doc-fcreport')">Format for compressed air and Nitrogen gas system Report</button>
-             
+
                 <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
-             
+
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
                 <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
                 <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
                 <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
                 <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
                 <button class="tablinks hidden-tabs" data-id="QUALIPROCUMREP" onclick="openData(event, 'doc_qpcr')">Qualification Protocol Cum Report</button>
-           
+
                 <button class="tablinks hidden-tabs" data-id="PROVALIINTERRE" onclick="openData(event, 'doc_proc_interim')">Process Validation Interim Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="ANNIGxPASSES" onclick="openData(event, 'doc_Annexure_I')">Annexure I-Gxp Assessment</button>
@@ -279,7 +279,7 @@
                 <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIITRACEABILITYMATRIX" onclick="openData(event, 'doc-atm')">annexure-XVIII - Traceability Matrix</button>
                 <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIIVALIDATION" onclick="openData(event, 'doc-avsr')">annexure-XVII - Validation Summary Report </button>
                 <button class="tablinks hidden-tabs" data-id="ANNEXUREXVIINSTALLATION" onclick="openData(event, 'doc-aiiopq')">annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification</button>
-               
+
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
@@ -1147,7 +1147,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3)
-                                   
+
                                     <div class="comment">
                                         <div>
 
@@ -1196,7 +1196,7 @@
                                 </script>
 
                                 @if (Auth::user()->role != 3)
-                                   
+
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1249,7 +1249,7 @@
                                 </div>
 
                                 @if (Auth::user()->role != 3)
-                                   
+
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -2002,7 +2002,7 @@
                                             require completion</small></div>
                                     <div id="responsibilitydiv">
                                          @if ($document->document_content && !empty($document->document_content->responsibility))
-                                        
+
                                             @foreach (unserialize($document->document_content->responsibility) as $key => $data)
                                                 <div
                                                     class="{{ str_contains($key, 'sub') ? 'subSingleResponsibilityBlock' : 'singleResponsibilityBlock' }}">
@@ -2711,7 +2711,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+
                                         @if($document->revised == 'Yes' && isset($document->revisions))
                                             @foreach($document->revisions as $key => $revision)
                                                 <tr>
@@ -2934,10 +2934,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @php 
-                                            $serialNumber = 1; 
-                                            $GtpData = isset($RevisionHistoryData->data) && is_string($RevisionHistoryData->data) 
-                                                ? json_decode($RevisionHistoryData->data, true) 
+                                        @php
+                                            $serialNumber = 1;
+                                            $GtpData = isset($RevisionHistoryData->data) && is_string($RevisionHistoryData->data)
+                                                ? json_decode($RevisionHistoryData->data, true)
                                                 : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
                                         @endphp
 
@@ -2987,7 +2987,7 @@
                                             <td><input type="text" name="revision_history[${serialNumber - 1}][reason_of_revision]" value=""></td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                         </tr>`;
-                                    
+
                                     $('#Details-table-revision tbody').append(newRow);
                                 });
 
@@ -3548,7 +3548,7 @@
                                                 </p>
                                                 <input class="input-field"
                                                     style="background: #ffff0061;color: black;"
-                                            
+
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -3818,8 +3818,8 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-                                
-                                
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="conclusion" id="conclusion">
@@ -3934,8 +3934,8 @@
                                         @endforeach
                                     </div>
                                 </div>
-                                
-                                
+
+
                             </div>
                         </div>
                         --}}
@@ -3965,7 +3965,7 @@
 
                                         <div class="add-btn">
                                             <label for="attachment_srtData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_srtData" name="attachment_srt[]" 
+                                            <input type="file" id="attachment_srtData" name="attachment_srt[]"
                                                 oninput="addMultipleFiles(this, 'attachment_srtDatafield')" multiple hidden>
                                         </div>
                                     </div>
@@ -3984,7 +3984,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -4030,7 +4030,7 @@
                                 </div>
                     </div>
 
-                  
+
 
                   <!-- Study Protocol Tabs -->
                     <div id="doc-stprotocol" class="tabcontent">
@@ -4279,7 +4279,7 @@
                                                 </p>
                                                 <input class="input-field"
                                                     style="background: #ffff0061;color: black;"
-                                            
+
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -4549,8 +4549,8 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-                                
-                                
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="ststrategy" id="ststrategy">
@@ -5004,8 +5004,8 @@
 
 
 
-                                                               
-                                
+
+
                             </div>
                         </div>
                          --}}
@@ -5036,7 +5036,7 @@
 
                                         <div class="add-btn">
                                             <label for="attachment_sptData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_sptData" name="attachment_spt[]" 
+                                            <input type="file" id="attachment_sptData" name="attachment_spt[]"
                                                 oninput="addMultipleFiles(this, 'attachment_sptfield')" multiple hidden>
                                         </div>
                                     </div>
@@ -5055,7 +5055,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -5387,7 +5387,7 @@
                                                 </p>
                                                 <input class="input-field"
                                                     style="background: #ffff0061;color: black;"
-                                            
+
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -5657,8 +5657,8 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-                                
-                                
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="eqpconclusion" id="eqpconclusion">
@@ -5839,12 +5839,12 @@
                                     </div>
                                 @endif
 
-                               
 
 
 
-                                                               
-                                
+
+
+
                             </div>
                         </div>
                         --}}
@@ -5874,7 +5874,7 @@
 
                                         <div class="add-btn">
                                             <label for="attachment_ehtsrData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]" 
+                                            <input type="file" id="attachment_ehtsrData" name="attachment_ehtsr[]"
                                                 oninput="addMultipleFiles(this, 'attachment_ehtsrfield')" multiple hidden>
                                         </div>
                                     </div>
@@ -5893,7 +5893,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -9439,7 +9439,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_V_user_attachmentHolTimSutRepfile_attach" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachmentHolTimSutRepfile_attach" name="HolTimSutRepfile_attach[]" 
+                                            <input type="file" id="annex_V_user_attachmentHolTimSutRepfile_attach" name="HolTimSutRepfile_attach[]"
                                                 oninput="addMultipleFiles(this, 'HolTimSutRepfile_attachDatassp')" multiple hidden>
                                         </div>
                                     </div>
@@ -9458,7 +9458,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -11245,7 +11245,7 @@
 
 
 
-	
+
 
 
 
@@ -14453,7 +14453,7 @@
                     <div class="input-fields">
                         <div class="row">
 
-                            
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>Site Master File Attachment</b></label>
@@ -14670,7 +14670,7 @@
                                     </div>
                                 @endif
 
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="formatidentification" id="formatidentification">
@@ -14838,7 +14838,7 @@
                                                 </p>
                                                 <input class="input-field"
                                                     style="background: #ffff0061;color: black;"
-                                           
+
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -15109,8 +15109,8 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-                               
-                               
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="generalconsideration" id="generalconsideration">
@@ -15921,8 +15921,8 @@
                                         </div>
                                         <div class="button">Add Comment</div>
                                     </div>
-                                @endif                               
-                               
+                                @endif
+
                             </div>
                         </div>
                         --}}
@@ -15952,7 +15952,7 @@
 
                                         <div class="add-btn">
                                             <label for="attach_comp_nitrogenData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="attach_comp_nitrogenData" name="attach_comp_nitrogen[]" 
+                                            <input type="file" id="attach_comp_nitrogenData" name="attach_comp_nitrogen[]"
                                                 oninput="addMultipleFiles(this, 'attach_comp_nitrogenDatafield')" multiple hidden>
                                         </div>
                                     </div>
@@ -15971,7 +15971,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -16200,8 +16200,8 @@
                                 </div>
 
 
-                               
-                               
+
+
                                  <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Results of In process data" id="result_In_process_data">
@@ -16278,9 +16278,9 @@
                                         @endforeach
                                     </div>
                                 </div>
-                               
 
-                               
+
+
 
                                  <div class="col-md-12">
                                     <div class="group-input">
@@ -16790,7 +16790,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -16834,7 +16834,7 @@
                                         <div class="group-input">
                                             <label for="File_Attachment">File Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                   
+
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="pvir_fileattachement">
                                                 @if (!empty($document->document_content->pvir_attachment))
@@ -16857,7 +16857,7 @@
                                                     @endforeach
                                                 @endif
                                                 </div>
-                                   
+
                                                 <div class="add-btn">
                                                     <label for="pvir_attachment" style="cursor: pointer;">Add</label>
                                                     <input type="file" id="pvir_attachment" name="pvir_attachment[]"
@@ -16867,13 +16867,13 @@
                                         </div>
                                     </div>
 
-                   
-                                   
+
+
                                     <script>
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         fileList.innerHTML = ""; // Clear previous files (if needed)
-                                   
+
                                         for (let file of input.files) {
                                             let fileItem = document.createElement("div");
                                             fileItem.textContent = file.name;
@@ -16881,7 +16881,7 @@
                                         }
                                     }
                                     </script> --}}
-                               
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -16952,7 +16952,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -16991,7 +16991,7 @@
                                     }
                                 }
                             </script>
-                 
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17062,7 +17062,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17102,7 +17102,7 @@
                                 }
                             </script>
 
-                                               
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17172,7 +17172,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17212,7 +17212,7 @@
                                 }
                             </script>
 
-                     
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17282,7 +17282,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17322,8 +17322,8 @@
                                 }
                             </script>
 
-                                   
-                                   
+
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -17392,7 +17392,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17432,8 +17432,8 @@
                                 }
                             </script>
 
-                                   
-                               
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17503,7 +17503,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17543,7 +17543,7 @@
                                 }
                             </script>
 
-                                   
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17613,7 +17613,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17722,7 +17722,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17762,8 +17762,8 @@
                                 }
                             </script>
 
-                                   
-                               
+
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -17832,7 +17832,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17872,9 +17872,9 @@
                                 }
                             </script>
 
-                                 
 
-                                                   
+
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17944,7 +17944,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -17984,7 +17984,7 @@
                                 }
                             </script>
 
-                                   
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -18036,7 +18036,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_XI_confi_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]" 
+                                            <input type="file" id="annex_XI_confi_attachment" name="annex_XI_confi_attachment[]"
                                                 oninput="addMultipleFiles(this, 'annex_XI_Config_fileattachement')" multiple hidden>
                                         </div>
                                     </div>
@@ -18055,7 +18055,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -18096,7 +18096,7 @@
                             </script>
 
 
-                                   
+
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -18146,7 +18146,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_XII_qua_proto_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]" 
+                                            <input type="file" id="annex_XII_qua_proto_attachment" name="annex_XII_qua_proto_attachment[]"
                                                 oninput="addMultipleFiles(this, 'annex_XII_quaProto_fileattachement')" multiple hidden>
                                         </div>
                                     </div>
@@ -18165,7 +18165,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -18206,7 +18206,7 @@
                             </script>
 
 
-                                
+
 
 
                                 <div class="button-block">
@@ -18258,7 +18258,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_XIII_unit_integ_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]" 
+                                            <input type="file" id="annex_XIII_unit_integ_attachment" name="annex_XIII_unit_integ_attachment[]"
                                                 oninput="addMultipleFiles(this, 'annex_XIII_unitInteg_fileattachement')" multiple hidden>
                                         </div>
                                     </div>
@@ -18277,7 +18277,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -18317,7 +18317,7 @@
                                 }
                             </script>
 
-                                                               
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -18368,7 +18368,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_XIV_data_migra_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]" 
+                                            <input type="file" id="annex_XIV_data_migra_attachment" name="annex_XIV_data_migra_attachment[]"
                                                 oninput="addMultipleFiles(this, 'annex_XIV_dataMigra_fileattachement')" multiple hidden>
                                         </div>
                                     </div>
@@ -18387,7 +18387,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -18427,7 +18427,7 @@
                                 }
                             </script>
 
-                                   
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -18478,7 +18478,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_XV_data_qualif_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]" 
+                                            <input type="file" id="annex_XV_data_qualif_attachment" name="annex_XV_data_qualif_attachment[]"
                                                 oninput="addMultipleFiles(this, 'annex_XV_dataQualif_fileattachement')" multiple hidden>
                                         </div>
                                     </div>
@@ -18497,7 +18497,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -18537,7 +18537,7 @@
                                 }
                             </script>
 
-                                   
+
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -18579,7 +18579,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 sub-head">  
+                                    <div class="col-12 sub-head">
                                            STANDARD TESTING PROCEDURE
                                         <div class="group-input">
                                             <label for="procedure"></label>
@@ -18715,7 +18715,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 sub-head">  
+                                    <div class="col-12 sub-head">
                                            STANDARD TESTING PROCEDURE
                                         <div class="group-input">
                                             <label for="procedure"></label>
@@ -18856,7 +18856,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 sub-head">  
+                                    <div class="col-12 sub-head">
                                            STANDARD TESTING PROCEDURE
                                         <div class="group-input">
                                             <label for="procedure"></label>
@@ -19362,7 +19362,7 @@
                                     </div>
                                 @endif
 
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="eqpresponsibility" id="eqpresponsibility">
@@ -19530,7 +19530,7 @@
                                                 </p>
                                                 <input class="input-field"
                                                     style="background: #ffff0061;color: black;"
-                                           
+
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -19801,8 +19801,8 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-                               
-                               
+
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="EnvironmentalConditions" id="EnvironmentalConditions">
@@ -20348,12 +20348,12 @@
 
 
 
-                               
 
 
 
-                                                               
-                               
+
+
+
                             </div>
                         </div>
                         --}}
@@ -20403,7 +20403,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -20522,7 +20522,7 @@
 
 
 
-                                
+
 
                                     <div class="col-md-12">
                                         <div class="group-input">
@@ -20916,7 +20916,7 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                    
+
 
 
                                     <div class="col-md-12">
@@ -21316,7 +21316,7 @@
 
 
 
-                                    
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="criticalprocess_parameter_pvr" id="criticalprocess_parameter_pvr">
@@ -21395,7 +21395,7 @@
                                     </div>
 
 
-            
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="yield_at_various_stage_pvr" id="yield_at_various_stage_pvr">
@@ -21871,7 +21871,7 @@
 
 
 
-                                    
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="summary_pvr" id="summary_pvr">
@@ -21951,7 +21951,7 @@
 
 
 
-                                    
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="conclusion_pvr" id="conclusion_pvr">
@@ -22031,7 +22031,7 @@
 
 
 
-                                        
+
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="proposed_parameter_upcoming_batch_pvr" id="proposed_parameter_upcoming_batch_pvr">
@@ -22212,7 +22212,7 @@
 
                                         <div class="add-btn">
                                             <label for="file_attach_pvrData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]" 
+                                            <input type="file" id="file_attach_pvrData" name="file_attach_pvr[]"
                                                 oninput="addMultipleFiles(this, 'file_attach_pvrDatassp')" multiple hidden>
                                         </div>
                                     </div>
@@ -22231,7 +22231,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -22270,7 +22270,7 @@
                                     }
                                 }
                             </script>
-                       
+
                             <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -22294,7 +22294,7 @@
                     <div class="row">
 
 
-                    {{--  
+                    {{--
 
 
                          <div class="col-md-12">
@@ -22374,7 +22374,7 @@
                                 </div>
                             </div>
 
-                           
+
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -22617,7 +22617,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="identification_sensitive_product_contamination_cvpd" id="identification_sensitive_product_contamination_cvpd">
-                                    Identification of most sensitive product for contamination on 
+                                    Identification of most sensitive product for contamination on
                                         the basis of maximum daily dose & minimum batch size <button type="button" id="identification_sensitive_product_contamination_cvpdbtnadd" name="button"
                                             {{ Helpers::isRevised($document->stage) }}>+</button>
                                     </label>
@@ -22769,7 +22769,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            
+
 
 
                             <div class="col-md-12">
@@ -23169,7 +23169,7 @@
 
 
 
-                            
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="recovery_studies_cvpd" id="recovery_studies_cvpd">
@@ -23248,7 +23248,7 @@
                             </div>
 
 
-      
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="calculating_carry_over_cvpd" id="calculating_carry_over_cvpd">
@@ -23724,7 +23724,7 @@
 
 
 
-                            
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="evaluation_analytical_result_cvpd" id="evaluation_analytical_result_cvpd">
@@ -23804,7 +23804,7 @@
 
 
 
-                            
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="conclusion_pvr" id="conclusion_pvr">
@@ -23884,7 +23884,7 @@
 
 
 
-                                 
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="summary_conclusion_cvpd" id="summary_conclusion_cvpd">
@@ -24040,7 +24040,7 @@
                                 </div>
                             </div>
 
-                     --}}     
+                     --}}
                      <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
@@ -24066,7 +24066,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachment" name="attach_cvpd[]" 
+                                            <input type="file" id="annex_V_user_attachment" name="attach_cvpd[]"
                                                 oninput="addMultipleFiles(this, 'attach_cvpdData')" multiple hidden>
                                         </div>
                                     </div>
@@ -24085,7 +24085,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -24123,7 +24123,7 @@
                                         fileList.appendChild(fileContainer);
                                     }
                                 }
-                            </script>   
+                            </script>
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -24135,7 +24135,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!---------------------------------------------- cleaning validation Report-doc tab ----------------------------------------->
 
 
@@ -24227,7 +24227,7 @@
                                 </div>
                             </div>
 
-                           
+
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -24621,7 +24621,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            
+
 
 
                             <div class="col-md-12">
@@ -24942,7 +24942,7 @@
 
 
                     --}}
-                         
+
                     <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
@@ -24968,7 +24968,7 @@
 
                                         <div class="add-btn">
                                             <label for="file_attach_cvrdData" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]" 
+                                            <input type="file" id="file_attach_cvrdData" name="file_attach_cvrd[]"
                                                 oninput="addMultipleFiles(this, 'file_attach_cvrdDatassp')" multiple hidden>
                                         </div>
                                     </div>
@@ -24987,7 +24987,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -25037,8 +25037,8 @@
                 </div>
             </div>
         </div>
-     
-   
+
+
   <!---------------------------------------------- stability study protocol tab ----------------------------------------->
 
 
@@ -25051,8 +25051,8 @@
 
 
 
-                   {{-- 
-                     
+                   {{--
+
                                     <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="purpose">PRODUCT NAME  </label>
@@ -25136,12 +25136,12 @@
                                             </div>
                                         </div>
 
-                                                    
+
                                         <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                             <div class="group-input">
                                                 <label for="other_specify">Please specify</label>
                                                 <input type="text" name="specify_ssp" id="other_specify" value="{{ $document->document_content->specify_ssp ?? '' }}" placeholder="Specify if Other is selected">
-                                                
+
                                             </div>
                                         </div>
 
@@ -25156,7 +25156,7 @@
                                                                 }
                                                             }
 
-                                                            toggleOtherSpecifyField(); 
+                                                            toggleOtherSpecifyField();
 
                                                             $('#change_related_to').change(function() {
                                                                 toggleOtherSpecifyField();
@@ -25175,13 +25175,13 @@
                                                     <option value="Commercial Validation batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Commercial Validation batch' ? 'selected' : '' }}>Commercial Validation batch</option>
                                                     <option value="Commercial Annual batch" {{ old('scope_ssp', $document->document_content->scope_ssp ?? '') == 'Commercial Annual batch' ? 'selected' : '' }}>Commercial Annual batch</option>
                                                 </select>
-                                                
+
                                             </div>
                                         </div>
 
 
 
-                                        
+
 
 
                                     <div class="col-md-12 mb-3">
@@ -25199,7 +25199,7 @@
                                                 <input type="text" name="reason_stability_ssp" value="{{$document->document_content->reason_stability_ssp}}">
                                             </div>
                                     </div>
-                         
+
 
 
                                     <div class="col-12">
@@ -25223,8 +25223,8 @@
                                             <tbody>
                                                 @php
                                                     // Ensure $BATCH_DETAILS_ssp->data is an array
-                                                    $batchData = !empty($BATCH_DETAILS_ssp) && is_string($BATCH_DETAILS_ssp->data) 
-                                                                ? json_decode($BATCH_DETAILS_ssp->data, true) 
+                                                    $batchData = !empty($BATCH_DETAILS_ssp) && is_string($BATCH_DETAILS_ssp->data)
+                                                                ? json_decode($BATCH_DETAILS_ssp->data, true)
                                                                 : (is_array($BATCH_DETAILS_ssp->data) ? $BATCH_DETAILS_ssp->data : []);
                                                 @endphp
 
@@ -25285,7 +25285,7 @@
                                     // Remove row functionality
                                     $(document).on('click', '.removeRowBtn', function() {
                                         $(this).closest('tr').remove();
-                                        
+
                                         // Renumber serial numbers after removal
                                         $('#batch_detailData_ssp tbody tr').each(function(index) {
                                             $(this).find('td:first input').val(index + 1);
@@ -25307,11 +25307,11 @@
 
 
 
-   
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Specification Details">
-                                                
+
                                                 DETAILS
                                                 <button type="button" id="SecondbatchDetailData_ssp">+</button>
                                             </label>
@@ -25322,7 +25322,7 @@
                                                                 <th style="width: 2%">Sr.No</th>
                                                                 <th style="width: 12%">Stability station</th>
                                                                 <th style="width: 12%">Required tests</th>
-                                                                
+
                                                                 <th style="width: 3%">Action</th>
 
                                                             </tr>
@@ -25334,7 +25334,7 @@
                                                                     <td><input disabled type="text" name="batch_detaildata_ssp[{{ $index }}][serial]" value="{{ $index + 1 }}"></td>
                                                                     <td><input type="text" name="batch_detaildata_ssp[{{ $index }}][stability_station]" value="{{ $spec['stability_station'] }}"></td>
                                                                     <td><input type="text" name="batch_detaildata_ssp[{{ $index }}][req_test]" value="{{ $spec['req_test'] }}"></td>
-                                                                    
+
                                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                                 </tr>
                                                             @endforeach
@@ -25362,7 +25362,7 @@
                                                         '][serial]" value="' + (serialNumber + 1) + '"></td>' +
                                                         '<td><input type="text" name="batch_detaildata_ssp[' + serialNumber + '][stability_station]"></td>' +
                                                         '<td><input type="text" name="batch_detaildata_ssp[' + serialNumber + '][req_test]"></td>' +
-                                                    
+
                                                         '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                         '</tr>'
                                                     );
@@ -25453,11 +25453,11 @@
                                         <label for="scope">Batch Number</label>
                                         <input type="text" name="batchnumber_ssp" value="{{$document->document_content->batchnumber_ssp}}">
                                     </div>
-                                </div> 
+                                </div>
 
-                        --}}      
-                   
-                       
+                        --}}
+
+
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -25484,7 +25484,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachment" name="file_attach[]" 
+                                            <input type="file" id="annex_V_user_attachment" name="file_attach[]"
                                                 oninput="addMultipleFiles(this, 'file_attachDatassp')" multiple hidden>
                                         </div>
                                     </div>
@@ -25503,7 +25503,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -25546,7 +25546,7 @@
 
 
 
-                            
+
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -25571,7 +25571,7 @@
                                 <div class="">
                                   PRODUCT DETAILS
                                 </div>  <br>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Generic Name </label>
                                         <input type="text" name="generic_prvp" value="{{$document->document_content->generic_prvp}}">
@@ -25913,8 +25913,8 @@
                                         @endforeach
                                     </div>
                                 </div>
-           
-       
+
+
 
 
                                 <div class="col-md-12">
@@ -26359,7 +26359,92 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>Bill of Materia File Attachment</b></label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="ProValProtocolDatassp">
+                                                @if ($document->ProValProtocol)
+                                                    @foreach(json_decode($document->ProValProtocol) as $file)
+                                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_ProValProtocol[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+
+                                            <div class="add-btn">
+                                                <label for="ProValProtocol_id" style="cursor: pointer;">Add</label>
+                                                <input type="file" id="ProValProtocol_id" name="ProValProtocol[]"
+                                                    oninput="addMultipleFiles(this, 'ProValProtocolDatassp')" multiple hidden>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <!-- Hidden field to store deleted files -->
+                                <input type="hidden" id="deleted_ProValProtocol" name="deleted_ProValProtocol" value="">
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        document.querySelectorAll('.remove-file').forEach(button => {
+                                            button.addEventListener('click', function () {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+
+                                                    const deletedFilesInput = document.getElementById('deleted_ProValProtocol');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        for (let file of input.files) {
+                                            let fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                            let fileText = document.createElement('b');
+                                            fileText.textContent = file.name;
+
+                                            let removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = file.name;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function () {
+                                                fileContainer.style.display = 'none';
+                                            });
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(removeLink);
+                                            fileList.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+
 
 
                                 <div class="button-block">
@@ -26407,7 +26492,7 @@
 
                                         <div class="add-btn">
                                             <label for="file_attach_vmpDatafiled" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="file_attach_vmpDatafiled" name="file_attach_vmp[]" 
+                                            <input type="file" id="file_attach_vmpDatafiled" name="file_attach_vmp[]"
                                                 oninput="addMultipleFiles(this, 'file_attach_vmpData')" multiple hidden>
                                         </div>
                                     </div>
@@ -26426,7 +26511,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -26511,7 +26596,7 @@
 
                                         <div class="add-btn">
                                             <label for="file_attach_qmDatafiled" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="file_attach_qmDatafiled" name="file_attach_qm[]" 
+                                            <input type="file" id="file_attach_qmDatafiled" name="file_attach_qm[]"
                                                 oninput="addMultipleFiles(this, 'file_attach_qmData')" multiple hidden>
                                         </div>
                                     </div>
@@ -26530,7 +26615,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -26590,10 +26675,10 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                              
-                               
 
-                                
+
+
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
@@ -26619,7 +26704,7 @@
 
                                         <div class="add-btn">
                                             <label for="annex_V_user_attachment" style="cursor: pointer;">Add</label>
-                                            <input type="file" id="annex_V_user_attachment" name="procumrepo_file_attach[]" 
+                                            <input type="file" id="annex_V_user_attachment" name="procumrepo_file_attach[]"
                                                 oninput="addMultipleFiles(this, 'procumrepo_file_attachDatassp')" multiple hidden>
                                         </div>
                                     </div>
@@ -26638,7 +26723,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                                
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -26678,8 +26763,8 @@
                                 }
                             </script>
 
-                            
-                                
+
+
                             </div>
                         </div>
                         <div class="button-block">
@@ -26694,7 +26779,7 @@
                         </div>
                     </div>
 
-                
+
                 <!------------------------ Packing Material Specification - tab ------------------------------------>
                 <div id="doc_pams" class="tabcontent">
                     <div class="orig-head">
@@ -26907,7 +26992,7 @@
                                     </div>
                                 </div>
 
-                               
+
 
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -27006,10 +27091,10 @@
                                             <tbody>
                                                 <tr>
                                                     <td>1</td>
-                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>                                                    
-                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>                
-                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>                                                                                        
+                                                    <td><input type="text" id="" name="revision_number" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="cc_no" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="revised_effective_date" value="" class="form-control"></td>
+                                                    <td><input type="text" id="" name="reason_of_revision" value="" class="form-control"></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -27018,7 +27103,7 @@
                                 </div> --}}
                                 {{-- comment for temp --}}
                      {{--
-                               
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="htspdescription" id="htspdescription">
@@ -27643,7 +27728,7 @@
                                     <div class="group-input">
                                         <label for="File_Attachment"><b> Attachment</b></label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-   
+
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attachement_htsp">
                                                 @if ($document->document_content->htspattachement)
@@ -27661,7 +27746,7 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-   
+
                                             <div class="add-btn">
                                                 <label for="htpsfile" style="cursor: pointer;">Add</label>
                                                 <input type="file" id="htpsfile" name="htspattachement[]"
@@ -27670,25 +27755,25 @@
                                         </div>
                                     </div>
                                 </div>
-   
+
                                 <!-- Hidden field to store deleted files -->
                                 <input type="hidden" id="deleted_htspattachement" name="deleted_htspattachement" value="">
-   
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
                                         document.querySelectorAll('.remove-file').forEach(button => {
                                             button.addEventListener('click', function () {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-   
+
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
-                                                   
+
                                                     const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-   
+
                                                     const deletedFilesInput = document.getElementById('deleted_htspattachement');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
                                                     deletedFiles.push(fileName);
@@ -27697,17 +27782,17 @@
                                             });
                                         });
                                     });
-   
+
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         for (let file of input.files) {
                                             let fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-   
+
                                             let fileText = document.createElement('b');
                                             fileText.textContent = file.name;
-   
+
                                             let removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = file.name;
@@ -27715,17 +27800,17 @@
                                             removeLink.addEventListener('click', function () {
                                                 fileContainer.style.display = 'none';
                                             });
-   
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(removeLink);
                                             fileList.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-   
-   
-   
-   
+
+
+
+
 
 
 
@@ -27805,7 +27890,7 @@
                                     </div>
                                 </div> --}}
 
-                               
+
                             </div>
                         </div>
                     <div class="button-block">
@@ -27831,7 +27916,7 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                       
+
                         <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b> Attachment</b></label>
@@ -27876,7 +27961,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -27947,8 +28032,8 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                       
-                       
+
+
 
 
                         <div class="col-12">
@@ -27995,7 +28080,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28063,7 +28148,7 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                     
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="File_Attachment"><b> Attachment</b></label>
@@ -28108,7 +28193,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28181,7 +28266,7 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                       
+
                        <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b> Attachment</b></label>
@@ -28226,7 +28311,7 @@
 
                                             if (fileContainer) {
                                                 fileContainer.style.display = 'none';
-                                               
+
                                                 const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                 if (hiddenInput) {
                                                     hiddenInput.remove();
@@ -28288,7 +28373,7 @@
                             </a>
                         </button>
                     </div>
-                </div>  
+                </div>
                 <div id="doc-aqr" class="tabcontent">
                     <div class="orig-head">
                         Area Qualification Report
@@ -28299,7 +28384,7 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                       
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="File_Attachment"><b> Attachment</b></label>
@@ -28344,7 +28429,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28404,8 +28489,8 @@
                             </a>
                         </button>
                     </div>
-                </div>  
-               
+                </div>
+
                 <div id="doc-pfmf" class="tabcontent">
                     <div class="orig-head">
                         Protocol For Media Fill
@@ -28416,7 +28501,7 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                     
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="File_Attachment"><b> Attachment</b></label>
@@ -28461,7 +28546,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28532,7 +28617,7 @@
                         <!-- <div class="col-12 sub-head">
                             STANDARD TESTING PROCEDURE
                         </div> -->
-                       
+
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="File_Attachment"><b> Attachment</b></label>
@@ -28577,7 +28662,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28697,7 +28782,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28810,7 +28895,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -28921,7 +29006,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -29034,7 +29119,7 @@
 
                                         if (fileContainer) {
                                             fileContainer.style.display = 'none';
-                                           
+
                                             const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                             if (hiddenInput) {
                                                 hiddenInput.remove();
@@ -29135,7 +29220,7 @@
                                     </div>
                                 </div>
 
-                             
+
                                 <div class="">
                                     PRODUCT DETAILS
                                   </div>  <br>
@@ -30505,10 +30590,10 @@
                                     </div>
                                 </div>
  --}}
-                               
 
 
-                               
+
+
 
 
 
@@ -30590,7 +30675,7 @@
                                     <div class="group-input">
                                         <label for="File_Attachment"><b> Attachment</b></label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-   
+
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attachement_pvp">
                                                 @if ($document->document_content->pvpattachement)
@@ -30608,7 +30693,7 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-   
+
                                             <div class="add-btn">
                                                 <label for="pvpfile" style="cursor: pointer;">Add</label>
                                                 <input type="file" id="pvpfile" name="pvpattachement[]"
@@ -30617,25 +30702,25 @@
                                         </div>
                                     </div>
                                 </div>
-   
+
                                 <!-- Hidden field to store deleted files -->
                                 <input type="hidden" id="deleted_pvpattachement" name="deleted_pvpattachement" value="">
-   
+
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
                                         document.querySelectorAll('.remove-file').forEach(button => {
                                             button.addEventListener('click', function () {
                                                 const fileName = this.getAttribute('data-file-name');
                                                 const fileContainer = this.closest('.file-container');
-   
+
                                                 if (fileContainer) {
                                                     fileContainer.style.display = 'none';
-                                                   
+
                                                     const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
                                                     if (hiddenInput) {
                                                         hiddenInput.remove();
                                                     }
-   
+
                                                     const deletedFilesInput = document.getElementById('deleted_pvpattachement');
                                                     let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
                                                     deletedFiles.push(fileName);
@@ -30644,17 +30729,17 @@
                                             });
                                         });
                                     });
-   
+
                                     function addMultipleFiles(input, listId) {
                                         let fileList = document.getElementById(listId);
                                         for (let file of input.files) {
                                             let fileContainer = document.createElement('h6');
                                             fileContainer.classList.add('file-container', 'text-dark');
                                             fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-   
+
                                             let fileText = document.createElement('b');
                                             fileText.textContent = file.name;
-   
+
                                             let removeLink = document.createElement('a');
                                             removeLink.classList.add('remove-file');
                                             removeLink.dataset.fileName = file.name;
@@ -30662,19 +30747,19 @@
                                             removeLink.addEventListener('click', function () {
                                                 fileContainer.style.display = 'none';
                                             });
-   
+
                                             fileContainer.appendChild(fileText);
                                             fileContainer.appendChild(removeLink);
                                             fileList.appendChild(fileContainer);
                                         }
                                     }
                                 </script>
-   
-   
-   
-   
 
-                               
+
+
+
+
+
                             </div>
                         </div>
                     <div class="button-block">
@@ -30709,7 +30794,7 @@
                                         <input type="text" id="stp" name="stp_mfps_no" value="{{ $stpNumber }}" maxlength="255" readonly>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="generic-name">CAS No.</label>
@@ -30859,10 +30944,10 @@
                                         // Add new row in Specification Details table
                                         $('#row_material_add').click(function (e) {
                                             e.preventDefault();
-                                            
+
                                             var tableBody = $('#row_material_details tbody');
                                             var rowCount = tableBody.children('tr').length;
-                                            
+
                                             var newRow = `
                                                 <tr>
                                                     <td><input disabled type="text" name="Row_Materail[${rowCount}][serial]" value="${rowCount + 1}"></td>
