@@ -288,7 +288,7 @@
             <tbody>
                 <tr>
                     <td>
-                      {Name of Product / Material}
+                      {{$data->document_content->product_name_mstp}}
                     </td>
                 </tr>
             </tbody>
@@ -533,7 +533,7 @@
     
 
 
-<table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
     <thead>
         <tr>
             <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>

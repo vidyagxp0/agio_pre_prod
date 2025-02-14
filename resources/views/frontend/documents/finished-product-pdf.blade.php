@@ -257,6 +257,46 @@
         }
     </style>
 
+<style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+               /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+
+    </style>
+
 </head>
 <body>
     <header class="">
@@ -455,25 +495,6 @@
                     </tr> 
                 </tbody>
             </table>
-
-            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-                <tbody>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        @php
-                            $inreviews = DB::table('stage_manages')
-                                ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                ->select('stage_manages.*', 'users.name as user_name')
-                                ->where('document_id', $document->id)
-                                ->where('stage', 'Review-Submit')
-                                ->where('deleted_at', null)
-                                ->get();
-                        @endphp
-                        <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                        <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                        <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                    </tr>
-                </tbody>
-            </table> --}}
             <span>
                 Format No.: QA/097/F2-01                               
             </span>
@@ -505,11 +526,11 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->label_claim}}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
                                 </td>
@@ -520,11 +541,11 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sample_quantity}}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
@@ -548,32 +569,64 @@
                         </tbody>
                     </table>
                 </div>
-            </section>
-        </section>
-    </div>
 
-    
-    {{-- <table style="margin-top: 20px;">
-        <thead>
-            <tr>
-                <th class="text-left">
-                    <div class="bold">For Finished product specification use below table:</div>
-                </th>
-            </tr>
-        </thead>
-    </table> --}}
-    
+
+                {{-- PROCEDURE START --}}
+    <div class="other-container ">
         <table>
             <thead>
                 <tr>
-                    <th class="text-center">
-                        <div class="bold">SPECIFICATION</div>
+                    <th class="text-left">
+                        <div class="bold">Label Claim</div>
                     </th>
                 </tr>
             </thead>
         </table>
+        <div class="custom-procedure-block">
+            <div class="custom-container">
+                <div class="custom-table-wrapper" id="custom-table2">
+                    <div class="custom-procedure-content">
+                        <div class="custom-content-wrapper">
+                            <div class="table-containers">
+                                {!! strip_tags($data->label_claim, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+    {{-- PROCEDURE START --}}
+    <div class="other-container ">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        <div class="bold">Sample Quantity for analysis</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="custom-procedure-block">
+            <div class="custom-container">
+                <div class="custom-table-wrapper" id="custom-table2">
+                    <div class="custom-procedure-content">
+                        <div class="custom-content-wrapper">
+                            <div class="table-containers">
+                                {!! strip_tags($data->sample_quantity, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            </section>
+        </section>
+    </div>
+
+        {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
             <thead>
                 <tr>
                     <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
@@ -615,66 +668,37 @@
                     </tr>
                 @endif
             </tbody>
-        </table>
-
-
-        {{-- <table>
+        </table> --}}
+    {{-- PROCEDURE START --}}
+    <div class="other-container ">
+        <table>
             <thead>
                 <tr>
                     <th class="text-left">
-                        <div class="bold">For Inprocess / Cleaning validation specification use below table:</div>
-                    </th>
-                </tr>
-            </thead>
-        </table> --}}
-
-        {{-- <table>
-            <thead>
-                <tr>
-                    <th class="text-center">
                         <div class="bold">SPECIFICATION</div>
                     </th>
                 </tr>
             </thead>
-        </table> --}}
+        </table>
+        <div class="custom-procedure-block">
+            <div class="custom-container">
+                <div class="custom-table-wrapper" id="custom-table2">
+                    <div class="custom-procedure-content">
+                        <div class="custom-content-wrapper">
+                            {{-- @if ($data->document_content)
+                                {!! strip_tags($data->document_content->tds_result, 
+                                '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            @endif --}}
 
-        {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Tests</th>
-                <th style="border: 1px solid black; width: 40%; font-weight: bold; text-align: center;">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold; text-align: center;">Reference</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if(!empty($specificationValidationData))
-                @foreach($specificationValidationData as $key => $itemData)
-                    <tr>
-                        <td style="border: 1px solid black; text-align: center; font-size: 16px; font-weight: bold;">
-                            {{ $key+1 }}
-                        </td>
-                        <td style="border: 1px solid black; text-align: center;">
-                            {{ $itemData['test'] ?? '' }}
-                        </td>
-                        <td style="border: 1px solid black; text-align: center;">
-                            {{ $itemData['specification'] ?? '' }}
-                        </td>
-                        <td style="border: 1px solid black; text-align: center;">
-                            {{ $itemData['reference'] ?? '' }}
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                        No Data Available
-                    </td>
-                </tr>
-            @endif
-        </tbody>
-    </table> --}}
-
+                            <div class="table-containers">
+                                {!! strip_tags($data->fps_specificationGrid, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <table>

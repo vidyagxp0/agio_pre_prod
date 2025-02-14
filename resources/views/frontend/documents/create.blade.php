@@ -9987,12 +9987,21 @@
                                         <input type="text" name="brand_name">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Label Claim</label>
                                         <input type="text" name="label_claim">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Label Claim
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="label_claim" class="summernote"></textarea>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="product-code">Product Code</label>
@@ -10005,7 +10014,7 @@
                                         <input type="text" name="fsstorage_condition">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity">
@@ -10015,7 +10024,17 @@
 
                                         </select>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity" class="summernote"></textarea>
+                                    </div>
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="reserve-sample">Reserve Sample Quantity</label>
@@ -10041,10 +10060,16 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-12 sub-head">
                                     SPECIFICATION
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="fps_specificationGrid" class="summernote"></textarea>
+                                    </div>
                                 </div>
-                                <div class="col-12">
+
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Specification Details">
                                             Specification Details
@@ -10079,7 +10104,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <script>
                                     $(document).ready(function() {
                                         // Add new row in Specification Details table
@@ -10221,12 +10246,21 @@
                                         <input type="text" name="brand_name_cvs">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Label Claim</label>
                                         <input type="text" name="label_claim_cvs">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Label Claim
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="label_claim_cvs" class="summernote"></textarea>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="product-code">Product Code</label>
@@ -10239,7 +10273,7 @@
                                         <input type="text" name="storage_condition_cvs">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity_cvs">
@@ -10248,6 +10282,14 @@
                                             <option value="Microbial Analysis">Microbial Analysis</option>
 
                                         </select>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                       Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity_cvs" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -10344,10 +10386,20 @@
                                         });
                                     });
                                 </script> --}}
+
+
                             <div class="col-12 sub-head">
                                 Validation  Specification
                             </div>
-                            <div class="col-12">
+
+                            <div class="col-12 sub-head">
+                                 Validation  Specification
+                                <div class="group-input">
+                                    <label for="procedure"></label>
+                                    <textarea name="cvs_specificationGrid" class="summernote"></textarea>
+                                </div>
+                            </div>
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
                                         Specification Validation Details
@@ -10377,7 +10429,9 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
+
+
                             <script>
                                 $(document).ready(function() {
                                     // Add new row in Specification Details table
@@ -10455,10 +10509,18 @@
                                         <input type="text" name="brand_name_inps">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Label Claim</label>
                                         <input type="text" name="label_claim_inps">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Label Claim
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="label_claim_inps" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -10473,15 +10535,13 @@
                                         <input type="text" name="storage_condition_inps">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
-                                        <select name="sample_quantity_inps">
-                                            <option value="" selected>Enter your Selection</option>
-                                            <option value="Chemical Analysis">Chemical Analysis</option>
-                                            <option value="Microbial Analysis">Microbial Analysis</option>
 
-                                        </select>
+
+                                <div class="col-12 sub-head">
+                                      Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity_inps" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -10578,11 +10638,17 @@
                                             $(this).closest('tr').remove();
                                         });
                                     });
-                                </script> --}}
+                            </script> --}}
+
+
                             <div class="col-12 sub-head">
-                                Validation  Specification
+                                     Specification
+                                <div class="group-input">
+                                    <label for="procedure"></label>
+                                    <textarea name="ips_specificationGrid" class="summernote"></textarea>
+                                </div>
                             </div>
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
                                         Specification Validation Details
@@ -10612,7 +10678,7 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <script>
                                 $(document).ready(function() {
                                     // Add new row in Specification Details table

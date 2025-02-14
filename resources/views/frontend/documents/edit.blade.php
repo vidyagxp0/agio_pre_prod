@@ -6395,12 +6395,38 @@
                                         <input type="text" name="brand_name" value="{{ $document->brand_name }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Label Claim</label>
                                         <input type="text" name="label_claim" value="{{ $document->label_claim }}">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Label Claim
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        
+                                        <textarea name="label_claim" id="summernote" class="summernote">{{ $document->label_claim ? $document->label_claim : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="product-code">Product Code</label>
@@ -6413,7 +6439,7 @@
                                         <input type="text" name="fsstorage_condition" value="{{ $document->fsstorage_condition }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity">
@@ -6421,9 +6447,34 @@
                                             <option value="Chemical Analysis" {{ $document->sample_quantity == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
                                             <option value="Microbial Analysis" {{ $document->sample_quantity == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
                                         </select>
+                                    </div>
+                                </div> --}}
 
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity" id="summernote" class="summernote">{{ $document->sample_quantity ? $document->sample_quantity : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="reserve-sample">Reserve Sample Quantity</label>
@@ -6449,10 +6500,32 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-12 sub-head">
-                                    SPECIFICATION
+                                      SPECIFICATION
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        
+                                        <textarea name="fps_specificationGrid" id="summernote" class="summernote">{{ $document->fps_specificationGrid ? $document->fps_specificationGrid : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Specification Details">
                                             Specification Details
@@ -6495,7 +6568,7 @@
 
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <script>
                                     $(document).ready(function() {
@@ -6700,10 +6773,34 @@
                                         <input type="text" name="brand_name_cvs" value="{{ $document->brand_name_cvs }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Label Claim</label>
                                         <input type="text" name="label_claim_cvs" value="{{ $document->label_claim_cvs }}">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Label Claim
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="label_claim_cvs" id="summernote" class="summernote">{{ $document->label_claim_cvs ? $document->label_claim_cvs : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -6718,7 +6815,7 @@
                                         <input type="text" name="storage_condition_cvs" value="{{ $document->storage_condition_cvs }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity_cvs">
@@ -6726,7 +6823,30 @@
                                             <option value="Chemical Analysis" {{ $document->sample_quantity_cvs == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
                                             <option value="Microbial Analysis" {{ $document->sample_quantity_cvs == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
                                         </select>
+                                    </div>
+                                </div> --}}
 
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity_cvs" id="summernote" class="summernote">{{ $document->sample_quantity_cvs ? $document->sample_quantity_cvs : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -6754,7 +6874,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                     SPECIFICATION
                                 </div>
                                 <div class="col-12">
@@ -6848,9 +6968,29 @@
 
 
                         <div class="col-12 sub-head">
-                            Validation Specification
+                             Specification
+                            <div class="group-input">
+                                <label for="procedure"></label>
+                                <textarea name="cvs_specificationGrid" id="summernote" class="summernote">{{ $document->cvs_specificationGrid ? $document->cvs_specificationGrid : '' }}</textarea>
+                                @foreach ($history as $tempHistory)
+                                    @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
-                        <div class="col-12">
+                        {{-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Specification Details">
                                     Specification Details
@@ -6887,7 +7027,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <script>
                             $(document).ready(function() {
@@ -6983,10 +7123,34 @@
                                         <input type="text" name="brand_name_inps" value="{{ $document->brand_name_inps }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Label Claim</label>
                                         <input type="text" name="label_claim_inps" value="{{ $document->label_claim_inps }}">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Label Claim
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="label_claim_inps" id="summernote" class="summernote">{{ $document->label_claim_inps ? $document->label_claim_inps : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -7001,15 +7165,28 @@
                                         <input type="text" name="storage_condition_inps" value="{{ $document->storage_condition_inps }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="sample-quantity">Sample Quantity for Analysis</label>
-                                        <select name="sample_quantity_inps">
-                                            <option value="" selected>Enter your Selection</option>
-                                            <option value="Chemical Analysis" {{ $document->sample_quantity_inps == "Chemical Analysis" ? 'selected' : '' }}>Chemical Analysis</option>
-                                            <option value="Microbial Analysis" {{ $document->sample_quantity_inps == "Microbial Analysis" ? 'selected' : '' }}>Microbial Analysis</option>
-                                        </select>
 
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity_inps" id="summernote" class="summernote">{{ $document->sample_quantity_inps ? $document->sample_quantity_inps : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -7037,7 +7214,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                     SPECIFICATION
                                 </div>
                                 <div class="col-12">
@@ -7127,13 +7304,34 @@
                                             }
                                         });
                                     });
-                                </script> --}}
+                            </script> --}}
 
 
                         <div class="col-12 sub-head">
-                            Validation Specification
+                            Specification
+                            <div class="group-input">
+                                <label for="procedure"></label>
+                                
+                                <textarea name="ips_specificationGrid" id="summernote" class="summernote">{{ $document->ips_specificationGrid ? $document->ips_specificationGrid : '' }}</textarea>
+                                @foreach ($history as $tempHistory)
+                                    @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
-                        <div class="col-12">
+                        {{-- <div class="col-12">
                             <div class="group-input">
                                 <label for="Specification Details">
                                     Specification Details
@@ -7170,7 +7368,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <script>
                             $(document).ready(function() {
@@ -17118,7 +17316,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "FP/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "FPSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -17254,7 +17452,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "IP/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "IPSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -17395,7 +17593,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "CV/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "CVSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>

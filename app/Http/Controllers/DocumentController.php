@@ -501,6 +501,10 @@ class DocumentController extends Controller
             $document->tds_name_code = $request->tds_name_code;
             $document->total_no_pages = $request->total_no_pages;
 
+            $document->fps_specificationGrid = $request->fps_specificationGrid;
+            $document->cvs_specificationGrid = $request->cvs_specificationGrid;
+            $document->ips_specificationGrid = $request->ips_specificationGrid;
+
 
 
 
@@ -2949,6 +2953,10 @@ class DocumentController extends Controller
                 $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
                 $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
                 $document->rawmaterials_specifications = $request->rawmaterials_specifications;
+
+                $document->fps_specificationGrid = $request->fps_specificationGrid;
+                $document->cvs_specificationGrid = $request->cvs_specificationGrid;
+                $document->ips_specificationGrid = $request->ips_specificationGrid;
 
             // PIAS
                 $document->pia_name = $request->pia_name;

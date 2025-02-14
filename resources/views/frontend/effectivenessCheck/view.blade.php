@@ -207,13 +207,13 @@
                                 <div class="">QA/CQA Review</div>
                             @endif
 
-                            @if ($data->stage >= 6)
+                            {{-- @if ($data->stage >= 6)
                                 <div class="active">QA/CQA Approval Effective</div>
                                 <div style="display: none">QA/CQA Approval Not-Effective</div>
                                 <div style="display: none">Closed Not-Effective</div>
                             @else
                                 <div class="" style="display: none">QA/CQA Approval Effective</div>
-                            @endif
+                            @endif --}}
 
                             @if ($data->stage == 7)
                                 <div class="active bg-danger">Closed - Effective</div>
@@ -223,13 +223,28 @@
                                 <div class="" style="display: none">Closed - Effective</div>
                             @endif
 
-                            @if ($data->stage >= 8)
+                            @if ($data->status == 'QA/CQA Approval Effective')
+                                <div class="active">QA/CQA Approval Effective</div>
+                                <div style="display: none">QA/CQA Approval Not-Effective</div>
+                            @elseif ($data->status == 'QA/CQA Approval Not-Effective')
+                                <div class="active">QA/CQA Approval Not-Effective</div>
+                                <div style="display: none">QA/CQA Approval Effective</div>
+                            @else
+                                <div style="display: none">QA/CQA Approval Effective</div>
+                                <div style="display: none">QA/CQA Approval Not-Effective</div>
+                                <div style="display: none">Closed Not-Effective</div>
+                            @endif
+
+
+                            {{-- @if ($data->stage >= 8)
                                 <div class="active">QA/CQA Approval Not-Effective</div>
                                 <div style="display: none">QA/CQA Approval Effective</div>
                                 <div style="display: none">Closed -Effective</div>
                             @else
                                 <div class="" style="display: none">QA/CQA Approval Not-Effective</div>
-                            @endif
+                            @endif --}}
+
+                            
 
                             @if ($data->stage == 9)
                                 <div class="active bg-danger">Closed Not-Effective</div>

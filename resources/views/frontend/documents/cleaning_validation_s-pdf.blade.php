@@ -325,6 +325,22 @@
             table-layout: fixed; /* Fix table layout to maintain structure */
         }
 
+               /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
         #isPasted th,
         #isPasted td {
             border: 1px solid #000 !important;
@@ -339,8 +355,6 @@
             width: 100%;
             overflow-x: auto; /* Enable horsizontal scrolling */
         }
-
-     
 
     </style>
 
@@ -575,11 +589,11 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->brand_name_cvs}}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->label_claim_cvs}}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
                                 </td>
@@ -590,11 +604,11 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->storage_condition_cvs}}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_quantity_cvs}}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
@@ -618,12 +632,65 @@
                         </tbody>
                     </table>
                 </div>
+
+                {{-- PROCEDURE START --}}
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Label Claim</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->label_claim_cvs, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- PROCEDURE START --}}
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Sample Quantity for analysis</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->sample_quantity_cvs, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
             </section>
         </section>
     </div>
 
    
-    <table>
+    {{-- <table>
         <thead>
             <tr>
                 <th class="text-center">
@@ -668,7 +735,60 @@
                 </tr>
             @endif
         </tbody>
-    </table>
+    </table> --}}
+
+    {{-- PROCEDURE START --}}
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Specificatiom</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->cvs_specificationGrid, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- PROCEDURE START --}}
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Sample Quantity for analysis</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->sample_quantity_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
     <table>
         <thead>
