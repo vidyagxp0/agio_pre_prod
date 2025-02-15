@@ -3126,7 +3126,7 @@
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         
-                                        <textarea name="master_specification" id="summernote" class="summernote">{{ $document->master_specification ? $document->master_specification : '' }}</textarea>
+                                        <textarea name="master_specification" id="" class="summernote">{{ $document->master_specification ? $document->master_specification : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -3197,7 +3197,7 @@
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         
-                                        <textarea name="mfpstp_specification" id="summernote" class="summernote">{{ $document->mfpstp_specification ? $document->mfpstp_specification : '' }}</textarea>
+                                        <textarea name="mfpstp_specification" id="" class="summernote">{{ $document->mfpstp_specification ? $document->mfpstp_specification : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -17256,7 +17256,7 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                 <div class="col-md-12">
+                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
@@ -17392,7 +17392,7 @@
                         <div class="input-fields">
                             <div class="row">
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
@@ -17533,7 +17533,7 @@
                                 STANDARD TESTING PROCEDURE
                             </div> -->
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php

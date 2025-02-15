@@ -1507,7 +1507,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="input-fields">
+                        {{-- <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
                                     Specifications
@@ -1543,7 +1543,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div> -->
+                        </div> --}}
 
                         <div class="col-12 sub-head">
                             SPECIFICATION
@@ -2939,7 +2939,7 @@
 
 
     <!-----------------MASTER FINISHED PRODUCT SPECIFICATION Tab ---------------------->
-                    <div id="doc-mfps" class="tabcontent">
+                    {{-- <div id="doc-mfps" class="tabcontent">
                         <div class="orig-head">
                             Master Finished Product Specification
                         </div>
@@ -3006,7 +3006,7 @@
                                 </a>
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
 
                <!-----------------MASTER FINISHED PRODUCT STANDARD TESTING PROCEDURE Tab ---------------------->
 
