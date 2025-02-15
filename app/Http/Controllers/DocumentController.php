@@ -474,9 +474,12 @@ class DocumentController extends Controller
             $document->stp_mfps_no = $request->stp_mfps_no;
 
             $document->mfproduct_name = $request->mfproduct_name;
+            $document->master_specification = $request->master_specification;
             //mfstp
             $document->specification_mfpstp_no = $request->specification_mfpstp_no;
             $document->stp_mfpstp_no = $request->stp_mfpstp_no;
+            $document->mfpstp_specification = $request->mfpstp_specification;
+            $document->product_name_mstp = $request->product_name_mstp;
 
             //tds
             $document->product_material_name = $request->product_material_name;
@@ -585,7 +588,7 @@ class DocumentController extends Controller
            $document->pia_name_code = $request->pia_name_code;
 
 
-            // row  material store
+            // raw  material store
             $document->material_name = $request->material_name;
             $document->cas_no_row_material = $request->cas_no_row_material;
             $document->molecular_formula_row_material = $request->molecular_formula_row_material;
@@ -600,6 +603,9 @@ class DocumentController extends Controller
             $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
             $document->rawmaterials_specifications = $request->rawmaterials_specifications;
 
+            //raw material stp
+            $document->product_name_rawmstp = $request->product_name_rawmstp;
+            $document->rawmaterials_testing = $request->rawmaterials_testing;
 
             $document->packing_material_name = $request->packing_material_name;
             $document->item_code = $request->item_code;
@@ -612,6 +618,7 @@ class DocumentController extends Controller
             $document->safety_precaution = $request->safety_precaution;
             $document->storage_condition = $request->storage_condition;
             $document->approved_vendor = $request->approved_vendor;
+            $document->packingmaterial_specification = $request->packingmaterial_specification; 
 
             $document->stp_no = $request->stp_no;
 
@@ -2920,10 +2927,13 @@ class DocumentController extends Controller
                 $document->stp_mfps_no = $request->stp_mfps_no;
 
                 $document->mfproduct_name = $request->mfproduct_name;
+                $document->master_specification = $request->master_specification;
 
                 //mfpstp
                 $document->stp_mfpstp_no = $request->stp_mfpstp_no;
                 $document->specification_mfpstp_no = $request->specification_mfpstp_no;
+                $document->mfpstp_specification = $request->mfpstp_specification;
+                $document->product_name_mstp = $request->product_name_mstp;
 
 
                 $document->packing_material_name = $request->packing_material_name;
@@ -2953,6 +2963,10 @@ class DocumentController extends Controller
                 $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
                 $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
                 $document->rawmaterials_specifications = $request->rawmaterials_specifications;
+
+                //raw material stp
+                $document->product_name_rawmstp = $request->product_name_rawmstp;
+                $document->rawmaterials_testing = $request->rawmaterials_testing;
 
                 $document->fps_specificationGrid = $request->fps_specificationGrid;
                 $document->cvs_specificationGrid = $request->cvs_specificationGrid;

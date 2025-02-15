@@ -582,23 +582,23 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->retest_period_row_material }}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling procedure
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sampling_procedure_row_material }}</td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Item Code
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->item_code_row_material }}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
                                     {{ $data->sample_quantity_row_material }}
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
@@ -616,6 +616,56 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Sampling Procedure</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->sampling_procedure_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Sample Quantity for analysis</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->sample_quantity_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </section>
         </section>

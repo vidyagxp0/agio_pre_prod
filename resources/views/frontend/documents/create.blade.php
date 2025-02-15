@@ -309,7 +309,7 @@
                 <button class="tablinks hidden-tabs" data-id="PACKVALIREPORT" onclick="openData(event, 'doc-PacValRep')">Packing Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="FOCONITOGENPROTOCOL" onclick="openData(event, 'doc-FoCoANGsP')">Format For Compressed Air And Nitrogen Gas System Protocol</button>
 
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">RAWMS SOP</button>
+                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
@@ -318,8 +318,8 @@
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">Test Data Sheet</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">General Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
-                <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
+                <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">Master Finished Product Specification</button>
+                <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">Master Finished Product Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="STUDY" onclick="openData(event, 'doc-study')">Study Report</button>
 
                 <button class="tablinks hidden-tabs" data-id="STUDYPROTOCOL" onclick="openData(event, 'doc-stprotocol')">Study Protocol</button>
@@ -1507,7 +1507,7 @@
                             </div>
                         </div>
 
-                        <div class="input-fields">
+                        <!-- <div class="input-fields">
                             <div class="group-input">
                                 <label for="specifications">
                                     Specifications
@@ -1543,7 +1543,21 @@
                                     </table>
                                 </div>
                             </div>
+                        </div> -->
+
+                        <div class="col-12 sub-head">
+                            SPECIFICATION
+                            <div class="group-input">
+                                <label for="procedure"></label>
+                                <textarea name="master_specification" class="summernote"></textarea>
+                            </div>
                         </div>
+
+                        
+
+
+
+
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2249,43 +2263,24 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Specification No</label>
                                         <input type="text" id="specification" name="specification_mfpstp_no" maxlength="255">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Standard Testing procedure
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="mfpstp_specification" class="summernote"></textarea>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
-                        <div class="input-fields">
-                            <div class="group-input">
-                                <label for="specifications">
-                                     Specifications Testing
-                                    <button type="button" onclick="addSpecificationsTesting()">+</button>
-                                </label>
-                                <div class="table-responsive retrieve-table">
-                                    <table class="table table-bordered" id="specifications-testing">
-                                        <thead>
-                                            <tr>
-                                                <th>Sr. No.</th>
-                                                <th class="copy-name">Tests</th>
-                                                <th class="copy-name">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($specifications ?? [] as $index => $spec)
-                                            <tr>
-                                                <td>{{ $index + 1 }}</td>
-                                                <td><input type="text" name="specifications_testing[{{ $index }}][tests]" value="{{ $spec->tests }}"></td>
-                                                <td><button type="button" class="removeSpecRow">Remove</button></td>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -7809,7 +7804,15 @@
                                     </div>
                                 </div>
 
-                                <div class="group-input">
+                                <div class="col-12 sub-head">
+                                    Standard Testing Procedure
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="rawmaterials_testing" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                {{-- <div class="group-input">
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add">+</button>
@@ -7837,17 +7840,17 @@
 
                                         </table>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="short-desc">STP No.</label>
 
                                     <input type="text" id="" name="stp_no">
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -8568,65 +8571,65 @@
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Name of packing material</label>
-                                        <textarea name="name_pack_material"></textarea>
+                                        <input type="text" name="name_pack_material">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Standard pack</label>
-                                        <textarea name="standard_pack"></textarea>
+                                        <input type="text" name="standard_pack">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Sampling plan</label>
-                                        <textarea name="sampling_plan"></textarea>
+                                        <input type="text" name="sampling_plan">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Sampling Instructions</label>
-                                        <textarea name="sampling_instruction"></textarea>
+                                        <input type="text" name="sampling_instruction">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Sample for analysis </label>
-                                        <textarea name="sample_analysis"></textarea>
+                                        <input type="text" name="sample_analysis">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Control Sample</label>
-                                        <textarea name="control_sample"></textarea>
+                                        <input type="text" name="control_sample">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Safety Precautions</label>
-                                        <textarea name="safety_precaution"></textarea>
+                                        <input type="text" name="safety_precaution">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Storage condition</label>
-                                        <textarea name="storage_condition"></textarea>
+                                        <input type="text" name="storage_condition">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Approved Vendors</label>
-                                        <textarea name="approved_vendor"></textarea>
+                                        <input type="text" name="approved_vendor">
                                     </div>
                             </div>
 
-                            <div class="group-input">
+                            <!-- <div class="group-input">
                                 <label for="action-plan-grid">
                                     Details
                                     <button type="button" id="Details_add_data">+</button>
@@ -8654,6 +8657,14 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div> -->
+
+                            <div class="col-12 sub-head">
+                                    SPECIFICATION
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="packingmaterial_specification" class="summernote"></textarea>
+                                    </div>
                             </div>
 
                             <script>
@@ -10388,12 +10399,10 @@
                                 </script> --}}
 
 
-                            <div class="col-12 sub-head">
-                                Validation  Specification
-                            </div>
+
 
                             <div class="col-12 sub-head">
-                                 Validation  Specification
+                                 Specification
                                 <div class="group-input">
                                     <label for="procedure"></label>
                                     <textarea name="cvs_specificationGrid" class="summernote"></textarea>
@@ -14386,19 +14395,28 @@
                                         <input type="text" name="retest_period_row_material">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sampling-procedure">Sampling Procedure</label>
                                         <input type="text" name="sampling_procedure_row_material">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Sampling Procedure
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sampling_procedure_row_material" class="summernote"></textarea>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="item-code">Item Code</label>
                                         <input type="text" name="item_code_row_material">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity_row_material">
@@ -14407,7 +14425,17 @@
                                             <option value="Microbial Analysis">Microbial Analysis</option>
                                         </select>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity_row_material" class="summernote"></textarea>
+                                    </div>
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="reserve-sample">Reserve Sample Quantity</label>
