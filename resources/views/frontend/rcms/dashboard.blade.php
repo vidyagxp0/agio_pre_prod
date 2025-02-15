@@ -773,7 +773,9 @@
                         url = url.replace(':auditid', auditid).replace(':formType', formType);
                         // console.log('enter', url);
 
-                        // url = url.replace('http://', 'https://');
+                        if (window.location.href.indexOf('mydemosoftware') !== -1) {
+                                url = url.replace('http:', 'https:');
+                            }
                         // Empty modal data
                         $('#auditTableinfo').empty();
                         $.ajax({
