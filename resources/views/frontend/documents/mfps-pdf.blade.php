@@ -257,6 +257,46 @@
         }
     </style>
 
+<style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+               /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+
+    </style>
+
 </head>
 <body>
     <header class="">
@@ -365,6 +405,26 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
+                        <span>
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                @else
+                                  MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                @endif
+                            @else                        
+                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                @else
+                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                @endif
+                            @endif
+                        </span>
+
 
                     </td>
                 </tr>
@@ -532,47 +592,36 @@
         </table>
         <span>Format No.: QA/095/F1-00</span>
     </footer>
-    
-    <table>
-        <thead>
-            <tr>
-                <th class="text-center">
-                    <div class="bold">SPECIFICATION</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
 
-    <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-    <thead>
-        <tr>
-            <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
-            <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
-            <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
-            <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
-        </tr>
-        <tr>
-            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
-            <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if(!empty($SpecificationGrid))
-            @foreach($SpecificationGrid as $index => $row)
+    <div class="other-container ">
+        <table>
+            <thead>
                 <tr>
-                    <td style="border: 1px solid black; text-align: center;">{{ $index + 1 }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $row['tests'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $row['release'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $row['shelf_life'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $row['reference'] ?? '' }}</td>
+                    <th class="text-left">
+                        <div class="bold">SPECIFICATION</div>
+                    </th>
                 </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="5" style="border: 1px solid black; text-align: center;">No data available</td>
-            </tr>
-        @endif
-    </tbody>
+            </thead>
+        </table>
+        <div class="custom-procedure-block">
+            <div class="custom-container">
+                <div class="custom-table-wrapper" id="custom-table2">
+                    <div class="custom-procedure-content">
+                        <div class="custom-content-wrapper">
+                            <div class="table-containers">
+                                {!! strip_tags($data->master_specification, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+
+
 </table>
 
     
@@ -603,7 +652,8 @@
                                 <tr>
                                     <td>{{ $item['revision_number'] ?? '' }}</td>
                                     <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                    <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-M-Y') : '' }}</td>
+
                                     <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                 </tr>
                             @endforeach

@@ -358,7 +358,7 @@
             <tbody>
                 <tr>
                     <td style="font-weight: bold;">
-                    FINISHED PRODUCT STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                    FINISHED PRODUCT STANDARD TESTING PROCEDURE
                     </td>
                 </tr>
             </tbody>
@@ -384,15 +384,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FP/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    FP/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FP/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   FP/STP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -426,15 +426,14 @@
                                 ->value('typecode');
                         @endphp
                         @if ($document->revised === 'Yes')
-                        FP/STP/00{{ $document->revised_doc }}-0{{ $document->major }}
+                        FPSTP/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
                         Nill
                         @endif
                         </span>
                     </td>
-                    <td class="w-50"
-                        style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
-                        
+                    <td class="w-50" style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
+                        Page No.:
                     </td>
                 </tr>
             </tbody>
@@ -613,8 +612,8 @@
             $pdf->page_script('
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
-                $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 185;
+                $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
+                $y = 170;
                 $x = 405;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');

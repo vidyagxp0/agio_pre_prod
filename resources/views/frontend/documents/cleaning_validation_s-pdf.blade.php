@@ -383,11 +383,6 @@
                       CLEANING VALIDATION SPECIFICATION 
                     </td>
                 </tr>
-                <tr>
-                    <td style="font-weight: bold;">
-                       (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
-                    </td>
-                </tr>
             </tbody>
         </table>
         <table class="border border-top-none" style="width: 100%;">
@@ -471,6 +466,25 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No:
+                       <span>
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                        CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @else
+                                        CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @endif
+                            @else
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @else
+                                    CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @endif
+                            @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -837,7 +851,7 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 200;
+                $y = 170;
                 $x = 380;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');

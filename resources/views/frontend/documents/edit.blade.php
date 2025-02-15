@@ -251,8 +251,8 @@
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
                 <button class="tablinks hidden-tabs" data-id="TDS" onclick="openData(event, 'doc-tds')">Test Data Sheet</button>
                 <button class="tablinks hidden-tabs" data-id="GTP" onclick="openData(event, 'doc-gtp')">General Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">MFPS</button>
-                <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">MFPSTP</button>
+                <button class="tablinks hidden-tabs" data-id="MFPS" onclick="openData(event, 'doc-mfps')">Master Finished Product Specification</button>
+                <button class="tablinks hidden-tabs" data-id="MFPSTP" onclick="openData(event, 'doc-mfpstp')">Master Finished Product Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="STUDY" onclick="openData(event, 'doc-study')">Study Report</button>
                 <button class="tablinks hidden-tabs" data-id="STUDYPROTOCOL" onclick="openData(event, 'doc-stprotocol')">Study Protocol</button>
                 <button class="tablinks hidden-tabs" data-id="EQUIPMENTHOLDREPORT" onclick="openData(event, 'doc-eqpreport')">Equipment Hold Time Study Report</button>
@@ -3121,88 +3121,42 @@
                                         <input type="text" id="mfproduct" name="mfproduct_name" value="{{ $document->mfproduct_name }}" maxlength="255">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div class="input-fields">
-                            <div class="group-input">
-                                <label for="specifications">
-                                    Specifications
-                                    <button type="button" onclick="addSpecifications()">+</button>
-                                </label>
-                                <div class="table-responsive retrieve-table">
-                                    <table class="table table-bordered" id="specifications-grid">
-                                        <thead>
-                                            <tr>
-                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Sr. No.</th>
-                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Tests</th>
-                                                <th  colspan="2" style="font-size: 16px; font-weight: bold;">Specifications</th>
-                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Reference</th>
-                                                <th  rowspan="2" style="font-size: 16px; font-weight: bold;">Action</th>
-                                            </tr>
-                                            <tr>
-                                                <th style="font-size: 16px; font-weight: bold;">Release</th>
-                                                <th style="font-size: 16px; font-weight: bold;">Shelf life</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if(!empty($specifications->data))
-                                                @foreach($specifications->data as $index => $spec)
-                                                    <tr>
-                                                        <td>{{ $index + 1 }}</td>
-                                                        <td><input type="text" name="specifications[{{ $index }}][tests]" value="{{ $spec['tests'] ?? '' }}"></td>
-                                                        <td><input type="text" name="specifications[{{ $index }}][release]" value="{{ $spec['release'] ?? '' }}"></td>
-                                                        <td><input type="text" name="specifications[{{ $index }}][shelf_life]" value="{{ $spec['shelf_life'] ?? '' }}"></td>
-                                                        <td><input type="text" name="specifications[{{ $index }}][reference]" value="{{ $spec['reference'] ?? '' }}"></td>
-                                                        <td><button type="button" class="removeSpecRow">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td><input type="text" name="specifications[0][tests]"></td>
-                                                    <td><input type="text" name="specifications[0][release]"></td>
-                                                    <td><input type="text" name="specifications[0][shelf_life]"></td>
-                                                    <td><input type="text" name="specifications[0][reference]"></td>
-                                                    <td><button type="button" class="removeSpecRow">Remove</button></td>
-                                                </tr>
+                                <div class="col-12 sub-head">
+                                        SPECIFICATION
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        
+                                        <textarea name="master_specification" id="summernote" class="summernote">{{ $document->master_specification ? $document->master_specification : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
-                                        </tbody>
-                                    </table>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <script>
-                            function addSpecifications() {
-                            let table = document.getElementById("specifications-grid").getElementsByTagName('tbody')[0];
-                            let rowCount = table.rows.length;
-                            let row = table.insertRow(rowCount);
-                            row.innerHTML = `
-                            <td>${rowCount + 1}</td>
-                            <td><input type="text" name="specifications[${rowCount}][tests]"></td>
-                            <td><input type="text" name="specifications[${rowCount}][release]"></td>
-                            <td><input type="text" name="specifications[${rowCount}][shelf_life]"></td>
-                            <td><input type="text" name="specifications[${rowCount}][reference]"></td>
-                            <td><button type="button" class="removeSpecRow">Remove</button></td>`;
-                            }
-
-                            document.addEventListener("click", function(event) {
-                            if (event.target.classList.contains("removeSpecRow")) {
-                            event.target.closest("tr").remove();
-                            }
-                            });
-                        </script>
-
-                        <div class="button-block">
-                            <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a>
-                            </button>
-                        </div>
+                            
+                            <div class="button-block">
+                                <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                    class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    </a>
+                                </button>
+                            </div>
                     </div>
 
                     <!-- mfpstp -->
@@ -3214,7 +3168,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="stp">STP No</label>
+                                        <label for="stp">Specification No</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
                                             $mfpstpNumber = "MFP/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
@@ -3231,51 +3185,42 @@
                                 </div>
 
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Specification No</label>
                                         <input type="text" id="specification" name="specification_mfpstp_no" maxlength="255" value="{{$document->specification_mfpstp_no}}" >
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Standard Testing procedure
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        
+                                        <textarea name="mfpstp_specification" id="summernote" class="summernote">{{ $document->mfpstp_specification ? $document->mfpstp_specification : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
-                        <div class="input-fields">
-                            <div class="group-input">
-                                <label for="specifications">
-                                     Specifications Testing
-                                    <button type="button" onclick="addSpecificationsTesting()">+</button>
-                                </label>
-                                <div class="table-responsive retrieve-table">
-                                    <table class="table table-bordered" id="specifications-testing">
-                                        <thead>
-                                            <tr>
-                                                <th>Sr. No.</th>
-                                                <th class="copy-name">Tests</th>
-                                                <th class="copy-name">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        @if(!empty($specifications_testing->data))
-                                            @foreach($specifications_testing->data as $index => $spec)
-                                            <tr>
-                                                <td>{{ $index + 1 }}</td>
-                                                <td><input type="text" name="specifications_testing[{{ $index }}][tests]" value="{{ $spec['tests'] }}"></td>
-                                                <td><button type="button" class="removeSpecRow">Remove</button></td>
-                                            </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td>1</td>
-                                                <td><input type="text" name="specifications_testing[0][tests]"></td>
-                                                <td><button type="button" class="removeSpecRow">Remove</button></td>
-                                            </tr>
-                                        @endif
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+
 
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -17875,6 +17820,19 @@
                 <div class="input-fields">
                     <div class="row">
 
+
+
+                               <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="stp">STP No<span class="text-danger">*</span></label>
+                                        @php
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "RMSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        @endphp
+                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="reference">Product Name</label>
@@ -17882,103 +17840,31 @@
                                     </div>
                                 </div>
 
-                               <div class="col-md-12">
+                                <div class="col-12 sub-head">
+                                     Standard Testing Procedure
                                     <div class="group-input">
-                                        <label for="stp">STP No<span class="text-danger">*</span></label>
-                                        @php
-                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "RM/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
-                                        @endphp
-                                        <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
+                                        <label for="procedure"></label>
+                                        
+                                        <textarea name="rawmaterials_testing" id="summernote" class="summernote">{{ $document->rawmaterials_testing ? $document->rawmaterials_testing : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
-                        <div class="group-input">
-                            <label for="action-plan-grid">
-                                Details
-                                <button type="button" id="Details_add">+</button>
-                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    Row Increment
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="Details-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr.No</th>
-                                            <th>Test</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
 
-                                        @php
-                                            $serialNumber = 1;
-                                            $decodedData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
-                                                ? json_decode($testDataDecoded->data, true)
-                                                : (is_array($testDataDecoded->data) ? $testDataDecoded->data : []);
-                                        @endphp
-                                        @if(!empty($decodedData))
-                                            @foreach($decodedData as $key => $test)
-                                                <tr>
-                                                    <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
-                                                    <td><input type="text" name="test[{{ $key }}][testdata]" value="{{ $test['testdata'] ?? '' }}"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td><input type="text" disabled value="1" style="width: 30px;"></td>
-                                                <td><input type="text" name="test[0][testdata]"></td>
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <script>
-                            $(document).ready(function() {
-                                let investdetails = {{ isset($decodedData) ? count($decodedData) : 1 }};
-
-                                $('#Details_add').click(function() {
-                                    let rowCount = $('#Details-table tbody tr').length + 1;
-                                    let newRow = `
-                                        <tr>
-                                            <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
-                                            <td><input type="text" name="test[${investdetails}][testdata]" value=""></td>
-                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                        </tr>
-                                    `;
-                                    $('#Details-table tbody').append(newRow);
-                                    investdetails++;
-                                });
-
-                                $(document).on('click', '.removeRowBtn', function() {
-                                    $(this).closest('tr').remove();
-                                    updateRowNumbers();
-                                });
-
-                                function updateRowNumbers() {
-                                    $('#Details-table tbody tr').each(function(index) {
-                                        $(this).find('td:first-child input').val(index + 1);
-                                    });
-                                }
-                            });
-                        </script>
-
-
-                        <!-- <div class="col-md-12">
-                            <div class="group-input">
-                                <label for="short-desc">STP No.</label>
-
-                                <input type="text" id="" name="stp_no" value="{{$document->stp_no}}">
-                            </div>
-
-                        </div>
-
-                        </div> -->
 
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
@@ -25538,7 +25424,7 @@
                     <div class="input-fields">
                         <div class="row">
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="stp">Specification No<span class="text-danger">*</span></label>
                                     @php
@@ -25549,75 +25435,75 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Material Name</label>
-                                        <textarea name="packing_material_name">{{ $document->packing_material_name }}</textarea>
+                                        <input type="text" name="packing_material_name" value="{{ $document->packing_material_name }}">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Item Code</label>
-                                        <textarea name="item_code">{{ $document->item_code }}</textarea>
+                                        <input type="text" name="item_code" value="{{ $document->item_code }}">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Name of packing material</label>
-                                        <textarea name="name_pack_material">{{ $document->name_pack_material }}</textarea>
+                                        <input type="text" name="name_pack_material" value="{{ $document->name_pack_material }}">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Standard pack</label>
-                                        <textarea name="standard_pack">{{ $document->standard_pack }}</textarea>
+                                        <input type="text" name="standard_pack" value="{{ $document->standard_pack }}">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Sampling plan</label>
-                                        <textarea name="sampling_plan">{{ $document->sampling_plan }}</textarea>
+                                        <input type="text" name="sampling_plan" value="{{ $document->sampling_plan }}">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Sampling Instructions</label>
-                                        <textarea name="sampling_instruction">{{ $document->sampling_instruction }}</textarea>
+                                        <input type="text" name="sampling_instruction" value="{{ $document->sampling_instruction }}">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Sample for analysis </label>
-                                        <textarea name="sample_analysis">{{ $document->sample_analysis }}</textarea>
+                                        <input type="text" name="sample_analysis" value="{{ $document->sample_analysis }}">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Control Sample</label>
-                                        <textarea name="control_sample">{{ $document->control_sample }}</textarea>
+                                        <input type="text" name="control_sample" value="{{ $document->control_sample }}">
                                     </div>
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Safety Precautions</label>
-                                        <textarea name="safety_precaution">{{ $document->safety_precaution }}</textarea>
+                                        <input type="text" name="safety_precaution" vlaue="{{ $document->safety_precaution }}">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Storage condition</label>
-                                        <textarea name="storage_condition">{{ $document->storage_condition }}</textarea>
+                                        <input type="text" name="storage_condition" value="{{ $document->storage_condition }}">
                                     </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="scope">Approved Vendors</label>
-                                        <textarea name="approved_vendor">{{ $document->approved_vendor }}</textarea>
+                                        <input type="text" name="approved_vendor" value="{{ $document->approved_vendor }}">
                                     </div>
                             </div>
 
@@ -25628,7 +25514,7 @@
                                     : (is_array($PackingGridData->data) ? $PackingGridData->data : []);
                             @endphp
 
-                            <div class="group-input">
+                            {{--<div class="group-input">
                                 <label for="action-plan-grid">
                                     Details
                                     <button type="button" id="Details_add_data">+</button>
@@ -25671,42 +25557,34 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <script>
-                                $(document).ready(function() {
-                                    let investdetails = {{ isset($decodedPackingData) ? count($decodedPackingData) : 1 }};
-
-                                    $('#Details_add_data').click(function() {
-                                        let rowCount = $('#Details-table-data tbody tr').length + 1;
-                                        let newRow = `
-                                            <tr>
-                                                <td><input type="text" disabled value="${rowCount}" style="width: 30px;"></td>
-                                                <td><input type="text" name="packingtest[${investdetails}][tests]" value=""></td>
-                                                <td><input type="text" name="packingtest[${investdetails}][specification]" value=""></td>
-                                                <td><input type="text" name="packingtest[${investdetails}][gtp_no]" value=""></td>
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>
-                                        `;
-                                        $('#Details-table-data tbody').append(newRow);
-                                        investdetails++;
-                                    });
-
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                        updateRowNumbers();
-                                    });
-
-                                    function updateRowNumbers() {
-                                        $('#Details-table-data tbody tr').each(function(index) {
-                                            $(this).find('td:first-child input').val(index + 1);
-                                        });
-                                    }
-                                });
-                            </script>
-
-
-
+                                <div class="col-12 sub-head">
+                                      SPECIFICATION
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        
+                                        <textarea name="packingmaterial_specification" id="summernote" class="summernote">{{ $document->packingmaterial_specification ? $document->fps_specificationGrid : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                                </div>
+                                </div>
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -25715,9 +25593,10 @@
                                         </a>
                                     </button>
                                 </div>
-                         </div>
-                    </div>
-                </div>
+                        </div>
+    
+
+                
 
 
                 <!-- rajendra start -->
@@ -29583,10 +29462,34 @@
                                         <input type="text" name="retest_period_row_material" value="{{$document->retest_period_row_material}}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sampling-procedure">Sampling Procedure</label>
                                         <input type="text" name="sampling_procedure_row_material" value="{{$document->sampling_procedure_row_material}}">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                      Sampling Procedure
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sampling_procedure_row_material" id="summernote" class="summernote">{{ $document->sampling_procedure_row_material ? $document->sampling_procedure_row_material : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -29596,7 +29499,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sample-quantity">Sample Quantity for Analysis</label>
                                         <select name="sample_quantity_row_material">
@@ -29604,6 +29507,30 @@
                                             <option value="Chemical Analysis" {{ $document->sample_quantity_row_material == 'Chemical Analysis' ? 'selected' : '' }}>Chemical Analysis</option>
                                             <option value="Microbial Analysis" {{ $document->sample_quantity_row_material == 'Microbial Analysis' ? 'selected' : '' }}>Microbial Analysis</option>
                                         </select>
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Sample Quantity for Analysis
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sample_quantity_row_material" id="summernote" class="summernote">{{ $document->sample_quantity_row_material ? $document->sample_quantity_row_material : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
 

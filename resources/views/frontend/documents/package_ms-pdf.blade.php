@@ -257,6 +257,46 @@
         }
     </style>
 
+    <style>
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+               /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
+            
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+
+    </style>
+
 </head>
 <body>
     <header class="">
@@ -282,11 +322,6 @@
                         PACKING MATERIAL SPECIFICATION  
                     </td>
                 </tr>
-                <tr>
-                    <td style="font-weight: bold;">
-                       (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
-                    </td>
-                </tr>
             </tbody>
         </table>
         <table class="border border-top-none" style="width: 100%;">
@@ -305,23 +340,23 @@
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
                    
                         <span>
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                @endphp
 
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                   PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                        PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    @else
+                                        PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    @endif
+                            @else
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                    @else
+                                    PMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                    @endif
+                            @endif
                         </span>
                    
                     </td>
@@ -461,23 +496,7 @@
                 </tbody>
             </table>
 
-            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody> --}}
+
             <span>
                 Format No.: QA/097/F7-00 
             </span>
@@ -551,8 +570,34 @@
             </section>
         </section>
     </div>
+
+    <div class="other-container ">
+        <table>
+            <thead>
+                <tr>
+                    <th class="text-left">
+                        <div class="bold">SPECIFICATION</div>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="custom-procedure-block">
+            <div class="custom-container">
+                <div class="custom-table-wrapper" id="custom-table2">
+                    <div class="custom-procedure-content">
+                        <div class="custom-content-wrapper">
+                            <div class="table-containers">
+                                {!! strip_tags($data->packingmaterial_specification, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
    
-    <table>
+    {{-- <table>
         <thead>
             <tr>
                 <th class="text-center">
@@ -560,35 +605,35 @@
                 </th>
             </tr>
         </thead>
-    </table>
+    </table> --}}
 
    
-<table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-    <thead>
-        <tr>
-            <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-            <th style="border: 1px solid black; width: 20%; font-weight: bold;">Tests</th>
-            <th style="border: 1px solid black; width: 50%; font-weight: bold;">Specifications</th>
-            <th style="border: 1px solid black; width: 20%; font-weight: bold;">GTP No.</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!empty($PackingDataGrid))
-            @foreach ($PackingDataGrid as $key => $item)
-                <tr>
-                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
-                    <td style="border: 1px solid black; text-align: left;">{{ $item['tests'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item['specification'] ?? 'N/A' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
-                </tr>
-            @endforeach
-        @else
+    {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+        <thead>
             <tr>
-                <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Tests</th>
+                <th style="border: 1px solid black; width: 50%; font-weight: bold;">Specifications</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">GTP No.</th>
             </tr>
-        @endif
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @if (!empty($PackingDataGrid))
+                @foreach ($PackingDataGrid as $key => $item)
+                    <tr>
+                        <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                        <td style="border: 1px solid black; text-align: left;">{{ $item['tests'] ?? '' }}</td>
+                        <td style="border: 1px solid black; text-align: center;">{{ $item['specification'] ?? 'N/A' }}</td>
+                        <td style="border: 1px solid black; text-align: center;">{{ $item['gtp_no'] ?? 'N/A' }}</td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="4" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+                </tr>
+            @endif
+        </tbody>
+    </table> --}}
 
     <table>
         <thead>
@@ -616,7 +661,7 @@
                                 <tr>
                                     <td>{{ $item['revision_number'] ?? '' }}</td>
                                     <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                    <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-M-Y') : '' }}</td>
                                     <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                 </tr>
                             @endforeach
@@ -637,8 +682,8 @@
                 $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
                 $size = 12;
                 $pageText = $PAGE_NUM . " of " . $PAGE_COUNT;
-                $y = 200;
-                $x = 400;
+                $y = 170;
+                $x = 380;
                 $pdf->text($x, $y, $pageText, $font, $size);
             ');
         }
