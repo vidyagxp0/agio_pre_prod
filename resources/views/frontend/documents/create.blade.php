@@ -9920,7 +9920,8 @@
 
                     <div id="doc-manufacturingRecord" class="tabcontent">
                         <div class="orig-head">
-                            Batch Manufacturing Record (BMR)                    </div>
+                            Batch Manufacturing Record (BMR)                    
+                        </div>
                         <div class="input-fields">
                             <div class="row">
 
@@ -9975,8 +9976,7 @@
                     {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
                     <div id="doc_FPS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT  VALIDATION SPECIFICATION
-                            (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        <div class="orig-head">Finished Product Specification
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -10211,11 +10211,6 @@
                                     });
                                 });
                             </script> --}}
-
-
-
-
-
 
                             </div>
                         </div>
@@ -10490,7 +10485,6 @@
                             </button>
                         </div>
                 </div>
-
 
 
                <!-- Inprocess Validation Specification -->
@@ -11255,20 +11249,18 @@
                                     </div>
 
 
-
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        function addMultipleFiles(input, listId) {
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                            for (let file of input.files) {
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+                                            }
                                         }
-                                    }
                                     </script>
-
 
 
 
@@ -11289,14 +11281,12 @@
                 <div id="doc_Annexure_IV" class="tabcontent">
                     <div class="orig-head">
                         Annexure IV-Validation Plan
-                        Annexure IV-VALIDATION PLAN
                         </div>
                         <div class="input-fields">
                             <div class="row">
                                 {{-- <div class="">
                                   PRODUCT DETAILS
                                 </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11317,16 +11307,16 @@
 
 
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        function addMultipleFiles(input, listId) {
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                            for (let file of input.files) {
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+                                            }
                                         }
-                                    }
                                     </script>
 
 
@@ -11356,7 +11346,6 @@
                                 {{-- <div class="">
                                   PRODUCT DETAILS
                                 </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11377,16 +11366,16 @@
 
 
                                     <script>
-                                    function addMultipleFiles(input, listId) {
-                                        let fileList = document.getElementById(listId);
-                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+                                        function addMultipleFiles(input, listId) {
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                        for (let file of input.files) {
-                                            let fileItem = document.createElement("div");
-                                            fileItem.textContent = file.name;
-                                            fileList.appendChild(fileItem);
+                                            for (let file of input.files) {
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+                                            }
                                         }
-                                    }
                                     </script>
 
 
@@ -11996,7 +11985,7 @@
 
                     <div id="doc-fpstp" class="tabcontent">
                         <div class="orig-head">
-                            FINISHED PRODUCT ON STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                          Finished Product Standard Testing Procedure
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -12086,7 +12075,7 @@
 
                     <div id="doc-istp" class="tabcontent">
                         <div class="orig-head">
-                            INPROCESS STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                            Inprocess Standard Testing Procedure
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -12177,7 +12166,7 @@
 
                     <div id="doc-cvstp" class="tabcontent">
                         <div class="orig-head">
-                            CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                            Cleaning Validation Standard Testing Procedure
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -12680,7 +12669,7 @@
 
                     <div id="doc-asr" class="tabcontent">
                         <div class="orig-head">
-                            annexure-XIX - System Retirement
+                            Annexure-XIX - System Retirement
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -12739,7 +12728,7 @@
 
                     <div id="doc-atm" class="tabcontent">
                         <div class="orig-head">
-                            annexure-XVIII - Traceability Matrix
+                            Annexure-XVIII - Traceability Matrix
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -12798,7 +12787,7 @@
 
                     <div id="doc-avsr" class="tabcontent">
                         <div class="orig-head">
-                            annexure-XVII - Validation Summary Report
+                            Annexure-XVII - Validation Summary Report
 
                         </div>
                         <div class="input-fields">
@@ -12858,7 +12847,7 @@
 
                     <div id="doc-aiiopq" class="tabcontent">
                         <div class="orig-head">
-                            annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification
+                            Annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -12926,7 +12915,7 @@
                                 <div class="row">
 
                                     {{-- comment for tempary --}}
-                                    {{-- <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Purpose">Purpose</label>
                                             <textarea name="htsp_purpose"></textarea>
@@ -13052,7 +13041,7 @@
                                             </div>
                                         </div>
                                     </div>
-     --}}
+                                --}}
                                     {{-- <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="abbreviation" id="abbreviation">
@@ -13143,7 +13132,7 @@
 
                                         </div>
                                     </div>
-     --}}
+                                --}}
                                     {{-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="procedure">Procedure</label>
@@ -13518,11 +13507,6 @@
                                           </div>
                                       </div>
 
-
-
-
-
-
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="Purpose">Purpose</label>
@@ -13771,7 +13755,7 @@
 
                                         </div>
                                     </div>
-     --}}
+                        --}}
                                     {{-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="procedure">Procedure</label>
@@ -14126,7 +14110,7 @@
 
                                         </div>
                                     </div>
-     --}}
+                                --}}
                                     {{-- <div class="col-md-12 mb-3">
                                         <div class="group-input">
                                             <label for="procedure">Procedure</label>
@@ -14352,7 +14336,7 @@
                     {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
                         <div class="orig-head">
-                            RAW MATERIAL SPECIFICATION</div>
+                           Raw Material Specifications</div>
                         <div class="input-fields">
                             <div class="row">
 

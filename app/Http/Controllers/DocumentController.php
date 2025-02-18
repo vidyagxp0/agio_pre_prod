@@ -6401,6 +6401,9 @@ class DocumentController extends Controller
 
 
         $documentContent = DocumentContent::where('document_id', $id)->first();
+
+        // $attachments = DocumentContent::where('documents', $document->document_type_id)->get();
+
         // dd($documentContent);
         $annexures = [];
         if (!empty($documentContent->annexuredata)) {
@@ -6431,39 +6434,39 @@ class DocumentController extends Controller
             'STP' => 'frontend.documents.stp-pdf',
             'TDS' => 'frontend.documents.tds-pdf',
             'GTP' => 'frontend.documents.gtp-pdf',
-            'PROTO' => 'frontend.documents.proto-pdf',
-            'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
-            'STUDY' => 'frontend.documents.reports.study_report',
-            'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
-            'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
-            'REPORT' => 'frontend.documents.report-pdf',
-            'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
-            'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
-            'REQULIFICATION'=>'frontend.documents.reports.requlification',
-            'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
-            'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
-            'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
-            'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
-            'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
-            'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
-            'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
-            'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
-            'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
-            'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
-            'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
-            'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
-            'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
-            'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
-            'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
-            'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
-            'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
-            'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
-            'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
-            'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
-            'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
-            'SMF' => 'frontend.documents.smf-pdf',
-            'VMP' => 'frontend.documents.vmp-pdf',
-            'QM' => 'frontend.documents.qm-pdf',
+            // 'PROTO' => 'frontend.documents.proto-pdf',
+            // 'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
+            // 'STUDY' => 'frontend.documents.reports.study_report',
+            // 'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
+            // 'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
+            // 'REPORT' => 'frontend.documents.report-pdf',
+            // 'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
+            // 'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
+            // 'REQULIFICATION'=>'frontend.documents.reports.requlification',
+            // 'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
+            // 'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
+            // 'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
+            // 'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
+            // 'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
+            // 'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
+            // 'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
+            // 'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
+            // 'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
+            // 'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
+            // 'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
+            // 'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
+            // 'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
+            // 'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
+            // 'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
+            // 'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
+            // 'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
+            // 'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
+            // 'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
+            // 'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
+            // 'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
+            // 'SMF' => 'frontend.documents.smf-pdf',
+            // 'VMP' => 'frontend.documents.vmp-pdf',
+            // 'QM' => 'frontend.documents.qm-pdf',
             default => 'frontend.documents.pdfpage',
         };
 
@@ -6538,6 +6541,84 @@ class DocumentController extends Controller
             \Log::error('PDF Generation Error: ' . $e->getMessage());
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
+    }
+
+
+    public function viewAttachments($id)
+    {
+        $data = Document::find($id);
+        $data['document_content'] = DocumentContent::where('document_id', $id)->first();
+    
+        if (empty($data->document_type_id)) {
+            return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
+        }
+    
+        // document_type_id ke hisaab se blade file map karna
+        $viewName = match ($data->document_type_id) {
+            
+            'BMR' => 'frontend.documents.bmr-pdf',
+            'BPR' => 'frontend.documents.bpr-pdf',
+            'PROTO' => 'frontend.documents.proto-pdf',
+            'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
+            'STUDY' => 'frontend.documents.reports.study_report',
+            'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
+            'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
+            'REPORT' => 'frontend.documents.report-pdf',
+            'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
+            'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
+            'REQULIFICATION'=>'frontend.documents.reports.requlification',
+            'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
+            'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
+            'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
+            'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
+            'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
+            'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
+            'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
+            'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
+            'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
+            'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
+            'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
+            'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
+            'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
+            'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
+            'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
+            'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
+            'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
+            'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
+            'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
+            'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
+            'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
+
+            default => '',
+        };
+        $attachmentFields = [
+            'BMR' => 'bmrattachment',
+            'BPR' => 'bprattachment',
+            'PROTO' => 'protoattachment',
+            'STUDYPROTOCOL' => 'studyattachment',
+            'ANNEQUALPROTO' => 'annexureattachment',
+            'ANNEQUALREPORT' => 'annexurereportattachment',
+            'PROVALIDRE' => 'validationreportattachment',
+            'PACKVALIPROTOCOL' => 'pvpattachement',
+            'HOLDTIMESTUDYPROTOCOL'=>'htspattachement',
+
+        ];
+    
+        $attachments = [];
+    
+        // Agar document_type_id ka attachment field exist karta ho to usko extract karo
+        if (isset($attachmentFields[$data->document_type_id])) {
+            $attachmentField = $attachmentFields[$data->document_type_id];
+            
+            if (!empty($data['document_content']->$attachmentField)) {
+                $decoded = json_decode($data['document_content']->$attachmentField, true);
+                if (is_array($decoded)) {
+                    $attachments = $decoded;
+                }
+            }
+        }
+    
+        return view($viewName, compact('data', 'attachments'));
     }
 
 
@@ -7190,7 +7271,10 @@ class DocumentController extends Controller
         toastr()->error('No files uploaded!');
 
         return back();
-    }
+    }    
+
+
+
 
     // public function revision(Request $request, $id)
     // {

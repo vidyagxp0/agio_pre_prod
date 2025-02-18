@@ -262,8 +262,8 @@
 
                 <button class="tablinks hidden-tabs" data-id="PROVALIDRE" onclick="openData(event, 'doc_pvr')">Process Validation Report</button>
 
-                <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol.doc</button>
-                <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report.doc</button>
+                <button class="tablinks hidden-tabs" data-id="CLEAVALIPROTODOC" onclick="openData(event, 'doc_cvpd')">Cleaning Validation Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="CLEAVALIREPORTDOC" onclick="openData(event, 'doc_cvrd')">Cleaning Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="STABILITYPROTOCOL" onclick="openData(event, 'doc_ssp')">STABILITY STUDY PROTOCOL</button>
                 <button class="tablinks hidden-tabs" data-id="VMP" onclick="openData(event, 'doc_vmp')">Validation Master Plan</button>
                 <button class="tablinks hidden-tabs" data-id="QM" onclick="openData(event, 'doc_qm')">Quality Manual </button>
@@ -6306,8 +6306,7 @@
                       {{-- Finished product,  Inprocess , Cleaning Validation Specification (Commercial  registration , re-registration) tabs --}}
 
                 <div id="doc_FPS" class="tabcontent">
-                        <div class="orig-head">FINISHED PRODUCT  VALIDATION SPECIFICATION
-                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        <div class="orig-head">Finished Product Specification
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -6684,8 +6683,7 @@
                 <!-- Cleaning Validation Specificatiom -->
 
                 <div id="doc_CVS" class="tabcontent">
-                        <div class="orig-head">CLEANING VALIDATION SPECIFICATION
-                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        <div class="orig-head">Cleaning Validation Specification
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -7035,8 +7033,7 @@
 
                 <!-- Inprocess Validation Specification -->
                 <div id="doc_INPS" class="tabcontent">
-                        <div class="orig-head"> INPROCESS VALIDATION SPECIFICATION
-                             (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        <div class="orig-head">Inprocess Specification
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -17252,7 +17249,7 @@
 
                     <div id="doc-fpstp" class="tabcontent">
                         <div class="orig-head">
-                        FINISHED PRODUCT ON STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        Finished Product Standard Testing Procedure
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -17387,7 +17384,7 @@
 
                     <div id="doc-istp" class="tabcontent">
                         <div class="orig-head">
-                        INPROCESS STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                         Inprocess Standard Testing Procedure
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -17524,7 +17521,7 @@
 
                     <div id="doc-cvstp" class="tabcontent">
                         <div class="orig-head">
-                        CLEANING VALIDATION STANDARD TESTING PROCEDURE (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
+                        Cleaning Validation Standard Testing Procedure
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -17815,13 +17812,10 @@
 
             <div id="doc_rmstp" class="tabcontent">
                     <div class="orig-head">
-                        RAW MATERIAL STANDARD TESTING PROCEDURE
+                        Raw Material Standard Testing Procedure
                     </div>
                 <div class="input-fields">
                     <div class="row">
-
-
-
                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
@@ -18168,10 +18162,6 @@
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
-
-
-
-
                                     </div>
                                 </div>
 
@@ -20922,15 +20912,13 @@
 
         <div id="doc_cvpd" class="tabcontent">
                     <div class="orig-head">
-                    Cleaning Validation Protocol.doc
+                    Cleaning Validation Protocol
                     </div>
                 <div class="input-fields">
                     <div class="row">
 
 
-                    {{--
-
-
+                        {{--
                          <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="objective_cvpd" id="objective_cvpd">
@@ -22776,7 +22764,7 @@
 
         <div id="doc_cvrd" class="tabcontent">
                     <div class="orig-head">
-                    Cleaning Validation Report.doc
+                    Cleaning Validation Report
                     </div>
                 <div class="input-fields">
                     <div class="row">
@@ -23685,7 +23673,7 @@
 
 
 
-                   {{--
+                           {{--
 
                                     <div class="col-md-6">
                                             <div class="group-input">
@@ -24198,14 +24186,14 @@
                 <!--Process Validation Protocol  -->
                 <div id="doc_prvp" class="tabcontent">
                     <div class="orig-head">
-                        PROCESS VALIDATION PROTOCOL
+                        Process Validation Protocol
                         </div>
                         <div class="input-fields">
                             <div class="row">
                                 <div class="">
                                   PRODUCT DETAILS
                                 </div>  <br>
-                                {{-- <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Generic Name </label>
                                         <input type="text" name="generic_prvp" value="{{$document->document_content->generic_prvp}}">
@@ -24997,7 +24985,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="File_Attachment"><b>Bill of Materia File Attachment</b></label>
+                                        <label for="File_Attachment"><b>File Attachment</b></label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
 
                                         <div class="file-attachment-field">
@@ -27811,7 +27799,7 @@
                         Packing validation Protocol</div>
                         <div class="input-fields">
                             <div class="row">
-                     {{--
+                            {{--
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="comments">Dosage Form</label>
@@ -29216,7 +29204,7 @@
                                         @endforeach
                                     </div>
                                 </div>
- --}}
+                            --}}
 
 
 
@@ -29328,10 +29316,46 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- Hidden field to store deleted files -->
+                                            <!-- View Attachments Button -->
+                                                <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
+                                                    View Attachments
+                                                </a>
+                                            
+                                </div>
                                 <input type="hidden" id="deleted_pvpattachement" name="deleted_pvpattachement" value="">
+
+
+
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="File_Attachment"><b>Attachment</b></label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attachement_pvp">
+                                                @if ($document->document_content->pvpattachement)
+                                                    @foreach(json_decode($document->document_content->pvpattachement) as $file)
+                                                        <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+
+                                            <!-- View Attachments Button -->
+                                            @if ($document->document_content->pvpattachement)
+                                                <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
+                                                    View Attachments
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div> --}}
+
 
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
@@ -29402,12 +29426,9 @@
                 </div>
                 <!-- rajendra end -->
 
-
-
-
                 {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
-                        <div class="orig-head">RAW MATERIAL SPECIFICATION</div>
+                        <div class="orig-head">Raw Material Specification</div>
                         <div class="input-fields">
                             <div class="row">
 

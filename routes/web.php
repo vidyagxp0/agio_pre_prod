@@ -101,6 +101,9 @@ Route::view('forgot-password', 'frontend.forgot-password');
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');
 });
+
+
+
 Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(function () {
     Route::resource('change-control', OpenStageController::class);
     Route::get('change-control-audit/{id}', [OpenStageController::class, 'auditTrial']);
@@ -125,6 +128,9 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::get('documents/annexureviewpdf/{id}', [DocumentController::class, 'annexureviewPdf']);
     Route::get('documents/printAnnexurePDF/{id}', [DocumentController::class, 'printAnnexurePDF']);
+
+    Route::get('document/view-attachments/{id}', [DocumentController::class, 'viewAttachments'])->name('view.attachments');
+
         
     Route::resource('documentsContent', DocumentContentController::class);
     Route::get('doc-details/{id}', [DocumentDetailsController::class, 'viewdetails']);
