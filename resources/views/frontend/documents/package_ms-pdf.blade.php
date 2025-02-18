@@ -328,7 +328,11 @@
             <tbody>
                 <tr>
                     <td>
-                       {{ $document->packing_material_name }}
+                        @if(!empty( $document->packing_material_name))
+                          {{ $document->packing_material_name }}
+                        @endif
+                          -
+                        @else
                     </td>
                 </tr>
             </tbody>

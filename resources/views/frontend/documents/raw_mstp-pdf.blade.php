@@ -310,7 +310,11 @@
             <tbody>
                 <tr>
                     <td>
-                    {{$document->product_name_rawmstp}}
+                        @if(!empty($document->product_name_rawmstp))
+                           {{$document->product_name_rawmstp}}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

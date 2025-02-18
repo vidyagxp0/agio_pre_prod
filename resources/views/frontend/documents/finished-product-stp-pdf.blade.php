@@ -367,7 +367,11 @@
             <tbody>
                 <tr>
                     <td>
-                    {{$data->document_content->product_name_fpstp}}
+                        @if(!empty($data->document_content->product_name_fpstp))
+                          {{ $data->document_content->product_name_fpstp }}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

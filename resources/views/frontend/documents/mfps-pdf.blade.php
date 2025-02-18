@@ -328,7 +328,11 @@
             <tbody>
                 <tr>
                     <td>
-                       {{ $document->mfproduct_name }}
+                        @if(!empty( $document->mfproduct_name ))
+                           {{ $document->mfproduct_name }}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

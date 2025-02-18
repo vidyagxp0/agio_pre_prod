@@ -328,7 +328,11 @@
             <tbody>
                 <tr>
                     <td>
-                      {{ $data->fsproduct_name }}
+                        @if(!empty($data->fsproduct_name))
+                          {{ $data->fsproduct_name }}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

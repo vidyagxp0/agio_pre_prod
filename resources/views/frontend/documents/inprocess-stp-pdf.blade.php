@@ -369,7 +369,11 @@
             <tbody>
                 <tr>
                     <td>
-                    {{$data->document_content->product_name_ipstp}}
+                        @if(!empty($data->document_content->product_name_ipstp))
+                          {{$data->document_content->product_name_ipstp}}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

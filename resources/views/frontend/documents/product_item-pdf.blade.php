@@ -288,7 +288,11 @@
             <tbody>
                 <tr>
                     <td>
-                      {{ $document->pia_name }}
+                        @if(!empty( $document->pia_name ))
+                          {{ $document->pia_name }}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

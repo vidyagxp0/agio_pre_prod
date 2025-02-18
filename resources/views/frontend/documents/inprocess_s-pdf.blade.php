@@ -315,7 +315,11 @@
             <tbody>
                 <tr>
                     <td>
-                      {{ $data->product_name_inps }}
+                        @if(!empty( $data->product_name_inps ))
+                          {{ $data->product_name_inps }}
+                        @else
+                         -
+                        @endif
                     </td>
                 </tr>
             </tbody>

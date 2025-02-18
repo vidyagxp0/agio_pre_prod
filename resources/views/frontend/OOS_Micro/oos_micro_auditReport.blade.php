@@ -154,8 +154,9 @@
                    OOS Microbiology Audit Trial Report
                 </td>
                 <td class="w-30">
-                    <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px;">
+                    <div class="logo" style="text-align: center;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                        style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>
