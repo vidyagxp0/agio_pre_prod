@@ -328,7 +328,11 @@
             <tbody>
                 <tr>
                     <td>
-                      {{$data->product_name_mstp}}
+                        @if(!empty( $data->product_name_mstp ))
+                           {{$data->product_name_mstp}}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

@@ -173,9 +173,9 @@
                 <header>
                     <table>
                         <tr>
-                            <div class="logo">
-                                <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
-                                    class="w-100">
+                            <div class="logo" style="text-align: center;">
+                                <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                                style="max-height: 55px; max-width: 40px;">
                             </div>
                         </tr>
                     </table>

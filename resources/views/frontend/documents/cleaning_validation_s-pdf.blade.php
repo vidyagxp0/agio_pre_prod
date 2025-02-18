@@ -389,7 +389,11 @@
             <tbody>
                 <tr>
                     <td>
-                      {{ $data->product_name_cvs }}
+                        @if(!empty( $data->product_name_cvs ))
+                          {{ $data->product_name_cvs }}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

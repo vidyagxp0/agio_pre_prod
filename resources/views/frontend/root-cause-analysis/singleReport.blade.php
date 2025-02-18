@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Connexo - Software</title>
+    <title>Vidyagxp - Software</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 
@@ -167,12 +167,12 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Root Cause Analysis  Report
+                    Root Cause Analysis Report
                 </td>
                 <td class="w-30">
-                    <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
+                    <div class="logo" style="text-align: center;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                        style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>

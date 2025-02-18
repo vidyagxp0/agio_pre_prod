@@ -372,7 +372,11 @@
             <tbody>
                 <tr>
                     <td>
-                       {{ $document->material_name}}
+                        @if(!empty( $document->material_name ))
+                           {{ $document->material_name}}
+                        @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>

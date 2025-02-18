@@ -307,7 +307,11 @@
             <tbody>
                 <tr>
                     <td>
-                    {{$data->document_content->product_name_cvstp }}
+                        @if(!empty($data->document_content->product_name_cvstp))
+                         {{$data->document_content->product_name_cvstp }}
+                        @else
+                         -
+                        @endif
                     </td>
                 </tr>
             </tbody>
