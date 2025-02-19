@@ -192,7 +192,7 @@
 
 
 .bottom-links a.active {
-    border-bottom: 2px solid #041647; /* Active link color */
+    border-bottom: 2px solid #0f43cf; /* Active link color */
     font-weight: bold;
     color: #333;
 }
