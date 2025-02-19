@@ -1,5 +1,5 @@
-@if ($data->document_content->attach_cvpd)
-    @foreach (json_decode($data->document_content->attach_cvpd) as $file)
+@if ($data->attach_cvpd)
+    @foreach (json_decode($data->attach_cvpd) as $file)
         <iframe src="{{ asset('upload/' . $file) }}#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="600px" style="border: none;"></iframe>
     @endforeach
 @endif

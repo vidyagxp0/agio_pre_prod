@@ -1,5 +1,5 @@
-@if ($data->document_content->attachment_srt)
-    @foreach (json_decode($data->document_content->attachment_srt) as $file)
+@if ($data->attachment_srt)
+    @foreach (json_decode($data->attachment_srt) as $file)
         <iframe src="{{ asset('upload/' . $file) }}#toolbar=0&navpanes=0&scrollbar=0" width="100%" height="600px" style="border: none;"></iframe>
     @endforeach
 @endif

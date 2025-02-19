@@ -4010,7 +4010,7 @@
                         <div class="orig-head">
                             Study Protocol
                         </div>
-                       {{--
+                    {{--
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-12">
@@ -6663,6 +6663,38 @@
                  <div id="doc_PCR" class="tabcontent">
                     <div class="orig-head">PROTOCOL CUM REPORT
                     </div>
+
+                    <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File_Attachment"><b>File Attachment</b></label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="procumrepo_file_attachDatassp">
+                                            @if ($document->procumrepo_file_attach)
+                                                @foreach(json_decode($document->procumrepo_file_attach) as $file)
+                                                    <h6 class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                        </a>
+                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                        </a>
+                                                        <input type="hidden" name="existing_procumrepo_file_attach[]" value="{{ $file }}">
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <label for="procumrepo_file_attachData" style="cursor: pointer;">Add</label>
+                                            <input type="file" id="procumrepo_file_attachData" name="procumrepo_file_attach[]" 
+                                                oninput="addMultipleFiles(this, 'procumrepo_file_attachDatassp')" multiple hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" id="DocsaveButton"
@@ -25717,7 +25749,7 @@
                                     </div>
                                 </div> --}}
                                 {{-- comment for temp --}}
-                     {{--
+                            {{--
 
                                 <div class="col-md-12">
                                     <div class="group-input">

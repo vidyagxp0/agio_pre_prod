@@ -783,8 +783,8 @@ class Helpers
             'STUDY' => 'Study Report',
             'AAEUSERREQUESPECI' => 'Annexure For User Requirement Specification',
             'PROCUMREPORT' => 'Protocol cum Report',
-            'CLEAVALIPROTODOC' => 'Cleaning  Validation Protocol.doc',
-            'CLEAVALIREPORTDOC' => 'Cleaning  Validation Report.doc',
+            'CLEAVALIPROTODOC' => 'Cleaning  Validation Protocol',
+            'CLEAVALIREPORTDOC' => 'Cleaning  Validation Report',
             'QUALIPROCUMREP' => 'Qualification Protocol Cum Report',
 
             'REQULIFICATION' => 'ReQualification Report',
@@ -820,7 +820,7 @@ class Helpers
             'ANNXIVDataMigPro'=>'Annexure XIV Data Migration Protocol',
             'ANNXVPerfQualif'=>'Annexure XV Data Qualification Protocol',
 
-            'AREAQUALIFICATIONREPORT'=>'Area Qualification Report',
+            // 'AREAQUALIFICATIONREPORT'=>'Area Qualification Report',
             'ANNEXUREXVIIITRACEABILITYMATRIX'=>'annexure-XVIII - Traceability Matrix',
             'ANNEXUREXVIIVALIDATION'=>'annexure-XVII - Validation Summary Report',
             'ANNEXUREXVIINSTALLATION'=>'annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification',
