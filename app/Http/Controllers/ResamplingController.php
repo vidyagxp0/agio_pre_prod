@@ -263,7 +263,7 @@ foreach ($pre as $processName => $modelClass) {
         if (!empty($openState->division_id)) {
             $history = new ResamplingAudittrail();
             $history->resampling_id = $openState->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = Helpers::getDivisionName($openState->division_id);
             $history->comment = "Not Applicable";
@@ -2036,7 +2036,7 @@ foreach ($pre as $processName => $modelClass) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Pls fill Action Approval Tab is yet to be filled'
+                        'message' => 'Pls fill QA/CQA Verification is yet to be filled'
                     ]);
 
                     return redirect()->back();
