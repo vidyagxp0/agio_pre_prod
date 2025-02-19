@@ -448,7 +448,7 @@
                                     <p id="docnameError" style="color:red">**Document Name is required</p>
 
                                 </div>
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="short-desc">Short Description<span class="text-danger">*</span></label>
                                         <span id="new-rchars">255</span>
@@ -456,20 +456,56 @@
                                         <input type="text" id="short_desc" name="short_desc" maxlength="255">
                                     </div>
                                     <p id="short_descError" style="color:red">**Short description is required</p>
+                                </div> --}}
 
-                                </div>
-                                <!-- <div class="col-md-12">
-                                                            <div class="group-input">
-                                                                <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
-                                                                <select name="sop_type" required>
-                                                                    <option value="" disabled selected>Enter your selection</option>
-                                                                    <option value="SOP (Standard Operating procedure)">SOP (Standard Operating procedure)</option>
-                                                                    <option value="EOP (Equipment Operating procedure)">EOP (Equipment Operating procedure)</option>
-                                                                    <option value="IOP (Instrument Operating Procedure)">IOP (Instrument Operating Procedure)</option>
-                                                                </select>
-                                                            </div>
+<!-- Short Description (Initially Hidden) -->
+<div class="col-md-12" id="shortDescContainer" style="display: none;">
+    <div class="group-input">
+        <label for="short-desc">Short Description<span class="text-danger" id="shortDescRequired" style="display: none;">*</span></label>
+        <span id="new-rchars">255</span> characters remaining
+        <input type="text" id="short_desc" name="short_desc" maxlength="255">
+    </div>
+    <p id="short_descError" style="color:red; display: none;">**Short description is required</p>
+</div>
 
-                                                        </div> -->
+<script>
+    var maxLength = 255;
+
+    function handleDocumentTypeChange(select) {
+        const docTypeCodeSpan = document.getElementById('document_type_code');
+        const shortDescContainer = document.getElementById('shortDescContainer');
+        const shortDescInput = document.getElementById('short_desc');
+        const shortDescError = document.getElementById('short_descError');
+        const shortDescRequired = document.getElementById('shortDescRequired');
+
+        const selectedText = select.options[select.selectedIndex].text;
+
+        docTypeCodeSpan.textContent = select.value ? select.value : 'Not selected';
+
+        if (selectedText.includes("SOP")) {
+            shortDescContainer.style.display = 'block';
+            shortDescInput.setAttribute('required', 'required'); 
+            shortDescInput.setAttribute('name', 'short_desc');
+            shortDescRequired.style.display = 'inline';
+
+            $('#short_desc').off('keyup').on('keyup', function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#new-rchars').text(textlen);
+            });
+
+        } else {
+            shortDescContainer.style.display = 'none';
+            shortDescInput.removeAttribute('required');
+            shortDescInput.removeAttribute('name');
+            shortDescRequired.style.display = 'none';
+            shortDescInput.value = '';
+            $('#new-rchars').text(maxLength);
+            shortDescError.style.display = 'none';
+        }
+    }
+</script>
+
+
 
 
                                 <div class="col-md-12">
@@ -543,12 +579,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="description">Description</label>
-                                        <textarea name="description"></textarea>
-                                    </div>
-                                </div> --}}
+
                             </div>
                         </div>
                         <div class="orig-head">
@@ -680,7 +711,8 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-6">
+                                <!-- Document Type -->
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Type<span class="text-danger">*</span></label>
                                         <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
@@ -700,7 +732,29 @@
                                         <label for="doc-code">Document Type Code</label>
                                         <div class="default-name"> <span id="document_type_code">Not selected</span></div>
                                     </div>
-                                </div>
+                                </div> --}}
+
+<div class="col-md-6">
+    <div class="group-input">
+        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+        <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
+            <option value="" selected>Enter your Selection</option>
+            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                <option value="{{ $code }}">
+                    {{ $type }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <p id="doc-typeError" style="color:red">** Department is required</p>
+</div>
+
+<div class="col-md-6">
+    <div class="group-input">
+        <label for="doc-code">Document Type Code</label>
+        <div class="default-name"><span id="document_type_code">Not selected</span></div>
+    </div>
+</div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -15136,13 +15190,13 @@
             $('#rchars').text(textlen);
         });
     </script>
-    <script>
+    {{-- <script>
         var maxLength = 255;
         $('#short_desc').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#new-rchars').text(textlen);
         });
-    </script>
+    </script> --}}
 
     <script>
         $(document).ready(function() {

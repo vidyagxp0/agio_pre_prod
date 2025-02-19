@@ -824,7 +824,7 @@ class Helpers
             'ANNEXUREXVIIITRACEABILITYMATRIX'=>'annexure-XVIII - Traceability Matrix',
             'ANNEXUREXVIIVALIDATION'=>'annexure-XVII - Validation Summary Report',
             'ANNEXUREXVIINSTALLATION'=>'annexure-XVI - Installation_Infrastructure_Operational_Performance Qualification',
-            'ANNEXUREXIXSYSTEMRETIREMENT'=>'annexure-XIX - System Retirement.doc',
+            'ANNEXUREXIXSYSTEMRETIREMENT'=>'annexure-XIX - System Retirement',
 
             'MAForRec' =>'Master Formula Record',
             'MAPacRec' =>'Master Packing Record',
