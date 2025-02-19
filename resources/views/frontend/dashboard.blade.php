@@ -84,7 +84,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
                         <div class="dashboard-left-block">
                             <div class="inner-block main-block">
                                 <div class="top">
@@ -107,13 +107,21 @@
                                 </div>
                             </div>
 
-                            {{-- <div id="rootApp"></div> --}}
-                            
-                            <div class="inner-block">
-                                <h2>Analytics</h2>
-            
-                                @include('frontend.charts.charts')
-            
+                            <div id="document">
+                                <div class="container-fluid">
+                                    <div class="dashboard-container">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="document-left-block">
+                                                    <div class="inner-block table-block">
+                        
+                                                    <div id="calendar"></div>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="chart-grid">
@@ -167,10 +175,21 @@
                                     </div>
                                 </div> 
                             </div>
+
+                            {{-- <div id="rootApp"></div> --}}
+                            
+                            <div class="inner-block">
+                                <h2>Analytics</h2>
+            
+                                @include('frontend.charts.charts')
+            
+                            </div>
+
+                            
                         </div>
                     </div>
                     
-                     <div class="col-lg-3">
+                     <!-- <div class="col-lg-3">
                         <div class="dashboard-right-block">
                             <div class="inner-block recent-record">
                                 <div class="head">
@@ -220,7 +239,7 @@
                                 <a herf="#" class="link">Go to Helpdesk</a>
                             </div>
                         </div>
-                    </div> 
+                    </div>  -->
                 </div>
 
 
@@ -229,22 +248,7 @@
 
                         
 
-                <div id="document">
-                                <div class="container-fluid">
-                                    <div class="dashboard-container">
-                                        <div class="row">
-                                            <div class="col-xl-12 col-lg-12">
-                                                <div class="document-left-block">
-                                                    <div class="inner-block table-block">
-                        
-                                                    <div id="calendar"></div>
-                                                   </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                
 
             </div>
         </div>

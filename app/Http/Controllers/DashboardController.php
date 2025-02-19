@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Deviation;
 use App\Models\Document;
+use App\Models\Errata;
+use App\Models\FailureInvestigation;
+use App\Models\Incident;
+use App\Models\MarketComplaint;
+use App\Models\NonConformance;
 use App\Models\OOS;
 use App\Models\OOS_micro;
 use App\Models\Ootc;
+use App\Models\Resampling;
+use App\Models\RiskAssessment;
 use App\Models\User;
 use App\Models\Grouppermission;
 use App\Http\Controllers\Controller;
@@ -223,6 +230,272 @@ class DashboardController extends Controller
                 'start' => Carbon::parse($query->due_date)->toDateString(),
                 'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/AuditProgramShow', ['id' => $query->id]) 
+            ];
+        });
+        Extension::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Extension',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Extension/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('extension_newshow', ['id' => $query->id]) 
+            ];
+        });
+        Resampling::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Resampling',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Resampling/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('resampling_view', ['id' => $query->id]) 
+            ];
+        });
+        Observation::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Observation',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Observation/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/observationshow', ['id' => $query->id]) 
+            ];
+        });
+        RootCauseAnalysis::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Root Cause Analysis',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Root Cause Analysis/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rootshow', ['id' => $query->id]) 
+            ];
+        });
+        RiskAssessment::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Risk Assessment',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Risk Assessment/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('RiskManagement', ['id' => $query->id]) 
+            ];
+        });
+        ManagementReview::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Management Review',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Management Review/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('manageshow', ['id' => $query->id]) 
+            ];
+        });
+        Auditee::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'External Audit',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/External Audit/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('show', ['id' => $query->id]) 
+            ];
+        });
+        InternalAudit::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Internal Audit',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Internal Audit/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/internalAuditShow', ['id' => $query->id]) 
+            ];
+        });
+        EffectivenessCheck::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Effectiveness Check',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Effectiveness Check/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/effectiveness', ['id' => $query->id]) 
+            ];
+        });
+        MarketComplaint::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Market Complaint',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Market Complaint/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/marketcomplaint/marketcomplaint_view', ['id' => $query->id]) 
+            ];
+        });
+        NonConformance::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Non Conformance',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Non Conformance/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/non-conformance-show', ['id' => $query->id]) 
+            ];
+        });
+        Incident::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Incident',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Incident/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/incident-show', ['id' => $query->id]) 
+            ];
+        });
+        FailureInvestigation::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Failure Investigation',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Failure Investigation/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/failure-investigation-show', ['id' => $query->id]) 
+            ];
+        });
+        Errata::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+            $due_dates[] = [
+                'Form_Type' => 'Errata',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Errata/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('errata/show', ['id' => $query->id]) 
             ];
         });
        
