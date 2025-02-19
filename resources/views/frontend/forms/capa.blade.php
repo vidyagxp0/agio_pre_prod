@@ -774,7 +774,7 @@ $(document).ready(function() {
                                                     <label for="search">
                                                         CAPA Type<span class="text-danger"></span>
                                                     </label>
-                                                    <select id="select-state" placeholder="Select..." name="capa_type">
+                                                    <select id="capa_type" placeholder="Select..." name="capa_type">
                                                         <option value="">Select a value</option>
                                                         <option value="Corrective Action">Corrective Action</option>
                                                         <option value="Preventive Action">Preventive Action</option>
@@ -786,18 +786,46 @@ $(document).ready(function() {
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 corrective-action-field" style="display: none;">
                                                 <div class="group-input">
                                                     <label for="Corrective Action">Corrective Action</label>
                                                     <textarea name="corrective_action"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            <div class="col-12 preventive-action-field" style="display: none;">
                                                 <div class="group-input">
                                                     <label for="Preventive Action">Preventive Action</label>
                                                     <textarea name="preventive_action"></textarea>
                                                 </div>
                                             </div>
+
+                                                <script>
+                                                    document.addEventListener("DOMContentLoaded", function () {
+                                                        let capaTypeSelect = document.getElementById("capa_type");
+                                                        let correctiveActionField = document.querySelector(".corrective-action-field");
+                                                        let preventiveActionField = document.querySelector(".preventive-action-field");
+
+                                                        capaTypeSelect.addEventListener("change", function () {
+                                                            let selectedValue = this.value;
+
+                                                            if (selectedValue === "Corrective Action") {
+                                                                correctiveActionField.style.display = "block";
+                                                                preventiveActionField.style.display = "none";
+                                                            } else if (selectedValue === "Preventive Action") {
+                                                                correctiveActionField.style.display = "none";
+                                                                preventiveActionField.style.display = "block";
+                                                            } else if (selectedValue === "Corrective & Preventive Action") {
+                                                                correctiveActionField.style.display = "block";
+                                                                preventiveActionField.style.display = "block";
+                                                            } else {
+                                                                correctiveActionField.style.display = "none";
+                                                                preventiveActionField.style.display = "none";
+                                                            }
+                                                        });
+                                                    });
+                                                </script>
+
+
                                             {{-- <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Supervisor Review Comments">QA Review Comments</label>

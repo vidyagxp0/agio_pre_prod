@@ -178,10 +178,10 @@
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent General Information</button> --}}
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Head QA/CQA Approval</button>
                      
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Acknowledge</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Verification</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
                 </div>
                 <form action="{{ route('resampling-update', $data->id) }}" method="POST" enctype="multipart/form-data">
@@ -216,7 +216,7 @@
                                     
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Division Code"><b>Division Code</b></label>
+                                            <label for="Division Code"><b>Site/Location Code</b></label>
                                             <input disabled type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName($data->division_id) }}">
                                             {{-- <div class="static"></div> --}}
@@ -288,9 +288,8 @@
                                     <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                            reason in "Due Date Extension Justification" data field.</small></div>
-                                         <div class="calenderauditee">                                     
+                                        
+                                        <div class="calenderauditee">                                     
                                             <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                 {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}/>
                                             <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
@@ -1174,7 +1173,7 @@
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="sub-head">Action Approval</div>
+                                    <div class="sub-head">QA/CQA Verification</div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="qa_comments">QA/CQA Review Comments  @if($data->stage == 4) <span class="text-danger">*</span>@endif</label>
@@ -1194,10 +1193,9 @@
 
 
 
-                                 <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="final_attach">
-                                        Action Approval Attachment</label>
+                                        <label for="final_attach">Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach">
