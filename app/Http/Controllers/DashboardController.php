@@ -55,7 +55,6 @@ class DashboardController extends Controller
             $due_date = \Carbon\Carbon::parse($query->due_date);
             $daysLeft = $today->diffInDays($due_date, false);  
         
-            
             if ($daysLeft > 7) {
                 $backgroundColor = 'green';  
             } elseif ($daysLeft > 1 && $daysLeft <= 7) {
@@ -63,6 +62,7 @@ class DashboardController extends Controller
             } else {
                 $backgroundColor = 'red';   
             }
+            
         
             $due_dates[] = [
                 'type' => 'CC',
@@ -74,74 +74,154 @@ class DashboardController extends Controller
         });
         
         Deviation::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'type' => 'Deviation',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/Deviation/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/devshow', ['id' => $query->id])
             ];
         });
         LabIncident::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'Lab Incident',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/LI/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/labIncident-Show', ['id' => $query->id])
             ];
         });
         OOS::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'OOS Chemical',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/OOS Chemical/' . date('Y') . '/' . str_pad($query->record_number, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/oos/oos_view', ['id' => $query->id])
             ];
         });
         OOS_micro::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'OOS Microbiology',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/OOS Microbiology/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/oos_micro/edit', ['id' => $query->id])
             ];
         });
         Ootc::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'OOT',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/OOT/' . date('Y') . '/' . str_pad($query->record_number, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/oot_view', ['id' => $query->id]) 
             ];
         });
         Capa::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'CAPA',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/CAPA/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('capashow', ['id' => $query->id]) 
             ];
         });
         ActionItem::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'Action Item',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/AI/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/actionItem', ['id' => $query->id]) 
             ];
         });
         AuditProgram::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
             $due_dates[] = [
                 'Form_Type' => 'Audit Program',
                 'title' => Helpers::getDivisionCode($query->division_id) . '/Audit Program/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
                 'start' => Carbon::parse($query->due_date)->toDateString(),
-                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'backgroundColor' => $backgroundColor,
                 'url' => url('rcms/AuditProgramShow', ['id' => $query->id]) 
             ];
         });
