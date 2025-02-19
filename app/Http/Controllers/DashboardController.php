@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deviation;
 use App\Models\Document;
+use App\Models\OOS;
+use App\Models\OOS_micro;
+use App\Models\Ootc;
 use App\Models\User;
 use App\Models\Grouppermission;
 use App\Http\Controllers\Controller;
@@ -43,6 +47,107 @@ class DashboardController extends Controller
 
     public function index()
     {
+        $due_dates = [];
+
+        $today = \Carbon\Carbon::today();
+        
+        CC::all()->each(function ($query) use (&$due_dates, $today) {
+            $due_date = \Carbon\Carbon::parse($query->due_date);
+            $daysLeft = $today->diffInDays($due_date, false);  
+        
+            
+            if ($daysLeft > 7) {
+                $backgroundColor = 'green';  
+            } elseif ($daysLeft > 1 && $daysLeft <= 7) {
+                $backgroundColor = 'orange'; 
+            } else {
+                $backgroundColor = 'red';   
+            }
+        
+            $due_dates[] = [
+                'type' => 'CC',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/CC/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => $due_date->toDateString(),
+                'backgroundColor' => $backgroundColor,
+                'url' => url('rcms/CC', ['id' => $query->id])
+            ];
+        });
+        
+        Deviation::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'type' => 'Deviation',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Deviation/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/devshow', ['id' => $query->id])
+            ];
+        });
+        LabIncident::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'Lab Incident',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/LI/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/labIncident-Show', ['id' => $query->id])
+            ];
+        });
+        OOS::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'OOS Chemical',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/OOS Chemical/' . date('Y') . '/' . str_pad($query->record_number, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/oos/oos_view', ['id' => $query->id])
+            ];
+        });
+        OOS_micro::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'OOS Microbiology',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/OOS Microbiology/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/oos_micro/edit', ['id' => $query->id])
+            ];
+        });
+        Ootc::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'OOT',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/OOT/' . date('Y') . '/' . str_pad($query->record_number, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/oot_view', ['id' => $query->id]) 
+            ];
+        });
+        Capa::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'CAPA',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/CAPA/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('capashow', ['id' => $query->id]) 
+            ];
+        });
+        ActionItem::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'Action Item',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/AI/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/actionItem', ['id' => $query->id]) 
+            ];
+        });
+        AuditProgram::all()->map(function ($query) use (&$due_dates, $today) {
+            $due_dates[] = [
+                'Form_Type' => 'Audit Program',
+                'title' => Helpers::getDivisionCode($query->division_id) . '/Audit Program/' . date('Y') . '/' . str_pad($query->record, 4, '0', STR_PAD_LEFT),
+                'start' => Carbon::parse($query->due_date)->toDateString(),
+                'backgroundColor' => Carbon::parse($query->due_date)->subDays(2)->lt($today) ? 'red' : 'green',
+                'url' => url('rcms/AuditProgramShow', ['id' => $query->id]) 
+            ];
+        });
+       
+
+
         if (Helpers::checkRoles(3)) {
             $count = [];
             $draft = Document::where('originator_id', Auth::user()->id)->where('stage', 1)->count();
@@ -58,12 +163,13 @@ class DashboardController extends Controller
             foreach ($data as $temp) {
                 $temp->created_at = Carbon::parse($temp->created_at)->format('Y-m-d');
             }
-            return view('frontend.dashboard', compact('data', 'count'));
+            return view('frontend.dashboard', compact('data', 'count','due_dates'));
         }
         if (Helpers::checkRoles(2)) {
 
             $array1 = [];
             $array2 = [];
+            $due_dates = [];
             $document = Document::where('stage', '>=', 2)->get();
 
             foreach ($document as $data) {
@@ -106,7 +212,7 @@ class DashboardController extends Controller
             foreach ($arrayTask as $temp) {
                 $temp->created_at = Carbon::parse($temp->created_at)->format('Y-m-d');
             }
-            return view('frontend.dashboard', ['data' => $arrayTask]);
+            return view('frontend.dashboard', ['data' => $arrayTask,'due_dates' => $due_dates]);
         }
         if (Helpers::checkRoles(1)) {
             $array1 = [];

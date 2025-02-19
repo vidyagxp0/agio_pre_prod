@@ -7,6 +7,67 @@
         display: block;
     }
 </style>
+<style>
+    #calendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(1) > button{
+        text-transform: capitalize;
+    }
+    #calendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(3) > div > button.fc-timeGridDay-button.fc-button.fc-button-primary{
+        text-transform: capitalize;
+    }
+
+    #calendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(3) > div > button.fc-timeGridWeek-button.fc-button.fc-button-primary{
+        text-transform: capitalize;
+    }
+    #calendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(3) > div > button.fc-timeGridWeek-button.fc-button.fc-button-primary{
+        text-transform: capitalize;
+    }
+    #calendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(3) > div > button.fc-dayGridMonth-button.fc-button.fc-button-primary.fc-button-active{
+        text-transform: capitalize;  
+    }
+    #calendar > div.fc-header-toolbar.fc-toolbar.fc-toolbar-ltr > div:nth-child(3) > div{
+    display: flex;
+    gap: 10px;
+}
+</style>
+
+                            <script>
+                                 $(document).ready(function() {
+                                        var calendarEl = document.getElementById('calendar');
+                                
+                                        var calendar = new FullCalendar.Calendar(calendarEl, {
+                                            initialView: 'dayGridMonth', // Show monthly view
+                                            headerToolbar: {
+                                                left: 'prev,next today',
+                                                center: 'title',
+                                                right: 'year,halfQuarterView,quarterView,dayGridMonth,timeGridWeek,timeGridDay'
+                                            },
+                                            views: {
+                                                    year: {
+                                                        type: 'multiMonth',   // Use the multiMonth view from the plugin
+                                                        duration: { years: 1 }, // Show 6 months (adjust as needed)
+                                                        buttonText: 'Year',
+                                                        contentHeight: 400, // Set fixed height for scrollable area
+                                                       scrollTime: '00:00', // Ensure scroll starts at the top
+                                                     stickyHeaderDates: false
+                                                    },
+                                                    quarterView: {
+                                                        type: 'dayGrid', // Use dayGrid view for quarter view
+                                                        duration: { months: 3 }, // 3 months for a quarter
+                                                        buttonText: 'Quarter '
+                                                    },
+                                                    halfQuarterView: {
+                                                        type: 'dayGrid', // Use dayGrid view for half-quarter view
+                                                        duration: { months: 6 }, // 2 months for half-quarter view
+                                                        buttonText: 'Half Year'
+                                                    }
+                                                },
+                                            events: @json($due_dates), // Pass your events as JSON
+                                        });
+                                
+                                        calendar.render();
+                                    })
+
+                            </script>
 
     {{-- ======================================
                     DASHBOARD
@@ -168,9 +229,22 @@
 
                         
 
-                        <div class="inner-block calendar-block">
-                            <div id='calendar'></div>
-                        </div>
+                <div id="document">
+                                <div class="container-fluid">
+                                    <div class="dashboard-container">
+                                        <div class="row">
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="document-left-block">
+                                                    <div class="inner-block table-block">
+                        
+                                                    <div id="calendar"></div>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
             </div>
         </div>
@@ -1261,38 +1335,7 @@ var options = {
         var chart = new ApexCharts(document.querySelector("#chart-26"), options);
         chart.render();
 
-        // ================================================= DASHBOARD CALENDAR
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                navLinks: true,
-                initialView: 'dayGridMonth',
-                events: [
-                    @if (Auth::user()->role != 4 && Auth::user()->role != 5 && Auth::user()->role != 6)
-                        @foreach ($data as $temp)
-                            {
-                                title: '{{ $temp->document_name }}',
-                                start: '{{ $temp->created_at }}',
-                                url: '{{ url('doc-details', $temp->id) }}',
-                                color: 'yellow',
-                                textColor: 'black'
-                            },
-                        @endforeach
-                    @else
-                        {
-                            title: 'example',
-                            start: '12-04-2023',
-                            url: '#',
-                            color: 'yellow',
-                            textColor: 'black'
-                        },
-                    @endif
-                ],
 
-
-            });
-            calendar.render();
-        });
 
         var randomColorGenerator = function() {
             return '#' + (Math.random().toString(16) + '0000000').slice(2, 8) + "36";
@@ -3245,38 +3288,7 @@ var options = {
         var chart = new ApexCharts(document.querySelector("#chart-26"), options);
         chart.render();
 
-        // ================================================= DASHBOARD CALENDAR
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                navLinks: true,
-                initialView: 'dayGridMonth',
-                events: [
-                    @if (Auth::user()->role != 4 && Auth::user()->role != 5 && Auth::user()->role != 6)
-                        @foreach ($data as $temp)
-                            {
-                                title: '{{ $temp->document_name }}',
-                                start: '{{ $temp->created_at }}',
-                                url: '{{ url('doc-details', $temp->id) }}',
-                                color: 'yellow',
-                                textColor: 'black'
-                            },
-                        @endforeach
-                    @else
-                        {
-                            title: 'example',
-                            start: '12-04-2023',
-                            url: '#',
-                            color: 'yellow',
-                            textColor: 'black'
-                        },
-                    @endif
-                ],
 
-
-            });
-            calendar.render();
-        });
 
         var randomColorGenerator = function() {
             return '#' + (Math.random().toString(16) + '0000000').slice(2, 8) + "36";
