@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="{{ asset('user/css/virtual-select.min.css') }}">
     <script src="{{ asset('user/js/virtual-select.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('user/css/rcms_style.css') }}">
-    
+
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
@@ -161,7 +161,7 @@
                             <button class="btn-transparent bg-transparent text-black" data-bs-toggle="modal" data-bs-target="#log-list-modal" title="Logs">
                                 <i class="fa-solid fa-gauge-high"></i>
                             </button>
-                            
+
                         </div>
                     </div>
                     <div class="right-block">
@@ -178,6 +178,40 @@
                     </div>
                 </div>
             </div>
+
+            <style>
+                .bottom-links a {
+    text-decoration: none;
+    /* padding: 10px 15px; */
+    display: inline-block;
+    border-bottom: 3px solid transparent; /* Default border hidden */
+    transition: border-color 0.3s ease-in-out;
+    color: #333; /* Default text color */
+}
+
+
+
+.bottom-links a.active {
+    border-bottom: 2px solid #041647; /* Active link color */
+    font-weight: bold;
+    color: #333;
+}
+
+            </style>
+
+            <script>
+               document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll(".bottom-links a");
+    let currentUrl = window.location.pathname;
+
+    links.forEach(link => {
+        if (link.href.includes(currentUrl)) {
+            link.classList.add("active");
+        }
+    });
+});
+
+            </script>
             <div class="header-bottom">
                 <div class="container-fluid">
                     <div class="bottom-links">
@@ -185,7 +219,7 @@
                             <a href="#"><i class="fa-solid fa-braille"></i></a>
                         </div>
                         <div>
-                            <a href="/dashboard">DMS Dashboard</a>
+                            <a href="/dashboard"> Dashboard</a>
                         </div>
                         <div>
                             <a href="/TMS">TMS Dashboard</a>
@@ -382,8 +416,8 @@
         'OOC',
         'OOT',
         'Risk Management',
-            
-    ];                
+
+    ];
 @endphp
 
     {{-- LOG LIST MODAL START --}}
@@ -395,7 +429,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                
+
                 @foreach ($logs_list as $log_list)
                     <p> <a href="{{ route('rcms.logs.show', Str::slug($log_list)) }}" target="_blank">{{ $log_list }}</a> </p>
                 @endforeach

@@ -852,8 +852,9 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 
 #rcms-dashboard .scope-table thead {
-    background: #5897fbf2;
+    background: #2f6fd5f2;
     font-size: 0.75rem;
+    color: #fff;
 }
 
 #rcms-dashboard .scope-table .child-row {

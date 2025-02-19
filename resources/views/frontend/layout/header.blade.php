@@ -130,6 +130,41 @@
             </div>
         </div>
 
+        <style>
+            .bottom-links a {
+text-decoration: none;
+/* padding: 10px 15px; */
+display: inline-block;
+border-bottom: 3px solid transparent; /* Default border hidden */
+transition: border-color 0.3s ease-in-out;
+color: #333; /* Default text color */
+}
+
+
+
+.bottom-links a.active {
+border-bottom: 2px solid #041647; /* Active link color */
+font-weight: bold;
+color: #333;
+}
+
+        </style>
+
+        <script>
+           document.addEventListener("DOMContentLoaded", function () {
+    let links = document.querySelectorAll(".bottom-links a");
+    let currentUrl = window.location.pathname;
+
+    links.forEach(link => {
+        if (link.href.includes(currentUrl)) {
+            link.classList.add("active");
+        }
+    });
+});
+
+
+        </script>
+
         {{-- Header Bottom --}}
         <div class="container-fluid header-bottom">
             <div class="container-fluid">
@@ -138,7 +173,7 @@
                         <a href="#"><i class="fa-solid fa-braille"></i></a>
                     </div>
                     <div>
-                        <a href="/dashboard">DMS Dashboard</a>
+                        <a href="/dashboard"> Dashboard</a>
                     </div>
                     <div>
                         <a href="/TMS">TMS Dashboard</a>
@@ -937,7 +972,7 @@
                     </div>
                     <div class="mb-2">
                             <strong>Designation :&nbsp;</strong>
-                            This section includes two designations: Lead Auditor and Auditor. 
+                            This section includes two designations: Lead Auditor and Auditor.
                     </div>
 
                     <div class="mb-2">
