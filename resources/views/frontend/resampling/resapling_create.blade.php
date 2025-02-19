@@ -34,9 +34,9 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Parent Information</button> --}}
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Head QA/CQA Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Acknowledge</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Action Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA/CQA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
             </div>
 
@@ -65,7 +65,7 @@
                                 </div>
                                 <div class="col-lg-6">  
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -467,7 +467,7 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">Action Approval</div>
+                                <div class="sub-head">QA/CQA Verification</div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">QA/CQA Review Comments</label>
@@ -488,7 +488,7 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Action Approval Attachment</label>
+                                        <label for="file_attach">Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">

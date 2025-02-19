@@ -1189,34 +1189,68 @@ $(document).ready(function() {
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            CAPA Type<span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="capa_type"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}>
-                                            <option value="">Select a value</option>
-                                            <option {{ $data->capa_type == "Corrective Action" ? 'selected' : '' }} value="Corrective Action">Corrective Action</option>
-                                            <option {{ $data->capa_type == "Preventive Action" ? 'selected' : '' }} value="Preventive Action">Preventive Action</option>
-                                            <option {{ $data->capa_type == "Corrective & Preventive Action"  ? 'selected' : '' }} value="Corrective & Preventive Action">Corrective & Preventive Action</option>
+                                            <div class="group-input">
+                                                <label for="search">
+                                                    CAPA Type<span class="text-danger"></span>
+                                                </label>
+                                                <select id="capa_type" placeholder="Select..." name="capa_type"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}>
+                                                    <option value="">Select a value</option>
+                                                    <option {{ $data->capa_type == "Corrective Action" ? 'selected' : '' }} value="Corrective Action">Corrective Action</option>
+                                                    <option {{ $data->capa_type == "Preventive Action" ? 'selected' : '' }} value="Preventive Action">Preventive Action</option>
+                                                    <option {{ $data->capa_type == "Corrective & Preventive Action"  ? 'selected' : '' }} value="Corrective & Preventive Action">Corrective & Preventive Action</option>
 
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                        <div class="col-12">
+                                                </select>
+                                                @error('assign_to')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 corrective-action-field">
                                             <div class="group-input">
                                                 <label for="Corrective Action">Corrective Action</label>
                                                 <textarea name="corrective_action" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->corrective_action }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12 preventive-action-field">
                                             <div class="group-input">
                                                 <label for="Preventive Action">Preventive Action</label>
                                                 <textarea name="preventive_action" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>{{ $data->preventive_action }}</textarea>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function () {
+                                                let capaTypeSelect = document.getElementById("capa_type");
+                                                let correctiveActionField = document.querySelector(".corrective-action-field");
+                                                let preventiveActionField = document.querySelector(".preventive-action-field");
+
+                                                function toggleFields(selectedValue) {
+                                                    if (selectedValue === "Corrective Action") {
+                                                        correctiveActionField.style.display = "block";
+                                                        preventiveActionField.style.display = "none";
+                                                    } else if (selectedValue === "Preventive Action") {
+                                                        correctiveActionField.style.display = "none";
+                                                        preventiveActionField.style.display = "block";
+                                                    } else if (selectedValue === "Corrective & Preventive Action") {
+                                                        correctiveActionField.style.display = "block";
+                                                        preventiveActionField.style.display = "block";
+                                                    } else {
+                                                        correctiveActionField.style.display = "none";
+                                                        preventiveActionField.style.display = "none";
+                                                    }
+                                                }
+
+                                                // Initialize fields based on the selected option on page load
+                                                toggleFields(capaTypeSelect.value);
+
+                                                // Listen for changes to update visibility dynamically
+                                                capaTypeSelect.addEventListener("change", function () {
+                                                    toggleFields(this.value);
+                                                });
+                                            });
+                                        </script>
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Closure Attachments">File Attachment</label>
@@ -1250,7 +1284,9 @@ $(document).ready(function() {
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                     </div>
+
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>Save</button>
