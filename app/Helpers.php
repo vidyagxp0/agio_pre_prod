@@ -233,6 +233,37 @@ class Helpers
     }
 
 
+    public static function getDivisionCode($id)
+    {
+        $code = '';
+
+        switch ($id) {
+            case 1:
+                $code = 'CQA';
+                break;
+            case 2:
+                $code = 'P1';
+                break;
+            case 3:
+                $code = 'P2';
+                break;
+            case 4:
+                $code = 'P3';
+                break;
+            case 5:
+                $code = 'P4';
+                break;
+            case 6:
+                $code = 'C1';
+                break;
+            default:
+                break;
+        }
+
+        return $code;
+    }
+
+
     public static function checkRoles_check_reviewers($document)
     {
 
