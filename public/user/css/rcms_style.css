@@ -768,7 +768,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #rcms-dashboard .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    /* box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff; */
     background: #ffffff;
     overflow: hidden;
     padding: 20px;

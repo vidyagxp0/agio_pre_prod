@@ -67,7 +67,7 @@
         <div class="container-fluid header-top">
             <div class="container">
                 <div class="text-center text-light">
-                    <small>Agio</small>
+                    <small></small>
                 </div>
             </div>
         </div>
