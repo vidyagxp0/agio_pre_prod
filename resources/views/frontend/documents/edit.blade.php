@@ -206,19 +206,6 @@
 
     <div id="data-fields">
         <div class="container-fluid">
-        {{-- <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
-                    information</button>
-                <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
-                <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
-                <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &
-                    Retrieval</button>
-                <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
-                <button class="tablinks printdoc" style="float: right;"
-                    onclick="window.print();return false;">Print</button>
-            </div> --}}
-
             <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document Information</button>
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
@@ -348,6 +335,7 @@
                             </div> --}}
                                 </div>
                             </div>
+                        @if($document->document_type_id == 'SOP')
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="document_name-desc">Document Name<span
@@ -356,7 +344,44 @@
                                     <input type="text" name="document_name" id="docname" maxlength="255"
                                         {{ Helpers::isRevised($document->stage) }} value="{{ $document->document_name }}"
                                         required>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'Document Name' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                        color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <p id="docnameError" style="color:red">**Document Name is required</p>
+                            </div>
 
+                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
+                                    class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
+                                            {{ date('d-M-Y h:i:s') }}
+                                        </p>
+                                        <input class="input-field" type="text" name="document_name_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif
+                            @else
+                            <div class="col-md-12"  style="display: none;">>
+                                <div class="group-input">
+                                    <label for="document_name-desc">Document Name<span
+                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                    characters remaining
+                                    <input type="text" name="document_name" id="docname">
 
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Document Name' && !empty($tempHistory->comment))
@@ -374,35 +399,13 @@
                                                 type="text" value="{{ $tempHistory->comment }}" disabled>
                                         @endif
                                     @endforeach
-
-
-
                                 </div>
-                                <p id="docnameError" style="color:red">**Document Name is required</p>
-
+                                <p id="docnameError" style="color:red; display: none;">**Document Name is required</p>
                             </div>
-
-                            <script>
-                                var maxLength = 255;
-                                $('#docname').keyup(function() {
-                                    var textlen = maxLength - $(this).val().length;
-                                    $('#rchars').text(textlen);
-                                });
-                            </script>
-
-                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
-                                    class="comment">
-                                    <div>
-                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                                            {{ date('d-M-Y h:i:s') }}
-                                        </p>
-                                        <input class="input-field" type="text" name="document_name_comment">
-                                    </div>
-                                    <div class="button">Add Comment</div>
-                                </div>
-
                             @endif
 
+
+                            @if($document->document_type_id == 'SOP')
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="short-desc">Short Description* </label>
@@ -429,16 +432,7 @@
                                     @endforeach
                                 </div>
                                 <p id="short_descError" style="color:red">**Short description is required</p>
-
                             </div>
-
-                            <script>
-                                var maxLength = 255;
-                                $('#short_desc').keyup(function() {
-                                    var textlen = maxLength - $(this).val().length;
-                                    $('#editrchars').text(textlen);
-                                });
-                            </script>
 
                             @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
@@ -451,13 +445,35 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-
+                            @endif
+                            @else
+                                <div class="col-md-12" id="short-desc-container" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="short-desc">Short Description* </label>
+                                        <span id="editrchars">255</span> characters remaining
+                                        <input type="text" name="short_desc" id="short_desc"
+                                            value="{{ $document->short_description }}">
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'Short Description' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                                                <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    <p id="short_descError" style="color:red; display: none;">**Short description is required</p>
+                                </div>
                             @endif
 
+
+                            @if($document->document_type_id == 'SOP')
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="sop_type">SOP Type</label>
-
                                     <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()"
                                         @if ($document->stage == 11 || $document->status == 'Obsolete') disabled @endif>
                                         <option value="" disabled {{ $document->sop_type == '' ? 'selected' : '' }}>
@@ -472,24 +488,6 @@
                                             {{ $document->sop_type == 'IOP (Instrument Operating Procedure)' ? 'selected' : '' }}>
                                             IOP (Instrument Operating Procedure)</option>
                                     </select>
-
-                                    <!-- <input type="hidden" name="sop_type_short" id="sop_type_short" value="{{ $document->sop_type_short }}"> -->
-
-                                    {{-- @foreach ($history as $tempHistory)
-                                    @if ($tempHistory->activity_type == 'SOP Type' && !empty($tempHistory->comment) && $tempHistory->user_id == Auth::user()->id)
-                                        @php
-                                            $users_name = DB::table('users')
-                                                ->where('id', $tempHistory->user_id)
-                                                ->value('name');
-                                        @endphp
-                                        <p style="color: blue">Modify by {{ $users_name }} at
-                    {{ $tempHistory->created_at }}
-                    </p>
-                    <input class="input-field" style="background: #ffff0061;
-                                        color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-                    @endif
-                    @endforeach --}}
-
                                 </div>
                                 @if (Auth::user()->role != 3 && $document->stage < 8) Add Comment <div
                                         class="comment">
@@ -505,6 +503,29 @@
                                         value="{{ $document->sop_type_short }}">
 
                                 @endif
+                            </div>
+                                @else
+                                <div class="col-12" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="sop_type">SOP Type</label>
+                                        <select name="sop_type" id="sop_type" onchange="updateSopTypeShort()"
+                                            @if ($document->stage == 11 || $document->status == 'Obsolete') disabled @endif>
+                                            <option value="" disabled {{ $document->sop_type == '' ? 'selected' : '' }}>
+                                                Enter your selection</option>
+                                            <option value="SOP (Standard Operating procedure)"
+                                                {{ $document->sop_type == 'SOP (Standard Operating procedure)' ? 'selected' : '' }}>
+                                                SOP (Standard Operating procedure)</option>
+                                            <option value="EOP (Equipment Operating procedure)"
+                                                {{ $document->sop_type == 'EOP (Equipment Operating procedure)' ? 'selected' : '' }}>
+                                                EOP (Equipment Operating procedure)</option>
+                                            <option value="IOP (Instrument Operating Procedure)"
+                                                {{ $document->sop_type == 'IOP (Instrument Operating Procedure)' ? 'selected' : '' }}>
+                                                IOP (Instrument Operating Procedure)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                @endif
+
                                 <script>
                                     function updateSopTypeShort() {
                                         const sopType = document.getElementById('sop_type').value;
@@ -523,10 +544,7 @@
                                     }
                                 </script>
 
-
-
-
-                            </div>
+                        @if($document->document_type_id == 'SOP')   
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date</label>
@@ -558,7 +576,7 @@
                                             </p>
                                             <input class="input-field"
                                                 style="background: #ffff0061;
-                color: black;"
+                                            color: black;"
                                                 type="text" value="{{ $tempHistory->comment }}" disabled>
                                         @endif
                                     @endforeach
@@ -579,9 +597,96 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-
                             </div>
+                            @else
+                            <div class="col-md-4 new-date-data-field" style="display: none;">
+                                <div class="group-input input-date">
+                                    <label for="due-date">Due Date</label>
+                                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
+                                    </div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="due_dateDoc"
+                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('d-M-Y') : '' }}"
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_dateDoc"
+                                            value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : '' }}"/>
+                                    </div>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Due Date' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                            color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <p id="due_dateDocError" style="color:red; display: none;">**Due Date is required</p>
+                                </div>
+                            @endif 
+
+                            @if($document->document_type_id == 'SOP') 
                             <div class="col-md-8">
+                                <div class="group-input">
+                                    <label for="notify_to">Notify To</label>
+                                    <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
+                                        data-silent-initial-value-set="true" id="notify_to"
+                                        {{ Helpers::isRevised($document->stage) }}>
+                                        @php
+                                            $notify_user_id = explode(',', $document->notify_to);
+                                        @endphp
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}"
+                                                {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>
+                                                {{ $data->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Notify To' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="notify_to_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+                            </div>
+                            @else
+                            <div class="col-md-8" style="display: none;">
                                 <div class="group-input">
                                     <label for="notify_to">Notify To</label>
                                     <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
@@ -618,43 +723,10 @@
                                         @endif
                                     @endforeach
                                 </div>
+                              </div>
+                            @endif    
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
 
-                                            <input class="input-field" type="text" name="notify_to_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
-                                    </div>
-                                @endif
-
-                            </div>
-                            <!-- <div class="col-md-12">
-                                                                <div class="group-input">
-                                                                    <label for="description">Description</label>
-                                                                    <textarea name="description" {{ Helpers::isRevised($document->stage) }}>{{ $document->description }}</textarea>
-                                                                    @foreach ($history as $tempHistory)
-    @if (
-        $tempHistory->activity_type == 'Description' &&
-            !empty($tempHistory->comment) &&
-            $tempHistory->user_id == Auth::user()->id)
-    @php
-        $users_name = DB::table('users')
-            ->where('id', $tempHistory->user_id)
-            ->value('name');
-    @endphp
-                                                                    <p style="color: blue">Modify by {{ $users_name }} at
-                                                                        {{ $tempHistory->created_at }}
-                                                                    </p>
-                                                                    <input class="input-field" style="background: #ffff0061;
-                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-    @endif
-    @endforeach
-                                                                </div>
-                                                            </div> -->
                             @if (Auth::user()->role != 3 && $document->stage < 8) <div
                                     class="comment">
                                     <div>
@@ -664,7 +736,6 @@
 
                                         <input class="input-field" type="text" name="description_comment">
                                     </div>
-                                    <!-- <div class="button">Add Comment</div> -->
                                 </div>
                             @endif
 
@@ -772,28 +843,6 @@
                                 @endif
                             </div>
 
-                            {{-- @php
-                use Illuminate\Support\Facades\DB;
-                $actionItems = DB::table('action_items')->get();
-            @endphp
-        @php
-        $parentChildRecords = DB::table('action_items')->get();
-        @endphp
-        <div class="col-md-6">
-            <div class="group-input">
-                <label for="link-doc">Parent Child Record</label>
-                <select multiple name="parent_child[]" placeholder="Select Parent Child Records" id="parent_child">
-                    @if (!empty($parentChildRecords))
-                        @foreach ($parentChildRecords as $item)
-                            <option value="{{ $item->id }}" {{( json_decode($document->parent_child ?? '[]')) ? 'selected' : '' }}>
-                                {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record }}
-                            </option>
-                        @endforeach
-                    @endif
-                </select>
-            </div>
-        </div> --}}
-
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
@@ -807,11 +856,6 @@
                                             </option>
                                         @endforeach
 
-                                        {{-- @foreach ($departments as $department)
-                                            <option data-id="{{ $department->dc }}" value="{{ $department->id }}"
-                    {{ $department->id == $document->department_id ? 'selected' : '' }}>
-                    {{ $department->name }}</option>
-                    @endforeach --}}
                                     </select>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -833,7 +877,7 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                <p id="depart-nameError" style="color:red">**Department Name is required</p>
+                                <!-- <p id="depart-nameError" style="color:red">**Department Name is required</p> -->
 
 
                                 @if (Auth::user()->role != 3 && $document->stage < 8)

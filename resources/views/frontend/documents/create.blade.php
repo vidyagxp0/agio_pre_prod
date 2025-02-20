@@ -438,7 +438,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="document_name-desc">Document Name<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
@@ -446,8 +446,7 @@
                                         <input id="docname" type="text" name="document_name" maxlength="255" required>
                                     </div>
                                     <p id="docnameError" style="color:red">**Document Name is required</p>
-
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="short-desc">Short Description<span class="text-danger">*</span></label>
@@ -458,97 +457,41 @@
                                     <p id="short_descError" style="color:red">**Short description is required</p>
                                 </div> --}}
 
-<!-- Short Description (Initially Hidden) -->
-<div class="col-md-12" id="shortDescContainer" style="display: none;">
-    <div class="group-input">
-        <label for="short-desc">Short Description<span class="text-danger" id="shortDescRequired" style="display: none;">*</span></label>
-        <span id="new-rchars">255</span> characters remaining
-        <input type="text" id="short_desc" name="short_desc" maxlength="255">
-    </div>
-    <p id="short_descError" style="color:red; display: none;">**Short description is required</p>
-</div>
-
-<script>
-    var maxLength = 255;
-
-    function handleDocumentTypeChange(select) {
-        const docTypeCodeSpan = document.getElementById('document_type_code');
-        const shortDescContainer = document.getElementById('shortDescContainer');
-        const shortDescInput = document.getElementById('short_desc');
-        const shortDescError = document.getElementById('short_descError');
-        const shortDescRequired = document.getElementById('shortDescRequired');
-
-        const selectedText = select.options[select.selectedIndex].text;
-
-        docTypeCodeSpan.textContent = select.value ? select.value : 'Not selected';
-
-        if (selectedText.includes("SOP")) {
-            shortDescContainer.style.display = 'block';
-            shortDescInput.setAttribute('required', 'required'); 
-            shortDescInput.setAttribute('name', 'short_desc');
-            shortDescRequired.style.display = 'inline';
-
-            $('#short_desc').off('keyup').on('keyup', function() {
-                var textlen = maxLength - $(this).val().length;
-                $('#new-rchars').text(textlen);
-            });
-
-        } else {
-            shortDescContainer.style.display = 'none';
-            shortDescInput.removeAttribute('required');
-            shortDescInput.removeAttribute('name');
-            shortDescRequired.style.display = 'none';
-            shortDescInput.value = '';
-            $('#new-rchars').text(maxLength);
-            shortDescError.style.display = 'none';
-        }
-    }
-</script>
-
-
-
-
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="docNameContainer" style="display: none;">
                                     <div class="group-input">
-                                        <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
-                                        <select name="sop_type" id="sop_type" required onchange="updateSopTypeShort()">
+                                        <label for="document_name-desc">Document Name<span class="text-danger" id="docNameRequired" style="display: none;">*</span></label>
+                                        <span id="rchars">255</span> characters remaining
+                                        <input id="docname" type="text" maxlength="255">
+                                    </div>
+                                    <p id="docnameError" style="color:red; display: none;">**Document Name is required</p>
+                                </div>
+
+                                <!-- Short Description (Initially Hidden) -->
+                                <div class="col-md-12" id="shortDescContainer" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="short-desc">Short Description<span class="text-danger" id="shortDescRequired" style="display: none;">*</span></label>
+                                        <span id="new-rchars">255</span> characters remaining
+                                        <input type="text" id="short_desc" name="short_desc" maxlength="255">
+                                    </div>
+                                    <p id="short_descError" style="color:red; display: none;">**Short description is required</p>
+                                </div>
+
+                                <div class="col-md-12" id="sopTypeContainer" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="sop_type">SOP Type<span class="text-danger" id="sopTypeRequired" style="display: none;">*</span></label>
+                                        <select name="sop_type" id="sop_type" onchange="updateSopTypeShort()">
                                             <option value="" disabled selected>Enter your selection</option>
-                                            <option value="SOP (Standard Operating procedure)">SOP (Standard Operating
-                                                procedure)</option>
-                                            <option value="EOP (Equipment Operating procedure)">EOP (Equipment Operating
-                                                procedure)</option>
-                                            <option value="IOP (Instrument Operating Procedure)">IOP (Instrument Operating
-                                                Procedure)</option>
+                                            <option value="SOP (Standard Operating procedure)">SOP (Standard Operating procedure)</option>
+                                            <option value="EOP (Equipment Operating procedure)">EOP (Equipment Operating procedure)</option>
+                                            <option value="IOP (Instrument Operating Procedure)">IOP (Instrument Operating Procedure)</option>
                                         </select>
                                     </div>
                                 </div>
                                 <input type="hidden" name="sop_type_short" id="sop_type_short">
 
-                                <script>
-                                    function updateSopTypeShort() {
-                                        const sopType = document.getElementById('sop_type').value;
-                                        let shortName = '';
-                                        if (sopType === 'SOP (Standard Operating procedure)') {
-                                            shortName = 'SOP';
-                                        } else if (sopType === 'EOP (Equipment Operating procedure)') {
-                                            shortName = 'EOP';
-                                        } else if (sopType === 'IOP (Instrument Operating Procedure)') {
-                                            shortName = 'IOP';
-                                        }
-                                        document.getElementById('sop_type_short').value = shortName;
-                                    }
-
-                                    document.querySelector('form').addEventListener('submit', function() {
-                                        updateSopTypeShort();
-                                    });
-                                </script>
-
-
-
-
-                                <div class="col-md-4 new-date-data-field">
+                                <div class="col-md-4 new-date-data-field" id="dueDateContainer" style="display: none;">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                        <label for="due-date">Due Date <span class="text-danger" id="dueDateRequired" style="display: none;">*</span></label>
                                         <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                         </div>
                                         <div class="calenderauditee">
@@ -559,20 +502,18 @@
                                                 min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                                 oninput="handleDateInput(this, 'due_dateDoc')" />
                                         </div>
-
-                                        {{-- onchange="changeFormat(this,'due-dateDoc')"> --}}
                                     </div>
-                                    <p id="due_dateDocError" style="color:red">**Due Date is required</p>
+                                    <p id="due_dateDocError" style="color:red; display: none;">**Due Date is required</p>
 
                                 </div>
-                                <div class="col-md-8">
+
+                                <div class="col-md-8" id="notifyContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="notify_to">Notify To</label>
                                         <select multiple name="notify_to[]" placeholder="Select Persons"
                                             data-search="false" data-silent-initial-value-set="true" id="notify_to">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}
-                                                    {{-- ({{ $data->role }}) --}}
                                                 </option>
                                             @endforeach
 
@@ -619,25 +560,6 @@
                                     </div>
                                 </div>
 
-                                {{-- @php
-                                    use Illuminate\Support\Facades\DB;
-
-                                    $actionItems = DB::table('action_items')->get();
-                                @endphp
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="link-doc">Parent Child Record</label>
-                                        <select multiple name="parent_child[]" placeholder="Select Parent Child Records" data-search="false" data-silent-initial-value-set="true" id="parent_child">
-                                            @foreach ($actionItems as $item)
-                                                <option value="{{ $item->id }}">
-                                                    {{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $item->record}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
@@ -646,22 +568,10 @@
                                             @foreach (Helpers::getDmsDepartments() as $code => $department)
                                                 <option value="{{ $code }}">{{ $department }}</option>
                                             @endforeach
-                                            {{-- @foreach ($departments as $department)
-                                                <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
-                                        {{ $department->name }}</option>
-                                        @endforeach --}}
                                         </select>
                                     </div>
                                     <p id="depart-nameError" style="color:red">** Department is required</p>
                                 </div>
-
-
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="depart-code">Department Code</label>
-                                        <div class="default-name"> <span id="department-code">Not selected</span></div>
-                                    </div>
-                                </div> --}}
 
                                 <div class="col-6">
                                     <div class="group-input">
@@ -675,86 +585,29 @@
                                         </label>
                                         <input type="number" name="major" id="major" min="0" required>
                                     </div>
-                                    {{-- <p id="majorError" style="color:red">** Department is required</p> --}}
                                 </div>
 
-                                {{-- <div class="col-6">
-                                        <div class="group-input">
-                                            <label for="minor">Document Version <small>(Minor)</small><span class="text-danger">*</span>
-                                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-management-system-modal-minor" style="font-size: 0.8rem; font-weight: 400;">
-                                                    (Launch Instruction)
-                                                </span>
-                                            </label>
-                                            <input type="number" name="minor" id="minor" min="0" max="9" required>
-
-                                        </div>
-                                    </div> --}}
-
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
-                                        <select name="document_type_id" id="doc-type" required>
-                                            <option value="" selected>Enter your Selection</option>
-                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
-                                                <option data-id="{{ $code }}" value="{{ $code }}">
-                                                    {{ $type }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <p id="doc-typeError" style="color:red">** Department is required</p>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+                                    <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
+                                        <option value="" selected>Enter your Selection</option>
+                                        @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                            <option value="{{ $code }}">
+                                                {{ $type }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-code">Document Type Code</label>
-                                        <div class="default-name"> <span id="document_type_code">Not selected</span></div>
-                                    </div>
-                                </div> --}}
+                                <p id="doc-typeError" style="color:red">** Department is required</p>
+                            </div>
 
-                                <!-- Document Type -->
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
-                                        <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
-                                            <option value="" selected>Enter your Selection</option>
-                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
-                                                <option value="{{ $code }}">
-                                                    {{ $type }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <p id="doc-typeError" style="color:red">** Department is required</p>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="doc-code">Document Type Code</label>
+                                    <div class="default-name"><span id="document_type_code">Not selected</span></div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="doc-code">Document Type Code</label>
-                                        <div class="default-name"> <span id="document_type_code">Not selected</span></div>
-                                    </div>
-                                </div> --}}
-
-<div class="col-md-6">
-    <div class="group-input">
-        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
-        <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
-            <option value="" selected>Enter your Selection</option>
-            @foreach (Helpers::getDocumentTypes() as $code => $type)
-                <option value="{{ $code }}">
-                    {{ $type }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-    <p id="doc-typeError" style="color:red">** Department is required</p>
-</div>
-
-<div class="col-md-6">
-    <div class="group-input">
-        <label for="doc-code">Document Type Code</label>
-        <div class="default-name"><span id="document_type_code">Not selected</span></div>
-    </div>
-</div>
+                            </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -775,6 +628,123 @@
                                         <div class="default-name"><span id="document_language">Not selected</span></div>
                                     </div>
                                 </div>
+
+                <script>
+                    var maxLength = 255;
+
+                    function handleDocumentTypeChange(select) {
+                        const docTypeCodeSpan = document.getElementById('document_type_code');
+                        const shortDescContainer = document.getElementById('shortDescContainer');
+                        const shortDescInput = document.getElementById('short_desc');
+                        const shortDescError = document.getElementById('short_descError');
+                        const shortDescRequired = document.getElementById('shortDescRequired');
+
+                        const docNameContainer = document.getElementById('docNameContainer');
+                        const docNameInput = document.getElementById('docname');
+                        const docNameError = document.getElementById('docnameError');
+                        const docNameRequired = document.getElementById('docNameRequired');
+
+                        // SOP Type and Due Date fields
+                        const sopTypeContainer = document.getElementById('sopTypeContainer');
+                        const sopType = document.getElementById('sop_type');
+                        const sopTypeRequired = document.getElementById('sopTypeRequired');
+
+                        const dueDateContainer = document.getElementById('dueDateContainer');
+                        const dueDateInput = document.getElementById('due_dateDoc');
+                        const dueDateRequired = document.getElementById('dueDateRequired');
+                        const dueDateError = document.getElementById('due_dateDocError');
+
+                        const notifyContainer = document.getElementById('notifyContainer');
+                        const notifyInput = document.getElementById('notify_to');
+
+                        const selectedText = select.options[select.selectedIndex].text;
+
+                        docTypeCodeSpan.textContent = select.value ? select.value : 'Not selected';
+
+                        if (selectedText.includes("SOP")) {
+                            // Show and make required: Short Description, Document Name, SOP Type, Due Date
+                            shortDescContainer.style.display = 'block';
+                            shortDescInput.setAttribute('required', 'required');
+                            shortDescInput.setAttribute('name', 'short_desc');
+                            shortDescRequired.style.display = 'inline';
+
+                            docNameContainer.style.display = 'block';
+                            docNameInput.setAttribute('required', 'required');
+                            docNameInput.setAttribute('name', 'document_name');
+                            docNameRequired.style.display = 'inline';
+
+                            sopTypeContainer.style.display = 'block';
+                            sopType.setAttribute('required', 'required');
+                            sopTypeRequired.style.display = 'inline';
+
+                            dueDateContainer.style.display = 'block';
+                            dueDateInput.setAttribute('required', 'required');
+                            dueDateRequired.style.display = 'inline';
+
+                            notifyContainer.style.display = 'block';
+                            notifyInput.setAttribute('', '');
+
+                            // Character counter for Document Name
+                            $('#docname').off('keyup').on('keyup', function() {
+                                var textlen = maxLength - $(this).val().length;
+                                $('#rchars').text(textlen);
+                            });
+
+                            $('#short_desc').off('keyup').on('keyup', function() {
+                                var textlen = maxLength - $(this).val().length;
+                                $('#new-rchars').text(textlen);
+                            });
+
+                        } else {
+                            // Hide and remove required: Short Description, Document Name, SOP Type, Due Date
+                            shortDescContainer.style.display = 'none';
+                            shortDescInput.removeAttribute('required');
+                            shortDescInput.removeAttribute('name');
+                            shortDescInput.value = '';
+                            shortDescError.style.display = 'none';
+                            $('#new-rchars').text(maxLength);
+
+                            docNameContainer.style.display = 'none';
+                            docNameInput.removeAttribute('required');
+                            docNameInput.removeAttribute('name');
+                            docNameInput.value = '';
+                            docNameError.style.display = 'none';
+                            $('#rchars').text(maxLength);
+
+                            sopTypeContainer.style.display = 'none';
+                            sopType.removeAttribute('required');
+                            sopType.value = '';
+                            sopTypeRequired.style.display = 'none';
+
+                            dueDateContainer.style.display = 'none';
+                            dueDateInput.removeAttribute('required');
+                            dueDateInput.value = '';
+                            dueDateRequired.style.display = 'none';
+                            dueDateError.style.display = 'none';
+
+                            notifyContainer.style.display = 'none';
+                            notifyInput.value = '';
+                        }
+                    }
+
+                    // SOP Type Short Update
+                    function updateSopTypeShort() {
+                        const sopType = document.getElementById('sop_type').value;
+                        let shortName = '';
+                        if (sopType === 'SOP (Standard Operating procedure)') {
+                            shortName = 'SOP';
+                        } else if (sopType === 'EOP (Equipment Operating procedure)') {
+                            shortName = 'EOP';
+                        } else if (sopType === 'IOP (Instrument Operating Procedure)') {
+                            shortName = 'IOP';
+                        }
+                        document.getElementById('sop_type_short').value = shortName;
+                    }
+
+                    document.querySelector('form').addEventListener('submit', function() {
+                        updateSopTypeShort();
+                    });
+                </script>
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="keyword">Keywords</label>
@@ -15183,13 +15153,13 @@
         }
     </script>
 
-    <script>
+    {{-- <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
         });
-    </script>
+    </script> --}}
     {{-- <script>
         var maxLength = 255;
         $('#short_desc').keyup(function() {
