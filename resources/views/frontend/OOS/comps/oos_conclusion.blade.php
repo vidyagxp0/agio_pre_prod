@@ -8,7 +8,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Conclusion Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                         {{ $data->conclusion_comments_oosc ?? '' }}
                         </textarea>
                 </div>
@@ -60,14 +60,14 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">Specification Limit </label>
-                    <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                 </div>
             </div>
 
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">Results to be Reported</label>
-                    <select name="results_to_be_reported_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="results_to_be_reported_oosc" {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
                             }}>Initial</option>
@@ -81,7 +81,7 @@
                 <div class="group-input">
                     <label for="Reference Recores">Final Reportable Results</label>
                     <input type="text" name="final_reportable_results_oosc"
-                        value="{{ $data->final_reportable_results_oosc ?? '' }}"  {{Helpers::isOOSChemical($data->stage)}}>
+                        value="{{ $data->final_reportable_results_oosc ?? '' }}"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                 </div>
             </div>
 
@@ -89,7 +89,7 @@
                 <div class="group-input">
                     <label for="Description Deviation">Justifi. for Averaging Results</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                                 {{ $data->justifi_for_averaging_results_oosc ?? '' }}
                             </textarea>
                 </div>
@@ -98,7 +98,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">OOS/OOT Stands </label>
-                    <select name="oos_stands_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="oos_stands_oosc"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                        <option value="">Enter Your Selection Here</option>
                         <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
                         </option>
@@ -111,7 +111,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CAPA Req.</label>
-                    <select name="capa_req_oosc"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <select name="capa_req_oosc"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->capa_req_oosc == 'Yes' ? 'selected' : '' }}>Yes</option>
                         <option value="No" {{ $data->capa_req_oosc == 'No' ? 'selected' : '' }}>No</option>
@@ -123,6 +123,8 @@
                 <div class="group-input">
                     <label for="Reference Records">CAPA Ref No.</label>
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]"
+                         {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}
+
                         placeholder="Select Reference Records">
                         
                         @if (!empty($capa_record))
@@ -157,7 +159,7 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if CAPA not required</label>
-                    <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1"  {{Helpers::isOOSChemical($data->stage)}}>
+                    <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1"  {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                                 {{ $data->justify_if_capa_not_required_oosc ?? '' }}
                             </textarea>
                 </div>
@@ -336,18 +338,19 @@
                 </div>
             </div> --}}
 
-            <div class="col-md-12 mb-4">
+            {{-- <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
                     <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
                             {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : '' }}
                         </textarea>
                 </div>
-            </div>
+            </div> --}}
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action On affected batches</label>
-                    <textarea class="summernote" name="action_on_affected_batch" id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>
+                    <textarea class="summernote" name="action_on_affected_batch" id="summernote-1" {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }}>
                             {{ $data->action_on_affected_batch ? $data->action_on_affected_batch : '' }}
                         </textarea>
                 </div>
@@ -385,7 +388,7 @@
                             <div>Add</div>
                             <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
                                 oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple 
-                                {{Helpers::isOOSChemical($data->stage)}} >
+                                {{ in_array($data->stage, [17, 18, 20]) ? 'disabled' : '' }} >
                         </div>
                     </div>
                 </div>
