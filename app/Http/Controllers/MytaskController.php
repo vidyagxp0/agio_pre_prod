@@ -5,12 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Document;
+use App\Models\CC;
 use App\Models\DocumentType;
 use App\Models\DocumentHistory;
 use App\Models\Department;
 use App\Models\StageManage;
 use App\Models\RoleGroup;
+use App\Models\QMSProcess;
 use App\Models\User;
+use App\Models\Deviation;
+use App\Models\Capa;
+use App\Models\UserRole;
 use App\Models\Grouppermission;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
@@ -21,10 +26,10 @@ use Helpers;
 
 class MytaskController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
-       
+
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 2)->orWhere('stage','>=','4')->orderByDesc('id')->get();
@@ -98,18 +103,112 @@ class MytaskController extends Controller
                 ->value('name');
             }
             $task = $this->paginate($arrayTask);
-            return view('frontend.tasks', ['task' => $task]);
-        
+
+
+            /******* My Task For ALL Process ******/
+            $selectedProcess = $request->input('process');
+            $selectedStatus = $request->input('status');
+            $loggedInUserId = Auth::id();
+            $taskCounts = [];
+            $records = [];
+
+            // Define process models and their respective stages
+            $processes = [
+                'CC' => ['model' => CC::class, 'name' => 'Change Control'],
+                'Deviation' => ['model' => Deviation::class, 'name' => 'Deviation'],
+                'Capa' => ['model' => Capa::class, 'name' => 'Capa'],
+            ];
+
+            if ($selectedProcess && isset($processes[$selectedProcess])) {
+                // Get the process model
+                $processModel = $processes[$selectedProcess]['model'];
+                $processName = $processes[$selectedProcess]['name'];
+
+                // Find related processes and user roles
+                $findProcess = QMSProcess::where('process_name', $processName)->pluck('id');
+                $userRoles = UserRole::whereIn('q_m_s_processes_id', $findProcess)
+                    ->where('user_id', $loggedInUserId)
+                    ->pluck('q_m_s_roles_id')
+                    ->unique();
+
+                // Fetch all records for the process
+                $processAllRecords = $processModel::pluck('stage');
+
+                // Define stages for each process
+                $stages = [
+                    'CC' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'HOD Assessment', 'role' => 4],
+                        ['id' => 3, 'status' => 'QA/CQA Initial Assessment', 'role' => 7],
+                        ['id' => 4, 'status' => 'CFT Assessment', 'role' => 5],
+                        ['id' => 5, 'status' => 'QA/CQA Final Review', 'role' => 7],
+                        ['id' => 6, 'status' => 'Pending RA Approval', 'role' => 7],
+                        ['id' => 7, 'status' => 'QA/CQA Head/Manager Designee Approval', 'role' => 39],
+                        ['id' => 8, 'status' => 'Pending Initiator Update', 'role' => 3],
+                        ['id' => 9, 'status' => 'HOD Final Review', 'role' => 4],
+                        ['id' => 10, 'status' => 'Implementation verification by QA/CQA', 'role' => 7],
+                        ['id' => 11, 'status' => 'QA/CQA Closure Approval', 'role' => 39],
+                    ],
+                    'Deviation' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'HOD Review', 'role' => 4],
+                        ['id' => 3, 'status' => 'Pending Cancellation', 'role' => 7],
+                        ['id' => 4, 'status' => 'QA/CQA Initial Assessment', 'role' => 7],
+                        ['id' => 5, 'status' => 'CFT Review', 'role' => 5],
+                        ['id' => 6, 'status' => 'QA/CQA Final Assessment', 'role' => 7],
+                        ['id' => 7, 'status' => 'QA/CQA Head/Manager Designee Approval', 'role' => [9, 65]],
+                        ['id' => 8, 'status' => 'Pending Initiator Update', 'role' => 3],
+                        ['id' => 9, 'status' => 'HOD Final Review', 'role' => 4],
+                        ['id' => 10, 'status' => 'Implementation verification by QA/CQA', 'role' => 7],
+                        ['id' => 11, 'status' => 'Head QA/CQA Designee Closure Approval', 'role' => [7, 65]],
+                    ],
+                    'Capa' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'HOD Review', 'role' => 4],
+                        ['id' => 3, 'status' => 'QA/CQA Review', 'role' => [7, 63]],
+                        ['id' => 4, 'status' => 'QA/CQA Approval', 'role' => [7]],
+                        ['id' => 5, 'status' => 'CAPA In progress', 'role' => 3],
+                        ['id' => 6, 'status' => 'HOD Final Review', 'role' => 4],
+                        ['id' => 7, 'status' => 'QA/CQA Closure Review', 'role' => [7, 66]],
+                        ['id' => 8, 'status' => 'QAH/CQA Head Approval', 'role' => [7, 65]],
+                    ]
+                ];
+
+                // Loop through the stages and count tasks
+                foreach ($stages[$selectedProcess] as $stage) {
+                    if (is_array($stage['role'])) {
+                        $roleMatch = $userRoles->intersect($stage['role'])->isNotEmpty();
+                    } else {
+                        $roleMatch = $userRoles->contains($stage['role']);
+                    }
+
+                    if ($roleMatch) {
+                        $taskCounts[$stage['status']] = $processAllRecords->filter(function ($taskStage) use ($stage) {
+                            return $taskStage == $stage['id'];
+                        })->count();
+                    }
+                }
+
+                // Fetch records if status is selected
+                if ($selectedStatus) {
+                    $records = $processModel::where('stage', array_search($selectedStatus, array_column($stages[$selectedProcess], 'status')))->get();
+                }
+            }
+
+            return view('frontend.tasks', compact('task','taskCounts', 'records', 'selectedProcess', 'selectedStatus', 'processes'));
+
+
+            /******* My Task For ALL Process Ends ******/
 
 
             if (Helpers::checkRoles(4)) {
                 $array1 = [];
                 $array2 = [];
                 $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
-    
+
                 foreach ($document as $data) {
                     $data->originator_name = User::where('id', $data->originator_id)->value('name');
-                    
+
                     if ($data->hods) {
                         $datauser = explode(',', $data->hods);
                         for ($i = 0; $i < count($datauser); $i++) {
@@ -118,7 +217,7 @@ class MytaskController extends Controller
                             }
                         }
                     }
-    
+
                 }
                 $arrayTask = array_unique(array_merge($array1, $array2));
                 foreach ($arrayTask as $temp) {
@@ -126,7 +225,7 @@ class MytaskController extends Controller
                     ->value('name');
                 }
                 $task = $this->paginate($arrayTask);
-    
+
                 return view('frontend.tasks', ['task' => $task]);
             }
 
@@ -137,7 +236,7 @@ class MytaskController extends Controller
 
             foreach ($document as $data) {
                 $data->originator_name = User::where('id', $data->originator_id)->value('name');
-                
+
                 if ($data->reviewers_group) {
                     $datauser = explode(',', $data->reviewers_group);
                     for ($i = 0; $i < count($datauser); $i++) {
@@ -218,10 +317,10 @@ class MytaskController extends Controller
         $document->last_modify = DocumentHistory::where('document_id', $document->id)->latest()->first();
         $stagereview = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Reviewed")->latest()->first();
         $stagereview_submit = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Review-Submit")->latest()->first();
-        
+
         $stagehod_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"HOD Review-Submit")->latest()->first();
         $stagehod = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"HOD Review Complete")->latest()->first();
-        
+
         $stageapprove = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
         $stageapprove_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
        // $stageapprove = '';
@@ -246,4 +345,9 @@ class MytaskController extends Controller
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
+
+    /**
+ * Fetch task counts based on selected process and its specific stages.
+ */
+
 }
