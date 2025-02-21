@@ -346,10 +346,21 @@
                     <div class="col-12">
                         <div class="inner-block doc-overview">
                             <div class="main-title">Preview</div>
-                            <iframe id="theFrame" width="100%" height="800"
+                            {{-- <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
                             <iframe id="theFrame" width="100%" height="800"
-                                src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>    
+                                src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>     --}}
+
+                            @if(in_array($document->document_type_id, ['SOP', 'BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                                <iframe id="theFrame" width="100%" height="800"
+                                    src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                                <iframe id="theFrame" width="100%" height="800"
+                                    src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                            @else
+                                <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
+                                    View Attachments
+                                </a>
+                            @endif
                         </div>
                     </div>
 
