@@ -680,8 +680,8 @@
                     <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">CQA/QA Head Primary Review</div>
                     @endif
 
-                    @if ($data->stage >= 5)
-                        <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation </div>
+                    @if ($data->stage >= 5 && (!isset($resampling) || $resampling->status !== 'closed - done'))
+                        <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
                     @else
                         <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase IA Investigation</div>
                     @endif
