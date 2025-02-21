@@ -1,6 +1,6 @@
 <div class="my-4 row">
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
                 <h5 class="card-title">Deviation Delay and On Time</h5>
 
@@ -15,7 +15,7 @@
     </div>
 
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
                 <h5 class="card-title">Deviation By Site</h5>
 
@@ -32,7 +32,7 @@
 
 <div class="my-4 row">
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
                 <h5 class="card-title">Priority Levels (Risk Management)</h5>
 
@@ -47,7 +47,7 @@
     </div>
 
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
                 <h5 class="card-title">Priority Levels (RCA)</h5>
 
@@ -63,10 +63,10 @@
 <div class="my-4 row">
 
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
               <h5 class="card-title">Deviation By Classification</h5>
-              
+
                 <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="deviationClassificationChart">
                     <div class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>
@@ -77,10 +77,10 @@
     </div>
 
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
               <h5 class="card-title">Deviation By Departments</h5>
-              
+
                 <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="deviationDepartmentChart">
                     <div class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>
@@ -93,10 +93,10 @@
 
 <div class="my-4 row">
     <div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
               <h5 class="card-title">Processes</h5>
-              
+
                 <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="processChart">
                     <div class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>
@@ -106,7 +106,7 @@
         </div>
     </div>
 	<div class="col-sm-6">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
                 <h5 class="card-title">Deviation by Severity</h5>
 
@@ -140,36 +140,36 @@
     <div class="tab-content" id="myTabContent2">
 
       <div class="tab-pane fade show active" id="hodAnalysisBar" role="tabpanel" aria-labelledby="home-tab">
-        
-        <div class="card border-0" style="width: 26rem;">
+
+        <div class="card border-0"style="">
           <div class="card-body">
             <h5 class="card-title">Pending HOD Analysis</h5>
-            
+
 				<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingHODAnalysis">
 					<div class="spinner-border" role="status">
 						<span class="visually-hidden">Loading...</span>
 					</div>
 				</div>
-              
+
           </div>
         </div>
 
       </div>
 
       <div class="tab-pane fade" id="hodAnalysisPie" role="tabpanel" aria-labelledby="profile">
-        
-        <div class="card border-0" style="width: 26rem;">
+
+        <div class="card border-0"style="">
           <div class="card-body">
             <h5 class="card-title">Pending HOD Analysis</h5>
-            
+
 				<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingHODAnalysisPie">
 				</div>
-              
+
           </div>
         </div>
 
       </div>
-    
+
     </div>
 
   </div>
@@ -188,11 +188,11 @@
 	<div class="tab-content" id="myTabContent3">
 
 		<div class="tab-pane fade show active" id="pendingTrainingBar" role="tabpanel" aria-labelledby="home-tab">
-		
-			<div class="card border-0" style="width: 26rem;">
+
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Pending Training Analysis</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingTrainingAnalysis">
 						<div class="spinner-border" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -200,17 +200,17 @@
 					</div>
 				</div>
 			</div>
-			
+
 		</div>
 
 		<div class="tab-pane fade" id="pendingTrainingPie" role="tabpanel" aria-labelledby="home-tab">
-		
-			<div class="card border-0" style="width: 26rem;">
+
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Pending Training Analysis</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingTrainingAnalysisPie">
-						
+
 					</div>
 				</div>
 			</div>
@@ -238,10 +238,10 @@
 	<div class="tab-content" id="myTabContent4">
 
 		<div class="tab-pane fade show active" id="pendingReviewBar" role="tabpanel" aria-labelledby="home-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Pending Review Analysis</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingReviewAnalysis">
 						<div class="spinner-border" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -252,17 +252,17 @@
 		</div>
 
 		<div class="tab-pane fade" id="pendingReviewPie" role="tabpanel" aria-labelledby="home-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Pending Review Analysis</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingReviewAnalysisBar">
 
 					</div>
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
   </div>
 
@@ -281,10 +281,10 @@
 	<div class="tab-content" id="myTabContent4">
 
 		<div class="tab-pane fade show active" id="pendingApprovalBar" role="tabpanel" aria-labelledby="home23-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Pending Approval Analysis</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingApproveAnalysis">
 						<div class="spinner-border" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -294,20 +294,20 @@
 			</div>
 		</div>
 		<div class="tab-pane fade" id="pendingApprovalPie" role="tabpanel" aria-labelledby="home23-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Pending Approval Analysis</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="pendingApproveAnalysisPie">
 
 					</div>
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 
-	
+
   </div>
   {{-- PENDING APPROVAL ANALYSIS END --}}
 
@@ -327,10 +327,10 @@
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="docTypeBar" role="tabpanel" aria-labelledby="home-tab">
 
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
               <h5 class="card-title">Document Type Distribution</h5>
-              
+
                 <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentTypeDistribution">
                     <div class="spinner-border" role="status">
                         <span class="visually-hidden">Loading...</span>
@@ -342,12 +342,12 @@
       </div>
 
       <div class="tab-pane fade" id="docTypePie" role="tabpanel" aria-labelledby="profile-tab">
-        <div class="card border-0" style="width: 26rem;">
+        <div class="card border-0"style="">
             <div class="card-body">
               <h5 class="card-title">Document Type Distribution</h5>
-              
+
                 <div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentTypeDistributionBar">
-                    
+
                 </div>
             </div>
         </div>
@@ -355,12 +355,12 @@
 
     </div>
 
-      
+
   </div>
 
 {{-- REVIEW NEXT 6 MONTH START --}}
   <div class="col-sm-6">
-	
+
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item" role="presentation">
 		  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#reviewSixBar" type="button" role="tab" aria-controls="home" aria-selected="true">Bar</button>
@@ -371,12 +371,12 @@
 	</ul>
 
     <div class="tab-content" id="myTabContent">
-	
+
 		<div class="tab-pane fade show active" id="reviewSixBar" role="tabpanel" aria-labelledby="home42-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				<h5 class="card-title">Review in Next 6 Months</h5>
-				
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewSix">
 						<div class="spinner-border" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -387,20 +387,20 @@
 		</div>
 
 		<div class="tab-pane fade" id="reviewSixPie" role="tabpanel" aria-labelledby="home42-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				<h5 class="card-title">Review in Next 6 Months</h5>
-				
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewSixPie">
-						
+
 					</div>
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
-	
-	
+
+
   </div>
 {{-- REVIEW NEXT 6 MONTH END --}}
 
@@ -411,7 +411,7 @@
 
 {{-- REVIEW NEXT 1 YEAR START --}}
   <div class="col-sm-6">
-	
+
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item" role="presentation">
 		  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#reviewOneBar" type="button" role="tab" aria-controls="home" aria-selected="true">Bar</button>
@@ -422,12 +422,12 @@
 	</ul>
 
 	<div class="tab-content" id="myTabContent">
-	
+
 		<div class="tab-pane fade show active" id="reviewOneBar" role="tabpanel" aria-labelledby="home45-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Review in Next 1 Year</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewOne">
 						<div class="spinner-border" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -438,10 +438,10 @@
 		</div>
 
 		<div class="tab-pane fade" id="reviewOnePie" role="tabpanel" aria-labelledby="home45-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Review in Next 1 Year</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewOnePie">
 
 					</div>
@@ -467,12 +467,12 @@
 	</ul>
 
 	<div class="tab-content" id="myTabContent">
-	
+
 		<div class="tab-pane fade show active" id="reviewTwoBar" role="tabpanel" aria-labelledby="home45-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Review in Next 2 Years</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewTwo">
 						<div class="spinner-border" role="status">
 							<span class="visually-hidden">Loading...</span>
@@ -481,22 +481,22 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="tab-pane fade" id="reviewTwoPie" role="tabpanel" aria-labelledby="home45-tab">
-			<div class="card border-0" style="width: 26rem;">
+			<div class="card border-0"style="">
 				<div class="card-body">
 				  <h5 class="card-title">Review in Next 2 Years</h5>
-				  
+
 					<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentReviewTwoPie">
 
 					</div>
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 
-    
+
   </div>
   {{-- REVIEW NEXT 2 YEAR END --}}
 </div>
@@ -516,12 +516,12 @@
 		</ul>
 
 		<div class="tab-content" id="myTabContent">
-	
+
 			<div class="tab-pane fade show active" id="originatorDistBar" role="tabpanel" aria-labelledby="home45-tab">
-				<div class="card border-0" style="width: 26rem;">
+				<div class="card border-0"style="">
 					<div class="card-body">
 					  <h5 class="card-title">Originator Distribution</h5>
-					  
+
 						<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentOriginatorDistribution">
 							<div class="spinner-border" role="status">
 								<span class="visually-hidden">Loading...</span>
@@ -532,12 +532,12 @@
 			</div>
 
 			<div class="tab-pane fade" id="originatorDistPie" role="tabpanel" aria-labelledby="home45-tab">
-				<div class="card border-0" style="width: 26rem;">
+				<div class="card border-0"style="">
 					<div class="card-body">
 					  <h5 class="card-title">Originator Distribution</h5>
-					  
+
 						<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentOriginatorDistributionPie">
-							
+
 						</div>
 					</div>
 				</div>
@@ -545,7 +545,7 @@
 
 		</div>
 
-        
+
     </div>
 	{{-- ORIGINATOR DISTRIBUTION END --}}
 
@@ -563,12 +563,12 @@
 		</ul>
 
 		<div class="tab-content" id="myTabContent">
-	
+
 			<div class="tab-pane fade show active" id="documentStatusBar" role="tabpanel" aria-labelledby="home45-tab">
-				<div class="card border-0" style="width: 26rem;">
+				<div class="card border-0"style="">
 					<div class="card-body">
 					  <h5 class="card-title">Documents by status</h5>
-					  
+
 						<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentCategoryChart">
 							<div class="spinner-border" role="status">
 								<span class="visually-hidden">Loading...</span>
@@ -579,10 +579,10 @@
 			</div>
 
 			<div class="tab-pane fade" id="documentStatusPie" role="tabpanel" aria-labelledby="home45-tab">
-				<div class="card border-0" style="width: 26rem;">
+				<div class="card border-0"style="">
 					<div class="card-body">
 					  <h5 class="card-title">Documents by status</h5>
-					  
+
 						<div class="card-text d-flex justify-content-center d-flex justify-content-center align-items-center h-100" id="documentCategoryChartPie">
 
 						</div>
@@ -592,7 +592,7 @@
 
 		</div>
 
-       
+
     </div>
 	{{-- DOCUMENT BY STATUS END --}}
 
@@ -603,7 +603,7 @@
 <script>
 
 
-    // Processes Charts start 
+    // Processes Charts start
     function renderProcessChart(series, labels)
     {
         var options = {
@@ -638,7 +638,7 @@
             const url = "{{ route('api.process.chart') }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -661,7 +661,7 @@
         $('#processChart > .spinner-border').hide();
     }
     // Processes Charts End
-    
+
     // Document by status Charts Starts
     function renderDocumentCategoryChart(series, labels)
     {
@@ -726,7 +726,7 @@
             const url = "{{ route('api.document_by_status.chart') }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -758,11 +758,11 @@
             {
                 name: 'Minor',
                 data: minorData
-            }, 
+            },
             {
                 name: 'Major',
                 data: majorData
-            }, 
+            },
             {
                 name: 'Critical',
                 data: criticalData
@@ -820,7 +820,7 @@
             const url = "{{ route('api.deviation.chart') }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -847,7 +847,7 @@
         $('#deviationClassificationChart > .spinner-border').hide();
     }
     // Classification of deviation end
-    
+
     // Departments wise deviation start
     function renderDeviationDepartmentChart(seriesData, labels)
     {
@@ -905,7 +905,7 @@
             const url = "{{ route('api.deviation_departments.chart') }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -928,7 +928,7 @@
         $('#deviationDepartmentChart > .spinner-border').hide();
     }
     // Departments wise deviation end
-    
+
     // Originator Distribution start
     function renderDocumentOriginatorChart(seriesData, labels)
     {
@@ -1015,7 +1015,7 @@
             const url = "{{ route('api.document.originator.chart') }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -1038,7 +1038,7 @@
         $('#documentOriginatorDistribution > .spinner-border').hide();
     }
     // Originator distribution end
-    
+
     // Type Distribution start
     function renderDocumentTypeChart(seriesData, labels)
     {
@@ -1123,7 +1123,7 @@
             const url = "{{ route('api.document.type.chart') }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -1146,7 +1146,7 @@
         $('#documentTypeDistribution > .spinner-border').hide();
     }
     // Type distribution end
-    
+
     // Review six month start
     function renderDocumentSixChart(seriesData, labels)
     {
@@ -1233,7 +1233,7 @@
             const url = "{{ route('api.document.review.chart', 6) }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -1341,7 +1341,7 @@
             const url = "{{ route('api.document.review.chart', 12) }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -1449,7 +1449,7 @@
             const url = "{{ route('api.document.review.chart', 24) }}"
             const res = await axios.get(url);
 
-            
+
 
 
             if (res.data.status == 'ok') {
@@ -1472,7 +1472,7 @@
         $('#documentReviewTwo > .spinner-border').hide();
     }
     // Review two year end
-    
+
     // Pending Review Analysis start
     function renderPendingReviewerChart(seriesData, labels)
     {
@@ -1562,7 +1562,7 @@
                 let labels = []
                 let seriesData = []
 
-                for (const key in bodyData) 
+                for (const key in bodyData)
                 {
                   console.log('key', key)
                   console.log('bodyData', bodyData[key])
@@ -1580,7 +1580,7 @@
         $('#pendingReviewAnalysis > .spinner-border').hide();
     }
     // Pending Review Analysis end
-    
+
     // Pending Approval Analysis start
     function renderPendingApproverChart(seriesData, labels)
     {
@@ -1670,7 +1670,7 @@
                 let labels = []
                 let seriesData = []
 
-                for (const key in bodyData) 
+                for (const key in bodyData)
                 {
                   console.log('key', key)
                   console.log('bodyData', bodyData[key])
@@ -1779,7 +1779,7 @@
                 let labels = []
                 let seriesData = []
 
-                for (const key in bodyData) 
+                for (const key in bodyData)
                 {
                   console.log('key', key)
                   console.log('bodyData', bodyData[key])
@@ -1887,7 +1887,7 @@
                 let labels = []
                 let seriesData = []
 
-                for (const key in bodyData) 
+                for (const key in bodyData)
                 {
                   console.log('key', key)
                   console.log('bodyData', bodyData[key])
@@ -2103,7 +2103,7 @@
     // Priority Level deviation end
 
     // Priority Level start
-    
+
     function renderPriorityLevelChartRca(lowData, mediumData, highData, months) {
         var options = {
             series: [{
@@ -2398,5 +2398,5 @@
     preparePriorityLevelChartRca()
     preparedelayedCharts()
     prepareSiteCharts()
-      
+
 </script>
