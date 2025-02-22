@@ -771,7 +771,7 @@
                                 </div>
                             </div>
 
-
+                            @if($document->document_type_id == 'SOP') 
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="legacy_number">Legacy Document Number</label>
@@ -780,21 +780,21 @@
                                         {{ Helpers::isRevised($document->stage) }}>
                                 </div>
                             </div>
+                            @else
+                            <div class="col-md-6" style="display: none;">
+                                <div class="group-input">
+                                    <label for="legacy_number">Legacy Document Number</label>
+                                    <input type="text" id="legacy_number" name="legacy_number"
+                                        value="{{ $document->legacy_number }}" maxlength="255"
+                                        {{ Helpers::isRevised($document->stage) }}>
+                                </div>
+                            </div>
+                            @endif
+
 
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="link-doc">Reference Record</label>
-                                    {{-- <select multiple name="reference_record[]" placeholder="Select Reference Records" data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}}>
-                                    @if (!empty($document_data))
-                                    @foreach ($document_data as $temp)
-                                    <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
-                                        <!-- {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}} -->
-                                        {{$temp->sop_type_short}}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
-                                    </option>
-                                    @endforeach
-                                    @endif
-                                </select> --}}
-
                                     <select multiple name="reference_record[]" placeholder="Select Reference Records"
                                         data-search="false" data-silent-initial-value-set="true" id="reference_record"
                                         {{ Helpers::isRevised($document->stage) }}>
@@ -894,21 +894,7 @@
 
                             </div>
 
-                            {{-- <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="depart-code">Department Code</label>
-                                    <div class="default-name"> <span id="department-code">
-                                            @if (!empty($departments))
-                                                @foreach ($departments as $department)
-                                            {{ $document->department_id == $department->id ? $department->dc : '' }}
-    @endforeach
-    @else
-    Not Selected
-    @endif
-
-    </span></div>
-    </div>
-    </div> --}}
+                            
 
                             <div class="col-6">
                                 <div class="group-input">
@@ -955,53 +941,6 @@
                                     </div>
                                 @endif
                             </div>
-
-                            {{-- <div class="col-6">
-                                <div class="group-input">
-                                    <label for="minor">Document Version <small>(Minor)</small><span
-                                            class="text-danger">*</span>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-management-system-modal"
-                                            style="font-size: 0.8rem; font-weight: 400;">
-                                            (Launch Instruction) </span>
-                                    </label>
-                                    <input type="number" name="major" id="major" min="0"
-                                        value="{{ $document->major }}" required
-                                        {{ Helpers::isRevised($document->stage) }}>
-
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Major' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="major_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
-                                    </div>
-                                @endif
-                            </div> --}}
-
 
 
                             <!-- testing code -->
@@ -1065,7 +1004,7 @@
                             </div>
                             <p id="doc-typeError" style="color:red">**Document Type is required</p>
 
-
+                            @if($document->document_type_id == 'SOP') 
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-lang">Document Language</label>
@@ -1112,9 +1051,46 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-
                             </div>
+                            @else
+                            <div class="col-md-6" style="display: none;">
+                                <div class="group-input">
+                                    <label for="doc-lang">Document Language</label>
+                                    <select name="document_language_id" id="doc-lang"
+                                        {{ Helpers::isRevised($document->stage) }}>
+                                        <option value="">Enter your Selection</option>
+                                        @foreach ($documentLanguages as $lan)
+                                            <option data-id="{{ $lan->lcode }}" value="{{ $lan->id }}"
+                                                {{ $lan->id == $document->document_language_id ? 'selected' : '' }}>
+                                                {{ $lan->lname }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Document Language' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                            @endif
 
+
+                            @if($document->document_type_id == 'SOP') 
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-lang">Document Language Code</label>
@@ -1126,10 +1102,26 @@
                                             @else
                                                 Not Selected
                                             @endif
-
                                         </span></div>
                                 </div>
                             </div>
+                            @else
+                            <div class="col-md-6" style="display: none;">
+                                <div class="group-input">
+                                    <label for="doc-lang">Document Language Code</label>
+                                    <div class="default-name"><span id="document_language">
+                                            @if (!empty($documentLanguages))
+                                                @foreach ($documentLanguages as $lan)
+                                                    {{ $document->document_language_id == $lan->id ? $lan->lcode : '' }}
+                                                @endforeach
+                                            @else
+                                                Not Selected
+                                            @endif
+                                        </span></div>
+                                </div>
+                            </div>
+                            @endif
+
 
                             <div class="col-md-12">
                                 <div class="group-input">

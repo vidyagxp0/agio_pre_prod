@@ -257,6 +257,8 @@
             document.getElementById('document_type_code').innerText = selectedOption.value || "Not selected";
         }
     </script>
+
+    
     <?php $division_id = isset($_GET['id']) ? $_GET['id'] : ''; ?>
     <div id="data-field-head">
         <div class="pr-id">
@@ -274,19 +276,6 @@
     <div id="data-fields">
 
         <div class="container-fluid">
-            {{-- <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
-                    information</button>
-                <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
-                <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
-                <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &
-                    Retrieval</button>
-                <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
-                <button class="tablinks printdoc" style="float: right;"
-                    onclick="window.print();return false;">Print</button>
-            </div> --}}
-
             <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
                  information</button>
@@ -528,21 +517,21 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="docnoContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="doc-num">Document Number</label>
                                         <div class="default-name">Not available</div>
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="legacyContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="legacy_number">Legacy Document Number</label>
                                         <input type="text" id="legacy_number" name="legacy_number" maxlength="255">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="refContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="link-doc">Reference Record</label>
                                         <select multiple name="reference_record[]" placeholder="Select Reference Records"
@@ -560,7 +549,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="departContainer">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                                         <select name="department_id" id="depart-name" required>
@@ -570,7 +559,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <p id="depart-nameError" style="color:red">** Department is required</p>
+                                    <p id="depart-nameError" style="color:red; display: none;">** Department is required</p>
                                 </div>
 
                                 <div class="col-6">
@@ -590,7 +579,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-type">Document Type<span class="text-danger">*</span></label>
-                                    <select name="document_type_id" id="doc-type" required onchange="handleDocumentTypeChange(this)">
+                                    <select name="document_type_id" id="doc-type" required onchange="handleDocumentSelection(this)">
                                         <option value="" selected>Enter your Selection</option>
                                         @foreach (Helpers::getDocumentTypes() as $code => $type)
                                             <option value="{{ $code }}">
@@ -630,6 +619,141 @@
                                 </div>
 
                 <script>
+                    var maxLength = 255;
+
+                    function handleDocumentSelection(selectElement) {
+                        // Get selected value
+                        const selectedType = selectElement.value;
+
+                        // Get all hidden tabs
+                        const tabs = document.querySelectorAll('.hidden-tabs');
+
+                        // Hide all tabs initially
+                        tabs.forEach(tab => {
+                            tab.style.display = 'none';
+                        });
+
+                        // Show the matching tab
+                        tabs.forEach(tab => {
+                            if (tab.getAttribute('data-id') === selectedType) {
+                                tab.style.display = 'block';
+                            }
+                        });
+
+                        // Update document type code display
+                        document.getElementById('document_type_code').innerText = selectElement.value || "Not selected";
+
+                        // Handle field validation and visibility
+                        const shortDescContainer = document.getElementById('shortDescContainer');
+                        const shortDescInput = document.getElementById('short_desc');
+
+                        const docNameContainer = document.getElementById('docNameContainer');
+                        const docNameInput = document.getElementById('docname');
+
+                        const sopTypeContainer = document.getElementById('sopTypeContainer');
+                        const sopType = document.getElementById('sop_type');
+
+                        const dueDateContainer = document.getElementById('dueDateContainer');
+                        const dueDateInput = document.getElementById('due_dateDoc');
+
+                        const notifyContainer = document.getElementById('notifyContainer');
+
+
+
+                        if (selectedType === "SOP") {
+                            shortDescContainer.style.display = 'block';
+                            shortDescInput.setAttribute('required', 'required');
+                            shortDescInput.setAttribute('name', 'short_desc');
+                            shortDescRequired.style.display = 'inline';
+
+                            docNameContainer.style.display = 'block';
+                            docNameInput.setAttribute('required', 'required');
+                            docNameInput.setAttribute('name', 'document_name');
+                            docNameRequired.style.display = 'inline';
+
+                            sopTypeContainer.style.display = 'block';
+                            sopType.setAttribute('required', 'required');
+                            sopTypeRequired.style.display = 'inline';
+
+
+                            dueDateContainer.style.display = 'block';
+                            dueDateInput.setAttribute('required', 'required');
+                            dueDateRequired.style.display = 'inline';
+
+
+                            notifyContainer.style.display = 'block';
+
+                            // Character counter for inputs
+                            $('#docname').off('keyup').on('keyup', function() {
+                                $('#rchars').text(maxLength - $(this).val().length);
+                            });
+
+                            $('#short_desc').off('keyup').on('keyup', function() {
+                                $('#new-rchars').text(maxLength - $(this).val().length);
+                            });
+
+                        } else {
+                            shortDescContainer.style.display = 'none';
+                            shortDescInput.removeAttribute('required');
+                            shortDescInput.value = '';
+
+                            docNameContainer.style.display = 'none';
+                            docNameInput.removeAttribute('required');
+                            docNameInput.value = '';
+
+                            sopTypeContainer.style.display = 'none';
+                            sopType.removeAttribute('required');
+                            sopType.value = '';
+
+                            dueDateContainer.style.display = 'none';
+                            dueDateInput.removeAttribute('required');
+                            dueDateInput.value = '';
+
+                            notifyContainer.style.display = 'none';
+                        }
+                    }
+
+                    function updateSopTypeShort() {
+                        const sopType = document.getElementById('sop_type').value;
+                        let shortName = '';
+                        if (sopType === 'SOP (Standard Operating procedure)') {
+                            shortName = 'SOP';
+                        } else if (sopType === 'EOP (Equipment Operating procedure)') {
+                            shortName = 'EOP';
+                        } else if (sopType === 'IOP (Instrument Operating Procedure)') {
+                            shortName = 'IOP';
+                        }
+                        document.getElementById('sop_type_short').value = shortName;
+                    }
+
+                    function validateForm() {
+                        let isValid = true;
+                        const shortDesc = document.getElementById('short_desc');
+                        const shortDescError = document.getElementById('short_descError');
+                        const docName = document.getElementById('docname');
+                        const docNameError = document.getElementById('docnameError');
+
+                        if (shortDesc.hasAttribute('required') && shortDesc.value.trim() === "") {
+                            shortDescError.style.display = 'inline';
+                            isValid = false;
+                        } else {
+                            shortDescError.style.display = 'none';
+                        }
+
+                        if (docName.hasAttribute('required') && docName.value.trim() === "") {
+                            docNameError.style.display = 'inline';
+                            isValid = false;
+                        } else {
+                            docNameError.style.display = 'none';
+                        }
+
+                        if (isValid) {
+                            alert("Form Submitted Successfully!");
+                        }
+                    }
+                </script>
+
+                {{-- <script>
                     var maxLength = 255;
 
                     function handleDocumentTypeChange(select) {
@@ -744,7 +868,7 @@
                     document.querySelector('form').addEventListener('submit', function() {
                         updateSopTypeShort();
                     });
-                </script>
+                </script> --}}
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="keyword">Keywords</label>

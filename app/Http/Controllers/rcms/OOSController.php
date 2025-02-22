@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ActionItem;
 use App\Models\Capa;
 use App\Models\extension_new;
+use App\Models\Resampling;
 use Illuminate\Http\Request;
 use App\Models\OOS;
 use App\Models\User;
@@ -2695,12 +2696,37 @@ class OOSController extends Controller
                 return back();
             }
             if ($changestage->stage == 5) {
+
+                // Resampling Status Check
+                $resampling = Resampling::where('parent_id', $id)->first();
+
+                if ($resampling) { // Check only if a child (resampling) exists
+                    $resamplingStatus = trim(strtolower($resampling->status));
+
+                    if ($resamplingStatus !== 'closed - done') {
+                        Session::flash('swal', [
+                            'title' => 'Resampling Pending!',
+                            'message' => 'You cannot proceed until Resampling is Closed-Done.',
+                            'type' => 'warning',
+                        ]);
+
+                        return redirect()->back();
+                    }
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
+
                 if (!$changestage->Comments_plidata) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
                         'message' => 'Comment is yet to be filled!',
-                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                        'type' => 'warning', 
                     ]);
             
                     return redirect()->back();
@@ -2712,6 +2738,7 @@ class OOSController extends Controller
                         'type' => 'success',
                     ]);
                 }
+
                 $changestage->stage = "6";
                 $changestage->status = "Phase IA HOD Primary Review";
                 $changestage->Phase_IA_Investigation_By= Auth::user()->name;
@@ -3310,7 +3337,9 @@ class OOSController extends Controller
             $parent_id = $id;
             $actionchild->save();
 
-            return view('frontend.resampling.resapling_create', compact('relatedRecords','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+
+
+            return view('frontend.resampling.resapling_create', compact('relatedRecords','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type',));
         }
         elseif ($request->child_type == "Extension")
         {
