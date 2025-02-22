@@ -500,9 +500,19 @@ class TMSController extends Controller
                 $TrainingHistory->user_name = Auth::user()->name;
                 $TrainingHistory->origin_state = "Assigned";
                 $TrainingHistory->save();
+                
                 $document->doc = Document::find($id);
                 $document->doc->stage = 10;
                 $document->doc->status = "Effective";
+                
+                $documentTraining = DocumentTraining::where('document_id', $id)->first();
+                if ($documentTraining && $documentTraining->status == "Complete") {
+                    $effectiveDate = Carbon::now()->format('Y-m-d');
+                    $nextReviewDate = Carbon::parse($effectiveDate)->addYears(3)->subDay()->format('Y-m-d');
+                
+                    $document->doc->effective_date = $effectiveDate;
+                    $document->doc->next_review_date = $nextReviewDate;
+                }
                 $document->doc->update();
                 $user_data = User::find($document->doc->originator_id);
                 try {
@@ -1096,7 +1106,6 @@ class TMSController extends Controller
                 
     
                 $employees = Employee::get();
-                // dd($employees);
     
                 $trainers = TrainerQualification::get();
                 return view('frontend.layout.TMS-Training', compact('useDocFromJobTraining', 'useDocFromInductionTraining', 'documents2','documents','due','pending','complete', 'employees', 'trainers', 'inductionTraining', 'jobTrainings'));

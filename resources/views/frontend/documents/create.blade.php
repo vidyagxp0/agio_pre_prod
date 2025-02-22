@@ -1730,7 +1730,7 @@
                     <div class="input-fields">
                         <div class="row">
 
-                            {{--
+                        {{--
                             <div class="col-md-12">
                                 <div class="group-input">
 
@@ -2342,7 +2342,7 @@
 
                                 </div>
                             </div>
-                    --}}
+                        --}}
 
 
                             <div class="col-12">
@@ -3533,7 +3533,6 @@
                         </div>
                     </div>
 
-                    {{-- Packing validation report by kpatel --}}
 
                     {{-- Packing validation report by kpatel --}}
 
@@ -4992,7 +4991,7 @@
                     </div>
                     <div class="input-fields">
                         <div class="row">
-                            {{-- <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="Protocolapproval_FoCompAaNirogenkp" id="Protocolapproval_FoCompAaNirogenkp">
                                         Protocol approval<button type="button" id="Protocolapproval_FoCompAaNirogenkpbtnadd"
@@ -5416,7 +5415,7 @@
                     <div class="input-fields">
                         <div class="row">
                      {{--
-                      <div class="col-md-6">
+                        <div class="col-md-6">
                               <div class="group-input">
                                   <label for="purpose">Generic Name </label>
                                   <input type="text" name="generic_pvr">
@@ -6168,7 +6167,7 @@
                     <div class="input-fields">
                         <div class="row">
 
-                        {{--
+                            {{--
                                  <div class="col-md-12">
                                     <div class="group-input">
 
@@ -6844,7 +6843,7 @@
                             <div class="input-fields">
                                 <div class="row">
 
-                             {{--
+                              {{--
                                 <div class="col-md-12">
                                     <div class="group-input">
 
@@ -7162,7 +7161,7 @@
 
 
 
-                              <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -7195,11 +7194,11 @@
 
 
 
- <!------------------------ STABILITY STUDY PROTOCOL - tab ------------------------------------>
+               <!------------------------ STABILITY STUDY PROTOCOL - tab ------------------------------------>
 
 
 
-                <div id="doc_ssp" class="tabcontent">
+                        <div id="doc_ssp" class="tabcontent">
                             <div class="orig-head">
                             STABILITY STUDY PROTOCOL
                             </div>
@@ -7240,7 +7239,7 @@
                                     </script>
 
 
-                    {{--
+                            {{--
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">PRODUCT NAME </label>
@@ -7704,9 +7703,7 @@
                     </div>
                 </div>
 
-<!------------------------ Validation Master Plan - tab ------------------------------------>
-
-
+               <!------------------------ Validation Master Plan - tab ------------------------------------>
 
                 <div id="doc_vmp" class="tabcontent">
                             <div class="orig-head">
@@ -7748,7 +7745,7 @@
                     </div>
                 </div>
 
-<!------------------------ Validation Master Plan - tab ------------------------------------>
+        <!------------------------ Validation Master Plan - tab ------------------------------------>
 
 
 
@@ -7903,8 +7900,6 @@
                             <div class="row">
 
 
-
-
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -8057,9 +8052,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br>
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Generic Name </label>
@@ -9085,7 +9077,7 @@
                                             </tbody>
                                         </table>
                                      </div>
-                            </div>
+                                </div>
 
 
 
@@ -9449,7 +9441,7 @@
                     </div>
                     <div class="input-fields">
                         <div class="row">
-                     {{--
+                    {{--
                             <div class="col-md-12">
                                 <div class="group-input">
 
@@ -9824,10 +9816,6 @@
                                 }
                             }
                             </script>
-
-
-
-
                         </div>
                     </div>
                     <div class="button-block">
@@ -9847,7 +9835,8 @@
 
                 <div id="doc-billofmaterial" class="tabcontent">
                     <div class="orig-head">
-                        Bill of Materia                    </div>
+                        Bill of Materia                    
+                    </div>
                     <div class="input-fields">
                         <div class="row">
 
@@ -9902,7 +9891,8 @@
 
                 <div id="doc-masterformulaRecord" class="tabcontent">
                     <div class="orig-head">
-                        Master Formula Record (MFR)                    </div>
+                        Master Formula Record (MFR)                    
+                    </div>
                     <div class="input-fields">
                         <div class="row">
 
@@ -9957,7 +9947,8 @@
 
                   <div id="doc-masterPackingRecord" class="tabcontent">
                     <div class="orig-head">
-                        Master Packing Record (MFR)                    </div>
+                        Master Packing Record (MFR)                    
+                    </div>
                     <div class="input-fields">
                         <div class="row">
 
@@ -10012,7 +10003,8 @@
 
                  <div id="doc-SiteMasterFile" class="tabcontent">
                     <div class="orig-head">
-                        Site Master File                    </div>
+                        Site Master File                    
+                    </div>
                     <div class="input-fields">
                         <div class="row">
 
@@ -10378,7 +10370,6 @@
 
                 <div id="doc_CVS" class="tabcontent">
                         <div class="orig-head">CLEANING VALIDATION SPECIFICATION
-                            (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -10638,7 +10629,6 @@
                <!-- Inprocess Validation Specification -->
                 <div id="doc_INPS" class="tabcontent">
                         <div class="orig-head">INPROCESS VALIDATION SPECIFICATION
-                            (COMMERCIAL / REGISTRATION / RE-REGISTRATION)
                         </div>
                         <div class="input-fields">
                             <div class="row">
@@ -10882,12 +10872,8 @@
                         PROCESS VALIDATION INTERIM REPORT
                         </div>
                         <div class="input-fields">
-                            <div class="row">
-                                <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br>
 
-                                {{-- <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="purpose">Dosage Form</label>
                                         <input type="text" name="pvir_dosage_form">
@@ -11199,7 +11185,7 @@
                                     </div>
                                 </div> --}}
 
-                                   <div class="col-12">
+                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment">File Attachment</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -11251,14 +11237,9 @@
                 <div id="doc_Annexure_I" class="tabcontent">
                     <div class="orig-head">
                         Annexure I-Gxp Assessment
-                        {{-- Annexure I-GXP ASSESSMENT --}}
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11311,14 +11292,9 @@
                 <div id="doc_Annexure_II" class="tabcontent">
                     <div class="orig-head">
                         Annexure II-Initial Risk Assessment
-                        {{-- Annexure II-INITIAL RISK ASSESSMENT --}}
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11371,14 +11347,9 @@
                 <div id="doc_Annexure_III" class="tabcontent">
                     <div class="orig-head">
                         Annexure III-ERES Assessment
-                        {{-- Annexure III-ERES ASSESSMENT --}}
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11432,9 +11403,7 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
+
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11487,13 +11456,9 @@
                 <div id="doc_Annexure_V" class="tabcontent">
                     <div class="orig-head">
                         Annexure V-User Requirement Specification
-                        {{-- Annexure V-USER REQUIRED SPECIFICATION --}}
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11549,10 +11514,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11608,10 +11569,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11667,9 +11624,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
 
                                    <div class="col-12">
                                         <div class="group-input">
@@ -11726,10 +11680,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11785,10 +11735,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
-
                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="File_Attachment"><b>File Attachment</b></label>
@@ -11842,9 +11788,6 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                {{-- <div class="">
-                                  PRODUCT DETAILS
-                                </div>  <br> --}}
 
                                    <div class="col-12">
                                         <div class="group-input">

@@ -509,8 +509,6 @@ class DocumentController extends Controller
             $document->ips_specificationGrid = $request->ips_specificationGrid;
 
 
-
-
             // $document->effective_date = Carbon::parse($document->effective_date)->format('d-m-y');
 
             try {
@@ -6434,39 +6432,6 @@ class DocumentController extends Controller
             'STP' => 'frontend.documents.stp-pdf',
             'TDS' => 'frontend.documents.tds-pdf',
             'GTP' => 'frontend.documents.gtp-pdf',
-            // 'PROTO' => 'frontend.documents.proto-pdf',
-            // 'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
-            // 'STUDY' => 'frontend.documents.reports.study_report',
-            // 'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
-            // 'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
-            // 'REPORT' => 'frontend.documents.report-pdf',
-            // 'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
-            // 'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
-            // 'REQULIFICATION'=>'frontend.documents.reports.requlification',
-            // 'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
-            // 'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
-            // 'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
-            // 'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
-            // 'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
-            // 'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
-            // 'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
-            // 'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
-            // 'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
-            // 'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
-            // 'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
-            // 'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
-            // 'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
-            // 'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
-            // 'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
-            // 'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
-            // 'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
-            // 'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
-            // 'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
-            // 'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
-            // 'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
-            // 'SMF' => 'frontend.documents.smf-pdf',
-            // 'VMP' => 'frontend.documents.vmp-pdf',
-            // 'QM' => 'frontend.documents.qm-pdf',
             default => 'frontend.documents.pdfpage',
         };
 
@@ -6921,45 +6886,11 @@ class DocumentController extends Controller
                 'STP' => 'frontend.documents.stp-pdf',
                 'TDS' => 'frontend.documents.tds-pdf',
                 'GTP' => 'frontend.documents.gtp-pdf',
-                'PROTO' => 'frontend.documents.proto-pdf',
-                'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
-                'STUDY' => 'frontend.documents.reports.study_report',
-                'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
-                'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
-                'REPORT' => 'frontend.documents.report-pdf',
-                'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
-                'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
-                'REQULIFICATION'=>'frontend.documents.reports.requlification',
-                'EQUIPMENTHOLDPROTOCOL' => 'frontend.documents.protocol.equipment_hold_protocol',
-                'ANNEQUALPROTO' => 'frontend.documents.protocol.annexure_for_qualification_protocol',
-                'ANNEQUALREPORT' =>'frontend.documents.reports.annexure_for_qualification_report',
-                'AAEUSERREQUESPECI' => 'frontend.documents.reports.annexure_for_user_requirement_specification_report',
-                'PROVALIPROTOCOL'=>'frontend.documents.protocol.provaliprotocol',
-                'REQULIFICATIONPROTOCOL'=>'frontend.documents.protocol.requliprotocol',
-                'REPORTFORMEDIAFILL'=>'frontend.documents.reports.reportformediafill',
-                'PROTOCOLFORMEDIAFILL'=>'frontend.documents.protocol.protocolformediafill',
-                'ANNACINQULIPROTOCOL'=>'frontend.documents.protocol.anacinquliprotocol',
-                'ANNACOPERQULIPROTOCOL'=>'frontend.documents.protocol.anacoperaquliprotocol',
-                'ANNACPERMQULIPROTOCOL'=>'frontend.documents.protocol.anacperquliprotocol',
-                'PROVALIINTERRE'=>'frontend.documents.reports.process-interim-report',
-                'PACKVALIREPORT'=>'frontend.documents.reports.pack-vali-report',
-                'PACKVALIPROTOCOL'=>'frontend.documents.protocol.packvaliprotocol',
-                'HOLDTIMESTUDYREPORT'=>'frontend.documents.reports.hold-time-study-report',
-                'HOLDTIMESTUDYPROTOCOL'=>'frontend.documents.protocol.hold-time-study-protocol',
-                'FOCONITOGENREPORT'=>' frontend.documents.reports.for-com-air-nitogen-report',
-                'FOCONITOGENPROTOCOL'=>'frontend.documents.protocol.for-com-air-nitogen-protocol',
-                'STABILITYPROTOCOL'=>'frontend.documents.protocol.stability-protocol',
-                'CLEAVALIPROTODOC' => 'frontend.documents.protocol.cleaning_validation_protocoldoc',
-                'CLEAVALIREPORTDOC' => 'frontend.documents.reports.cleaning_validation_reportdoc',
-                'SMF' => 'frontend.documents.smf-pdf',
-                'VMP' => 'frontend.documents.vmp-pdf',
-                'QM' => 'frontend.documents.qm-pdf',
                 default => 'frontend.documents.pdfpage',
             };
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-
 
             $pdf = PDF::loadview($viewName, compact('data', 'time', 'document','annexures','currentId','documents','sopNumber'))
                 ->setOptions([
@@ -6979,16 +6910,19 @@ class DocumentController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 4,
+                $width / 2.9,
                 $height / 2,
                 $data->status,
                 null,
                 25,
                 [0, 0, 0],
-                2,
+                12,
                 6,
                 -20
+                
             );
+
+
 
             if ($controls->daily != 0) {
                 $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();
@@ -7181,13 +7115,13 @@ class DocumentController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 4,
+                $width / 2.9,
                 $height / 2,
                 $data->status,
                 null,
                 25,
                 [0, 0, 0],
-                2,
+                12,
                 6,
                 -20
             );
@@ -7558,11 +7492,6 @@ class DocumentController extends Controller
             }
 
 
-
-
-
-
-
             $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
 
             $DocumentGridData = $DocumentGridData->replicate();
@@ -7792,13 +7721,13 @@ class DocumentController extends Controller
 
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text(
-                $width / 4,
+                $width / 2.9,
                 $height / 2,
                 $data->status,
                 null,
                 25,
                 [0, 0, 0],
-                2,
+                12,
                 6,
                 -20
             );
@@ -7963,15 +7892,16 @@ class DocumentController extends Controller
                 $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
                 $canvas->page_text(
-                    $width / 4,
+                    $width / 2.9,
                     $height / 2,
                     $data->status,
                     null,
                     25,
                     [0, 0, 0],
-                    2,
+                    12,
                     6,
                     -20
+                    
                 );
 
                 return $pdf->stream('SOP'.$documentId.'.pdf');

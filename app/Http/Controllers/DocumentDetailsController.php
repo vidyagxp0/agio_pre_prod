@@ -750,8 +750,12 @@ class DocumentDetailsController extends Controller
               }
 
               try {
-                $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
+                // $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
+                // $document->next_review_date = $next_review_date;
+
+                $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->subDay()->format('Y-m-d');
                 $document->next_review_date = $next_review_date;
+
               } catch (\Exception $e) {
                 // 
               }
@@ -762,7 +766,6 @@ class DocumentDetailsController extends Controller
             }
           }
         }
-
         $document->update();
         toastr()->success('Document has been sent.');
         return redirect()->back();
