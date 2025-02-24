@@ -331,24 +331,24 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Repeat</th>
+                        {{-- <th class="w-20">Repeat</th>
                         <td class="w-30" colspan="3">
                             @if ($data->repeat)
                                 {{ucfirst($data->repeat) }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
                     </tr>
                     <tr>
-                        <th class="w-20">Repeat Nature</th>
+                        {{-- <th class="w-20">Repeat Nature</th>
                         <td class="w-30">
                             @if ($data->repeat_nature)
                                 {{ $data->repeat_nature }}
                             @else
                                 Not Applicable
                             @endif
-                        </td>
+                        </td> --}}
 
                         <!-- <th class="w-20">Division Code</th>
                        <td class="w-80">

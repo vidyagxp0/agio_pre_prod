@@ -2890,6 +2890,35 @@ class CCController extends Controller
 
 
 
+        if (!empty($request->change_details_attachments) || !empty($request->deleted_change_details_attachments)) {
+            $existingFiles = json_decode($cc_cfts->change_details_attachments, true) ?? [];
+
+            // Handle deleted files
+            if (!empty($request->deleted_change_details_attachments)) {
+                $filesToDelete = explode(',', $request->deleted_change_details_attachments);
+                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                    return !in_array($file, $filesToDelete);
+                });
+            }
+
+            // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('change_details_attachments')) {
+                foreach ($request->file('change_details_attachments') as $file) {
+                    $name = $request->name . 'change_details_attachments' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+            // Merge existing and new files
+            $allFiles = array_merge($existingFiles, $newFiles);
+            $cc_cfts->change_details_attachments = json_encode($allFiles);
+        }
+        $cc_cfts->save();
+
+
+
         if (!empty($request->hod_assessment_attachment) || !empty($request->deleted_hod_assessment_attachment)) {
             $existingFiles = json_decode($cc_cfts->hod_assessment_attachment, true) ?? [];
 
@@ -5775,33 +5804,64 @@ if (!$areRegAffairAttachSame && !empty($request->RegulatoryAffair_attachment)) {
             $history->save();
         }
 
-    // Convert attachments to comma-separated strings if they're arrays, otherwise use the string directly
-$lastCftAttachment = is_array($lastCft->hod_assessment_attachment) ? implode(',', $lastCft->hod_assessment_attachment) : $lastCft->hod_assessment_attachment;
-$requestAttachment = is_array($cc_cfts->hod_assessment_attachment) ? implode(',', $cc_cfts->hod_assessment_attachment) : $cc_cfts->hod_assessment_attachment;
 
-// Check if there is a difference, but exclude cases where the attachment is unintentionally saved as an empty array
-if ($lastCftAttachment !== $requestAttachment && ($requestAttachment !== '[]' || !is_null($lastCft->hod_assessment_attachment))) {
-    // Check if a history entry already exists for this change type
-    $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
-        ->where('activity_type', 'HOD Assessment Attachments')
-        ->exists();
+         // Convert attachments to comma-separated strings if they're arrays, otherwise use the string directly
+        $lastCftAttachment = is_array($lastCft->change_details_attachments) ? implode(',', $lastCft->change_details_attachments) : $lastCft->change_details_attachments;
+        $requestAttachment = is_array($cc_cfts->change_details_attachments) ? implode(',', $cc_cfts->change_details_attachments) : $cc_cfts->change_details_attachments;
 
-    // Create a new history entry with updated data
-    $history = new RcmDocHistory;
-    $history->cc_id = $id;
-    $history->activity_type = 'HOD Assessment Attachments';
-    $history->previous = $lastCftAttachment ?? 'Null';  // Set 'Null' explicitly if previous is null
-    $history->current = $requestAttachment ?: '[]';  // Explicitly set empty array representation
-    $history->comment = "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
-    $history->save();
-}
+        // Check if there is a difference, but exclude cases where the attachment is unintentionally saved as an empty array
+        if ($lastCftAttachment !== $requestAttachment && ($requestAttachment !== '[]' || !is_null($lastCft->change_details_attachments))) {
+            // Check if a history entry already exists for this change type
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'Change Details Attachments')
+                ->exists();
+
+            // Create a new history entry with updated data
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Change Details Attachments';
+            $history->previous = $lastCftAttachment ?? 'Null';  // Set 'Null' explicitly if previous is null
+            $history->current = $requestAttachment ?: '[]';  // Explicitly set empty array representation
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
+
+
+
+        // Convert attachments to comma-separated strings if they're arrays, otherwise use the string directly
+        $lastCftAttachment = is_array($lastCft->hod_assessment_attachment) ? implode(',', $lastCft->hod_assessment_attachment) : $lastCft->hod_assessment_attachment;
+        $requestAttachment = is_array($cc_cfts->hod_assessment_attachment) ? implode(',', $cc_cfts->hod_assessment_attachment) : $cc_cfts->hod_assessment_attachment;
+
+        // Check if there is a difference, but exclude cases where the attachment is unintentionally saved as an empty array
+        if ($lastCftAttachment !== $requestAttachment && ($requestAttachment !== '[]' || !is_null($lastCft->hod_assessment_attachment))) {
+            // Check if a history entry already exists for this change type
+            $lastDocumentAuditTrail = RcmDocHistory::where('cc_id', $id)
+                ->where('activity_type', 'HOD Assessment Attachments')
+                ->exists();
+
+            // Create a new history entry with updated data
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'HOD Assessment Attachments';
+            $history->previous = $lastCftAttachment ?? 'Null';  // Set 'Null' explicitly if previous is null
+            $history->current = $requestAttachment ?: '[]';  // Explicitly set empty array representation
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocument->status;
+            $history->action_name = $lastDocumentAuditTrail ? 'Update' : 'New';
+            $history->save();
+        }
 
 
         if ($lastCft->RA_data_person != $request->RA_data_person && $request->RA_data_person != null) {

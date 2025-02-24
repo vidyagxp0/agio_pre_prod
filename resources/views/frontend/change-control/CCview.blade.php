@@ -65,17 +65,14 @@
                 "{{ Session::get('swal')['type'] }}")
         </script>
     @endif
+
     <script>
-        function otherController(value, checkValue, blockID) {
-            let block = document.getElementById(blockID)
-            let blockTextarea = block.getElementsByTagName('textarea')[0];
-            let blockLabel = block.querySelector('label span.text-danger');
-            if (value === checkValue) {
-                blockLabel.classList.remove('d-none');
-                blockTextarea.setAttribute('required', 'required');
+        function otherController(value, targetValue, targetFieldId) {
+            var targetField = document.getElementById(targetFieldId);
+            if (value === targetValue) {
+                targetField.style.display = "block";
             } else {
-                blockLabel.classList.add('d-none');
-                blockTextarea.removeAttribute('required');
+                targetField.style.display = "none";
             }
         }
     </script>
@@ -666,9 +663,17 @@
                                                 </div>
                                             </div>
 
-
-
                                             <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiator"><b>Initiator Department</b></label>
+                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                </div>
+                                            </div>
+
+
+
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
                                                     <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
@@ -727,13 +732,13 @@
                                                         </option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiation Group Code">Initiation Department Code</label>
                                                     <input type="text" name="initiator_group_code"
-                                                        value="{{ $data->Initiator_Group }}" id="initiator_group_code"
+                                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                         readonly>
                                                     {{-- <div class="default-name"> <span
                                                     id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
@@ -948,8 +953,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator Group">Initiated Through</label>
-                                                    <div><small class="text-primary">Please select related
-                                                            information</small></div>
+                                                    <div><small class="text-primary">Please select related information</small></div>
                                                     <select name="initiated_through"
                                                         onchange="otherController(this.value, 'others', 'initiated_through_req')" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                         <option value="">Enter Your Selection Here</option>
@@ -974,13 +978,14 @@
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <div class="group-input" id="initiated_through_req">
+                                                <div class="group-input" id="initiated_through_req" style="display: none;">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger d-none">*</span></label>
                                                     <textarea name="initiated_through_req"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="repeat">Repeat</label>
                                                     <div><small class="text-primary">Please select yes if it is has
@@ -996,16 +1001,16 @@
                                                             value="na">NA</option>
                                                     </select>
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-6">
+                                            </div> --}}
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
                                                     <textarea name="repeat_nature"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
                                                     <select name="doc_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
@@ -1019,7 +1024,7 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="others">If Others</label>
                                                     <textarea name="others">{{ $data->If_Others }}</textarea>
@@ -1027,7 +1032,7 @@
                                             </div>
 
 
-                                            <div class="col-lg-6">
+                                            <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="others">Description of Change </label>
                                                     <textarea name="bd_domestic">{{ $data->bd_domestic }}</textarea>
@@ -1349,6 +1354,104 @@
                                                     <textarea name="supervisor_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->supervisor_comment }}</textarea>
                                                 </div>
                                             </div> -->
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="change_details_attachments">Change Details Attachments</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                    <div class="file-attachment-field">
+                                                        <div class="file-attachment-list" id="change_details_attachments">
+                                                            @if ($cc_cfts->change_details_attachments)
+                                                                @foreach(json_decode($cc_cfts->change_details_attachments) as $file)
+                                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                        <b>{{ $file }}</b>
+                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                            <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                                        </a>
+                                                                        <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                            <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                                        </a>
+                                                                        <input type="hidden" name="existing_change_details_attachments[]" value="{{ $file }}">
+                                                                    </h6>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input type="file" id="myfile" name="change_details_attachments[]"
+                                                                {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                                oninput="addMultipleFiles(this, 'change_details_attachments')" multiple>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Hidden field to keep track of files to be deleted -->
+                                            <input type="hidden" id="deleted_change_details_attachments" name="deleted_change_details_attachments" value="">
+
+                                            <script>
+                                                document.addEventListener('DOMContentLoaded', function() {
+                                                    const removeButtons = document.querySelectorAll('.remove-file');
+
+                                                    removeButtons.forEach(button => {
+                                                        button.addEventListener('click', function() {
+                                                            const fileName = this.getAttribute('data-file-name');
+                                                            const fileContainer = this.closest('.file-container');
+
+                                                            // Hide the file container
+                                                            if (fileContainer) {
+                                                                fileContainer.style.display = 'none';
+                                                                // Remove hidden input associated with this file
+                                                                const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                                if (hiddenInput) {
+                                                                    hiddenInput.remove();
+                                                                }
+
+                                                                // Add the file name to the deleted files list
+                                                                const deletedFilesInput = document.getElementById('deleted_change_details_attachments');
+                                                                let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                                deletedFiles.push(fileName);
+                                                                deletedFilesInput.value = deletedFiles.join(',');
+                                                            }
+                                                        });
+                                                    });
+                                                });
+
+                                                function addMultipleFiles(input, id) {
+                                                    const fileListContainer = document.getElementById(id);
+                                                    const files = input.files;
+
+                                                    for (let i = 0; i < files.length; i++) {
+                                                        const file = files[i];
+                                                        const fileName = file.name;
+                                                        const fileContainer = document.createElement('h6');
+                                                        fileContainer.classList.add('file-container', 'text-dark');
+                                                        fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                                        const fileText = document.createElement('b');
+                                                        fileText.textContent = fileName;
+
+                                                        const viewLink = document.createElement('a');
+                                                        viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                                        viewLink.target = '_blank';
+                                                        viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                                        const removeLink = document.createElement('a');
+                                                        removeLink.classList.add('remove-file');
+                                                        removeLink.dataset.fileName = fileName;
+                                                        removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                                        removeLink.addEventListener('click', function() {
+                                                            fileContainer.style.display = 'none';
+                                                        });
+
+                                                        fileContainer.appendChild(fileText);
+                                                        fileContainer.appendChild(viewLink);
+                                                        fileContainer.appendChild(removeLink);
+
+                                                        fileListContainer.appendChild(fileContainer);
+                                                    }
+                                                }
+                                            </script>
+                                        
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -6724,7 +6827,7 @@
                                             @endphp
                                             <div class="col-lg-6 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
+                                            <label for="Contract Giver notification">Contract Giver comment update by<span
                                                     id="asteriskPT" class="text-danger">*</span></label>
                                             <select @if ($data->stage == 4) disabled @endif
                                                 name="ContractGiver_person" id="ContractGiver_person">
@@ -7037,26 +7140,20 @@
                                         </select>
                                         @if ($data->stage != 3)
                                         <!-- Hidden field to retain the value if select is disabled -->
-                                        <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+                                        <input type="hidden" name="Other1_person" value="{{ $data1->Other1_person }}">
                                     @endif
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-lg-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department
                                             <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
                                         </label>
-                                        <select name="Other1_Department_person" id="Other1_Department_person" @if ($data->stage != 3) disabled @endif>
-                                            <option value="">-- Select --</option>
-                                            @foreach (Helpers::getDepartments() as $key => $name)
-                                                <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>{{ $name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($data->stage != 3)
-                                        <!-- Hidden field to retain the value if select is disabled -->
-                                        <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                    @endif
+
+                                        <input type="text" name="Other1_Department_person" id="Other1_Department_person"
+                                            value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                     </div>
                                 </div>
 
@@ -7297,19 +7394,15 @@
                                 </div>
                             </div>
 
+
+
                             <div class="col-lg-12 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                    <select name="Other2_Department_person" id="Other2_Department_person" @if ($data->stage != 3) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>{{ $name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
-                                    <!-- Hidden field to retain the value if select is disabled -->
-                                    <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
-                                @endif
+
+                                    <input type="text" name="Other2_Department_person" id="Other2_Department_person"
+                                            value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -7448,16 +7541,10 @@
                             <div class="col-lg-12 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                    <select name="Other3_Department_person" id="Other3_Department_person" @if ($data->stage != 3) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>{{ $name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
-                                    <!-- Hidden field to retain the value if select is disabled -->
-                                    <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
-                                @endif
+                                      
+                                    <input type="text" name="Other3_Department_person" id="Other3_Department_person"
+                                            value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -7600,16 +7687,11 @@
                             <div class="col-lg-12 Other4_reviews">
                                 <div class="group-input">
                                     <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
-                                    <select name="Other4_Department_person" id="Other4_Department_person" @if ($data->stage != 3) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>{{ $name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
-                                        <!-- Hidden field to retain the value if select is disabled -->
-                                        <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
-                                    @endif
+
+                                    <input type="text" name="Other4_Department_person" id="Other4_Department_person"
+                                            value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
+
                                 </div>
                             </div>
 
@@ -7754,16 +7836,10 @@
                             <div class="col-lg-12 Other5_reviews">
                                 <div class="group-input">
                                     <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
-                                    <select name="Other5_Department_person" id="Other5_Department_person" @if ($data->stage != 3) disabled @endif>
-                                        <option value="">-- Select --</option>
-                                        @foreach (Helpers::getDepartments() as $key => $name)
-                                            <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>{{ $name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
-                                        <!-- Hidden field to retain the value if select is disabled -->
-                                        <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
-                                    @endif
+
+                                    <input type="text" name="Other5_Department_person" id="Other5_Department_person"
+                                            value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -10445,6 +10521,7 @@
         });
     });
     </script>
+
     <script>
         function calculateRiskAnalysis(selectElement) {
             // Get the row containing the changed select element
@@ -10510,5 +10587,37 @@
             $('#dueDate').attr('min', maxDate);
         });
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function setupPersonToDepartmentMapping(personSelectId, departmentInputId, usersData) {
+            let personSelect = document.getElementById(personSelectId);
+            let departmentInput = document.getElementById(departmentInputId);
+
+            if (personSelect && departmentInput) {
+                personSelect.addEventListener("change", function () {
+                    let selectedPerson = personSelect.value;
+                    departmentInput.value = usersData[selectedPerson] || ""; // Assign department or clear field
+                });
+            }
+        }
+
+        // Store user department data
+        let userDepartments = {
+            @foreach ($users as $user)
+                "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+            @endforeach
+        };
+
+        // Apply function to "Other's 1 Person" and "Other's 1 Department"
+        setupPersonToDepartmentMapping("Other1_person", "Other1_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other2_person", "Other2_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other3_person", "Other3_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other4_person", "Other4_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other5_person", "Other5_Department_person", userDepartments);
+    });
+</script>
+
+
 
 @endsection

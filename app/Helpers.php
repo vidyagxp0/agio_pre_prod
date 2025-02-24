@@ -1261,6 +1261,98 @@ class Helpers
 
     }
 
+    public static function getUsersDepartmentName($departmentid)
+    {
+        $full_department_name = '';
+
+        
+        switch ($departmentid) {
+            case '1':
+                $full_department_name = 'Calibration Lab';
+                break;
+            case '2':
+                $full_department_name = 'Engineering';
+                break;
+            case '3':
+                $full_department_name = 'Facilities';
+                break;
+            case '4':
+                $full_department_name = 'LAB';
+                break;
+            case '5':
+                $full_department_name = 'Labeling';
+                break;
+            case '6':
+                $full_department_name = 'Manufacturing';
+                break;
+            case '7':
+                $full_department_name = 'Quality Assurance';
+                break;
+            case '8':
+                $full_department_name = 'Quality Control';
+                break;
+            case '9':
+                $full_department_name = 'Ragulatory Affairs';
+                break;
+            case '10':
+                $full_department_name = 'Security';
+                break;
+            case '11':
+                $full_department_name = 'Training';
+                break;
+            case '12':
+                $full_department_name = 'IT';
+                break;
+            case '13':
+                $full_department_name = 'IT Administration';
+                break;
+            case '14':
+                $full_department_name = 'Trading';
+                break;
+            case '15':
+                $full_department_name = 'Research';
+                break;
+            case '16':
+                $full_department_name = 'Sales';
+                break;
+            case '17':
+                $full_department_name = 'Finance';
+                break;
+            case '18':
+                $full_department_name = 'Systems';
+                break;
+            case '19':
+                $full_department_name = 'Administrative';
+                break;
+            case '20':
+                $full_department_name = 'M&A';
+                break;
+            case '21':
+                $full_department_name = 'R&D';
+                break;
+            case '22':
+                $full_department_name = 'Human Resource';
+                break;
+            case '23':
+                $full_department_name = 'Banking';
+                break;
+            case '24':
+                $full_department_name = 'Marketing';
+                break;
+            default:
+                $full_department_name = '';
+                break;
+        }
+
+        return $full_department_name;
+
+
+    }
+
+
+
+
+
     public static function getInitiatorGroupData($shortName)
     {
         $full_department_name = '';
