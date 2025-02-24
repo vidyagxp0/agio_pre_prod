@@ -235,7 +235,7 @@
                                             @foreach($taskCounts as $status => $count)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>Pending {{ $status }}</td>
+                                                    <td>{{ $status }}</td>
                                                     <td>
                                                         <a href="{{ url('mytaskdata') }}?process={{ request('process') }}&status={{ $status }}">
                                                             {{ $count }}
@@ -270,9 +270,26 @@
                                                             @php
                                                                 // Define route names for each process
                                                                 $routes = [
+                                                                    'ActionItem' => 'actionItem.show',
+                                                                    'AuditProgram' => 'ShowAuditProgram',
+                                                                    'Capa' => 'capashow',
                                                                     'CC' => 'CC.show',
                                                                     'Deviation' => 'devshow',
-                                                                    'Capa' => 'capashow',
+                                                                    'EffectivenessCheck' => 'effectiveness.show',
+                                                                    'Errata' => 'errata.show',
+                                                                    'Extension' => 'extension_newshow',
+                                                                    'ExternalAudit' => 'showExternalAudit',
+                                                                    'Incident' => 'incident-show',
+                                                                    'InternalAudit' => 'showInternalAudit',
+                                                                    'LabIncident' => 'ShowLabIncident',
+                                                                    'ManagementReview' => 'manageshow',
+                                                                    'MarketComplaint' => 'marketcomplaint.marketcomplaint_view',
+                                                                    'Observation' => 'showobservation',
+                                                                    'OOC' => 'ShowOutofCalibration',
+                                                                    'OOSOOT' => 'oos.oos_view',
+                                                                    'Resampling' => 'resampling_view',
+                                                                    'RiskAssessment' => 'showRiskManagement',
+                                                                    'RootCauseAnalysis' => 'root_show',
                                                                 ];
                                                                 $routeName = $routes[request('process')] ?? '';
                                                             @endphp
