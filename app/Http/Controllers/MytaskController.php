@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Document;
-use App\Models\CC;
 use App\Models\DocumentType;
 use App\Models\DocumentHistory;
 use App\Models\Department;
@@ -13,8 +12,30 @@ use App\Models\StageManage;
 use App\Models\RoleGroup;
 use App\Models\QMSProcess;
 use App\Models\User;
-use App\Models\Deviation;
+
+use App\Models\ActionItem;
+use App\Models\AuditProgram;
+use App\Models\Auditee;
 use App\Models\Capa;
+use App\Models\CC;
+use App\Models\Deviation;
+use App\Models\EffectivenessCheck;
+use App\Models\errata;
+use App\Models\Extension;
+use App\Models\FailureInvestigation;
+use App\Models\Incident;
+use App\Models\InternalAudit;
+use App\Models\LabIncident;
+use App\Models\ManagementReview;
+use App\Models\MarketComplaint;
+use App\Models\NonConformance;
+use App\Models\Observation;
+use App\Models\OOS;
+use App\Models\OutOfCalibration;
+use App\Models\Resampling;
+use App\Models\RiskManagement;
+use App\Models\RootCauseAnalysis;
+
 use App\Models\UserRole;
 use App\Models\Grouppermission;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -114,9 +135,28 @@ class MytaskController extends Controller
 
             // Define process models and their respective stages
             $processes = [
+                'ActionItem' => ['model' => ActionItem::class, 'name' => 'Action Item'],
+                'AuditProgram' => ['model' => AuditProgram::class, 'name' => 'Audit Program'],
+                'Capa' => ['model' => Capa::class, 'name' => 'CAPA'],
                 'CC' => ['model' => CC::class, 'name' => 'Change Control'],
                 'Deviation' => ['model' => Deviation::class, 'name' => 'Deviation'],
-                'Capa' => ['model' => Capa::class, 'name' => 'Capa'],
+                'EffectivenessCheck' => ['model' => EffectivenessCheck::class, 'name' => 'Effectiveness Check'],
+                'Errata' => ['model' => errata::class, 'name' => 'Errata'],
+                'Extension' => ['model' => Extension::class, 'name' => 'Extension'],
+                'ExternalAudit' => ['model' => Auditee::class, 'name' => 'External Audit'],
+                'FailureInvestigation' => ['model' => FailureInvestigation::class, 'name' => 'Failure Investigation'],
+                'Incident' => ['model' => Incident::class, 'name' => 'Incident'],
+                'InternalAudit' => ['model' => InternalAudit::class, 'name' => 'Internal Audit'],
+                'LabIncident' => ['model' => LabIncident::class, 'name' => 'Lab Incident'],
+                'ManagementReview' => ['model' => ManagementReview::class, 'name' => 'Management Review'],
+                'MarketComplaint' => ['model' => MarketComplaint::class, 'name' => 'Market Complaint'],
+                'NonConformance' => ['model' => NonConformance::class, 'name' => 'Non-Conformance'],
+                'Observation' => ['model' => Observation::class, 'name' => 'Observation'],
+                'OOC' => ['model' => OutOfCalibration::class, 'name' => 'OOC'],
+                'OOSOOT' => ['model' => OOS::class, 'name' => 'OOS/OOT'],
+                'Resampling' => ['model' => Resampling::class, 'name' => 'Resampling'],
+                'RiskAssessment' => ['model' => RiskManagement::class, 'name' => 'Risk Assessment'],
+                'RootCauseAnalysis' => ['model' => RootCauseAnalysis::class, 'name' => 'Root Cause Analysis'],
             ];
 
             if ($selectedProcess && isset($processes[$selectedProcess])) {
@@ -136,31 +176,16 @@ class MytaskController extends Controller
 
                 // Define stages for each process
                 $stages = [
-                    'CC' => [
+                    'ActionItem' => [
                         ['id' => 1, 'status' => 'Opened', 'role' => 3],
-                        ['id' => 2, 'status' => 'HOD Assessment', 'role' => 4],
-                        ['id' => 3, 'status' => 'QA/CQA Initial Assessment', 'role' => 7],
-                        ['id' => 4, 'status' => 'CFT Assessment', 'role' => 5],
-                        ['id' => 5, 'status' => 'QA/CQA Final Review', 'role' => 7],
-                        ['id' => 6, 'status' => 'Pending RA Approval', 'role' => 7],
-                        ['id' => 7, 'status' => 'QA/CQA Head/Manager Designee Approval', 'role' => 39],
-                        ['id' => 8, 'status' => 'Pending Initiator Update', 'role' => 3],
-                        ['id' => 9, 'status' => 'HOD Final Review', 'role' => 4],
-                        ['id' => 10, 'status' => 'Implementation verification by QA/CQA', 'role' => 7],
-                        ['id' => 11, 'status' => 'QA/CQA Closure Approval', 'role' => 39],
+                        ['id' => 2, 'status' => 'Acknowledge', 'role' => 18],
+                        ['id' => 3, 'status' => 'Work Completion', 'role' => 18],
+                        ['id' => 4, 'status' => 'QA/CQA Verification', 'role' => [7,66]],
                     ],
-                    'Deviation' => [
-                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
-                        ['id' => 2, 'status' => 'HOD Review', 'role' => 4],
-                        ['id' => 3, 'status' => 'Pending Cancellation', 'role' => 7],
-                        ['id' => 4, 'status' => 'QA/CQA Initial Assessment', 'role' => 7],
-                        ['id' => 5, 'status' => 'CFT Review', 'role' => 5],
-                        ['id' => 6, 'status' => 'QA/CQA Final Assessment', 'role' => 7],
-                        ['id' => 7, 'status' => 'QA/CQA Head/Manager Designee Approval', 'role' => [9, 65]],
-                        ['id' => 8, 'status' => 'Pending Initiator Update', 'role' => 3],
-                        ['id' => 9, 'status' => 'HOD Final Review', 'role' => 4],
-                        ['id' => 10, 'status' => 'Implementation verification by QA/CQA', 'role' => 7],
-                        ['id' => 11, 'status' => 'Head QA/CQA Designee Closure Approval', 'role' => [7, 65]],
+                    'AuditProgram' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => [7,66]],
+                        ['id' => 2, 'status' => 'Pending Approval', 'role' => 4],
+                        ['id' => 3, 'status' => 'Pending Audit', 'role' => [9, 65]],
                     ],
                     'Capa' => [
                         ['id' => 1, 'status' => 'Opened', 'role' => 3],
@@ -171,7 +196,52 @@ class MytaskController extends Controller
                         ['id' => 6, 'status' => 'HOD Final Review', 'role' => 4],
                         ['id' => 7, 'status' => 'QA/CQA Closure Review', 'role' => [7, 66]],
                         ['id' => 8, 'status' => 'QAH/CQA Head Approval', 'role' => [7, 65]],
-                    ]
+                    ],
+                    'CC' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'HOD Assessment', 'role' => 4],
+                        ['id' => 3, 'status' => 'QA/CQA Initial Assessment', 'role' => [7, 66]],
+                        ['id' => 4, 'status' => 'CFT Assessment', 'role' => 5],
+                        ['id' => 5, 'status' => 'QA/CQA Final Review', 'role' => [7, 66]],
+                        ['id' => 6, 'status' => 'Pending RA Approval', 'role' => 50],
+                        ['id' => 7, 'status' => 'QA/CQA Head/Manager Designee Approval', 'role' => [39, 66]],
+                        ['id' => 8, 'status' => 'Pending Initiator Update', 'role' => 3],
+                        ['id' => 9, 'status' => 'HOD Final Review', 'role' => 4],
+                        ['id' => 10, 'status' => 'Implementation verification by QA/CQA', 'role' => [7, 66]],
+                        ['id' => 11, 'status' => 'QA/CQA Closure Approval', 'role' => [39, 66]],
+                    ],
+                    'Deviation' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'HOD Review', 'role' => 4],
+                        ['id' => 3, 'status' => 'QA/CQA Initial Assessment', 'role' => 7],
+                        ['id' => 4, 'status' => 'CFT Review', 'role' => 5],
+                        ['id' => 5, 'status' => 'QA/CQA Final Assessment', 'role' => [7, 66]],
+                        ['id' => 6, 'status' => 'QA/CQA Head/Manager Designee Approval', 'role' => [43, 65]],
+                        ['id' => 7, 'status' => 'Pending Initiator Update', 'role' => 3],
+                        ['id' => 8, 'status' => 'HOD Final Review', 'role' => 4],
+                        ['id' => 9, 'status' => 'Implementation verification by QA/CQA', 'role' => [7, 66]],
+                        ['id' => 10, 'status' => 'Head QA/CQA Designee Closure Approval', 'role' => [43, 65]],
+                        ['id' => 11, 'status' => 'Pending Cancellation', 'role' => 7],
+                    ],
+                    'EffectivenessCheck' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'Acknowledge', 'role' => 18],
+                        ['id' => 3, 'status' => 'Work Completion', 'role' => 18],
+                        ['id' => 4, 'status' => 'HOD Review', 'role' => 4],
+                        ['id' => 5, 'status' => 'QA/CQA Review', 'role' => [7, 66]],
+                        ['id' => 6, 'status' => 'QA/CQA Approval-Effective', 'role' => [43, 65]],
+                        ['id' => 7, 'status' => 'QA/CQA Approval-Not Effective', 'role' => [43, 65]],
+                    ],
+                    'Errata' => [
+                        ['id' => 1, 'status' => 'Opened', 'role' => 3],
+                        ['id' => 2, 'status' => 'HOD Review', 'role' => 4],
+                        ['id' => 3, 'status' => 'QA/CQA Initial Review', 'role' => [7, 66]],
+                        ['id' => 4, 'status' => 'QA/CQA Approval', 'role' => [7, 43, 65]],
+                        ['id' => 5, 'status' => 'Pending Correction', 'role' => 3],
+                        ['id' => 6, 'status' => 'Pending HOD Review', 'role' => 4],
+                        ['id' => 7, 'status' => 'Pending QA/CQA Head Approval', 'role' => [7, 43, 66]],
+                    ],
+
                 ];
 
                 // Loop through the stages and count tasks
