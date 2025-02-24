@@ -370,7 +370,7 @@
     $(document).ready(function() {
         let investigationTeamDataIndex =
             {{ $investigationTeamData && is_array($investigationTeamData) ? count($investigationTeamData) : 1 }};
-        
+
         $('#investigationTeamAdd').click(function(e) {
             function generateTableRow(serialNumber) {
                 var users = @json($users);
@@ -387,7 +387,7 @@
                     '<td> <select name="investigationTeam[' + investigationTeamDataIndex +
                     '][teamMember]" id="" class="teamMember"> <option value="">-- Select --</option>' +
                     userOptionsHtml + ' </select> </td>' +
-                    
+
                     '<td><textarea class="responsibility" name="investigationTeam[' +
                     investigationTeamDataIndex + '][responsibility]"></textarea></td>' +
 
@@ -402,7 +402,7 @@
 
                     '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                     '</tr>';
-                
+
                 investigationTeamDataIndex++;
                 return html;
             }
@@ -1099,7 +1099,7 @@
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial Assessment</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT Review</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
                     <button id="investigationButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm9')">Investigation</button>
@@ -1249,9 +1249,15 @@
 
 
 
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator"><b>Initiation Department</b></label>
+                                            <input disabled type="text" name="Initiator_Group" id="initiator_group"
+                                                value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                        </div>
+                                    </div>
 
-
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="initiator-group">Initiation Department<span
                                                     class = "text-danger">*</span></label>
@@ -1327,7 +1333,7 @@
                                         @error('Initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
                                     <div class="col-12">
@@ -1345,194 +1351,202 @@
                                     </div>
 
                                     <div class="col-lg-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="short_description_required">Repeat Deviation? <span class="text-danger">*</span></label>
-        <select name="short_description_required"
-                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                id="short_description_required" onchange="checkRecurring(this)"
-                value="{{ $data->short_description_required }}">
-            <option value="0">-- Select --</option>
-            <option value="Yes" 
-                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
-            <option value="No" 
-                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
-        </select>
-    </div>
-</div>
+                                        <div class="group-input input-date">
+                                            <label for="short_description_required">Repeat Deviation? <span class="text-danger">*</span></label>
+                                            <select name="short_description_required"
+                                                    {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                    id="short_description_required" onchange="checkRecurring(this)"
+                                                    value="{{ $data->short_description_required }}">
+                                                <option value="0">-- Select --</option>
+                                                <option value="Yes"
+                                                    @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
+                                                <option value="No"
+                                                    @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-<div class="col-lg-6" id="nature_of_repeat_block"
-    @if ($data->short_description_required != 'Yes') style="display: none" @endif>
-    <div class="group-input" id="nature_of_repeat">
-        <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
-                style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
-                class="text-danger">*</span></label>
-        <textarea class="nature_of_repeat"
-            name="nature_of_repeat"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="nature_of_repeat"
-            class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
-    </div>
-</div>
+                                    <div class="col-lg-6" id="nature_of_repeat_block"
+                                        @if ($data->short_description_required != 'Yes') style="display: none" @endif>
+                                        <div class="group-input" id="nature_of_repeat">
+                                            <label for="nature_of_repeat">Repeat Nature <span id="asteriskInviRecurring"
+                                                    style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
+                                                    class="text-danger">*</span></label>
+                                            <textarea class="nature_of_repeat"
+                                                name="nature_of_repeat"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="nature_of_repeat"
+                                                class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
+                                        </div>
+                                    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var selectField = document.getElementById('short_description_required');
-        var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
-        var asteriskIcon = document.getElementById('asteriskInviRecurring');
-        var natureOfRepeatField = document.getElementById('nature_of_repeat');
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function() {
+                                                var selectField = document.getElementById('short_description_required');
+                                                var natureOfRepeatBlock = document.getElementById('nature_of_repeat_block');
+                                                var asteriskIcon = document.getElementById('asteriskInviRecurring');
+                                                var natureOfRepeatField = document.getElementById('nature_of_repeat');
 
-        // Show/hide 'Repeat Nature' field and asterisk based on initial selection
-        toggleNatureOfRepeatField(selectField.value === 'Yes');
+                                                // Show/hide 'Repeat Nature' field and asterisk based on initial selection
+                                                toggleNatureOfRepeatField(selectField.value === 'Yes');
 
-        // Listen for changes in 'Repeat Deviation' dropdown
-        selectField.addEventListener('change', function() {
-            var isYesSelected = this.value === 'Yes';
-            toggleNatureOfRepeatField(isYesSelected);
-        });
+                                                // Listen for changes in 'Repeat Deviation' dropdown
+                                                selectField.addEventListener('change', function() {
+                                                    var isYesSelected = this.value === 'Yes';
+                                                    toggleNatureOfRepeatField(isYesSelected);
+                                                });
 
-        // Toggle display and required attribute for 'Repeat Nature' based on 'Yes' or 'No' selection
-        function toggleNatureOfRepeatField(isYes) {
-            natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
-            asteriskIcon.style.display = isYes ? 'inline' : 'none';
-            natureOfRepeatField.required = isYes;
-        }
-    });
+                                                // Toggle display and required attribute for 'Repeat Nature' based on 'Yes' or 'No' selection
+                                                function toggleNatureOfRepeatField(isYes) {
+                                                    natureOfRepeatBlock.style.display = isYes ? 'block' : 'none';
+                                                    asteriskIcon.style.display = isYes ? 'inline' : 'none';
+                                                    natureOfRepeatField.required = isYes;
+                                                }
+                                            });
 
-    function checkRecurring(selectElement) {
-        var repeatNatureField = document.getElementById('nature_of_repeat');
-        if (selectElement.value === 'Yes') {
-            repeatNatureField.setAttribute('required', 'required');
-        } else {
-            repeatNatureField.removeAttribute('required');
-        }
-    }
-</script>
+                                            function checkRecurring(selectElement) {
+                                                var repeatNatureField = document.getElementById('nature_of_repeat');
+                                                if (selectElement.value === 'Yes') {
+                                                    repeatNatureField.setAttribute('required', 'required');
+                                                } else {
+                                                    repeatNatureField.removeAttribute('required');
+                                                }
+                                            }
+                                        </script>
 
 
                                 <div class="col-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="severity-level">Deviation Observed On <span class="text-danger">*</span></label>
-        <div class="calenderauditee">
-            <input type="text"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
-                value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
-            <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_date }}"
-                class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
-        </div>
-        @error('Deviation_date')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                    <div class="group-input input-date">
+                                        <label for="severity-level">Deviation Observed On <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <input type="text"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
+                                            <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_date }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
+                                        </div>
+                                        @error('Deviation_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-<div class="col-lg-6 new-time-data-field">
-    <div class="group-input input-time">
-        <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
-        <input type="text" name="deviation_time"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="deviation_time"
-            value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
-        @error('deviation_time')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                        <div class="col-lg-6 new-time-data-field">
+                                            <div class="group-input input-time">
+                                                <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
+                                                <input type="text" name="deviation_time"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="deviation_time"
+                                                    value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
+                                                @error('deviation_time')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
 
-<div class="col-lg-6 new-time-data-field">
-    <div class="group-input input-time delayJustificationBlock">
-        <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-        <textarea id="Delay_Justification" name="Delay_Justification"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
-    </div>
-    @error('Delay_Justification')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+                                            <div class="col-lg-6 new-time-data-field">
+                                                <div class="group-input input-time delayJustificationBlock">
+                                                    <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                                                    <textarea id="Delay_Justification" name="Delay_Justification"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $data->Delay_Justification }}</textarea>
+                                                </div>
+                                                @error('Delay_Justification')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
 
-<script>
-    flatpickr("#deviation_time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i", // 24-hour format with date and time
-        time_24hr: true, // Enable 24-hour time format
-        minuteIncrement: 1 // Set minute increment to 1
-    });
-</script>
+                                            <script>
+                                                flatpickr("#deviation_time", {
+                                                    enableTime: true,
+                                                    noCalendar: true,
+                                                    dateFormat: "H:i", // 24-hour format with date and time
+                                                    time_24hr: true, // Enable 24-hour time format
+                                                    minuteIncrement: 1 // Set minute increment to 1
+                                                });
+                                            </script>
 
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="Facility">Deviation Observed By</label>
+                                                <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="facility">Deviation Observed By</label>
+                                                        <input type="text" name="Facility" id="deviation_observed_by" value="{{$data->Facility}}"
+                                                            placeholder="">
+                                                    </div>
+                                                </div>
 
-        <select name="Facility[]" id="Facility" multiple 
-        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-            <option value="">Select a value</option>
-            @if ($users->isNotEmpty())
-                @foreach ($users as $value)
-                    <option 
-                        {{ in_array($value->name, (array) old('Facility', explode(',', $data->Facility))) ? 'selected' : '' }} 
-                        value="{{ $value->name }}">
-                        {{ $value->name }}
-                    </option>
-                @endforeach
-            @endif
-        </select>
-    </div>
-</div>
+                                                {{-- <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="Facility">Deviation Observed By</label>
 
-
-<div class="col-6 new-date-data-field">
-    <div class="group-input input-date">
-        <label for="Initiator Group">Deviation Reported On <span class="text-danger">*</span></label>
-        <div class="calenderauditee">
-            <input type="text"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
-                value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
-            <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_reported_date }}"
-                class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
-        </div>
-        @error('Deviation_reported_date')
-            <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
-
-<script>
-    $(document).ready(function() {
-        // Hide the delayJustificationBlock initially
-        $('.delayJustificationBlock').hide();
-
-        // Check the condition on page load
-        checkDateDifference();
-    });
-
-    function checkDateDifference() {
-        let deviationDate = $('input[name=Deviation_date]').val();
-        let reportedDate = $('input[name=Deviation_reported_date]').val();
-        let deviationTime = $('#deviation_time').val();
-
-        if (!deviationDate || !reportedDate || !deviationTime) {
-            console.error('Deviation date, reported date, or deviation time is missing.');
-            return;
-        }
-
-        // Combine date and time for accurate difference calculation
-        let deviationDateTime = moment(deviationDate + ' ' + deviationTime, 'YYYY-MM-DD HH:mm');
-        let reportedDateTime = moment(reportedDate + ' ' + moment().format('HH:mm'), 'YYYY-MM-DD HH:mm');
-
-        let diffInHours = reportedDateTime.diff(deviationDateTime, 'hours');
-        let diffInDays = reportedDateTime.diff(deviationDateTime, 'days');
-
-        // Show delay justification if the difference is 24 hours or more OR if more than 2 days
-        if (diffInHours > = 24 || diffInDays >= 2) {
-            $('.delayJustificationBlock').show();
-        } else {
-            $('.delayJustificationBlock').hide();
-        }
-    }
-
-    // Call checkDateDifference whenever the values are changed
-    $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function() {
-        checkDateDifference();
-    });
-</script>
+                                                        <select name="Facility[]" id="Facility" multiple
+                                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                            <option value="">Select a value</option>
+                                                            @if ($users->isNotEmpty())
+                                                                @foreach ($users as $value)
+                                                                    <option
+                                                                        {{ in_array($value->name, (array) old('Facility', explode(',', $data->Facility))) ? 'selected' : '' }}
+                                                                        value="{{ $value->name }}">
+                                                                        {{ $value->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div> --}}
 
 
-                                    <div class="col-lg-6">
+                                <div class="col-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Initiator Group">Deviation Reported On <span class="text-danger">*</span></label>
+                                        <div class="calenderauditee">
+                                            <input type="text"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
+                                                value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
+                                            <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} value="{{ $data->Deviation_reported_date }}"
+                                                class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
+                                        </div>
+                                        @error('Deviation_reported_date')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        // Hide the delayJustificationBlock initially
+                                        $('.delayJustificationBlock').hide();
+
+                                        // Check the condition on page load
+                                        checkDateDifference();
+                                    });
+
+                                    function checkDateDifference() {
+                                        let deviationDate = $('input[name=Deviation_date]').val();
+                                        let reportedDate = $('input[name=Deviation_reported_date]').val();
+                                        let deviationTime = $('#deviation_time').val();
+
+                                        if (!deviationDate || !reportedDate || !deviationTime) {
+                                            console.error('Deviation date, reported date, or deviation time is missing.');
+                                            return;
+                                        }
+
+                                        // Combine date and time for accurate difference calculation
+                                        let deviationDateTime = moment(deviationDate + ' ' + deviationTime, 'YYYY-MM-DD HH:mm');
+                                        let reportedDateTime = moment(reportedDate + ' ' + moment().format('HH:mm'), 'YYYY-MM-DD HH:mm');
+
+                                        let diffInHours = reportedDateTime.diff(deviationDateTime, 'hours');
+                                        let diffInDays = reportedDateTime.diff(deviationDateTime, 'days');
+
+                                        // Show delay justification if the difference is 24 hours or more OR if more than 2 days
+                                        if (diffInHours > = 24 || diffInDays >= 2) {
+                                            $('.delayJustificationBlock').show();
+                                        } else {
+                                            $('.delayJustificationBlock').hide();
+                                        }
+                                    }
+
+                                    // Call checkDateDifference whenever the values are changed
+                                    $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function() {
+                                        checkDateDifference();
+                                    });
+                                </script>
+
+
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="audit type">Deviation Related To <span
                                                     class="text-danger">*</span></label>
@@ -1593,27 +1607,10 @@
                                         @error('audit_type')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
 
-                                    <!-- <div class="col-lg-6" id="others_block"
-                                        @if (strpos($data->audit_type, 'Anyother(specify)')) style="display: none" @endif>
-                                        <div class="group-input">
-                                            <label for="others">Others <span id="asteriskInOther"
-                                                    style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="otherrr" name="others"
-                                                  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="others" value="{{ $data->others }}">
-                                            @error('others')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div> -->
-
-
-
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                             <div class="group-input">
                                             <label for="others">Others <span id="asteriskInOther"
                                                     style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
@@ -1623,8 +1620,9 @@
                                                     id="summernote-2">{{ $data->others }}</textarea>
                                             </div>
 
-                                        </div>
-                                    <script>
+                                    </div> --}}
+
+                                    {{-- <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('audit_type');
                                             var inputsToToggle = [];
@@ -1653,7 +1651,63 @@
                                                 asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                             });
                                         });
+                                    </script> --}}
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="audit_type">Deviation Related To <span class="text-danger">*</span></label>
+                                            <select multiple name="audit_type[]" id="audit_type"
+                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                <option value="Facility" {{ in_array('Facility', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Facility</option>
+                                                <option value="Equipment/Instrument" {{ in_array('Equipment/Instrument', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Equipment/Instrument</option>
+                                                <option value="Documentationerror" {{ in_array('Documentationerror', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Documentation error</option>
+                                                <option value="STP/ADS_instruction" {{ in_array('STP/ADS_instruction', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>STP/ADS instruction</option>
+                                                <option value="Packaging&Labelling" {{ in_array('Packaging&Labelling', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Packaging & Labelling</option>
+                                                <option value="Material_System" {{ in_array('Material_System', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Material System</option>
+                                                <option value="Laboratory_Instrument/System" {{ in_array('Laboratory_Instrument/System', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Laboratory Instrument/System</option>
+                                                <option value="Utility_System" {{ in_array('Utility_System', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Utility System</option>
+                                                <option value="Computer_System" {{ in_array('Computer_System', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Computer System</option>
+                                                <option value="Document" {{ in_array('Document', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Document</option>
+                                                <option value="Data integrity" {{ in_array('Data integrity', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Data integrity</option>
+                                                <option value="SOP Instruction" {{ in_array('SOP Instruction', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>SOP Instruction</option>
+                                                <option value="BMR/ECR Instruction" {{ in_array('BMR/ECR Instruction', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>BMR/ECR Instruction</option>
+                                                <option value="Water System" {{ in_array('Water System', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Water System</option>
+                                                <option value="Anyother(specify)" {{ in_array('Anyother(specify)', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Anyother(specify)</option>
+                                                <option value="Process" {{ in_array('Process', explode(',', $data->audit_type ?? '')) ? 'selected' : '' }}>Process</option>
+                                            </select>
+                                        </div>
+                                        @error('audit_type')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="group-input" id="others_block" style="display: {{ in_array('Anyother(specify)', explode(',', $data->audit_type ?? '')) ? 'block' : 'none' }};">
+                                            <label for="others">Others <span id="asteriskInOther" class="text-danger" style="display: inline;">*</span></label>
+                                            <textarea class="tiny" name="others" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-2">{{ $data->others }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            function toggleOtherField() {
+                                                let selectedValues = $('#audit_type').val() || [];
+                                                let showOther = selectedValues.includes('Anyother(specify)');
+                                                $('#others_block').toggle(showOther);
+                                                $('#asteriskInOther').toggle(showOther);
+                                            }
+
+                                            $('#audit_type').change(toggleOtherField);
+
+                                            // Ensure the field is shown on page load if "Anyother(specify)" is selected
+                                            toggleOtherField();
+                                        });
                                     </script>
+
+
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System
@@ -3469,7 +3523,7 @@
                                                 {{-- <option @if ($data1->Production_Table_Review == 'yes') selected @endif
                                                     value='yes'>
                                                     Yes</option> --}}
-                                                    <option 
+                                                    <option
                                                 @if (empty($data1->Production_Table_Review) || $data1->Production_Table_Review == 'yes') selected @endif
                                                 value="yes">Yes</option>
 
@@ -3479,7 +3533,7 @@
                                                 <option @if ($data1->Production_Table_Review == 'na') selected @endif
                                                     value='na'>
                                                     NA</option>
-                                                   
+
                                         </select>
 
                                         </div>
@@ -3670,7 +3724,7 @@
                                             <select name="Production_Table_Review" disabled
                                                 id="Production_Table_Review">
                                                 <option value="">-- Select --</option>
-                                                <option 
+                                                <option
                                                 @if (empty($data1->Production_Table_Review) || $data1->Production_Table_Review == 'yes') selected @endif
                                                 value="yes">Yes</option>
                                                 <option @if ($data1->Production_Table_Review == 'no') selected @endif
@@ -8391,8 +8445,8 @@
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                             <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
-                                    
-                                       
+
+
                                         </select>
                                     </div>
                                 </div>
@@ -8421,6 +8475,7 @@
                                         @if ($data->stage != 3)
                                         <!-- Hidden field to retain the value if select is disabled -->
                                         <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
+
                                     @endif
                                     </div>
                                 </div>
@@ -8430,16 +8485,19 @@
                                         <label for="Department1">Other's 1 Department
                                             <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
                                         </label>
-                                        <select name="Other1_Department_person" id="Other1_Department_person" @if ($data->stage != 3) disabled @endif>
+                                        {{-- <select name="Other1_Department_person" id="Other1_Department_person" @if ($data->stage != 3) disabled @endif>
                                             <option value="">-- Select --</option>
                                             @foreach (Helpers::getDepartments() as $key => $name)
                                                 <option value="{{ $key }}" @if ($data1->Other1_Department_person == $key) selected @endif>{{ $name }}</option>
                                             @endforeach
-                                        </select>
-                                        @if ($data->stage != 3)
+                                        </select> --}}
+                                        {{-- @if ($data->stage != 3)
                                         <!-- Hidden field to retain the value if select is disabled -->
                                         <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
-                                    @endif
+                                    @endif --}}
+                                    <input type="text" name="Other1_Department_person" id="Other1_Department_person"
+                                            value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                     </div>
                                 </div>
 
@@ -8545,7 +8603,7 @@
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                             <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
-                                    
+
                                         </select>
                                     </div>
                                 </div>
@@ -8640,7 +8698,7 @@
                                         <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
                                         <option @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif value='na'>NA</option>
-                                    
+
                                     </select>
                                 </div>
                             </div>
@@ -8674,16 +8732,15 @@
                             <div class="col-lg-12 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                    <select name="Other2_Department_person" id="Other2_Department_person" @if ($data->stage != 3) disabled @endif>
+                                    {{-- <select name="Other2_Department_person" id="Other2_Department_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other2_Department_person == $key) selected @endif>{{ $name }}</option>
                                         @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
-                                    <!-- Hidden field to retain the value if select is disabled -->
-                                    <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
-                                @endif
+                                    </select> --}}
+                                    <input type="text" name="Other2_Department_person" id="Other2_Department_person"
+                                    value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                    @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -8788,7 +8845,7 @@
                                         <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
                                         <option @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif value='na'>NA</option>
-                                    
+
                                     </select>
                                 </div>
                             </div>
@@ -8822,16 +8879,19 @@
                             <div class="col-lg-12 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                    <select name="Other3_Department_person" id="Other3_Department_person" @if ($data->stage != 3) disabled @endif>
+                                    {{-- <select name="Other3_Department_person" id="Other3_Department_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other3_Department_person == $key) selected @endif>{{ $name }}</option>
                                         @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
+                                    </select> --}}
+                                    {{-- @if ($data->stage != 3)
                                     <!-- Hidden field to retain the value if select is disabled -->
                                     <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
-                                @endif
+                                    @endif --}}
+                                    <input type="text" name="Other3_Department_person" id="Other3_Department_person"
+                                    value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                    @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -8938,7 +8998,7 @@
                                         <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
                                         <option @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif value='na'>NA</option>
-                                    
+
                                     </select>
                                 </div>
                             </div>
@@ -8974,16 +9034,19 @@
                             <div class="col-lg-12 Other4_reviews">
                                 <div class="group-input">
                                     <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
-                                    <select name="Other4_Department_person" id="Other4_Department_person" @if ($data->stage != 3) disabled @endif>
+                                    {{-- <select name="Other4_Department_person" id="Other4_Department_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other4_Department_person == $key) selected @endif>{{ $name }}</option>
                                         @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
+                                    </select> --}}
+                                    {{-- @if ($data->stage != 3)
                                         <!-- Hidden field to retain the value if select is disabled -->
                                         <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
-                                    @endif
+                                    @endif --}}
+                                    <input type="text" name="Other4_Department_person" id="Other4_Department_person"
+                                            value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -9092,7 +9155,7 @@
                                         <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
                                         <option @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif value='na'>NA</option>
-                                    
+
                                     </select>
                                 </div>
                             </div>
@@ -9128,16 +9191,19 @@
                             <div class="col-lg-12 Other5_reviews">
                                 <div class="group-input">
                                     <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
-                                    <select name="Other5_Department_person" id="Other5_Department_person" @if ($data->stage != 3) disabled @endif>
+                                    {{-- <select name="Other5_Department_person" id="Other5_Department_person" @if ($data->stage != 3) disabled @endif>
                                         <option value="">-- Select --</option>
                                         @foreach (Helpers::getDepartments() as $key => $name)
                                             <option value="{{ $key }}" @if ($data1->Other5_Department_person == $key) selected @endif>{{ $name }}</option>
                                         @endforeach
-                                    </select>
-                                    @if ($data->stage != 3)
+                                    </select> --}}
+                                    {{-- @if ($data->stage != 3)
                                         <!-- Hidden field to retain the value if select is disabled -->
                                         <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
-                                    @endif
+                                    @endif --}}
+                                    <input type="text" name="Other5_Department_person" id="Other5_Department_person"
+                                    value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                    @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>
 
@@ -9656,7 +9722,6 @@
                 <div class="inner-block-content">
                     <div class="row">
 
-
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Investigation Summary">Description of Event</label>
@@ -9746,11 +9811,10 @@
                                                         </td>
 
 
-                                                        <td>
-                                                                <textarea class="desination_dept" name="investigationTeam[{{ $loop->index }}][desination_dept]">
-                                                                    {{ isset($investigation_data['desination_dept']) ? $investigation_data['desination_dept'] : '' }}
-                                                                </textarea>
-                                                            </td>
+                                                                <td>
+                                                                    <textarea class="desination_dept" name="investigationTeam[{{ $loop->index }}][desination_dept]">{{ isset($investigation_data['desination_dept']) ? $investigation_data['desination_dept'] : '' }}</textarea>
+                                                                </td>
+
                                                             <td>
                                                                 <textarea class="responsibility" name="investigationTeam[{{ $loop->index }}][responsibility]">
                                                                     {{ isset($investigation_data['responsibility']) ? $investigation_data['responsibility'] : '' }}
@@ -9784,12 +9848,9 @@
                                                         @endforeach
                                                     </select>
                                                 </td>
-                                                <td><input type="text" class="desination_dept"
-                                                        name="investigationTeam[0][desination_dept]"></td>
-                                                <td><input type="text" class="responsibility"
-                                                        name="investigationTeam[0][responsibility]"></td>
-                                                <td><input type="text" class="remarks"
-                                                        name="investigationTeam[0][remarks]"></td>
+                                               <td> <textarea type="text" class="desination_dept" name="investigationTeam[0][desination_dept]"></textarea></td>
+                                               <td> <textarea type="text" class="responsibility" name="investigationTeam[0][responsibility]"></textarea></td>
+                                                <td><textarea type="text" class="remarks"  name="investigationTeam[0][remarks]"></textarea></td>
                                                  <!-- <td><input type="text" class="investigation_approach"
                                                         name="investigationTeam[0][investigation_approach]"></td> -->
 
@@ -9883,7 +9944,7 @@
                 </thead>
                 <tbody>
                 @if (!empty($riskEffectAnalysis->risk_factor_1))
-                   
+
                     @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
                         <tr>
                             <td>{{ $key + 1 }}</td>
@@ -10134,7 +10195,7 @@
         const table = document.getElementById(tableId).getElementsByTagName('tbody')[0];
         const rowCount = table.rows.length;
         const newRow = table.insertRow();
-        
+
 
         const currentRowId = `file_${rowCount}`;
 
@@ -10216,13 +10277,13 @@
             </td>
 
          <td><textarea name="mitigation_proposal_1[]"></textarea></td>
-        
+
             <td><button type="button" class="btn btn-dark" onclick="removeRow(this)">Remove</button></td>
-    
+
                 `;
             }
 
-            
+
         function removeRow(button) {
             const row = button.closest('tr');
             row.remove();
@@ -10236,7 +10297,7 @@
         </script>
 
                         <!-- Fishbone or Ishikawa Diagram Section -->
-                        <div class="col-12 sub-head"></div>
+                        {{-- <div class="col-12 sub-head"></div> --}}
                         <div class="col-12 fishbone-section" style="display: none;">
                             <div class="group-input">
                                 <label for="fishbone">
@@ -10425,11 +10486,12 @@
                                                                     Machine</option>
                                                             </select>
                                                         </td>
-                                                        <td>
+                                                        {{-- <td>
                                                             <input type="text" name="inference_remarks[]"
                                                                 value="{{ $inference_remarks[$key] ?? '' }}"
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                                        </td>
+                                                        </td> --}}
+                                                        <textarea name="inference_remarks[]" id="" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $inference_remarks[$key] ?? '' }}</textarea>
                                                         <td>
                                                             <button type="button" class="removeRowBtn"
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
@@ -10449,71 +10511,71 @@
 
                         <!-- jQuery Script -->
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        function toggleSections() {
-            // Get selected values as an array
-            var selectedValues = $('#investigation_approach').val();
+                    <script>
+                        $(document).ready(function() {
+                            function toggleSections() {
+                                // Get selected values as an array
+                                var selectedValues = $('#investigation_approach').val();
 
-            // Toggle Fishbone section
-            if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
-                $('.fishbone-section').show();
-                $('.fishbone-required').attr('required', true);
-            } else {
-                $('.fishbone-section').hide();
-                $('.fishbone-required').removeAttr('required');
-            }
+                                // Toggle Fishbone section
+                                if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
+                                    $('.fishbone-section').show();
+                                    $('.fishbone-required').attr('required', true);
+                                } else {
+                                    $('.fishbone-section').hide();
+                                    $('.fishbone-required').removeAttr('required');
+                                }
 
-            // Toggle Why-Why Chart section
-            if (selectedValues.includes('Why-Why Chart')) {
-                $('.why-why-chart').show();
-            } else {
-                $('.why-why-chart').hide();
-            }
+                                // Toggle Why-Why Chart section
+                                if (selectedValues.includes('Why-Why Chart')) {
+                                    $('.why-why-chart').show();
+                                } else {
+                                    $('.why-why-chart').hide();
+                                }
 
-            // Toggle Is/Is Not Analysis section
-            if (selectedValues.includes('Is/Is Not Analysis')) {
-                $('.Is-not').show();
-            } else {
-                $('.Is-not').hide();
-            }
+                                // Toggle Is/Is Not Analysis section
+                                if (selectedValues.includes('Is/Is Not Analysis')) {
+                                    $('.Is-not').show();
+                                } else {
+                                    $('.Is-not').hide();
+                                }
 
-            // Toggle Category Of Human Error section
-            if (selectedValues.includes('Category Of Human Error')) {
-                $('.Category-human').show();
-            } else {
-                $('.Category-human').hide();
-            }
+                                // Toggle Category Of Human Error section
+                                if (selectedValues.includes('Category Of Human Error')) {
+                                    $('.Category-human').show();
+                                } else {
+                                    $('.Category-human').hide();
+                                }
 
-            // Toggle Failure Mode and Effect Analysis section
-            if (selectedValues.includes('Failure Mode and Effect Analysis')) {
-                $('.failure').show();
-            } else {
-                $('.failure').hide();
-            }
+                                // Toggle Failure Mode and Effect Analysis section
+                                if (selectedValues.includes('Failure Mode and Effect Analysis')) {
+                                    $('.failure').show();
+                                } else {
+                                    $('.failure').hide();
+                                }
 
 
-            // Toggle Others input field
-        if (selectedValues.includes('Others')) {
-            $('.others-section').show();
-            $('#other_specify').attr('required', true);
-        } else {
-            $('.others-section').hide();
-            $('#other_specify').removeAttr('required');
-        }
+                                // Toggle Others input field
+                            if (selectedValues.includes('Others')) {
+                                $('.others-section').show();
+                                $('#other_specify').attr('required', true);
+                            } else {
+                                $('.others-section').hide();
+                                $('#other_specify').removeAttr('required');
+                            }
 
-            
-        }
 
-        // Initial check on page load
-        toggleSections();
+                            }
 
-        // Check on change
-        $('#investigation_approach').on('change', function() {
-            toggleSections();
-        });
-    });
-</script>
+                            // Initial check on page load
+                            toggleSections();
+
+                            // Check on change
+                            $('#investigation_approach').on('change', function() {
+                                toggleSections();
+                            });
+                        });
+                    </script>
 
                         <script>
                             function addInference(tableId) {
@@ -10531,7 +10593,7 @@
                                     "<select  name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Mother Environment'>Mother Environment</option><option value='Man'>Man</option><option value='Machine'>Machine</option></select>";
 
                                 var cell3 = newRow.insertCell(2);
-                                cell3.innerHTML = "<input type='text'  name='inference_remarks[]'>";
+                                cell3.innerHTML = "<textarea  name='inference_remarks[]'> </textarea>";
 
                                 var cell4 = newRow.insertCell(3);
                                 cell4.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
@@ -10552,8 +10614,6 @@
 
                                     $('#HideInference').hide();
 
-
-
                                     // Show sections based on the selected values
                                     selectedValues.forEach(function(value) {
 
@@ -10571,7 +10631,7 @@
                         </script>
 
 
-                        <div class="col-12 sub-head"></div>
+                        {{-- <div class="col-12 sub-head"></div> --}}
                         <div class="col-12 why-why-chart" style="display: none;">
                             <div class="col-12">
                                 <div class="group-input">
@@ -10741,7 +10801,7 @@
                         </div>
 
 
-                        <div class="sub-head"></div>
+                        {{-- <div class="sub-head"></div> --}}
 
                         <div class="col-12 Category-human" style="display: none;">
                             <div class="col-12">
@@ -10850,7 +10910,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sub-head"></div>
+                        {{-- <div class="sub-head"></div> --}}
                         <div class="col-12 Is-not" style="display: none;">
                             <div class="col-12 Is-not">
                                 <div class="group-input">
@@ -12066,7 +12126,7 @@
                                 <td>
                                     <textarea name="existing_risk_control[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}</textarea>
                                 </td>
-                
+
                                                         <td>
                                                             <select onchange="calculateInitialResult(this)"
                                                                 class="fieldR" name="initial_severity[]"
@@ -13341,7 +13401,7 @@
                                     <div class="group-input">
                                         <label for="QA Evaluation ">QA/CQA Implementation Verification<span
                                         class="text-danger">*</span></label>
-                                            
+
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not
@@ -14224,13 +14284,13 @@
                     @csrf
                     <div class="modal-body">
                         <!-- <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                                                                                                                                                                                </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date(QRM)</label>
                             <input class="extension_modal_signature" type="date" name="qrm_proposed_due_date"
@@ -14261,7 +14321,6 @@
                         <input name="extension_identifier" id="extension_identifier" value="QRM" hidden>
                     </div>
 
-
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -14289,13 +14348,13 @@
                     <div class="modal-body">
 
                         <!-- <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                                                                                                                                                                                </div> -->
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input class="extension_modal_signature" type="text" name="username" required>
+                            </div>
+                            <div class="group-input">
+                                <label for="password">Password <span class="text-danger">*</span></label>
+                                <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date(Investigation)</label>
                             <input class="extension_modal_signature" type="date"
@@ -14356,13 +14415,13 @@
                     <div class="modal-body">
 
                         <!-- <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                                                                                                                                                                                </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date (CAPA)</label>
                             <input class="extension_modal_signature" type="date" name="capa_proposed_due_date"
@@ -14422,13 +14481,13 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <!-- <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="username">Username <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="text" name="username" required>
-                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                    <label for="password">Password <span class="text-danger">*</span></label>
-                                                                                                                                                                                                                                                                                    <input class="extension_modal_signature" type="password" name="password" required>
-                                                                                                                                                                                                                                                                                </div> -->
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="extension_modal_signature" type="password" name="password" required>
+                        </div> -->
                         <div class="group-input">
                             <label for="password">Proposed Due Date (Deviation)</label>
                             <input class="extension_modal_signature" type="date" name="dev_proposed_due_date"
@@ -14648,7 +14707,6 @@
                         </div>
 
                     </div>
-
 
                     <div class="modal-footer">
                         <button type="submit">
@@ -14997,6 +15055,7 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
+
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
@@ -15260,9 +15319,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                    </div> -->
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15308,9 +15367,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                    </div> -->
+                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button>Close</button>
+                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15443,9 +15502,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                    </div> -->
+                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button>Close</button>
+                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15491,9 +15550,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                    </div> -->
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
                     <div class="modal-footer">
                         <button type="submit">
                             Submit
@@ -15627,9 +15686,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                    </div> -->
+                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button>Close</button>
+                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15672,9 +15731,9 @@
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                                                                                                                    </div> -->
+                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button>Close</button>
+                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -15782,12 +15841,12 @@
             }
         }
     </script>
-    <script>
+    {{-- <script>
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-    </script>
+    </script> --}}
     <script>
         function clicktoremove() {
 
@@ -15912,5 +15971,34 @@
                 $(this).remove();
             });
         }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function setupPersonToDepartmentMapping(personSelectId, departmentInputId, usersData) {
+                let personSelect = document.getElementById(personSelectId);
+                let departmentInput = document.getElementById(departmentInputId);
+
+                if (personSelect && departmentInput) {
+                    personSelect.addEventListener("change", function () {
+                        let selectedPerson = personSelect.value;
+                        departmentInput.value = usersData[selectedPerson] || ""; // Assign department or clear field
+                    });
+                }
+            }
+
+            // Store user department data
+            let userDepartments = {
+                @foreach ($users as $user)
+                    "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                @endforeach
+            };
+
+            // Apply function to "Other's 1 Person" and "Other's 1 Department"
+            setupPersonToDepartmentMapping("Other1_person", "Other1_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other2_person", "Other2_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other3_person", "Other3_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other4_person", "Other4_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other5_person", "Other5_Department_person", userDepartments);
+        });
     </script>
 @endsection

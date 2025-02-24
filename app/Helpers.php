@@ -859,11 +859,11 @@ class Helpers
 
             'MAForRec' =>'Master Formula Record',
             'MAPacRec' =>'Master Packing Record',
-                        
+
             'SMF' => 'Site Master File',
             'VMP' => 'Validation Master Plan',
             'QM' => 'Quality Manual',
-            
+
         ];
 
         return $document_types;
@@ -1265,7 +1265,7 @@ class Helpers
     {
         $full_department_name = '';
 
-        
+
         switch ($departmentid) {
             case '1':
                 $full_department_name = 'Calibration Lab';
@@ -1304,7 +1304,7 @@ class Helpers
                 $full_department_name = 'IT';
                 break;
             case '13':
-                $full_department_name = 'IT Administration';
+                $full_department_name = 'Application Engneering';
                 break;
             case '14':
                 $full_department_name = 'Trading';
@@ -1867,7 +1867,7 @@ class Helpers
         } else {
             $documents = collect(); // Empty collection if no valid IDs
         }
-        
+
         $formattedDocuments = [];
 
         foreach ($documents as $document) {

@@ -607,7 +607,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assessment</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT Review</button>
 
                 <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
@@ -760,8 +760,61 @@
 
 
 
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiation Department</b></label>
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
 
-                                <div class="col-lg-12">
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Define department name to code mapping
+                                        const departmentMapping = {
+                                            "Calibration Lab": "CLB",
+                                            "Engineering": "ENG",
+                                            "Facilities": "FAC",
+                                            "LAB": "LAB",
+                                            "Labeling": "LABL",
+                                            "Manufacturing": "MANU",
+                                            "Quality Assurance": "QA",
+                                            "Quality Control": "QC",
+                                            "Ragulatory Affairs": "RA",
+                                            "Security": "SCR",
+                                            "Training": "TR",
+                                            "IT": "IT",
+                                            "Application Engineering": "AE",
+                                            "Trading": "TRD",
+                                            "Research": "RSCH",
+                                            "Sales": "SAL",
+                                            "Finance": "FIN",
+                                            "Systems": "SYS",
+                                            "Administrative": "ADM",
+                                            "M&A": "M&A",
+                                            "R&D": "R&D",
+                                            "Human Resource": "HR",
+                                            "Banking": "BNK",
+                                            "Marketing": "MRKT",
+                                        };
+
+                                        // Get the Initiator Department input
+                                        let initiatorGroupInput = document.getElementById("initiator_group");
+                                        let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                        // Get the department name from the input field
+                                        let departmentName = initiatorGroupInput.value.trim();
+
+                                        // Auto-generate the department code based on the mapping
+                                        if (departmentName in departmentMapping) {
+                                            initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                        } else {
+                                            initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                        }
+                                    });
+                                </script>
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department</label>
                                         <select name="Initiator_Group" id="initiator_group">
@@ -795,7 +848,7 @@
                                             <option value="Pharmacovigilance">Pharmacovigilance</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -913,15 +966,15 @@
                                     });
                                 </script>
 
-                                <!-- <div class="col-lg-6">
+                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="facility">Deviation Observed By</label>
                                         <input type="text" name="Facility" id="deviation_observed_by"
-                                            placeholder="Enter Facility Name">
+                                            placeholder="">
                                     </div>
-                                </div> -->
+                                </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Facility">Deviation Observed By <span class="text-danger">*</span></label>
                                         <select name="Facility[]" id="Facility" multiple
@@ -935,7 +988,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-lg-6 new-date-data-field">
@@ -992,19 +1045,18 @@
                                 </script>
 
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit type">Deviation Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
-                                            {{-- <option value="">Enter Your Selection Here</option> --}}
+
                                             <option value="Facility">Facility</option>
                                             <option value="Equipment/Instrument">Equipment/ Instrument </option>
                                             <option value="Documentationerror">Documentation error </option>
                                             <option value="STP/ADS_instruction">STP/ADS instruction </option>
                                             <option value="Packaging&Labelling">Packaging & Labelling </option>
                                             <option value="Material_System">Material System </option>
-                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System
-                                            </option>
+                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System </option>
                                             <option value="Utility_System"> Utility System</option>
                                             <option value="Computer_System"> Computer System</option>
                                             <option value="Document">Document</option>
@@ -1016,42 +1068,10 @@
                                             <option value="Process">Process</option>
                                         </select>
                                     </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="audit type">Deviation Related To </label>
-                                        <select name="audit_type[]" id="audit_type" multiple class="form-control">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="Facility">Facility</option>
-                                            <option value="Equipment/Instrument">Equipment/ Instrument </option>
-                                            <option value="Documentationerror">Documentation error </option>
-                                            <option value="STP/ADS_instruction">STP/ADS instruction </option>
-                                            <option value="Packaging&Labelling">Packaging & Labelling  </option>
-                                            <option value="Material_System">Material System  </option>
-                                            <option value="Laboratory_Instrument/System"> Laboratory Instrument /System</option>
-                                            <option value="Utility_System"> Utility System</option>
-                                            <option value="Computer_System"> Computer System</option>
-                                            <option value="Document">Document</option>
-                                            <option value="Data integrity">Data integrity</option>
-                                            <option value="SOP Instruction">SOP Instruction</option>
-                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
-                                            <option value="Water System">Water System</option>
-                                            <option value="Anyother(specify)">Any other (specify) </option>
-                                        </select>
-                                    </div>
                                 </div> --}}
 
 
-                                <!-- <div class="col-lg-6" id="others_block" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="others">Others <span id="asteriskInviothers" style="display: none"
-                                                class="text-danger">*</span></label>
-                                        <input type="text" id="others" name="others" class="others">
-                                    </div>
-                                </div> -->
-
-
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                             <div class="group-input">
                                             <label for="others">Others <span id="asteriskInviothers" style="display: none"
                                             class="text-danger">*</span></label>
@@ -1060,8 +1080,9 @@
                                                     id="summernote-2"></textarea>
                                             </div>
 
-                                        </div>
-                                <script>
+                                </div> --}}
+
+                                {{-- <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         var selectField = document.getElementById('audit_type');
                                         var inputsToToggle = [];
@@ -1071,8 +1092,6 @@
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
                                             inputsToToggle.push(facilityNameInputs[i]);
                                         }
-
-
                                         selectField.addEventListener('change', function() {
                                             // var isRequired = this.value === 'Anyother(specify)';
                                             var isRequired = this.value.includes('Anyother(specify)');
@@ -1090,7 +1109,65 @@
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });
+                                </script> --}}
+
+
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="audit_type">Deviation Related To<span class="text-danger"></span></label>
+                                        <select name="audit_type[]" id="audit_type" multiple>
+                                            <option value="Facility">Facility</option>
+                                            <option value="Equipment/Instrument">Equipment/ Instrument</option>
+                                            <option value="Documentationerror">Documentation error</option>
+                                            <option value="STP/ADS_instruction">STP/ADS instruction</option>
+                                            <option value="Packaging&Labelling">Packaging & Labelling</option>
+                                            <option value="Material_System">Material System</option>
+                                            <option value="Laboratory_Instrument/System">Laboratory Instrument /System</option>
+                                            <option value="Utility_System">Utility System</option>
+                                            <option value="Computer_System">Computer System</option>
+                                            <option value="Document">Document</option>
+                                            <option value="Data integrity">Data integrity</option>
+                                            <option value="SOP Instruction">SOP Instruction</option>
+                                            <option value="BMR/ECR Instruction">BMR/ECR Instruction</option>
+                                            <option value="Water System">Water System</option>
+                                            <option value="Anyother(specify)">Any other (specify)</option>
+                                            <option value="Process">Process</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Hidden Input Field -->
+                                <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
+                                    <label for="otherFieldsUser">Other <span class="text-danger">*</span></label>
+                                    <input type="text" name="others" id="otherFieldsUser" class="form-control"/>
+                                </div>
+
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        function checkOtherOption() {
+                                            var selectedValues = $('#audit_type').val() || []; // Array milega
+                                            if (selectedValues.includes('Anyother(specify)')) {
+                                                $('#typeOfErrorBlock').show();
+                                                $('#otherFieldsUser').prop('required', true);
+                                            } else {
+                                                $('#typeOfErrorBlock').hide();
+                                                $('#otherFieldsUser').prop('required', false);
+                                            }
+                                        }
+
+                                        // On change event
+                                        $('#audit_type').change(checkOtherOption);
+
+                                        // Page load pe bhi check karna zaroori hai
+                                        checkOtherOption();
+                                    });
                                 </script>
+
+
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System Details
@@ -1302,7 +1379,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input" id="productRow" style="display: none">
                                         <label for="audit-agenda-grid">
-                                        Product/ Material Batch Details 
+                                        Product/ Material Batch Details
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
