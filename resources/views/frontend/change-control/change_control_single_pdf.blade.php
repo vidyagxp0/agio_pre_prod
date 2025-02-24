@@ -246,6 +246,8 @@
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+
+                                
                             @else
                                 Not Applicable
                             @endif
@@ -270,17 +272,17 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
 
-                    <th class="w-20">Justification</th>
+                     <th class="w-20">Justification</th>
                     <td class="w-30">
                         @if ($data->risk_identification)
                             {{ $data->risk_identification }}
                         @else
                             Not Applicable
                         @endif
-                    </td>
-                    </tr>
+                    </td> 
+                    </tr> -->
                     <tr>
                     <th class="w-20">Change Related To</th>
                     <td class="w-30">
@@ -621,6 +623,36 @@ Not Applicable
                         </td>
                     </tr>
                 </table>
+
+                <!-- Change control Attachment -->
+
+                <div class="border-table">
+                    <div class="block-head">
+                    Change control Attachment
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data->change_details_attachments)
+                            @foreach (json_decode($data->change_details_attachments) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
             </div>
 
 
@@ -740,8 +772,7 @@ Not Applicable
                         </tr> -->
                     </table>
 
-
-                    
+                       <br>
                     <div class="border-table">
                         <div class="block-head">
                         QA/CQA Initial Attachments
@@ -1095,6 +1126,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
+                    <br>
                     <div class="head">
                         <div class="block-head">
                             Production (Liquid/Ointment)
@@ -1299,6 +1331,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
+                    <br>
                     <div class="head">
                         <div class="block-head">
                             Stores
@@ -1401,6 +1434,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
+                    <br>
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
@@ -1614,6 +1648,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
+                    <br>
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
@@ -1938,6 +1973,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
+                    <br>
                     <div class="head">
                         <div class="block-head">
                             Regulatory Affair
@@ -2040,6 +2076,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
+                    <br>
                     <div class="head">
                         <div class="block-head">
                             Corporate Quality Assurance
@@ -2142,7 +2179,7 @@ Not Applicable
                             @endif
                         </table>
                     </div>
-
+                      <br>
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
@@ -2470,7 +2507,7 @@ Not Applicable
                         </table>
                     </div>
 
-
+                    <br>
                     <div class="block">
                         <div class="head">
                             <div class="block-head">
