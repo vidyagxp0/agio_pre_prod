@@ -729,8 +729,7 @@
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Date Due"> Date Of Analysis</label>
-                                <div><small class="text-primary">Please mention expected date of completion</small>
-                                </div>
+
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_analysis_gi" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date_analysis_gi) }}"/>
@@ -781,8 +780,7 @@
                         <div class="col-lg-12 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Date Due">Date of Incidence</label>
-                                <div><small class="text-primary">Please mention expected date of completion</small>
-                                </div>
+
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_incidence_gi" readonly
                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->incident_date_incidence_gi) }}"/>
@@ -798,7 +796,7 @@
                             <div class="group-input" id="description_incidence_gi">
                                 <label for="Description_incidence"> Description Of Incidence<span
                                         class="text-danger d-none">*</span></label>
-                                <textarea name="description_incidence_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->description_incidence_gi }}</textarea>
+                                <textarea name="description_incidence_gi" class="tiny" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->description_incidence_gi }}</textarea>
                             </div>
 
                         </div>
@@ -1524,19 +1522,19 @@
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span>
                                             @endif</label>
-                                        <textarea name="Investigation_Details" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Investigation_Details }}</textarea>
+                                        <textarea name="Investigation_Details" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Investigation_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken</label>
-                                        <textarea name="Action_Taken" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Action_Taken }}</textarea>
+                                        <textarea name="Action_Taken" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Root Cause">Root Cause</label>
-                                        <textarea name="Root_Cause" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Root_Cause }}</textarea>
+                                        <textarea name="Root_Cause" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
 
@@ -1544,7 +1542,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Inv Attachment</label>
+                                        <label for="Inv Attachments"> Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Inv_Attachment">
@@ -1604,13 +1602,13 @@
                                 <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
-                                <textarea name="details_investigation_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->details_investigation_ia}}</textarea>
+                                <textarea name="details_investigation_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->details_investigation_ia}}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken</label>
-                            <textarea name="proposed_correctivei_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->proposed_correctivei_ia}}</textarea>
+                            <textarea name="proposed_correctivei_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->proposed_correctivei_ia}}</textarea>
                         </div>
                      </div>
 
@@ -1618,7 +1616,7 @@
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
-                        <textarea name="repeat_analysis_plan_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->repeat_analysis_plan_ia}}</textarea>
+                        <textarea name="repeat_analysis_plan_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->repeat_analysis_plan_ia}}</textarea>
                       </div>
                          </div>
 
@@ -1631,13 +1629,13 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>
-                    <textarea name="result_of_repeat_analysis_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
+                    <textarea name="result_of_repeat_analysis_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Corrective and Preventive Action">Corrective and Preventive Action</label>
-                <textarea name="corrective_and_preventive_action_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
+                <textarea name="corrective_and_preventive_action_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
             </div>
         </div>
         <div class="col-12">
@@ -1650,7 +1648,7 @@
          <div class="col-12">
             <div class="group-input">
                 <label for="Investigation Summary">Investigation Summary</label>
-            <textarea name="investigation_summary_ia" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->investigation_summary_ia}}</textarea>
+            <textarea name="investigation_summary_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{$data->investigation_summary_ia}}</textarea>
         </div>
     </div>
 
@@ -1674,7 +1672,7 @@
 
 
 
-    <div class="col-lg-12">
+    {{-- <div class="col-lg-12">
         <div class="group-input">
             <label for="Type Of Incidence"><b>Type of Incidence</b></label>
             <select name="type_incidence_ia" id="type_incidence" @if ($data->stage <= 3 || $data->stage >= 5) disabled @endif>
@@ -1685,7 +1683,7 @@
                 <option value="Other" {{ $data->type_incidence_ia == 'Other' ? 'selected' : '' }}>Other</option>
             </select>
         </div>
-    </div>
+    </div> --}}
 
     <div class="col-lg-12" id="other_incidence_div" style="display: none;">
         <div class="group-input">
@@ -1744,7 +1742,7 @@
                         <label for="search">
                             QC Investigator <span class="text-danger"></span>
                         </label>
-                            <textarea name="investigator_data" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->investigator_data }}</textarea>
+                            <textarea name="investigator_data" class="tiny" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->investigator_data }}</textarea>
                     </div>
                 </div>
 
@@ -2228,7 +2226,7 @@
                             <div class="group-input">
                                 <label for=" qa head remark"><b>QA Head Comment</b> @if($data->stage==7)<span class="text-danger">*</span>
                                 @endif</label>
-                               <textarea name="qa_hear_remark_c" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}>{{$labnew->qa_hear_remark_c}}</textarea>
+                               <textarea name="qa_hear_remark_c" class="tiny" {{ $data->stage <= 6 || $data->stage >= 8 ? "readonly" : "" }}>{{$labnew->qa_hear_remark_c}}</textarea>
                             </div>
                         </div>
 
