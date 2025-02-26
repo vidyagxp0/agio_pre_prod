@@ -53,6 +53,10 @@ class LabIncidentController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
+        // if (!$request->name_of_analyst) {
+        //     toastr()->info("Name of Analyst is required");
+        //     return redirect()->back()->withInput();
+        // }
         // if (!$request->Initiator_Group) {
         //     toastr()->info("Initiator Group is required");
         //     return redirect()->back()->withInput();
@@ -2516,6 +2520,10 @@ class LabIncidentController extends Controller
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
+        // if ($request->stage == 1 && empty($request->investrecord)) {
+        //     toastr()->info("Incident Investigation Report is required at Stage 1");
+        //     return redirect()->back()->withInput();
+        // }
 
         $lastDocument = LabIncident::find($id);
         $data = LabIncident::find($id);
@@ -6331,6 +6339,32 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             $data =  LabIncident::find($id);
 
             if ($changeControl->stage == 1) {
+                if (empty($changeControl->short_desc
+                && $changeControl->incident_involved_others_gi && $changeControl->stage_stage_gi
+                && $changeControl->incident_stability_cond_gi && $changeControl->incident_interval_others_gi
+                && $changeControl->test_gi && $changeControl->incident_date_analysis_gi
+                && $changeControl->incident_specification_no_gi && $changeControl->incident_stp_no_gi
+                && $changeControl->incident_date_incidence_gi && $changeControl->description_incidence_gi
+                && $changeControl->analyst_sign_date_gi && $changeControl->investigator_qc
+                && $changeControl->Incident_Category_others && $changeControl->immediate_action_ia && $changeControl->qc_review_to
+
+                ))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Opened Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for QA Initial Review state'
+                    ]);
+                }
                 $changeControl->stage = "2";
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
@@ -6529,7 +6563,12 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
                 if ($changeControl->stage == 4) {
-                    if (empty($changeControl->Investigation_Details))
+                    if (empty($changeControl->Investigation_Details && $changeControl->Action_Taken
+                     && $changeControl->Root_Cause && $changeControl->details_investigation_ia
+                     && $changeControl->proposed_correctivei_ia && $changeControl->repeat_analysis_plan_ia
+                     && $changeControl->result_of_repeat_analysis_ia && $changeControl->corrective_and_preventive_action_ia
+                     && $changeControl->capa_number_im && $changeControl->investigation_summary_ia
+                     && $changeControl->investigator_data && $changeControl->qc_review_data))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
@@ -6605,7 +6644,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 }
 
             if ($changeControl->stage == 5) {
-                if (empty($changeControl->QC_head_hod_secondry_Comments))
+                if (empty($changeControl->QC_head_hod_secondry_Comments && $changeControl->Incident_Category || ($changeControl->Incident_Category == "Other" && empty($changeControl->other_incidence_data))))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -6752,7 +6791,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             }
 
             if ($changeControl->stage == 7) {
-                if (empty($changeControl->qa_hear_remark_c))
+                if (empty($changeControl->qa_hear_remark_c && $changeControl->closure_incident_c))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',

@@ -122,13 +122,14 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span
+                                            class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" required />
 
                                             <!-- Editable date input (hidden) -->
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" required
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -210,9 +211,9 @@
                                 <div class="col-lg-6">
                                             <div class="group-input" id="incident_interval_others_gi">
                                                 <label for="incident_interval_others_gi">Name of Analyst<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <!-- <textarea type="text" name="name_of_analyst" ></textarea> -->
-                                                 <input type="text" name="name_of_analyst">
+                                                    class="text-danger">*</span></label>
+                                                 <textarea type="text" name="name_of_analyst" required ></textarea>
+                                                 {{-- <input type="text" name="name_of_analyst"> --}}
                                             </div>
 
                                         </div>
@@ -691,7 +692,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Review Comments">QC Head Review Comments</label>
-                                        <textarea name="QA_Review_Comments"></textarea>
+                                        <textarea name="QA_Review_Comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -704,7 +705,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Head_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -726,7 +727,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Incident Category">QA Initial Review Comments</label>
-                                        <textarea name="QA_initial_Comments"></textarea>
+                                        <textarea name="QA_initial_Comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -739,7 +740,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Initial_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Initial_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_Initial_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -772,19 +773,19 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Details ">Investigation Details</label>
-                                        <textarea name="Investigation_Details" class="tiny"></textarea>
+                                        <textarea name="Investigation_Details" class="tiny" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Action Taken">Action Taken</label>
-                                        <textarea name="Action_Taken" class="tiny"></textarea>
+                                        <textarea name="Action_Taken" class="tiny" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Root Cause">Root Cause</label>
-                                        <textarea name="Root_Cause" class="tiny" ></textarea>
+                                        <textarea name="Root_Cause" class="tiny" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -797,7 +798,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Inv_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Inv_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'Inv_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -806,13 +807,13 @@
                                 <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
-                                <textarea name="details_investigation_ia" class="tiny"></textarea>
+                                <textarea name="details_investigation_ia" class="tiny" disabled></textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken</label>
-                            <textarea name="proposed_correctivei_ia" class="tiny"></textarea>
+                            <textarea name="proposed_correctivei_ia" class="tiny" disabled></textarea>
                         </div>
                      </div>
 
@@ -820,7 +821,7 @@
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
-                        <textarea name="repeat_analysis_plan_ia" class="tiny"></textarea>
+                        <textarea name="repeat_analysis_plan_ia" class="tiny" disabled></textarea>
                       </div>
                          </div>
 
@@ -829,26 +830,26 @@
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>
-                    <textarea name="result_of_repeat_analysis_ia" class="tiny"></textarea>
+                    <textarea name="result_of_repeat_analysis_ia" class="tiny" disabled></textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Corrective and Preventive Action">Corrective and Preventive Action</label>
-                <textarea name="corrective_and_preventive_action_ia" class="tiny"></textarea>
+                <textarea name="corrective_and_preventive_action_ia" class="tiny" disabled></textarea>
             </div>
         </div>
         <div class="col-12">
             <div class="group-input">
                 <label for="CAPA Number">CAPA Number</label>
-            <input type="text" name="capa_number_im">
+            <input type="text" name="capa_number_im" disabled>
         </div>
          </div>
 
          <div class="col-12">
             <div class="group-input">
                 <label for="Investigation Summary">Investigation Summary</label>
-            <textarea name="investigation_summary_ia" class="tiny"></textarea>
+            <textarea name="investigation_summary_ia" class="tiny" disabled></textarea>
         </div>
     </div>
 
@@ -887,7 +888,7 @@
     <div class="col-lg-12" id="other_incidence_div" style="display: none;">
         <div class="group-input">
             <label for="other_incidence"><b>Other Incidence</b></label>
-            <input type="text" name="other_incidence" id="other_incidence" placeholder="Specify other type of incidence">
+            <input type="text" name="other_incidence" id="other_incidence" placeholder="Specify other type of incidence" disabled>
         </div>
     </div>
     <script>
@@ -916,7 +917,7 @@
                         <label for="search">
                             QC Investigator <span class="text-danger"></span>
                         </label>
-                            <textarea name="investigator_data" class="tiny" id=""></textarea>
+                            <textarea name="investigator_data" class="tiny" id="" disabled></textarea>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -924,7 +925,7 @@
                         <label for="search">
                             QC Review <span class="text-danger"></span>
                         </label>
-                        <select id="select-state" placeholder="Select..." name="qc_review_data">
+                        <select id="select-state" placeholder="Select..." name="qc_review_data" disabled>
                             <option value="">Select a value</option>
                             @foreach ($users as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -965,7 +966,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="attachments_ia" name="attachments_ia[]"
-                                                    oninput="addMultipleFiles(this, 'attachments_ia')" multiple>
+                                                    oninput="addMultipleFiles(this, 'attachments_ia')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -988,7 +989,7 @@
                             <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
-                                        <select name="Incident_Category" id="Incident_Category_data">
+                                        <select name="Incident_Category" id="Incident_Category_data" disabled>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Biological">Biological</option>
                                             <option value="Chemical">Chemical</option>
@@ -1000,7 +1001,7 @@
                                 <div class="col-lg-12" id="other_incidence_data" style="display: none;">
                                     <div class="group-input">
                                         <label for="Other Incidence"><b>Other Incident Category</b></label>
-                                        <input type="text" name="other_incidence_data" id="other_incidence_data" value=""/>
+                                        <input type="text" name="other_incidence_data" id="other_incidence_data" value="" disabled/>
                                     </div>
                                 </div>
                                 <script>
@@ -1025,7 +1026,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Incident Category">QC Head/HOD Secondary Review Comments</label>
-                                        <textarea name="QC_head_hod_secondry_Comments"></textarea>
+                                        <textarea name="QC_head_hod_secondry_Comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1038,7 +1039,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QC_headhod_secondery_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QC_headhod_secondery_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QC_headhod_secondery_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -1095,7 +1096,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Incident Category">QA Secondary Review Comments</label>
-                                        <textarea name="QA_secondry_Comments"></textarea>
+                                        <textarea name="QA_secondry_Comments" disabled></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1108,7 +1109,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_secondery_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_secondery_Attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_secondery_Attachment')" multiple disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -1130,7 +1131,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="closure_incident_c">Closure Of Incident</label>
-                                        <input type="text" name="closure_incident_c">
+                                        <input type="text" name="closure_incident_c" disabled>
                                     </div>
 
                                 </div>
@@ -1138,7 +1139,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" qa head remark"><b>QA Head Comment</b></label>
-                                   <textarea name="qa_hear_remark_c" class="tiny"></textarea>
+                                   <textarea name="qa_hear_remark_c" class="tiny" disabled></textarea>
                                 </div>
                             </div>
 
@@ -1152,7 +1153,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="closure_attachment_c" name="closure_attachment_c[]"
-                                                oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
+                                                oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple disabled>
                                         </div>
                                     </div>
                                 </div>
