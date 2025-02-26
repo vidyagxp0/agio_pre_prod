@@ -549,7 +549,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6" id="departContainer">
+                                <div class="col-md-6" id="departContainer" style="display: none">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                                         <select name="department_id" id="depart-name" required>
@@ -562,7 +562,7 @@
                                     <p id="depart-nameError" style="color:red; display: none;">** Department is required</p>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-6" id="docVerContainer" style="display: none">
                                     <div class="group-input">
                                         <label for="major">Document Version <small>(Major)</small> <span
                                                 class="text-danger">*</span>
@@ -618,124 +618,6 @@
                                     </div>
                                 </div>
 
-
-
-                {{-- <script>
-                    var maxLength = 255;
-
-                    function handleDocumentTypeChange(select) {
-                        const docTypeCodeSpan = document.getElementById('document_type_code');
-                        const shortDescContainer = document.getElementById('shortDescContainer');
-                        const shortDescInput = document.getElementById('short_desc');
-                        const shortDescError = document.getElementById('short_descError');
-                        const shortDescRequired = document.getElementById('shortDescRequired');
-
-                        const docNameContainer = document.getElementById('docNameContainer');
-                        const docNameInput = document.getElementById('docname');
-                        const docNameError = document.getElementById('docnameError');
-                        const docNameRequired = document.getElementById('docNameRequired');
-
-                        // SOP Type and Due Date fields
-                        const sopTypeContainer = document.getElementById('sopTypeContainer');
-                        const sopType = document.getElementById('sop_type');
-                        const sopTypeRequired = document.getElementById('sopTypeRequired');
-
-                        const dueDateContainer = document.getElementById('dueDateContainer');
-                        const dueDateInput = document.getElementById('due_dateDoc');
-                        const dueDateRequired = document.getElementById('dueDateRequired');
-                        const dueDateError = document.getElementById('due_dateDocError');
-
-                        const notifyContainer = document.getElementById('notifyContainer');
-                        const notifyInput = document.getElementById('notify_to');
-
-                        const selectedText = select.options[select.selectedIndex].text;
-
-                        docTypeCodeSpan.textContent = select.value ? select.value : 'Not selected';
-
-                        if (selectedText.includes("SOP")) {
-                            // Show and make required: Short Description, Document Name, SOP Type, Due Date
-                            shortDescContainer.style.display = 'block';
-                            shortDescInput.setAttribute('required', 'required');
-                            shortDescInput.setAttribute('name', 'short_desc');
-                            shortDescRequired.style.display = 'inline';
-
-                            docNameContainer.style.display = 'block';
-                            docNameInput.setAttribute('required', 'required');
-                            docNameInput.setAttribute('name', 'document_name');
-                            docNameRequired.style.display = 'inline';
-
-                            sopTypeContainer.style.display = 'block';
-                            sopType.setAttribute('required', 'required');
-                            sopTypeRequired.style.display = 'inline';
-
-                            dueDateContainer.style.display = 'block';
-                            dueDateInput.setAttribute('required', 'required');
-                            dueDateRequired.style.display = 'inline';
-
-                            notifyContainer.style.display = 'block';
-                            notifyInput.setAttribute('', '');
-
-                            // Character counter for Document Name
-                            $('#docname').off('keyup').on('keyup', function() {
-                                var textlen = maxLength - $(this).val().length;
-                                $('#rchars').text(textlen);
-                            });
-
-                            $('#short_desc').off('keyup').on('keyup', function() {
-                                var textlen = maxLength - $(this).val().length;
-                                $('#new-rchars').text(textlen);
-                            });
-
-                        } else {
-                            // Hide and remove required: Short Description, Document Name, SOP Type, Due Date
-                            shortDescContainer.style.display = 'none';
-                            shortDescInput.removeAttribute('required');
-                            shortDescInput.removeAttribute('name');
-                            shortDescInput.value = '';
-                            shortDescError.style.display = 'none';
-                            $('#new-rchars').text(maxLength);
-
-                            docNameContainer.style.display = 'none';
-                            docNameInput.removeAttribute('required');
-                            docNameInput.removeAttribute('name');
-                            docNameInput.value = '';
-                            docNameError.style.display = 'none';
-                            $('#rchars').text(maxLength);
-
-                            sopTypeContainer.style.display = 'none';
-                            sopType.removeAttribute('required');
-                            sopType.value = '';
-                            sopTypeRequired.style.display = 'none';
-
-                            dueDateContainer.style.display = 'none';
-                            dueDateInput.removeAttribute('required');
-                            dueDateInput.value = '';
-                            dueDateRequired.style.display = 'none';
-                            dueDateError.style.display = 'none';
-
-                            notifyContainer.style.display = 'none';
-                            notifyInput.value = '';
-                        }
-                    }
-
-                    // SOP Type Short Update
-                    function updateSopTypeShort() {
-                        const sopType = document.getElementById('sop_type').value;
-                        let shortName = '';
-                        if (sopType === 'SOP (Standard Operating procedure)') {
-                            shortName = 'SOP';
-                        } else if (sopType === 'EOP (Equipment Operating procedure)') {
-                            shortName = 'EOP';
-                        } else if (sopType === 'IOP (Instrument Operating Procedure)') {
-                            shortName = 'IOP';
-                        }
-                        document.getElementById('sop_type_short').value = shortName;
-                    }
-
-                    document.querySelector('form').addEventListener('submit', function() {
-                        updateSopTypeShort();
-                    });
-                </script> --}}
                                 <div class="col-md-12" id="keywordsContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="keyword">Keywords</label>
@@ -820,6 +702,7 @@
                                             }
                                         });
 
+
                                         // Update document type code display
                                         document.getElementById('document_type_code').innerText = selectElement.value || "Not selected";
 
@@ -836,21 +719,32 @@
                                         const dueDateContainer = document.getElementById('dueDateContainer');
                                         const dueDateInput = document.getElementById('due_dateDoc');
 
+                                        const departContainer = document.getElementById('departContainer');
+                                        const departInput = document.getElementById('depart-name');
+
+                                        const docVerContainer = document.getElementById('docVerContainer');
+                                        const majorInput = document.getElementById('major');
+
                                         const notifyContainer = document.getElementById('notifyContainer');
                                         const keywordContainer = document.getElementById('keywordsContainer');
 
                                         const docLangContainer = document.getElementById('docLangContainer');
                                         const docLangCodeContainer = document.getElementById('docLangCodeContainer');
 
-
                                         const effectiveContainer = document.getElementById('effectiveContainer');
                                         const reviewContainer = document.getElementById('reviewContainer');
                                         const nextReviewContainer = document.getElementById('nextReviewContainer');
+
+                                        const attachdraftContainer = document.getElementById('attachdraftContainer');
+                                        const attacheffectContainer = document.getElementById('attacheffectContainer');
+
 
                                             // HODs field
                                         const hodsContainer = document.getElementById('hods-container');
                                         const hodsDropdown  = document.getElementById('hods-dropdown');
                                         const hodsError = document.getElementById('hodError');
+
+                                        const reviewersLabel = document.getElementById('reviewers-label');
                                         
                                         if (selectedType === "SOP") {
                                             shortDescContainer.style.display = 'block';
@@ -872,6 +766,12 @@
                                             dueDateInput.setAttribute('required', 'required');
                                             dueDateRequired.style.display = 'inline';
 
+                                            departContainer.style.display = 'block';
+                                            departInput.setAttribute('required', 'required');
+                                            // dueDateRequired.style.display = 'inline';
+
+                                            docVerContainer.style.display = 'block';
+                                            majorInput.setAttribute('required', 'required');
 
                                             notifyContainer.style.display = 'block';
                                             effectiveContainer.style.display = 'block';
@@ -882,11 +782,15 @@
                                             docLangContainer.style.display = 'block';
                                             docLangCodeContainer.style.display = 'block';
 
+                                            attachdraftContainer.style.display = 'block';
+                                            attacheffectContainer.style.display = 'block';
 
                                             // Show HODs field
                                             hodsContainer.style.display = 'block';
                                             hodsDropdown.setAttribute('required', 'required');
                                             hodsError.style.display = 'none';
+
+                                            reviewersLabel.innerHTML = "Reviewers<span class='text-danger'>*</span>";
 
                                             // Character counter for inputs
                                             $('#docname').off('keyup').on('keyup', function() {
@@ -914,10 +818,26 @@
                                             dueDateInput.removeAttribute('required');
                                             dueDateInput.value = '';
 
+                                            departContainer.style.display = 'none';
+                                            departInput.removeAttribute('required');
+                                            departInput.value = '';
+
+                                            docVerContainer.style.display = 'none';
+                                            majorInput.removeAttribute('required');
+                                            majorInput.value = '';
+
                                             notifyContainer.style.display = 'none';
                                             effectiveContainer.style.display = 'none';
                                             nextReviewContainer.style.display = 'none';
                                             reviewContainer.style.display = 'none';
+
+                                            keywordContainer.style.display = 'none';
+                                            docLangContainer.style.display = 'none';
+                                            docLangCodeContainer.style.display = 'none';
+
+                                            attachdraftContainer.style.display = 'none';
+                                            attacheffectContainer.style.display = 'none';
+
 
                                             // Hide HODs field
                                             hodsContainer.style.display = 'none';
@@ -925,10 +845,11 @@
                                             hodsDropdown.value = ''; // Clear selection
                                             hodsError.style.display = 'none';
 
-
+                                            reviewersLabel.innerHTML = "Checked By<span class='text-danger'>*</span>";
                                             
                                         }
                                     }
+
 
                                     function updateSopTypeShort() {
                                         const sopType = document.getElementById('sop_type').value;
@@ -970,16 +891,16 @@
                                     }
                                 </script>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="attachdraftContainer" style="display: none">
                                     <div class="group-input">
                                         <label for="draft-doc">Attach Draft document</label>
-                                        <input type="file" name="attach_draft_doocument">
+                                        <input type="file" id="attach_draft_doc" name="attach_draft_doocument">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="attacheffectContainer" style="display: none">
                                     <div class="group-input">
                                         <label for="effective-doc">Attach Effective document</label>
-                                        <input type="file" name="attach_effective_docuement">
+                                        <input type="file" id="attach_effective_doc" name="attach_effective_docuement">
                                     </div>
                                 </div>
                             </div>
@@ -992,8 +913,8 @@
 
                                <div class="col-md-6">
                                    <div class="group-input">
-                                       <label for="reviewers">Checked By<span class="text-danger">*</span></label>
-                                       <select id="reviewers-dropdown" class="form-control" name="reviewers[]" multiple required style="display: none">
+                                       <label for="reviewers" id="reviewers-label">Checked By<span class="text-danger">*</span></label>
+                                       <select id="reviewers-dropdown"  class="form-control" name="reviewers[]" multiple required style="display: none">
                                            @if (!empty($reviewer))
                                                @foreach ($reviewer as $lan)
                                                    @if (Helpers::checkUserRolesreviewer($lan))
@@ -1033,8 +954,6 @@
                                    </div>
                                    <p id="hodError" style="color:red; display: none;">** HODs are required</p>
                                </div>
-
-
 
                             </div>
                             <div class="row">
