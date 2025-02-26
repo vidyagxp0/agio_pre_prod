@@ -175,6 +175,55 @@
             padding-left: 10px;
             margin-bottom: 10px;
         }
+
+
+
+        .why-why-chart-container {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.block-head {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.problem-statement th {
+    background: #f4bb22;
+    width: 150px;
+}
+
+.why-label {
+    color: #393cd4;
+    width: 150px;
+}
+
+.answer-label {
+    color: #393cd4;
+    width: 150px;
+}
+
+.root-cause th {
+    background: #0080006b;
+    width: 150px;
+}
+
+.text-muted {
+    color: gray;
+}
     </style>
 </head>
 
@@ -243,11 +292,12 @@
                     {{-- <td class="w-30">@if ($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> --}}
 
 
+
                     <tr>
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
-                            @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                            @if ($data->initiator_group_code)
+                                {{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1029,156 +1079,62 @@
                     </tr>
                 </table> --}}
 
-                <div class="block-head">
-                    Why-Why Chart
-                </div>
-                <table>
-                    <tr>
-                        <th class="w-20">Problem Statement</th>
-                        <td class="w-80">
-                            @if ($riskgrdwhy_chart->why_problem_statement)
-                                {{ $riskgrdwhy_chart->why_problem_statement }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                <div class="why-why-chart-container">
+    <div class="block-head">
+        <strong>Why-Why Chart</strong>
+    </div>
 
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">Why 1 </th>
-                        <td class="w-80">
-                            @php
-                                $why_1 = unserialize($riskgrdwhy_chart->why_1);
-                            @endphp
+    <table class="table table-bordered">
+        <tbody>
+            <tr class="problem-statement">
+                <th>Problem Statement :</th>
+                <td>
+                    {{ $riskgrdwhy_chart->why_problem_statement ?? 'Not Applicable' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-                            @if (is_array($why_1))
-                                @foreach ($why_1 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($why_1))
-                                {{ htmlspecialchars($why_1) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr> --}}
-                    <tr>
-                        <th class="w-20">Why 1</th>
-                        <td class="w-80">
-                            @php
-                                $why_1 = unserialize($riskgrdwhy_chart->why_1);
-                            @endphp
+    <div>
+        @php
+            $why_data = !empty($riskgrdwhy_chart->why_data) ? unserialize($riskgrdwhy_chart->why_data) : [];
+        @endphp
 
-                            @if (is_array($why_1))
-                                <ul>
-                                    @foreach ($why_1 as $value)
-                                        <li>{{ htmlspecialchars($value) }}</li>
-                                    @endforeach
-                                </ul>
-                            @elseif(is_string($why_1))
-                                <p>{{ htmlspecialchars($why_1) }}</p>
-                            @else
-                                <p>Not Applicable</p>
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Why 2</th>
-                        <td class="w-80">
-                            @php
-                                $why_2 = unserialize($riskgrdwhy_chart->why_2);
-                            @endphp
-
-                            @if (is_array($why_2))
-                            <ul>
-                                @foreach ($why_2 as $value)
-                              <li>{{ htmlspecialchars($value) }}</li>
-                            </ul>
-                            @endforeach
-                            @elseif(is_string($why_2))
-                               <p>{{ htmlspecialchars($why_2) }}</p>
-                            @else
-                               <p>Not Applicable</p>
-                            @endif
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Why 3</th>
-                        <td class="w-80">
-                            @php
-                                $why_3 = unserialize($riskgrdwhy_chart->why_3);
-                            @endphp
-
-                            @if (is_array($why_3))
-                            <ul>
-                                @foreach ($why_3 as $value)
-                               <li> {{ htmlspecialchars($value) }}</li>
-                            @endforeach
-                            </ul>
-                            @elseif(is_string($why_3))
-                               <p>{{ htmlspecialchars($why_3) }}</p>
-                            @else
-                                <p>>Not Applicable</p>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Why 4</th>
-                        <td class="w-80">
-                            @php
-                                $why_4 = unserialize($riskgrdwhy_chart->why_4);
-                            @endphp
-
-                            @if (is_array($why_4))
-                            <ul>
-                                @foreach ($why_4 as $value)
-                                <li>{{ htmlspecialchars($value) }}</li>
-                            @endforeach
-                            </ul>
-                            @elseif(is_string($why_4))
-                               <p> {{ htmlspecialchars($why_4) }}</p>
-                            @else
-                               <p> Not Applicable</p>
-                            @endif
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Why 5</th>
-                        <td class="w-80">
-                            @php
-                                $why_5 = unserialize($riskgrdwhy_chart->why_5);
-                            @endphp
-
-                            @if (is_array($why_5))
-                            <ul>
-                                @foreach ($why_5 as $value)
-                                {{ htmlspecialchars($value) }}
-                                 @endforeach
-                            </ul>
-
-                            @elseif(is_string($why_5))
-                              <p>{{ htmlspecialchars($why_5) }}</p>
-                            @else
-                              <p>Not Applicable</p>
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-80">Root Cause</th>
-                        <td class="w-80">
-                            @if ($riskgrdwhy_chart->why_root_cause)
-                                {{ $riskgrdwhy_chart->why_root_cause }}
-                            @else
-                                Not Applicable
-                            @endif
-
-                        </td>
-                    </tr>
-
+        @if (is_array($why_data) && count($why_data) > 0)
+            @foreach ($why_data as $index => $why)
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="why-label">Why {{ $index + 1 }}</th>
+                            <td>{{ $why['question'] ?? 'Not Provided' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="answer-label">Answer {{ $index + 1 }}</th>
+                            <td>{{ $why['answer'] ?? 'Not Provided' }}</td>
+                        </tr>
+                    </tbody>
                 </table>
+            @endforeach
+        @else
+            <p class="text-muted">No Why-Why Data Available</p>
+        @endif
+    </div>
+
+    <div id="root-cause-container">
+        <table class="table table-bordered">
+            <tbody>
+                <tr class="root-cause">
+                    <th>Root Cause :</th>
+                    <td>
+                        {{ $riskgrdwhy_chart->why_root_cause ?? 'Not Applicable' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+                
 
                 <div class="border">
                     <table>
@@ -2636,7 +2592,7 @@
                         <th class="w-20">Impact Assessment (By Other's 1) </th>
                         <td class="w-80">
                             @if ($data1->Other1_assessment)
-                                {{ strip_tags($data1->Other1_review) }}
+                                {{ strip_tags($data1->Other1_assessment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2737,7 +2693,7 @@
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 2) </th>
                         <td class="w-80">
-                            @if ($data1->Other2_Assessment)
+                           @if ($data1->Other2_Assessment)
                                 {{ strip_tags($data1->Other2_Assessment) }}
                             @else
                                 Not Applicable
@@ -2839,8 +2795,8 @@
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 3) </th>
                         <td class="w-80">
-                            @if ($data1->Other3_assessment)
-                                {{ strip_tags($data1->Other3_assessment) }}
+                        @if ($data1->Other3_Assessment)
+                                {{ strip_tags($data1->Other3_Assessment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2941,8 +2897,8 @@
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 4) </th>
                         <td class="w-80">
-                            @if ($data1->Other4_assessment)
-                                {{ strip_tags($data1->Other4_assessment) }}
+                            @if ($data1->Other4_Assessment)
+                                {{ strip_tags($data1->Other4_Assessment) }}
                             @else
                                 Not Applicable
                             @endif
@@ -3043,8 +2999,8 @@
                     <tr>
                         <th class="w-20">Impact Assessment (By Other's 5) </th>
                         <td class="w-80">
-                            @if ($data1->Other5_assessment)
-                                {{ strip_tags($data1->Other5_assessment) }}
+                            @if ($data1->Other5_Assessment)
+                                {{ strip_tags($data1->Other5_Assessment) }}
                             @else
                                 Not Applicable
                             @endif

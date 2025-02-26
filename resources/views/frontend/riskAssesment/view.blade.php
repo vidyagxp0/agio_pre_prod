@@ -753,12 +753,30 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Brief Description / Procedure </label>
                                                 <textarea name="Brief_description" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Brief_description }}</textarea>
                                             </div>
+                                        </div> -->
+
+
+
+
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Brief_description">Brief Description / Procedure </label>
+                                                <div class="relative-container">
+                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="tiny">{{ $data->Brief_description }}</textarea>
+                                               
+                                                </div>
+                                            </div>
                                         </div>
+
+
+
+
+
 
 
                                         <div class="col-12">

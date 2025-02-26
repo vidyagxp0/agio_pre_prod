@@ -627,13 +627,22 @@
                                     </div>
 
 
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Brief Description / Procedure </label>
                                             <textarea name="Brief_description" id="comments"></textarea>
                                         </div>
-                                    </div>
+                                    </div> -->
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="comments">Brief Description / Procedure </label>
+                                        <div class="relative-container">
+                                         <textarea name="Brief_description" class="tiny"></textarea>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
