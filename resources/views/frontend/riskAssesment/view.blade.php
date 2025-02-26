@@ -1273,213 +1273,117 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12" id="why-why-chart-section">
+    <div class="group-input">
+        <label for="why-why-chart">
+            Why-Why Chart
+            <span class="text-primary add-why-question" style="font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 10px;">+</span>
+        </label>
 
+        <div class="why-why-chart">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr style="background: #f4bb22">
+                        <th style="width:150px;">Problem Statement :</th>
+                        <td>
+                            <textarea name="why_problem_statement">{{ old('why_problem_statement', $whyChart->why_problem_statement ?? '') }}</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                                                        <div class="col-12" id="why-why-chart-section" style="display:none;">
-                                                            <div class="group-input">
-                                                                <label for="why-why-chart">
-                                                                    Why-Why Chart
-                                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                                        data-bs-target="#why_chart-instruction-modal"
-                                                                        style="font-size: 0.8rem; font-weight: 400;">
-                                                                        (Launch Instruction)
-                                                                    </span>
-                                                                </label>
-                                                                <div class="why-why-chart">
-                                                                    <table class="table table-bordered">
-                                                                        <tbody>
-                                                                            <tr style="background: #f4bb22">
-                                                                                <th style="width:150px;">Problem Statement :</th>
-                                                                                <td>
+            <div id="why-questions-container">
+                @php
+                    $whyData = !empty($whyChart->why_data) ? unserialize($whyChart->why_data) : [];
+                @endphp
 
-                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 1 <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
-                                                                                </th>
+                @foreach ($whyData as $index => $why)
+                    <div class="why-field-wrapper">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width:150px; color: #393cd4;">Why {{ $index + 1 }}</th>
+                                    <td>
+                                        <textarea name="why_questions[]" placeholder="Enter Why {{ $index + 1 }} Question">{{ $why['question'] }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width:150px; color: #393cd4;">Answer {{ $index + 1 }}</th>
+                                    <td>
+                                        <textarea name="why_answers[]" placeholder="Enter Answer for Why {{ $index + 1 }}">{{ $why['answer'] }}</textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                    </div>
+                @endforeach
+            </div>
 
-                                                                                <td>
-                                                                                    <div class="why_1_block">
-                                                                                        @if (!empty($whyChart->why_1))
-                                                                                            @foreach (unserialize($whyChart->why_1) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_1[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
+            <div id="root-cause-container" style="display: {{ count($whyData) > 0 ? 'block' : 'none' }};">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr style="background: #0080006b;">
+                            <th style="width:150px;">Root Cause :</th>
+                            <td>
+                                <textarea name="why_root_cause">{{ old('why_root_cause', $whyChart->why_root_cause ?? '') }}</textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+    let whyCount = {{ count($whyData) }};
 
-                                                                        
-                                                                            <!-- <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 2 <span
-                                                                                        onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_2_block">
-                                                                                        {{-- @if (!empty($whyChart->why_2))
-                                                                                            @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_2[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
+    document.querySelector('.add-why-question').addEventListener('click', function () {
+        whyCount++;
 
-                                                                                        @if (!empty($whyChart->why_2))
-                                                                                            @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_2[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 3 <span
-                                                                                        onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_3_block">
-                                                                                        {{-- @if (!empty($whyChart->why_3))
-                                                                                            @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
+        const container = document.getElementById('why-questions-container');
+        const rootCauseContainer = document.getElementById('root-cause-container');
 
-                                                                                        @if (!empty($whyChart->why_3))
-                                                                                            @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 4 <span
-                                                                                        onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_4_block">
-                                                                                        {{-- @if (!empty($whyChart->why_4))
-                                                                                            @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
+        const whySet = document.createElement('div');
+        whySet.className = 'why-field-wrapper';
+        whySet.innerHTML = `
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width:150px; color: #393cd4;">Why ${whyCount}</th>
+                        <td>
+                            <textarea name="why_questions[]" placeholder="Enter Why ${whyCount} Question"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width:150px; color: #393cd4;">Answer ${whyCount}</th>
+                        <td>
+                            <textarea name="why_answers[]" placeholder="Enter Answer for Why ${whyCount}"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+        `;
 
-                                                                                        @if (!empty($whyChart->why_4))
-                                                                                            @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 5 <span
-                                                                                        onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_5_block">
-                                                                                        {{-- @if (!empty($whyChart->why_5))
-                                                                                            @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
+        container.appendChild(whySet);
+        rootCauseContainer.style.display = 'block';
+        container.after(rootCauseContainer);
+    });
 
-                                                                                        @if (!empty($whyChart->why_5))
-                                                                                            @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr> -->
-
-
-                                                                        
-                                                                            <tr style="background: #0080006b;">
-                                                                                <th style="width:150px;">Root Cause :</th>
-                                                                                <td>
-                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                            </div>
-                                    <script>
-                                             function removeWhyField(element) {
+    function removeWhyField(element) {
         element.closest('.why-field-wrapper').remove();
+        whyCount--;
+
+        if (document.getElementById('why-questions-container').children.length === 0) {
+            document.getElementById('root-cause-container').style.display = 'none';
+        }
     }
+</script>
 
-    function addWhyField(blockClass, fieldName) {
-        const block = document.querySelector(`.${blockClass}`);
 
-        const fieldWrapper = document.createElement('div');
-        fieldWrapper.className = 'why-field-wrapper';
-        fieldWrapper.style.marginBottom = '5px';
 
-        const textarea = document.createElement('textarea');
-        textarea.name = fieldName;
-        textarea.placeholder = "Why 1 Answer"; // Set placeholder text
-
-        const removeButton = document.createElement('span');
-        removeButton.innerText = ' Remove';
-        removeButton.style.cursor = 'pointer';
-        removeButton.style.color = 'red';
-        removeButton.style.marginLeft = '10px';
-        removeButton.onclick = function() {
-            fieldWrapper.remove();
-        };
-
-        fieldWrapper.appendChild(textarea);
-        fieldWrapper.appendChild(removeButton);
-
-        block.appendChild(fieldWrapper);
-    }
-
-                                    </script>
 
                                     <div class="col-12">
                                         <div class="group-input">
