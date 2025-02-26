@@ -746,30 +746,58 @@
                     </div>
                     <div class="input-fields">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="doc-num">Document Number</label>
-                                    <input type="text" id="doc-num" name="document_number" class="default-name" readonly
-                                        value="
-                                        @if ($document->revised === 'Yes')
-                                            @php
-                                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                                            @endphp
 
-                                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @if($document->document_type_id == 'SOP')
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-num">Document Number</label>
+                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
+                                            value="
+                                            @if ($document->revised === 'Yes')
+                                                @php
+                                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                                @endphp
+
+                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                                @else
+                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                                @endif
                                             @else
-                                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                            @endif
-                                        @else
-                                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                            @else
-                                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
-                                            @endif
-                                        @endif">
+                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                                @else
+                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                                @endif
+                                            @endif">
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <div class="col-md-6" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="doc-num">Document Number</label>
+                                        <input type="text" id="doc-num" name="document_number" class="default-name" readonly
+                                            value="
+                                            @if ($document->revised === 'Yes')
+                                                @php
+                                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                                @endphp
+
+                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                                @else
+                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                                @endif
+                                            @else
+                                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                                    {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                                @else
+                                                    {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                                @endif
+                                            @endif">
+                                    </div>
+                                </div>
+                            @endif
 
                             @if($document->document_type_id == 'SOP') 
                             <div class="col-md-6">
@@ -791,57 +819,110 @@
                             </div>
                             @endif
 
+                           @if($document->document_type_id == 'SOP')
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="link-doc">Reference Record</label>
+                                        <select multiple name="reference_record[]" placeholder="Select Reference Records"
+                                            data-search="false" data-silent-initial-value-set="true" id="reference_record"
+                                            {{ Helpers::isRevised($document->stage) }}>
+                                            @if (!empty($document_data))
+                                                @foreach ($document_data as $temp)
+                                                    @if ($temp->id != $document->id)
+                                                        <option value="{{ $temp->id }}"
+                                                            {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
+                                                            {{ $temp->sop_type_short }}/000{{ $temp->id }}/R{{ $temp->major }}.{{ $temp->minor }}/{{ $temp->document_name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
 
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="link-doc">Reference Record</label>
-                                    <select multiple name="reference_record[]" placeholder="Select Reference Records"
-                                        data-search="false" data-silent-initial-value-set="true" id="reference_record"
-                                        {{ Helpers::isRevised($document->stage) }}>
-                                        @if (!empty($document_data))
-                                            @foreach ($document_data as $temp)
-                                                @if ($temp->id != $document->id)
-                                                    <option value="{{ $temp->id }}"
-                                                        {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
-                                                        {{ $temp->sop_type_short }}/000{{ $temp->id }}/R{{ $temp->major }}.{{ $temp->minor }}/{{ $temp->document_name }}
-                                                    </option>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </select>
-
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Reference Record' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="reference_record_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
+                                        @foreach ($history as $tempHistory)
+                                            @if (
+                                                $tempHistory->activity_type == 'Reference Record' &&
+                                                    !empty($tempHistory->comment) &&
+                                                    $tempHistory->user_id == Auth::user()->id)
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
                                     </div>
-                                @endif
-                            </div>
+                                    @if (Auth::user()->role != 3 && $document->stage < 8)
+                                        <div class="comment">
+                                            <div>
+                                                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                    at {{ date('d-M-Y h:i:s') }}</p>
+
+                                                <input class="input-field" type="text" name="reference_record_comment">
+                                            </div>
+                                            <div class="button">Add Comment</div>
+                                        </div>
+                                    @endif
+                                </div>
+                           @else
+                                <div class="col-md-12" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="link-doc">Reference Record</label>
+                                        <select multiple name="reference_record[]" placeholder="Select Reference Records"
+                                            data-search="false" data-silent-initial-value-set="true" id="reference_record"
+                                            {{ Helpers::isRevised($document->stage) }}>
+                                            @if (!empty($document_data))
+                                                @foreach ($document_data as $temp)
+                                                    @if ($temp->id != $document->id)
+                                                        <option value="{{ $temp->id }}"
+                                                            {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
+                                                            {{ $temp->sop_type_short }}/000{{ $temp->id }}/R{{ $temp->major }}.{{ $temp->minor }}/{{ $temp->document_name }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+
+                                        @foreach ($history as $tempHistory)
+                                            @if (
+                                                $tempHistory->activity_type == 'Reference Record' &&
+                                                    !empty($tempHistory->comment) &&
+                                                    $tempHistory->user_id == Auth::user()->id)
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    @if (Auth::user()->role != 3 && $document->stage < 8)
+                                        <div class="comment">
+                                            <div>
+                                                <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                    at {{ date('d-M-Y h:i:s') }}</p>
+
+                                                <input class="input-field" type="text" name="reference_record_comment">
+                                            </div>
+                                            <div class="button">Add Comment</div>
+                                        </div>
+                                    @endif
+                                </div>
+                           @endif
+                        
 
                             <div class="col-6">
                                 <div class="group-input">
@@ -1122,7 +1203,7 @@
                             </div>
                             @endif
 
-
+                          @if($document->document_type_id == 'SOP')
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="keyword">Keywords</label>
@@ -1172,6 +1253,61 @@
                                     @endforeach
                                 </div>
                             </div>
+                          @else
+                            <div class="col-md-12" style="display: none;">
+                                <div class="group-input">
+                                    <label for="keyword">Keywords</label>
+                                    <div class="add-keyword">
+                                        <input type="text" id="sourceField" class="mb-0" maxlength="15"
+                                            {{ Helpers::isRevised($document->stage) }}>
+                                        <button id="addButton" type="button">ADD</button>
+                                    </div>
+                                    <ul id="displayField" class="d-flex justify-content-between align-items-center">
+                                        @if (!empty($keywords))
+                                            @foreach ($keywords as $lan)
+                                                <li>
+                                                    {{ $lan->keyword }}
+                                                    <span class="close-icon ms-2">x</span>
+                                                </li>
+                                            @endforeach
+                                        @endif
+                                    </ul>
+                                    <select name="keywords[]" class="targetField" multiple id="keywords"
+                                        style="display: none">
+                                        @if (!empty($keywords))
+                                            @foreach ($keywords as $lan)
+                                                <option value="{{ $lan->keyword }}" selected>
+                                                    {{ $lan->keyword }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Keywords' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+                          @endif
+                          
+                          
+
+                          @if($document->document_type_id == 'SOP')
 
                             <div class="col-md-5 new-date-data-field">
                                 <div class="group-input input-date">
@@ -1225,6 +1361,7 @@
                                 @endif
 
                             </div>
+
                             <div class="col-md-2">
                                 <div class="group-input">
                                     <label for="review-period">Review Period (in years)</label>
@@ -1326,8 +1463,7 @@
                                 @endif
 
                             </div>
-
-
+                            
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="draft-doc">Attach Draft document</label>
@@ -1341,19 +1477,7 @@
                                         <p>Current file: {{ basename($document->attach_draft_doocument) }}</p>
                                     @endif
 
-                                    {{-- @if ($document->attach_draft_doocument)
-                                            <input type="hidden" name="attach_draft_doocument" value="{{ $document->attach_draft_doocument }}">
-                @php
-                $draftDocumentUrl = asset('upload/document/' . basename($document->attach_draft_doocument));
-                @endphp
-                @if (pathinfo($document->attach_draft_doocument, PATHINFO_EXTENSION) == 'pdf')
-                <iframe src="{{ $draftDocumentUrl }}" width="100%" height="600"></iframe>
-                @elseif(in_array(pathinfo($document->attach_draft_doocument, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
-                <img src="{{ $draftDocumentUrl }}" alt="Draft document" style="max-width: 100%;">
-                @else
-                <p>Preview not available for this file type.</p>
-                @endif
-                @endif --}}
+
 
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -1438,6 +1562,262 @@
                                 @endif
 
                             </div>
+                        
+                          @else
+                            <div class="col-md-5 new-date-data-field" style="display: none;">
+                              <div class="group-input input-date">
+                                    <label for="effective-date">Effective Date</label>
+                                    <div><small class="text-primary">The effective date will be automatically populated
+                                            once the record becomes effective</small></div>
+                                    <div class="calenderauditee">
+                                        <input @if ($document->stage != 1) disabled @endif type="text"
+                                            id="effective_date"
+                                            value="{{ $document->effective_date ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : '' }}"
+                                            readonly placeholder="DD-MMM-YYYY"
+                                            {{ Helpers::isRevised($document->stage) }} />
+                                        <input @if ($document->stage != 1) disabled @endif type="date"
+                                            name="effective_date" value="" class="hide-input"
+                                            min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
+                                            oninput="handleDateInput(this, 'effective_date')" />
+                                    </div>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Effective Date' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                @if (Auth::user()->role != 3)
+
+                                    <div class="comment">
+                                        <div>
+
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="effective_date_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <div class="col-md-2" style="display: none;">
+                                <div class="group-input">
+                                    <label for="review-period">Review Period (in years)</label>
+                                    <input style="margin-top: 25px;" @if ($document->stage != 1) readonly @endif
+                                        type="number" name="review_period" id="review_period" min="0"
+                                        {{ Helpers::isRevised($document->stage) }} value={{ $document->review_period }}>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Review Period' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <script>
+                                    function validateInput(input) {
+                                        if (input.value < 0) {
+                                            input.value = 0;
+                                        }
+                                    }
+                                </script>
+
+                                @if (Auth::user()->role != 3)
+
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="review_period_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <div class="col-md-5 new-date-data-field" style="display: none;">
+                                <div class="group-input input-date">
+                                    <label for="review-date">Next Review Date</label>
+
+                                    <div class="calenderauditee">
+                                        <input style="margin-top: 25px;" @if ($document->stage != 1) disabled @endif
+                                            type="text" id="next_review_date" class="new_review_date_show"
+                                            value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}"
+                                            {{ Helpers::isRevised($document->stage) }} readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input @if ($document->stage != 1) disabled @endif type="date"
+                                            name="next_review_date" value=""
+                                            class="hide-input new_review_date_hide"
+                                            min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
+                                            oninput="handleDateInput(this, 'next_review_date')" />
+                                    </div>
+
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Next-Review Date' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                        color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                @if (Auth::user()->role != 3)
+
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="next_review_date_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+                            
+                            <div class="col-md-6" style="display: none;">
+                                <div class="group-input">
+                                    <label for="draft-doc">Attach Draft document</label>
+                                    <input type="file" name="attach_draft_doocument"
+                                        style="height: 100% !important; margin-bottom: 0px !important;"
+                                        {{ Helpers::isRevised($document->stage) }}
+                                        value="{{ $document->attach_draft_doocument }}">
+                                    @if ($document->attach_draft_doocument)
+                                        <input type="hidden" name="attach_draft_doocument"
+                                            value="{{ $document->attach_draft_doocument }}">
+                                        <p>Current file: {{ basename($document->attach_draft_doocument) }}</p>
+                                    @endif
+
+
+
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Draft Document' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                        color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text"
+                                                name="attach_draft_doocument_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <div class="col-md-6" style="display: none;">
+                                <div class="group-input">
+                                    <label for="effective-doc">Attach Effective document</label>
+                                    <input type="file" name="attach_effective_docuement"
+                                        style="height: 100% !important; margin-bottom: 0px !important;"
+                                        {{ Helpers::isRevised($document->stage) }}
+                                        value="{{ $document->attach_effective_docuement }}">
+                                    @if ($document->attach_effective_docuement)
+                                        <input type="hidden" name="attach_effective_docuement"
+                                            value="{{ $document->attach_effective_docuement }}">
+                                        <p>Current file: {{ basename($document->attach_effective_docuement) }}</p>
+                                    @endif
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Effective Document' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                        color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text"
+                                                name="attach_effective_docuement_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+                          @endif
 
                         </div>
                     </div>
@@ -1447,6 +1827,7 @@
                     <div class="input-fields">
                         <div class="row">
 
+                        @if($document->document_type_id == 'SOP')
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
@@ -1511,6 +1892,78 @@
                                 @endif
 
                             </div>
+                        @else
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="reviewers">Checked By</label>
+
+                                    <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
+                                        name="reviewers[]" placeholder="Select Reviewers" multiple
+                                        @if ($document->stage != 1) disabled @endif>
+                                        @if (!empty($reviewer))
+                                            @foreach ($reviewer as $lan)
+                                                @if (Helpers::checkUserRolesreviewer($lan))
+                                                    <option value="{{ $lan->id }}"
+                                                        @if ($document->reviewers) @php
+                                $data = explode(",", $document->reviewers);
+                                $count = count($data);
+                            @endphp
+                            @for ($i = 0; $i < $count; $i++)
+                                @if ($data[$i] == $lan->id)
+                                    selected @endif
+                                                        @endfor
+                                                @endif>
+                                                {{ $lan->name }}
+                                                </option>
+                                            @endif
+                                        @endforeach
+                                        @endif
+                                    </select>
+
+
+
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Reviewers' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                <p id="reviewerError" style="color:red">**Reviewers are required</p>
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="reviewers_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+                        @endif
+
+
+
+                
+                        
+                        
 
                             <div class="col-md-6">
                                 <div class="group-input">
@@ -1574,7 +2027,8 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                        @if($document->document_type_id == 'SOP')
+                            <div class="col-md-6">  
                                 <div class="group-input">
                                     <label for="hods">HOD's</label>
                                     <select id="choices-multiple-remove-button" class="choices-multiple-approver"
@@ -1584,12 +2038,12 @@
                                         @foreach ($hods as $hod)
                                             <option value="{{ $hod->id }}"
                                                 @if ($document->hods) @php
-                        $data = explode(",",$document->hods);
-                        $count = count($data);
-                        $i=0;
-                        @endphp
-                        @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $hod->id)
-                            selected @endif
+                                                    $data = explode(",",$document->hods);
+                                                    $count = count($data);
+                                                    $i=0;
+                                                    @endphp
+                                                    @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $hod->id)
+                                                        selected @endif
                                                 @endfor>
                                                 {{ $hod->name }}
                                             </option>
@@ -1616,9 +2070,9 @@
                                         @endif
                                     @endforeach
                                 </div>
-                                {{-- <p id="approverError" style="color:red">**Approvers are required</p> --}}
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8) 
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -1631,187 +2085,65 @@
                                 @endif
 
                             </div>
-
-                            {{-- <div class="col-md-6">
+                        @else
+                            <div class="col-md-6" style="display: none;">  
                                 <div class="group-input">
-                                    <label for="reviewers-group">Reviewers Group</label>
-                                    <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}}
-        placeholder="Select Reviewers" multiple>
-        @if (!empty($reviewergroup))
-        @foreach ($reviewergroup as $lan)
-        <option value="{{ $lan->id }}" @if ($document->reviewers_group) @php
-            $data = explode(",",$document->reviewers_group);
-            $count = count($data);
-            $i=0;
-            @endphp
-            @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $lan->id)
-                selected @endif
-                @endfor
-                @endif>
-                {{ $lan->name }}
-        </option>
-        @endforeach
-        @endif
-        </select>
-        @foreach ($history as $tempHistory)
-        @if ($tempHistory->activity_type == 'Reviewers Group' && !empty($tempHistory->comment) && $tempHistory->user_id == Auth::user()->id)
-        @php
-        $users_name = DB::table('users')
-        ->where('id', $tempHistory->user_id)
-        ->value('name');
-        @endphp
-        <p style="color: blue">Modify by {{ $users_name }} at
-            {{ $tempHistory->created_at }}
-        </p>
-        <input class="input-field" style="background: #ffff0061;
-                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-        @endif
-        @endforeach
-        </div>
-
-        @if (Auth::user()->role != 3 && $document->stage < 8) <!-- Add Comment -->
-            <div class="comment">
-                <div>
-                    <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                        at {{ date('d-M-Y h:i:s') }}</p>
-
-                    <input class="input-field" type="text" name="reviewers_group_comment">
-                </div>
-                <div class="button">Add Comment</div>
-            </div>
-            @endif
-
-            </div> --}}
-
-                            {{-- <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="approvers-group">Approvers Group</label>
-                                    <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}}
-            placeholder="Select Approvers" multiple>
-            @if (!empty($approversgroup))
-            @foreach ($approversgroup as $lan)
-            <option value="{{ $lan->id }}" @if ($document->approver_group) @php
-                $data = explode(",",$document->approver_group);
-                $count = count($data);
-                $i=0;
-                @endphp
-                @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $lan->id)
-                    selected @endif
-                    @endfor
-                    @endif>
-                    {{ $lan->name }}
-            </option>
-            @endforeach
-            @endif
-            </select>
-            @foreach ($history as $tempHistory)
-            @if ($tempHistory->activity_type == 'Approvers Group' && !empty($tempHistory->comment) && $tempHistory->user_id == Auth::user()->id)
-            @php
-            $users_name = DB::table('users')
-            ->where('id', $tempHistory->user_id)
-            ->value('name');
-            @endphp
-            <p style="color: blue">Modify by {{ $users_name }} at
-                {{ $tempHistory->created_at }}
-            </p>
-            <input class="input-field" style="background: #ffff0061;
-                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-            @endif
-            @endforeach
-            </div>
-
-
-            @if (Auth::user()->role != 3 && $document->stage < 8) <!-- Add Comment -->
-                <div class="comment">
-                    <div>
-                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                            at {{ date('d-M-Y h:i:s') }}</p>
-
-                        <input class="input-field" type="text" name="approver_group_comment">
-                    </div>
-                    <div class="button">Add Comment</div>
-                </div>
-                @endif
-
-                </div> --}}
-
-                            <div class="col-12">
-                                <!-- <div class="group-input">
-                                    <label for="revision-type">Revision Type</label>
-                                    <select name="revision_type" {{ Helpers::isRevised($document->stage) }}>
-                                        <option value="0">-- Select --</option>
-                                        <option @if ($document->revision_type == 'minor') selected @endif
-                                            value="minor">Minor</option>
-                                        <option @if ($document->revision_type == 'major') selected @endif
-                                            value="major">Major</option>
-                                        <option @if ($document->revision_type == 'NA') selected @endif
-                                            value="NA">NA</option>
+                                    <label for="hods">HOD's</label>
+                                    <select id="choices-multiple-remove-button" class="choices-multiple-approver"
+                                        {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : '' }}
+                                        name="hods[]" placeholder="Select HOD's" multiple
+                                        @if ($document->stage != 1) disabled @endif>
+                                        @foreach ($hods as $hod)
+                                            <option value="{{ $hod->id }}"
+                                                @if ($document->hods) @php
+                                                    $data = explode(",",$document->hods);
+                                                    $count = count($data);
+                                                    $i=0;
+                                                    @endphp
+                                                    @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $hod->id)
+                                                        selected @endif
+                                                @endfor>
+                                                {{ $hod->name }}
+                                            </option>
+                                        @endif
+                                        @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)
-                                    @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment))
-                                    @php
-                                        $users_name = DB::table('users')
-                                            ->where('id', $tempHistory->user_id)
-                                            ->value('name');
-                                    @endphp
-                                                    <p style="color: blue">Modify by {{ $users_name }} at
-                                                        {{ $tempHistory->created_at }}
-                                                    </p>
-                                                    <input class="input-field" style="background: #ffff0061;
-                                           color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-                                    @endif
+                                        @if (
+                                            $tempHistory->activity_type == 'Approvers' &&
+                                                !empty($tempHistory->comment) &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
                                     @endforeach
-                                </div> -->
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
+                                </div>
+
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8) 
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
                                                 at {{ date('d-M-Y h:i:s') }}</p>
 
-                                            <input class="input-field" type="text" name="revision_type_comment">
+                                            <input class="input-field" type="text" name="approvers_comment">
                                         </div>
-                                        <!-- <div class="button">Add Comment</div> -->
+                                        <div class="button">Add Comment</div>
                                     </div>
                                 @endif
 
                             </div>
-
-                            <div class="col-md-12">
-                                <!-- <div class="group-input">
-                                                                                    <label for="summary">Revision Summary</label>
-
-                                                                                    <textarea name="revision_summary" {{ Helpers::isRevised($document->stage) }}>{{ $document->revision_summary }}</textarea>
-                                                                                    @foreach ($history as $tempHistory)
-    @if ($tempHistory->activity_type == 'Revision Summary' && !empty($tempHistory->comment))
-    @php
-        $users_name = DB::table('users')
-            ->where('id', $tempHistory->user_id)
-            ->value('name');
-    @endphp
-                                                                                    <p style="color: blue">Modify by {{ $users_name }} at
-                                                                                        {{ $tempHistory->created_at }}
-                                                                                    </p>
-                                                                                    <input class="input-field" style="background: #ffff0061;
-                                    color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
-    @endif
-    @endforeach
-                                                                                </div> -->
-
-                                @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}}
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="revision_summary_comment">
-                                        </div>
-                                        <!-- <div class="button">Add Comment</div> -->
-                                    </div>
-                                @endif
-
-                            </div>
-
-                        </div>
+                        @endif
                     </div>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" id="DocsaveButton"
@@ -1819,7 +2151,6 @@
                         <button type="button" class="nextButton" id="DocnextButton">Next</button>
                     </div>
                 </div>
-                <!-- ------------------------------------------------------------------------------------------------------------- -->
 
                 <!-- ------------------------------------------------------------------------------------------------------------- -->
                 <div id="add-doc" class="tabcontent">

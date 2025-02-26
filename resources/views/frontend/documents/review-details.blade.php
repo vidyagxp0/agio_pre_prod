@@ -351,9 +351,13 @@
                             <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>     --}}
 
-                            @if(in_array($document->document_type_id, ['SOP', 'BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                            @if(in_array($document->document_type_id, ['SOP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                                <iframe id="theFrame" width="100%" height="800"
+                                    src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                            
+                            @elseif(in_array($document->document_type_id, ['BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
                             @else
@@ -392,8 +396,8 @@
                         </thead>
                         <tbody>
                             @php
-                            $hod_data = explode(',', $document->hods);
-                            $i = 0;
+                                $hod_data = !empty($document->hods) ? explode(',', $document->hods) : [];
+                                $i = 0;
                             @endphp
                             @for ($i = 0; $i < count($hod_data); $i++) @php $user=DB::table('users') ->where('id', $hod_data[$i])
                                 ->first();
@@ -1074,6 +1078,8 @@
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div>
                     </div>
+
+                @if($document->document_type_id == 'SOP')   
                     @if ($document->stage == 2)
                         <input type="hidden" name="stage_id" value="HOD Review Complete" />
                     @endif
@@ -1098,6 +1104,25 @@
                             <input type="hidden" name="stage_id" value="Approval-Submit" />
                         @endif
                     @endif
+
+                @else
+                   
+                    @if ($document->stage == 5)
+                        <input type="hidden" name="stage_id" value="Checked By" />
+                    @endif
+
+                    @if ($document->stage == 4)
+                        <input type="hidden" name="stage_id" value="Reviewed" />
+                    @endif
+
+                    @if ($document->stage == 6)
+                        <input type="hidden" name="stage_id" value="Approved" />
+                    @endif
+                
+                @endif
+
+                   
+                   
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
