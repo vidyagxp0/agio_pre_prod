@@ -315,6 +315,7 @@
                     @endif
                     <div class="col-4">
                         <div>
+                            @if($document->document_type_id == 'SOP')
                             <div class="inner-block person-table" >
                                 <div class="main-title mb-0" >
                                     HOD
@@ -323,7 +324,18 @@
                                     View
                                 </button>
                             </div>
+                            @else
+                            <div class="inner-block person-table" style="display:none" >
+                                <div class="main-title mb-0" >
+                                    HOD
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-hods">
+                                    View
+                                </button>
+                            </div>
+                            @endif
 
+                            @if($document->document_type_id == 'SOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Reviewers
@@ -332,6 +344,17 @@
                                     View
                                 </button>
                             </div>
+                            @else
+                            <div class="inner-block person-table">
+                                <div class="main-title mb-0">
+                                    Checked By
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-reviewers">
+                                    View
+                                </button>
+                            </div>
+                            @endif
+
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Approvers
@@ -600,10 +623,17 @@
             <div class="modal-content">
 
                 <!-- Modal Header -->
+                 @if($document->document_type_id == 'SOP')
                 <div class="modal-header">
                     <h4 class="modal-title">Reviewers</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                @else
+                <div class="modal-header">
+                    <h4 class="modal-title">Checked By</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                @endif
 
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -611,12 +641,21 @@
                         <div class="reviewer-table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
+                                    @if($document->document_type_id == 'SOP')
                                     <tr>
                                         <th>Reviewers</th>
                                         <th>Department</th>
                                         <th>Status</th>
                                         <th>Audit Trial</th>
                                     </tr>
+                                    @else
+                                    <tr>
+                                        <th>Checked By</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Audit Trial</th>
+                                    </tr>
+                                    @endif
                                 </thead>
                                 <tbody>
                                     @php
@@ -670,7 +709,11 @@
                     @endif
                     @if ($document->reviewers_group)
                         <div class="modal-header">
+                        @if($document->document_type_id == 'SOP')
                             <h4 class="modal-title">Reviewer Group</h4>
+                        @else
+                        <h4 class="modal-title">Reviewer Group</h4>
+                        @endif
                         </div>
 
                         <div class="reviewer-table table-responsive">

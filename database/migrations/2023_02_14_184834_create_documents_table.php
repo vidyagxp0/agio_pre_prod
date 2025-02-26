@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('record')->nullable();
             $table->string('revised')->default('No');
             $table->integer('revised_doc')->default('0');
-            $table->longtext('document_name');
+            $table->longtext('document_name')->nullable();
             $table->longtext('short_description')->nullable();
             $table->string('due_dateDoc')->nullable();
             $table->longtext('description')->nullable();

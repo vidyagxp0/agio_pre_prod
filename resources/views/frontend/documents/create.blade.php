@@ -598,7 +598,7 @@
                                 </div>
                             </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="docLangContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="doc-lang">Document Language</label>
                                         <select name="document_language_id" id="doc-lang">
@@ -611,7 +611,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6" id="docLangCodeContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="doc-lang">Document Language Code</label>
                                         <div class="default-name"><span id="document_language">Not selected</span></div>
@@ -736,7 +736,7 @@
                         updateSopTypeShort();
                     });
                 </script> --}}
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="keywordsContainer" style="display: none;">
                                     <div class="group-input">
                                         <label for="keyword">Keywords</label>
                                         <div class="add-keyword">
@@ -837,6 +837,11 @@
                                         const dueDateInput = document.getElementById('due_dateDoc');
 
                                         const notifyContainer = document.getElementById('notifyContainer');
+                                        const keywordContainer = document.getElementById('keywordsContainer');
+
+                                        const docLangContainer = document.getElementById('docLangContainer');
+                                        const docLangCodeContainer = document.getElementById('docLangCodeContainer');
+
 
                                         const effectiveContainer = document.getElementById('effectiveContainer');
                                         const reviewContainer = document.getElementById('reviewContainer');
@@ -872,6 +877,11 @@
                                             effectiveContainer.style.display = 'block';
                                             reviewContainer.style.display = 'block';
                                             nextReviewContainer.style.display = 'block';
+
+                                            keywordContainer.style.display = 'block';
+                                            docLangContainer.style.display = 'block';
+                                            docLangCodeContainer.style.display = 'block';
+
 
                                             // Show HODs field
                                             hodsContainer.style.display = 'block';
