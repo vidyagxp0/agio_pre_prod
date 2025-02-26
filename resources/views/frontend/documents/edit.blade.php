@@ -335,7 +335,7 @@
                             </div> --}}
                                 </div>
                             </div>
-                        @if($document->document_type_id == 'SOP')
+                          @if($document->document_type_id == 'SOP')
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="document_name-desc">Document Name<span
@@ -364,8 +364,8 @@
                                 <p id="docnameError" style="color:red">**Document Name is required</p>
                             </div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8) <div
-                                    class="comment">
+                              @if (Auth::user()->role != 3 && $document->stage < 8)
+                                <div class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
                                             {{ date('d-M-Y h:i:s') }}
@@ -2083,67 +2083,19 @@
                                         <div class="button">Add Comment</div>
                                     </div>
                                 @endif
-
                             </div>
                         @else
-                            <div class="col-md-6" style="display: none;">  
+                            <div class="col-md-6" style="display: none">  
                                 <div class="group-input">
                                     <label for="hods">HOD's</label>
-                                    <select id="choices-multiple-remove-button" class="choices-multiple-approver"
-                                        {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : '' }}
-                                        name="hods[]" placeholder="Select HOD's" multiple
-                                        @if ($document->stage != 1) disabled @endif>
-                                        @foreach ($hods as $hod)
-                                            <option value="{{ $hod->id }}"
-                                                @if ($document->hods) @php
-                                                    $data = explode(",",$document->hods);
-                                                    $count = count($data);
-                                                    $i=0;
-                                                    @endphp
-                                                    @for ($i = 0; $i < $count; $i++) @if ($data[$i] == $hod->id)
-                                                        selected @endif
-                                                @endfor>
-                                                {{ $hod->name }}
-                                            </option>
-                                        @endif
-                                        @endforeach
+                                    <select id="" class="choices-multiple-approver"
+                                        name="hods[]" placeholder="Select HOD's" multiple>
+                                        
                                     </select>
-                                    @foreach ($history as $tempHistory)
-                                        @if (
-                                            $tempHistory->activity_type == 'Approvers' &&
-                                                !empty($tempHistory->comment) &&
-                                                $tempHistory->user_id == Auth::user()->id)
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
                                 </div>
-
-
-                                @if (Auth::user()->role != 3 && $document->stage < 8) 
-                                    <div class="comment">
-                                        <div>
-                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
-                                                at {{ date('d-M-Y h:i:s') }}</p>
-
-                                            <input class="input-field" type="text" name="approvers_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
-                                    </div>
-                                @endif
-
                             </div>
-                        @endif
+                        @endif 
+                     </div>
                     </div>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" id="DocsaveButton"
