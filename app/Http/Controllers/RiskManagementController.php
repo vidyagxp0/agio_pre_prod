@@ -6813,7 +6813,10 @@ class RiskManagementController extends Controller
             $history->risk_id = $id;
             $history->activity_type = 'Other 1 Attachment';
             $history->previous = $lastCft->Other1_attachment;
-            $history->current = implode(',',$Cft->Other1_attachment);
+            $history->current = is_array($Cft->Other1_attachment) 
+            ? implode(',', $Cft->Other1_attachment) 
+            : $Cft->Other1_attachment;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
