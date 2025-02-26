@@ -35,20 +35,16 @@
 
     </style>
 
-    <script>
-        function otherController(value, checkValue, blockID) {
-            let block = document.getElementById(blockID)
-            let blockTextarea = block.getElementsByTagName('textarea')[0];
-            let blockLabel = block.querySelector('label span.text-danger');
-            if (value === checkValue) {
-                blockLabel.classList.remove('d-none');
-                blockTextarea.setAttribute('required', 'required');
-            } else {
-                blockLabel.classList.add('d-none');
-                blockTextarea.removeAttribute('required');
-            }
+<script>
+    function otherController(value, targetValue, targetFieldId) {
+        var targetField = document.getElementById(targetFieldId);
+        if (value === targetValue) {
+            targetField.style.display = "block";
+        } else {
+            targetField.style.display = "none";
         }
-    </script>
+    }
+</script>
 
 
 <script>
@@ -212,6 +208,7 @@
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -320,6 +317,62 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+                                                
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+
+                                <!-- <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="initiator-group">Initiation Department
                                           </label>
                                                 <select name="Initiator_Group" id="initiator_group">
@@ -350,7 +403,8 @@
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror --}}
                                     </div>
-                                </div>
+                                </div> -->
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiation Department Code</label>
@@ -358,6 +412,7 @@
                                             value="" readonly>
                                     </div>
                                 </div>
+
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="short-desc">Short Description <span
@@ -565,13 +620,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
+                                    <div class="group-input" id="initiated_through_req" style="display: none;">
                                         <label for="initiated_through">Others<span
                                                 class="text-danger d-none">*</span></label>
                                         <textarea name="initiated_through_req"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
                                         <div><small class="text-primary">Please select yes if it is has recurred in past
@@ -584,14 +640,15 @@
                                             <option value="na">NA</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="repeat_nature">
                                         <label for="repeat_nature">Repeat Nature<span
                                                 class="text-danger d-none">*</span></label>
                                         <textarea name="repeat_nature"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="risk_level">Risk Level</label>
@@ -605,7 +662,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="nature-change">Nature Of Change</label>
                                         <select name="doc_change">
@@ -615,19 +672,21 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">If Others</label>
                                         <textarea name="others"></textarea>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Description of Change</label>
                                         <textarea name="bd_domestic"></textarea>
                                     </div>
                                 </div>
+
                                 <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="div_code">Division Code</label>
@@ -854,6 +913,24 @@
                                         <textarea name="other_comment" disabled></textarea>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="qa-eval-attach">Change Details Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="change_details_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="change_details_attachments[]" disabled
+                                                    oninput="addMultipleFiles(this, 'change_details_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="supervisor_comment">
@@ -2539,7 +2616,7 @@
                                 @endphp
                                 <div class="col-lg-6 store">
                                     <div class="group-input">
-                                        <label for="Contract Giver notification">Contract Giver Person</label>
+                                        <label for="Contract Giver notification">Contract Giver comment update by</label>
                                         <select name="ContractGiver_Person" class="ContractGiver_Person" id="ContractGiver_Person">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
@@ -4678,13 +4755,13 @@
             });
         });
     </script>
-    <script>
+    <!-- <script>
         // JavaScript
         document.getElementById('initiator_group').addEventListener('change', function() {
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-    </script>
+    </script> -->
 
     <style>
         .swal2-container.swal2-center.swal2-backdrop-show .swal2-icon.swal2-error.swal2-icon-show,

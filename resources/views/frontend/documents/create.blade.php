@@ -618,140 +618,7 @@
                                     </div>
                                 </div>
 
-                <script>
-                    var maxLength = 255;
 
-                    function handleDocumentSelection(selectElement) {
-                        // Get selected value
-                        const selectedType = selectElement.value;
-
-                        // Get all hidden tabs
-                        const tabs = document.querySelectorAll('.hidden-tabs');
-
-                        // Hide all tabs initially
-                        tabs.forEach(tab => {
-                            tab.style.display = 'none';
-                        });
-
-                        // Show the matching tab
-                        tabs.forEach(tab => {
-                            if (tab.getAttribute('data-id') === selectedType) {
-                                tab.style.display = 'block';
-                            }
-                        });
-
-                        // Update document type code display
-                        document.getElementById('document_type_code').innerText = selectElement.value || "Not selected";
-
-                        // Handle field validation and visibility
-                        const shortDescContainer = document.getElementById('shortDescContainer');
-                        const shortDescInput = document.getElementById('short_desc');
-
-                        const docNameContainer = document.getElementById('docNameContainer');
-                        const docNameInput = document.getElementById('docname');
-
-                        const sopTypeContainer = document.getElementById('sopTypeContainer');
-                        const sopType = document.getElementById('sop_type');
-
-                        const dueDateContainer = document.getElementById('dueDateContainer');
-                        const dueDateInput = document.getElementById('due_dateDoc');
-
-                        const notifyContainer = document.getElementById('notifyContainer');
-
-
-
-                        if (selectedType === "SOP") {
-                            shortDescContainer.style.display = 'block';
-                            shortDescInput.setAttribute('required', 'required');
-                            shortDescInput.setAttribute('name', 'short_desc');
-                            shortDescRequired.style.display = 'inline';
-
-                            docNameContainer.style.display = 'block';
-                            docNameInput.setAttribute('required', 'required');
-                            docNameInput.setAttribute('name', 'document_name');
-                            docNameRequired.style.display = 'inline';
-
-                            sopTypeContainer.style.display = 'block';
-                            sopType.setAttribute('required', 'required');
-                            sopTypeRequired.style.display = 'inline';
-
-
-                            dueDateContainer.style.display = 'block';
-                            dueDateInput.setAttribute('required', 'required');
-                            dueDateRequired.style.display = 'inline';
-
-
-                            notifyContainer.style.display = 'block';
-
-                            // Character counter for inputs
-                            $('#docname').off('keyup').on('keyup', function() {
-                                $('#rchars').text(maxLength - $(this).val().length);
-                            });
-
-                            $('#short_desc').off('keyup').on('keyup', function() {
-                                $('#new-rchars').text(maxLength - $(this).val().length);
-                            });
-
-                        } else {
-                            shortDescContainer.style.display = 'none';
-                            shortDescInput.removeAttribute('required');
-                            shortDescInput.value = '';
-
-                            docNameContainer.style.display = 'none';
-                            docNameInput.removeAttribute('required');
-                            docNameInput.value = '';
-
-                            sopTypeContainer.style.display = 'none';
-                            sopType.removeAttribute('required');
-                            sopType.value = '';
-
-                            dueDateContainer.style.display = 'none';
-                            dueDateInput.removeAttribute('required');
-                            dueDateInput.value = '';
-
-                            notifyContainer.style.display = 'none';
-                        }
-                    }
-
-                    function updateSopTypeShort() {
-                        const sopType = document.getElementById('sop_type').value;
-                        let shortName = '';
-                        if (sopType === 'SOP (Standard Operating procedure)') {
-                            shortName = 'SOP';
-                        } else if (sopType === 'EOP (Equipment Operating procedure)') {
-                            shortName = 'EOP';
-                        } else if (sopType === 'IOP (Instrument Operating Procedure)') {
-                            shortName = 'IOP';
-                        }
-                        document.getElementById('sop_type_short').value = shortName;
-                    }
-
-                    function validateForm() {
-                        let isValid = true;
-                        const shortDesc = document.getElementById('short_desc');
-                        const shortDescError = document.getElementById('short_descError');
-                        const docName = document.getElementById('docname');
-                        const docNameError = document.getElementById('docnameError');
-
-                        if (shortDesc.hasAttribute('required') && shortDesc.value.trim() === "") {
-                            shortDescError.style.display = 'inline';
-                            isValid = false;
-                        } else {
-                            shortDescError.style.display = 'none';
-                        }
-
-                        if (docName.hasAttribute('required') && docName.value.trim() === "") {
-                            docNameError.style.display = 'inline';
-                            isValid = false;
-                        } else {
-                            docNameError.style.display = 'none';
-                        }
-
-                        if (isValid) {
-                            alert("Form Submitted Successfully!");
-                        }
-                    }
-                </script>
 
                 {{-- <script>
                     var maxLength = 255;
@@ -884,7 +751,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-5 new-date-data-field">
+                                <div class="col-md-5 new-date-data-field" id="effectiveContainer" style="display: none;">
                                     <div class="group-input input-date">
                                         <label for="effective-date">Effective Date</label>
                                         <div> <small class="text-primary">The effective date will be automatically
@@ -899,7 +766,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-2 new-date-data-field">
+                                <div class="col-md-2 new-date-data-field" id="reviewContainer" style="display: none;">
                                     <div class="group-input ">
                                         <label for="review-period">Review Period (in years)</label>
 
@@ -916,7 +783,7 @@
                                     }
                                 </script>
 
-                                <div class="col-md-5 new-date-data-field">
+                                <div class="col-md-5 new-date-data-field" id="nextReviewContainer" style="display: none;">
                                     <div class="group-input input-date">
                                         <label for="next_review_date">Next Review Date</label>
                                         <div class="calenderauditee">
@@ -930,6 +797,168 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    var maxLength = 255;
+
+                                    function handleDocumentSelection(selectElement) {
+                                        // Get selected value
+                                        const selectedType = selectElement.value;
+
+                                        // Get all hidden tabs
+                                        const tabs = document.querySelectorAll('.hidden-tabs');
+
+                                        // Hide all tabs initially
+                                        tabs.forEach(tab => {
+                                            tab.style.display = 'none';
+                                        });
+
+                                        // Show the matching tab
+                                        tabs.forEach(tab => {
+                                            if (tab.getAttribute('data-id') === selectedType) {
+                                                tab.style.display = 'block';
+                                            }
+                                        });
+
+                                        // Update document type code display
+                                        document.getElementById('document_type_code').innerText = selectElement.value || "Not selected";
+
+                                        // Handle field validation and visibility
+                                        const shortDescContainer = document.getElementById('shortDescContainer');
+                                        const shortDescInput = document.getElementById('short_desc');
+
+                                        const docNameContainer = document.getElementById('docNameContainer');
+                                        const docNameInput = document.getElementById('docname');
+
+                                        const sopTypeContainer = document.getElementById('sopTypeContainer');
+                                        const sopType = document.getElementById('sop_type');
+
+                                        const dueDateContainer = document.getElementById('dueDateContainer');
+                                        const dueDateInput = document.getElementById('due_dateDoc');
+
+                                        const notifyContainer = document.getElementById('notifyContainer');
+
+                                        const effectiveContainer = document.getElementById('effectiveContainer');
+                                        const reviewContainer = document.getElementById('reviewContainer');
+                                        const nextReviewContainer = document.getElementById('nextReviewContainer');
+
+                                            // HODs field
+                                        const hodsContainer = document.getElementById('hods-container');
+                                        const hodsDropdown  = document.getElementById('hods-dropdown');
+                                        const hodsError = document.getElementById('hodError');
+                                        
+                                        if (selectedType === "SOP") {
+                                            shortDescContainer.style.display = 'block';
+                                            shortDescInput.setAttribute('required', 'required');
+                                            shortDescInput.setAttribute('name', 'short_desc');
+                                            shortDescRequired.style.display = 'inline';
+
+                                            docNameContainer.style.display = 'block';
+                                            docNameInput.setAttribute('required', 'required');
+                                            docNameInput.setAttribute('name', 'document_name');
+                                            docNameRequired.style.display = 'inline';
+
+                                            sopTypeContainer.style.display = 'block';
+                                            sopType.setAttribute('required', 'required');
+                                            sopTypeRequired.style.display = 'inline';
+
+
+                                            dueDateContainer.style.display = 'block';
+                                            dueDateInput.setAttribute('required', 'required');
+                                            dueDateRequired.style.display = 'inline';
+
+
+                                            notifyContainer.style.display = 'block';
+                                            effectiveContainer.style.display = 'block';
+                                            reviewContainer.style.display = 'block';
+                                            nextReviewContainer.style.display = 'block';
+
+                                            // Show HODs field
+                                            hodsContainer.style.display = 'block';
+                                            hodsDropdown.setAttribute('required', 'required');
+                                            hodsError.style.display = 'none';
+
+                                            // Character counter for inputs
+                                            $('#docname').off('keyup').on('keyup', function() {
+                                                $('#rchars').text(maxLength - $(this).val().length);
+                                            });
+
+                                            $('#short_desc').off('keyup').on('keyup', function() {
+                                                $('#new-rchars').text(maxLength - $(this).val().length);
+                                            });
+
+                                        } else {
+                                            shortDescContainer.style.display = 'none';
+                                            shortDescInput.removeAttribute('required');
+                                            shortDescInput.value = '';
+
+                                            docNameContainer.style.display = 'none';
+                                            docNameInput.removeAttribute('required');
+                                            docNameInput.value = '';
+
+                                            sopTypeContainer.style.display = 'none';
+                                            sopType.removeAttribute('required');
+                                            sopType.value = '';
+
+                                            dueDateContainer.style.display = 'none';
+                                            dueDateInput.removeAttribute('required');
+                                            dueDateInput.value = '';
+
+                                            notifyContainer.style.display = 'none';
+                                            effectiveContainer.style.display = 'none';
+                                            nextReviewContainer.style.display = 'none';
+                                            reviewContainer.style.display = 'none';
+
+                                            // Hide HODs field
+                                            hodsContainer.style.display = 'none';
+                                            hodsDropdown.removeAttribute('required');
+                                            hodsDropdown.value = ''; // Clear selection
+                                            hodsError.style.display = 'none';
+
+
+                                            
+                                        }
+                                    }
+
+                                    function updateSopTypeShort() {
+                                        const sopType = document.getElementById('sop_type').value;
+                                        let shortName = '';
+                                        if (sopType === 'SOP (Standard Operating procedure)') {
+                                            shortName = 'SOP';
+                                        } else if (sopType === 'EOP (Equipment Operating procedure)') {
+                                            shortName = 'EOP';
+                                        } else if (sopType === 'IOP (Instrument Operating Procedure)') {
+                                            shortName = 'IOP';
+                                        }
+                                        document.getElementById('sop_type_short').value = shortName;
+                                    }
+
+                                    function validateForm() {
+                                        let isValid = true;
+                                        const shortDesc = document.getElementById('short_desc');
+                                        const shortDescError = document.getElementById('short_descError');
+                                        const docName = document.getElementById('docname');
+                                        const docNameError = document.getElementById('docnameError');
+
+                                        if (shortDesc.hasAttribute('required') && shortDesc.value.trim() === "") {
+                                            shortDescError.style.display = 'inline';
+                                            isValid = false;
+                                        } else {
+                                            shortDescError.style.display = 'none';
+                                        }
+
+                                        if (docName.hasAttribute('required') && docName.value.trim() === "") {
+                                            docNameError.style.display = 'inline';
+                                            isValid = false;
+                                        } else {
+                                            docNameError.style.display = 'none';
+                                        }
+
+                                        if (isValid) {
+                                            alert("Form Submitted Successfully!");
+                                        }
+                                    }
+                                </script>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -953,7 +982,7 @@
 
                                <div class="col-md-6">
                                    <div class="group-input">
-                                       <label for="reviewers">Reviewers<span class="text-danger">*</span></label>
+                                       <label for="reviewers">Checked By<span class="text-danger">*</span></label>
                                        <select id="reviewers-dropdown" class="form-control" name="reviewers[]" multiple required style="display: none">
                                            @if (!empty($reviewer))
                                                @foreach ($reviewer as $lan)
@@ -983,7 +1012,7 @@
                                    <p id="approverError" style="color:red; display: none;">** Approvers are required</p>
                                </div>
 
-                               <div class="col-md-6">
+                               <div class="col-md-6" id="hods-container" style="display: none;">
                                    <div class="group-input">
                                        <label for="hods">HOD's<span class="text-danger">*</span></label>
                                        <select id="hods-dropdown" class="form-control" name="hods[]" multiple required style="display: none">

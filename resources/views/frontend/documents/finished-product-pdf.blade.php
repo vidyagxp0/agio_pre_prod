@@ -544,11 +544,15 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim
+                            <tr> 
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                    Label Claim
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->label_claim}}</td>
-                            </tr> --}}
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->label_claim, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
+                            </tr>
+
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
                                 </td>
@@ -559,11 +563,14 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
+                            <tr> 
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                    Sample Quantity for analysis
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sample_quantity}}</td>
-                            </tr> --}}
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->sample_quantity, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
@@ -590,7 +597,7 @@
 
 
                 {{-- PROCEDURE START --}}
-    <div class="other-container ">
+    {{-- <div class="other-container ">
         <table>
             <thead>
                 <tr>
@@ -613,10 +620,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     {{-- PROCEDURE START --}}
-    <div class="other-container ">
+    {{-- <div class="other-container ">
         <table>
             <thead>
                 <tr>
@@ -639,7 +646,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
             </section>
         </section>
     </div>
