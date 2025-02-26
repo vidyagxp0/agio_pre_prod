@@ -14,6 +14,7 @@ use App\Models\RecordNumber;
 use App\Models\LabIncidentAuditTrial;
 use App\Models\AuditReviewersDetails;
 use App\Models\RoleGroup;
+use App\Models\extension_new;
 use App\Models\User;
 use App\Models\lab_incidents_grid;
 // use App\Models\Labincident_Second;
@@ -6420,6 +6421,26 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 2) {
+                $extensionchild = extension_new::where('parent_id', $id)->first();
+               if ($extensionchild) {
+                $extensionchildStatus = trim(strtolower($extensionchild->status));
+                   if ($extensionchildStatus !== 'closed - done') {
+                       Session::flash('swal', [
+                           'title' => 'Extension Child Pending!',
+                           'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Sent for Next Stage',
+                       'type' => 'success',
+                   ]);
+               }
                 if (empty($changeControl->QA_Review_Comments))
                 {
                     Session::flash('swal', [
@@ -6491,6 +6512,28 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 return back();
             }
             if ($changeControl->stage == 3) {
+
+                $extensionchild = extension_new::where('parent_id', $id)->first();
+                dd($extensionchild->status);
+               if ($extensionchild) {
+                $extensionchildStatus = trim(strtolower($extensionchild->status));
+                   if ($extensionchildStatus !== 'closed - done') {
+                       Session::flash('swal', [
+                           'title' => 'Extension Child Pending!',
+                           'message' => 'You cannot proceed until Extension Child is Closed-Done.',
+                           'type' => 'warning',
+                       ]);
+
+                   return redirect()->back();
+                   }
+               } else {
+                   // Flash message for success (when the form is filled correctly)
+                   Session::flash('swal', [
+                       'title' => 'Success!',
+                       'message' => 'Sent for Next Stage',
+                       'type' => 'success',
+                   ]);
+               }
                 if (empty($changeControl->QA_initial_Comments))
                     {
                         Session::flash('swal', [

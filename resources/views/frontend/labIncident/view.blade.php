@@ -211,13 +211,13 @@
                                 <div class="">Opened</div>
                             @endif
 
-                            @if ($data->stage >= 2)
+                            @if ($data->stage >= 2 && (!isset($extensionchild) || $extensionchild->status !== 'closed - done'))
                                 <div class="active"  style="width: 8% ">QC Head/HOD Initial Review</div>
                             @else
                                 <div class="">QC Head/HOD Initial Review</div>
                             @endif
 
-                            @if ($data->stage >= 3)
+                            @if ($data->stage >= 3 && (!isset($extensionchild) || $extensionchild->status !== 'closed - done'))
                                 <div class="active">QA Initial Review</div>
                             @else
                                 <div class="">QA Initial Review</div>
