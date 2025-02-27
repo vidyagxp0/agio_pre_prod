@@ -357,10 +357,10 @@
 
 
                                         {{-- <div class="{{ $document->stage == 0 ? 'active' : '' }}">Draft
-                </div>
-                <div class="{{ $document->stage == 1 ? 'active' : '' }}">Reviewed</div>
-                <div class="{{ $document->stage == 2 ? 'active' : '' }}">Approved</div>
-                <div class="{{ $document->stage == 3 ? 'active' : '' }}">Effective</div> --}}
+                                        </div>
+                                        <div class="{{ $document->stage == 1 ? 'active' : '' }}">Reviewed</div>
+                                        <div class="{{ $document->stage == 2 ? 'active' : '' }}">Approved</div>
+                                        <div class="{{ $document->stage == 3 ? 'active' : '' }}">Effective</div> --}}
                                     </div>
                                 @else
                                     <div class="bg-danger text-white rounded-pill text-center">
@@ -373,6 +373,7 @@
 
                     <div class="col-4">
                         <div>
+                            @if($document->document_type_id == 'SOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     HOD
@@ -381,6 +382,18 @@
                                     View
                                 </button>
                             </div>
+                            @else
+                            <div class="inner-block person-table" style="display:none">
+                                <div class="main-title mb-0">
+                                    HOD
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-hods">
+                                    View
+                                </button>
+                            </div>
+                            @endif
+
+                            @if($document->document_type_id == 'SOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Reviewers
@@ -389,6 +402,16 @@
                                     View
                                 </button>
                             </div>
+                            @else
+                            <div class="inner-block person-table">
+                                <div class="main-title mb-0">
+                                    Checked By
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-reviewers">
+                                    View
+                                </button>
+                            </div>
+                            @endif
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Approvers
@@ -681,10 +704,18 @@
                 <div class="modal-content">
 
                     <!-- Modal Header -->
+                     @if($document->document_type_id == 'SOP')
                     <div class="modal-header">
                         <h4 class="modal-title">Reviewers</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
+                    @else
+                    <div class="modal-header">
+                        <h4 class="modal-title">Checked By</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    @endif
+
 
                     <!-- Modal body -->
 
@@ -718,12 +749,21 @@
                         <div class="reviewer-table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
+                                    @if($document->document_type_id == 'SOP')
                                     <tr>
                                         <th>Reviewers</th>
                                         <th>Department</th>
                                         <th>Status</th>
                                         <th>Audit Trial</th>
                                     </tr>
+                                    @else
+                                    <tr>
+                                        <th>Checked By</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Audit Trial</th>
+                                    </tr>
+                                    @endif
                                 </thead>
                                 <tbody>
                                     @php
@@ -772,9 +812,15 @@
                                 </tbody>
                             </table>
                         </div>
+                        @if($document->document_type_id == 'SOP')
                         <div class="modal-header">
                             <h4 class="modal-title">Reviewer Group</h4>
                         </div>
+                        @else
+                        <div class="modal-header">
+                            <h4 class="modal-title">Checked Group</h4>
+                        </div>
+                        @endif
 
                         @if ($document->stage <= 2)
                             <div class="add-reviewer">
@@ -832,27 +878,7 @@
                                             <tr>
                                                 <td>
                                                     <div>{{ $user->name }}</div>
-                                                    {{-- @if (count($users) > 0)
-                                                <ul>
-                                                    @for ($j = 0; $j < count($users); $j++)
-                                                        @php
-                                                            $userdata = DB::table('users')
-                                                                ->where('id', $users[$j])
-                                                                ->first();
-                                                            $userdata->department = DB::table('departments')
-                                                                ->where('id', $userdata->departmentid)
-                                                                ->value('name');
-                                                            $userdata->approval = DB::table('stage_manages')
-                                                                ->where('document_id', $document->id)
-                                                                ->where('user_id', $users[$j])
-                                                                ->latest()
-                                                                ->first();
-                                                        @endphp
-                                                        <li><small>{{ $userdata->name }}</small></li>
-                                    @endfor
-
-                                    </ul>
-                                    @endif --}}
+                                                  
                                                 </td>
 
                                                 <td>{{ $user->department }}
@@ -942,9 +968,7 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    {{-- @if ($document->stage <= 2)
-                        <button type="submit">Update</button>
-                    @endif --}}
+
                     <button type="button" data-bs-dismiss="modal">Close</button>
                 </div>
         </form>

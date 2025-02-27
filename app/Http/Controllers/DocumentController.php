@@ -6025,8 +6025,6 @@ class DocumentController extends Controller
             $revisionNumber = '00';
         }
 
-        // department code wise number
-        // $documents = Document::orderBy('department_id')->get();
         $departmentId = $document->department_id;
 
         if (!$departmentId) {
@@ -6077,18 +6075,36 @@ class DocumentController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
 
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
+            // $canvas->page_text(
+            //     $width / 4,
+            //     $height / 2,
+            //     $data->status,
+            //     null,
+            //     25,
+            //     [0, 0, 0],
+            //     2,
+            //     6,
+            //     -20
+            // );
+
+
+            $watermarkText = strtoupper($data->status);
+            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+            $fontSize = 25;
+            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
             $canvas->page_text(
-                $width / 4,
-                $height / 2,
-                $data->status,
-                null,
-                25,
-                [0, 0, 0],
-                2,
+                ($width - $textWidth) / 2,
+                ($height / 2) + 50,
+                $watermarkText,  
+                $font,  
+                $fontSize,  
+                [0, 0, 0],  
+                0.9,  
                 6,
-                -20
+                -20  
             );
 
             if ($controls->daily != 0) {
@@ -6378,8 +6394,6 @@ class DocumentController extends Controller
             }
         }
 
-
-
         // 🔹 SOP Number Generate
         if ($document->revised == 'Yes') {
             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
@@ -6513,9 +6527,6 @@ class DocumentController extends Controller
         $specificationValidationData_cvs = isset($specificationValidation_cvs->data)&& is_string($specificationValidation_cvs->data) ? json_decode($specificationValidation_cvs->data,true) :(is_array($specificationValidation_cvs->data) ? $specificationValidation_cvs->data:[]);
 
 
-        //  dd($specificationValidation);
-
-
        $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','specificationInprocessValidationSpecification')->first();
         $data_inproces_specification = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
 
@@ -6529,7 +6540,6 @@ class DocumentController extends Controller
 
         // $attachments = DocumentContent::where('documents', $document->document_type_id)->get();
 
-        // dd($documentContent);
         $annexures = [];
         if (!empty($documentContent->annexuredata)) {
             $annexures = unserialize($documentContent->annexuredata);
@@ -6581,19 +6591,36 @@ class DocumentController extends Controller
         $height = $canvas->get_height();
         $width = $canvas->get_width();
 
-        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
+        // $canvas->page_text(
+        //     $width / 2.4,
+        //     $height / 2,
+        //     Helpers::getDocStatusByStage($data->stage),
+        //     null,
+        //     25,
+        //     [0, 0, 0],
+        //     2,
+        //     6,
+        //     -20
+        // );
+
+        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage));
+
+        $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+        $fontSize = 25;
+        $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
 
         $canvas->page_text(
-            $width / 2.4,
-            $height / 2,
-            Helpers::getDocStatusByStage($data->stage),
-            null,
-            25,
-            [0, 0, 0],
-            2,
+            ($width - $textWidth) / 2,
+            ($height / 2)+50,
+            $watermarkText,  
+            $font,  
+            $fontSize,  
+            [0, 0, 0],  
+            0.2,  
             6,
-            -20
+            -25
         );
 
 
@@ -6868,18 +6895,35 @@ class DocumentController extends Controller
         $height = $canvas->get_height();
         $width = $canvas->get_width();
 
-        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+
+        // $canvas->page_text(
+        //     $width / 2.4,
+        //     $height / 2,
+        //     Helpers::getDocStatusByStage($data->stage),
+        //     null,
+        //     25,
+        //     [0, 0, 0],
+        //     2,
+        //     6,
+        //     -20
+        // );
+        $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage));
+
+        $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+        $fontSize = 25; // Adjust as needed
+        $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
 
         $canvas->page_text(
-            $width / 2.4,
-            $height / 2,
-            Helpers::getDocStatusByStage($data->stage),
-            null,
-            25,
-            [0, 0, 0],
-            2,
+            ($width - $textWidth) / 2,
+            ($height / 2)+50,
+            $watermarkText,  
+            $font,  
+            $fontSize,  
+            [0, 0, 0],  
+            0.2,  
             6,
-            -20
+            -25
         );
 
         if ($data->documents) {
@@ -6927,33 +6971,38 @@ class DocumentController extends Controller
 
         if ($document->revised == 'Yes') {
             $latestRevision = Document::where('revised_doc', $document->id)
-                                       ->max('minor');
+                                    ->max('minor');
             $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
             $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
         } else {
             $revisionNumber = '00';
         }
 
-        // department code wise number
-        // $documents = Document::orderBy('department_id')->get();
+        // Filter documents by department_id and sop_type_short
         $departmentId = $document->department_id;
+        $sopTypeShort = $document->sop_type_short;
 
         if (!$departmentId) {
             return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
         }
 
-        $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
+        $documents = Document::where('department_id', $departmentId)
+            ->where('sop_type_short', $sopTypeShort)
+            ->orderBy('id')
+            ->get();
 
         $counter = 0;
         foreach ($documents as $doc) {
             $counter++;
             $doc->currentId = $counter;
+
             if ($doc->id == $id) {
                 $currentId = $doc->currentId;
             }
         }
 
-        // 🔹 SOP Number (Same As viewPDF)
+
+        // 🔹 SOP Number Generate
         if ($document->revised == 'Yes') {
             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
         } else {
@@ -6965,7 +7014,6 @@ class DocumentController extends Controller
         } else {
             $sopNumber = "{$document->sop_type_short}/{$document->department_id}/" . str_pad($currentId, 3, '0', STR_PAD_LEFT) . "-{$revisionNumber}";
         }
-
 
         if ($controls) {
             set_time_limit(30);
@@ -7034,19 +7082,35 @@ class DocumentController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
 
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
+            // $canvas->page_text(
+            //     $width / 2.9,
+            //     $height / 2,
+            //     $data->status,
+            //     null,
+            //     25,
+            //     [0, 0, 0],
+            //     12,
+            //     6,
+            //     -20
+            // );
+
+            $watermarkText = strtoupper($data->status);
+            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+            $fontSize = 25;
+            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
             $canvas->page_text(
-                $width / 2.9,
-                $height / 2,
-                $data->status,
-                null,
-                25,
-                [0, 0, 0],
-                12,
+                ($width - $textWidth) / 2,
+                ($height / 2) + 50,
+                $watermarkText,  
+                $font,  
+                $fontSize,  
+                [0, 0, 0],  
+                0.9,  
                 6,
-                -20
-                
+                -20  
             );
 
 
@@ -7239,18 +7303,35 @@ class DocumentController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
 
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
 
+            // $canvas->page_text(
+            //     $width / 2.9,
+            //     $height / 2,
+            //     $data->status,
+            //     null,
+            //     25,
+            //     [0, 0, 0],
+            //     12,
+            //     6,
+            //     -20
+            // );
+
+            $watermarkText = strtoupper($data->status);
+            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+            $fontSize = 25; // Adjust for bigger watermark
+            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
             $canvas->page_text(
-                $width / 2.9,
-                $height / 2,
-                $data->status,
-                null,
-                25,
-                [0, 0, 0],
-                12,
+                ($width - $textWidth) / 2, // X-axis: perfect center
+                ($height / 2) + 50,  // Y-axis: moved 50px down
+                $watermarkText,  
+                $font,  
+                $fontSize,  
+                [0, 0, 0],  
+                0.9,  
                 6,
-                -20
+                -20  
             );
 
             if ($controls->daily != 0) {
@@ -7846,19 +7927,35 @@ class DocumentController extends Controller
                 $canvas2->text($pageWidth - $width - 50, $pageHeight - 30, $text, null, $size);
             });
 
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text(
-                $width / 2.9,
-                $height / 2,
-                $data->status,
-                null,
-                25,
-                [0, 0, 0],
-                12,
-                6,
-                -20
-            );
+            $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
+            // $canvas->page_text(
+            //     $width / 2.9,
+            //     $height / 2,
+            //     $data->status,
+            //     null,
+            //     25,
+            //     [0, 0, 0],
+            //     12,
+            //     6,
+            //     -20
+            // );
 
+            $watermarkText = strtoupper($data->status);
+            $font = $pdf->getDomPDF()->getFontMetrics()->get_font("sans-serif", "bold");
+            $fontSize = 25; // Adjust for bigger watermark
+            $textWidth = $pdf->getDomPDF()->getFontMetrics()->getTextWidth($watermarkText, $font, $fontSize);
+            
+            $canvas->page_text(
+                ($width - $textWidth) / 2, // X-axis: perfect center
+                ($height / 2) + 50,  // Y-axis: moved 50px down
+                $watermarkText,  
+                $font,  
+                $fontSize,  
+                [0, 0, 0],  
+                0.9,  
+                6,
+                -20  
+            );
 
             if ($controls->daily != 0) {
                 $user = PrintHistory::where('user_id', Auth::user()->id)->where('document_id', $id)->where('date', Carbon::now()->format('d-m-Y'))->count();

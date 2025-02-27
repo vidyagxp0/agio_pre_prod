@@ -1184,13 +1184,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if (!empty($RevisionGridData))
-                                    @foreach ($RevisionGridData as $key => $item)
+                                @if (!empty($SummaryDataGrid))
+                                    @foreach ($SummaryDataGrid as $key => $item)
                                         <tr>
-                                            <td>{{ $item['revision_number'] ?? '' }}</td>
-                                            {{-- <td>{{ $item['cc_no'] ?? '' }}</td> --}}
-                                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
-                                            <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                            <td>{{ $item['revision_no_tds'] ?? '' }}</td>
+                                            {{-- <td>{{ $item['changContNo_tds'] ?? '' }}</td> --}}
+                                            <td>{{ $item['effectiveDate_tds'] ?? '' }}</td>
+                                            <td>{{ $item['reasonRevi_tds'] ?? '' }}</td>
                                         </tr>
                                     @endforeach
                                 @else

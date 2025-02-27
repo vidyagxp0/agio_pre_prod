@@ -500,25 +500,6 @@
                     </tr> 
                 </tbody>
             </table>
-
-        {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody> --}}
-
             <span>
                 Format No.: QA/097/F2-01                               
             </span>
