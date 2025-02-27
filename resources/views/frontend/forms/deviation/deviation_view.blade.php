@@ -33,14 +33,7 @@
         /* .sub-head {
                                                                                                                                                                                                                                                                         margin-left: 280px;
                                                                                                                                                                                                                                                                         margin-right: 280px;
-                                                                                                                                                                                                                                                                        color: #4274da;
-                                                                                                                                                                                                                                                                        border-bottom: 2px solid #4274da;
-                                                                                                                                                                                                                                                                        padding-bottom: 5px;
-                                                                                                                                                                                                                                                                        margin-bottom: 20px;
-                                                                                                                                                                                                                                                                        font-weight: bold;
-                                                                                                                                                                                                                                                                        font-size: 1.2rem;
-
-                                                                                                                                                                                                                                                                    } */
+                                                                                                                                                                                                                                                                   } */
         .launch_extension {
             background: #4274da;
             color: white;
@@ -10572,173 +10565,115 @@
 
 
                         <div class="col-12 sub-head"></div>
+                       
                         <div class="col-12 why-why-chart" style="display: none;">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="why-why-chart">
-                                        Why-Why Chart
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#why_chart-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="why-why-chart">
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                                @if ($why_data && is_array($why_data))
+                                    <div class="group-input">
+                                        <label for="why-why-chart">
+                                            Why-Why Chart
+                                            <span class="text-primary add-why-question" style="font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 10px;">+</span>
+                                        </label>
+
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <tbody>
                                                     <tr style="background: #f4bb22">
                                                         <th style="width:150px;">Problem Statement :</th>
                                                         <td>
-                                                            <textarea name="why[problem_statement]">{{ $why_data['problem_statement'] }}</textarea>
+                                                            <textarea name="why_problem_statement">{{ old('why_problem_statement', $data->why_problem_statement ?? '') }}</textarea>
                                                         </td>
                                                     </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 1 <span
-                                                                onclick="addWhyField('why_1_block', 'why[why_1][index]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            @foreach ($why_data['why_1'] as $why_one)
-                                                                <div class="why_1_block whyblock-bottom">
-                                                                    <textarea name="why[why_1][{{ $loop->index }}]">{{ $why_one }}</textarea>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 2 <span
-                                                                onclick="addWhyField('why_2_block', 'why[why_2][index]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            @foreach ($why_data['why_2'] as $why_two)
-                                                                <div class="why_2_block  whyblock-bottom">
-                                                                    <textarea name="why[why_2][{{ $loop->index }}]">{{ $why_two }}</textarea>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 3 <span
-                                                                onclick="addWhyField('why_3_block', 'why[why_3][index]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            @foreach ($why_data['why_3'] as $why_three)
-                                                                <div class="why_3_block whyblock-bottom">
-                                                                    <textarea name="why[why_3][{{ $loop->index }}]">{{ $why_three }}</textarea>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 4 <span
-                                                                onclick="addWhyField('why_4_block', 'why[why_4][index]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            @foreach ($why_data['why_4'] as $why_four)
-                                                                <div class="why_4_block whyblock-bottom">
-                                                                    <textarea name="why[why_4][{{ $loop->index }}]">{{ $why_four }}</textarea>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 5 <span
-                                                                onclick="addWhyField('why_5_block', 'why[why_5][index]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            @foreach ($why_data['why_5'] as $why_five)
-                                                                <div class="why_5_block whyblock-bottom">
-                                                                    <textarea name="why[why_5][{{ $loop->index }}]">{{ $why_five }}</textarea>
-                                                                </div>
-                                                            @endforeach
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="background: #0080006b;">
-                                                        <th style="width:150px;">Root Cause :</th>
-                                                        <td>
-                                                            <textarea name="why[root-cause]">{{ $why_data['root-cause'] }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                @else
-                                                    <tr style="background: #f4bb22">
-                                                        <th style="width:150px;">Problem Statement :</th>
-                                                        <td>
-                                                            <textarea name="why[problem_statement]"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 1 <span
-                                                                onclick="addWhyField('why_1_block', 'why[why_1][]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_1_block">
-                                                                <textarea name="why[why_1][0]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 2 <span
-                                                                onclick="addWhyField('why_2_block', 'why[why_2][]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_2_block">
-                                                                <textarea name="why[why_2][0]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 3 <span
-                                                                onclick="addWhyField('why_3_block', 'why[why_3][]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_3_block">
-                                                                <textarea name="why[why_3][0]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 4 <span
-                                                                onclick="addWhyField('why_4_block', 'why[why_4][]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_4_block">
-                                                                <textarea name="why[why_4][0]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr class="why-row">
-                                                        <th style="width:150px; color: #393cd4;">
-                                                            Why 5 <span
-                                                                onclick="addWhyField('why_5_block', 'why[why_5][]')">+</span>
-                                                        </th>
-                                                        <td>
-                                                            <div class="why_5_block">
-                                                                <textarea name="why[why_5][0]"></textarea>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="background: #0080006b;">
-                                                        <th style="width:150px;">Root Cause :</th>
-                                                        <td>
-                                                            <textarea name="why[root-cause]"></textarea>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+
+                                            <div id="why-questions-container">
+                                                @php
+                                                    $whyData = !empty($data->why_data) ? unserialize($data->why_data) : [];
+                                                @endphp
+
+                                                @foreach ($whyData as $index => $why)
+                                                    <div class="why-field-wrapper">
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width:150px; color: #393cd4;">Why {{ $index + 1 }}</th>
+                                                                    <td>
+                                                                        <textarea name="why_questions[]" placeholder="Enter Why {{ $index + 1 }} Question">{{ $why['question'] }}</textarea>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:150px; color: #393cd4;">Answer {{ $index + 1 }}</th>
+                                                                    <td>
+                                                                        <textarea name="why_answers[]" placeholder="Enter Answer for Why {{ $index + 1 }}">{{ $why['answer'] }}</textarea>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
+                                            <div id="root-cause-container" style="display: {{ count($whyData) > 0 ? 'block' : 'none' }};">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr style="background: #0080006b;">
+                                                            <th style="width:150px;">Root Cause :</th>
+                                                            <td>
+                                                                <textarea name="why_root_cause">{{ old('why_root_cause', $data->why_root_cause ?? '') }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+
+                                <script>
+                                    let whyCount = {{ count($whyData) }};
+
+                                    document.querySelector('.add-why-question').addEventListener('click', function () {
+                                        whyCount++;
+
+                                        const container = document.getElementById('why-questions-container');
+                                        const rootCauseContainer = document.getElementById('root-cause-container');
+
+                                        const whySet = document.createElement('div');
+                                        whySet.className = 'why-field-wrapper';
+                                        whySet.innerHTML = `
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width:150px; color: #393cd4;">Why ${whyCount}</th>
+                                                        <td>
+                                                            <textarea name="why_questions[]" placeholder="Enter Why ${whyCount} Question"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:150px; color: #393cd4;">Answer ${whyCount}</th>
+                                                        <td>
+                                                            <textarea name="why_answers[]" placeholder="Enter Answer for Why ${whyCount}"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                                        `;
+
+                                        container.appendChild(whySet);
+                                        rootCauseContainer.style.display = 'block';
+                                        container.after(rootCauseContainer);
+                                    });
+
+                                    function removeWhyField(element) {
+                                        element.closest('.why-field-wrapper').remove();
+                                        whyCount--;
+
+                                        if (document.getElementById('why-questions-container').children.length === 0) {
+                                            document.getElementById('root-cause-container').style.display = 'none';
+                                        }
+                                    }
+                                </script>
 
 
                         <div class="sub-head"></div>
