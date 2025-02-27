@@ -4276,8 +4276,7 @@
                                 <div>
                                     @php
                                         $why_data = !empty($data->why_data) ? unserialize($data->why_data) : [];
-                                           
-                                        dd($why_data);
+                                       
                                      @endphp
 
                                     @if (is_array($why_data) && count($why_data) > 0)
