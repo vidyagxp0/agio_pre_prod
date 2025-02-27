@@ -2222,85 +2222,60 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <script>
-                                        function addWhyField(containerClass, fieldName) {
-                                            let container = document.querySelector('.' + containerClass);
+                                    <div class="col-12" id="why-why-chart-section">
+                                    <div class="group-input">
+                                        <label for="why-why-chart">
+                                            Why-Why Chart
+                                            <span class="text-primary add-why-question" style="font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 10px;">+</span>
+                                        </label>
 
-                                            // Create the textarea
-                                            let textarea = document.createElement('textarea');
-                                            textarea.name = fieldName;
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr style="background: #f4bb22">
+                                                        <th style="width:150px;">Problem Statement :</th>
+                                                        <td>
+                                                            <textarea name="why_problem_statement">{{ old('why_problem_statement', $data->why_problem_statement ?? '') }}</textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                            // Create the remove button
-                                            let removeButton = document.createElement('span');
-                                            removeButton.innerText = 'Remove';
-                                            removeButton.style.cursor = 'pointer';
-                                            removeButton.style.color = 'red';
-                                            removeButton.onclick = function() {
-                                                removeWhyField(this);
-                                            };
+                                            <div id="why-questions-container">
+                                                @php
+                                                    $whyData = !empty($data->why_data) ? unserialize($data->why_data) : [];
+                                                @endphp
 
-                                            let fieldWrapper = document.createElement('div');
-                                            fieldWrapper.classList.add('why-field-wrapper');
-                                            fieldWrapper.appendChild(textarea);
-                                            fieldWrapper.appendChild(removeButton);
+                                                @foreach ($whyData as $index => $why)
+                                                    <div class="why-field-wrapper">
+                                                        <table class="table table-bordered">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th style="width:150px; color: #393cd4;">Why {{ $index + 1 }}</th>
+                                                                    <td>
+                                                                        <textarea name="why_questions[]" placeholder="Enter Why {{ $index + 1 }} Question">{{ $why['question'] }}</textarea>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th style="width:150px; color: #393cd4;">Answer {{ $index + 1 }}</th>
+                                                                    <td>
+                                                                        <textarea name="why_answers[]" placeholder="Enter Answer for Why {{ $index + 1 }}">{{ $why['answer'] }}</textarea>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                                                    </div>
+                                                @endforeach
+                                            </div>
 
-                                            container.appendChild(fieldWrapper);
-                                        }
-
-                                        function removeWhyField(button) {
-                                            let fieldWrapper = button.parentNode; // Get the wrapper div
-                                            fieldWrapper.remove(); // Remove the wrapper div, which removes the textarea and the remove button
-                                        }
-                                    </script>
-                                    <div class="col-12" id="why-why-chart-section" style="display:none;">
-                                        <div class="group-input">
-                                            <label for="why-why-chart">
-                                                Why-Why Chart
-                                                <span class="text-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#why_chart-instruction-modal"
-                                                    style="font-size: 0.8rem; font-weight: 400;">
-                                                    (Launch Instruction)
-                                                </span>
-                                            </label>
-                                            <div class="why-why-chart">
+                                            <div id="root-cause-container" style="display: {{ count($whyData) > 0 ? 'block' : 'none' }};">
                                                 <table class="table table-bordered">
                                                     <tbody>
-                                                        <tr style="background: #f4bb22">
-                                                            <th style="width:150px;">Problem Statement</th>
-                                                            <td>
-                                                                <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
-                                                            </td>
-                                                        </tr>
-
-                                                        @foreach (range(1, 5) as $why_number)
-                                                            <tr class="why-row">
-                                                                <th style="width:150px; color: #393cd4;">
-                                                                    Why {{ $why_number }}
-                                                                    <span
-                                                                        onclick="addWhyField('why_{{ $why_number }}_block', 'why_{{ $why_number }}[]')"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</span>
-                                                                </th>
-                                                                <td>
-                                                                    <div class="why_{{ $why_number }}_block">
-                                                                        @if (!empty($data['why_' . $why_number]))
-                                                                            @foreach (unserialize($data['why_' . $why_number]) as $key => $measure)
-                                                                                <div class="why-field-wrapper">
-                                                                                    <textarea name="why_{{ $why_number }}[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                                    <span class="remove-field"
-                                                                                        onclick="removeWhyField(this)"
-                                                                                        style="cursor:pointer; color:red;">Remove</span>
-                                                                                </div>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
+                                                                <textarea name="why_root_cause">{{ old('why_root_cause', $data->why_root_cause ?? '') }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -2308,6 +2283,54 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <script>
+                                    let whyCount = {{ count($whyData) }};
+
+                                    document.querySelector('.add-why-question').addEventListener('click', function () {
+                                        whyCount++;
+
+                                        const container = document.getElementById('why-questions-container');
+                                        const rootCauseContainer = document.getElementById('root-cause-container');
+
+                                        const whySet = document.createElement('div');
+                                        whySet.className = 'why-field-wrapper';
+                                        whySet.innerHTML = `
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width:150px; color: #393cd4;">Why ${whyCount}</th>
+                                                        <td>
+                                                            <textarea name="why_questions[]" placeholder="Enter Why ${whyCount} Question"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width:150px; color: #393cd4;">Answer ${whyCount}</th>
+                                                        <td>
+                                                            <textarea name="why_answers[]" placeholder="Enter Answer for Why ${whyCount}"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                                        `;
+
+                                        container.appendChild(whySet);
+                                        rootCauseContainer.style.display = 'block';
+                                        container.after(rootCauseContainer);
+                                    });
+
+                                    function removeWhyField(element) {
+                                        element.closest('.why-field-wrapper').remove();
+                                        whyCount--;
+
+                                        if (document.getElementById('why-questions-container').children.length === 0) {
+                                            document.getElementById('root-cause-container').style.display = 'none';
+                                        }
+                                    }
+                                </script>
+
 
                                     <div class="col-12 sub-head"></div>
 

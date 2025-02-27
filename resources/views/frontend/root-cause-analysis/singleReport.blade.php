@@ -159,6 +159,52 @@
     .table_bg {
         background: #4274da57;
     }
+    .why-why-chart-container {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.block-head {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.problem-statement th {
+    background: #f4bb22;
+    width: 150px;
+}
+
+.why-label {
+    color: #393cd4;
+    width: 150px;
+}
+
+.answer-label {
+    color: #393cd4;
+    width: 150px;
+}
+
+.root-cause th {
+    background: #0080006b;
+    width: 150px;
+}
+
+.text-muted {
+    color: gray;
+}
 </style>
 
 <body>
@@ -1357,139 +1403,70 @@ Not Applicable
                     </table>
                 </div>
 
-                <div class="block-head mt-1">
-                    Why-Why Chart
-                </div>
-
-                <div class="inner-block">
-                    <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                        Problem Statement</label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->why_problem_statement)
-                            {{ $data->why_problem_statement }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div>
+                
 
 
-                <table>
 
 
-                    <tr>
+                <div class="why-why-chart-container">
+    <div class="block-head">
+        <strong>Why-Why Chart</strong>
+    </div>
 
-                        <th class="w-20">Why 1 </th>
-                        {{-- <td class="w-80">@if ($data->why_1){{ $data->why_1 }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $why_1 = unserialize($data->why_1);
-                            @endphp
+    <table class="table table-bordered">
+        <tbody>
+            <tr class="problem-statement">
+                <th>Problem Statement :</th>
+                <td>
+                    {{ $data->why_problem_statement ?? 'Not Applicable' }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 
-                            @if (is_array($why_1))
-                                @foreach ($why_1 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($why_1))
-                                {{ htmlspecialchars($why_1) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Why 2</th>
-                        {{-- <td class="w-80">@if ($data->why_2){{ $data->why_2 }}@else Not Applicable @endif</td> --}}
-                        <td class ="w-80">
-                            @php
-                                $why_2 = unserialize($data->why_2);
-                            @endphp
+    <div>
+        @php
+            $why_data = !empty($data->why_data) ? unserialize($data->why_data) : [];
+        @endphp
 
-                            @if (is_array($why_2))
-                                @foreach ($why_2 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($why_2))
-                                {{ htmlspecialchars($why_2) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <th class="w-20">Why 3</th>
-                        {{-- <td class="w-80">@if ($data->why_3){{ $data->why_3 }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $why_3 = unserialize($data->why_3);
-                            @endphp
-
-                            @if (is_array($why_3))
-                                @foreach ($why_3 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($why_3))
-                                {{ htmlspecialchars($why_3) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Why 4</th>
-                        {{-- <td class="w-80">@if ($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $why_4 = unserialize($data->why_4);
-                            @endphp
-
-                            @if (is_array($why_4))
-                                @foreach ($why_4 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($why_4))
-                                {{ htmlspecialchars($why_4) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-
-                        <th class="w-20">Why5</th>
-                        {{-- <td class="w-80">@if ($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80" colspan="3">
-                            @php
-                                $why_5 = unserialize($data->why_5);
-                            @endphp
-
-                            @if (is_array($why_5))
-                                @foreach ($why_5 as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($why_5))
-                                {{ htmlspecialchars($why_5) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+        @if (is_array($why_data) && count($why_data) > 0)
+            @foreach ($why_data as $index => $why)
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th class="why-label">Why {{ $index + 1 }}</th>
+                            <td>{{ $why['question'] ?? 'Not Provided' }}</td>
+                        </tr>
+                        <tr>
+                            <th class="answer-label">Answer {{ $index + 1 }}</th>
+                            <td>{{ $why['answer'] ?? 'Not Provided' }}</td>
+                        </tr>
+                    </tbody>
                 </table>
+            @endforeach
+        @else
+            <p class="text-muted">No Why-Why Data Available</p>
+        @endif
+    </div>
 
-                <div class="inner-block">
-                    <label class="Summer"
-                        style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                        Root Cause :</label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->why_root_cause)
-                            {{ $data->why_root_cause }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div>
+    <div id="root-cause-container">
+        <table class="table table-bordered">
+            <tbody>
+                <tr class="root-cause">
+                    <th>Root Cause :</th>
+                    <td>
+                        {{ $data->why_root_cause ?? 'Not Applicable' }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
                 <div class="block-head">
                     Is/Is Not Analysis
                 </div>
