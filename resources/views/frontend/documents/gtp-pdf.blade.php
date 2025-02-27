@@ -597,13 +597,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($RevisionGridData))
-                            @foreach ($RevisionGridData as $key => $item)
+                        @if (!empty($GtpGridData))
+                            @foreach ($GtpGridData as $key => $item)
                                 <tr>
-                                    <td>{{ $item['revision_number'] ?? '' }}</td>
-                                    <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ $item['revised_effective_date'] ?? '' }}</td>
-                                    <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                    <td>{{ $item['revision_no_gtp'] ?? '' }}</td>
+                                    <td>{{ $item['changContNo_gtp'] ?? '' }}</td>
+                                    <td>{{ $item['effectiveDate_gtp'] ?? '' }}</td>
+                                    <td>{{ $item['reasonRevi_gtp'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else

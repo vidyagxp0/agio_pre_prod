@@ -500,25 +500,6 @@
                     </tr> 
                 </tbody>
             </table>
-
-        {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody> --}}
-
             <span>
                 Format No.: QA/097/F2-01                               
             </span>
@@ -551,11 +532,14 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->brand_name_inps}}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim
+                            <tr>
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                    Label Claim
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->label_claim_inps}}</td>
-                            </tr> --}}
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->label_claim_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
                                 </td>
@@ -596,7 +580,7 @@
                 </div>
 
                                 {{-- PROCEDURE START --}}
-                    <div class="other-container ">
+                    {{-- <div class="other-container ">
                         <table>
                             <thead>
                                 <tr>
@@ -619,7 +603,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     {{-- PROCEDURE START --}}
                     <div class="other-container ">

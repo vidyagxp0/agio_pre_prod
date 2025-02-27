@@ -549,7 +549,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6" id="departContainer" style="display: none">
+                                <div class="col-md-6" id="departContainer">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                                         <select name="department_id" id="depart-name" required>
@@ -719,8 +719,8 @@
                                         const dueDateContainer = document.getElementById('dueDateContainer');
                                         const dueDateInput = document.getElementById('due_dateDoc');
 
-                                        const departContainer = document.getElementById('departContainer');
-                                        const departInput = document.getElementById('depart-name');
+                                        // const departContainer = document.getElementById('departContainer');
+                                        // const departInput = document.getElementById('depart-name');
 
                                         const docVerContainer = document.getElementById('docVerContainer');
                                         const majorInput = document.getElementById('major');
@@ -766,8 +766,8 @@
                                             dueDateInput.setAttribute('required', 'required');
                                             dueDateRequired.style.display = 'inline';
 
-                                            departContainer.style.display = 'block';
-                                            departInput.setAttribute('required', 'required');
+                                            // departContainer.style.display = 'block';
+                                            // departInput.setAttribute('required', 'required');
                                             // dueDateRequired.style.display = 'inline';
 
                                             docVerContainer.style.display = 'block';
@@ -818,9 +818,9 @@
                                             dueDateInput.removeAttribute('required');
                                             dueDateInput.value = '';
 
-                                            departContainer.style.display = 'none';
-                                            departInput.removeAttribute('required');
-                                            departInput.value = '';
+                                            // departContainer.style.display = 'none';
+                                            // departInput.removeAttribute('required');
+                                            // departInput.value = '';
 
                                             docVerContainer.style.display = 'none';
                                             majorInput.removeAttribute('required');
@@ -842,7 +842,7 @@
                                             // Hide HODs field
                                             hodsContainer.style.display = 'none';
                                             hodsDropdown.removeAttribute('required');
-                                            hodsDropdown.value = ''; // Clear selection
+                                            hodsDropdown.value = '';
                                             hodsError.style.display = 'none';
 
                                             reviewersLabel.innerHTML = "Checked By<span class='text-danger'>*</span>";
@@ -2322,7 +2322,7 @@
                             <script>
                             function addMultipleFiles(input, listId) {
                                 let fileList = document.getElementById(listId);
-                                fileList.innerHTML = ""; // Clear previous files (if needed)
+                                fileList.innerHTML = "";
 
                                 for (let file of input.files) {
                                     let fileItem = document.createElement("div");
@@ -2331,9 +2331,6 @@
                                 }
                             }
                             </script>
-
-
-
 
                         </div>
                     </div>
@@ -7762,34 +7759,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="group-input">
-                                    <label for="action-plan-grid">
-                                        Details<button type="button" name="action-plan-grid"
-                                                id="Details_add_gtp">+</button>
-                                    </label>
-                                <div class="table-responsive">
-                                        <table class="table table-bordered" id="Details-table-gtp">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 2%">Sr.No</th>
-                                                    <th style="width: 12%">Test</th>
-                                                    <th style="width: 3%">Action</th>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $serialNumber = 1;
-                                                @endphp
-                                                <td disabled>{{ $serialNumber++ }}</td>
-
-                                                <td><input type="text" name="gtp[0][test_gtp]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
-                                            </tbody>
-
-                                        </table>
-                                </div>
-                            </div> --}}
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -7797,6 +7767,37 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea name="gtp_test" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="group-input">
+                                    <label for="action-plan-grid">
+                                        Revision History<button type="button" name="action-plan-grid"
+                                                id="Details_add_gtp">+</button>
+                                    </label>
+                                    <div class="table-responsive">
+                                            <table class="table table-bordered" id="Details-table-gtp">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:5%">Sr. No.</th>
+                                                        <th class="">Revision No.</th>
+                                                        <th class="">Change Control No./ DCRF No</th>
+                                                        <th class="">Effective Date</th>
+                                                        <th class="">Reason of revision</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $serialNumber = 1;
+                                                    @endphp
+                                                    <td disabled>{{ $serialNumber++ }}</td>
+                                                    <td><input type="text" name="gtp[0][revision_no_gtp]"></td>
+                                                    <td><input type="text" name="gtp[0][changContNo_gtp]"></td>
+                                                    <td><input type="date" name="gtp[0][effectiveDate_gtp]"></td>
+                                                    <td><input type="text" name="gtp[0][reasonRevi_gtp]"></td>
+                                                </tbody>
+
+                                            </table>
                                     </div>
                                 </div>
 
@@ -7824,12 +7825,14 @@
                                         '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
                                         '"></td>' +
                                         '<td><input type="text" name="gtp[' + investdetails +
-                                        '][test_gtp]" value=""></td>' +
-
-
-                                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                                        '][revision_no_gtp]" value=""></td>' +
+                                        '<td><input type="text" name="gtp[' + investdetails +
+                                        '][changContNo_gtp]" value=""></td>' +
+                                        '<td><input type="date" name="gtp[' + investdetails +
+                                        '][effectiveDate_gtp]" value=""></td>' +                                        
+                                        '<td><input type="text" name="gtp[' + investdetails +
+                                        '][reasonRevi_gtp]" value=""></td>' +
                                         '</tr>';
-
 
                                     return html;
                                 }
@@ -9202,42 +9205,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#ObservationAdd').click(function(e) {
-                                        function generateTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="summaryResult[' + serialNumber +
-                                                '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="summaryResult[' + serialNumber +
-                                                '][job]"></td>' +
-                                                '<td><input type="text" name="summaryResult[' + serialNumber +
-                                                '][remarks]"></td>' +
-                                                '</tr>';
-                                    return html;
-                                }
-
-                                        var tableBody = $('#job-responsibilty-table tbody');
-                                        var lastIndex = 0;
-
-                                        // Check last row index from existing rows
-                                        tableBody.find('tr').each(function() {
-                                            var inputName = $(this).find('input[name^="summaryResult["]').attr('name');
-                                            var match = inputName.match(/\[(\d+)\]/);  // Extracting numeric index
-                                            if (match) {
-                                                var index = parseInt(match[1]);
-                                                if (index > lastIndex) {
-                                                    lastIndex = index; // Set highest index
-                                                }
-                                            }
-                                        });
-
-                                        var newRow = generateTableRow(lastIndex + 1); // Increment highest index
-                                        tableBody.append(newRow);
-                                    });
-                                });
-                            </script>
+                   
 
                             <div class="col-12 sub-head">
                              B) Test wise data and calculation:-
@@ -9374,6 +9342,67 @@
                                         </select>
                                     </div>
                                 </div> --}}
+
+
+
+                                    <div class="col-12 sub-head">
+                                    Revision History:-
+
+                                        <div class="group-input">
+                                            <label for="audit-agenda-grid">
+                                                <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                    
+                                                </span>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width:5%">Sr. No.</th>
+                                                            <th class="">Revision No.</th>
+                                                            <th class="">Change Control No./ DCRF No</th>
+                                                            <th class="">Effective Date</th>
+                                                            <th class="">Reason of revision</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
+                                                            <td><input type="text" name="summaryResult[0][revision_no_tds]"></td>
+                                                            <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>
+                                                            <td><input type="date" name="summaryResult[0][effectiveDate_tds]"></td>
+                                                            <td><input type="text" name="summaryResult[0][reasonRevi_tds]"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            <script>
+$(document).ready(function() {
+    $('#ObservationAdd').click(function() {
+        var tableBody = $('#job-responsibilty-table tbody');
+        var lastRow = tableBody.find('tr:last');
+        var lastIndex = lastRow.length ? parseInt(lastRow.find('input[name^="summaryResult["]').attr('name').match(/\[(\d+)\]/)[1]) : 0;
+
+        function generateTableRow(serialNumber) {
+            return `
+                <tr>
+                    <td><input disabled type="text" name="summaryResult[${serialNumber}][serial]" value="${serialNumber + 1}"></td>
+                    <td><input type="text" name="summaryResult[${serialNumber}][revision_no_tds]"></td>
+                    <td><input type="text" name="summaryResult[${serialNumber}][changContNo_tds]"></td>
+                    <td><input type="date" name="summaryResult[${serialNumber}][effectiveDate_tds]"></td>
+                    <td><input type="text" name="summaryResult[${serialNumber}][reasonRevi_tds]"></td>
+                </tr>`;
+        }
+
+        var newRow = generateTableRow(lastIndex + 1);
+        tableBody.append(newRow);
+    });
+});
+
+                            </script>
 
                             </div>
 
