@@ -820,6 +820,8 @@ class RiskManagementController extends Controller
         $data3 = new RiskAssesmentGrid();
         $data3->risk_id = $data->id;
         $data3->type = "why_chart";
+
+        
         if (!empty($request->why_problem_statement)) {
             $data3->why_problem_statement = $request->why_problem_statement;
         }
@@ -843,6 +845,16 @@ class RiskManagementController extends Controller
         if (!empty($request->why_root_cause)) {
             $data3->why_root_cause = $request->why_root_cause;
         }
+        $whyData = [];
+        if (!empty($request->why_questions) && !empty($request->why_answers)) {
+            foreach ($request->why_questions as $index => $question) {
+                $whyData[] = [
+                    'question' => $question,
+                    'answer' => $request->why_answers[$index] ?? '',
+                ];
+            }
+        }
+        $data3->why_data = !empty($whyData) ? serialize($whyData) : null;
 
         $data3->save();
 
@@ -3693,10 +3705,21 @@ class RiskManagementController extends Controller
         $data2->save();
         // =-------------------------------
         $data3 = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', 'why_chart')->first();
+     
         //  $data3 = new RiskAssesmentGrid();
         //  $data3->risk_id = $data->id;
         //  $data3->type = "why_chart";
-
+        $whyData = [];
+        if (!empty($request->why_questions) && !empty($request->why_answers)) {
+            foreach ($request->why_questions as $index => $question) {
+                $whyData[] = [
+                    'question' => $question,
+                    'answer' => $request->why_answers[$index] ?? '',
+                ];
+            }
+        }
+        $data3->why_data = !empty($whyData) ? serialize($whyData) : null;
+        
 
         if (!empty($request->why_problem_statement)) {
             $data3->why_problem_statement = $request->why_problem_statement;
@@ -3719,7 +3742,7 @@ class RiskManagementController extends Controller
         if (!empty($request->why_root_cause)) {
             $data3->why_root_cause = $request->why_root_cause;
         }
-
+       // dd($data3);
         $data3->save();
 
         // --------------------------------------------
@@ -6813,7 +6836,10 @@ class RiskManagementController extends Controller
             $history->risk_id = $id;
             $history->activity_type = 'Other 1 Attachment';
             $history->previous = $lastCft->Other1_attachment;
-            $history->current = implode(',',$Cft->Other1_attachment);
+            $history->current = is_array($Cft->Other1_attachment) 
+            ? implode(',', $Cft->Other1_attachment) 
+            : $Cft->Other1_attachment;
+
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

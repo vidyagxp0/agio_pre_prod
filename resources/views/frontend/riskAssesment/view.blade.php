@@ -462,18 +462,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
-                                        {{--  <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Date Due"><b>Date of Initiation</b></label>
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                    name="intiation_date">  --}}
-                                        {{-- <input type="hidden" value="{{ $data->intiation_date }}" name="intiation_date"> --}}
-
-                                        {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
-                                        {{--  </div>
-                                        </div>  --}}
-
+                                        {{--
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Department</b></label>
@@ -557,6 +546,8 @@
                                                 </select>
                                             </div>
                                         </div>
+
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Department Code</label>
@@ -565,6 +556,28 @@
                                                     id="initiator_group_code" readonly>
                                             </div>
                                         </div>
+
+                                        --}}
+
+
+                                        <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiator"><b>Initiator Department</b></label>
+                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                                    <input type="text" name="initiator_group_code"
+                                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                        readonly>
+                                                    {{-- <div class="default-name"> <span
+                                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                                </div>
+                                            </div>
 
 
                                         {{-- <div class="col-12">
@@ -740,12 +753,30 @@
                                         </div>
 
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Brief Description / Procedure </label>
                                                 <textarea name="Brief_description" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Brief_description }}</textarea>
                                             </div>
+                                        </div> -->
+
+
+
+
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Brief_description">Brief Description / Procedure </label>
+                                                <div class="relative-container">
+                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="tiny">{{ $data->Brief_description }}</textarea>
+                                               
+                                                </div>
+                                            </div>
                                         </div>
+
+
+
+
+
 
 
                                         <div class="col-12">
@@ -1260,208 +1291,117 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12" id="why-why-chart-section">
+    <div class="group-input">
+        <label for="why-why-chart">
+            Why-Why Chart
+            <span class="text-primary add-why-question" style="font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 10px;">+</span>
+        </label>
+
+        <div class="why-why-chart">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr style="background: #f4bb22">
+                        <th style="width:150px;">Problem Statement :</th>
+                        <td>
+                            <textarea name="why_problem_statement">{{ old('why_problem_statement', $whyChart->why_problem_statement ?? '') }}</textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="why-questions-container">
+                @php
+                    $whyData = !empty($whyChart->why_data) ? unserialize($whyChart->why_data) : [];
+                @endphp
+
+                @foreach ($whyData as $index => $why)
+                    <div class="why-field-wrapper">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th style="width:150px; color: #393cd4;">Why {{ $index + 1 }}</th>
+                                    <td>
+                                        <textarea name="why_questions[]" placeholder="Enter Why {{ $index + 1 }} Question">{{ $why['question'] }}</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width:150px; color: #393cd4;">Answer {{ $index + 1 }}</th>
+                                    <td>
+                                        <textarea name="why_answers[]" placeholder="Enter Answer for Why {{ $index + 1 }}">{{ $why['answer'] }}</textarea>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                    </div>
+                @endforeach
+            </div>
+
+            <div id="root-cause-container" style="display: {{ count($whyData) > 0 ? 'block' : 'none' }};">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr style="background: #0080006b;">
+                            <th style="width:150px;">Root Cause :</th>
+                            <td>
+                                <textarea name="why_root_cause">{{ old('why_root_cause', $whyChart->why_root_cause ?? '') }}</textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let whyCount = {{ count($whyData) }};
+
+    document.querySelector('.add-why-question').addEventListener('click', function () {
+        whyCount++;
+
+        const container = document.getElementById('why-questions-container');
+        const rootCauseContainer = document.getElementById('root-cause-container');
+
+        const whySet = document.createElement('div');
+        whySet.className = 'why-field-wrapper';
+        whySet.innerHTML = `
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width:150px; color: #393cd4;">Why ${whyCount}</th>
+                        <td>
+                            <textarea name="why_questions[]" placeholder="Enter Why ${whyCount} Question"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th style="width:150px; color: #393cd4;">Answer ${whyCount}</th>
+                        <td>
+                            <textarea name="why_answers[]" placeholder="Enter Answer for Why ${whyCount}"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+        `;
+
+        container.appendChild(whySet);
+        rootCauseContainer.style.display = 'block';
+        container.after(rootCauseContainer);
+    });
+
+    function removeWhyField(element) {
+        element.closest('.why-field-wrapper').remove();
+        whyCount--;
+
+        if (document.getElementById('why-questions-container').children.length === 0) {
+            document.getElementById('root-cause-container').style.display = 'none';
+        }
+    }
+</script>
 
 
-                                                        <div class="col-12" id="why-why-chart-section" style="display:none;">
-                                                            <div class="group-input">
-                                                                <label for="why-why-chart">
-                                                                    Why-Why Chart
-                                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                                        data-bs-target="#why_chart-instruction-modal"
-                                                                        style="font-size: 0.8rem; font-weight: 400;">
-                                                                        (Launch Instruction)
-                                                                    </span>
-                                                                </label>
-                                                                <div class="why-why-chart">
-                                                                    <table class="table table-bordered">
-                                                                        <tbody>
-                                                                            <tr style="background: #f4bb22">
-                                                                                <th style="width:150px;">Problem Statement :</th>
-                                                                                <td>
 
-                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 1 <span onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_1_block">
-                                                                                        @if (!empty($whyChart->why_1))
-                                                                                            @foreach (unserialize($whyChart->why_1) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_1[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 2 <span
-                                                                                        onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_2_block">
-                                                                                        {{-- @if (!empty($whyChart->why_2))
-                                                                                            @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_2[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
-
-                                                                                        @if (!empty($whyChart->why_2))
-                                                                                            @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_2[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 3 <span
-                                                                                        onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_3_block">
-                                                                                        {{-- @if (!empty($whyChart->why_3))
-                                                                                            @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
-
-                                                                                        @if (!empty($whyChart->why_3))
-                                                                                            @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 4 <span
-                                                                                        onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_4_block">
-                                                                                        {{-- @if (!empty($whyChart->why_4))
-                                                                                            @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
-
-                                                                                        @if (!empty($whyChart->why_4))
-                                                                                            @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="why-row">
-                                                                                <th style="width:150px; color: #393cd4;">
-                                                                                    Why 5 <span
-                                                                                        onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
-                                                                                </th>
-                                                                                <td>
-                                                                                    <div class="why_5_block">
-                                                                                        {{-- @if (!empty($whyChart->why_5))
-                                                                                            @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                                <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                                            @endforeach
-                                                                                        @endif --}}
-
-                                                                                        @if (!empty($whyChart->why_5))
-                                                                                            @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                                <div class="why-field-wrapper" style="">
-                                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                                                    <span class="remove-field"
-                                                                                                        onclick="removeWhyField(this)"
-                                                                                                        style="cursor: pointer; color: red;">
-                                                                                                        Remove
-                                                                                                    </span>
-                                                                                                </div>
-                                                                                            @endforeach
-                                                                                        @endif
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr style="background: #0080006b;">
-                                                                                <th style="width:150px;">Root Cause :</th>
-                                                                                <td>
-                                                                                    <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                            </div>
-                                    <script>
-                                                function removeWhyField(element) {
-                                                element.closest('.why-field-wrapper').remove();
-                                            }
-
-                                            function addWhyField(blockClass, fieldName) {
-                                                const block = document.querySelector(`.${blockClass}`);
-
-                                                const fieldWrapper = document.createElement('div');
-                                                fieldWrapper.className = 'why-field-wrapper';
-                                                // fieldWrapper.style.display = 'flex';
-                                                // fieldWrapper.style.gap = '10px';
-                                                // fieldWrapper.style.marginBottom = '5px';
-
-                                                const textarea = document.createElement('textarea');
-                                                textarea.name = fieldName;
-
-                                                const removeButton = document.createElement('span');
-                                                removeButton.innerText = 'Remove';
-                                                removeButton.style.cursor = 'pointer';
-                                                removeButton.style.color = 'red';
-                                                removeButton.onclick = function() {
-                                                    fieldWrapper.remove();
-                                                };
-
-                                                fieldWrapper.appendChild(textarea);
-                                                fieldWrapper.appendChild(removeButton);
-
-
-                                                block.appendChild(fieldWrapper);
-                                            }
-
-                                    </script>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -6646,7 +6586,7 @@
                                         @endif
                                         </div>
                                     </div>
-
+                                 {{--    
                                     <div class="col-lg-12 other1_reviews">
                                         <div class="group-input">
                                             <label for="Department1">Other's 1 Department
@@ -6664,6 +6604,19 @@
                                         @endif
                                         </div>
                                     </div>
+                                    --}}
+
+                                    <div class="col-lg-12 other1_reviews">
+                                        <div class="group-input">
+                                            <label for="Department1">Other's 1 Department
+                                                <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
+                                            </label>
+
+                                            <input type="text" name="Other1_Department_person" id="Other1_Department_person"
+                                                value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                                @if ($data->stage != 2) readonly @endif>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-12 mb-3 other1_reviews">
                                         <div class="group-input">
@@ -6678,28 +6631,36 @@
                                             <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 3 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                         </div>
                                     </div> --}}
-                                    <div class="col-12 other1_reviews">
+                                    
+
+                                    <div class="col-12 other1_reviews ">
                                         <div class="group-input">
                                             <label for="Audit Attachments">Other's 1 Attachments</label>
-                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
                                             <div class="file-attachment-field">
                                                 <div disabled class="file-attachment-list" id="Other1_attachment">
                                                     @if ($data1->Other1_attachment)
                                                         @foreach (json_decode($data1->Other1_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <h6 type="button" class="file-container text-dark"
+                                                                style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
-                                                                        style="font-size:20px;"></i></a>
-                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                                                        class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <a href="{{ asset('upload/' . $file) }}"
+                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                <a type="button" class="remove-file"
+                                                                    data-file-name="{{ $file }}"><i
+                                                                        class="fa-solid fa-circle-xmark"
+                                                                        style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                         @endforeach
                                                     @endif
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile"@if ($data->stage != 4) disabled @endif
-                                                        name="Other1_attachment[]" oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        type="file" id="myfile" name="Other1_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'Other1_attachment')" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -6892,7 +6853,7 @@
                                     @endif
                                     </div>
                                 </div>
-
+                            {{--
                                 <div class="col-lg-12 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'Yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
@@ -6909,6 +6870,16 @@
                                     </div>
                                 </div>
 
+                            --}}
+                                <div class="col-lg-12 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+
+                                        <input type="text" name="Other2_Department_person" id="Other2_Department_person"
+                                                value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                                @if ($data->stage != 2) readonly @endif>
+                                    </div>
+                                </div>
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
@@ -7042,6 +7013,8 @@
                                     </div>
                                 </div>
 
+
+                                {{--
                                 <div class="col-lg-12 Other3_reviews">
                                     <div class="group-input">
                                         <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'Yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
@@ -7057,7 +7030,18 @@
                                     @endif
                                     </div>
                                 </div>
+                                --}}
 
+
+                                <div class="col-lg-12 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                        
+                                        <input type="text" name="Other3_Department_person" id="Other3_Department_person"
+                                                value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                                @if ($data->stage != 2) readonly @endif>
+                                    </div>
+                                </div>
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
                                         <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
@@ -7193,7 +7177,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div> 
 
                                 <div class="col-lg-12 Other4_reviews">
                                     <div class="group-input">
@@ -7211,6 +7195,17 @@
                                     </div>
                                 </div>
 
+                                --}}
+                                <div class="col-lg-12 Other4_reviews">
+                                   <div class="group-input">
+                                        <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
+
+                                        <input type="text" name="Other4_Department_person" id="Other4_Department_person"
+                                                value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                            @if ($data->stage != 2) readonly @endif>
+
+                                    </div>
+                                </div>
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
                                         <label for="Description of Action Item15">Impact Assessment (By Other's 4)</label>
@@ -7348,7 +7343,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div> 
 
                                 <div class="col-lg-12 Other5_reviews">
                                     <div class="group-input">
@@ -7360,11 +7355,24 @@
                                             @endforeach
                                         </select>
                                         @if ($data->stage != 2)
-                                            <!-- Hidden field to retain the value if select is disabled -->
+                                           
                                             <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
                                         @endif
                                     </div>
                                 </div>
+                                --}}
+
+
+                                <div class="col-lg-12 Other5_reviews">
+                                    <div class="group-input">
+                                        <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
+
+                                        <input type="text" name="Other5_Department_person" id="Other5_Department_person"
+                                                value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                                @if ($data->stage != 2) readonly @endif>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
@@ -9940,6 +9948,38 @@
                 // initializeRiskAcceptance();
             }
         </script>
+
+                
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                function setupPersonToDepartmentMapping(personSelectId, departmentInputId, usersData) {
+                    let personSelect = document.getElementById(personSelectId);
+                    let departmentInput = document.getElementById(departmentInputId);
+
+                    if (personSelect && departmentInput) {
+                        personSelect.addEventListener("change", function () {
+                            let selectedPerson = personSelect.value;
+                            departmentInput.value = usersData[selectedPerson] || ""; // Assign department or clear field
+                        });
+                    }
+                }
+
+                // Store user department data
+                let userDepartments = {
+                    @foreach ($users as $user)
+                        "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                    @endforeach
+                };
+
+                // Apply function to "Other's 1 Person" and "Other's 1 Department"
+                setupPersonToDepartmentMapping("Other1_person", "Other1_Department_person", userDepartments);
+                setupPersonToDepartmentMapping("Other2_person", "Other2_Department_person", userDepartments);
+                setupPersonToDepartmentMapping("Other3_person", "Other3_Department_person", userDepartments);
+                setupPersonToDepartmentMapping("Other4_person", "Other4_Department_person", userDepartments);
+                setupPersonToDepartmentMapping("Other5_person", "Other5_Department_person", userDepartments);
+            });
+        </script>
+
 
          <!-- Correct Order -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
