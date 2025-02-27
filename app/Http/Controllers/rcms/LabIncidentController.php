@@ -6514,7 +6514,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
             if ($changeControl->stage == 3) {
 
                 $extensionchild = extension_new::where('parent_id', $id)->first();
-                dd($extensionchild->status);
+
+                // dd($extensionchild->id);
                if ($extensionchild) {
                 $extensionchildStatus = trim(strtolower($extensionchild->status));
                    if ($extensionchildStatus !== 'closed - done') {
