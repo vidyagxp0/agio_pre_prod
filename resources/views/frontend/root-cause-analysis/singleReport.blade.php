@@ -1409,59 +1409,59 @@ Not Applicable
 
 
                 <div class="why-why-chart-container">
-    <div class="block-head">
-        <strong>Why-Why Chart</strong>
-    </div>
+                    <div class="block-head">
+                        <strong>Why-Why Chart</strong>
+                    </div>
 
-    <table class="table table-bordered">
-        <tbody>
-            <tr class="problem-statement">
-                <th>Problem Statement :</th>
-                <td>
-                    {{ $data->why_problem_statement ?? 'Not Applicable' }}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="problem-statement">
+                                <th>Problem Statement :</th>
+                                <td>
+                                    {{ $data->why_problem_statement ?? 'Not Applicable' }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-    <div>
-        @php
-            $why_data = !empty($data->why_data) ? unserialize($data->why_data) : [];
-        @endphp
+                    <div>
+                        @php
+                            $why_data = !empty($data->why_data) ? unserialize($data->why_data) : [];
+                        @endphp
 
-        @if (is_array($why_data) && count($why_data) > 0)
-            @foreach ($why_data as $index => $why)
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <th class="why-label">Why {{ $index + 1 }}</th>
-                            <td>{{ $why['question'] ?? 'Not Provided' }}</td>
-                        </tr>
-                        <tr>
-                            <th class="answer-label">Answer {{ $index + 1 }}</th>
-                            <td>{{ $why['answer'] ?? 'Not Provided' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            @endforeach
-        @else
-            <p class="text-muted">No Why-Why Data Available</p>
-        @endif
-    </div>
+                        @if (is_array($why_data) && count($why_data) > 0)
+                            @foreach ($why_data as $index => $why)
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <th class="why-label">Why {{ $index + 1 }}</th>
+                                            <td>{{ $why['question'] ?? 'Not Applicable' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="answer-label">Answer {{ $index + 1 }}</th>
+                                            <td>{{ $why['answer'] ?? 'Not Applicable' }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            @endforeach
+                        @else
+                            <p class="text-muted">No Why-Why Data Available</p>
+                        @endif
+                    </div>
 
-    <div id="root-cause-container">
-        <table class="table table-bordered">
-            <tbody>
-                <tr class="root-cause">
-                    <th>Root Cause :</th>
-                    <td>
-                        {{ $data->why_root_cause ?? 'Not Applicable' }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                    <div id="root-cause-container">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr class="root-cause">
+                                    <th>Root Cause :</th>
+                                    <td>
+                                        {{ $data->why_root_cause ?? 'Not Applicable' }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
 
 
