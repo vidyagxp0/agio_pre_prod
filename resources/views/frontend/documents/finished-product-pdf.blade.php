@@ -595,106 +595,12 @@
                     </table>
                 </div>
 
-
-                {{-- PROCEDURE START --}}
-    {{-- <div class="other-container ">
-        <table>
-            <thead>
-                <tr>
-                    <th class="text-left">
-                        <div class="bold">Label Claim</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="custom-procedure-block">
-            <div class="custom-container">
-                <div class="custom-table-wrapper" id="custom-table2">
-                    <div class="custom-procedure-content">
-                        <div class="custom-content-wrapper">
-                            <div class="table-containers">
-                                {!! strip_tags($data->label_claim, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    {{-- PROCEDURE START --}}
-    {{-- <div class="other-container ">
-        <table>
-            <thead>
-                <tr>
-                    <th class="text-left">
-                        <div class="bold">Sample Quantity for analysis</div>
-                    </th>
-                </tr>
-            </thead>
-        </table>
-        <div class="custom-procedure-block">
-            <div class="custom-container">
-                <div class="custom-table-wrapper" id="custom-table2">
-                    <div class="custom-procedure-content">
-                        <div class="custom-content-wrapper">
-                            <div class="table-containers">
-                                {!! strip_tags($data->sample_quantity, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
             </section>
         </section>
     </div>
 
-        {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid black; width: 10%; font-weight: bold;" rowspan="2">Sr. No</th>
-                    <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Tests</th>
-                    <th style="border: 1px solid black; width: 50%; font-weight: bold;" colspan="2">Specifications</th>
-                    <th style="border: 1px solid black; width: 20%; font-weight: bold;" rowspan="2">Reference</th>
-                </tr>
-                <tr>
-                    <th style="border: 1px solid black; width: 25%; font-weight: bold;">Release</th>
-                    <th style="border: 1px solid black; width: 25%; font-weight: bold;">Shelf life</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if(!empty($finishedProductSpecificationData))
-                    @foreach($finishedProductSpecificationData as $key => $item)
-                        <tr>
-                            <td style="border: 1px solid black; font-size: 16px; font-weight: bold; text-align: center;">
-                                {{ $key+1 }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: left;">
-                                {{ $item['test'] ?? '' }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: center;">
-                                {{ $item['release'] ?? '' }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: center;">
-                                {{ $item['shelf_life'] ?? '' }}
-                            </td>
-                            <td style="border: 1px solid black; text-align: left;">
-                                {{ $item['reference'] ?? '' }}
-                            </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                            No Data Available
-                        </td>
-                    </tr>
-                @endif
-            </tbody>
-        </table> --}}
-    {{-- PROCEDURE START --}}
+
+
     <div class="other-container ">
         <table>
             <thead>
@@ -725,7 +631,6 @@
         </div>
     </div>
 
-
     <table>
         <thead>
             <tr>
@@ -740,26 +645,36 @@
         <thead>
             <tr>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
+                <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
                 <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
             </tr>
         </thead>
         <tbody>
-        @if($data->revised == 'Yes')
-            <tr>
-                <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                                                                 
-                <td style="border: 1px solid black;">{{ $data->effective_date }}</td>                 
-                <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
-            </tr>
-        @else
-        <tr>
-            <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                No Data Available
-            </td>
-        </tr>
-        @endif
+
+            @if (!empty($RevisionProductSpecificationData))
+                    @foreach ($RevisionProductSpecificationData as $key => $item)
+                        <tr>
+                            <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason'] ?? '' }}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                    </tr>
+                @endif
+
+
+
         </tbody>
     </table>
+
+
+
+
 
 
 

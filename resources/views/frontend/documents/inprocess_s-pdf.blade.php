@@ -551,11 +551,14 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->brand_name_inps}}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim
+                            <tr> 
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                    Label Claim
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->label_claim_inps}}</td>
-                            </tr> --}}
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->label_claim_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
                                 </td>
@@ -566,11 +569,14 @@
                                 </td>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->storage_condition_inps}}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for analysis
+                            <tr> 
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                    Sample Quantity for analysis
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_quantity_inps}}</td>
-                            </tr> --}}
+                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->sample_quantity_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
+                            </tr>
                             <tr>
                                 <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
@@ -594,59 +600,6 @@
                         </tbody>
                     </table>
                 </div>
-
-                                {{-- PROCEDURE START --}}
-                    <div class="other-container ">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="text-left">
-                                        <div class="bold">Label Claim</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="custom-procedure-block">
-                            <div class="custom-container">
-                                <div class="custom-table-wrapper" id="custom-table2">
-                                    <div class="custom-procedure-content">
-                                        <div class="custom-content-wrapper">
-                                            <div class="table-containers">
-                                                {!! strip_tags($data->label_claim_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- PROCEDURE START --}}
-                    <div class="other-container ">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="text-left">
-                                        <div class="bold">Sample Quantity for analysis</div>
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="custom-procedure-block">
-                            <div class="custom-container">
-                                <div class="custom-table-wrapper" id="custom-table2">
-                                    <div class="custom-procedure-content">
-                                        <div class="custom-content-wrapper">
-                                            <div class="table-containers">
-                                                {!! strip_tags($data->sample_quantity_inps, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
             </section>
         </section>
     </div>
@@ -754,7 +707,7 @@
             <thead>
                 <tr>
                     <th class="text-left">
-                        <div class="bold">Specificatiom</div>
+                        <div class="bold">SPECIFICATION</div>
                     </th>
                 </tr>
             </thead>
@@ -795,13 +748,13 @@
                 </tr>
             </thead>
             <tbody>
-                @if (!empty($RevisionGridData))
-                    @foreach ($RevisionGridData as $key => $item)
+                @if (!empty($RevisionGridInpsData))
+                    @foreach ($RevisionGridInpsData as $key => $item)
                         <tr>
-                            <td>{{ $item['revision_number'] ?? '' }}</td>
-                            <td>{{ $item['cc_no'] ?? '' }}</td>
-                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
-                            <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ $item['rev_inps_no'] ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_inps_no'] ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_inps'])->format('d-M-Y') ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason_inps'] ?? '' }}</td>
                         </tr>
                     @endforeach
                 @else

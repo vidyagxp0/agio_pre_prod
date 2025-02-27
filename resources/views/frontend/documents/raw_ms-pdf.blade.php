@@ -774,13 +774,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($RevisionGridData))
-                            @foreach ($RevisionGridData as $key => $item)
+                        @if (!empty($RevisionGridrawmsData))
+                            @foreach ($RevisionGridrawmsData as $key => $item)
                                 <tr>
-                                    <td>{{ $item['revision_number'] ?? '' }}</td>
-                                    <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ $item['revised_effective_date'] ?? '' }}</td>
-                                    <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else
