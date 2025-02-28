@@ -626,7 +626,9 @@
 
                                         <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
                                             <label for="otherFieldsUser">Other (Source of Risk/Opportunity)</label>
-                                            <input type="text" name="other_source_of_risk" class="form-control" value="{{ old('other_source_of_risk', $data->other_source_of_risk ?? '') }}" />
+                                         
+                                            <textarea name="other_source_of_risk" class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_source_of_risk }}</textarea>
+                                    
                                         </div>
 
                                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -673,8 +675,10 @@
 
                                     <div id="typeOfError" class="group-input col-6" style="display:none;">
                                         <label for="otherFieldsUser">Other(Type)</label>
-                                        <input type="text" name="other_type" class="form-control"
-                                            value="{{ old('other_type', $data->other_type ?? '') }}" />
+                                        
+
+                                       <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_type }}</textarea>
+                                       
                                     </div>
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -732,7 +736,11 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Comments">Purpose</label>
+                                                <label for="Comments">Purpose
+                                                @if ($data->stage == 1)  
+                                                  <span class="text-danger">*</span>  
+                                                 @endif
+                                                </label>
                                                 <textarea name="purpose" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="comments">{{ $data->purpose }}</textarea>
                                             </div>
                                         </div>
@@ -740,14 +748,20 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Comments">Scope</label>
+                                                <label for="Comments">Scope
+                                                @if ($data->stage == 1)  
+                                                  <span class="text-danger">*</span>  
+                                                 @endif
+                                                </label>
                                                 <textarea name="scope" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
                                             </div>
                                         </div>
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Comments">Reason for Revision</label>
+                                                <label for="Comments">Reason for Revision @if ($data->stage == 1)  
+                                                  <span class="text-danger">*</span>  
+                                                 @endif</label>
                                                 <textarea name="reason_for_revision" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->reason_for_revision }}</textarea>
                                             </div>
                                         </div>
@@ -765,7 +779,10 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Brief_description">Brief Description / Procedure </label>
+                                                <label for="Brief_description">Brief Description / Procedure 
+                                                 @if ($data->stage == 1)  
+                                                    <span class="text-danger">*</span>  
+                                                 @endif</label>
                                                 <div class="relative-container">
                                                 <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="tiny">{{ $data->Brief_description }}</textarea>
                                                
@@ -781,7 +798,10 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Comments">Documents Used for Risk Management</label>
+                                                <label for="Comments">Documents Used for Risk Management 
+                                                @if ($data->stage == 1)  
+                                                  <span class="text-danger">*</span>  
+                                                 @endif</label>
                                                 <textarea name="document_used_risk" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->document_used_risk }}</textarea>
                                             </div>
                                         </div>
@@ -851,7 +871,8 @@
 
                                                 {{-- <div class="col-6">
                                                     <div class="group-input">
-                                                        <label for="root-cause-methodology">Root Cause Methodology</label>
+                                                        <label for="root-cause-methodology">Root Cause Methodology<span
+                                                class="text-danger">*</span></label>
                                                         @php
                                                             $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                                             if (!in_array('Other_Detail', $selectedMethodologies)) {
@@ -957,25 +978,34 @@
                                                         });
                                                     </script> --}}
 
-                                                    <div class="col-6">
-                                                        <div class="group-input">
-                                                            <label for="root-cause-methodology">Root Cause Methodology</label>
-                                                            @php
-                                                                $selectedMethodologies = explode(',', $data->root_cause_methodology);
-                                                            @endphp
-                                                            <select name="root_cause_methodology[]" multiple
-                                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                id="root-cause-methodology">
-                                                                <option value="Why-Why Chart"
-                                                                    @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
-                                                                </option>
-                                                                <option value="Failure Mode and Effect Analysis"
-                                                                    @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
-                                                                    Effect Analysis</option>
-                                                                <option value="Other Detail" @if (in_array('Other Detail', $selectedMethodologies)) selected @endif>Other</option>
-                                                            </select>
-                                                        </div>
+                                                <div class="col-6">
+                                                    <div class="group-input">
+                                                        <label for="root-cause-methodology">
+                                                            Root Cause Methodology
+                                                            @if ($data->stage == 2)  
+                                                                <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
+                                                            @endif
+                                                        </label>
+                                                        @php
+                                                            $selectedMethodologies = explode(',', $data->root_cause_methodology);
+                                                        @endphp
+                                                        <select name="root_cause_methodology[]" multiple
+                                                        {{ ($data->stage == 1 || $data->stage == 2) ? '' : 'disabled' }}
+                                                            id="root-cause-methodology">
+                                                            <option value="Why-Why Chart"
+                                                                @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
+                                                            </option>
+                                                            <option value="Failure Mode and Effect Analysis"
+                                                                @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
+                                                                Effect Analysis
+                                                            </option>
+                                                            <option value="Other Detail"
+                                                                @if (in_array('Other Detail', $selectedMethodologies)) selected @endif>Other
+                                                            </option>
+                                                        </select>
                                                     </div>
+                                                </div>
+
                                                     <div class="col-6">
                                                         <div id="rootCause" class="group-input" style="display:none;">
                                                             <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
@@ -7500,8 +7530,7 @@
                                         </div>
                                         @else
                                         <div class="group-input">
-                                            <label for="Closure Comment">QA/CQA Review Comment <span
-                                                    class="text-danger">*</span></label>
+                                            <label for="Closure Comment">QA/CQA Review Comment</label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not
                                                     require completion </small></div>
@@ -7624,8 +7653,7 @@
                                         </div>
                                         @else
                                         <div class="group-input">
-                                            <label for="Closure Comment">QA/CQA Head Approval Comment <span
-                                                    class="text-danger">*</span></label>
+                                            <label for="Closure Comment">QA/CQA Head Approval Comment </label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea readonly  class="summernote" name="qa_cqa_head_comm"
