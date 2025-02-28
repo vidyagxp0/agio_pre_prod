@@ -2376,6 +2376,51 @@ class DocumentController extends Controller
             $RevisionData->data = $request->revision_history;
             $RevisionData->save();
 
+            $RevisionGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_data'])->firstOrNew();
+            $RevisionGridData->document_type_id = $document->id;
+            $RevisionGridData->identifier = 'revision_data';
+            $RevisionGridData->data = $request->revision_data;
+            $RevisionGridData->save();
+
+            $RevisionGridInpsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_inps_data'])->firstOrNew();
+            $RevisionGridInpsData->document_type_id = $document->id;
+            $RevisionGridInpsData->identifier = 'revision_inps_data';
+            $RevisionGridInpsData->data = $request->revision_inps_data;
+            $RevisionGridInpsData->save();
+
+            $RevisionGridCvsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_cvs_data'])->firstOrNew();
+            $RevisionGridCvsData->document_type_id = $document->id;
+            $RevisionGridCvsData->identifier = 'revision_cvs_data';
+            $RevisionGridCvsData->data = $request->revision_cvs_data;
+            $RevisionGridCvsData->save();
+
+            $RevisionGridfpstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_fpstp_data'])->firstOrNew();
+            $RevisionGridfpstpData->document_type_id = $document->id;
+            $RevisionGridfpstpData->identifier = 'revision_fpstp_data';
+            $RevisionGridfpstpData->data = $request->revision_fpstp_data;
+            $RevisionGridfpstpData->save();
+
+            $RevisionGridinpstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_inpstp_data'])->firstOrNew();
+            $RevisionGridinpstpData->document_type_id = $document->id;
+            $RevisionGridinpstpData->identifier = 'revision_inpstp_data';
+            $RevisionGridinpstpData->data = $request->revision_inpstp_data;
+            $RevisionGridinpstpData->save();
+
+
+            $RevisionGridcvstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_cvstp_data'])->firstOrNew();
+            $RevisionGridcvstpData->document_type_id = $document->id;
+            $RevisionGridcvstpData->identifier = 'revision_cvstp_data';
+            $RevisionGridcvstpData->data = $request->revision_cvstp_data;
+            $RevisionGridcvstpData->save();
+
+            $RevisionGridrawmsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_rawms_data'])->firstOrNew();
+            $RevisionGridrawmsData->document_type_id = $document->id;
+            $RevisionGridrawmsData->identifier = 'revision_rawms_data';
+            $RevisionGridrawmsData->data = $request->revision_rawms_data;
+            $RevisionGridrawmsData->save();
+
+
+
 
             $ProductSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'ProductSpecification'])->firstOrNew();
             $ProductSpecification->document_type_id = $document->id;
@@ -2766,6 +2811,13 @@ class DocumentController extends Controller
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
 
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
+        $RevisionGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_data")->first();
+        $RevisionGridInpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inps_data")->first();
+        $RevisionGridCvsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvs_data")->first();
+        $RevisionGridfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_fpstp_data")->first();
+        $RevisionGridinpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
+        $RevisionGridcvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
+        $RevisionGridrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
 
         // dd($GtpGridData);
 
@@ -2859,7 +2911,13 @@ class DocumentController extends Controller
             'GtpGridData',
             'currentId',
             'Specification_Validation_Data_CVS',
-            'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData',
+             'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData','RevisionGridData',
+             'RevisionGridInpsData',
+             'RevisionGridCvsData',
+             'RevisionGridfpstpData',
+             'RevisionGridinpstpData',
+             'RevisionGridcvstpData',
+             'RevisionGridrawmsData',
             'CalibrationQualificationstatus'
 
         ));
@@ -5469,6 +5527,48 @@ class DocumentController extends Controller
             $RevisionData->data = $request->revision_history;
             $RevisionData->save();
 
+            $RevisionGridData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_data'])->firstOrNew();
+            $RevisionGridData->document_type_id = $document->id;
+            $RevisionGridData->identifier = 'revision_data';
+            $RevisionGridData->data = $request->revision_data;
+            $RevisionGridData->save();
+
+            $RevisionGridInpsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_inps_data'])->firstOrNew();
+            $RevisionGridInpsData->document_type_id = $document->id;
+            $RevisionGridInpsData->identifier = 'revision_inps_data';
+            $RevisionGridInpsData->data = $request->revision_inps_data;
+            $RevisionGridInpsData->save();
+
+            $RevisionGridCvsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_cvs_data'])->firstOrNew();
+            $RevisionGridCvsData->document_type_id = $document->id;
+            $RevisionGridCvsData->identifier = 'revision_cvs_data';
+            $RevisionGridCvsData->data = $request->revision_cvs_data;
+            $RevisionGridCvsData->save();
+
+            $RevisionGridfpstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_fpstp_data'])->firstOrNew();
+            $RevisionGridfpstpData->document_type_id = $document->id;
+            $RevisionGridfpstpData->identifier = 'revision_fpstp_data';
+            $RevisionGridfpstpData->data = $request->revision_fpstp_data;
+            $RevisionGridfpstpData->save();
+
+            $RevisionGridinpstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_inpstp_data'])->firstOrNew();
+            $RevisionGridinpstpData->document_type_id = $document->id;
+            $RevisionGridinpstpData->identifier = 'revision_inpstp_data';
+            $RevisionGridinpstpData->data = $request->revision_inpstp_data;
+            $RevisionGridinpstpData->save();
+
+            $RevisionGridcvstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_cvstp_data'])->firstOrNew();
+            $RevisionGridcvstpData->document_type_id = $document->id;
+            $RevisionGridcvstpData->identifier = 'revision_cvstp_data';
+            $RevisionGridcvstpData->data = $request->revision_cvstp_data;
+            $RevisionGridcvstpData->save();
+
+            $RevisionGridrawmsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_rawms_data'])->firstOrNew();
+            $RevisionGridrawmsData->document_type_id = $document->id;
+            $RevisionGridrawmsData->identifier = 'revision_rawms_data';
+            $RevisionGridrawmsData->data = $request->revision_rawms_data;
+            $RevisionGridrawmsData->save();
+
 
             $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
             $ProductSpecification->document_type_id = $document->id;
@@ -6355,6 +6455,30 @@ class DocumentController extends Controller
         $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data)
             ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
 
+        $RevisionInpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inps_data")->first();
+        $RevisionGridInpsData = isset($RevisionInpsData->data) && is_string($RevisionInpsData->data)
+                ? json_decode($RevisionInpsData->data, true) :(is_array($RevisionInpsData->data) ? $RevisionInpsData->data:[]);
+
+        $RevisionCvsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvs_data")->first();
+        $RevisionGridCvsData = isset($RevisionCvsData->data) && is_string($RevisionCvsData->data)
+                ? json_decode($RevisionCvsData->data, true) :(is_array($RevisionCvsData->data) ? $RevisionCvsData->data:[]);
+
+        $RevisionfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_fpstp_data")->first();
+        $RevisionGridfpstpData = isset($RevisionfpstpData->data) && is_string($RevisionfpstpData->data)
+                ? json_decode($RevisionfpstpData->data, true) :(is_array($RevisionfpstpData->data) ? $RevisionfpstpData->data:[]);
+
+        $RevisioninpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
+        $RevisionGridinpstpData = isset($RevisioninpstpData->data) && is_string($RevisioninpstpData->data)
+                ? json_decode($RevisioninpstpData->data, true) :(is_array($RevisioninpstpData->data) ? $RevisioninpstpData->data:[]);
+
+        $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
+        $RevisionGridcvstpData = isset($RevisioncvstpData->data) && is_string($RevisioncvstpData->data)
+                ? json_decode($RevisioncvstpData->data, true) :(is_array($RevisioncvstpData->data) ? $RevisioncvstpData->data:[]);
+
+        $RevisionrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
+        $RevisionGridrawmsData = isset($RevisionrawmsData->data) && is_string($RevisionrawmsData->data)
+                ? json_decode($RevisionrawmsData->data, true) :(is_array($RevisionrawmsData->data) ? $RevisionrawmsData->data:[]);
+
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
         $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data)
             ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
@@ -6382,6 +6506,9 @@ class DocumentController extends Controller
 
         $Finished_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION')->first();
         $finishedProductSpecificationData = isset($Finished_product_specification->data) && is_string($Finished_product_specification->data) ? json_decode($Finished_product_specification->data) : (is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
+
+        $Revision_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','revision_data')->first();
+        $RevisionProductSpecificationData = isset($Revision_product_specification->data) && is_string($Revision_product_specification->data) ? json_decode($Revision_product_specification->data) : (is_array($Revision_product_specification->data) ? $Revision_product_specification->data : []);
 
 
         $specificationValidation = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION')->first();
@@ -6450,7 +6577,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent','RevisionProductSpecificationData','RevisionGridInpsData','RevisionGridCvsData','RevisionGridfpstpData','RevisionGridinpstpData','RevisionGridcvstpData','RevisionGridrawmsData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

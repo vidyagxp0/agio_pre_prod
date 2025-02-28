@@ -533,13 +533,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($RevisionGridData))
-                            @foreach ($RevisionGridData as $key => $item)
+                        @if (!empty($RevisionGridcvstpData))
+                            @foreach ($RevisionGridcvstpData as $key => $item)
                                 <tr>
-                                    <td>{{ $item['revision_number'] ?? '' }}</td>
-                                    <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ $item['revised_effective_date'] ?? '' }}</td>
-                                    <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_cvstp_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_cvstp_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_cvstp'])->format('d-M-Y') ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_cvstp'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else

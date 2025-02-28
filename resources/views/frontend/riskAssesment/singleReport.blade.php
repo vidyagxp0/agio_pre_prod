@@ -1106,11 +1106,11 @@
                     <tbody>
                         <tr>
                             <th class="why-label">Why {{ $index + 1 }}</th>
-                            <td>{{ $why['question'] ?? 'Not Provided' }}</td>
+                            <td>{{ $why['question'] ?? 'Not Applicable' }}</td>
                         </tr>
                         <tr>
                             <th class="answer-label">Answer {{ $index + 1 }}</th>
-                            <td>{{ $why['answer'] ?? 'Not Provided' }}</td>
+                            <td>{{ $why['answer'] ?? 'Not Applicable' }}</td>
                         </tr>
                     </tbody>
                 </table>
