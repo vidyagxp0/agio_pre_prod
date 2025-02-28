@@ -330,9 +330,9 @@
                     <td>
                         @if(!empty( $document->packing_material_name))
                           {{ $document->packing_material_name }}
-                        @endif
-                          -
                         @else
+                          -
+                        @endif
                     </td>
                 </tr>
             </tbody>
@@ -660,13 +660,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($RevisionGridData))
-                            @foreach ($RevisionGridData as $key => $item)
+                        @if (!empty($RevisionGridpamsData))
+                            @foreach ($RevisionGridpamsData as $key => $item)
                                 <tr>
-                                    <td>{{ $item['revision_number'] ?? '' }}</td>
-                                    <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-M-Y') : '' }}</td>
-                                    <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_pams_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_pams_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_pams'])->format('d-M-Y') ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_pams'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else

@@ -2419,6 +2419,18 @@ class DocumentController extends Controller
             $RevisionGridrawmsData->data = $request->revision_rawms_data;
             $RevisionGridrawmsData->save();
 
+            $RevisionGridrawmstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_rawmstp_data'])->firstOrNew();
+            $RevisionGridrawmstpData->document_type_id = $document->id;
+            $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
+            $RevisionGridrawmstpData->data = $request->revision_rawmstp_data;
+            $RevisionGridrawmstpData->save();
+
+            $RevisionGridpamsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_pams_data'])->firstOrNew();
+            $RevisionGridpamsData->document_type_id = $document->id;
+            $RevisionGridpamsData->identifier = 'revision_pams_data';
+            $RevisionGridpamsData->data = $request->revision_pams_data;
+            $RevisionGridpamsData->save();
+
 
 
 
@@ -2818,6 +2830,8 @@ class DocumentController extends Controller
         $RevisionGridinpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
         $RevisionGridcvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
         $RevisionGridrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
+        $RevisionGridrawmstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawmstp_data")->first();
+        $RevisionGridpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
 
         // dd($GtpGridData);
 
@@ -2918,6 +2932,8 @@ class DocumentController extends Controller
              'RevisionGridinpstpData',
              'RevisionGridcvstpData',
              'RevisionGridrawmsData',
+             'RevisionGridrawmstpData',
+             'RevisionGridpamsData',
             'CalibrationQualificationstatus'
 
         ));
@@ -5569,6 +5585,18 @@ class DocumentController extends Controller
             $RevisionGridrawmsData->data = $request->revision_rawms_data;
             $RevisionGridrawmsData->save();
 
+            $RevisionGridrawmstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_rawmstp_data'])->firstOrNew();
+            $RevisionGridrawmstpData->document_type_id = $document->id;
+            $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
+            $RevisionGridrawmstpData->data = $request->revision_rawmstp_data;
+            $RevisionGridrawmstpData->save();
+
+            $RevisionGridpamsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_pams_data'])->firstOrNew();
+            $RevisionGridpamsData->document_type_id = $document->id;
+            $RevisionGridpamsData->identifier = 'revision_pams_data';
+            $RevisionGridpamsData->data = $request->revision_pams_data;
+            $RevisionGridpamsData->save();
+
 
             $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
             $ProductSpecification->document_type_id = $document->id;
@@ -6479,6 +6507,14 @@ class DocumentController extends Controller
         $RevisionGridrawmsData = isset($RevisionrawmsData->data) && is_string($RevisionrawmsData->data)
                 ? json_decode($RevisionrawmsData->data, true) :(is_array($RevisionrawmsData->data) ? $RevisionrawmsData->data:[]);
 
+        $RevisionrawmstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawmstp_data")->first();
+        $RevisionGridrawmstpData = isset($RevisionrawmstpData->data) && is_string($RevisionrawmstpData->data)
+                ? json_decode($RevisionrawmstpData->data, true) :(is_array($RevisionrawmstpData->data) ? $RevisionrawmstpData->data:[]);
+
+        $RevisionpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
+        $RevisionGridpamsData = isset($RevisionpamsData->data) && is_string($RevisionpamsData->data)
+                ? json_decode($RevisionpamsData->data, true) :(is_array($RevisionpamsData->data) ? $RevisionpamsData->data:[]);
+
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
         $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data)
             ? json_decode($summaryResult->data, true) :(is_array($summaryResult->data) ? $summaryResult->data:[]);
@@ -6577,7 +6613,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent','RevisionProductSpecificationData','RevisionGridInpsData','RevisionGridCvsData','RevisionGridfpstpData','RevisionGridinpstpData','RevisionGridcvstpData','RevisionGridrawmsData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent','RevisionProductSpecificationData','RevisionGridInpsData','RevisionGridCvsData','RevisionGridfpstpData','RevisionGridinpstpData','RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridrawmstpData','RevisionGridpamsData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

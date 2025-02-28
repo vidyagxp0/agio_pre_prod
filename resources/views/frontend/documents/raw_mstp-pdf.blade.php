@@ -510,24 +510,26 @@
                     <thead style="width:20%">
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:60%">Reason of revision</th>
 
                         </tr>
                     </thead>
-                    <tbody style="">
-                    @if($data->revised == 'Yes')
-                            <tr>
-                                <td style="border: 1px solid black;">{{ $data->revised_doc }}</td>                                                                                                 
-                                <td style="border: 1px solid black;">{{ $data->effective_date }}</td>                 
-                                <td style="border: 1px solid black;">{{ $data->reason }}</td>                                                                                        
-                            </tr>
+                    <tbody>
+                        @if (!empty($RevisionGridrawmstpData))
+                            @foreach ($RevisionGridrawmstpData as $key => $item)
+                                <tr>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawmstp_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawmstp_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_rawmstp'])->format('d-M-Y') ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_rawmstp'] ?? '' }}</td>
+                                </tr>
+                            @endforeach
                         @else
-                        <tr>
-                            <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">
-                                No Data Available
-                            </td>
-                        </tr>
+                            <tr>
+                                <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                            </tr>
                         @endif
                     </tbody>
                 </table>

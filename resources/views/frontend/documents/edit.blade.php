@@ -17143,6 +17143,94 @@
                                         @endforeach
                                     </div>
                                 </div>
+
+                                <div class="group-input">
+                                        <label for="action-plan-grid">
+                                            Revision History<button type="button" name="action-plan-grid"
+                                                    id="rawmstp_revision">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="table_rawmstp_revision">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2%">Sr. No.</th>
+                                                        <th style="width: 12%">Revision No.</th>
+                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Effective Date</th>
+                                                        <th style="width: 30%">Reason of revision</th>
+                                                        <th style="width: 3%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $serialNumber = 1;
+                                                        $GtpData = isset($RevisionGridrawmstpData->data) && is_string($RevisionGridrawmstpData->data)
+                                                            ? json_decode($RevisionGridrawmstpData->data, true)
+                                                            : (is_array($RevisionGridrawmstpData->data) ? $RevisionGridrawmstpData->data : []);
+                                                    @endphp
+
+                                                    @if(!empty($GtpData))
+                                                        @foreach($GtpData as $key => $gtp_data)
+                                                            <tr>
+                                                                <td>{{ $serialNumber++ }}</td>
+                                                                <td><input type="text" name="revision_rawmstp_data[{{ $key }}][rev_rawmstp_no]" value="{{ $gtp_data['rev_rawmstp_no'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_rawmstp_data[{{ $key }}][change_ctrl_rawmstp_no]" value="{{ $gtp_data['change_ctrl_rawmstp_no'] ?? '' }}"></td>
+                                                                <td><input type="date" name="revision_rawmstp_data[{{ $key }}][eff_date_rawmstp]" value="{{ $gtp_data['eff_date_rawmstp'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_rawmstp_data[{{ $key }}][rev_reason_rawmstp]" value="{{ $gtp_data['rev_reason_rawmstp'] ?? '' }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td>{{ $serialNumber++ }}</td>
+                                                            <td><input type="text" name="revision_rawmstp_data[0][rev_rawmstp_no]"></td>
+                                                            <td><input type="text" name="revision_rawmstp_data[0][change_ctrl_rawmstp_no]"></td>
+                                                            <td><input type="date" name="revision_rawmstp_data[0][eff_date_rawmstp]"></td>
+                                                            <td><input type="text" name="revision_rawmstp_data[0][rev_reason_rawmstp]"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            function updateSerialNumbers() {
+                                                $('#table_rawmstp_revision tbody tr').each(function(index) {
+                                                    $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                                    $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
+                                                });
+                                            }
+
+                                            $('#rawmstp_revision').click(function() {
+                                                var serialNumber = $('#table_rawmstp_revision tbody tr').length + 1; // Get the next serial number
+                                                var newRow = `
+                                                    <tr>
+                                                        <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                                        <td><input type="text" name="revision_rawmstp_data[${serialNumber - 1}][rev_rawmstp_no]" value=""></td>
+                                                        <td><input type="text" name="revision_rawmstp_data[${serialNumber - 1}][change_ctrl_rawmstp_no]" value=""></td>
+                                                        <td><input type="date" name="revision_rawmstp_data[${serialNumber - 1}][eff_date_rawmstp]" value=""></td>
+                                                        <td><input type="text" name="revision_rawmstp_data[${serialNumber - 1}][rev_reason_rawmstp]" value=""></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>`;
+
+                                                $('#table_rawmstp_revision tbody').append(newRow);
+                                            });
+
+                                            // Remove row functionality
+                                            $(document).on('click', '.removeRowBtn', function() {
+                                                $(this).closest('tr').remove();
+                                                updateSerialNumbers(); // Update serial numbers after removal
+                                            });
+                                        });
+                                    </script>
+
+
+
+
+                                
                             </div>
                         </div>
                     <div class="button-block">
@@ -24831,30 +24919,122 @@
                                 </div>
                             </div> --}}
 
-                                <div class="col-12 sub-head">
-                                      SPECIFICATION
-                                    <div class="group-input">
-                                        <label for="procedure"></label>
-                                        
-                                        <textarea name="packingmaterial_specification" id="summernote" class="summernote">{{ $document->packingmaterial_specification ? $document->fps_specificationGrid : '' }}</textarea>
-                                        @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                @php
-                                                    $users_name = DB::table('users')
-                                                        ->where('id', $tempHistory->user_id)
-                                                        ->value('name');
-                                                @endphp
-                                                <p style="color: blue">Modify by {{ $users_name }} at
-                                                    {{ $tempHistory->created_at }}
-                                                </p>
-                                                <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
-                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
-                                            @endif
-                                        @endforeach
+                                    <div class="col-12 sub-head">
+                                        SPECIFICATION
+                                        <div class="group-input">
+                                            <label for="procedure"></label>
+                                            
+                                            <textarea name="packingmaterial_specification" id="summernote" class="summernote">{{ $document->packingmaterial_specification ? $document->fps_specificationGrid : '' }}</textarea>
+                                            @foreach ($history as $tempHistory)
+                                                @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
+                                                    @php
+                                                        $users_name = DB::table('users')
+                                                            ->where('id', $tempHistory->user_id)
+                                                            ->value('name');
+                                                    @endphp
+                                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                                        {{ $tempHistory->created_at }}
+                                                    </p>
+                                                    <input class="input-field"
+                                                        style="background: #ffff0061;
+                                            color: black;"
+                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                @endif
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
+
+                                    <div class="group-input">
+                                        <label for="action-plan-grid">
+                                            Revision History<button type="button" name="action-plan-grid"
+                                                    id="pams_revision">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="table_pams_revision">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2%">Sr. No.</th>
+                                                        <th style="width: 12%">Revision No.</th>
+                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Effective Date</th>
+                                                        <th style="width: 30%">Reason of revision</th>
+                                                        <th style="width: 3%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $serialNumber = 1;
+                                                        $GtpData = isset($RevisionGridpamsData->data) && is_string($RevisionGridpamsData->data)
+                                                            ? json_decode($RevisionGridpamsData->data, true)
+                                                            : (is_array($RevisionGridpamsData->data) ? $RevisionGridpamsData->data : []);
+                                                    @endphp
+
+                                                    @if(!empty($GtpData))
+                                                        @foreach($GtpData as $key => $gtp_data)
+                                                            <tr>
+                                                                <td>{{ $serialNumber++ }}</td>
+                                                                <td><input type="text" name="revision_pams_data[{{ $key }}][rev_pams_no]" value="{{ $gtp_data['rev_pams_no'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_pams_data[{{ $key }}][change_ctrl_pams_no]" value="{{ $gtp_data['change_ctrl_pams_no'] ?? '' }}"></td>
+                                                                <td><input type="date" name="revision_pams_data[{{ $key }}][eff_date_pams]" value="{{ $gtp_data['eff_date_pams'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_pams_data[{{ $key }}][rev_reason_pams]" value="{{ $gtp_data['rev_reason_pams'] ?? '' }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td>{{ $serialNumber++ }}</td>
+                                                            <td><input type="text" name="revision_pams_data[0][rev_pams_no]"></td>
+                                                            <td><input type="text" name="revision_pams_data[0][change_ctrl_pams_no]"></td>
+                                                            <td><input type="date" name="revision_pams_data[0][eff_date_pams]"></td>
+                                                            <td><input type="text" name="revision_pams_data[0][rev_reason_pams]"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            function updateSerialNumbers() {
+                                                $('#table_pams_revision tbody tr').each(function(index) {
+                                                    $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                                    $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
+                                                });
+                                            }
+
+                                            $('#pams_revision').click(function() {
+                                                var serialNumber = $('#table_pams_revision tbody tr').length + 1; // Get the next serial number
+                                                var newRow = `
+                                                    <tr>
+                                                        <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                                        <td><input type="text" name="revision_pams_data[${serialNumber - 1}][rev_pams_no]" value=""></td>
+                                                        <td><input type="text" name="revision_pams_data[${serialNumber - 1}][change_ctrl_pams_no]" value=""></td>
+                                                        <td><input type="date" name="revision_pams_data[${serialNumber - 1}][eff_date_pams]" value=""></td>
+                                                        <td><input type="text" name="revision_pams_data[${serialNumber - 1}][rev_reason_pams]" value=""></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>`;
+
+                                                $('#table_pams_revision tbody').append(newRow);
+                                            });
+
+                                            // Remove row functionality
+                                            $(document).on('click', '.removeRowBtn', function() {
+                                                $(this).closest('tr').remove();
+                                                updateSerialNumbers(); // Update serial numbers after removal
+                                            });
+                                        });
+                                    </script>
+
+
+
+
+                                    
+
+
+
+
                                 </div>
                                 </div>
                                 <div class="button-block">
