@@ -315,6 +315,7 @@
                     @endif
                     <div class="col-4">
                         <div>
+                            @if($document->document_type_id == 'SOP')
                             <div class="inner-block person-table" >
                                 <div class="main-title mb-0" >
                                     HOD
@@ -323,7 +324,18 @@
                                     View
                                 </button>
                             </div>
+                            @else
+                            <div class="inner-block person-table" style="display:none" >
+                                <div class="main-title mb-0" >
+                                    HOD
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-hods">
+                                    View
+                                </button>
+                            </div>
+                            @endif
 
+                            @if($document->document_type_id == 'SOP')
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Reviewers
@@ -332,6 +344,17 @@
                                     View
                                 </button>
                             </div>
+                            @else
+                            <div class="inner-block person-table">
+                                <div class="main-title mb-0">
+                                    Checked By
+                                </div>
+                                <button data-bs-toggle="modal" data-bs-target="#doc-reviewers">
+                                    View
+                                </button>
+                            </div>
+                            @endif
+
                             <div class="inner-block person-table">
                                 <div class="main-title mb-0">
                                     Approvers
@@ -351,11 +374,15 @@
                             <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>     --}}
 
-                            @if(in_array($document->document_type_id, ['SOP', 'BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                            @if(in_array($document->document_type_id, ['SOP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
+                            
+                            @elseif(in_array($document->document_type_id, ['BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                                <iframe id="theFrame" width="100%" height="800"
+                                src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
                             @else
                                 <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
                                     View Attachments
@@ -392,8 +419,8 @@
                         </thead>
                         <tbody>
                             @php
-                            $hod_data = explode(',', $document->hods);
-                            $i = 0;
+                                $hod_data = !empty($document->hods) ? explode(',', $document->hods) : [];
+                                $i = 0;
                             @endphp
                             @for ($i = 0; $i < count($hod_data); $i++) @php $user=DB::table('users') ->where('id', $hod_data[$i])
                                 ->first();
@@ -596,10 +623,17 @@
             <div class="modal-content">
 
                 <!-- Modal Header -->
+                 @if($document->document_type_id == 'SOP')
                 <div class="modal-header">
                     <h4 class="modal-title">Reviewers</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
+                @else
+                <div class="modal-header">
+                    <h4 class="modal-title">Checked By</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                @endif
 
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -607,12 +641,21 @@
                         <div class="reviewer-table table-responsive">
                             <table class="table table-bordered">
                                 <thead>
+                                    @if($document->document_type_id == 'SOP')
                                     <tr>
                                         <th>Reviewers</th>
                                         <th>Department</th>
                                         <th>Status</th>
                                         <th>Audit Trial</th>
                                     </tr>
+                                    @else
+                                    <tr>
+                                        <th>Checked By</th>
+                                        <th>Department</th>
+                                        <th>Status</th>
+                                        <th>Audit Trial</th>
+                                    </tr>
+                                    @endif
                                 </thead>
                                 <tbody>
                                     @php
@@ -666,7 +709,11 @@
                     @endif
                     @if ($document->reviewers_group)
                         <div class="modal-header">
+                        @if($document->document_type_id == 'SOP')
                             <h4 class="modal-title">Reviewer Group</h4>
+                        @else
+                        <h4 class="modal-title">Reviewer Group</h4>
+                        @endif
                         </div>
 
                         <div class="reviewer-table table-responsive">
@@ -1074,6 +1121,8 @@
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div>
                     </div>
+
+                @if($document->document_type_id == 'SOP')   
                     @if ($document->stage == 2)
                         <input type="hidden" name="stage_id" value="HOD Review Complete" />
                     @endif
@@ -1098,6 +1147,25 @@
                             <input type="hidden" name="stage_id" value="Approval-Submit" />
                         @endif
                     @endif
+
+                @else
+                   
+                    @if ($document->stage == 5)
+                        <input type="hidden" name="stage_id" value="Checked By" />
+                    @endif
+
+                    @if ($document->stage == 4)
+                        <input type="hidden" name="stage_id" value="Reviewed" />
+                    @endif
+
+                    @if ($document->stage == 6)
+                        <input type="hidden" name="stage_id" value="Approved" />
+                    @endif
+                
+                @endif
+
+                   
+                   
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
