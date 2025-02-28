@@ -3477,6 +3477,96 @@
                                         @endforeach
                                     </div>
                                 </div>
+
+                                    <div class="group-input">
+                                        <label for="action-plan-grid">
+                                            Revision History<button type="button" name="action-plan-grid"
+                                                    id="mfps_revision">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="table_mfps_revision">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2%">Sr. No.</th>
+                                                        <th style="width: 12%">Revision No.</th>
+                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Effective Date</th>
+                                                        <th style="width: 30%">Reason of revision</th>
+                                                        <th style="width: 3%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $serialNumber = 1;
+                                                        $GtpData = isset($RevisionGridmfpsData->data) && is_string($RevisionGridmfpsData->data)
+                                                            ? json_decode($RevisionGridmfpsData->data, true)
+                                                            : (is_array($RevisionGridmfpsData->data) ? $RevisionGridmfpsData->data : []);
+                                                    @endphp
+
+                                                    @if(!empty($GtpData))
+                                                        @foreach($GtpData as $key => $gtp_data)
+                                                            <tr>
+                                                                <td>{{ $serialNumber++ }}</td>
+                                                                <td><input type="text" name="revision_mfps_data[{{ $key }}][rev_mfps_no]" value="{{ $gtp_data['rev_mfps_no'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_mfps_data[{{ $key }}][change_ctrl_mfps_no]" value="{{ $gtp_data['change_ctrl_mfps_no'] ?? '' }}"></td>
+                                                                <td><input type="date" name="revision_mfps_data[{{ $key }}][eff_date_mfps]" value="{{ $gtp_data['eff_date_mfps'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_mfps_data[{{ $key }}][rev_reason_mfps]" value="{{ $gtp_data['rev_reason_mfps'] ?? '' }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td>{{ $serialNumber++ }}</td>
+                                                            <td><input type="text" name="revision_mfps_data[0][rev_mfps_no]"></td>
+                                                            <td><input type="text" name="revision_mfps_data[0][change_ctrl_mfps_no]"></td>
+                                                            <td><input type="date" name="revision_mfps_data[0][eff_date_mfps]"></td>
+                                                            <td><input type="text" name="revision_mfps_data[0][rev_reason_mfps]"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            function updateSerialNumbers() {
+                                                $('#table_mfps_revision tbody tr').each(function(index) {
+                                                    $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                                    $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
+                                                });
+                                            }
+
+                                            $('#mfps_revision').click(function() {
+                                                var serialNumber = $('#table_mfps_revision tbody tr').length + 1; // Get the next serial number
+                                                var newRow = `
+                                                    <tr>
+                                                        <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                                        <td><input type="text" name="revision_mfps_data[${serialNumber - 1}][rev_mfps_no]" value=""></td>
+                                                        <td><input type="text" name="revision_mfps_data[${serialNumber - 1}][change_ctrl_mfps_no]" value=""></td>
+                                                        <td><input type="date" name="revision_mfps_data[${serialNumber - 1}][eff_date_mfps]" value=""></td>
+                                                        <td><input type="text" name="revision_mfps_data[${serialNumber - 1}][rev_reason_mfps]" value=""></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>`;
+
+                                                $('#table_mfps_revision tbody').append(newRow);
+                                            });
+
+                                            // Remove row functionality
+                                            $(document).on('click', '.removeRowBtn', function() {
+                                                $(this).closest('tr').remove();
+                                                updateSerialNumbers(); // Update serial numbers after removal
+                                            });
+                                        });
+                                    </script>
+
+
+
+
+                                
+
+
                             </div>
                         </div>
                             
@@ -3548,6 +3638,92 @@
                                         @endforeach
                                     </div>
                                 </div>
+
+                                <div class="group-input">
+                                        <label for="action-plan-grid">
+                                            Revision History<button type="button" name="action-plan-grid"
+                                                    id="mfpstp_revision">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="table_mfpstp_revision">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 2%">Sr. No.</th>
+                                                        <th style="width: 12%">Revision No.</th>
+                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Effective Date</th>
+                                                        <th style="width: 30%">Reason of revision</th>
+                                                        <th style="width: 3%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $serialNumber = 1;
+                                                        $GtpData = isset($RevisionGridmfpstpData->data) && is_string($RevisionGridmfpstpData->data)
+                                                            ? json_decode($RevisionGridmfpstpData->data, true)
+                                                            : (is_array($RevisionGridmfpstpData->data) ? $RevisionGridmfpstpData->data : []);
+                                                    @endphp
+
+                                                    @if(!empty($GtpData))
+                                                        @foreach($GtpData as $key => $gtp_data)
+                                                            <tr>
+                                                                <td>{{ $serialNumber++ }}</td>
+                                                                <td><input type="text" name="revision_mfpstp_data[{{ $key }}][rev_mfpstp_no]" value="{{ $gtp_data['rev_mfpstp_no'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_mfpstp_data[{{ $key }}][change_ctrl_mfpstp_no]" value="{{ $gtp_data['change_ctrl_mfpstp_no'] ?? '' }}"></td>
+                                                                <td><input type="date" name="revision_mfpstp_data[{{ $key }}][eff_date_mfpstp]" value="{{ $gtp_data['eff_date_mfpstp'] ?? '' }}"></td>
+                                                                <td><input type="text" name="revision_mfpstp_data[{{ $key }}][rev_reason_mfpstp]" value="{{ $gtp_data['rev_reason_mfpstp'] ?? '' }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td>{{ $serialNumber++ }}</td>
+                                                            <td><input type="text" name="revision_mfpstp_data[0][rev_mfpstp_no]"></td>
+                                                            <td><input type="text" name="revision_mfpstp_data[0][change_ctrl_mfpstp_no]"></td>
+                                                            <td><input type="date" name="revision_mfpstp_data[0][eff_date_mfpstp]"></td>
+                                                            <td><input type="text" name="revision_mfpstp_data[0][rev_reason_mfpstp]"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function() {
+                                            function updateSerialNumbers() {
+                                                $('#table_mfpstp_revision tbody tr').each(function(index) {
+                                                    $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                                    $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
+                                                });
+                                            }
+
+                                            $('#mfpstp_revision').click(function() {
+                                                var serialNumber = $('#table_mfpstp_revision tbody tr').length + 1; // Get the next serial number
+                                                var newRow = `
+                                                    <tr>
+                                                        <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                                        <td><input type="text" name="revision_mfpstp_data[${serialNumber - 1}][rev_mfpstp_no]" value=""></td>
+                                                        <td><input type="text" name="revision_mfpstp_data[${serialNumber - 1}][change_ctrl_mfpstp_no]" value=""></td>
+                                                        <td><input type="date" name="revision_mfpstp_data[${serialNumber - 1}][eff_date_mfpstp]" value=""></td>
+                                                        <td><input type="text" name="revision_mfpstp_data[${serialNumber - 1}][rev_reason_mfpstp]" value=""></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>`;
+
+                                                $('#table_mfpstp_revision tbody').append(newRow);
+                                            });
+
+                                            // Remove row functionality
+                                            $(document).on('click', '.removeRowBtn', function() {
+                                                $(this).closest('tr').remove();
+                                                updateSerialNumbers(); // Update serial numbers after removal
+                                            });
+                                        });
+                                    </script>
+
+
+
 
                             </div>
                         </div>
