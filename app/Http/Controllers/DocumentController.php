@@ -2816,8 +2816,8 @@ class DocumentController extends Controller
         $RevisionGridCvsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvs_data")->first();
         $RevisionGridfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_fpstp_data")->first();
         $RevisionGridinpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
-        $RevisionGridicvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
-        $RevisionGridirawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
+        $RevisionGridcvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
+        $RevisionGridrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
 
         // dd($GtpGridData);
 
@@ -2916,8 +2916,8 @@ class DocumentController extends Controller
              'RevisionGridCvsData',
              'RevisionGridfpstpData',
              'RevisionGridinpstpData',
-             'RevisionGridicvstpData',
-             'RevisionGridirawmsData',
+             'RevisionGridcvstpData',
+             'RevisionGridrawmsData',
             'CalibrationQualificationstatus'
 
         ));
