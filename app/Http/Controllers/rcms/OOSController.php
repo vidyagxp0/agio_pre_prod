@@ -51,19 +51,19 @@ class OOSController extends Controller
         return view("frontend.OOS.oos_form", compact('due_date', 'record_number', 'old_records', 'cft','old_record','capa_record'));
 
     }
-    
+
     public function store(Request $request)
-    { 
+    {
         $res = Helpers::getDefaultResponse();
         try {
-            
+
             $oos_record = OOSService::create_oss($request);
             // dd($request->capa_ref_no_oosc);
 
             if ($oos_record['status'] == 'error')
             {
                 throw new Error($oos_record['message']);
-            } 
+            }
 
         } catch (\Exception $e) {
             $res['status'] = 'error';
@@ -90,7 +90,7 @@ class OOSController extends Controller
         $capa_record = Capa::select('id', 'division_id', 'record')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
         $record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
-        
+
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $products_details = $data->grids()->where('identifier', 'products_details')->first();
@@ -167,7 +167,7 @@ class OOSController extends Controller
         $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
         // dd($phase_two_invs);
-        return view('frontend.OOS.oos_form_view', 
+        return view('frontend.OOS.oos_form_view',
         compact('data', 'old_records','micro_count','chemical_count','oot_count','capa_record','check_method_procedure_during_analysis','Results_and_Calculation','check_Instrument_Equipment_Details','check_sample_receiving_vars','old_record','revised_date','phase_two_invss','checklist_for_result_calculation_CIMTs','disinfectant_details_last_CIMTs','checklist_for_intrument_equip_last_CIMTs','sterilize_accessories_CIMTs','checklist_for_Culture_verification_CIMTs','checklist_for_comp_results_CIMTs','checklist_for_analyst_training_CIMTs','Ch_Trend_analysis_CIEMs','CR_of_instru_equip_CIEMs','CR_microbial_isolates_contamination_CIEMs','CR_of_test_method_CIEMs','checklist_for_fogging_CIEMs','check_for_disinfectant_CIEMs','CR_of_En_condition_in_testing_CIEMs','checklist_for_media_prepara_sterilization_CIEMs','checklist_for_media_dehydrated_CIEMs','Check_for_comparision_of_results_CIEMs','Check_for_Sample_details_CIEMs','CR_of_training_rec_anaylst_in_monitoring_CIEMs','cft','disinfectant_details_IMAs','CR_of_instru_equipment_IMAs','CR_of_Environmental_condition_in_testing_IMAs','CR_of_microbial_cultures_inoculation_IMAs','cr_of_media_buffe_rst_IMAs','checklist_for_review_of_test_method_IMAs','sample_intactness_before_analysis2','training_records_analyst_involvedIn_testing_microbial_asssays','disinfectant_details_of_bioburden_and_water_tests','review_of_instrument_bioburden_and_waters','Checklist_Review_Environment_condition_in_tests','Checklist_for_Review_Media_prepara_RTU_medias','Checklist_Review_of_Test_Method_proceds','Checklist_for_Review_of_sampling_and_Transports','Checklist_for_Review_of_Training_records_Analysts','Checklist_for_Review_of_instrument_equips','check_for_disinfectant_details','Checklist_for_Revi_of_Media_Buffer_Stand_preps','Review_of_Media_Buffer_Standards_prepar','test_methods_Procedures','sample_intactness_before_analysis','record_number','ph_meters','Viscometers','Melting_Points','Dis_solutions','HPLC_GCs','General_Checklists','kF_Potentionmeters','RM_PMs','check_analyst_training_procedures','Training_records_Analyst_Involveds', 'products_details','instrument_detail','info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusion', 'oos_conclusion_review','checklist_IB_invs'));
 
     }
@@ -181,13 +181,13 @@ class OOSController extends Controller
         $res = Helpers::getDefaultResponse();
 
         try {
-            
+
             $oos_record = OOSService::update_oss($request,$id);
 
             if ($oos_record['status'] == 'error')
             {
                 throw new Error($oos_record['message']);
-            } 
+            }
 
         } catch (\Exception $e) {
             $res['status'] = 'error';
@@ -199,8 +199,8 @@ class OOSController extends Controller
         toastr()->success('Record is Update Successfully');
         return back();
         // return redirect()->route('qms.dashboard');
-        
-        
+
+
     }
 
     public function send_stage(Request $request, $id)
@@ -209,6 +209,36 @@ class OOSController extends Controller
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
             if ($changestage->stage == 1) {
+
+                if ( empty($changestage->description_gi && $changestage->initiator_group
+                    &&  $changestage->initiator_group_code && $changestage->is_repeat_gi
+                     && $changestage->source_document_type_gi
+                    &&  $changestage->reference_system_document_gi && $changestage->reference_document
+                    &&  $changestage->deviation_occured_on_gi && $changestage->oos_observed_on
+                    &&  $changestage->delay_justification && $changestage->oos_reported_date
+                    &&  $changestage->immediate_action && $changestage->sample_type_gi
+                    &&  $changestage->sample_type_gi && $changestage->sample_type_gi
+                    &&  $changestage->immediate_action && $changestage->product_material_name_gi
+                    &&  $changestage->market_gi && $changestage->customer_gi
+                    &&  $changestage->specification_details && $changestage->STP_details
+                    &&  $changestage->manufacture_vendor
+                 )) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Opened Tab is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for HOD Primary Review state',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "2";
                 $changestage->status = "HOD Primary Review";
                 $changestage->Submite_by = Auth::user()->name;
@@ -239,7 +269,7 @@ class OOSController extends Controller
                                 $history->action = 'Submit';
                                 $history->save();
 
-                                
+
                                 // $list = Helpers::getHodUserList($changestage->division_id);
                                 // foreach ($list as $u) {
                                 //    $email = Helpers::getUserEmail($u->user_id);
@@ -254,7 +284,7 @@ class OOSController extends Controller
                                 //        );
                                 //    }
                                 // }
-                               
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -267,7 +297,7 @@ class OOSController extends Controller
                         'message' => 'HOD Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -319,7 +349,7 @@ class OOSController extends Controller
                     //                    );
                     //                }
                     //             }
-                    
+
                     //             $list = Helpers::getCQAUsersList($changestage->division_id);
                     //             foreach ($list as $u) {
                     //                $email = Helpers::getUserEmail($u->user_id);
@@ -348,7 +378,7 @@ class OOSController extends Controller
             //                 $history = new OosAuditTrial();
             //                 $history->oos_id = $id;
             //                   $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                  
+
             //                 $history->comment = $request->comment;
             //                 $history->user_id = Auth::user()->id;
             //                 $history->user_name = Auth::user()->name;
@@ -372,7 +402,7 @@ class OOSController extends Controller
                         'message' => 'Phase IA HOD Primary Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -450,7 +480,7 @@ class OOSController extends Controller
                         'message' => 'Phase IA CQA/QA Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -528,7 +558,7 @@ class OOSController extends Controller
                         'message' => 'Outcome of Phase IA investigation is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -580,7 +610,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -593,7 +623,7 @@ class OOSController extends Controller
                         'message' => 'Phase IB HOD Primary Remark* is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -659,7 +689,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -672,7 +702,7 @@ class OOSController extends Controller
                         'message' => 'Phase IB CQA/QA Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -738,7 +768,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -752,7 +782,7 @@ class OOSController extends Controller
             //         $history = new OosAuditTrial();
             //         $history->oos_id = $id;
             //           $history->activity_type = 'More Information Required By    ,  More Information Required On';
-                   
+
             //         $history->comment = $request->comment;
             //         $history->user_id = Auth::user()->id;
             //         $history->user_name = Auth::user()->name;
@@ -775,7 +805,7 @@ class OOSController extends Controller
                         'message' => 'P-IB CQAH/QAH Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -827,12 +857,12 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             if($changestage->stage == 14) {
                 if (!$changestage->hod_remark4) {
                     // Flash message for warning (field not filled)
@@ -841,7 +871,7 @@ class OOSController extends Controller
                         'message' => 'Phase II A HOD Primary Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -920,7 +950,7 @@ class OOSController extends Controller
                         'message' => 'Phase II A CQA/QA Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -986,7 +1016,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1000,7 +1030,7 @@ class OOSController extends Controller
                         'message' => 'P-II A QAH/CQAH Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -1100,7 +1130,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1114,7 +1144,7 @@ class OOSController extends Controller
                         'message' => 'Phase II B HOD Primary Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -1193,7 +1223,7 @@ class OOSController extends Controller
                         'message' => 'Phase II B CQA/QA Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -1259,7 +1289,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1273,7 +1303,7 @@ class OOSController extends Controller
                         'message' => 'Approval Comments is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -1406,7 +1436,7 @@ class OOSController extends Controller
                 return back();
             }
             // --------------------------------------------------------------------------------------------------------------
-            
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -1415,7 +1445,7 @@ class OOSController extends Controller
     // ========== requestmoreinfo_back_stage ==============
     public function requestmoreinfo_back_stage(Request $request, $id)
     {
-       
+
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
@@ -1486,7 +1516,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1534,7 +1564,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1647,7 +1677,7 @@ class OOSController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-           
+
             if ($changestage->stage == 7) {
                 $changestage->stage = "6";
                 $changestage->status = "Phase IA HOD Primary Review";
@@ -1691,7 +1721,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1739,7 +1769,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                     // $list = Helpers::getQAUserList($changestage->division_id);
                     // foreach ($list as $u) {
                     //    $email = Helpers::getUserEmail($u->user_id);
@@ -1754,8 +1784,8 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
-                   
+
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1817,7 +1847,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1865,8 +1895,8 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                  
-                   
+
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1914,7 +1944,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1962,7 +1992,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                  
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2104,7 +2134,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2227,7 +2257,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2275,7 +2305,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                    
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2323,7 +2353,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2385,7 +2415,7 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2424,7 +2454,7 @@ class OOSController extends Controller
                 return back();
             }
             // -------------------------------------------------------------------------------------------------------------
-           
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2468,7 +2498,7 @@ class OOSController extends Controller
                 //         'message' => 'CQA/QA Head Remark is yet to be filled!',
                 //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 //     ]);
-            
+
                 //     return redirect()->back();
                 // } else {
                 //     // Flash message for success (when the form is filled correctly)
@@ -2546,7 +2576,7 @@ class OOSController extends Controller
                 //         'message' => 'CQA/QA Head Remark is yet to be filled!',
                 //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 //     ]);
-            
+
                 //     return redirect()->back();
                 // } else {
                 //     // Flash message for success (when the form is filled correctly)
@@ -2612,7 +2642,7 @@ class OOSController extends Controller
                             //         );
                             //     }
                             //     }
-                           
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2625,7 +2655,7 @@ class OOSController extends Controller
                         'message' => 'CQA/QA Head Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -2721,14 +2751,20 @@ class OOSController extends Controller
                     ]);
                 }
 
-                if (!$changestage->Comments_plidata) {
+                if (empty($changestage->Comments_plidata && $changestage->analyst_interview_pli
+                 && $changestage->Any_other_cause && $changestage->root_comment && $changestage->rational_for_assingnable
+                 && $changestage->summary_of_prelim_investiga_plic && $changestage->phase_i_investigation_pli && $changestage->oos_category_root_cause_ident_plic
+                 && $changestage->capa_required_plic && $changestage->phase_ib_inv_required_plir && $changestage->phase_ii_inv_required_plir
+                 && $changestage->root_cause_identified_pia && $changestage->is_repeat_assingable_pia && $changestage->repeat_testing_pia
+                 && $changestage->impact_assesment_pia 
+                )) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Comment is yet to be filled!',
-                        'type' => 'warning', 
+                        'message' => 'Phase IA Investigation tab is yet to be filled!',
+                        'type' => 'warning',
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -2785,7 +2821,7 @@ class OOSController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-           
+
             if ($changestage->stage == 8) {
                 if (!$changestage->QA_Head_primary_remark2) {
                     // Flash message for warning (field not filled)
@@ -2794,7 +2830,7 @@ class OOSController extends Controller
                         'message' => 'P-IA CQAH/QAH Primary Remark is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -2846,12 +2882,12 @@ class OOSController extends Controller
                     //        );
                     //    }
                     // }
-                   
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
             if ($changestage->stage == 13) {
                 $changestage->stage = "14";
                 $changestage->status = "Phase II A HOD Primary Review";
@@ -3047,7 +3083,7 @@ class OOSController extends Controller
             //        );
             //    }
             // }
-          
+
             $data->update();
             toastr()->success('Document Sent');
             return back();
@@ -3145,7 +3181,7 @@ class OOSController extends Controller
             //        );
             //    }
             // }
-          
+
             $data->update();
             toastr()->success('Document Sent');
             return back();
@@ -3287,7 +3323,7 @@ class OOSController extends Controller
             $parent_type = 'OOS Micro';
         } else {
             $parent_type = 'OOT';
-        }        
+        }
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -3320,7 +3356,7 @@ class OOSController extends Controller
             $actionchild = OOS::find($id);
             $data = OOS::find($id);
             // $p_record = RootCauseAnalysis::find($id);
-            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);    
+            $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = OOS::where('id', $id)->value('record');
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
@@ -3456,10 +3492,10 @@ class OOSController extends Controller
         $detail_data = OosAuditTrial::where('activity_type', $detail->activity_type)->where('oos_id', $detail->id)->latest()->get();
 
         $doc = OOS::where('id', $detail->oos_id)->first();
-        
+
 
         $doc->origiator_name = User::find($doc->initiator_id);
-        
+
         return view('frontend.OOS.comps.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
     public static function auditReport($id)
@@ -3487,7 +3523,7 @@ class OOSController extends Controller
             return $pdf->stream('OOS-Audit' . $id . '.pdf');
         }
     }
-    
+
     public static function singleReport($id)
     {
         $data = OOS::find($id);
@@ -3513,7 +3549,7 @@ class OOSController extends Controller
             $General_Checklists = $data->grids()->where('identifier', 'General_Checklist')->first();
             $kF_Potentionmeters = $data->grids()->where('identifier', 'kF_Potentionmeter')->first();
             $RM_PMs = $data->grids()->where('identifier', 'RM_PM')->first();
-            
+
             $check_analyst_training_procedures = $data->grids()->where('identifier', 'analyst_training_procedure')->first();
             $Training_records_Analyst_Involveds = $data->grids()->where('identifier', 'Training_records_Analyst_Involved1')->first();
             $sample_intactness_before_analysis = $data->grids()->where('identifier', 'sample_intactness_before_analysis1')->first();
@@ -3564,7 +3600,7 @@ class OOSController extends Controller
             $check_method_procedure_during_analysis = $data->grids()->where('identifier', 'method_used_during_analysis')->first();
             $check_Instrument_Equipment_Details = $data->grids()->where('identifier', 'instrument_equipment_detailss')->first();
             $Results_and_Calculation = $data->grids()->where('identifier', 'result_and_calculation')->first();
-    
+
 
             $oos_conclusion = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $oos_conclusion_review = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
@@ -3588,5 +3624,5 @@ class OOSController extends Controller
             return $pdf->stream('OOS Cemical' . $id . '.pdf');
         }
     }
-       
+
 }
