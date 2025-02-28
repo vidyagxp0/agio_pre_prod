@@ -267,7 +267,65 @@
                                         </div>
                                     </div>
 
+
                                     <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+                                                
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+
+
+                                    <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Department</b></label>
                                             <select name="Initiator_Group" id="initiator_group">
@@ -299,7 +357,7 @@
                                                     <option value="PV">Pharmacovigilance</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator Department Code</label>
@@ -569,13 +627,22 @@
                                     </div>
 
 
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Brief Description / Procedure </label>
                                             <textarea name="Brief_description" id="comments"></textarea>
                                         </div>
-                                    </div>
+                                    </div> -->
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="comments">Brief Description / Procedure </label>
+                                        <div class="relative-container">
+                                         <textarea name="Brief_description" class="tiny"></textarea>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -780,7 +847,7 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                {{--
                                     <div class="col-12" id="why-why-chart-section" style="display:none;">
                                         <div class="group-input">
                                             <label for="why-why-chart">
@@ -874,11 +941,7 @@
 
                                                             <td>
                                                                 <div class="why_3_block">
-                                                                    {{-- @if (!empty($whyChart->why_3))
-                                                                        @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                            <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_3[]">{{ $measure }}</textarea>
-                                                                        @endforeach
-                                                                    @endif --}}
+                                                                    
 
                                                                     @if (!empty($whyChart->why_3))
                                                                         @foreach (unserialize($whyChart->why_3) as $key => $measure)
@@ -910,11 +973,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="why_4_block">
-                                                                    {{-- @if (!empty($whyChart->why_4))
-                                                                        @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                            <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_4[]">{{ $measure }}</textarea>
-                                                                        @endforeach
-                                                                    @endif --}}
+                                                                    
 
                                                                     @if (!empty($whyChart->why_4))
                                                                         @foreach (unserialize($whyChart->why_4) as $key => $measure)
@@ -944,11 +1003,7 @@
                                                             </td>
                                                             <td>
                                                                 <div class="why_5_block">
-                                                                    {{-- @if (!empty($whyChart->why_5))
-                                                                        @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                            <textarea {{ Helpers::isRiskAssessment($data->stage) }} name="why_5[]">{{ $measure }}</textarea>
-                                                                        @endforeach
-                                                                    @endif --}}
+                                                                  
 
                                                                     @if (!empty($whyChart->why_5))
                                                                         @foreach (unserialize($whyChart->why_5) as $key => $measure)
@@ -976,6 +1031,91 @@
                                             </div>
                                         </div>
                                     </div>
+                                --}}
+
+
+                                    <div class="col-12" id="why-why-chart-section" style="display:none;">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Why-Why Chart
+                                                <span class="text-primary add-why-question" style="font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 10px;">+</span>
+                                            </label>
+
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr style="background: #f4bb22">
+                                                            <th style="width:150px;">Problem Statement :</th>
+                                                            <td>
+                                                                <textarea name="why_problem_statement"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <div id="why-questions-container"></div>
+
+                                                <div id="root-cause-container" style="display: none;">
+                                                    <table class="table table-bordered">
+                                                        <tbody>
+                                                            <tr style="background: #0080006b;">
+                                                                <th style="width:150px;">Root Cause :</th>
+                                                                <td>
+                                                                    <textarea name="why_root_cause"></textarea>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        let whyCount = 0;
+
+                                        document.querySelector('.add-why-question').addEventListener('click', function () {
+                                            whyCount++;
+
+                                            const container = document.getElementById('why-questions-container');
+                                            const rootCauseContainer = document.getElementById('root-cause-container');
+
+                                            const whySet = document.createElement('div');
+                                            whySet.className = 'why-field-wrapper';
+                                            whySet.innerHTML = `
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="width:150px; color: #393cd4;">Why ${whyCount}</th>
+                                                            <td>
+                                                                <textarea name="why_questions[]" placeholder="Enter Why ${whyCount} Question"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="width:150px; color: #393cd4;">Answer ${whyCount}</th>
+                                                            <td>
+                                                                <textarea name="why_answers[]" placeholder="Enter Answer for Why ${whyCount}"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <span class="remove-field" onclick="removeWhyField(this)" style="cursor: pointer; color: red; font-weight: 600;">Remove</span>
+                                            `;
+
+                                            container.appendChild(whySet);
+                                            rootCauseContainer.style.display = 'block';
+                                            container.after(rootCauseContainer);
+                                        });
+
+                                        function removeWhyField(element) {
+                                            element.closest('.why-field-wrapper').remove();
+                                            whyCount--;
+
+                                            if (document.getElementById('why-questions-container').children.length === 0) {
+                                                document.getElementById('root-cause-container').style.display = 'none';
+                                            }
+                                        }
+                                    </script>
 
                                     <div class="col-12" id="is-is-not-section" style="display:none;">
                                         <div class="group-input">

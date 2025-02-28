@@ -122,6 +122,18 @@ class RootCauseController extends Controller
             $root->why_root_cause = $request->why_root_cause;
         }
 
+
+        $whyData = [];
+        if (!empty($request->why_questions) && !empty($request->why_answers)) {
+            foreach ($request->why_questions as $index => $question) {
+                $whyData[] = [
+                    'question' => $question,
+                    'answer' => $request->why_answers[$index] ?? '',
+                ];
+            }
+        }
+        $root->why_data = !empty($whyData) ? serialize($whyData) : null;
+
         // Is/Is Not Analysis (Launch Instruction)
         $root->what_will_be = ($request->what_will_be);
         $root->what_will_not_be = ($request->what_will_not_be);
@@ -1633,6 +1645,17 @@ class RootCauseController extends Controller
             $root->why_root_cause = $request->why_root_cause;
         }
 
+        $whyData = [];
+        if (!empty($request->why_questions) && !empty($request->why_answers)) {
+            foreach ($request->why_questions as $index => $question) {
+                $whyData[] = [
+                    'question' => $question,
+                    'answer' => $request->why_answers[$index] ?? '',
+                ];
+            }
+        }
+        $root->why_data = !empty($whyData) ? serialize($whyData) : null;
+       
         // Is/Is Not Analysis (Launch Instruction)
         $root->what_will_be = ($request->what_will_be);
         $root->what_will_not_be = ($request->what_will_not_be);

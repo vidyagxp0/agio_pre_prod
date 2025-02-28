@@ -153,6 +153,56 @@
     .table_bg {
         background: #4274da57;
     }
+
+
+    
+
+    .why-why-chart-container {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.block-head {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.problem-statement th {
+    background: #f4bb22;
+    width: 150px;
+}
+
+.why-label {
+    color: #393cd4;
+    width: 150px;
+}
+
+.answer-label {
+    color: #393cd4;
+    width: 150px;
+}
+
+.root-cause th {
+    background: #0080006b;
+    width: 150px;
+}
+
+.text-muted {
+    color: gray;
+}
 </style>
 
 <body>
@@ -3951,13 +4001,12 @@
 
 
 
-                            <div class="border-table" style="margin-bottom: 15px;">
+                            <!-- <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head">
                                     Why Why Chart
                                 </div>
 
-                                <!-- *********************** problem state *********************** -->
-
+                            
                                 <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Problem Statement
                                 </div>
@@ -3992,7 +4041,7 @@
                                             </tr>
                                         @endif
                                     </tbody>
-                                </table>
+                                </table> -->
 
 
                                 <!-- <table>
@@ -4021,7 +4070,7 @@
                                 </table> -->
 
              <!-- *********************** problem state *********************** -->
-                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
+                                <!-- <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Why 1
                                 </div>
 
@@ -4052,8 +4101,7 @@
                                 </table>
 
 
-                                <!-- *********************** WHY 2 *********************** -->
-                                <div class="block-head" style="margin-bottom:5px;  font-weight:bold;">
+                                 <div class="block-head" style="margin-bottom:5px;  font-weight:bold;">
                                     Why 2
                                 </div>
                                 <table>
@@ -4082,8 +4130,7 @@
                                 </table>
 
 
-                                <!-- *********************** WHY 3 *********************** -->
-                                <div class="block-head" style="margin-bottom:5px;  font-weight:bold;">
+                                 <div class="block-head" style="margin-bottom:5px;  font-weight:bold;">
                                     Why 3
                                 </div>
                                 <table>
@@ -4112,7 +4159,6 @@
                                 </table>
 
 
-                                <!-- *********************** WHY 4 *********************** -->
                                 <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Why 4
                                 </div>
@@ -4141,9 +4187,7 @@
                                     </tbody>
                                 </table>
 
-
-                                <!-- *********************** WHY 5 *********************** -->
-                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
+                            <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Why 5
                                 </div>
                                 <table>
@@ -4173,45 +4217,101 @@
                             </div>
 
 
-              <!-- ***********************  Root Cause *********************** -->
-                            
+                             
                             <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                 Root Cause
                                 </div>
 
                                 
                                 <table>
-    <tr class="table_bg">
-        <th class="w-20">S.N.</th>
-        <th class="w-60">Description</th>
-    </tr>
-    <tbody>
-        @if ($why_data && isset($why_data['root-cause']))
-            @php
-                $serialNumber = 1;
-            @endphp
-            @if (is_array($why_data['root-cause']))
-                @foreach ($why_data['root-cause'] as $rootCause)
-                    <tr>
-                        <td class="w-20">{{ $serialNumber++ }}</td>
-                        <td class="w-60">{{ $rootCause }}</td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td class="w-20">1</td>
-                    <td class="w-60">{{ $why_data['root-cause'] }}</td>
-                </tr>
-            @endif
-        @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-60">Not Applicable</td>
-            </tr>
-        @endif
-    </tbody>
-</table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Description</th>
+                            </tr>
+                            <tbody>
+                                @if ($why_data && isset($why_data['root-cause']))
+                                    @php
+                                        $serialNumber = 1;
+                                    @endphp
+                                    @if (is_array($why_data['root-cause']))
+                                        @foreach ($why_data['root-cause'] as $rootCause)
+                                            <tr>
+                                                <td class="w-20">{{ $serialNumber++ }}</td>
+                                                <td class="w-60">{{ $rootCause }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td class="w-20">1</td>
+                                            <td class="w-60">{{ $why_data['root-cause'] }}</td>
+                                        </tr>
+                                    @endif
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-60">Not Applicable</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table> -->
 
+
+
+                            <div class="why-why-chart-container">
+                                <div class="block-head">
+                                    <strong>Why-Why Chart</strong>
+                                </div>
+
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr class="problem-statement">
+                                            <th>Problem Statement :</th>
+                                            <td>
+                                                {{ $data->why_problem_statement ?? 'Not Applicable' }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div>
+                                    @php
+                                        $why_data = !empty($data->why_data) ? unserialize($data->why_data) : [];
+                                       
+                                     @endphp
+
+                                    @if (is_array($why_data) && count($why_data) > 0)
+                                        @foreach ($why_data as $index => $why)
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <th class="why-label">Why {{ $index + 1 }}</th>
+                                                        <td>{{ $why['question'] ?? 'Not Applicable' }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="answer-label">Answer {{ $index + 1 }}</th>
+                                                        <td>{{ $why['answer'] ?? 'Not Applicable' }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        @endforeach
+                                    @else
+                                        <p class="text-muted">No Why-Why Data Available</p>
+                                    @endif
+                                </div>
+
+                                <div id="root-cause-container">
+                                    <table class="table table-bordered">
+                                        <tbody>
+                                            <tr class="root-cause">
+                                                <th>Root Cause :</th>
+                                                <td>
+                                                    {{ $data->why_root_cause ?? 'Not Applicable' }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                             <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom: 5px; font-weight:bold;">

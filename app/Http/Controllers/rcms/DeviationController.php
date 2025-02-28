@@ -1799,6 +1799,27 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $lastCft = DeviationCft::where('deviation_id', $deviation->id)->first();
         $deviation->Delay_Justification = $request->Delay_Justification;
 
+
+
+        $whyData = [];
+        if (!empty($request->why_questions) && !empty($request->why_answers)) {
+            foreach ($request->why_questions as $index => $question) {
+                $whyData[] = [
+                    'question' => $question,
+                    'answer' => $request->why_answers[$index] ?? '',
+                ];
+            }
+        }
+        $deviation->why_data = !empty($whyData) ? serialize($whyData) : null;
+        if (!empty($request->why_root_cause)) {
+            $deviation->why_root_cause = $request->why_root_cause;
+        }
+
+        if (!empty($request->why_problem_statement)) {
+            $deviation->why_problem_statement = $request->why_problem_statement;
+        }
+
+        // Is/Is Not Anal
         $deviation->what = $request->what;
         $deviation->why_why = $request->why_why;
         $deviation->where_where = $request->where_where;
@@ -3525,38 +3546,38 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
             //---------------------------------------------Grid for why why --------------------------------------------------------------
 
-  // audit trail
-  $fieldNamewhys = [
-    'problem_statement' => 'Problem Statement',
-    'why_1' => 'Why 1',
-    'why_2' => 'Why 2',
-    'why_3' => 'Why 3',
-    'why_4' => 'Why 4',
-    'why_5' => 'Why 5',
-    'root-cause' => 'Root Cause',
-];
+        // audit trail
+        $fieldNamewhys = [
+            'problem_statement' => 'Problem Statement',
+            'why_1' => 'Why 1',
+            'why_2' => 'Why 2',
+            'why_3' => 'Why 3',
+            'why_4' => 'Why 4',
+            'why_5' => 'Why 5',
+            'root-cause' => 'Root Cause',
+        ];
 
-// Retrieve or create the fishbone record
-$newDataGridWhy = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->firstOrCreate();
-   
+        // Retrieve or create the fishbone record
+        $newDataGridWhy = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->firstOrCreate();
+        
 
-// Decode existing data from JSON if it's stored as a string
-$existingData = $newDataGridWhy->data;
-if (is_string($existingData)) {
-    $existingData = json_decode($existingData, true) ?: null; // Decode or set as an empty array
-}
+        // Decode existing data from JSON if it's stored as a string
+        $existingData = $newDataGridWhy->data;
+        if (is_string($existingData)) {
+            $existingData = json_decode($existingData, true) ?: null; // Decode or set as an empty array
+        }
 
-// Loop through each field to compare and process changes
-foreach ($fieldNamewhys as $fieldKey => $fieldName) {
-    $fieldNamewhy = $request->why;
+        // Loop through each field to compare and process changes
+        foreach ($fieldNamewhys as $fieldKey => $fieldName) {
+            $fieldNamewhy = $request->why;
 
-    // Retrieve old and new values
-    $oldValue = $existingData[$fieldKey] ?? null; // Safely access the old value
-    $newValue = is_array($fieldNamewhy) && array_key_exists($fieldKey, $fieldNamewhy)
-        ? $fieldNamewhy[$fieldKey]
-        : null;
+            // Retrieve old and new values
+            $oldValue = $existingData[$fieldKey] ?? null; // Safely access the old value
+            $newValue = is_array($fieldNamewhy) && array_key_exists($fieldKey, $fieldNamewhy)
+                ? $fieldNamewhy[$fieldKey]
+                : null;
 
-    
+            
 
     // If there's a change, create an audit trail record
     if ($oldValue !== $newValue && !is_null($oldValue) && !is_null($newValue) ) {
