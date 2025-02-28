@@ -132,7 +132,7 @@ class RootCauseController extends Controller
                 ];
             }
         }
-        $root->why_data = !empty($whyData) ? serialize($whyData) : null;
+        // $root->why_data = !empty($whyData) ? serialize($whyData) : null;
 
         // Is/Is Not Analysis (Launch Instruction)
         $root->what_will_be = ($request->what_will_be);
@@ -1579,7 +1579,7 @@ class RootCauseController extends Controller
         $lastinvestigation_teamIdsArray = explode(',', $getId);
         $lastinvestigation_teamNames = User::whereIn('id', $lastinvestigation_teamIdsArray)->pluck('name')->toArray();
         $lastinvestigation_teamName = implode(', ', $lastinvestigation_teamNames);
-        $root->initiator_Group = $request->initiator_Group;
+        // $root->initiator_Group = $request->initiator_Group;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
         $root->short_description = $request->short_description;
@@ -1654,8 +1654,8 @@ class RootCauseController extends Controller
                 ];
             }
         }
-        $root->why_data = !empty($whyData) ? serialize($whyData) : null;
-       
+        // $root->why_data = !empty($whyData) ? serialize($whyData) : null;
+
         // Is/Is Not Analysis (Launch Instruction)
         $root->what_will_be = ($request->what_will_be);
         $root->what_will_not_be = ($request->what_will_not_be);
@@ -1822,7 +1822,7 @@ class RootCauseController extends Controller
         if (!empty($request->initial_rpn)) {
             $root->initial_rpn = serialize($request->initial_rpn);
         }
-        
+
         if (!empty($request->risk_control_measure)) {
             $root->risk_control_measure = serialize($request->risk_control_measure);
         }
@@ -3267,7 +3267,7 @@ class RootCauseController extends Controller
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-       
+
         return view('frontend.root-cause-analysis.root_cause_analysisView', compact(
             'data'
         ));
@@ -3280,7 +3280,7 @@ class RootCauseController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
-            
+
 
             if ($root->stage == 1) {
                 if (!$root->short_description) {
@@ -3296,7 +3296,7 @@ class RootCauseController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA initial review state'
+                        'message' => 'Send for HOD review'
                     ]);
                 }
                 $root->stage = "2";
@@ -3334,7 +3334,7 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-               
+
 
                 // $list = Helpers::getHodUserList($root->division_id);
                 // foreach ($list as $u) {
@@ -3358,7 +3358,7 @@ class RootCauseController extends Controller
                 // }
 
 
-             
+
 
                 $root->update();
                 toastr()->success('Document Sent');
@@ -3415,7 +3415,7 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-                
+
                 // $list = Helpers::getQAUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3519,7 +3519,7 @@ class RootCauseController extends Controller
                 $history->save();
 
 
-               
+
                 // $list = Helpers::getInitiatorUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3597,7 +3597,7 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-              
+
                 // $list = Helpers::getHodUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3743,7 +3743,7 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-               
+
                 // $list = Helpers::getQAUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3765,7 +3765,7 @@ class RootCauseController extends Controller
                 //     // }
                 // }
 
-                
+
                 // $list = Helpers::getCQAUsersList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3843,7 +3843,7 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-              
+
 
 
                 // $list = Helpers::getQAHeadUserList($root->division_id);
@@ -3867,7 +3867,7 @@ class RootCauseController extends Controller
                 //     // }
                 // }
 
-                
+
                 // $list = Helpers::getCQAHeadUsersList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3947,7 +3947,7 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-              
+
 
 
                 $list = Helpers::getQAUserList($root->division_id);
@@ -3971,7 +3971,7 @@ class RootCauseController extends Controller
                     // }
                 }
 
-                
+
                 $list = Helpers::getInitiatorUserList($root->division_id);
                 foreach ($list as $u) {
                     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4066,8 +4066,8 @@ class RootCauseController extends Controller
             }
             $history->save();
 
-          
-          
+
+
 
             $root->update();
             $history = new RootCauseAnalysisHistory();
@@ -4131,7 +4131,7 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                
+
 
 
                 // $list = Helpers::getInitiatorUserList($root->division_id);
@@ -4154,7 +4154,7 @@ class RootCauseController extends Controller
                 //         }
                 //     // }
                 // }
-               
+
 
 
                 $root->update();
@@ -4203,7 +4203,7 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                
+
 
                 // $list = Helpers::getHodUserList($root->division_id);
                 // foreach ($list as $u) {
@@ -4225,9 +4225,9 @@ class RootCauseController extends Controller
                 //         }
                 //     // }
                 // }
-               
 
-              
+
+
                 $root->update();
 
 
@@ -4271,8 +4271,8 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-               
-              
+
+
 
                 // $list = Helpers::getCQAUsersList($root->division_id);
                 // foreach ($list as $u) {
@@ -4294,7 +4294,7 @@ class RootCauseController extends Controller
                 //         }
                 //     // }
                 // }
-    
+
                 // $list = Helpers::getQAUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4358,7 +4358,7 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-                
+
 
                 // $list = Helpers::getInitiatorUserList($root->division_id);
                 // foreach ($list as $u) {
@@ -4423,7 +4423,7 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-              
+
 
                 // $list = Helpers::getHodUserList($root->division_id);
                 // foreach ($list as $u) {
@@ -4487,13 +4487,13 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-             
+
 
 
 
                 // $list = Helpers::getQAUserList($root->division_id);
                 // foreach ($list as $u) {
-             
+
                 //         $email = Helpers::getUserEmail($u->user_id);
                 //             if ($email !== null) {
                 //             try {
@@ -4647,7 +4647,7 @@ class RootCauseController extends Controller
             $old_records = $old_record;
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild = RootCauseAnalysis::find($id);
-            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);       
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
             return view('frontend.forms.capa', compact('record_number','due_date', 'parent_id', 'parent_type', 'old_records', 'cft', 'relatedRecords','reference_record'));
         }
 
@@ -4657,7 +4657,7 @@ class RootCauseController extends Controller
             $p_record = RootCauseAnalysis::find($id);
             $data = new \stdClass();   // Create an empty object
             $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
-            $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
+            $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
             return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record', 'data'));

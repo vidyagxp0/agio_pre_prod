@@ -260,8 +260,8 @@
                             @endif
                         </td>
 
-                      
-                    
+
+
 
                     </tr>
                     <tr>
@@ -273,7 +273,7 @@
 
                     </tr>
 
-                    
+
                     {{-- <tr>
 
                         <th class="w-20">Due Date</th>
@@ -296,7 +296,7 @@
                     </tr> --}}
                     <tr>
 
-                       
+
 
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
@@ -327,7 +327,7 @@
                             @endif
                         </td>
 
-                      
+
 
 
                     </tr>
@@ -391,9 +391,9 @@
                             @endif
                         </td>
 
-                       
 
-                       
+
+
 
                         {{-- <div class="inner-block">
                             <label
@@ -429,7 +429,7 @@
                                 @endif
                             </td> --}}
 
-                           
+
 
                         </tr>
 
@@ -444,7 +444,7 @@
                             </td>
                         </tr>
 
-                   
+
                 </table>
 
                 <div class="block-head">
@@ -478,7 +478,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachments</th>
                         </tr>
                         @if ($data->root_cause_initial_attachment)
                             @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
@@ -503,10 +503,10 @@
                 <div class="block-head">
                     Investigation
                 </div>
-    
+
                 <table>
-    
-    
+
+
                     <tr>
                         <th class="w-20">Objective</th>
                         <td class="w-80">
@@ -516,8 +516,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    
-                
+
+
                         <th class="w-20">Scope</th>
                         <td class="w-80">
                             @if ($data->scope)
@@ -535,8 +535,8 @@
                             @else
                                 Not Applicable
                             @endif
-                        
-                    
+
+
                         <th class="w-20">Background</th>
                         <td class="w-80">
                             @if ($data->requirement)
@@ -555,8 +555,8 @@
                                 Not Applicable
                             @endif
                         </td>
-                    
-                        
+
+
                         <th class="w-20">Investigation Team</th>
                         <td class="w-80">
                             @if ($data->investigation_team)
@@ -591,10 +591,10 @@
                   <div class="border-table">
                     <div class="block-head">
                      Attachment
-                
+
                     </div>
                     <table>
-                
+
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
                             <th class="w-60">Batch No</th>
@@ -613,9 +613,9 @@
                                 <td class="w-20">Not Applicable</td>
                             </tr>
                         @endif
-                
+
                     </table>
-                </div>                
+                </div>
 
 
             </div> --}}
@@ -644,7 +644,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachments</th>
                     </tr>
                     @if ($data->hod_attachments)
                         @foreach (json_decode($data->hod_attachments) as $key => $file)
@@ -668,7 +668,7 @@
 
         <div class="block">
             <div class="block-head">
-                Initial QA/CQA Review       
+                Initial QA/CQA Review
             </div>
             <div class="inner-block">
                 <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
@@ -690,7 +690,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachments</th>
                     </tr>
                     @if ($data->cft_attchament_new)
                         @foreach (json_decode($data->cft_attchament_new) as $key => $file)
@@ -731,8 +731,8 @@
                         Not Applicable
                     @endif
                 </td>
-            
-        
+
+
                 <th class="w-20">Scope</th>
                 <td class="w-80">
                     @if ($data->scope)
@@ -750,8 +750,8 @@
                     @else
                         Not Applicable
                     @endif
-                
-            
+
+
                 <th class="w-20">Background</th>
                 <td class="w-80">
                     @if ($data->requirement)
@@ -770,7 +770,7 @@
                         Not Applicable
                     @endif
                 </td>
-            
+
                  {{-- @php
                      dd($data->investigation_teamNamesString);
                  @endphp --}}
@@ -804,8 +804,8 @@
                 </td>
             </tr>
     <tr>
-        
-                      
+
+
         <th class="w-20">Root Cause</th>
         <td class="w-80">
             @if ($data->root_cause)
@@ -814,7 +814,7 @@
                 Not Applicable
             @endif
         </td>
-    
+
         <th class="w-20">Impact / Risk Assessment</th>
         <td class="w-80">
             @if ($data->impact_risk_assessment)
@@ -833,7 +833,7 @@
                 Not Applicable
             @endif
         </td>
-   
+
         <th class="w-20">Investigation Summary</th>
         <td class="w-80">
             @if ($data->investigation_summary_rca)
@@ -854,7 +854,7 @@
 
         <tr class="table_bg">
             <th class="w-20">S.N.</th>
-            <th class="w-60">Batch No</th>
+            <th class="w-60">Attachments</th>
         </tr>
         @if ($data->investigation_attachment)
             @foreach (json_decode($data->investigation_attachment) as $key => $file)
@@ -872,7 +872,7 @@
         @endif
 
     </table>
-</div>  
+</div>
 <div class="border-table">
     <div class="block-head">
         Investigation Attachment
@@ -882,7 +882,7 @@
 
         <tr class="table_bg">
             <th class="w-20">S.N.</th>
-            <th class="w-60">Batch No</th>
+            <th class="w-60">Attachments</th>
         </tr>
         @if ($data->root_cause_initial_attachment_rca)
             @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
@@ -900,7 +900,7 @@
         @endif
 
     </table>
-</div>                
+</div>
 </div>
 
  <div class="block">
@@ -927,7 +927,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachments</th>
                     </tr>
                     @if ($data->hod_final_attachments)
                         @foreach (json_decode($data->hod_final_attachments) as $key => $file)
@@ -950,7 +950,7 @@
         </div>
 
 
-        
+
  <div class="block">
     <div class="block-head">
         QA/CQA Final Review
@@ -977,7 +977,7 @@
 
             <tr class="table_bg">
                 <th class="w-20">S.N.</th>
-                <th class="w-60">Batch No</th>
+                <th class="w-60">Attachments</th>
             </tr>
             @if ($data->qa_final_attachments)
                 @foreach (json_decode($data->qa_final_attachments) as $key => $file)
@@ -1000,12 +1000,12 @@
 </div>
 
 
-      
+
  <div class="block">
     <div class="block-head">
         QAH/CQAH/Designee Final Approval
     </div>
-    
+
     <div class="inner-block">
         <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
             QAH/CQAH/Designee Final Approval Comments
@@ -1028,7 +1028,7 @@
 
             <tr class="table_bg">
                 <th class="w-20">S.N.</th>
-                <th class="w-60">Batch No</th>
+                <th class="w-60">Attachments</th>
             </tr>
             @if ($data->qah_final_attachments)
                 @foreach (json_decode($data->qah_final_attachments) as $key => $file)
@@ -1049,7 +1049,7 @@
     </div>
 
 </div>
-               
+
 
 
 
@@ -1146,23 +1146,23 @@ Not Applicable
                         @endif
 
                     </table>
-                </div> --}} 
+                </div> --}}
                 <style>
                     .table {
                         width: 100%;
                         font-size: 7px;
                         /* font-weight: 100!important; */
                     }
-            
+
                     .th,
                     .td {
                         border: 1px solid black;
                         padding: 1px;
                         word-wrap: break-word;
                         text-align: center;
-                        
+
                     }
-            
+
                     /* Rotate table by flipping headers and rows */
                     .rotated-table {
                         display: flex;
@@ -1171,7 +1171,7 @@ Not Applicable
                         transform: rotate(-90deg);
                         transform-origin: left top 0;
                     }
-            
+
                     .rotated-table table {
                         transform: rotate(90deg);
                         /* Rotate inner table content back to normal */
@@ -1192,7 +1192,7 @@ Not Applicable
                                 <th class="th"  style="font-size: 7px"colspan="1">Risk Control</th>
                                 <th class="th" style="font-size: 7px" colspan="6">Risk Evaluation</th>
                                 <th class="th" style="font-size: 7px"></th>
-                
+
                             </tr>
                             <tr class="table_bg tr">
                                 <th  style="font-size: 7px" class="th">Activity</th>
@@ -1233,7 +1233,7 @@ Not Applicable
                                     <td style="font-size: 7px" class="td">{{ unserialize($data->risk_acceptance)[$key] }}</td>
                                     <td style="font-size: 7px" class="td">{{ unserialize($data->risk_acceptance2)[$key] }}</td>
                                     <td style="font-size: 7px" class="td">{{ unserialize($data->mitigation_proposal)[$key] }}</td>
-                                    
+
                                 </tr>
                             @endforeach
                             @else
@@ -1243,7 +1243,7 @@ Not Applicable
                     </table>
 
                 </div>
-               
+
 
                 <div class="block-head">
                     Fishbone or Ishikawa Diagram
@@ -1403,7 +1403,7 @@ Not Applicable
                     </table>
                 </div>
 
-                
+
 
 
 
@@ -1635,7 +1635,7 @@ Not Applicable
                     Activity log
                 </div>
                 <table>
-    
+
                                     <tr>
                                         <th class="w-20">Acknowledge By</th>
                                         <td class="w-30">
@@ -1653,7 +1653,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                         </td>
-                                
+
                                         <th class="w-20"> Acknowledge Comment</th>
                                         <td class="w-80">
                                             @if ($data->acknowledge_comment)
@@ -1663,7 +1663,7 @@ Not Applicable
                                             @endif
                                         </td>
                                     </tr>
-    
+
                                     {{-- <tr>
                                             <th class="w-20"> More Info Required By
                                             </th>
@@ -1675,7 +1675,7 @@ Not Applicable
                                                 Comment</th>
                                             <td class="w-30">{{ $data->More_Info_hrc_comment }}</td>
                                         </tr> --}}
-    
+
                                     <tr>
                                         <th class="w-20">QA/CQA Review Complete By</th>
                                         <td class="w-30">
@@ -1709,7 +1709,7 @@ Not Applicable
                                             <td class="w-30"> @if ($data->More_Info_qac_on) {{ Helpers::getdateFormat($data->More_Info_qac_on) }} @else Not Applicable @endif</td>
                                             <th class="w-20">More information Required Comment</th>
                                         <td class="w-80"> @if ($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td>
-    
+
                                         </tr> --}}
                                     {{-- <tr>
                                             <th class="w-20">Sumitted Comment</th>
@@ -1745,7 +1745,7 @@ Not Applicable
                                     {{-- <th class="w-20">QA Review Complete Comment</th>
                                             <td class="w-80"> @if ($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td> --}}
                                     </tr>
-    
+
                                     {{-- <tr>
                                             <th class="w-20"> More Info Required By
                                             </th>
@@ -1784,7 +1784,7 @@ Not Applicable
                                             @endif
                                         </td>
                                     </tr>
-    
+
                                     {{-- <tr>
                                             <th class="w-20"> More Info Required By
                                             </th>
@@ -1867,7 +1867,7 @@ Not Applicable
                                             <td class="w-30"> @if ($data->qA_review_complete_on) {{ Helpers::getdateFormat($data->qA_review_complete_on) }} @else Not Applicable @endif</td>
                                             <th class="w-20">More information Required Comment</th>
                                         <td class="w-80"> @if ($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td>
-    
+
                                         </tr> --}}
                                     <tr>
                                         <th class="w-20">QAH/CQAH Closure By</th>
@@ -1922,7 +1922,7 @@ Not Applicable
                                                 Not Applicable
                                             @endif
                                     </tr>
-    
+
                 </table>
             </div>
         </div>
@@ -2048,12 +2048,12 @@ Not Applicable
 
 
             </table>
-            
+
         </div>
 
-      
-       
-       
+
+
+
         <div class="block">
             <div class="block-head">
                 QA/CQA Final Review
@@ -2141,13 +2141,13 @@ Not Applicable
                     @endif
 
                 </table>
-            </div> 
+            </div>
 
         </div>--}}
-       
 
 
-        
+
+
     </div>
     </div>
 

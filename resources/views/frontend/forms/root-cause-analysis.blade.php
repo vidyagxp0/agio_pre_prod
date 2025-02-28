@@ -37,7 +37,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initial QA/CQA  Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
-               
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Final Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH/Designee Final Approval</button>
@@ -107,7 +107,16 @@
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
                                         <select name="initiator_Group" id="initiator_group">
@@ -136,7 +145,8 @@
                                             <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Department Code</label>
@@ -153,7 +163,7 @@
                                             required>
                                     </div>
                                 </div>
-{{-- 
+{{--
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -552,7 +562,7 @@
                                                         <th colspan="6"style="text-align:center;">Risk Evaluation</th>
                                                         <th colspan="2"style="text-align:center;"></th>
                                                     </tr>
-                                                   
+
                                                     <tr>
                                                         <th>Row </th>
                                                         <th>Activity</th>
@@ -945,7 +955,7 @@
                                     </div>
                                 </div> --
 
-                                
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments"> Attachment</label>
@@ -1166,13 +1176,13 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-{{--                                 
+{{--
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Team">Investigation Team</label>
                                         <select
                                             multiple id="investigation_team" placeholder="Select..." name="investigation_team[]">
-                                            
+
                                             @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
                                         @endforeach
@@ -1285,7 +1295,7 @@
                                                         <th colspan="6"style="text-align:center;">Risk Evaluation</th>
                                                         <th colspan="2"style="text-align:center;"></th>
                                                     </tr>
-                                                   
+
                                                     <tr>
                                                         <th>Row </th>
                                                         <th>Activity</th>
@@ -1607,10 +1617,10 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments"> Attachment</label>
+                                        <label for="Inv Attachments">Other Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -1629,7 +1639,7 @@
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="root_cause">Root Cause</label>

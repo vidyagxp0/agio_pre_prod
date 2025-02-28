@@ -246,7 +246,7 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     HOD Review Complete
                                 </button>
-                            
+
                                 @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Info Required
@@ -266,7 +266,7 @@
                                     Child
 
                                 </button>
-                                
+
                             @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                     More Info Required
@@ -390,7 +390,7 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initial QA/CQA  Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation & Root Cause</button> --}}
-                   
+
                         <button class="cctablinks" onclick="openCity(event, 'CCForm10')">HOD Final Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm11')">QA/CQA Final Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm12')">QAH/CQAH /Designee Final Approval</button>
@@ -438,13 +438,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Department </label>
                                                 <select name="initiator_Group"
                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     id="initiator_group">
-                                                    {{-- <option value="0">-- Select --</option> --}}
                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group == 'CQA') selected @endif>Corporate Quality
@@ -520,7 +519,16 @@
 
                                                 </select>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input disabled type="text" name="Initiator_Group" id="initiator_group"
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Department Code</label>
@@ -592,9 +600,7 @@
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Due Date</label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                    reason in "Due Date Extension Justification" data field.</small></div>
-                                                 <div class="calenderauditee">                                     
+                                                 <div class="calenderauditee">
                                                     <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}/>
                                                     <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
@@ -602,7 +608,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -637,12 +643,11 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
-                                                <label for="If Other">Others<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                                <label for="If Other">Others<span class="text-danger">*</span></label>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
-{{-- 
+{{--
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Type">Type</label>
@@ -697,7 +702,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                      
+
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Responsible Department">Responsible Department</label>
@@ -828,7 +833,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                     
+
                                     </div>
 
                                     <div class="button-block">
@@ -839,7 +844,7 @@
                                     </div>
                                 </div>
                             </div>
-                       
+
 
                         {{-- <div id="CCForm5" class="inner-block cctabcontent">
                             <div class="inner-block-content">
@@ -874,7 +879,7 @@
                                             <textarea name="immediate_action"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="investigation_team">Investigation Team</label>
@@ -915,7 +920,7 @@
                                                 <option value="Is/Is Not Analysis"
                                                     @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
                                                 </option>
-                                                <option value="Rootcauseothers"                                            
+                                                <option value="Rootcauseothers"
 
                                                     @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Others
                                                 </option>
@@ -930,7 +935,7 @@
                                             <textarea class="summernote" name="root_cause_Others" id="summernote">{{ $data->root_cause_Others}} </textarea>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments"> Attachment</label>
@@ -991,7 +996,7 @@
                                                             <th colspan="1"style="text-align:center;">Risk Control</th>
                                                             <th colspan="6"style="text-align:center;">Risk Evaluation</th>
                                                             <th colspan="2"style="text-align:center;"></th>
-                                                        </tr> 
+                                                        </tr>
                                                         <tr>
                                                             <th>Row #</th>
                                                             <th>Activity</th>
@@ -1644,16 +1649,16 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     CFT Feedback
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 </div>  -->
                                 <div class="row">
-                                  
+
                                     <div class="col-lg-12">
                                              @if ($data->stage == 3)
- 
+
                                                 <div class="group-input">
                                                     <label for="comments" >Initial QA/CQA Review Comments <span
                                                         class="text-danger">*</span></label>
                                                     <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
                                                 </div>
-                                                
+
                                               @else
                                                 <div class="group-input">
                                                     <label for="comments">Initial QA/CQA Review Comments</label>
@@ -1664,7 +1669,7 @@
                                                 <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                     </div>
-                                    
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">Initial QA/CQA Review Attachment</label>
@@ -1735,7 +1740,7 @@
                                                     class="text-danger">*</span></label>
                                                 <textarea name="objective"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->objective }}</textarea>
                                             </div>
-    
+
                                             @else
                                             <div class="group-input">
                                                 <label for="objective">Objective</label>
@@ -1772,7 +1777,7 @@
                                             <textarea name="immediate_action"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
                                         </div>
                                     </div>
-                                   
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="investigation_team">Investigation Team</label>
@@ -1813,7 +1818,7 @@
                                                 <option value="Is/Is Not Analysis"
                                                     @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
                                                 </option>
-                                                <option value="Rootcauseothers"                                            
+                                                <option value="Rootcauseothers"
 
                                                     @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Others
                                                 </option>
@@ -1839,7 +1844,7 @@
                                                             <th colspan="1"style="text-align:center;">Risk Control</th>
                                                             <th colspan="6"style="text-align:center;">Risk Evaluation</th>
                                                             <th colspan="2"style="text-align:center;"></th>
-                                                        </tr> 
+                                                        </tr>
                                                         <tr>
                                                             <th>Row #</th>
                                                             <th>Activity</th>
@@ -1848,7 +1853,7 @@
                                                             <th>Severity (S)</th>
                                                             <th>Probability (P)</th>
                                                             <th>Detection (D)</th>
-                                                            <th>RPN</th>
+                                                            <th>Risk Level (RPN)</th>
                                                             <th>Control Measures recommended/ Risk mitigation proposed</th>
                                                             <th>Severity (S)</th>
                                                             <th>Probability (P)</th>
@@ -1877,7 +1882,7 @@
                                                                             value="{{ unserialize($data->problem_cause)[$key] ?? null }}"
                                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                     </td>
-                                                                   
+
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)"
                                                                             class="fieldR" name="initial_severity[]"
@@ -2420,7 +2425,7 @@
                                             </div>
                                         </div>
                                     </div>
-    
+
                                     <div class="col-md-12" id="root-cause-others"style="display:none;">
                                         <div class="group-input">
                                             <label for="root_cause_Others">Others</label>
@@ -2429,10 +2434,10 @@
                                             <textarea class="summernote" name="root_cause_Others" id="summernote">{{ $data->root_cause_Others}} </textarea>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Inv Attachments"> Attachment</label>
+                                            <label for="Inv Attachments">Other Attachment</label>
                                             <div>
                                                 <small class="text-primary">
                                                     Please Attach all relevant or supporting documents
@@ -2469,15 +2474,15 @@
                                         </div>
                                     </div>
 
-    
+
                                     <div class="col-lg-12">
-                                                
+
                                                 <div class="group-input">
                                                     <label for="root_cause">Root Cause</label>
                                                     <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
                                                 </div>
 
-                                          
+
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -2500,7 +2505,7 @@
                                         </div>
                                     </div>
 
-                                   
+
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -2554,9 +2559,9 @@
                                 </div>
                             </div>
                         </div>
-                    
 
-                       
+
+
 
                         <div id="CCForm10" class="inner-block cctabcontent">
                             <div class="inner-block-content">
@@ -2572,7 +2577,7 @@
                                                    class="text-danger">*</span></label>
                                                <textarea name="hod_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
                                            </div>
-                                           
+
                                          @else
                                            <div class="group-input">
                                                <label for="comments">HOD Final Review Comments</label>
@@ -2583,7 +2588,7 @@
                                            <div class="text-danger">{{ $message }}</div>
                                            @enderror
                                     </div>
-                                     
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">HOD Final Review Attachment</label>
@@ -2645,7 +2650,7 @@
                                                    class="text-danger">*</span></label>
                                                <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
                                            </div>
-                                           
+
                                          @else
                                            <div class="group-input">
                                                <label for="comments">QA/CQA Final Review Comments</label>
@@ -2656,7 +2661,7 @@
                                            <div class="text-danger">{{ $message }}</div>
                                            @enderror
                                </div>
-                                  
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">QA/CQA Final Review Attachment</label>
@@ -2718,7 +2723,7 @@
                                                    class="text-danger">*</span></label>
                                                <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                            </div>
-                                           
+
                                          @else
                                            <div class="group-input">
                                                <label for="comments">QAH/CQAH/Designee Final Approval Comments</label>
@@ -2730,7 +2735,7 @@
                                            @enderror
                                </div>
 
-                                    
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">QAH/CQAH/designee Final Approval Attachments</label>
@@ -2789,7 +2794,7 @@
                                             <div class="">
                                                 @if ($data->acknowledge_by )
                                                 {{ $data->acknowledge_by }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif
                                                </div>
                                         </div>
@@ -2800,7 +2805,7 @@
                                             <div class="">
                                                 @if ($data->acknowledge_on )
                                                 {{ $data->acknowledge_on }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif
                                                </div>
                                         </div>
@@ -2811,7 +2816,7 @@
                                             <div class="">
                                                 @if ($data->ack_comments )
                                                 {{ $data->ack_comments }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif
                                             </div>
                                         </div>
@@ -2838,14 +2843,14 @@
                                             <div class="">{{ $data->More_Info_ack_comment }}</div>
                                         </div>
                                     </div> --}}
-                          
+
                                     <div class="col-lg-4">
                                         <div class="group-input" style="margin-bottom: 1rem">
                                             <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
                                             <div class="">
                                                 @if ($data->HOD_Review_Complete_By )
                                                 {{ $data->HOD_Review_Complete_By }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif
                                                 {{ $data->HOD_Review_Complete_By }}</div>
                                         </div>
@@ -2858,7 +2863,7 @@
                                             <div class="">
                                                 @if ($data->HOD_Review_Complete_On )
                                                 {{ $data->HOD_Review_Complete_On }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif
                                             </div>
                                         </div>
@@ -2870,7 +2875,7 @@
                                             <div class="">
                                                 @if ($data->HOD_Review_Complete_Comment )
                                                 {{ $data->HOD_Review_Complete_Comment }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2904,7 +2909,7 @@
                                             <div class="">
                                                 @if ($data->QQQA_Review_Complete_By )
                                                 {{ $data->QQQA_Review_Complete_By }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2914,7 +2919,7 @@
                                             <div class="">
                                                 @if ($data->QQQA_Review_Complete_On )
                                                 {{ $data->QQQA_Review_Complete_On }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2924,7 +2929,7 @@
                                             <div class="">
                                                 @if ($data->QAQQ_Review_Complete_comment )
                                                 {{ $data->QAQQ_Review_Complete_comment }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2956,7 +2961,7 @@
                                             <div class="">
                                                 @if ($data->submitted_by )
                                                 {{ $data->submitted_by }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2965,7 +2970,7 @@
                                             <label for="submitted_on">Submit On</label>
                                             <div class="">  @if ($data->submitted_on )
                                                 {{ $data->submitted_on }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2974,7 +2979,7 @@
                                             <label for="Comment"> Submit Comment</label>
                                             <div class="">  @if ($data->qa_comments_new )
                                                 {{ $data->qa_comments_new }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -2999,13 +3004,13 @@
                                             <div class="">{{ $data->More_Info_sub_comment }}</div>
                                         </div>
                                     </div> --}}
-                                
+
                                     <div class="col-lg-4" style="margin-bottom: 1rem">
                                         <div class="group-input">
                                             <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
                                             <div class="">  @if ($data->HOD_Final_Review_Complete_By )
                                                 {{ $data->HOD_Final_Review_Complete_By }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3014,7 +3019,7 @@
                                             <label for="HOD_Final_Review_Complete_On">HOD Final Review Complete On</label>
                                             <div class="">  @if ($data->HOD_Final_Review_Complete_On )
                                                 {{ $data->HOD_Final_Review_Complete_On }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3023,7 +3028,7 @@
                                             <label for="Comments"> HOD Final Review Complete Comment</label>
                                             <div class="">  @if ($data->HOD_Final_Review_Complete_Comment )
                                                 {{ $data->HOD_Final_Review_Complete_Comment }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3053,7 +3058,7 @@
                                                 By</label>
                                             <div class="">  @if ($data->Final_QA_Review_Complete_By )
                                                 {{ $data->Final_QA_Review_Complete_By }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3063,7 +3068,7 @@
                                                 On</label>
                                             <div class="">  @if ($data->Final_QA_Review_Complete_On )
                                                 {{ $data->Final_QA_Review_Complete_On }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3072,7 +3077,7 @@
                                             <label for="Comments"> Final QA/CQA Review Complete Comment</label>
                                             <div class="">  @if ($data->Final_QA_Review_Complete_Comment )
                                                 {{ $data->Final_QA_Review_Complete_Comment }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3101,7 +3106,7 @@
                                             <label for="evaluation_complete_by">QAH/CQAH Closure By</label>
                                             <div class="">  @if ($data->evaluation_complete_by )
                                                 {{ $data->evaluation_complete_by }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3110,7 +3115,7 @@
                                             <label for="evaluation_complete_on">QAH/CQAH Closure On</label>
                                             <div class="">  @if ($data->evaluation_complete_on )
                                                 {{ $data->evaluation_complete_on }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3120,7 +3125,7 @@
                                             <label for="evalution_Closure_comment"> QAH/CQAH Closure Comment</label>
                                             <div class="">  @if ($data->evalution_Closure_comment )
                                                 {{ $data->evalution_Closure_comment }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3129,7 +3134,7 @@
                                             <label for="Cancelled By">Cancel By</label>
                                             <div class="">  @if ($data->cancelled_by )
                                                 {{ $data->cancelled_by }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3138,7 +3143,7 @@
                                             <label for="Cancelled On">Cancel On</label>
                                             <div class="">  @if ($data->cancelled_on )
                                                 {{ $data->cancelled_on }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
@@ -3148,7 +3153,7 @@
                                             <label for="Comments"> Cancel Comment</label>
                                             <div class="">  @if ($data->cancel_comment )
                                                 {{ $data->cancel_comment }}
-                                                @else Not Applicable 
+                                                @else Not Applicable
                                                 @endif</div>
                                         </div>
                                     </div>
