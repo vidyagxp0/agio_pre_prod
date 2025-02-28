@@ -54,7 +54,7 @@
             margin-bottom: 20px;
         }
     </style>
-    
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
         integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -220,7 +220,7 @@
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>  --}}
-                          
+
                         @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
@@ -245,11 +245,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Initial Assessment Complete
                             </button>
-                            
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            
+
                         {{--  @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CFT Assessment Complete
@@ -274,30 +274,30 @@
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                     Child
                                 </button>
-                                    
+
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                         More Information Required
                                     </button>
                                   <!--
     @endif  -->
                              @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Change Control', 7)|| Helpers::check_roles($data->division_id, 'Change Control', 66)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
-                            
-                            
-                      
 
-                                                    
+
+
+
+
                             <button id="approval-button" class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal" style="display: none;">
                                 RA Approval Required
                             </button>
-                          
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
                             </button>
-                           
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                          
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-modal">
                                 Send to HOD
                             </button>
@@ -338,11 +338,11 @@
                             {{--  <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>  --}}
-                          
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal-stage_8">
                                 Child
                             </button>
-                          
+
                      @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Change Control', 4)|| Helpers::check_roles($data->division_id, 'Change Control', 18)))
 
 
@@ -569,10 +569,10 @@
 
 
                                                     <input type="hidden" name="record_number">
-                                             
+
                                                 <input disabled type="text"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
-                                            
+
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -666,7 +666,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator"><b>Initiator Department</b></label>
-                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group"
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
                                             </div>
@@ -1451,7 +1451,7 @@
                                                     }
                                                 }
                                             </script>
-                                        
+
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
@@ -1474,7 +1474,7 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
-                                    
+
                                             <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
@@ -1755,7 +1755,7 @@
                                                     <select multiple name="reviewer_person_value[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="reviewer_person_value"  {{   $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                        
+
                                                         @foreach ($cft as $data1)
                                                             @if (Helpers::checkUserRolesMicrobiology_Person($data1))
                                                                 @if (in_array($data1->id, $cftReviewerIds))
@@ -2115,9 +2115,9 @@
                                                             class="text-danger">*</span></label>
                                                     <select name="Quality_Assurance_Review" id="Quality_Assurance_Review">
                                                         <option value="">-- Select --</option>
-                                                       
+
                                                     <option @if ($data1->Quality_Assurance_Review == 'yes' || empty($data1->Quality_Assurance_Review)) selected @endif value='yes'>Yes</option>
-                                                      
+
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
                                                         <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value='NA'>
@@ -2282,8 +2282,8 @@
                                                         <option value="">-- Select --</option>
 
                                                         <option @if ($data1->Quality_Assurance_Review == 'yes' || empty($data1->Quality_Assurance_Review)) selected @endif value='yes'>Yes</option>
-                                                  
-                                                      
+
+
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
                                                         <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value='NA'>
@@ -2455,9 +2455,9 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                     
-                                                        <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
-                                                              
+
+                                                        <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>
+
                                                     </select>
 
                                                 </div>
@@ -2614,7 +2614,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>  
+                                                            <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -2784,7 +2784,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                         <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>  
+                                                         <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -2943,7 +2943,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option> 
+                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3107,7 +3107,7 @@
                                                             Yes</option>
                                                         <option @if ($data1->Production_Injection_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option> 
+                                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -3338,7 +3338,7 @@
                                                 <!-- <div class="col-md-12 mb-3 productionInjection">
                                                     <div class="group-input">
                                                         <label for="Production Injection feedback">Production Injection Feedback
-                                                          
+
                                                         </label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
@@ -5220,7 +5220,7 @@
                                             </div>
                                             <div class="col-md-6 mb-3 Microbiology">
                                                 <div class="group-input">
-                                                    <label for="Microbiology Completed By">Microbiology Review Completed 
+                                                    <label for="Microbiology Completed By">Microbiology Review Completed
                                                          By</label>
                                                     <input readonly type="text" value="{{ $data1->Microbiology_by }}"
                                                         name="Microbiology_by"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
@@ -7095,7 +7095,7 @@
 
 
 
-                                    
+
 
 
 
@@ -7112,7 +7112,7 @@
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                             <option value="NA" @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif>NA</option>
 
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -7144,7 +7144,7 @@
                                     @endif
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department
@@ -7541,7 +7541,7 @@
                             <div class="col-lg-12 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
-                                      
+
                                     <input type="text" name="Other3_Department_person" id="Other3_Department_person"
                                             value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
                                             @if ($data->stage != 3) readonly @endif>
@@ -7905,8 +7905,8 @@
 
 
 
-                            
-                              
+
+
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -9041,7 +9041,7 @@
                                         Justification</label>
                                     <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}> {{ $due_date_extension }}</textarea> -->
                                 </div>
-                                 
+
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -9656,14 +9656,14 @@
                                     <input type="radio" name="revision" id="minor" value="RCA">
                                     RCA
                                 </label>
-                            @endif    
+                            @endif
                                 @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
                                 @endif
-                         
+
                             @if($data->stage == 5)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Capa">
@@ -9726,7 +9726,7 @@
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
                                 </label>
-                            @endif    
+                            @endif
                             </div>
 
 

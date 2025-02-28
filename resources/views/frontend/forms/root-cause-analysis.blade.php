@@ -116,6 +116,54 @@
                                     </div>
                                 </div>
 
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Define department name to code mapping
+                                        const departmentMapping = {
+                                            "Calibration Lab": "CLB",
+                                            "Engineering": "ENG",
+                                            "Facilities": "FAC",
+                                            "LAB": "LAB",
+                                            "Labeling": "LABL",
+                                            "Manufacturing": "MANU",
+                                            "Quality Assurance": "QA",
+                                            "Quality Control": "QC",
+                                            "Ragulatory Affairs": "RA",
+                                            "Security": "SCR",
+                                            "Training": "TR",
+                                            "IT": "IT",
+                                            "Application Engineering": "AE",
+                                            "Trading": "TRD",
+                                            "Research": "RSCH",
+                                            "Sales": "SAL",
+                                            "Finance": "FIN",
+                                            "Systems": "SYS",
+                                            "Administrative": "ADM",
+                                            "M&A": "M&A",
+                                            "R&D": "R&D",
+                                            "Human Resource": "HR",
+                                            "Banking": "BNK",
+                                            "Marketing": "MRKT",
+
+                                        };
+
+                                        // Get the Initiator Department input
+                                        let initiatorGroupInput = document.getElementById("initiator_group");
+                                        let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                        // Get the department name from the input field
+                                        let departmentName = initiatorGroupInput.value.trim();
+
+                                        // Auto-generate the department code based on the mapping
+                                        if (departmentName in departmentMapping) {
+                                            initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                        } else {
+                                            initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                        }
+                                    });
+                                </script>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>

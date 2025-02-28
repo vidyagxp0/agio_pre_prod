@@ -536,9 +536,10 @@
                                                     name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     value="{{ $data->initiator_Group }}" id="initiator_group_code"
                                                     readonly>
-                                                {{-- <div class="static"></div> --}}
                                             </div>
                                         </div>
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
