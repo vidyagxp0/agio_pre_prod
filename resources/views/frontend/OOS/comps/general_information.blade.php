@@ -230,7 +230,7 @@
             </div> --}}
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Initiator Group Code">Is Repeat?  <span class="text-danger">*</span></label>
+                    <label for="Initiator Group Code">Is Repeat?<span class="text-danger">*</span></label>
                     <select name="is_repeat_gi" id="assignableSelect" {{ $data->stage == 1 ? 'required' : 'readonly' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>

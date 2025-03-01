@@ -58,7 +58,7 @@ class OOSController extends Controller
         try {
 
             $oos_record = OOSService::create_oss($request);
-            // dd($request->capa_ref_no_oosc);
+            // dd($request->impact_assesment_pia);
 
             if ($oos_record['status'] == 'error')
             {
@@ -178,11 +178,14 @@ class OOSController extends Controller
         //     toastr()->error("Short description is required");
         //     return redirect()->back();
         // }
+
+        //dd($request->all());
         $res = Helpers::getDefaultResponse();
 
         try {
 
             $oos_record = OOSService::update_oss($request,$id);
+            // dd($request->hod_remark2);
 
             if ($oos_record['status'] == 'error')
             {
@@ -551,7 +554,19 @@ class OOSController extends Controller
                 return back();
             }
             if ($changestage->stage == 9) {
-                if (!$changestage->outcome_phase_IA) {
+                if (empty($changestage->outcome_phase_IA &&  $changestage->summaryy_of_review
+                && $changestage->Probable_cause_iden &&  $changestage->details_of_result
+                && $changestage->Any_other_Comments &&  $changestage->Proposal_for_Hypothesis
+                && $changestage->Summary_of_Hypothesis &&  $changestage->Assignable_Cause
+                && $changestage->Types_of_assignable &&  $changestage->Evaluation_Timeline
+                && $changestage->timeline_met &&  $changestage->timeline_extension
+                && $changestage->CAPA_applicable &&  $changestage->resampling_required_ib
+                && $changestage->repeat_testing_ib &&  $changestage->phase_ii_inv_req_ib
+                && $changestage->production_person_ib &&  $changestage->Repeat_analysis_method
+                && $changestage->Details_repeat_analysis &&  $changestage->Impact_assessment1
+                && $changestage->Conclusion1
+
+                ) ) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -798,7 +813,9 @@ class OOSController extends Controller
             //     return back();
             // }
             if ($changestage->stage == 12) {
-                if (!$changestage->QA_Head_primary_remark3) {
+                if (empty($changestage->QA_Head_primary_remark3 && $changestage->escalation_required
+                && $changestage->phase_ib_assi_cause && $changestage->QA_Head_primary_remark3
+                )) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -1023,7 +1040,7 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 16) {
-                if (!$changestage->QA_Head_primary_remark4) {
+                if (empty($changestage->QA_Head_primary_remark4 &&  $changestage->phase_ii_a_assi_cause )) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
@@ -1088,6 +1105,23 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 17) {
+                if (empty($changestage->Summary_Of_Inv_IIB &&  $changestage->Assignable_Cause111 )) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'Phase II B Investigation is yet to be filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "18";
                 $changestage->status = "Phase II B HOD Primary Review";
                 $changestage->Phase_II_B_Investigation_By= Auth::user()->name;
@@ -2756,7 +2790,7 @@ class OOSController extends Controller
                  && $changestage->summary_of_prelim_investiga_plic && $changestage->phase_i_investigation_pli && $changestage->oos_category_root_cause_ident_plic
                  && $changestage->capa_required_plic && $changestage->phase_ib_inv_required_plir && $changestage->phase_ii_inv_required_plir
                  && $changestage->root_cause_identified_pia && $changestage->is_repeat_assingable_pia && $changestage->repeat_testing_pia
-                 && $changestage->impact_assesment_pia 
+                 && $changestage->impact_assesment_pia
                 )) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
@@ -2889,6 +2923,25 @@ class OOSController extends Controller
             }
 
             if ($changestage->stage == 13) {
+
+                if (empty($changestage->phase_iib_inv_required_plir 
+                )) {
+                    // Flash message for warning (field not filled)
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => ' Phase II A Investigation Tab is yet to be  required data filled!',
+                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    // Flash message for success (when the form is filled correctly)
+                    Session::flash('swal', [
+                        'title' => 'Success!',
+                        'message' => 'Sent for Next Stage',
+                        'type' => 'success',
+                    ]);
+                }
                 $changestage->stage = "14";
                 $changestage->status = "Phase II A HOD Primary Review";
                 $changestage->Phase_II_A_Investigation_By= Auth::user()->name;

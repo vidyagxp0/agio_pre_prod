@@ -8,7 +8,7 @@
                     <div class="col-md-12 4">
                         <div class="group-input">
                             <textarea class="summernote" name="Comments_plidata" value=""
-                                id="summernote-1" {{Helpers::isOOSChemical($data->stage)}}>{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
+                                id="summernote-1" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -73,9 +73,9 @@
                     </select>
                 </div>
             </div>
-                
+
             @endif
-            
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Checklist Outcome</label>
@@ -497,7 +497,7 @@
                 </div>
             </div>
 
-            
+
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Results Of Repeat Testing <span class="text-danger">*</span></label>
@@ -519,7 +519,7 @@
             <div class="col-lg-12 new-time-data-field">
                 <div class="group-input input-time ">
                     <label for="deviation_time">Impact Assessment <span class="text-danger">*</span></label>
-                    <textarea id="impact_assesment_pia"  name="impact_assesment_apia" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->impact_assesment_pia }}</textarea>
+                    <textarea id="impact_assesment_pia"  name="impact_assesment_pia" {{ $data->stage == 5 ? '' : 'readonly' }}>{{ $data->impact_assesment_pia }}</textarea>
                 </div>
             </div>
             <div class="col-lg-12">
