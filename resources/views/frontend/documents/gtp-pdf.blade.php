@@ -602,7 +602,7 @@
                                 <tr>
                                     <td>{{ $item['revision_no_gtp'] ?? '' }}</td>
                                     <td>{{ $item['changContNo_gtp'] ?? '' }}</td>
-                                    <td>{{ $item['effectiveDate_gtp'] ?? '' }}</td>
+                                    <td>{{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}</td>
                                     <td>{{ $item['reasonRevi_gtp'] ?? '' }}</td>
                                 </tr>
                             @endforeach
