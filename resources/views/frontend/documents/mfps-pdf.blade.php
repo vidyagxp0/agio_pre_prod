@@ -651,14 +651,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (!empty($RevisionGridData))
-                            @foreach ($RevisionGridData as $key => $item)
+                        @if (!empty($RevisionGridmfpsData))
+                            @foreach ($RevisionGridmfpsData as $key => $item)
                                 <tr>
-                                    <td>{{ $item['revision_number'] ?? '' }}</td>
-                                    <td>{{ $item['cc_no'] ?? '' }}</td>
-                                    <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-M-Y') : '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_mfps_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_mfps_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_mfps']) ? \Carbon\Carbon::parse($item['eff_date_mfps'])->format('d-M-Y') : '' }}</td>
 
-                                    <td>{{ $item['reason_of_revision'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_mfps'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else
