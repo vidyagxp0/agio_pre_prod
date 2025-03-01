@@ -821,8 +821,8 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Risk Assessment Required">Risk Assessment Required? </label>
-                                                    <select name="risk_assessment_required" id="risk_assessment_required" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <label for="Risk Assessment Required">Risk Assessment Required? <span class="text-danger">*</span> </label>
+                                                    <select name="risk_assessment_required" id="risk_assessment_required" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
                                                         <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
@@ -842,11 +842,11 @@
 
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
-                                                    <label for="Justification">Justification</label>
+                                                    <label for="Justification">Justification <span class="text-danger">*</span></label>
                                                     <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
-                                                    <!-- @error('justification')
+                                                     @error('justification')
                                                         <div class="text-danger">{{ $message }}</div>
-                                                    @enderror -->
+                                                    @enderror
                                                 </div>
                                             </div>
 
@@ -863,8 +863,8 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="hod_person">HOD Person</label>
-                                                    <select name="hod_person" id="hod_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >
+                                                    <label for="hod_person">HOD Person <span class="text-danger">*</span></label>
+                                                    <select name="hod_person" id="hod_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required >
                                                         <option value="">Select HOD Persion</option>
                                                         @if($users)
                                                             @foreach($users as $user)
@@ -903,7 +903,7 @@
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To
                                                     @if($data->stage == 1) <span class="text-danger">*</span>@endif</label>
-                                                    <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>
                                                         <option value="">-- Select --</option>
                                                         <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
                                                         <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
@@ -1251,8 +1251,8 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="migration-action">Comments</label>
-                                                    <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
+                                                    <label for="migration-action">Comments <span class="text-danger">*</span></label>
+                                                    <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1311,39 +1311,28 @@
                                             Change Details
                                         </div>
                                         <div class="row">
-
-
-
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="current-practice">
-                                                        Current Practice
-                                                    </label>
-                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->current_practice }}</textarea>
+                                                    <label for="current-practice"> Current Practice <span class="text-danger">*</span></label>
+                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="proposed_change">
-                                                        Proposed Change
-                                                    </label>
-                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->proposed_change }}</textarea>
+                                                    <label for="proposed_change">Proposed Change <span class="text-danger">*</span></label>
+                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>{{ $docdetail->proposed_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="reason_change">
-                                                        Reason for Change
-                                                    </label>
-                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->reason_change }}</textarea>
+                                                    <label for="reason_change">Reason for Change <span class="text-danger">*</span></label>
+                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>{{ $docdetail->reason_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="other_comment">
-                                                        Any Other Comments
-                                                    </label>
-                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->other_comment }}</textarea>
+                                                    <label for="other_comment"> Any Other Comments <span class="text-danger">*</span></label>
+                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} required>{{ $docdetail->other_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-12">
@@ -1474,8 +1463,10 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
-
-                                            <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                            <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                            @error('hod_assessment_comments')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
 
 
@@ -1576,7 +1567,6 @@
                                         }
                                     }
                                 </script>
-
 
                                         </div>
                                         <div class="button-block">
@@ -1709,11 +1699,8 @@
                                                     });
                                                 });
                                             </script>
-
-
                                         </div>
                                         <div class="button-block">
-
                                             <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
                                                 class="saveButton saveAuditFormBtn d-flex" style="align-items: center;"
                                                 id="ChangesaveButton02">
@@ -1747,8 +1734,6 @@
                                 <div id="CCForm3" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="row">
-
-
                                             <!-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Microbiology-Person">CFT Reviewer Person </label>
@@ -1796,7 +1781,7 @@
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Classification of Change </label>
+                                                    <label for="severity-level">Classification of Change  @if ($data->stage ==3)<span class="text-danger">*</span>@endif </label>
                                                     <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
@@ -1810,14 +1795,20 @@
                                                         <option @if ($data->severity_level1 == 'critical') selected @endif
                                                             value="critical">Critical</option>
                                                     </select>
+                                                    @error('severity_level1')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                                 </div>
                                             </div>
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
+                                                    <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3)<span class="text-danger">*</span> @endif </label>
                                                     <textarea name="qa_review_comments" {{ $data->stage == 3  ? 'required' : '' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
+                                                @error('severity_level1')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
                                             </div>
 
                                             <!-- <div class="col-12">
@@ -7902,11 +7893,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
-
-
-
                                     </div>
                                     <div class="button-block">
                                         <button style=" justify-content: center; width: 4rem; margin-left: 1px;;" type="submit"{{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}
@@ -7940,12 +7926,15 @@
                                             <label for="RA notification">RA Approval required
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
-                                            <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
+                                            <select name="RA_data_person" class="RA_data_person" id="RA_head_required" {{$data->stage == 5 ? 'required' :''}}
                                                     {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
                                                 <option value="">--Select--</option>
                                                 <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
                                                 <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
                                             </select>
+                                            @error('RA_data_person')
+                                                <span class="text-dangert">{{$message}}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                         <script>
@@ -7988,13 +7977,17 @@
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
                                                     <select name="QA_CQA_person" class="QA_CQA_person"
-                                                        id="QA_CQA_person"  {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        id="QA_CQA_person"  {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{$data->stage == 5 ? 'required' : ''}}>
                                                         <option value="">-- Select --</option>
                                                         @foreach ($users as $user)
                                                             <option value="{{ $user->name }}" @if ($user->name == $cc_cfts->QA_CQA_person) selected @endif>
                                                                 {{ $user->name }}</option>
                                                         @endforeach
                                                     </select>
+                                                    @error('QA_CQA_person')
+                                                    <span class="text-danger"> {{$message}}</span>
+
+                                                    @enderror
                                                 </div>
                                             </div>
 
@@ -8002,7 +7995,7 @@
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
-                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
 
@@ -8252,7 +8245,7 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comments
                                             @if($data->stage == 7) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
+                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>{{$cc_cfts->qa_cqa_comments}}</textarea>
                                         </div>
 
 
@@ -8432,7 +8425,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments"> Initiator Update Comments @if($data->stage == 9) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="intial_update_comments" {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
+                                            <textarea name="intial_update_comments" {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
 
@@ -8671,7 +8664,7 @@
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">Implementation Verification by QA/CQA Comments @if($data->stage == 11) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="implementation_verification_comments" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
+                                            <textarea name="implementation_verification_comments" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>{{ $cc_cfts->implementation_verification_comments }}</textarea>
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
@@ -8872,16 +8865,16 @@
 
                                 <div class="group-input">
                                     <label for="qa-closure-comments">QA/CQA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
-                                    <textarea name="qa_closure_comments" {{$data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
+                                    <textarea name="qa_closure_comments" {{$data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
 
 
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="effect_check">Effectiveness check required</label>
+                                        <label for="effect_check">Effectiveness check required @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
                                         <select name="effect_check" class="effect_check" id="effect_check"
-                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
+                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} required>
                                             <option value="">--Select--</option>
                                             <option @if ($cc_cfts->effect_check == 'Yes') selected @endif value="Yes">Yes</option>
                                             <option @if ($cc_cfts->effect_check == 'No') selected @endif value="No">No</option>

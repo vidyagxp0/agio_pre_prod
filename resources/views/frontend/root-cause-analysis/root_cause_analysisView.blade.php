@@ -524,18 +524,29 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Initiator Department</b></label>
-                                                <input disabled type="text" name="Initiator_Group" id="initiator_group"
+                                                <input disabled type="text" name="initiator_Group" id="initiator_group"
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Department Code</label>
                                                 <input readonly type="text"
                                                     name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     value="{{ $data->initiator_Group }}" id="initiator_group_code"
                                                     readonly>
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiation Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                                {{-- <div class="default-name"> <span
+                                                id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                             </div>
                                         </div>
 
@@ -600,25 +611,28 @@
 
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Audit Schedule Start Date">Due Date</label>
+                                                <label for="Audit Schedule Start Date">Due Date <span class="text-danger">*</span></label>
                                                  <div class="calenderauditee">
                                                     <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                        {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }}/>
+                                                        {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }} required/>
                                                     <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                                 </div>
                                             </div>
+                                            @error('due_date')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
 
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Initiated Through</label>
+                                                <label for="Initiator Group">Initiated Through <span class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please select related information</small>
                                                 </div>
                                                 <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                                     name="initiated_through"
-                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')" required>
                                                     <option value="">-- select --</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
                                                         value="recall">
@@ -641,14 +655,63 @@
                                                         Others</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
+                                        </div> --}}
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span class="text-danger">*</span></label>
                                                 <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group">Initiated Through <span class="text-danger">*</span></label>
+                                                <div>
+                                                    <small class="text-primary">Please select related information</small>
+                                                </div>
+                                                <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="initiated_through"
+                                                    id="initiated_through"
+                                                    onchange="toggleOtherField()" required>
+                                                    <option value="">-- select --</option>
+                                                    <option @if ($data->initiated_through == 'recall') selected @endif value="recall">Recall</option>
+                                                    <option @if ($data->initiated_through == 'return') selected @endif value="return">Return</option>
+                                                    <option @if ($data->initiated_through == 'deviation') selected @endif value="deviation">Deviation</option>
+                                                    <option @if ($data->initiated_through == 'complaint') selected @endif value="complaint">Complaint</option>
+                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif value="regulatory">Regulatory</option>
+                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif value="lab-incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'improvement') selected @endif value="improvement">Improvement</option>
+                                                    <option @if ($data->initiated_through == 'others') selected @endif value="others">Others</option>
+                                                </select>
+                                            </div>
                                         </div>
-{{--
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input" id="initiated_through_req" style="display: none;">
+                                                <label for="If Other">Others <span class="text-danger">*</span></label>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            function toggleOtherField() {
+                                                var selectBox = document.getElementById("initiated_through");
+                                                var otherField = document.getElementById("initiated_through_req");
+
+                                                if (selectBox.value === "others") {
+                                                    otherField.style.display = "block";
+                                                } else {
+                                                    otherField.style.display = "none";
+                                                }
+                                            }
+
+                                            // Call the function on page load to check the initial state
+                                            window.onload = function() {
+                                                toggleOtherField();
+                                            };
+                                        </script>
+
+                                    {{--
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Type">Type</label>
@@ -706,10 +769,10 @@
 
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="Responsible Department">Responsible Department</label>
+                                                <label for="Responsible Department">Responsible Department <span class="text-danger">*</span></label>
                                                 <select name="department"
                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    id="department">
+                                                    id="department" required>
                                                     <option value="">-- Select --</option>
                                                     <option value="Corporate Quality Assurance"
                                                         @if ($data->department == 'Corporate Quality Assurance') selected @endif>Corporate
@@ -775,26 +838,29 @@
                                                         Pharmacovigilance</option>
 
                                                 </select>
+                                                @error('department')
+                                                    <span class="text-danger">{{$message}}</span>
+                                                @enderror
                                             </div>
                                         </div>
-
-
 
                                         <div class="col-12">
                                             <div class="sub-head">Investigation details</div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="description">Description</label>
-
-                                                <textarea name="description"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
+                                                <label for="description">Description <span class="text-danger">*</span></label>
+                                                <textarea name="description"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>{{ $data->description }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="comments">Comments</label>
+                                                <label for="comments">Comments <span class="text-danger" >*</span></label>
                                                 <textarea name="comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
+                                            @error('comments')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -1575,13 +1641,14 @@
                                     <div class="col-lg-12">
 
                                             @if ($data->stage == 2)
-
-
                                                     <div class="group-input">
                                                         <label for="comments">HOD Review Comment<span
                                                             class="text-danger">*</span> </label>
-                                                        <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
+                                                        <textarea name="hod_comments"  {{$data->stage ==2 ? 'required' : ''}}  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
                                                     </div>
+                                                    @error('hod_comments')
+                                                        <span class="text-danger">{{$message}}</span>
+                                                    @enderror
                                                 </div>
                                             @else
 
@@ -1595,8 +1662,6 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                   </div>
-
-
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -1646,18 +1711,15 @@
                         </div>
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>  -->
-                                <div class="row">
 
+                                <div class="row">
                                     <div class="col-lg-12">
                                              @if ($data->stage == 3)
 
                                                 <div class="group-input">
                                                     <label for="comments" >Initial QA/CQA Review Comments <span
                                                         class="text-danger">*</span></label>
-                                                    <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                                    <textarea name="cft_comments_new" {{$data->stage == 3 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
                                                 </div>
 
                                               @else
@@ -1737,8 +1799,7 @@
                                         @if ($data->stage == 4)
                                             <div class="group-input">
 
-                                                <label for="objective">Objective<span
-                                                    class="text-danger">*</span></label>
+                                                <label for="objective">Objective<span class="text-danger">*</span></label>
                                                 <textarea name="objective"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->objective }}</textarea>
                                             </div>
 
@@ -1747,7 +1808,6 @@
                                                 <label for="objective">Objective</label>
                                                 <textarea name="objective"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->objective }}</textarea>
                                             </div>
-
                                         @endif
                                             @error('objective')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1756,33 +1816,36 @@
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="scope">Scope</label>
-                                            <textarea name="scope"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
+                                            <label for="scope">Scope @if ($data->stage == 4)<span class="text-danger">*</span>@endif</label>
+                                            <textarea name="scope" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="problem_statement">Problem Statement</label>
-                                            <textarea name="problem_statement_rca"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->problem_statement_rca }}</textarea>
+                                            <label for="problem_statement">Problem Statement @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
+                                            <textarea name="problem_statement_rca" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->problem_statement_rca }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="requirement">Background</label>
-                                            <textarea name="requirement"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->requirement }}</textarea>
+                                            <label for="requirement">Background @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
+                                            <textarea name="requirement" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->requirement }}</textarea>
                                         </div>
+                                        @error('requirement')
+                                            <span>{{$message}} </span>
+                                        @enderror
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="immediate_action">Immediate Action</label>
-                                            <textarea name="immediate_action"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
+                                            <label for="immediate_action">Immediate Action @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
+                                            <textarea name="immediate_action" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="investigation_team">Investigation Team</label>
-                                            <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]" >
+                                            <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
+                                            <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]" {{$data->stage ==4 ? 'required' : ''}} >
                                                 {{-- <option value="">Select members of the Investigation Team</option> --}}
                                                 @foreach ($users as $user)
                                                     {{-- <option value="{{ $user->id }}">{{ $user->name }}</option> --}}
@@ -1792,13 +1855,13 @@
                                                 @endforeach
                                             </select>
                                             @error('investigation_team')
-                                                <p class="text-danger">{{ $message }}</p>
+                                                <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                            <label for="root-cause-methodology">Root Cause Methodology @if ($data->stage == 4)  <span class="text-danger">*</span>@endif</label>
                                             @php
                                                 $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                             @endphp
@@ -2429,10 +2492,9 @@
 
                                     <div class="col-md-12" id="root-cause-others"style="display:none;">
                                         <div class="group-input">
-                                            <label for="root_cause_Others">Others</label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if
-                                                    it does not require completion</small></div>
-                                            <textarea class="summernote" name="root_cause_Others" id="summernote">{{ $data->root_cause_Others}} </textarea>
+                                            <label for="root_cause_Others">Others @if ($data->stage == 4) @endif</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea class="summernote" {{$data->stage == 4 ? 'required' : ''}} name="root_cause_Others" id="summernote">{{ $data->root_cause_Others}} </textarea>
                                         </div>
                                     </div>
 
@@ -2477,36 +2539,36 @@
 
 
                                     <div class="col-lg-12">
-
-                                                <div class="group-input">
-                                                    <label for="root_cause">Root Cause</label>
-                                                    <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
-                                                </div>
-
-
-                                    </div>
-                                    <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="impact_risk_assessment">Impact / Risk Assessment</label>
-                                            <textarea name="impact_risk_assessment"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_risk_assessment }}</textarea>
+                                            <label for="root_cause">Root Cause @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
+                                            <textarea name="root_cause" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
                                         <div class="group-input">
-                                            <label for="capa">CAPA</label>
-                                            <textarea name="capa"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->capa }}</textarea>
+                                            <label for="impact_risk_assessment">Impact / Risk Assessment @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
+                                            <textarea name="impact_risk_assessment" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_risk_assessment }}</textarea>
                                         </div>
+                                        @error('impact_risk_assessment')
+                                            <p class="text-danger">{{$message}}</p>
+                                        @enderror
                                     </div>
-
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="capa">CAPA @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
+                                            <textarea name="capa" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->capa }}</textarea>
+                                        </div>
+                                        @error('capa')
+                                        <p class="text-danger">{{$message}}</p>
+                                        @enderror
+                                    </div>
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Investigation Summary</label>
+                                            <label for="investigation_summary">Investigation Summary @if ($data->stage == 4 ? 'required' : '') <span class="text-danger">*</span> @endif</label>
                                             <textarea name="investigation_summary_rca"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->investigation_summary_rca }}</textarea>
                                         </div>
                                     </div>
-
-
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -2544,9 +2606,6 @@
                                                 </div>
                                         </div>
                                     </div>
-
-
-
                                 </div>
 
                                 <div class="button-block">
@@ -2567,18 +2626,15 @@
                         <div id="CCForm10" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>  -->
+                                                                                                                                                                                                                                                                                                                 </div>  -->
                                 <div class="row">
                                     <div class="col-lg-12">
                                         @if ($data->stage == 5)
-
                                            <div class="group-input">
                                                <label for="comments" >HOD Final Review Comments <span
                                                    class="text-danger">*</span></label>
-                                               <textarea name="hod_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                               <textarea name="hod_final_comments" {{$data->stage == 5 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
                                            </div>
-
                                          @else
                                            <div class="group-input">
                                                <label for="comments">HOD Final Review Comments</label>
@@ -2649,7 +2705,7 @@
                                            <div class="group-input">
                                                <label for="comments" >QA/CQA Final Review Comments <span
                                                    class="text-danger">*</span></label>
-                                               <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
+                                               <textarea name="qa_final_comments"  {{$data->stage == 6 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
                                            </div>
 
                                          @else
@@ -2713,8 +2769,7 @@
                         <div id="CCForm12" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <!-- <div class="sub-head">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            CFT Feedback
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>  -->
+                                  </div>  -->
                                 <div class="row">
                                     <div class="col-lg-12">
                                         @if ($data->stage == 7)
@@ -2722,7 +2777,7 @@
                                            <div class="group-input">
                                                <label for="comments" >QAH/CQAH/Designee Final Approval Comments <span
                                                    class="text-danger">*</span></label>
-                                               <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
+                                               <textarea name="qah_final_comments" {{$data->stage == 7 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
                                            </div>
 
                                          @else

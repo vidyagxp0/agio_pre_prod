@@ -120,8 +120,8 @@ class CCController extends Controller
         $openState->division_id = $request->division_id;
         $openState->initiator_id = Auth::user()->id;
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
-        
-        // $openState->cft_reviewer = implode(',', $request->cft_reviewer);     
+
+        // $openState->cft_reviewer = implode(',', $request->cft_reviewer);
         $openState->due_days = $request->due_days;
         $openState->severity_level1 = $request->severity_level1;
 
@@ -440,7 +440,7 @@ class CCController extends Controller
         // $Cft->Other5_by = $request->Other5_by;
         // $Cft->Other5_on = $request->Other5_on;
 
-        
+
         if (!empty ($request->RA_attachment)) {
             $files = [];
             if ($request->hasfile('RA_attachment')) {
@@ -495,7 +495,7 @@ class CCController extends Controller
                 }
             }
             $Cft->Production_Injection_Attachment = json_encode($files);
-        }            
+        }
         if (!empty ($request->Store_attachment)) {
             $files = [];
             if ($request->hasfile('Store_attachment')) {
@@ -594,7 +594,7 @@ class CCController extends Controller
                 }
             }
             $Cft->Environment_Health_Safety_attachment = json_encode($files);
-        }            
+        }
         if (!empty ($request->Information_Technology_attachment)) {
             $files = [];
             if ($request->hasfile('Information_Technology_attachment')) {
@@ -618,7 +618,7 @@ class CCController extends Controller
             $Cft->ContractGiver_attachment = json_encode($files);
         }
 
-        
+
         if (!empty ($request->Other1_attachment)) {
             $files = [];
             if ($request->hasfile('Other1_attachment')) {
@@ -1010,7 +1010,7 @@ class CCController extends Controller
             $history->action_name = 'Create';
             $history->save();
 
-        if(!empty($request->assign_to)){            
+        if(!empty($request->assign_to)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Assigned To';
@@ -1027,7 +1027,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->hod_person)){            
+        if(!empty($request->hod_person)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'HOD Person';
@@ -1044,7 +1044,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->risk_assessment_required)){            
+        if(!empty($request->risk_assessment_required)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Risk Assessment Required';
@@ -1060,10 +1060,10 @@ class CCController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-  
-           
-        
-        if(!empty($request->doc_change)){    
+
+
+
+        if(!empty($request->doc_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Supporting Documents';
@@ -1080,7 +1080,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->If_Others)){    
+        if(!empty($request->If_Others)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'If Others';
@@ -1097,7 +1097,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->Division_Code)){    
+        if(!empty($request->Division_Code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Division Code';
@@ -1114,7 +1114,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->current_practice)){    
+        if(!empty($request->current_practice)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Current Practice';
@@ -1131,7 +1131,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->proposed_change)){    
+        if(!empty($request->proposed_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Proposed Change';
@@ -1148,7 +1148,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->other_comment)){    
+        if(!empty($request->other_comment)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Reason for Change';
@@ -1165,7 +1165,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if(!empty($request->supervisor_comment)){    
+        // if(!empty($request->supervisor_comment)){
         //     $history = new RcmDocHistory;
         //     $history->cc_id = $openState->id;
         //     $history->activity_type = 'Supervisor Comments';
@@ -1182,7 +1182,7 @@ class CCController extends Controller
         //     $history->save();
         // }
 
-        if(!empty($request->type_chnage)){    
+        if(!empty($request->type_chnage)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Type of Change';
@@ -1199,7 +1199,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->qa_head)){    
+        if(!empty($request->qa_head)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Attachments';
@@ -1217,7 +1217,7 @@ class CCController extends Controller
         }
 
 
-        if(!empty($request->qa_comments)){    
+        if(!empty($request->qa_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Review Comments';
@@ -1234,7 +1234,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->related_records)){    
+        if(!empty($request->related_records)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Related Records';
@@ -1251,7 +1251,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->qa_eval_comments)){    
+        if(!empty($request->qa_eval_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Evaluation Comments';
@@ -1269,7 +1269,7 @@ class CCController extends Controller
         }
 
 
-        if(!empty($request->qa_eval_attach)){    
+        if(!empty($request->qa_eval_attach)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Evaluation Attachments';
@@ -1286,7 +1286,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->train_comments)){    
+        if(!empty($request->train_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Training Comments';
@@ -1304,7 +1304,7 @@ class CCController extends Controller
         }
 
 
-        if(!empty($request->training_required)){    
+        if(!empty($request->training_required)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Training Required';
@@ -1384,7 +1384,7 @@ class CCController extends Controller
         // $history->origin_state = $openState->status;
         // $history->save();
 
-        if(!empty($request->Microbiology)){    
+        if(!empty($request->Microbiology)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'CFT Reviewer';
@@ -1402,7 +1402,7 @@ class CCController extends Controller
         }
 
 
-        if(!empty($request->Microbiology_Person)){    
+        if(!empty($request->Microbiology_Person)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'CFT Reviewer Person';
@@ -1460,7 +1460,7 @@ class CCController extends Controller
 
         // ----------------------Group Comments History------------------------
 
-        if(!empty($request->qa_comments)){    
+        if(!empty($request->qa_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Comments';
@@ -1477,7 +1477,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->designee_comments)){    
+        if(!empty($request->designee_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Head Designee Comments';
@@ -1494,7 +1494,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->Warehouse_comments)){    
+        if(!empty($request->Warehouse_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Warehouse Comments';
@@ -1510,7 +1510,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->Engineering_comments)){    
+        if(!empty($request->Engineering_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Engineering Comments';
@@ -1526,7 +1526,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->Instrumentation_comments)){    
+        if(!empty($request->Instrumentation_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Instrumentation Comments';
@@ -1542,7 +1542,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->Validation_comments)){    
+        if(!empty($request->Validation_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Validation Comments';
@@ -1558,7 +1558,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->Others_comments)){    
+        if(!empty($request->Others_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Others Comments';
@@ -1574,7 +1574,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->Group_comments)){    
+        if(!empty($request->Group_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Comments';
@@ -1591,7 +1591,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->group_attachments)){    
+        if(!empty($request->group_attachments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Attachments';
@@ -1608,7 +1608,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->risk_identification)){    
+        if(!empty($request->risk_identification)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Risk Identification';
@@ -1624,7 +1624,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->severity)){    
+        if(!empty($request->severity)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Severity';
@@ -1641,7 +1641,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->Occurance)){    
+        if(!empty($request->Occurance)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Occurance';
@@ -1658,7 +1658,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->Detection)){    
+        if(!empty($request->Detection)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Detection';
@@ -1675,7 +1675,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->RPN)){    
+        if(!empty($request->RPN)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'RPN';
@@ -1693,7 +1693,7 @@ class CCController extends Controller
         }
 
 
-        if(!empty($request->risk_evaluation)){    
+        if(!empty($request->risk_evaluation)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Risk Evaluation';
@@ -1710,7 +1710,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->migration_action)){    
+        if(!empty($request->migration_action)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Mitigation Action';
@@ -1726,7 +1726,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->qa_appro_comments)){    
+        if(!empty($request->qa_appro_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Approval Commnent';
@@ -1742,7 +1742,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->feedback)){    
+        if(!empty($request->feedback)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Feedback';
@@ -1759,7 +1759,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->tran_attach)){    
+        if(!empty($request->tran_attach)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Training Attachments';
@@ -1776,7 +1776,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->qa_closure_comments)){    
+        if(!empty($request->qa_closure_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'QA Closure Comments';
@@ -1792,7 +1792,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->Effectiveness_checker)){    
+        if(!empty($request->Effectiveness_checker)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Effectiveness Check';
@@ -1808,7 +1808,7 @@ class CCController extends Controller
                 $history->action_name = 'Create';
             $history->save();
         }
-        if(!empty($request->feedbackeffective_check)){    
+        if(!empty($request->feedbackeffective_check)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Feedback';
@@ -1825,7 +1825,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->feedbackeffective_check_date)){    
+        if(!empty($request->feedbackeffective_check_date)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Effectiveness Check Date';
@@ -1842,7 +1842,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->attach_list)){    
+        if(!empty($request->attach_list)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'List Of Attachments 2';
@@ -1888,7 +1888,7 @@ class CCController extends Controller
         $closure = ChangeClosure::where('cc_id', $id)->first();
         $hod = User::get();
         $cft = User::get();
-        $pre = CC::all();        
+        $pre = CC::all();
         $previousRelated = explode(',', $data->related_records);
 
         $preRiskAssessment = RiskAssessment::all();
@@ -1947,11 +1947,11 @@ class CCController extends Controller
 
         //     return response()->json(['error' => 'Failed to update data'], 500);
         // }
-        
+
         // $openState->type_chnage = $request->type_chnage;
         // $openState->Division_Code = $request->div_code;
         // $openState->related_records = $request->related_records;
-        
+
         // $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
@@ -2072,7 +2072,7 @@ class CCController extends Controller
         $openState->update();
         // $impactassement->update();
 
-        
+
 
         if (!empty($request->in_attachment)) {
             $files = [];
@@ -2090,7 +2090,7 @@ class CCController extends Controller
 
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
-            if($Cft && $openState->stage == 4 ){                
+            if($Cft && $openState->stage == 4 ){
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_person = $request->RA_person == null ? $Cft->RA_person : $request->RA_person;
 
@@ -2099,7 +2099,7 @@ class CCController extends Controller
 
                 $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->Production_Table_Person : $request->Production_Table_Person;
                 $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->Production_Table_Review : $request->Production_Table_Review;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -2129,16 +2129,16 @@ class CCController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
@@ -2150,7 +2150,7 @@ class CCController extends Controller
                 $Cft->Other3_review = $request->Other3_review  == null ? $Cft->Other3_review : $request->Other3_review;
                 $Cft->Other3_person = $request->Other3_person  == null ? $Cft->Other3_person : $request->Other3_person;
                 $Cft->Other3_Department_person = $request->Other3_Department_person  == null ? $Cft->Other3_Department_person : $request->Other3_Department_person;
-                
+
                 $Cft->Other4_review = $request->Other4_review  == null ? $Cft->Other4_review : $request->Other4_review;
                 $Cft->Other4_person = $request->Other4_person  == null ? $Cft->Other4_person : $request->Other4_person;
                 $Cft->Other4_Department_person = $request->Other4_Department_person  == null ? $Cft->Other4_Department_person : $request->Other4_Department_person;
@@ -2198,7 +2198,7 @@ class CCController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -2207,10 +2207,10 @@ class CCController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
-                
+
                 $Cft->Other1_review = $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person;
@@ -2263,13 +2263,13 @@ class CCController extends Controller
 
             $Cft->Quality_Control_assessment = $request->Quality_Control_assessment;
             $Cft->Quality_Control_feedback = $request->Quality_Control_feedback;
-            
+
             $Cft->QualityAssurance_assessment = $request->QualityAssurance_assessment;
             $Cft->QualityAssurance_feedback = $request->QualityAssurance_feedback;
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -2278,7 +2278,7 @@ class CCController extends Controller
 
             $Cft->Information_Technology_assessment = $request->Information_Technology_assessment;
             $Cft->Information_Technology_feedback = $request->Information_Technology_feedback;
-            
+
             $Cft->Other1_assessment = $request->Other1_assessment;
             $Cft->Other1_feedback = $request->Other1_feedback;
 
@@ -2349,7 +2349,7 @@ class CCController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -2448,7 +2448,7 @@ class CCController extends Controller
                     }
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2533,7 +2533,7 @@ class CCController extends Controller
 
         if ($openState->stage == 3 || $openState->stage == 4 ){
             $Cft = CcCft::withoutTrashed()->where('cc_id', $id)->first();
-            if($Cft && $openState->stage == 4 ){                
+            if($Cft && $openState->stage == 4 ){
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
                 $Cft->RA_Review = $request->RA_Review == null ? $Cft->RA_Review : $request->RA_Review;
 
@@ -2542,7 +2542,7 @@ class CCController extends Controller
 
                 $Cft->Production_Table_Person = $request->Production_Table_Person == null ? $Cft->RA_Review : $request->Production_Table_Person;
                 $Cft->Production_Table_Review = $request->Production_Table_Review == null ? $Cft->RA_person : $request->Production_Table_Review;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -2572,20 +2572,20 @@ class CCController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
                 $Cft->Human_Resource_review = $request->Human_Resource_review == null ? $Cft->Human_Resource_review : $request->Human_Resource_review;
                 $Cft->Human_Resource_person = $request->Human_Resource_person == null ? $Cft->Human_Resource_person : $request->Human_Resource_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review == null ? $Cft->Information_Technology_review : $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person == null ? $Cft->Information_Technology_person : $request->Information_Technology_person;
 
                 $Cft->Other1_review = $request->Other1_review  == null ? $Cft->Other1_review : $request->Other1_review;
                 $Cft->Other1_person = $request->Other1_person  == null ? $Cft->Other1_person : $request->Other1_person;
                 $Cft->Other1_Department_person = $request->Other1_Department_person  == null ? $Cft->Other1_Department_person : $request->Other1_Department_person;
-                
+
                 $Cft->Other2_review = $request->Other2_review  == null ? $Cft->Other2_review : $request->Other2_review;
                 $Cft->Other2_person = $request->Other2_person  == null ? $Cft->Other2_person : $request->Other2_person;
                 $Cft->Other2_Department_person = $request->Other2_Department_person  == null ? $Cft->Other2_Department_person : $request->Other2_Department_person;
@@ -2709,7 +2709,7 @@ class CCController extends Controller
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-           
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -2789,7 +2789,7 @@ class CCController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -2889,7 +2889,7 @@ class CCController extends Controller
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
             }
-            
+
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -2988,7 +2988,7 @@ class CCController extends Controller
 
                 $Cft->ProductionInjection_person = $request->ProductionInjection_person == null ? $Cft->ProductionInjection_person : $request->ProductionInjection_person;
                 $Cft->ProductionInjection_Review = $request->ProductionInjection_Review == null ? $Cft->ProductionInjection_Review : $request->ProductionInjection_Review;
-                
+
                 $Cft->ProductionLiquid_Review = $request->ProductionLiquid_Review == null ? $Cft->ProductionLiquid_Review : $request->ProductionLiquid_Review;
                 $Cft->ProductionLiquid_person = $request->ProductionLiquid_person == null ? $Cft->ProductionLiquid_person : $request->ProductionLiquid_person;
 
@@ -3018,7 +3018,7 @@ class CCController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review == null ? $Cft->Engineering_review : $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person == null ? $Cft->Engineering_person : $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review == null ? $Cft->Environment_Health_review : $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person == null ? $Cft->Environment_Health_Safety_person : $request->Environment_Health_Safety_person;
 
@@ -3087,7 +3087,7 @@ class CCController extends Controller
 
                 $Cft->Engineering_review = $request->Engineering_review;
                 $Cft->Engineering_person = $request->Engineering_person;
-                
+
                 $Cft->Environment_Health_review = $request->Environment_Health_review;
                 $Cft->Environment_Health_Safety_person = $request->Environment_Health_Safety_person;
 
@@ -3096,7 +3096,7 @@ class CCController extends Controller
 
                 $Cft->Project_management_review = $request->Project_management_review;
                 $Cft->Project_management_person = $request->Project_management_person;
-                
+
                 $Cft->Information_Technology_review = $request->Information_Technology_review;
                 $Cft->Information_Technology_person = $request->Information_Technology_person;
 
@@ -3158,7 +3158,7 @@ class CCController extends Controller
 
             $Cft->Engineering_assessment = $request->Engineering_assessment;
             $Cft->Engineering_feedback = $request->Engineering_feedback;
-            
+
             $Cft->Health_Safety_assessment = $request->Health_Safety_assessment;
             $Cft->Health_Safety_feedback = $request->Health_Safety_feedback;
 
@@ -3241,7 +3241,7 @@ class CCController extends Controller
                     }
                 }
                 $Cft->Production_Injection_Attachment = json_encode($files);
-            }            
+            }
             if (!empty ($request->Store_attachment)) {
                 $files = [];
                 if ($request->hasfile('Store_attachment')) {
@@ -3341,7 +3341,7 @@ class CCController extends Controller
                 }
                 $Cft->Environment_Health_Safety_attachment = json_encode($files);
             }
-            
+
             if (!empty ($request->Information_Technology_attachment)) {
                 $files = [];
                 if ($request->hasfile('Information_Technology_attachment')) {
@@ -3464,7 +3464,7 @@ class CCController extends Controller
         if ($request->related_records) {
             $review->related_records = implode(',', $request->related_records);
         }
-       
+
         if (!empty($request->qa_head)) {
             $files = [];
             if ($request->hasfile('qa_head')) {
@@ -3677,7 +3677,7 @@ class CCController extends Controller
 
         //<!------------------------RCMS Documents---------------->
 
-        
+
 
         if ($lastDocument->short_description != $openState->short_description) {
             // return 'history';
@@ -3695,7 +3695,7 @@ class CCController extends Controller
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
             $history->save();
-        } 
+        }
 
         if ($lastDocument->risk_assessment_required != $request->risk_assessment_required) {
             // return 'history';
@@ -3713,7 +3713,7 @@ class CCController extends Controller
             $history->change_from = $lastDocument->status;
             $history->action_name = 'Update';
             $history->save();
-        } 
+        }
 
         if ($lastDocument->hod_person != $request->hod_person) {
             $history = new RcmDocHistory;
@@ -4368,7 +4368,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        
+
         /*************** Production Tablet ***************/
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new RcmDocHistory;
@@ -5740,7 +5740,7 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-        
+
         if ($lastDocument->Microbiology != $openState->Microbiology && $request->Microbiology != null) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -5773,7 +5773,7 @@ class CCController extends Controller
             $history->action_name = 'Update';
             $history->save();
         }
-    
+
         /*************** Other 1 ***************/
         if ($lastCft->Other1_review != $request->Other1_review && $request->Other1_review != null) {
             $history = new RcmDocHistory;
@@ -7265,7 +7265,7 @@ class CCController extends Controller
                 $changeControl->cft_to_qaInitial_by = Auth::user()->name;
                 $changeControl->cft_to_qaInitial_on = Carbon::now()->format('d-M-Y');
                 $changeControl->cft_to_qaInitial_comment = $request->comments;
-                
+
                 $changeControl->update();
 
                 $history = new RcmDocHistory();
@@ -7388,7 +7388,7 @@ class CCController extends Controller
         $changeControl->qa_final_to_initiator_by = Auth::user()->name;
         $changeControl->qa_final_to_initiator_on = Carbon::now()->format('d-M-Y');
         $changeControl->qa_final_to_initiator_comment = $request->comments;
-        
+
         $history = new RcmDocHistory();
         $history->cc_id = $id;
         $history->activity_type = 'Activity Log';
@@ -7401,7 +7401,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "Opened";
-        $history->change_from = $lastDocument->status;        
+        $history->change_from = $lastDocument->status;
         $history->save();
         $changeControl->update();
 
@@ -7473,10 +7473,10 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "HOD Review";
-        $history->change_from = $lastDocument->status;        
+        $history->change_from = $lastDocument->status;
         $history->save();
         $changeControl->update();
-        
+
         $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
@@ -7545,7 +7545,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "QA Initial Review";
-        $history->change_from = $lastDocument->status;        
+        $history->change_from = $lastDocument->status;
         $history->save();
         $changeControl->update();
 
@@ -7617,7 +7617,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->change_to =   "QA Final Review";
-        $history->change_from = $lastDocument->status;        
+        $history->change_from = $lastDocument->status;
         $history->save();
         $changeControl->update();
 
@@ -8026,7 +8026,7 @@ class CCController extends Controller
             $closure = ChangeClosure::where('cc_id', $data->id)->first();
             $json_decode = Docdetail::where(['cc_id' => $data->id, 'identifier' =>'AffectedDocDetail'])->first();
             $affectedDoc = json_decode($json_decode->data, true);
-            
+
 
 
             // pdf related work

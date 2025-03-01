@@ -1881,14 +1881,7 @@ class RootCauseController extends Controller
             $root->inference_remarks = serialize($request->inference_remarks);
         }
 
-
-
-
         $root->update();
-
-
-
-
 
         if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->comment)) {
 
@@ -3843,9 +3836,6 @@ class RootCauseController extends Controller
                 }
                 $history->save();
 
-
-
-
                 // $list = Helpers::getQAHeadUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3946,9 +3936,6 @@ class RootCauseController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-
-
-
 
                 $list = Helpers::getQAUserList($root->division_id);
                 foreach ($list as $u) {
@@ -4066,9 +4053,6 @@ class RootCauseController extends Controller
             }
             $history->save();
 
-
-
-
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";
@@ -4131,9 +4115,6 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-
-
-
                 // $list = Helpers::getInitiatorUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4154,9 +4135,6 @@ class RootCauseController extends Controller
                 //         }
                 //     // }
                 // }
-
-
-
                 $root->update();
 
 
@@ -4202,9 +4180,6 @@ class RootCauseController extends Controller
                 //     $history->action_name ="Not Applicable";
                 // }
                 $history->save();
-
-
-
                 // $list = Helpers::getHodUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4225,12 +4200,7 @@ class RootCauseController extends Controller
                 //         }
                 //     // }
                 // }
-
-
-
                 $root->update();
-
-
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -4270,9 +4240,6 @@ class RootCauseController extends Controller
                 //     $history->action_name ="Not Applicable";
                 // }
                 $history->save();
-
-
-
 
                 // $list = Helpers::getCQAUsersList($root->division_id);
                 // foreach ($list as $u) {
@@ -4358,8 +4325,6 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-
-
                 // $list = Helpers::getInitiatorUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4423,8 +4388,6 @@ class RootCauseController extends Controller
                 // }
                 $history->save();
 
-
-
                 // $list = Helpers::getHodUserList($root->division_id);
                 // foreach ($list as $u) {
                 //     // if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -4486,10 +4449,6 @@ class RootCauseController extends Controller
                 //     $history->action_name ="Not Applicable";
                 // }
                 $history->save();
-
-
-
-
 
                 // $list = Helpers::getQAUserList($root->division_id);
                 // foreach ($list as $u) {
@@ -4571,6 +4530,7 @@ class RootCauseController extends Controller
     public static function singleReport($id)
     {
         $data = RootCauseAnalysis::find($id);
+
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $investigation_teamIdsArray = explode(',', $data->investigation_team);
