@@ -257,6 +257,29 @@
         }
     </style>
 
+    <style>
+         #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fix table layout to maintain structure */
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Table wrapper for scrolling */
+        .table-containers {
+            width: 100%;
+            overflow-x: auto; /* Enable horsizontal scrolling */
+        }
+    </style>
+
 </head>
 <body>
     <header class="">

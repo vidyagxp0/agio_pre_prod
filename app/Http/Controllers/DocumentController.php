@@ -3033,6 +3033,7 @@ class DocumentController extends Controller
                 $document->safety_precaution = $request->safety_precaution;
                 $document->storage_condition = $request->storage_condition;
                 $document->approved_vendor = $request->approved_vendor;
+                $document->packingmaterial_specification = $request->packingmaterial_specification; 
                 $document->stp_no = $request->stp_no;
 
                 //raw material specification

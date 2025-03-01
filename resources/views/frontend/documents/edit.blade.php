@@ -25026,7 +25026,7 @@
                                         <div class="group-input">
                                             <label for="procedure"></label>
                                             
-                                            <textarea name="packingmaterial_specification" id="summernote" class="summernote">{{ $document->packingmaterial_specification ? $document->fps_specificationGrid : '' }}</textarea>
+                                            <textarea name="packingmaterial_specification" id="summernote" class="summernote">{{ $document->packingmaterial_specification ? $document->packingmaterial_specification : '' }}</textarea>
                                             @foreach ($history as $tempHistory)
                                                 @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                     @php

@@ -258,26 +258,10 @@
     </style>
 
 <style>
-        #isPasted {
+     #isPasted {
             width: 100% !important;
             border-collapse: collapse;
             table-layout: fixed; /* Fix table layout to maintain structure */
-        }
-
-               /* First column adjusts to its content */
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; /* Prevent wrapping */
-            width: 1%; /* Shrink to fit content */
-            vertical-align: top;
-        }
-
-        /* Second column takes remaining space */
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto; /* Take remaining space */
-            vertical-align: top;
-            
         }
 
         #isPasted th,
