@@ -607,7 +607,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial assessment</button>
-                <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT Review</button>
 
                 <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
@@ -3643,7 +3643,7 @@
                                 @endphp
                                 <div class="col-lg-6 store">
                                     <div class="group-input">
-                                        <label for="Contract Giver notification">Contract Giver Person</label>
+                                        <label for="Contract Giver notification">Contract Giver comment update by</label>
                                         <select name="ContractGiver_Person" class="ContractGiver_Person"
                                             id="ContractGiver_Person">
                                             <option value="">-- Select --</option>
