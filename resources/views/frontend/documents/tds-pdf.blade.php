@@ -531,10 +531,12 @@
     </style> --}}
 
     <style>
+
+        
         #isPasted {
             width: 100% !important;
             border-collapse: collapse;
-            table-layout: fixed; /* Fix table layout to maintain structure */
+            table-layout: fixed;
         }
 
         #isPasted th,
@@ -546,7 +548,7 @@
             overflow-wrap: break-word;
         }
 
-        /* Table wrapper for scrolling */
+        
         .table-containers {
             width: 100%;
             overflow-x: auto; /* Enable horsizontal scrolling */
@@ -706,24 +708,7 @@
                     </tbody>
                 </table>
 
-                {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            @php
-                                $inreviews = DB::table('stage_manages')
-                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                    ->select('stage_manages.*', 'users.name as user_name')
-                                    ->where('document_id', $document->id)
-                                    ->where('stage', 'Review-Submit')
-                                    ->where('deleted_at', null)
-                                    ->get();
-                            @endphp
-                            <td style="padding: 5px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                            <td style="padding: 5px; border: 1px solid #ddd;">  </td>        
-                        </tr>
-                    </tbody>
-                </table> --}}
+
                 <div></div>
                     <span style="text-align:center">Format No. QA/097/F9-00</span> 
                     <span style="text-align:right; margin-left:350px">Page No. :-</span>  
@@ -766,65 +751,7 @@
     <div>
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
-                {{-- <div class="other-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="w-5">A)</th>
-                                <th class="text-left">
-                                    <div class="bold">Summary of Results:-</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="scope-block">
-                        <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                            <thead>
-                                <tr>
-                                    <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                                    <th style="border: 1px solid black; width: 60%; font-weight: bold;">Test</th>
-                                    <th style="border: 1px solid black; width: 30%; font-weight: bold;">Result</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (!empty($SummaryDataGrid))
-                                    @php $count = 1; @endphp
-                                    @foreach ($SummaryDataGrid as $item)
-                                        <tr>
-                                            <td style="border: 1px solid black; text-align: center;">{{ $count }}</td>
-                                            <td style="border: 1px solid black; text-align: left;">{{ $item['test'] ?? '' }}</td>
-                                            <td style="border: 1px solid black; text-align: center;">{{ $item['result'] ?? 'N/A' }}</td>
-                                        </tr>
-                                        @php $count++; @endphp
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td colspan="3" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
-                                    </tr>
-                                @endif
-                            </tbody>
-                        </table>
-                    </div>
 
-
-                    <p><span style="font-weight: bold;">Remark:-</span>The above product complies/does not comply as per specification:  {{$data->tds_remark}}</p>
-
-                    <div style="margin-top: 20px;">
-                      <table style="width: 100%; border: none;">
-                        <tr>
-                            <td style="width: 50%; text-align: left;">
-                                <p><strong>Analyzed by:</strong> _____________________________</p>
-                                <p><strong>Date:</strong> _____________________________</p>
-                            </td>
-                            <td style="width: 50%; text-align: right;">
-                                <p><strong>Reviewed by:</strong> _____________________________</p>
-                                <p><strong>Date:</strong> _____________________________</p>
-                            </td>
-                        </tr>
-                     </table>
-                    </div>
-
-                </div> --}}
 
                 {{-- PROCEDURE START --}}
                 <div class="other-container ">
@@ -842,11 +769,6 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        {{-- @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->tds_result, 
-                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif --}}
-
                                         <div class="table-containers">
                                             {!! strip_tags($data->document_content->tds_result, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
@@ -860,7 +782,7 @@
                 
                 <br>
                 {{-- Test wise data Start --}}
-                    <div class="other-container ">
+                <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -875,11 +797,6 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        {{-- @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->tds_test_wise, 
-                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif --}}
-
                                         <div class="table-containers">
                                             {!! strip_tags($data->document_content->tds_test_wise, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
@@ -888,6 +805,7 @@
                             </div>
                         </div>
                     </div>
+     
                 </div>
                 {{-- Test wise data End --}}
 
@@ -1063,7 +981,6 @@
                     <table>
                         <thead>
                             <tr>
-                               
                                 <th class="text-center align-middle">
                                     <div class="bold">SAMPLE RECONCILATION (if applicable)</div>
                                 </th>
@@ -1183,6 +1100,7 @@
                                     <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                                 </tr>
                             </thead>
+                        
                             <tbody>
                                 @if (!empty($SummaryDataGrid))
                                     @foreach ($SummaryDataGrid as $key => $item)

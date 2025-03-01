@@ -6755,7 +6755,8 @@
                                             <tbody>
                                             @php
                                                 $ProductDetails = 1;
-                                                @endphp
+                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
+                                            @endphp
 
                                                 @if(!empty($summaryResult) && is_array($summaryResult->data))
                                                     @foreach($summaryResult->data as $index => $detail)
@@ -6763,7 +6764,7 @@
                                                             <td>{{ $ProductDetails++ }}</td>
                                                             <td><input type="text" name="summaryResult[{{$index}}][revision_no_tds]" value="{{ $detail['revision_no_tds'] ?? '' }}"></td>
                                                             <td><input type="text" name="summaryResult[{{$index}}][changContNo_tds]" value="{{ $detail['changContNo_tds'] ?? '' }}"></td>
-                                                            <td><input type="date" name="summaryResult[{{$index}}][effectiveDate_tds]" value="{{ $detail['effectiveDate_tds'] ?? '' }}"></td>
+                                                            <td><input type="date" readonly name="summaryResult[{{$index}}][effectiveDate_tds]" value="{{ $effectiveDate ?? '' }}"></td>
                                                             <td><input type="text" name="summaryResult[{{$index}}][reasonRevi_tds]" value="{{ $detail['reasonRevi_tds'] ?? '' }}"></td>
 
                                                         </tr>
@@ -7017,6 +7018,9 @@
                                                 $GtpData = isset($RevisionGridData->data) && is_string($RevisionGridData->data)
                                                     ? json_decode($RevisionGridData->data, true)
                                                     : (is_array($RevisionGridData->data) ? $RevisionGridData->data : []);
+
+                                                    $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
+
                                             @endphp
 
                                             @if(!empty($GtpData))
@@ -7025,7 +7029,7 @@
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td><input type="text" name="revision_data[{{ $key }}][rev_no]" value="{{ $gtp_data['rev_no'] ?? '' }}"></td>
                                                         <td><input type="text" name="revision_data[{{ $key }}][change_ctrl_no]" value="{{ $gtp_data['change_ctrl_no'] ?? '' }}"></td>
-                                                        <td><input type="date" name="revision_data[{{ $key }}][eff_date]" value="{{ $gtp_data['eff_date'] ?? '' }}"></td>
+                                                        <td><input type="date" name="revision_data[{{ $key }}][eff_date]" value="{{ $effectiveDate ?? '' }}"></td>
                                                         <td><input type="text" name="revision_data[{{ $key }}][rev_reason]" value="{{ $gtp_data['rev_reason'] ?? '' }}"></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>
@@ -17071,7 +17075,7 @@
                                         <label for="procedure">Test</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small></div>
-                                        <textarea name="gtp_test" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->gtp_test : '' }}</textarea>
+                                        <textarea name="gtp_test" id="" class="summernote">{{ $document->document_content ? $document->document_content->gtp_test : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
