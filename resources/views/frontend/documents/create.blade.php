@@ -559,7 +559,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <p id="depart-nameError" style="color:red; display: none;">** Department is required</p>
+                                    {{-- <p id="depart-nameError" style="color:red; display: none;">** Department is required</p> --}}
                                 </div>
 
                                 <div class="col-6" id="docVerContainer" style="display: none">

@@ -6699,7 +6699,7 @@
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         
-                                        <textarea name="label_claim" id="summernote" class="summernote">{{ $document->label_claim ? $document->label_claim : '' }}</textarea>
+                                        <textarea name="label_claim" id="" class="summernote">{{ $document->label_claim ? $document->label_claim : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -6746,7 +6746,7 @@
                                     Sample Quantity for Analysis
                                     <div class="group-input">
                                         <label for="procedure"></label>
-                                        <textarea name="sample_quantity" id="summernote" class="summernote">{{ $document->sample_quantity ? $document->sample_quantity : '' }}</textarea>
+                                        <textarea name="sample_quantity" id="" class="summernote">{{ $document->sample_quantity ? $document->sample_quantity : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -6798,7 +6798,7 @@
                                     <div class="group-input">
                                         <label for="procedure"></label>
                                         
-                                        <textarea name="fps_specificationGrid" id="summernote" class="summernote">{{ $document->fps_specificationGrid ? $document->fps_specificationGrid : '' }}</textarea>
+                                        <textarea name="fps_specificationGrid" id="" class="summernote">{{ $document->fps_specificationGrid ? $document->fps_specificationGrid : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -7197,7 +7197,7 @@
                                      Label Claim
                                     <div class="group-input">
                                         <label for="procedure"></label>
-                                        <textarea name="label_claim_cvs" id="summernote" class="summernote">{{ $document->label_claim_cvs ? $document->label_claim_cvs : '' }}</textarea>
+                                        <textarea name="label_claim_cvs" id="" class="summernote">{{ $document->label_claim_cvs ? $document->label_claim_cvs : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -7243,7 +7243,7 @@
                                     Sample Quantity for Analysis
                                     <div class="group-input">
                                         <label for="procedure"></label>
-                                        <textarea name="sample_quantity_cvs" id="summernote" class="summernote">{{ $document->sample_quantity_cvs ? $document->sample_quantity_cvs : '' }}</textarea>
+                                        <textarea name="sample_quantity_cvs" id="" class="summernote">{{ $document->sample_quantity_cvs ? $document->sample_quantity_cvs : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -7384,7 +7384,7 @@
                              Specification
                             <div class="group-input">
                                 <label for="procedure"></label>
-                                <textarea name="cvs_specificationGrid" id="summernote" class="summernote">{{ $document->cvs_specificationGrid ? $document->cvs_specificationGrid : '' }}</textarea>
+                                <textarea name="cvs_specificationGrid" id="" class="summernote">{{ $document->cvs_specificationGrid ? $document->cvs_specificationGrid : '' }}</textarea>
                                 @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                         @php
@@ -7630,7 +7630,7 @@
                                      Label Claim
                                     <div class="group-input">
                                         <label for="procedure"></label>
-                                        <textarea name="label_claim_inps" id="summernote" class="summernote">{{ $document->label_claim_inps ? $document->label_claim_inps : '' }}</textarea>
+                                        <textarea name="label_claim_inps" id="" class="summernote">{{ $document->label_claim_inps ? $document->label_claim_inps : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -7666,7 +7666,7 @@
                                     Sample Quantity for Analysis
                                     <div class="group-input">
                                         <label for="procedure"></label>
-                                        <textarea name="sample_quantity_inps" id="summernote" class="summernote">{{ $document->sample_quantity_inps ? $document->sample_quantity_inps : '' }}</textarea>
+                                        <textarea name="sample_quantity_inps" id="" class="summernote">{{ $document->sample_quantity_inps ? $document->sample_quantity_inps : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
@@ -7808,7 +7808,7 @@
                             <div class="group-input">
                                 <label for="procedure"></label>
                                 
-                                <textarea name="ips_specificationGrid" id="summernote" class="summernote">{{ $document->ips_specificationGrid ? $document->ips_specificationGrid : '' }}</textarea>
+                                <textarea name="ips_specificationGrid" id="" class="summernote">{{ $document->ips_specificationGrid ? $document->ips_specificationGrid : '' }}</textarea>
                                 @foreach ($history as $tempHistory)
                                     @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                         @php
@@ -16296,7 +16296,7 @@
                                             <label for="procedure"></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
-                                            <textarea name="fpstp_testfield" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->fpstp_testfield : '' }}</textarea>
+                                            <textarea name="fpstp_testfield" id="" class="summernote">{{ $document->document_content ? $document->document_content->fpstp_testfield : '' }}</textarea>
                                             @foreach ($history as $tempHistory)
                                                 @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                     @php
@@ -16521,7 +16521,7 @@
                                             <label for="procedure"></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
-                                            <textarea name="ipstp_testfield" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->ipstp_testfield : '' }}</textarea>
+                                            <textarea name="ipstp_testfield" id="" class="summernote">{{ $document->document_content ? $document->document_content->ipstp_testfield : '' }}</textarea>
                                             @foreach ($history as $tempHistory)
                                                 @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                     @php
@@ -16746,7 +16746,7 @@
                                             <label for="procedure"></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
-                                            <textarea name="cvstp_testfield" id="summernote" class="summernote">{{ $document->document_content ? $document->document_content->cvstp_testfield : '' }}</textarea>
+                                            <textarea name="cvstp_testfield" id="" class="summernote">{{ $document->document_content ? $document->document_content->cvstp_testfield : '' }}</textarea>
                                             @foreach ($history as $tempHistory)
                                                 @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                     @php
@@ -16849,80 +16849,6 @@
                                         });
                                     </script>
 
-
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Specification Details">
-                                            STANDARD TESTING PROCEDURE
-                                            <button type="button" id="Standard_Testing_add_3">+</button>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="Standard_Testing_details_3" style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 100px;">Sr. No.</th>
-                                                        <th>Test</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-
-
-                                                @php
-                                                        $serialNumber = 1;
-                                                        $CLEANING_VALIDATION_Data = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data)
-                                                            ? json_decode($CLEANING_VALIDATION->data, true)
-                                                            : (is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data : []);
-                                                    @endphp
-                                                    @if(!empty($CLEANING_VALIDATION_Data))
-                                                        @foreach($CLEANING_VALIDATION_Data as $key => $cleaning_validation)
-                                                            <tr>
-                                                                <td><input type="text" disabled value="{{ $serialNumber++ }}" style="width: 30px;"></td>
-                                                                <td><input type="text" name="cleaning_validation[{{ $key }}][data_test]" value="{{ $cleaning_validation['data_test'] ?? '' }}"></td>
-
-                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @else
-                                                        <tr>
-                                                            <td><input type="text" disabled value="1" style="width: 30px;"></td>
-                                                            <td><input type="text" name="cleaning_validation[0][data_test]"></td>
-                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                        </tr>
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        // Add new row in Specification Details table
-                                        $('#Standard_Testing_add_3').click(function(e) {
-                                            e.preventDefault();
-
-                                            function generateSpecificationTableRow(serialNumber) {
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="cleaning_validation[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="cleaning_validation[' + serialNumber + '][data_test]"></td>' +
-                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                    '</tr>';
-                                                return html;
-                                            }
-
-                                            var tableBody = $('#Standard_Testing_details_3 tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateSpecificationTableRow(rowCount);
-                                            tableBody.append(newRow);
-                                        });
-
-                                        // Remove row in Specification Details table
-                                        $(document).on('click', '.removeRowBtn', function() {
-                                            $(this).closest('tr').remove();
-                                        });
-                                    });
-                                </script> --}}
                             </div>
                         </div>
                         <div class="button-block">

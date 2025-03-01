@@ -6471,7 +6471,7 @@ class DocumentController extends Controller
         $RevisionGridinpstpData = isset($RevisioninpstpData->data) && is_string($RevisioninpstpData->data)
                 ? json_decode($RevisioninpstpData->data, true) :(is_array($RevisioninpstpData->data) ? $RevisioninpstpData->data:[]);
 
-        $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
+        $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
         $RevisionGridcvstpData = isset($RevisioncvstpData->data) && is_string($RevisioncvstpData->data)
                 ? json_decode($RevisioncvstpData->data, true) :(is_array($RevisioncvstpData->data) ? $RevisioncvstpData->data:[]);
 
