@@ -596,7 +596,7 @@
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_fpstp_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_fpstp_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_fpstp'])->format('d-M-Y') ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_fpstp']) ? \Carbon\Carbon::parse($item['eff_date_fpstp'])->format('d-M-Y') : '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_fpstp'] ?? '' }}</td>
                                 </tr>
                             @endforeach

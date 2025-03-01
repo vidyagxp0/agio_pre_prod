@@ -748,7 +748,7 @@
                         <tr>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_cvs_no'] ?? '' }}</td>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_cvs_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_cvs'])->format('d-M-Y') ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_cvs']) ? \Carbon\Carbon::parse($item['eff_date_cvs'])->format('d-M-Y') : '' }}</td>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_cvs'] ?? '' }}</td>
                         </tr>
                     @endforeach

@@ -3501,6 +3501,8 @@
                                                         $GtpData = isset($RevisionGridmfpsData->data) && is_string($RevisionGridmfpsData->data)
                                                             ? json_decode($RevisionGridmfpsData->data, true)
                                                             : (is_array($RevisionGridmfpsData->data) ? $RevisionGridmfpsData->data : []);
+
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -3509,7 +3511,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_mfps_data[{{ $key }}][rev_mfps_no]" value="{{ $gtp_data['rev_mfps_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_mfps_data[{{ $key }}][change_ctrl_mfps_no]" value="{{ $gtp_data['change_ctrl_mfps_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_mfps_data[{{ $key }}][eff_date_mfps]" value="{{ $gtp_data['eff_date_mfps'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_mfps_data[{{ $key }}][eff_date_mfps]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_mfps_data[{{ $key }}][rev_reason_mfps]" value="{{ $gtp_data['rev_reason_mfps'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -3662,6 +3664,7 @@
                                                         $GtpData = isset($RevisionGridmfpstpData->data) && is_string($RevisionGridmfpstpData->data)
                                                             ? json_decode($RevisionGridmfpstpData->data, true)
                                                             : (is_array($RevisionGridmfpstpData->data) ? $RevisionGridmfpstpData->data : []);
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -3670,7 +3673,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_mfpstp_data[{{ $key }}][rev_mfpstp_no]" value="{{ $gtp_data['rev_mfpstp_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_mfpstp_data[{{ $key }}][change_ctrl_mfpstp_no]" value="{{ $gtp_data['change_ctrl_mfpstp_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_mfpstp_data[{{ $key }}][eff_date_mfpstp]" value="{{ $gtp_data['eff_date_mfpstp'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_mfpstp_data[{{ $key }}][eff_date_mfpstp]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_mfpstp_data[{{ $key }}][rev_reason_mfpstp]" value="{{ $gtp_data['rev_reason_mfpstp'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -7689,6 +7692,7 @@
                                                 $GtpData = isset($RevisionGridCvsData->data) && is_string($RevisionGridCvsData->data)
                                                     ? json_decode($RevisionGridCvsData->data, true)
                                                     : (is_array($RevisionGridCvsData->data) ? $RevisionGridCvsData->data : []);
+                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                             @endphp
 
                                             @if(!empty($GtpData))
@@ -7697,7 +7701,7 @@
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td><input type="text" name="revision_cvs_data[{{ $key }}][rev_cvs_no]" value="{{ $gtp_data['rev_cvs_no'] ?? '' }}"></td>
                                                         <td><input type="text" name="revision_cvs_data[{{ $key }}][change_ctrl_cvs_no]" value="{{ $gtp_data['change_ctrl_cvs_no'] ?? '' }}"></td>
-                                                        <td><input type="date" name="revision_cvs_data[{{ $key }}][eff_date_cvs]" value="{{ $gtp_data['eff_date_cvs'] ?? '' }}"></td>
+                                                        <td><input type="date" readonly name="revision_cvs_data[{{ $key }}][eff_date_cvs]" value="{{ $effectiveDate ?? '' }}"></td>
                                                         <td><input type="text" name="revision_cvs_data[{{ $key }}][rev_reason_cvs]" value="{{ $gtp_data['rev_reason_cvs'] ?? '' }}"></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>
@@ -8113,6 +8117,7 @@
                                                 $GtpData = isset($RevisionGridInpsData->data) && is_string($RevisionGridInpsData->data)
                                                     ? json_decode($RevisionGridInpsData->data, true)
                                                     : (is_array($RevisionGridInpsData->data) ? $RevisionGridInpsData->data : []);
+                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                             @endphp
 
                                             @if(!empty($GtpData))
@@ -8121,7 +8126,7 @@
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td><input type="text" name="revision_inps_data[{{ $key }}][rev_inps_no]" value="{{ $gtp_data['rev_inps_no'] ?? '' }}"></td>
                                                         <td><input type="text" name="revision_inps_data[{{ $key }}][change_ctrl_inps_no]" value="{{ $gtp_data['change_ctrl_inps_no'] ?? '' }}"></td>
-                                                        <td><input type="date" name="revision_inps_data[{{ $key }}][eff_date_inps]" value="{{ $gtp_data['eff_date_inps'] ?? '' }}"></td>
+                                                        <td><input type="date" readonly name="revision_inps_data[{{ $key }}][eff_date_inps]" value="{{ $effectiveDate ?? '' }}"></td>
                                                         <td><input type="text" name="revision_inps_data[{{ $key }}][rev_reason_inps]" value="{{ $gtp_data['rev_reason_inps'] ?? '' }}"></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>
@@ -16519,6 +16524,8 @@
                                                         $GtpData = isset($RevisionGridfpstpData->data) && is_string($RevisionGridfpstpData->data)
                                                             ? json_decode($RevisionGridfpstpData->data, true)
                                                             : (is_array($RevisionGridfpstpData->data) ? $RevisionGridfpstpData->data : []);
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
+                                                        
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -16527,7 +16534,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_fpstp_data[{{ $key }}][rev_fpstp_no]" value="{{ $gtp_data['rev_fpstp_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_fpstp_data[{{ $key }}][change_ctrl_fpstp_no]" value="{{ $gtp_data['change_ctrl_fpstp_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_fpstp_data[{{ $key }}][eff_date_fpstp]" value="{{ $gtp_data['eff_date_fpstp'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_fpstp_data[{{ $key }}][eff_date_fpstp]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_fpstp_data[{{ $key }}][rev_reason_fpstp]" value="{{ $gtp_data['rev_reason_fpstp'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -16814,6 +16821,7 @@
                                                         $GtpData = isset($RevisionGridinpstpData->data) && is_string($RevisionGridinpstpData->data)
                                                             ? json_decode($RevisionGridinpstpData->data, true)
                                                             : (is_array($RevisionGridinpstpData->data) ? $RevisionGridinpstpData->data : []);
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -16822,7 +16830,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_inpstp_data[{{ $key }}][rev_inpstp_no]" value="{{ $gtp_data['rev_inpstp_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_inpstp_data[{{ $key }}][change_ctrl_inpstp_no]" value="{{ $gtp_data['change_ctrl_inpstp_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_inpstp_data[{{ $key }}][eff_date_inpstp]" value="{{ $gtp_data['eff_date_inpstp'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_inpstp_data[{{ $key }}][eff_date_inpstp]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_inpstp_data[{{ $key }}][rev_reason_inpstp]" value="{{ $gtp_data['rev_reason_inpstp'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -16969,6 +16977,7 @@
                                                         $GtpData = isset($RevisionGridcvstpData->data) && is_string($RevisionGridcvstpData->data)
                                                             ? json_decode($RevisionGridcvstpData->data, true)
                                                             : (is_array($RevisionGridcvstpData->data) ? $RevisionGridcvstpData->data : []);
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -16977,7 +16986,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_cvstp_data[{{ $key }}][rev_cvstp_no]" value="{{ $gtp_data['rev_cvstp_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_cvstp_data[{{ $key }}][change_ctrl_cvstp_no]" value="{{ $gtp_data['change_ctrl_cvstp_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_cvstp_data[{{ $key }}][eff_date_cvstp]" value="{{ $gtp_data['eff_date_cvstp'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_cvstp_data[{{ $key }}][eff_date_cvstp]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_cvstp_data[{{ $key }}][rev_reason_cvstp]" value="{{ $gtp_data['rev_reason_cvstp'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -17121,6 +17130,7 @@
                                                     $GtpData = isset($GtpGridData->data) && is_string($GtpGridData->data)
                                                         ? json_decode($GtpGridData->data, true)
                                                         : (is_array($GtpGridData->data) ? $GtpGridData->data : []);
+                                                    $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                 @endphp
 
                                                 @if(!empty($GtpData))
@@ -17129,7 +17139,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="gtp[{{ $key }}][revision_no_gtp]" value="{{ $gtp_data['revision_no_gtp'] ?? '' }}"></td>
                                                             <td><input type="text" name="gtp[{{ $key }}][changContNo_gtp]" value="{{ $gtp_data['changContNo_gtp'] ?? '' }}"></td>
-                                                            <td><input type="date" name="gtp[{{ $key }}][effectiveDate_gtp]" value="{{ $gtp_data['effectiveDate_gtp'] ?? '' }}"></td>
+                                                            <td><input type="date" readonly name="gtp[{{ $key }}][effectiveDate_gtp]" value="{{ $effectiveDate ?? '' }}"></td>
                                                             <td><input type="text" name="gtp[{{ $key }}][reasonRevi_gtp]" value="{{ $gtp_data['reasonRevi_gtp'] ?? '' }}"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -17273,6 +17283,7 @@
                                                         $GtpData = isset($RevisionGridrawmstpData->data) && is_string($RevisionGridrawmstpData->data)
                                                             ? json_decode($RevisionGridrawmstpData->data, true)
                                                             : (is_array($RevisionGridrawmstpData->data) ? $RevisionGridrawmstpData->data : []);
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -17281,7 +17292,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_rawmstp_data[{{ $key }}][rev_rawmstp_no]" value="{{ $gtp_data['rev_rawmstp_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_rawmstp_data[{{ $key }}][change_ctrl_rawmstp_no]" value="{{ $gtp_data['change_ctrl_rawmstp_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_rawmstp_data[{{ $key }}][eff_date_rawmstp]" value="{{ $gtp_data['eff_date_rawmstp'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_rawmstp_data[{{ $key }}][eff_date_rawmstp]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_rawmstp_data[{{ $key }}][rev_reason_rawmstp]" value="{{ $gtp_data['rev_reason_rawmstp'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -25073,6 +25084,7 @@
                                                         $GtpData = isset($RevisionGridpamsData->data) && is_string($RevisionGridpamsData->data)
                                                             ? json_decode($RevisionGridpamsData->data, true)
                                                             : (is_array($RevisionGridpamsData->data) ? $RevisionGridpamsData->data : []);
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -25081,7 +25093,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_pams_data[{{ $key }}][rev_pams_no]" value="{{ $gtp_data['rev_pams_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_pams_data[{{ $key }}][change_ctrl_pams_no]" value="{{ $gtp_data['change_ctrl_pams_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_pams_data[{{ $key }}][eff_date_pams]" value="{{ $gtp_data['eff_date_pams'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_pams_data[{{ $key }}][eff_date_pams]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_pams_data[{{ $key }}][rev_reason_pams]" value="{{ $gtp_data['rev_reason_pams'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
@@ -29272,6 +29284,8 @@
                                                         $GtpData = isset($RevisionGridrawmsData->data) && is_string($RevisionGridrawmsData->data)
                                                             ? json_decode($RevisionGridrawmsData->data, true)
                                                             : (is_array($RevisionGridrawmsData->data) ? $RevisionGridrawmsData->data : []);
+                                                        
+                                                        $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                                     @endphp
 
                                                     @if(!empty($GtpData))
@@ -29280,7 +29294,7 @@
                                                                 <td>{{ $serialNumber++ }}</td>
                                                                 <td><input type="text" name="revision_rawms_data[{{ $key }}][rev_rawms_no]" value="{{ $gtp_data['rev_rawms_no'] ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_rawms_data[{{ $key }}][change_ctrl_rawms_no]" value="{{ $gtp_data['change_ctrl_rawms_no'] ?? '' }}"></td>
-                                                                <td><input type="date" name="revision_rawms_data[{{ $key }}][eff_date_rawms]" value="{{ $gtp_data['eff_date_rawms'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="revision_rawms_data[{{ $key }}][eff_date_rawms]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="revision_rawms_data[{{ $key }}][rev_reason_rawms]" value="{{ $gtp_data['rev_reason_rawms'] ?? '' }}"></td>
                                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
