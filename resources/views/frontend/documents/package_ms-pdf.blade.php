@@ -130,7 +130,7 @@
         }
 
         body {
-            margin-top: 300px;
+            margin-top: 250px;
             margin-bottom: 180px;
             /* padding-top: 30px;
             padding-bottom: 50px;  */
@@ -507,7 +507,7 @@
         </table>
     </footer>
 
-    <div style="margin-top: 40px;">
+    <div style="margin-top: 10px;">
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
                 <div class="other-container">
@@ -515,58 +515,58 @@
                         <thead>
                             <tr>
                                 <th class="text-center">
-                                    <div class="bold">GENERAL INFORMATION</div>
+                                    <div style="font-weight: bold;">GENERAL INFORMATION</div>
                                 </th>
                             </tr>
                         </thead>
                     </table>
 
-                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 15px; page-break-inside: avoid;">
                         <tbody>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Name of packing material
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Name of packing material
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->name_pack_material}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->name_pack_material}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Standard pack
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Standard pack
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->standard_pack}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->standard_pack}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling plan
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling plan
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sampling_plan}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->sampling_plan}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sampling_instruction}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->sampling_instruction}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample for analysis 
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sample for analysis 
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->sample_analysis}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->sample_analysis}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Control Sample
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Control Sample
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->control_sample}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->control_sample}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Safety Precautions
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Safety Precautions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->safety_precaution}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->safety_precaution}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage condition
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage condition
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->storage_condition}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->storage_condition}}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Approved Vendors
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Approved Vendors
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->approved_vendor}}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->approved_vendor}}</td>
                             </tr>
                         </tbody>
                     </table>

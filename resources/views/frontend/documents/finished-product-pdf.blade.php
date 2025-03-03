@@ -130,7 +130,7 @@
         }
 
         body {
-            margin-top: 250px;
+            margin-top: 180px;
             margin-bottom: 160px;
             padding-top: 70px;
             padding-bottom: 60px; 
@@ -501,86 +501,72 @@
             </span>
     </footer>
 
-    <div style="margin-top: 50px;">
-        <section class="main-section" id="pdf-page">
-            <section style="page-break-after: never;">
-                <div class="other-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-center">
-                                    <div class="bold">GENERAL INFORMATION</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
+ <div style="margin-top: 10px;">
+    <section class="main-section" id="pdf-page">
+        <section style="page-break-after: never;">
+            <div class="other-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                <div style="font-weight: bold;">GENERAL INFORMATION</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
 
-                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                        <tbody>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{$data->generic_name}}</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
-                            </tr>
-                            <tr> 
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
-                                    Label Claim
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
-                                    {!! strip_tags($data->label_claim, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Product code
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->product_code}}</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
-                            </tr>
-                            <tr> 
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
-                                    Sample Quantity for analysis
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
-                                    {!! strip_tags($data->sample_quantity, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample}}</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->custom_sample}}</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reference
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->reference}}</td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
-                                </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </section>
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Generic Name</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{$data->generic_name}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Brand Name</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->brand_name}}</td>
+                        </tr>
+                        <tr> 
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Label Claim</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
+                                {!! strip_tags($data->label_claim, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Product Code</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->product_code}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->fsstorage_condition}}</td>
+                        </tr>
+                        <tr> 
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Analysis</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
+                                {!! strip_tags($data->sample_quantity, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Custom Sample</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->custom_sample}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reference</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reference}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling Instructions Warning and Precautions</td>
+                            <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </section>
-    </div>
+    </section>
+</div>
 
 
 
