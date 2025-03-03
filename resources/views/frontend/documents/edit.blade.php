@@ -146,10 +146,10 @@
   <style>
 
         /*Main Table Styling */
-        #isPasted {
-            width: 650px !important;
+    #isPasted {
+        width: 650px !important;
         border-collapse: collapse;
-        table-layout: auto; /* Adjusts column width dynamically */
+        table-layout: fixed; /* Adjusts column width dynamically */
     }
 
     /* First column adjusts to its content */
@@ -2279,78 +2279,70 @@
                     </div>
                     <div class="input-fields">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="purpose">Objective</label>
-                                    <textarea name="purpose" {{ Helpers::isRevised($document->stage) }}>{{ $document->document_content ? $document->document_content->purpose : '' }}</textarea>
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
+                           <div class="col-md-12">
+    <div class="group-input">
+        <label for="purpose">Objective</label>
+        <textarea name="purpose" 
+            @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>
+            {{ $document->document_content ? $document->document_content->purpose : '' }}
+        </textarea>
+        @foreach ($history as $tempHistory)
+            @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
+                @php
+                    $users_name = DB::table('users')
+                        ->where('id', $tempHistory->user_id)
+                        ->value('name');
+                @endphp
+                <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+            @endif
+        @endforeach
+    </div>
+</div>
 
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
-                                    class="comment">
-                                    <div>
-                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                                            {{ date('d-M-Y h:i:s') }}
-                                        </p>
+@if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective') 
+    {{-- Add Comment  --}}
+    <div class="comment">
+        <div>
+            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+            <input class="input-field" type="text" name="purpose_comment">
+        </div>
+        <div class="button">Add Comment</div>
+    </div>
+@endif
 
-                                        <input class="input-field" type="text" name="purpose_comment">
-                                    </div>
-                                    <div class="button">Add Comment</div>
-                                </div>
-                            @endif
+<div class="col-md-12">
+    <div class="group-input">
+        <label for="scope">Scope</label>
+        <textarea name="scope" 
+            @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>
+            {{ $document->document_content ? $document->document_content->scope : '' }}
+        </textarea>
+        @foreach ($history as $tempHistory)
+            @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
+                @php
+                    $users_name = DB::table('users')
+                        ->where('id', $tempHistory->user_id)
+                        ->value('name');
+                @endphp
+                <p style="color: blue">Modify by {{ $users_name }} at {{ $tempHistory->created_at }}</p>
+                <input class="input-field" style="background: #ffff0061; color: black;" type="text" value="{{ $tempHistory->comment }}" disabled>
+            @endif
+        @endforeach
+    </div>
+</div>
 
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="scope">Scope</label>
+@if (Auth::user()->role != 3 && $document->stage < 8 && $document->status != 'Effective') 
+    {{-- Add Comment  --}}
+    <div class="comment">
+        <div>
+            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at {{ date('d-M-Y h:i:s') }}</p>
+            <input class="input-field" type="text" name="scope_comment">
+        </div>
+        <div class="button">Add Comment</div>
+    </div>
+@endif
 
-                                    <textarea name="scope" {{ Helpers::isRevised($document->stage) }}>{{ $document->document_content ? $document->document_content->scope : '' }}</textarea>
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-
-                            @if (Auth::user()->role != 3 && $document->stage < 8) {{-- Add Comment  --}} <div
-                                    class="comment">
-                                    <div>
-                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
-                                            {{ date('d-M-Y h:i:s') }}
-                                        </p>
-
-                                        <input class="input-field" type="text" name="scope_comment">
-                                    </div>
-                                    <div class="button">Add Comment</div>
-                                </div>
-                            @endif
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -2379,7 +2371,8 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="responsibility[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                {{-- <textarea name="responsibility[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                <textarea name="responsibility[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button
@@ -3053,42 +3046,7 @@
                             @endif
                         </div>
 
-                        {{-- <div class="col-md-12">
-                            <div class="group-input">
-                                <label for="test">
-                                    Revision History
-                                </label>
-                                <div><small class="text-primary"></small></div>
-                                <div class="table-responsive retrieve-table">
-                                <table class="table-bordered table" id="">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr. No.</th>
-                                            <th class="copy-name">Revision No.</th>
-                                            <th class="copy-name">Change Control No./ DCRF No</th>
-                                            <th class="copy-name">Effective Date</th>
-                                            <th class="copy-name">Reason of revision</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
 
-                                        @if($document->revised == 'Yes' && isset($document->revisions))
-                                            @foreach($document->revisions as $key => $revision)
-                                                <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td><input type="text" name="revision_number[]" value="{{ $revision->revision_number }}" class="form-control"></td>
-                                                    <td><input type="text" name="cc_no[]" value="{{ $revision->cc_no }}" class="form-control"></td>
-                                                    <td><input type="date" name="revised_effective_date[]" value="{{ $revision->revised_effective_date }}" class="form-control"></td>
-                                                    <td><input type="text" name="reason[]" value="{{ $revision->reason }}" class="form-control"></td>
-                                                </tr>
-                                            @endforeach
-                                        @endif
-
-                                    </tbody>
-                                </table>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
 
                     <div class="input-fields">
@@ -3118,34 +3076,11 @@
                                                 <div class="col-md-12">
                                                     <div class="group-input">
                                                         <input type="text" name="master_user_department" value="{{$document->master_user_department}}">
-                                                        {{-- <select name="master_user_department"
-                                                            id="master_user_department" class="form-control"
-                                                            {{ Helpers::isRevised($document->stage) }}>
-                                                            <option value="" disabled selected>Enter your Selection
-                                                            </option>
-
-                                                            @foreach (Helpers::getDepartments() as $code => $department)
-                                                                <option value="{{ $code }}"
-                                                                    @if ($document->master_user_department == $code) selected @endif>
-                                                                    {{ $department }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select> --}}
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
-                                            {{-- <td>
-                                                <select id="department-master" class="form-control"
-                                                    placeholder="Select..." name="master_user_department">
-                                                    <option value="">Select the departments</option>
-                                                    @foreach ($departments as $department)
-                                                        <option value="{{ $department->id }}"
-                                                            {{ $document->master_user_department == $department->id ? 'selected' : '' }}>
-                                                            {{ $department->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td> --}}
+                                           
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -3159,34 +3094,11 @@
                                                 <div class="col-md-12">
                                                     <div class="group-input">
                                                         <input type="text" name="controlled_user_department" value="{{$document->controlled_user_department}}">
-                                                        {{-- <select name="controlled_user_department"
-                                                            id="controlled_user_department" class="form-control"
-                                                            {{ Helpers::isRevised($document->stage) }}>
-                                                            <option value="" disabled selected>Enter your Selection
-                                                            </option>
-
-                                                            @foreach (Helpers::getDepartments() as $code => $department)
-                                                                <option value="{{ $code }}"
-                                                                    @if ($document->controlled_user_department == $code) selected @endif>
-                                                                    {{ $department }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select> --}}
+                                                      
                                                     </div>
                                                 </div>
                                             </td>
-                                            {{-- <td>
-                                                <select id="department-controlled" class="form-control"
-                                                    placeholder="Select..." name="controlled_user_department">
-                                                    <option value="">Select the departments</option>
-                                                    @foreach ($departments as $department)
-                                                        <option value="{{ $department->id }}"
-                                                            {{ $document->controlled_user_department == $department->id ? 'selected' : '' }}>
-                                                            {{ $department->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td> --}}
+                                            
                                         </tr>
                                         <tr>
                                             <td>3</td>
@@ -3199,34 +3111,11 @@
                                                 <div class="col-md-12">
                                                     <div class="group-input">
                                                         <input type="text" name="display_user_department" value="{{$document->display_user_department}}">
-                                                        {{-- <select name="display_user_department"
-                                                            id="display_user_department" class="form-control"
-                                                            {{ Helpers::isRevised($document->stage) }}>
-                                                            <option value="" disabled selected>Enter your Selection
-                                                            </option>
-
-                                                            @foreach (Helpers::getDepartments() as $code => $department)
-                                                                <option value="{{ $code }}"
-                                                                    @if ($document->display_user_department == $code) selected @endif>
-                                                                    {{ $department }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select> --}}
+                                                      
                                                     </div>
                                                 </div>
                                             </td>
-                                            {{-- <td>
-                                                <select id="department-display" class="form-control"
-                                                    placeholder="Select..." name="display_user_department">
-                                                    <option value="">Select the departments</option>
-                                                    @foreach ($departments as $department)
-                                                        <option value="{{ $department->id }}"
-                                                            {{ $document->display_user_department == $department->id ? 'selected' : '' }}>
-                                                            {{ $department->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </td> --}}
+                                         
                                         </tr>
                                     </tbody>
                                 </table>
@@ -3235,47 +3124,7 @@
                     </div>
 
 
-                        {{-- <div class="col-md-12">
-                            <div class="group-input">
-                                <label for="test">
-                                    Revision History
-                                </label>
-                                <div><small class="text-primary"></small></div>
-                                <div class="table-responsive retrieve-table">
-                                <table class="table-bordered table" id="">
-                                    <thead>
-                                        <tr>
-                                            <th>Sr. No.</th>
-                                            <th class="copy-name">Revision No.</th>
-                                            <th class="copy-name">Change Control No./ DCRF No</th>
-                                            <th class="copy-name">Effective Date</th>
-                                            <th class="copy-name">Reason of revision</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @if($document->revised == 'Yes')
-                                            <tr>
-                                                <td>1</td>
-                                                <td><input type="text" name="revision_number[]" value="{{ $document->revised_doc }}" class="form-control"></td>
-                                                <td><input type="text" name="cc_no[]" value="{{ $document->cc_no }}" class="form-control"></td>
-                                                <td><input type="text" name="effective_date[]" value="{{ Helpers::getDateFormat($document->effective_date) }}" class="form-control"></td>
-                                                <td><input type="text" name="reason[]" value="{{ $document->reason }}" class="form-control"></td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td>1</td>
-                                                <td><input type="text" name="revision_number[]" value="" class="form-control">NA</td>
-                                                <td><input type="text" name="cc_no[]" value="" class="form-control">NA</td>
-                                                <td><input type="text" name="effective_date[]" value="" class="form-control">NA</td>
-                                                <td><input type="text" name="reason[]" value="" class="form-control">NA</td>
-                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                                </div>
-                            </div>
-                        </div> --}}
-
+                       
                         <div class="group-input">
                             <label for="action-plan-grid">
                                 Revision History<button type="button" name="action-plan-grid"
@@ -3287,7 +3136,7 @@
                                         <tr>
                                             <th style="width: 2%">Sr. No.</th>
                                             <th style="width: 12%">Revision No.</th>
-                                            <th style="width: 12%">Change Control No./ DCRF No</th>
+                                            <th style="width: 12%">Change Control No.</th>
                                             <th style="width: 12%">Effective Date</th>
                                             <th style="width: 30%">Reason of revision</th>
                                             <th style="width: 3%">Action</th>
@@ -3366,6 +3215,8 @@
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                     </div>
                 </div>
+
+
 
                 {{-- HOD REMARKS TAB START --}}
                 {{-- <div id="hod-remarks-tab" class="tabcontent">
@@ -6543,22 +6394,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                                     require completion</small></div>
                                             <textarea name="tds_result" id="" class="summernote">{{ $document->document_content ? $document->document_content->tds_result : '' }}</textarea>
-                                            @foreach ($history as $tempHistory)
-                                                @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                                    @php
-                                                        $users_name = DB::table('users')
-                                                            ->where('id', $tempHistory->user_id)
-                                                            ->value('name');
-                                                    @endphp
-                                                    <p style="color: blue">Modify by {{ $users_name }} at
-                                                        {{ $tempHistory->created_at }}
-                                                    </p>
-                                                    <input class="input-field"
-                                                        style="background: #ffff0061;
-                                            color: black;"
-                                                        type="text" value="{{ $tempHistory->comment }}" disabled>
-                                                @endif
-                                            @endforeach
+                                           
                                         </div>
                                     </div>
                              
@@ -6579,22 +6415,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea name="tds_test_wise" id="" class="summernote">{{ $document->document_content ? $document->document_content->tds_test_wise : '' }}</textarea>
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
+                                    
                                 </div>
                             </div>
 
@@ -9029,12 +8850,12 @@
                 </div>
 
 
-            {{-- temperature mapping protcal tabs edirt blade  --}}
-            <div id="doc-tempmapping" class="tabcontent">
-                <div class="orig-head">
-                    Temperature Mapping Protocal
-                </div>
-                <div class="input-fields">
+                {{-- temperature mapping protcal tabs edirt blade  --}}
+                <div id="doc-tempmapping" class="tabcontent">
+                    <div class="orig-head">
+                        Temperature Mapping Protocal
+                    </div>
+                    <div class="input-fields">
                     <div class="row">
 
                         <div class="col-12">
@@ -30603,6 +30424,22 @@
         </div>
     </div>
 
+
+    {{-- <script>
+        $(document).ready(function() {
+            $(".saveButton").click(function(event) {
+                var documentStatus = "{{ $document }}"; 
+
+                if (documentStatus === "Effective") {
+                    $("input, select, textarea").not("#Details-table-revision input").prop("disabled", true);
+
+                    setTimeout(() => {
+                        $("input, select, textarea").prop("disabled", false);
+                    }, 1000);
+                }
+            });
+        });
+    </script> --}}
 
     <style>
         #step-form>div {

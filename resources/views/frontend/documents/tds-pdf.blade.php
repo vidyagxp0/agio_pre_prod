@@ -358,9 +358,7 @@
             word-wrap: break-word;
         }
 
-        .annexure-block {
-            margin: 40px 0 0;
-        }
+
 
         .empty-page {
             page-break-after: always;
@@ -470,28 +468,29 @@
         }
     </style>
 
-    {{-- <style>
+    <style>
+        
         /*Main Table Styling */
         #isPasted {
-            width: 650px !important;
-            border-collapse: collapse;
-            table-layout: auto; /* Adjusts column width dynamically */
+            width: 690px !important;
+        border-collapse: collapse;
+        table-layout: fixed;
         }
 
         /* First column adjusts to its content */
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; /* Prevent wrapping */
-            width: 1%; /* Shrink to fit content */
+            white-space: nowrap; 
+            width: 1%;
             vertical-align: top;
         }
 
         /* Second column takes remaining space */
         #isPasted td:last-child,
         #isPasted th:last-child {
-            width: auto; /* Take remaining space */
+            width: auto;
             vertical-align: top;
-            
+
         }
 
         /* Common Table Cell Styling */
@@ -501,8 +500,8 @@
             padding: 8px;
             text-align: left;
             max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Paragraph Styling Inside Table Cells */
@@ -511,8 +510,8 @@
             text-justify: inter-word;
             margin: 0;
             max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         #isPasted img {
@@ -528,36 +527,41 @@
             height: 300px;
             margin: 5px auto;
         }
-    </style> --}}
 
-    <style>
+        .table-containers {
+            width: 550px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
 
-        
-        #isPasted {
+    
+        #isPasted table {
             width: 100% !important;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
-        #isPasted th,
-        #isPasted td {
+
+        #isPasted table th,
+        #isPasted table td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        
-        .table-containers {
-            width: 100%;
-            overflow-x: auto; /* Enable horsizontal scrolling */
-        }
 
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
     </style>
 
 </head>
-
 <body>
 
     <header class="">
@@ -593,7 +597,6 @@
             </tbody>
         </table>
 
-
         <table class="border border-top-none" border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
             <tbody>
               <tr>
@@ -627,93 +630,90 @@
 
             </tbody>
         </table>
-       
     </header>
 
-        <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
-                <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <thead>
-                        <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;"></th>
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Prepared By</th>
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Checked By</th>
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Approved By</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            @php
-                                $inreviews = DB::table('stage_manages')
-                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                    ->select('stage_manages.*', 'users.name as user_name')
-                                    ->where('document_id', $document->id)
-                                    ->where('stage', 'Review-Submit')
-                                    ->where('deleted_at', null)
-                                    ->get();
-                            @endphp
-                            <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Sign</th>
-                            <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                            <td style="padding: 5px; border: 1px solid #ddd;">  
-                            @if ($inreviews->isEmpty())
-                                <div>Yet Not Performed</div>
-                            @else
-                                @foreach ($inreviews as $temp)
-                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                                @endforeach
-                            @endif          
-                            @php
-                                $inreview = DB::table('stage_manages')
-                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                    ->select('stage_manages.*', 'users.name as user_name')
-                                    ->where('document_id', $document->id)
-                                    ->where('stage', 'Approval-Submit')
-                                    ->where('deleted_at', null)
-                                    ->get();
+    <footer class="footer" style=" font-family: Arial, sans-serif; font-size: 14px; ">
+        <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;"></th>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Prepared By</th>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Checked By</th>
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Approved By</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    @php
+                        $inreviews = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Review-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
+                    @endphp
+                    <th style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Sign</th>
+                    <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">  
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif          
+                    @php
+                        $inreview = DB::table('stage_manages')
+                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                            ->select('stage_manages.*', 'users.name as user_name')
+                            ->where('document_id', $document->id)
+                            ->where('stage', 'Approval-Submit')
+                            ->where('deleted_at', null)
+                            ->get();
 
-                            @endphp
-                            <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">  
-                            @if ($inreview->isEmpty())
-                                <div>Yet Not Performed</div>
-                            @else
-                                @foreach ($inreview as $temp)
-                                    <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
-                                @endforeach
-                            @endif                    
-                        </tr>
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Date</td>
-                            <td style="padding: 5px; border: 1px solid #ddd;">
-                            {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
-                            </td>
-                            <td style="padding: 5px; border: 1px solid #ddd;">
-                            @if ($inreviews->isEmpty())
-                                <div>Yet Not Performed</div>
-                            @else
-                                @foreach ($inreviews as $temp)
-                                <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                                @endforeach
-                            @endif 
-                            </td>
+                    @endphp
+                    <td style="padding: 5px; border: 1px solid #ddd; text-align: center;">  
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                            <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif                    
+                </tr>
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 5px; border: 1px solid #ddd; font-size: 12px; font-weight: bold;">Date</td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    {{ $formattedDate = \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                    </td>
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    @if ($inreviews->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreviews as $temp)
+                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif 
+                    </td>
 
-                            <td style="padding: 5px; border: 1px solid #ddd;">
-                            @if ($inreview->isEmpty())
-                                <div>Yet Not Performed</div>
-                            @else
-                                @foreach ($inreview as $temp)
-                                <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
-                                @endforeach
-                            @endif                    
-                            </td>
-                        </tr> 
-                    </tbody>
-                </table>
-
-
-                <div></div>
-                    <span style="text-align:center">Format No. QA/097/F9-00</span> 
-                    <span style="text-align:right; margin-left:350px">Page No. :-</span>  
-                </div>                             
-                </footer>
+                    <td style="padding: 5px; border: 1px solid #ddd;">
+                    @if ($inreview->isEmpty())
+                        <div>Yet Not Performed</div>
+                    @else
+                        @foreach ($inreview as $temp)
+                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                        @endforeach
+                    @endif                    
+                    </td>
+                </tr> 
+            </tbody>
+        </table>
+        <div></div>
+            <span style="text-align:center">Format No. QA/097/F9-00</span> 
+            <span style="text-align:right; margin-left:350px">Page No. :-</span>  
+        </div>                             
+    </footer>
 
         <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
             <tbody>
@@ -745,9 +745,7 @@
                 </tr>
             </tbody>
         </table>
-
         <br>
-        
     <div>
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
@@ -808,156 +806,6 @@
      
                 </div>
                 {{-- Test wise data End --}}
-
-                    {{-- <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                            <thead>
-                                <tr>
-                                    <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                                    <th style="border: 1px solid black; width: 90%; font-weight: bold;">Test Methods</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td style="border: 1px solid black;">1</td>
-                                    <td>
-                                        <table style="width: 100%; border: none;">
-                                            <tr>
-                                                <td style="width: 50%; text-align: left;">
-                                                    <p>Test Name: ________</p>
-                                                </td>
-                                                <td style="width: 50%; text-align: right;">
-                                                    <p>Date: ______________</p>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                            
-                                            <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="border: 1px solid black; width: 35%; font-weight: bold;">Instrument Name</th>
-                                                        <th style="border: 1px solid black; width: 30%; font-weight: bold;">ID Number</th>
-                                                        <th style="border: 1px solid black; width: 35%; font-weight: bold;">Calibration Due On</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        
-
-                                        
-                                            <table style="margin-top: 20px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Chemical /Solvent Name </th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Make</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Batch No</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Valid upto</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        
-
-                                        
-                                            <table style="margin-top: 20px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Standard / Impurity Name</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Standard / Impurity Number</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Purity</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Valid upto</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        
-
-                                    
-                                            <table style="margin-top: 20px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Reagent/ Volumetric solution Name</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Solution Number</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Molarity</th>
-                                                        <th style="border: 1px solid black; width: 25%; font-weight: bold;">Valid upto</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                        <td style="border: 1px solid black;"></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        
-                                        
-                                            <table style="width: 100%; border: none;">
-                                                <tr>
-                                                    <td style="text-align: left; font-weight: bold;">
-                                                        Procedure:
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                    
-
-                                    
-                                            <table style="width: 100%; border: none;">
-                                                <tr>
-                                                    <td style="text-align: left; font-weight: bold;">
-                                                        Observation:
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        
-
-                                    
-                                            <table style="width: 100%; border: none;">
-                                                <tr>
-                                                    <td style="text-align: left;">
-                                                        Remark: Complies / does not comply
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        
-
-                                
-                                            <table style="width: 100%; border: none;">
-                                                <tr>
-                                                    <td style="width: 50%; text-align: left;">
-                                                        <p><strong>Analyzed by/Date</strong> ________</p>
-                                                    </td>
-                                                    <td style="width: 50%; text-align: right;">
-                                                        <p><strong>Reviewed by/Date</strong> ______</p>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                    </td>
-
-                                </tr>
-                               
-                            </tbody>
-                    </table> --}}
                     
                     {{-- <p> Remark:The above product complies/does not comply as per specification: {{}}</p> --}}
 
@@ -966,7 +814,7 @@
                             <tr>
                                 <td style="width: 50%; text-align: left;">
                                     <p><strong>Analyzed by:</strong> _____________________________</p>
-                                    <p><strong>Date:</strong> _____________________________</p>
+                                    <p><strong>Date:</strong> ____________________________</p>
                                 </td>
                                 <td style="width: 50%; text-align: right;">
                                     <p><strong>Reviewed by:</strong> _____________________________</p>
@@ -1123,7 +971,6 @@
             </section>
         </section>
     </div>
-
 
     <script type="text/php">
         if ( isset($pdf) ) {
