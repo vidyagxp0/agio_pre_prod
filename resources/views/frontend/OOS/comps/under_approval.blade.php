@@ -55,7 +55,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
-                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
+                    <select name="oos_category_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
                         <option value="" >Enter Your Selection Here</option>
                         <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
                             }}>Analyst Error</option>
@@ -84,7 +84,7 @@
             <div class="col-12">
                 <div class="group-input">
                     <label for="Reference Records">Material/Batch Release</label>
-                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'readonly' }}>
+                    <select name="material_batch_release_bd" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 20 ? '' : 'disabled' }}>
                         <option value="" {{ $data->material_batch_release_bd == '' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
                         <option value="To Be Released" {{ $data->material_batch_release_bd == 'To Be Released' ? 'selected' : ''
