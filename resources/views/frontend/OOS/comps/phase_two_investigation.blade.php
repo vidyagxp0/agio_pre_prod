@@ -115,7 +115,7 @@
                 <div class="group-input">
                     <label for="Assigned To">Production Head Person</label>
                     <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                        name="production_head_person" placeholder="Select Production Head" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                        name="production_head_person" placeholder="Select Production Head" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">-- Select --</option>
                         @if (!empty(Helpers::getProductionHeadDropdown()))
                             @foreach (Helpers::getProductionHeadDropdown() as $listPersoneHead)
@@ -193,7 +193,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Report Attachments">OOS/OOT Cause Identified II A</label>
-                    <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                    <select name="manufact_invest_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
                                 '' }}>Yes</option>
@@ -205,7 +205,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS/OOT Category II A</label>
-                    <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                    <select name="hypo_exp_required_piii" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="Analyst Error"{{ $data->hypo_exp_required_piii ==
                             'Analyst Error' ? 'selected' : '' }}>Analyst Error</option>
@@ -224,13 +224,13 @@
                 <div class="group-input">
                     <label for="Audit Preparation Completed On">OOS/OOT Category If Others</label>
                     <input type="text" name="if_others_oos_category"
-                        value="{{$data->if_others_oos_category}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                        value="{{$data->if_others_oos_category}}" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
-                    <select name="capa_required_iia"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                    <select name="capa_required_iia"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'disabled' }}>
                         <option value="" {{ $data->capa_required_iia == '0' ? 'selected' : ''
                             }}>--Select---</option>
                         <option value="yes" {{ $data->capa_required_iia == 'yes' ? 'selected' : ''
@@ -243,7 +243,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Agenda">Reference CAPA No.</label>
-                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_iia}}" name="reference_capa_no_iia" {{ $data->stage == 13 ? '' : 'readonly' }}>
+                    <input  {{Helpers::isOOSChemical($data->stage)}} type="text" value="{{$data->reference_capa_no_iia}}" name="reference_capa_no_iia" {{ $data->stage == 13 ? '' : 'disabled' }}>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -263,8 +263,8 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Start Date">Phase IIB Inv. Required?</label>
-                    <select name="phase_iib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                    <label for="Audit Start Date">Phase IIB Inv. Required? <span class="text-danger">*</span></label>
+                    <select name="phase_iib_inv_required_plir" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? 'required' : 'disabled' }}>
                         <option value="">Enter Your Selection Here</option>
                         <option value="yes" {{ $data && $data->phase_iib_inv_required_plir == 'yes' ?
                             'selected' : '' }}>Yes</option>
