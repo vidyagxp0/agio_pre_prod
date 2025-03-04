@@ -699,7 +699,7 @@
                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
                             ->select('stage_manages.*', 'users.name as user_name')
                             ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
+                            ->where('stage', 'HOD Review-Submit')
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
