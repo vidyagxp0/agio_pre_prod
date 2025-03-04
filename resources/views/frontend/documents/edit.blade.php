@@ -280,7 +280,7 @@
                 <button class="tablinks hidden-tabs" data-id="ANNEQUALREPORT" onclick="openData(event, 'doc-afqr')">Annexure For Qualification Report</button>
                 <button class="tablinks hidden-tabs" data-id="AAEUSERREQUESPECI" onclick="openData(event, 'doc-afurs')">Annexure For User Requirement Specification</button>
                 <button class="tablinks hidden-tabs" data-id="REQULIFICATIONPROTOCOL" onclick="openData(event, 'doc-aqp')">Area Qualification Protocol</button>
-                <button class="tablinks hidden-tabs" data-id="AREAQUALIFICATIONREPORT" onclick="openData(event, 'doc-aqr')">Area Qualification Report</button>
+                <button class="tablinks hidden-tabs" data-id="REQULIFICATION" onclick="openData(event, 'doc-aqr')">Area Qualification Report</button>
                 <button class="tablinks hidden-tabs" data-id="PROTOCOLFORMEDIAFILL" onclick="openData(event, 'doc-pfmf')">Protocol For Media Fill</button>
                 <button class="tablinks hidden-tabs" data-id="REPORTFORMEDIAFILL" onclick="openData(event, 'doc-rfmf')">Report For Media Fill</button>
 
@@ -2465,7 +2465,8 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="accountability[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                {{-- <textarea name="accountability[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                <textarea name="accountability[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button
@@ -2514,7 +2515,7 @@
                                                         @else
                                                             <div class="row">
                                                                 <div class="col-sm-10">
-                                                                    <textarea name="references[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    <textarea name="references[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                     <button
@@ -2534,6 +2535,8 @@
                                                 <div class="row">
                                                     <div class="col-sm-10">
                                                         <textarea name="references[]" class="myclassname"></textarea>
+                                                        {{-- <textarea name="references[]" class="myclassname" @if($document->status == 'Effective') readonly @endif>{{ $data }}</textarea> --}}
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subReferencesAdd">+</button>
@@ -2611,7 +2614,9 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="abbreviation[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                {{-- <textarea name="abbreviation[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                <textarea name="abbreviation[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
+
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-dark subAbbreviationAdd">+</button>
@@ -2686,7 +2691,9 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="defination[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                {{-- <textarea name="defination[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                <textarea name="defination[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
+
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-dark subDefinitionAdd">+</button>
@@ -2760,7 +2767,9 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="materials_and_equipments[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                {{-- <textarea name="materials_and_equipments[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                <textarea name="materials_and_equipments[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
+
                                                             </div>
 
                                                             <div class="col-sm-1">
@@ -2783,6 +2792,8 @@
                                             <div class="row">
                                                 <div class="col-sm-10">
                                                     <textarea name="materials_and_equipments[]" class="myclassname"></textarea>
+                                                    {{-- <textarea name="materials_and_equipments[]" class="myclassname" @if($document->status == 'Effective') readonly @endif>{{ $data }}</textarea> --}}
+
                                                 </div>
 
                                                 <div class="col-sm-1">
@@ -2886,7 +2897,9 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea type="text" name="reporting[]" class="" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                {{-- <textarea  name="reporting[]" class="" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                <textarea type="text" name="reporting[]" class="" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
+
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-dark subReportingAdd">+</button>
@@ -2904,6 +2917,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-10">
                                                         <textarea type="text" name="reporting[]" class=""></textarea>
+                                                        {{-- <textarea type="text" name="reporting[]" class="" @if($document->status == 'Effective') readonly @endif>{{ $data }}</textarea> --}}
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subReportingAdd">+</button>
@@ -2980,7 +2994,8 @@
                                                         @else
                                                             <div class="row">
                                                                 <div class="col-sm-10">
-                                                                    <textarea name="ann[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea>
+                                                                    {{-- <textarea name="ann[]" class="myclassname" {{ Helpers::isRevised($document->stage) }}>{{ $data }}</textarea> --}}
+                                                                    <textarea name="ann[]" class="myclassname" @if($document->status == 'Effective') readonly @else {{ Helpers::isRevised($document->stage) }} @endif>{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                     <button class="btn btn-dark subAnnexureAdd">+</button>
@@ -2999,6 +3014,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-10">
                                                         <input type="text" name="ann[]" class="myclassname">
+
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subAnnexureAdd">+</button>
@@ -3070,12 +3086,12 @@
                                             <td style="font-weight: bold;">Master Copy</td>
                                             <td><input type="text" id="copies-master"
                                                     name="master_copy_number"
-                                                    value="{{ $document->master_copy_number }}" class="form-control">
+                                                    value="{{ $document->master_copy_number }}" class="form-control" @if($document->status == 'Effective') readonly @endif>
                                             </td>
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <input type="text" name="master_user_department" value="{{$document->master_user_department}}">
+                                                        <input type="text" name="master_user_department" value="{{$document->master_user_department}}" @if($document->status == 'Effective') readonly @endif>
                                                         
                                                     </div>
                                                 </div>
@@ -3088,12 +3104,12 @@
                                             <td><input type="text" id="copies-controlled"
                                                     name="controlled_copy_number"
                                                     value="{{ $document->controlled_copy_number }}"
-                                                    class="form-control">
+                                                    class="form-control" @if($document->status == 'Effective') readonly @endif>
                                             </td>
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <input type="text" name="controlled_user_department" value="{{$document->controlled_user_department}}">
+                                                        <input type="text" name="controlled_user_department" value="{{$document->controlled_user_department}}" @if($document->status == 'Effective') readonly @endif>
                                                       
                                                     </div>
                                                 </div>
@@ -3105,12 +3121,12 @@
                                             <td style="font-weight: bold;">Display Copy</td>
                                             <td><input type="text" id="copies-display"
                                                     name="display_copy_number"
-                                                    value="{{ $document->display_copy_number }}" class="form-control">
+                                                    value="{{ $document->display_copy_number }}" class="form-control" @if($document->status == 'Effective') readonly @endif>
                                             </td>
                                             <td>
                                                 <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <input type="text" name="display_user_department" value="{{$document->display_user_department}}">
+                                                        <input type="text" name="display_user_department" value="{{$document->display_user_department}}" @if($document->status == 'Effective') readonly @endif>
                                                       
                                                     </div>
                                                 </div>
@@ -3155,6 +3171,21 @@
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td><input type="text" name="revision_history[{{ $key }}][revision_number]" value="{{ $gtp_data['revision_number'] ?? '' }}"></td>
+
+                                                    {{-- <td>
+                                                        <select name="revision_history[{{ $key }}][revision_number]">
+                                                            @for ($i = 1; $i <= $document->revised_doc; $i++)
+                                                                @php
+                                                                    $revisionNum = str_pad($i, 2, '0', STR_PAD_LEFT);
+                                                                @endphp
+                                                                <option value="{{ $revisionNum }}" 
+                                                                    {{ isset($gtp_data['revision_number']) && $gtp_data['revision_number'] == $revisionNum ? 'selected' : '' }}>
+                                                                    {{ $revisionNum }}
+                                                                </option>
+                                                            @endfor
+                                                        </select>
+                                                    </td> --}}
+
                                                     <td><input type="text" name="revision_history[{{ $key }}][cc_no]" value="{{ $gtp_data['cc_no'] ?? '' }}"></td>
                                                     <td><input type="date" name="revision_history[{{ $key }}][revised_effective_date]" value="{{ $gtp_data['revised_effective_date'] ?? '' }}"></td>
                                                     <td><input type="text" name="revision_history[{{ $key }}][reason_of_revision]" value="{{ $gtp_data['reason_of_revision'] ?? '' }}"></td>

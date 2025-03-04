@@ -2745,8 +2745,21 @@ class DocumentController extends Controller
         $parentChildRecords = DB::table('action_items')->get();
         $specifications = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications'])->first();
         $specifications_testing = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications_testing'])->first();
-        $specifications->data = json_decode($specifications->data, true);
-        $specifications_testing->data = json_decode($specifications_testing->data, true);
+        
+        // Check if $specifications exists before accessing 'data'
+        if ($specifications) {
+            $specifications->data = json_decode($specifications->data, true);
+        } else {
+            $specifications = (object) ['data' => []]; // Empty object with default data
+        }
+        
+        // Check if $specifications_testing exists before accessing 'data'
+        if ($specifications_testing) {
+            $specifications_testing->data = json_decode($specifications_testing->data, true);
+        } else {
+            $specifications_testing = (object) ['data' => []]; // Empty object with default data
+        }
+        
 
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
@@ -2785,7 +2798,6 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
-
 
         /////////
         if ($document->revised == 'Yes') {
@@ -2844,14 +2856,12 @@ class DocumentController extends Controller
         $RevisionGridmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
 
 
-        // dd($GtpGridData);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
         $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
 
-        // $RowSpecification_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', "Row_Materail")->first();
 
         $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
 
@@ -2867,10 +2877,6 @@ class DocumentController extends Controller
         if ($sampleReconcilation && !empty($sampleReconcilation->data)) {
             $sampleReconcilation->data = json_decode($sampleReconcilation->data, true);
         }
-
-
-
-        //----------
 
 
         $SpecificationData_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SpecificationCleaningValidationSpecification')->first();
@@ -5167,7 +5173,7 @@ class DocumentController extends Controller
 
             //////PRVP End /////////////////
 
-         //---------------------------process Validation Report--------------------------------------------
+            //---------------------------process Validation Report--------------------------------------------
 
             $documentcontet->generic_pvr = $request->generic_pvr;
             $documentcontet->product_code_pvr = $request->product_code_pvr;
@@ -7541,382 +7547,309 @@ class DocumentController extends Controller
 
 
 
-    // public function revision(Request $request, $id)
-    // {
+    public function revision(Request $request, $id)
+    {
 
-    //     $document = Document::find($id);
+        $document = Document::find($id);
 
-    //     $revisionExists = Document::where([
-    //         'document_type_id' => $document->document_type_id,
-    //         'document_number' => $document->document_number,
-    //         'major' => $request->major,
-    //         'minor' => $request->minor
-    //     ])->first();
+        $revisionExists = Document::where([
+            'document_type_id' => $document->document_type_id,
+            'document_number' => $document->document_number,
+            'major' => $request->major,
+            'minor' => $request->minor
+        ])->first();
 
-    //     if ($revisionExists) {
-    //         toastr()->error('Same version of document is already revised!!');
-    //         return redirect()->back();
-    //     } else {
-    //         $document->revision = 'Yes';
-    //         $document->revision_policy = $request->revision;
-    //         $document->update();
-    //         $newdoc = new Document();
-    //         $newdoc->originator_id = $document->originator_id;
-    //         $newdoc->division_id = $document->division_id;
-    //         $newdoc->process_id = $document->process_id;
-    //         $newdoc->revised = 'Yes';
-    //         $newdoc->revised_doc = $document->id;
-    //         $newdoc->document_name = $document->document_name;
-    //         $newdoc->major = $request->major;
-    //         $newdoc->minor = $document->minor + 1;
-    //         $newdoc->sop_type = $request->sop_type;
-    //         $newdoc->short_description = $document->short_description;
-    //         $newdoc->due_dateDoc = $document->due_dateDoc;
-    //         $newdoc->description = $document->description;
-    //         $newdoc->notify_to = json_encode($document->notify_to);
-    //         $newdoc->reference_record = $document->reference_record;
-    //         $newdoc->department_id = $document->department_id;
-    //         $newdoc->document_type_id = $document->document_type_id;
-    //         $newdoc->document_subtype_id = $document->document_subtype_id;
-    //         $newdoc->document_language_id = $document->document_language_id;
-    //         $newdoc->keywords = $document->keywords;
-    //         // $newdoc->effective_date = $document->effective_date;
-    //         $newdoc->next_review_date = $document->next_review_date;
-    //         // $newdoc->review_period = $document->review_period;
-    //         $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
-    //         $newdoc->attach_effective_docuement = $document->attach_effective_docuement;
-    //         $newdoc->approvers = $document->approvers;
-    //         $newdoc->reviewers = $document->reviewers;
-    //         $newdoc->approver_group = $document->approver_group;
-    //         $newdoc->reviewers_group = $document->reviewers_group;
-    //         $newdoc->revision_summary = $document->revision_summary;
-    //         $newdoc->training_required = $document->training_required;
-    //         $newdoc->trainer = $request->trainer;
-    //         $newdoc->hods = $document->hods;
-    //         $newdoc->document_number = $document->document_number;
-    //         $newdoc->comments = $request->comments;
-    //         //$newdoc->purpose = $request->purpose;
-    //         $newdoc->stage = 1;
-    //         $newdoc->status = Stage::where('id', 1)->value('name');
-    //         $newdoc->save();
-
-    //         $doc_content = new DocumentContent();
-    //         $doc_content->document_id = $newdoc->id;
-    //         $doc_content->purpose = $doc_content->purpose;
-    //         $doc_content->scope = $doc_content->scope;
-    //         $doc_content->responsibility = $doc_content->responsibility;
-    //         $doc_content->abbreviation = $doc_content->abbreviation;
-    //         $doc_content->defination = $doc_content->defination;
-    //         $doc_content->materials_and_equipments = $doc_content->materials_and_equipments;
-    //         $doc_content->procedure = $doc_content->procedure;
-    //         $doc_content->reporting = $doc_content->reporting;
-    //         $doc_content->references = $doc_content->references;
-    //         $doc_content->ann = $doc_content->ann;
-    //         $doc_content->distribution = $doc_content->distribution;
-    //         $doc_content->save();
-
-    //         if ($document->training_required == 'yes') {
-    //             $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-    //             if (!empty($docTrain)) {
-    //                 $trainning = new DocumentTraining();
-    //                 $trainning->document_id = $newdoc->id;
-    //                 $trainning->trainer = $docTrain->trainer;
-    //                 $trainning->cbt = $docTrain->cbt;
-    //                 $trainning->type = $docTrain->type;
-    //                 $trainning->comments = $docTrain->comments;
-    //                 $trainning->save();
-    //             }
-    //         }
-
-    //         $annexure = Annexure::where('document_id', $id)->first();
-    //         $new_annexure = new Annexure();
-    //         $new_annexure->document_id = $newdoc->id;
-    //         $new_annexure->sno = $annexure->sno;
-    //         $new_annexure->annexure_no = $annexure->annexure_no;
-    //         $new_annexure->annexure_title = $annexure->annexure_title;
-    //         $new_annexure->save();
-
-    //         toastr()->success('Document is revised, you can change the body!!');
-    //         return redirect()->route('documents.edit', $newdoc->id);
-    //     }
-    // }
-
-        public function revision(Request $request, $id)
-        {
-
-            $document = Document::find($id);
-
-            if (!$document) {
-                toastr()->error('Document not found!');
-                return redirect()->back();
-            }
-
-            // **Step 1: Find the latest revised_doc for this document_number**
-            $lastRevision = Document::where('record', $document->record)
-                                     ->whereNotNull('revised_doc')
-                                     ->orderBy('revised_doc', 'desc') // Get the highest revised_doc
-                                     ->first();
-
-            // **Step 2: Determine the next revision number**
-            $nextRevision = $lastRevision ? $lastRevision->revised_doc + 1 : 1;
-
-            // **Step 3: Update major & minor version**
-            $requestedMajor = (int)$document->major;
-            $requestedMinor = (int)$document->minor;
-
-            if ($requestedMinor < 9) {
-                $requestedMinor += 1;
-            } else {
-                $requestedMinor = 1;
-                $requestedMajor += 1;
-            }
-
-            // **Step 4: Check if this version already exists**
-            $revisionExists = Document::where([
-                'document_type_id' => $document->document_type_id,
-                'document_number' => $document->document_number,
-                'major' => $requestedMajor,
-                'minor' => $requestedMinor
-            ])->first();
-
-            if ($revisionExists) {
-                toastr()->error('A document with this version already exists!');
-                return redirect()->back();
-            }
-
-            // **Step 5: Mark original document as revised**
+        if ($revisionExists) {
+            toastr()->error('Same version of document is already revised!!');
+            return redirect()->back();
+        } else {
             $document->revision = 'Yes';
             $document->revision_policy = $request->revision;
             $document->update();
-
-            // **Step 6: Create a new revision**
-            $newdoc = $document->replicate();
+            $newdoc = new Document();
+            $newdoc->originator_id = $document->originator_id;
+            $newdoc->division_id = $document->division_id;
+            $newdoc->process_id = $document->process_id;
             $newdoc->revised = 'Yes';
-            $newdoc->revised_doc = $nextRevision;  // **This will be incremented correctly**
-            $newdoc->major = $requestedMajor;
-            $newdoc->minor = $requestedMinor;
-            $newdoc->reason = $request->reason;
+            $newdoc->revised_doc = $document->id;
+            $newdoc->document_name = $document->document_name;
+            $newdoc->major = $request->major;
+            $newdoc->minor = $document->minor + 1;
+            $newdoc->sop_type = $request->sop_type;
+            $newdoc->short_description = $document->short_description;
+            $newdoc->due_dateDoc = $document->due_dateDoc;
+            $newdoc->description = $document->description;
+            $newdoc->notify_to = json_encode($document->notify_to);
+            $newdoc->reference_record = $document->reference_record;
+            $newdoc->department_id = $document->department_id;
+            $newdoc->document_type_id = $document->document_type_id;
+            $newdoc->document_subtype_id = $document->document_subtype_id;
+            $newdoc->document_language_id = $document->document_language_id;
+            $newdoc->keywords = $document->keywords;
+            // $newdoc->effective_date = $document->effective_date;
+            $newdoc->next_review_date = $document->next_review_date;
+            // $newdoc->review_period = $document->review_period;
+            $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
+            $newdoc->attach_effective_docuement = $document->attach_effective_docuement;
+            $newdoc->approvers = $document->approvers;
+            $newdoc->reviewers = $document->reviewers;
+            $newdoc->approver_group = $document->approver_group;
+            $newdoc->reviewers_group = $document->reviewers_group;
+            $newdoc->revision_summary = $document->revision_summary;
+            $newdoc->training_required = $document->training_required;
             $newdoc->trainer = $request->trainer;
-            $newdoc->comments = $request->comment;
+            $newdoc->hods = $document->hods;
+            $newdoc->document_number = $document->document_number;
+            $newdoc->comments = $request->comments;
+            //$newdoc->purpose = $request->purpose;
             $newdoc->stage = 1;
             $newdoc->status = Stage::where('id', 1)->value('name');
             $newdoc->save();
 
-
-            \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
-
-            $docContent = DocumentContent::where('document_id', $document->id)->first();
-            if ($docContent) {
-                $newDocContent = $docContent->replicate();
-                $newDocContent->document_id = $newdoc->id;
-                $newDocContent->save();
-            }
-
-            $annexure = Annexure::where('document_id', $document->id)->first();
-            if ($annexure) {
-                $newAnnexure = $annexure->replicate();
-                $newAnnexure->document_id = $newdoc->id;
-                $newAnnexure->save();
-            }
+            $doc_content = new DocumentContent();
+            $doc_content->document_id = $newdoc->id;
+            $doc_content->purpose = $doc_content->purpose;
+            $doc_content->scope = $doc_content->scope;
+            $doc_content->responsibility = $doc_content->responsibility;
+            $doc_content->abbreviation = $doc_content->abbreviation;
+            $doc_content->defination = $doc_content->defination;
+            $doc_content->materials_and_equipments = $doc_content->materials_and_equipments;
+            $doc_content->procedure = $doc_content->procedure;
+            $doc_content->reporting = $doc_content->reporting;
+            $doc_content->references = $doc_content->references;
+            $doc_content->ann = $doc_content->ann;
+            $doc_content->distribution = $doc_content->distribution;
+            $doc_content->save();
 
             if ($document->training_required == 'yes') {
                 $docTrain = DocumentTraining::where('document_id', $document->id)->first();
-                if ($docTrain) {
-                    $newTraining = $docTrain->replicate();
-                    $newTraining->document_id = $newdoc->id;
-                    $newTraining->save();
+                if (!empty($docTrain)) {
+                    $trainning = new DocumentTraining();
+                    $trainning->document_id = $newdoc->id;
+                    $trainning->trainer = $docTrain->trainer;
+                    $trainning->cbt = $docTrain->cbt;
+                    $trainning->type = $docTrain->type;
+                    $trainning->comments = $docTrain->comments;
+                    $trainning->save();
                 }
             }
 
-            $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
-            if ($distribution_grid) {
-                $distribution = $distribution_grid->replicate();
-                $distribution->document_id = $newdoc->id;
-                $distribution->save();
-            }
-            $specification_id = $document->id;
-            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->first();
-            if ($specifications) {
-                $distribution = $specifications->replicate();
-                $distribution->identifier = 'specifications';
-                $distribution->specification_id = $newdoc->id;
-                $distribution->save();
-            }
+            $annexure = Annexure::where('document_id', $id)->first();
+            $new_annexure = new Annexure();
+            $new_annexure->document_id = $newdoc->id;
+            $new_annexure->sno = $annexure->sno;
+            $new_annexure->annexure_no = $annexure->annexure_no;
+            $new_annexure->annexure_title = $annexure->annexure_title;
+            $new_annexure->save();
 
-            $specifications_testing = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->first();
-            if ($specifications_testing) {
-                $distribution = $specifications_testing->replicate();
-                $distribution->identifier = 'specifications_testing';
-                $distribution->specification_id = $newdoc->id;
-                $distribution->save();
-            }
-
-
-            $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
-
-            $DocumentGridData = $DocumentGridData->replicate();
-            $DocumentGridData->document_type_id = $newdoc->id;
-            $DocumentGridData->identifier = 'Rowmaterialtest';
-
-            $DocumentGridData->save();
-
-
-
-
-            $PackingGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata'])->first();
-            $PackingGridData = $PackingGridData->replicate();
-            $PackingGridData->document_type_id = $newdoc->id;
-            $PackingGridData->identifier = 'Packingmaterialdata';
-
-            $PackingGridData->save();
-
-            $GtpGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
-            $GtpGridData = $GtpGridData->replicate();
-            $GtpGridData->document_type_id = $newdoc->id;
-            $GtpGridData->identifier = 'gtp';
-
-            $GtpGridData->save();
-
-
-
-            $ProductSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification'])->first();
-            $ProductSpecification = $ProductSpecification->replicate();
-            $ProductSpecification->document_type_id = $newdoc->id;
-            $ProductSpecification->identifier = 'ProductSpecification';
-
-            $ProductSpecification->save();
-
-
-
-            $MaterialSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification'])->first();
-            $MaterialSpecification = $MaterialSpecification->replicate();
-            $MaterialSpecification->document_type_id = $newdoc->id;
-            $MaterialSpecification->identifier = 'MaterialSpecification';
-
-            // dd($MaterialSpecification);
-            $MaterialSpecification->save();
-
-
-
-
-
-            $Finished_Product = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product'])->first();
-            $Finished_Product = $Finished_Product->replicate();
-            $Finished_Product->document_type_id = $newdoc->id;
-            $Finished_Product->identifier = 'Finished_Product';
-
-            // dd($Finished_Product);
-            $Finished_Product->save();
-
-            $Inprocess_standard = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard'])->first();
-            $Inprocess_standard = $Inprocess_standard->replicate();
-            $Inprocess_standard->document_type_id = $newdoc->id;
-            $Inprocess_standard->identifier = 'Inprocess_standard';
-
-            $Inprocess_standard->save();
-
-            $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
-            $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
-            $CLEANING_VALIDATION->document_type_id = $newdoc->id;
-            $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-
-            // dd($CLEANING_VALIDATION);
-            $CLEANING_VALIDATION->save();
-
-        DocumentService::update_document_numbers();
-
-        $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
-        $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
-        $CLEANING_VALIDATION->document_type_id = $newdoc->id;
-        $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-       // dd($CLEANING_VALIDATION);
-        $CLEANING_VALIDATION->save();
-
-
-        $SpecificationData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION'])->first();
-        $SpecificationData = $SpecificationData->replicate();
-
-        $SpecificationData->document_type_id = $newdoc->id;
-        $SpecificationData->identifier = 'SPECIFICATION';
-        $SpecificationData->save();
-
-        $Specification_Validation_Data = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION'])->first();
-
-        $Specification_Validation_Data = $Specification_Validation_Data->replicate();
-        $Specification_Validation_Data->document_type_id = $newdoc->id;
-        $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
-        //dd($Specification_Validation_Data);
-        $Specification_Validation_Data->save();
-
-    // Cleaning Specification Validation
-        $SpecificationData_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->first();
-        $SpecificationData_cvs = $SpecificationData_cvs->replicate();
-
-        $SpecificationData_cvs->document_type_id = $newdoc->id;
-        $SpecificationData_cvs->identifier = 'SpecificationCleaningValidationSpecification';
-        $SpecificationData_cvs->save();
-
-        $Specification_Validation_Data_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->first();
-
-        $Specification_Validation_Data_cvs = $Specification_Validation_Data_cvs->replicate();
-        $Specification_Validation_Data_cvs->document_type_id = $newdoc->id;
-        $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
-        //dd($Specification_Validation_Data_cvs);
-        $Specification_Validation_Data_cvs->save();
-
-
-
-        // Inprocess  Validation Specification
-        $SpecificationData_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->first();
-        $SpecificationData_inps = $SpecificationData_inps->replicate();
-
-        $SpecificationData_inps->document_type_id = $newdoc->id;
-        $SpecificationData_inps->identifier = 'specificationInprocessValidationSpecification';
-        $SpecificationData_inps->save();
-
-        $Specification_Validation_Data_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->first();
-
-        $Specification_Validation_Data_inps = $Specification_Validation_Data_inps->replicate();
-        $Specification_Validation_Data_inps->document_type_id = $newdoc->id;
-        $Specification_Validation_Data_inps->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
-        //dd($Specification_Validation_Data_inps);
-        $Specification_Validation_Data_inps->save();
-
-
-
-       //---------------------------------------------------------------------------------------------
-
-
-
-       $SpecificationData_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->firstOrNew();;
-       $SpecificationData_invs->document_type_id = $document->id;
-       $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
-       $SpecificationData_invs->data = $request->specification_details_inps;
-       $SpecificationData_invs->save();
-
-       $Specification_Validation_Data_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->firstOrNew();;
-       $Specification_Validation_Data_invs->document_type_id = $document->id;
-       $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
-       $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
-       $Specification_Validation_Data_invs->save();
-
-
-
-
-
-        //--------------------------------------------------------------------------------------------
-
-
-
-    DocumentService::update_document_numbers();
-
-        toastr()->success('Document has been revised successfully! You can now edit the content.');
-        return redirect()->route('documents.edit', $newdoc->id);
+            toastr()->success('Document is revised, you can change the body!!');
+            return redirect()->route('documents.edit', $newdoc->id);
+        }
     }
 
+    // public function revision(Request $request, $id){
 
-    public function printPDFAnx($id)
-    {
+    //         $document = Document::find($id);
+
+    //         if (!$document) {
+    //             toastr()->error('Document not found!');
+    //             return redirect()->back();
+    //         }
+
+    //         // **Step 1: Find the latest revised_doc for this document_number**
+    //         $lastRevision = Document::where('record', $document->record)
+    //             ->whereNotNull('revised_doc')
+    //             ->orderBy('revised_doc', 'desc') // Get the highest revised_doc
+    //             ->first();
+
+    //         // **Step 2: Determine the next revision number**
+    //         $nextRevision = $lastRevision ? $lastRevision->revised_doc + 1 : 1;
+
+    //         // **Step 3: Update major & minor version**
+    //         $requestedMajor = (int)$document->major;
+    //         $requestedMinor = (int)$document->minor;
+
+    //         if ($requestedMinor < 9) {
+    //             $requestedMinor += 1;
+    //         } else {
+    //             $requestedMinor = 1;
+    //             $requestedMajor += 1;
+    //         }
+
+    //         // **Step 4: Check if this version already exists**
+    //         // $revisionExists = Document::where([
+    //         //     'document_type_id' => $document->document_type_id,
+    //         //     'document_number' => $document->document_number,
+    //         //     'major' => $requestedMajor,
+    //         //     'minor' => $requestedMinor
+    //         // ])->first();
+
+    //         // if ($revisionExists) {
+    //         //     toastr()->error('A document with this version already exists!');
+    //         //     return redirect()->back();
+    //         // }
+
+    //         // **Step 5: Mark original document as revised**
+    //         $document->revision = 'Yes';
+    //         $document->revision_policy = $request->revision;
+    //         $document->update();
+
+    //         // **Step 6: Create a new revision**
+    //         $newdoc = $document->replicate();
+    //         $newdoc->revised = 'Yes';
+    //         $newdoc->revised_doc = $nextRevision;
+    //         $newdoc->major = $requestedMajor;
+    //         $newdoc->minor = $requestedMinor;
+    //         $newdoc->reason = $request->reason;
+    //         $newdoc->trainer = $request->trainer;
+    //         $newdoc->comments = $request->comment;
+    //         $newdoc->stage = 1;
+    //         $newdoc->status = Stage::where('id', 1)->value('name');
+    //         $newdoc->save();
+
+    //         // \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
+
+    //         $docContent = DocumentContent::where('document_id', $document->id)->first();
+    //         if ($docContent) {
+    //             $newDocContent = $docContent->replicate();
+    //             $newDocContent->document_id = $newdoc->id;
+    //             $newDocContent->save();
+    //         }
+
+    //         $annexure = Annexure::where('document_id', $document->id)->first();
+    //         if ($annexure) {
+    //             $newAnnexure = $annexure->replicate();
+    //             $newAnnexure->document_id = $newdoc->id;
+    //             $newAnnexure->save();
+    //         }
+
+    //         if ($document->training_required == 'yes') {
+    //             $docTrain = DocumentTraining::where('document_id', $document->id)->first();
+    //             if ($docTrain) {
+    //                 $newTraining = $docTrain->replicate();
+    //                 $newTraining->document_id = $newdoc->id;
+    //                 $newTraining->save();
+    //             }
+    //         }
+
+    //         $distribution_grid = DocumentGridData::where('document_id', $document->id)->first();
+    //         if ($distribution_grid) {
+    //             $distribution = $distribution_grid->replicate();
+    //             $distribution->document_id = $newdoc->id;
+    //             $distribution->save();
+    //         }
+
+    //         $specification_id = $document->id;
+    //         $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->first();
+    //         if ($specifications) {
+    //             $distribution = $specifications->replicate();
+    //             $distribution->identifier = 'specifications';
+    //             $distribution->specification_id = $newdoc->id;
+    //             $distribution->save();
+    //         }
+
+    //         $specifications_testing = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->first();
+    //         if ($specifications_testing) {
+    //             $distribution = $specifications_testing->replicate();
+    //             $distribution->identifier = 'specifications_testing';
+    //             $distribution->specification_id = $newdoc->id;
+    //             $distribution->save();
+    //         }
+
+    //         // $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
+    //         // $DocumentGridData = $DocumentGridData->replicate();
+    //         // $DocumentGridData->document_type_id = $newdoc->id;
+    //         // $DocumentGridData->identifier = 'Rowmaterialtest';
+    //         // $DocumentGridData->save();
+
+    //         // $PackingGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata'])->first();
+    //         // $PackingGridData = $PackingGridData->replicate();
+    //         // $PackingGridData->document_type_id = $newdoc->id;
+    //         // $PackingGridData->identifier = 'Packingmaterialdata';
+    //         // $PackingGridData->save();
+
+    //         // $GtpGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
+    //         // $GtpGridData = $GtpGridData->replicate();
+    //         // $GtpGridData->document_type_id = $newdoc->id;
+    //         // $GtpGridData->identifier = 'gtp';
+    //         // $GtpGridData->save();
+
+    //         // $ProductSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification'])->first();
+    //         // $ProductSpecification = $ProductSpecification->replicate();
+    //         // $ProductSpecification->document_type_id = $newdoc->id;
+    //         // $ProductSpecification->identifier = 'ProductSpecification';
+    //         // $ProductSpecification->save();
+
+    //         // $MaterialSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification'])->first();
+    //         // $MaterialSpecification = $MaterialSpecification->replicate();
+    //         // $MaterialSpecification->document_type_id = $newdoc->id;
+    //         // $MaterialSpecification->identifier = 'MaterialSpecification';
+    //         // $MaterialSpecification->save();
+
+    //         // $Finished_Product = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product'])->first();
+    //         // $Finished_Product = $Finished_Product->replicate();
+    //         // $Finished_Product->document_type_id = $newdoc->id;
+    //         // $Finished_Product->identifier = 'Finished_Product';
+    //         // $Finished_Product->save();
+
+    //         // $Inprocess_standard = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard'])->first();
+    //         // $Inprocess_standard = $Inprocess_standard->replicate();
+    //         // $Inprocess_standard->document_type_id = $newdoc->id;
+    //         // $Inprocess_standard->identifier = 'Inprocess_standard';
+    //         // $Inprocess_standard->save();
+
+    //         // $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
+    //         // $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
+    //         // $CLEANING_VALIDATION->document_type_id = $newdoc->id;
+    //         // $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
+    //         // $CLEANING_VALIDATION->save();
+
+    //         // $SpecificationData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION'])->first();
+    //         // $SpecificationData = $SpecificationData->replicate();
+    //         // $SpecificationData->document_type_id = $newdoc->id;
+    //         // $SpecificationData->identifier = 'SPECIFICATION';
+    //         // $SpecificationData->save();
+
+    //         // $Specification_Validation_Data = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION'])->first();
+    //         // $Specification_Validation_Data = $Specification_Validation_Data->replicate();
+    //         // $Specification_Validation_Data->document_type_id = $newdoc->id;
+    //         // $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+    //         // $Specification_Validation_Data->save();
+
+    //         //     // Cleaning Specification Validation
+    //         // $SpecificationData_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->first();
+    //         // $SpecificationData_cvs = $SpecificationData_cvs->replicate();
+    //         // $SpecificationData_cvs->document_type_id = $newdoc->id;
+    //         // $SpecificationData_cvs->identifier = 'SpecificationCleaningValidationSpecification';
+    //         // $SpecificationData_cvs->save();
+
+    //         // $Specification_Validation_Data_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->first();
+    //         // $Specification_Validation_Data_cvs = $Specification_Validation_Data_cvs->replicate();
+    //         // $Specification_Validation_Data_cvs->document_type_id = $newdoc->id;
+    //         // $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
+    //         // $Specification_Validation_Data_cvs->save();
+
+    //         //         // Inprocess  Validation Specification
+    //         // $SpecificationData_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->first();
+    //         // $SpecificationData_inps = $SpecificationData_inps->replicate();
+    //         // $SpecificationData_inps->document_type_id = $newdoc->id;
+    //         // $SpecificationData_inps->identifier = 'specificationInprocessValidationSpecification';
+    //         // $SpecificationData_inps->save();
+
+    //         // $Specification_Validation_Data_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->first();
+    //         // $Specification_Validation_Data_inps = $Specification_Validation_Data_inps->replicate();
+    //         // $Specification_Validation_Data_inps->document_type_id = $newdoc->id;
+    //         // $Specification_Validation_Data_inps->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+    //         // $Specification_Validation_Data_inps->save();
+
+    //         DocumentService::update_document_numbers();
+
+    //         toastr()->success('Document has been revised successfully! You can now edit the content.');
+    //         return redirect()->route('documents.edit', $newdoc->id);
+    // }
+
+
+    public function printPDFAnx($id){
 
         $issue_copies = request('issue_copies');
         $print_reason = request('print_reason');
