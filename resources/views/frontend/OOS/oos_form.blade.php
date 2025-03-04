@@ -676,7 +676,7 @@ $users = DB::table('users')
                             @enderror
                         </div>
                         <p id="docnameError" style="color:red">**Short Description is required</p>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiation Department Group  <span class="text-danger"></span></label>
 
@@ -705,11 +705,65 @@ $users = DB::table('users')
                                         <option value="PV">Pharmacovigilance</option>
                                     </select>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator"><b>Initiator Department</b></label>
+                                <input readonly type="text" name="initiator_group" id="initiator_group"
+                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                            </div>
                         </div>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    // Define department name to code mapping
+                                    const departmentMapping = {
+                                        "Calibration Lab": "CLB",
+                                        "Engineering": "ENG",
+                                        "Facilities": "FAC",
+                                        "LAB": "LAB",
+                                        "Labeling": "LABL",
+                                        "Manufacturing": "MANU",
+                                        "Quality Assurance": "QA",
+                                        "Quality Control": "QC",
+                                        "Ragulatory Affairs": "RA",
+                                        "Security": "SCR",
+                                        "Training": "TR",
+                                        "IT": "IT",
+                                        "Application Engineering": "AE",
+                                        "Trading": "TRD",
+                                        "Research": "RSCH",
+                                        "Sales": "SAL",
+                                        "Finance": "FIN",
+                                        "Systems": "SYS",
+                                        "Administrative": "ADM",
+                                        "M&A": "M&A",
+                                        "R&D": "R&D",
+                                        "Human Resource": "HR",
+                                        "Banking": "BNK",
+                                        "Marketing": "MRKT",
+
+                                    };
+
+                                    // Get the Initiator Department input
+                                    let initiatorGroupInput = document.getElementById("initiator_group");
+                                    let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                    // Get the department name from the input field
+                                    let departmentName = initiatorGroupInput.value.trim();
+
+                                    // Auto-generate the department code based on the mapping
+                                    if (departmentName in departmentMapping) {
+                                        initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                    } else {
+                                        initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                    }
+                                });
+                            </script>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiation Department Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
+                                <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                             </div>
                         </div>
 
@@ -1002,7 +1056,7 @@ $users = DB::table('users')
                                                     <div class="calenderauditee">
                                                         <input type="text" id="info_mfg_date" readonly placeholder="MM-YYYY" />
                                                         <input type="month"  name="info_product_material[0][info_mfg_date]" value=""
-                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">   
+                                                        class="hide-input" oninput="handleMonthInput(this, 'info_mfg_date')">
                                                         <!-- max="{{ date('Y-m') }}" -->
                                                     </div>
                                                     {{-- <div class="calenderauditee">
@@ -1213,7 +1267,7 @@ $users = DB::table('users')
                                 </table>
                             </div>
                         </div>
-                        
+
                         <!---------------- grid-4 Products_details----------------------------------- -->
 
                         <div class="group-input">

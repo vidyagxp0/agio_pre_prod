@@ -537,7 +537,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Phase IA Investigation</button>
                     @if ($data->stage == 5  || $data->stage == 6 || $data->stage == 7 || $data->stage == 8)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
-                    @endif  
+                    @endif
                     <button class="cctablinks button7" style="display:none;" onclick="openCity(event, 'CCForm50')">Checklist - Bacterial Endotoxin Test</button>
                     <button class="cctablinks button8" style="display:none;" onclick="openCity(event, 'CCForm51')">Checklist - Sterility</button>
                     <button class="cctablinks button9" style="display:none;" onclick="openCity(event, 'CCForm52')">Checklist - Microbial Limit Test/Bioburden And Water Test</button>
@@ -550,21 +550,21 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm42')">Phase IB Investigation</button>
                     @if ($data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
-                    @endif  
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm33')">Phase IB HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm34')">Phase IB CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm35')">Phase IB CQAH/QAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II A Investigation</button>
                     @if ($data->stage == 13 || $data->stage == 14 || $data->stage == 15 || $data->stage == 16)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
-                    @endif  
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm36')">Phase II A HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm37')">Phase II A CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm38')">Phase II A QAH/CQAH Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm43')">Phase II B Investigation</button>
                     @if ($data->stage == 17 || $data->stage == 18 || $data->stage == 19 || $data->stage == 20)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS/OOT Conclusion</button>
-                    @endif  
+                    @endif
                     <button class="cctablinks" onclick="openCity(event, 'CCForm39')">Phase II B HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm40')">Phase II B CQA/QA Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Phase II B QAH/CQAH Review</button>
@@ -7870,7 +7870,7 @@
                                 );
                         @endphp
                         <div class="col-12">
-                                <label style="font-weight: bold; for="Audit Attachments">Phase IB investigation Checklist</label>
+                                <label style="font-weight: bold; for="Audit Attachments">Phase IB investigation Checklist <span class="text-danger">*</span></label>
                             <div class="group-input">
                                 <div class="why-why-chart mx-auto" style="width: 100%">
                                     <table class="table table-bordered ">
@@ -7896,7 +7896,7 @@
                                                                 $dataItem = $checklist_IB_invs->data[$loop->index] ?? null;
                                                             @endphp
 
-                                                            <select name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;" {{Helpers::isOOSChemical($data->stage)}}>
+                                                            <select  {{ $data->stage == 9 ? 'required' : 'readonly' }} name="checklist_IB_inv[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;" {{Helpers::isOOSChemical($data->stage)}}>
                                                                 <option value="">Select an Option</option>
 
                                                                 <option value="Yes" {{ isset($dataItem) && Helpers::getArrayKey($dataItem, 'response') == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -7935,13 +7935,13 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Summary Of Review</label>
+                                <label for="If Others">Summary Of Review <span class="text-danger">*</span></label>
                                 <textarea id="summaryy_of_review" name="summaryy_of_review" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->summaryy_of_review }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Probable Cause Identification</label>
+                                <label for="If Others">Probable Cause Identification <span class="text-danger">*</span></label>
                                 <textarea id="Probable_cause_iden" name="Probable_cause_iden" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Probable_cause_iden }}</textarea>
                             </div>
                         </div>
@@ -7989,14 +7989,14 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Details Of Results (Including original OOS/OOT results for side by side comparison)</label>
+                                <label for="If Others">Details Of Results (Including original OOS/OOT results for side by side comparison) <span class="text-danger">*</span></label>
                                 <textarea id="details_of_result" name="details_of_result" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->details_of_result }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Probable Cause Identified In Phase IB investigation</label>
-                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                <label for="If Others">Probable Cause Identified In Phase IB investigation <span class="text-danger">*</span></label>
+                                    <select name="Probable_Cause_Identified" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->Probable_Cause_Identified == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->Probable_Cause_Identified == 'No' ? 'selected' : '' }}>No</option>
@@ -8005,26 +8005,26 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Any Other Comments/ Probable Cause Evidence</label>
+                                <label for="If Others">Any Other Comments/ Probable Cause Evidence <span class="text-danger">*</span></label>
                                 <textarea id="Any_other_Comments" name="Any_other_Comments" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Any_other_Comments }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified</label>
+                                <label for="If Others">Proposal For Hypothesis Testing To Confirm Probable Cause Identified <span class="text-danger">*</span></label>
                                 <textarea id="Proposal_for_Hypothesis" name="Proposal_for_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Proposal_for_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Summary Of Hypothesis</label>
+                                <label for="If Others">Summary Of Hypothesis <span class="text-danger">*</span> </label>
                                 <textarea id="Summary_of_Hypothesis" name="Summary_of_Hypothesis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Summary_of_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                <label for="If Others">Assignable Cause <span class="text-danger">*</span></label>
+                                    <select name="Assignable_Cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -8033,8 +8033,8 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Types Of Assignable Cause</label>
-                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                <label for="If Others">Types Of Assignable Cause <span class="text-danger">*</span></label>
+                                    <select name="Types_of_assignable" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Analyst error" {{ $data->Types_of_assignable == 'Analyst error' ? 'selected' : '' }}>Analyst error</option>
                                     <option value="Instrument error" {{ $data->Types_of_assignable == 'Instrument error' ? 'selected' : '' }}>Instrument error</option>
@@ -8054,14 +8054,14 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Evaluation Of Phase IB investigation Timeline</label>
+                                <label for="If Others">Evaluation Of Phase IB investigation Timeline <span class="text-danger">*</span></label>
                                 <textarea id="Evaluation_Timeline" name="Evaluation_Timeline" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Evaluation_Timeline }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Is Phase IB Investigation Timeline Met</label>
-                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                <label for="If Others">Is Phase IB Investigation Timeline Met <span class="text-danger">*</span></label>
+                                    <select name="timeline_met" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->timeline_met == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->timeline_met == 'No' ? 'selected' : '' }}>No</option>
@@ -8070,20 +8070,20 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">If No, Justify For Timeline Extension</label>
+                                <label for="If Others">If No, Justify For Timeline Extension <span class="text-danger">*</span></label>
                                 <textarea id="timeline_extension" name="timeline_extension" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->timeline_extension }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">CAPA applicable</label>
+                                <label for="If Others">CAPA applicable <span class="text-danger">*</span></label>
                                 <textarea id="CAPA_applicable" name="CAPA_applicable" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->CAPA_applicable }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Resampling Required</label>
-                                    <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                <label for="If Others">Resampling Required <span class="text-danger">*</span> </label>
+                                    <select name="resampling_required_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->resampling_required_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->resampling_required_ib == 'No' ? 'selected' : '' }}>No</option>
@@ -8092,7 +8092,7 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Repeat Testing Required </label>
+                                <label for="If Others">Repeat Testing Required <span class="text-danger">*</span> </label>
                                     <select name="repeat_testing_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->repeat_testing_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -8103,13 +8103,13 @@
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
                                 <label for="If Others">Repeat Testing Plan</label>
-                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_testing_plan }}</textarea>
+                                <textarea id="Repeat_testing_plan" name="Repeat_testing_plan" {{ $data->stage == 9 ? '' : 'disabled' }}>{{ $data->Repeat_testing_plan }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Phase II Investigation Required</label>
-                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                <label for="If Others">Phase II Investigation Required <span class="text-danger">*</span></label>
+                                    <select name="phase_ii_inv_req_ib" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Yes" {{ $data->phase_ii_inv_req_ib == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->phase_ii_inv_req_ib == 'No' ? 'selected' : '' }}>No</option>
@@ -8128,9 +8128,9 @@
                         </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Assigned To">Production Person</label>
+                                <label for="Assigned To">Production Person <span class="text-danger">*</span></label>
                                 <select id="choices-multiple-remove" class="choices-multiple-reviewe"
-                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'readonly' }}>
+                                    name="production_person_ib" placeholder="Select Reviewers" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? '' : 'disabled' }}>
                                     <option value="">-- Select --</option>
                                     @if (!empty(Helpers::getProductionDropdown()))
                                         @foreach (Helpers::getProductionDropdown() as $listPersone)
@@ -8145,25 +8145,25 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Repeat Analysis Method/Resampling</label>
+                                <label for="If Others">Repeat Analysis Method/Resampling <span class="text-danger">*</span></label>
                                 <textarea id="Repeat_analysis_method" name="Repeat_analysis_method" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Repeat_analysis_method }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Details Of Repeat Analysis</label>
+                                <label for="If Others">Details Of Repeat Analysis <span class="text-danger">*</span></label></label>
                                 <textarea id="Details_repeat_analysis" name="Details_repeat_analysis" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Details_repeat_analysis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Impact Assessment</label>
+                                <label for="If Others">Impact Assessment <span class="text-danger">*</span></label></label>
                                 <textarea id="Impact_assessment1" name="Impact_assessment1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Impact_assessment1 }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Conclusion</label>
+                                <label for="If Others">Conclusion <span class="text-danger">*</span></label></label>
                                 <textarea id="Conclusion1" name="Conclusion1" {{ $data->stage == 9 ? '' : 'readonly' }}>{{ $data->Conclusion1 }}</textarea>
                             </div>
                         </div>
@@ -8240,17 +8240,22 @@
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
-                                <textarea
-                                    name="hod_remark2"
-                                    class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}"
-                                    {{ $data->stage == 6 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}
-                                </textarea>
+                                {{-- <textarea name="hod_remark2" class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}" {{ $data->stage == 6 ? 'required' : 'readonly' }} {{Helpers::isOOSChemical($data->stage)}}>{{$data->hod_remark2}}  </textarea>
 
                                     @if($errors->has('hod_remark2'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('hod_remark2') }}
                                     </div>
-                                    @endif
+                                    @endif --}}
+
+                                <textarea name="hod_remark2" {{ $data->stage == 6 ? "required" : "readonly" }}
+                                    class="form-control {{$errors->has('hod_remark2') ? 'is-invalid' : ''}}"
+                                    >{{$data->hod_remark2}}</textarea>
+                                @if($errors->has('hod_remark2'))
+                                    <div class="invalid-feedback">
+                                        {{ $errors->first('hod_remark2') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -8405,8 +8410,8 @@
 
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Assignable cause found">Phase IA Assignable Cause Found</label>
-                                <select name="assign_cause_found" id="assign_cause_found">
+                                <label for="Assignable cause found">Phase IA Assignable Cause Found <span class="text-danger">*</span></label>
+                                <select {{ $data->stage == 8 ? 'required' : 'disabled' }}  name="assign_cause_found" id="assign_cause_found" >
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->assign_cause_found == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->assign_cause_found == 'No' ? 'selected' : '' }}>No</option>
@@ -8620,8 +8625,8 @@
                          <!-- Others Field -->
                          <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Escalation Required</label>
-                                <select id="escalation_required" name="escalation_required" {{ Helpers::isOOSChemical($data->stage) }} {{ $data->stage == 12 ? '' : 'readonly' }}>
+                                <label for="If Others">Escalation Required <span class="text-danger">*</span></label>
+                                <select id="escalation_required" name="escalation_required" {{ Helpers::isOOSChemical($data->stage) }} {{ $data->stage == 12 ? '' : 'disabled' }}>
                                     <option value="">--Select---</option>
                                     <option value="Yes" {{ $data->escalation_required == 'Yes' ? 'selected' : '' }}>Yes</option>
                                     <option value="No" {{ $data->escalation_required == 'No' ? 'selected' : '' }}>No</option>
@@ -8631,14 +8636,14 @@
 
                         <div class="col-lg-6 new-time-data-field" id="notification_field" style="display: none;">
                             <div class="group-input input-time">
-                                <label for="If Others">If Yes, Notification</label>
+                                <label for="If Others">If Yes, Notification <span class="text-danger">*</span></label>
                                 <textarea id="notification_ib" name="notification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->notification_ib }}</textarea>
                             </div>
                         </div>
 
                         <div class="col-lg-6 new-time-data-field" id="justification_field" style="display: none;">
                             <div class="group-input input-time">
-                                <label for="If Others">If No, Justification</label>
+                                <label for="If Others">If No, Justification <span class="text-danger">*</span></label>
                                 <textarea id="justification_ib" name="justification_ib" {{ $data->stage == 12 ? '' : 'readonly' }}>{{ $data->justification_ib }}</textarea>
                             </div>
                         </div>
@@ -8674,8 +8679,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Assignable cause found">Phase IB Assignable Cause Found</label>
-                                    <select name="phase_ib_assi_cause" id="phase_ib_assi_cause">
+                                    <label for="Assignable cause found">Phase IB Assignable Cause Found <span class="text-danger">*</span></label>
+                                    <select name="phase_ib_assi_cause" id="phase_ib_assi_cause" {{ $data->stage == 12 ? "" : "disabled" }}>
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Yes" {{ $data->phase_ib_assi_cause == 'Yes' ? 'selected' : '' }}>Yes</option>
                                         <option value="No" {{ $data->phase_ib_assi_cause == 'No' ? 'selected' : '' }}>No</option>
@@ -8907,8 +8912,8 @@
                          <!-- Others Field -->
                          <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Report Attachments">Phase II A Assignable cause found</label>
-                                <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 13 ? '' : 'readonly' }}>
+                                <label for="Report Attachments">Phase II A Assignable cause found <span class="text-danger">*</span></label>
+                                <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 16 ? '' : 'disabled' }}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->phase_ii_a_assi_cause === 'Yes' ? 'selected' :
                                             '' }}>Yes</option>
@@ -8999,7 +9004,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
-                                <select name="capa_required_IIB"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                <select name="capa_required_IIB"  {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
                                     <option value="" {{ $data->capa_required_IIB == '0' ? 'selected' : ''
                                         }}>--Select---</option>
                                     <option value="yes" {{ $data->capa_required_IIB == 'yes' ? 'selected' : ''
@@ -9019,7 +9024,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Report Attachments">Resampling Required IIB Inv.</label>
-                                <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                <select name="resampling_req_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->resampling_req_IIB === 'Yes' ? 'selected' :
                                             '' }}>Yes</option>
@@ -9031,7 +9036,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">Repeat Testing Required IIB Inv.</label>
-                                <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                <select name="Repeat_testing_IIB" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'disabled' }}>
                                    <option value="" {{ $data->Repeat_testing_IIB == '0' ? 'selected' : ''
                                         }}>Enter Your Selection Here</option>
                                     <option value="yes" {{ $data->Repeat_testing_IIB == 'yes' ?
@@ -9049,8 +9054,8 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time ">
-                                <label for="If Others">Laboratory Investigation Hypothesis Details<span class="text-danger">*</span></label>
-                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? 'required' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
+                                <label for="If Others">Laboratory Investigation Hypothesis Details</label>
+                                <textarea id="Laboratory_Investigation_Hypothesis" name="Laboratory_Investigation_Hypothesis" {{ $data->stage == 17 ? '' : 'readonly' }}>{{ $data->Laboratory_Investigation_Hypothesis }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6 new-time-data-field">
@@ -9068,8 +9073,8 @@
                         </div>
                         <div class="col-lg-6 new-time-data-field">
                             <div class="group-input input-time">
-                                <label for="If Others">Assignable Cause</label>
-                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? '' : 'readonly' }}>
+                                <label for="If Others">Assignable Cause <span class="text-danger">*</span></label>
+                                    <select name="Assignable_Cause111" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 17 ? 'required' : 'disabled' }}>
                                     <option value="" >--Select---</option>
                                     <option value="Found" {{ $data->Assignable_Cause111 == 'Found' ? 'selected' : '' }}>Found</option>
                                     <option value="Not Found" {{ $data->Assignable_Cause111 == 'Not Found' ? 'selected' : '' }}>Not Found</option>
@@ -9128,7 +9133,7 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="phase_IIB_attachment">
-                        
+
                                         @if (is_array($data->phase_IIB_attachment)) <!-- Ensure it's an array -->
                                             @foreach ($data->phase_IIB_attachment as $file)
                                                 <h6 type="button" class="file-container text-dark"
@@ -9143,7 +9148,7 @@
                                                 </h6>
                                             @endforeach
                                         @endif
-                        
+
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>

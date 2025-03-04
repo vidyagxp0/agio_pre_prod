@@ -3372,7 +3372,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_mfps_data[0][rev_mfps_no]"></td>
                                                             <td><input type="text" name="revision_mfps_data[0][change_ctrl_mfps_no]"></td>
-                                                            <td><input type="date" name="revision_mfps_data[0][eff_date_mfps]"></td>
+                                                            <td><input type="date" readonly name="revision_mfps_data[0][eff_date_mfps]"></td>
                                                             <td><input type="text" name="revision_mfps_data[0][rev_reason_mfps]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -3398,7 +3398,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_mfps_data[${serialNumber - 1}][rev_mfps_no]" value=""></td>
                                                         <td><input type="text" name="revision_mfps_data[${serialNumber - 1}][change_ctrl_mfps_no]" value=""></td>
-                                                        <td><input type="date" name="revision_mfps_data[${serialNumber - 1}][eff_date_mfps]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_mfps_data[${serialNumber - 1}][eff_date_mfps]" value=""></td>
                                                         <td><input type="text" name="revision_mfps_data[${serialNumber - 1}][rev_reason_mfps]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -3534,7 +3534,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_mfpstp_data[0][rev_mfpstp_no]"></td>
                                                             <td><input type="text" name="revision_mfpstp_data[0][change_ctrl_mfpstp_no]"></td>
-                                                            <td><input type="date" name="revision_mfpstp_data[0][eff_date_mfpstp]"></td>
+                                                            <td><input type="date" readonly name="revision_mfpstp_data[0][eff_date_mfpstp]"></td>
                                                             <td><input type="text" name="revision_mfpstp_data[0][rev_reason_mfpstp]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -3560,7 +3560,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_mfpstp_data[${serialNumber - 1}][rev_mfpstp_no]" value=""></td>
                                                         <td><input type="text" name="revision_mfpstp_data[${serialNumber - 1}][change_ctrl_mfpstp_no]" value=""></td>
-                                                        <td><input type="date" name="revision_mfpstp_data[${serialNumber - 1}][eff_date_mfpstp]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_mfpstp_data[${serialNumber - 1}][eff_date_mfpstp]" value=""></td>
                                                         <td><input type="text" name="revision_mfpstp_data[${serialNumber - 1}][rev_reason_mfpstp]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -6598,7 +6598,7 @@
                                                         <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
                                                         <td><input type="text" name="summaryResult[0][revision_no_tds]"></td>
                                                         <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>
-                                                        <td><input type="date" name="summaryResult[0][effectiveDate_tds]"></td>
+                                                        <td><input type="date" readonly name="summaryResult[0][effectiveDate_tds]"></td>
                                                         <td><input type="text" name="summaryResult[0][reasonRevi_tds]"></td>
                                                     </tr>
                                                 @endif
@@ -6620,7 +6620,7 @@
                                                     '][revision_no_tds]"></td>' +
                                                     '<td><input type="text" name="summaryResult[' + serialNumber +
                                                     '][changContNo_tds]"></td>' +
-                                                    '<td><input type="date" name="summaryResult[' + serialNumber +
+                                                    '<td><input type="date" readonly name="summaryResult[' + serialNumber +
                                                     '][effectiveDate_tds]"></td>' +
                                                     '<td><input type="text" name="summaryResult[' + serialNumber +
                                                     '][reasonRevi_tds]"></td>' +
@@ -6853,7 +6853,7 @@
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td><input type="text" name="revision_data[{{ $key }}][rev_no]" value="{{ $gtp_data['rev_no'] ?? '' }}"></td>
                                                         <td><input type="text" name="revision_data[{{ $key }}][change_ctrl_no]" value="{{ $gtp_data['change_ctrl_no'] ?? '' }}"></td>
-                                                        <td><input type="date" name="revision_data[{{ $key }}][eff_date]" value="{{ $effectiveDate ?? '' }}"></td>
+                                                        <td><input type="date" readonly name="revision_data[{{ $key }}][eff_date]" value="{{ $effectiveDate ?? '' }}"></td>
                                                         <td><input type="text" name="revision_data[{{ $key }}][rev_reason]" value="{{ $gtp_data['rev_reason'] ?? '' }}"></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>
@@ -6863,7 +6863,7 @@
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td><input type="text" name="revision_data[0][rev_no]"></td>
                                                     <td><input type="text" name="revision_data[0][change_ctrl_no]"></td>
-                                                    <td><input type="date" name="revision_data[0][eff_date]"></td>
+                                                    <td><input type="date" readonly name="revision_data[0][eff_date]"></td>
                                                     <td><input type="text" name="revision_data[0][rev_reason]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
@@ -6889,7 +6889,7 @@
                                                 <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                 <td><input type="text" name="revision_data[${serialNumber - 1}][rev_no]" value=""></td>
                                                 <td><input type="text" name="revision_data[${serialNumber - 1}][change_ctrl_no]" value=""></td>
-                                                <td><input type="date" name="revision_data[${serialNumber - 1}][eff_date]" value=""></td>
+                                                <td><input type="date" readonly name="revision_data[${serialNumber - 1}][eff_date]" value=""></td>
                                                 <td><input type="text" name="revision_data[${serialNumber - 1}][rev_reason]" value=""></td>
                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tr>`;
@@ -7532,7 +7532,7 @@
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td><input type="text" name="revision_cvs_data[0][rev_cvs_no]"></td>
                                                     <td><input type="text" name="revision_cvs_data[0][change_ctrl_cvs_no]"></td>
-                                                    <td><input type="date" name="revision_cvs_data[0][eff_date_cvs]"></td>
+                                                    <td><input type="date" readonly name="revision_cvs_data[0][eff_date_cvs]"></td>
                                                     <td><input type="text" name="revision_cvs_data[0][rev_reason_cvs]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
@@ -7558,7 +7558,7 @@
                                                 <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                 <td><input type="text" name="revision_cvs_data[${serialNumber - 1}][rev_cvs_no]" value=""></td>
                                                 <td><input type="text" name="revision_cvs_data[${serialNumber - 1}][change_ctrl_cvs_no]" value=""></td>
-                                                <td><input type="date" name="revision_cvs_data[${serialNumber - 1}][eff_date_cvs]" value=""></td>
+                                                <td><input type="date" readonly name="revision_cvs_data[${serialNumber - 1}][eff_date_cvs]" value=""></td>
                                                 <td><input type="text" name="revision_cvs_data[${serialNumber - 1}][rev_reason_cvs]" value=""></td>
                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tr>`;
@@ -7957,7 +7957,7 @@
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td><input type="text" name="revision_inps_data[0][rev_inps_no]"></td>
                                                     <td><input type="text" name="revision_inps_data[0][change_ctrl_inps_no]"></td>
-                                                    <td><input type="date" name="revision_inps_data[0][eff_date_inps]"></td>
+                                                    <td><input type="date" readonly name="revision_inps_data[0][eff_date_inps]"></td>
                                                     <td><input type="text" name="revision_inps_data[0][rev_reason_inps]"></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
@@ -7983,7 +7983,7 @@
                                                 <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                 <td><input type="text" name="revision_inps_data[${serialNumber - 1}][rev_inps_no]" value=""></td>
                                                 <td><input type="text" name="revision_inps_data[${serialNumber - 1}][change_ctrl_inps_no]" value=""></td>
-                                                <td><input type="date" name="revision_inps_data[${serialNumber - 1}][eff_date_inps]" value=""></td>
+                                                <td><input type="date" readonly name="revision_inps_data[${serialNumber - 1}][eff_date_inps]" value=""></td>
                                                 <td><input type="text" name="revision_inps_data[${serialNumber - 1}][rev_reason_inps]" value=""></td>
                                                 <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tr>`;
@@ -16365,7 +16365,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_fpstp_data[0][rev_fpstp_no]"></td>
                                                             <td><input type="text" name="revision_fpstp_data[0][change_ctrl_fpstp_no]"></td>
-                                                            <td><input type="date" name="revision_fpstp_data[0][eff_date_fpstp]"></td>
+                                                            <td><input type="date" readonly name="revision_fpstp_data[0][eff_date_fpstp]"></td>
                                                             <td><input type="text" name="revision_fpstp_data[0][rev_reason_fpstp]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -16391,7 +16391,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_fpstp_data[${serialNumber - 1}][rev_fpstp_no]" value=""></td>
                                                         <td><input type="text" name="revision_fpstp_data[${serialNumber - 1}][change_ctrl_fpstp_no]" value=""></td>
-                                                        <td><input type="date" name="revision_fpstp_data[${serialNumber - 1}][eff_date_fpstp]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_fpstp_data[${serialNumber - 1}][eff_date_fpstp]" value=""></td>
                                                         <td><input type="text" name="revision_fpstp_data[${serialNumber - 1}][rev_reason_fpstp]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -16661,7 +16661,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_inpstp_data[0][rev_inpstp_no]"></td>
                                                             <td><input type="text" name="revision_inpstp_data[0][change_ctrl_inpstp_no]"></td>
-                                                            <td><input type="date" name="revision_inpstp_data[0][eff_date_inpstp]"></td>
+                                                            <td><input type="date" readonly name="revision_inpstp_data[0][eff_date_inpstp]"></td>
                                                             <td><input type="text" name="revision_inpstp_data[0][rev_reason_inpstp]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -16687,7 +16687,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_inpstp_data[${serialNumber - 1}][rev_inpstp_no]" value=""></td>
                                                         <td><input type="text" name="revision_inpstp_data[${serialNumber - 1}][change_ctrl_inpstp_no]" value=""></td>
-                                                        <td><input type="date" name="revision_inpstp_data[${serialNumber - 1}][eff_date_inpstp]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_inpstp_data[${serialNumber - 1}][eff_date_inpstp]" value=""></td>
                                                         <td><input type="text" name="revision_inpstp_data[${serialNumber - 1}][rev_reason_inpstp]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -16817,7 +16817,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_cvstp_data[0][rev_cvstp_no]"></td>
                                                             <td><input type="text" name="revision_cvstp_data[0][change_ctrl_cvstp_no]"></td>
-                                                            <td><input type="date" name="revision_cvstp_data[0][eff_date_cvstp]"></td>
+                                                            <td><input type="date" readonly name="revision_cvstp_data[0][eff_date_cvstp]"></td>
                                                             <td><input type="text" name="revision_cvstp_data[0][rev_reason_cvstp]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -16843,7 +16843,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_cvstp_data[${serialNumber - 1}][rev_cvstp_no]" value=""></td>
                                                         <td><input type="text" name="revision_cvstp_data[${serialNumber - 1}][change_ctrl_cvstp_no]" value=""></td>
-                                                        <td><input type="date" name="revision_cvstp_data[${serialNumber - 1}][eff_date_cvstp]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_cvstp_data[${serialNumber - 1}][eff_date_cvstp]" value=""></td>
                                                         <td><input type="text" name="revision_cvstp_data[${serialNumber - 1}][rev_reason_cvstp]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -16970,7 +16970,7 @@
                                                         <td>{{ $serialNumber++ }}</td>
                                                         <td><input type="text" name="gtp[0][revision_no_gtp]"></td>
                                                         <td><input type="text" name="gtp[0][changContNo_gtp]"></td>
-                                                        <td><input type="date" name="gtp[0][effectiveDate_gtp]"></td>
+                                                        <td><input type="date" readonly name="gtp[0][effectiveDate_gtp]"></td>
                                                         <td><input type="text" name="gtp[0][reasonRevi_gtp]"></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>
@@ -17007,7 +17007,7 @@
                                             '][revision_no_gtp]" value=""></td>' +
                                             '<td><input type="text" name="gtp[' + investdetails +
                                             '][changContNo_gtp]" value=""></td>' +
-                                            '<td><input type="date" name="gtp[' + investdetails +
+                                            '<td><input type="date" readonly name="gtp[' + investdetails +
                                             '][effectiveDate_gtp]" value=""></td>' +                                        
                                             '<td><input type="text" name="gtp[' + investdetails +
                                             '][reasonRevi_gtp]" value=""></td>' +
@@ -17123,7 +17123,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_rawmstp_data[0][rev_rawmstp_no]"></td>
                                                             <td><input type="text" name="revision_rawmstp_data[0][change_ctrl_rawmstp_no]"></td>
-                                                            <td><input type="date" name="revision_rawmstp_data[0][eff_date_rawmstp]"></td>
+                                                            <td><input type="date" readonly name="revision_rawmstp_data[0][eff_date_rawmstp]"></td>
                                                             <td><input type="text" name="revision_rawmstp_data[0][rev_reason_rawmstp]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -17149,7 +17149,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_rawmstp_data[${serialNumber - 1}][rev_rawmstp_no]" value=""></td>
                                                         <td><input type="text" name="revision_rawmstp_data[${serialNumber - 1}][change_ctrl_rawmstp_no]" value=""></td>
-                                                        <td><input type="date" name="revision_rawmstp_data[${serialNumber - 1}][eff_date_rawmstp]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_rawmstp_data[${serialNumber - 1}][eff_date_rawmstp]" value=""></td>
                                                         <td><input type="text" name="revision_rawmstp_data[${serialNumber - 1}][rev_reason_rawmstp]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -24924,7 +24924,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_pams_data[0][rev_pams_no]"></td>
                                                             <td><input type="text" name="revision_pams_data[0][change_ctrl_pams_no]"></td>
-                                                            <td><input type="date" name="revision_pams_data[0][eff_date_pams]"></td>
+                                                            <td><input type="date" readonly name="revision_pams_data[0][eff_date_pams]"></td>
                                                             <td><input type="text" name="revision_pams_data[0][rev_reason_pams]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -24950,7 +24950,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_pams_data[${serialNumber - 1}][rev_pams_no]" value=""></td>
                                                         <td><input type="text" name="revision_pams_data[${serialNumber - 1}][change_ctrl_pams_no]" value=""></td>
-                                                        <td><input type="date" name="revision_pams_data[${serialNumber - 1}][eff_date_pams]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_pams_data[${serialNumber - 1}][eff_date_pams]" value=""></td>
                                                         <td><input type="text" name="revision_pams_data[${serialNumber - 1}][rev_reason_pams]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
@@ -29125,7 +29125,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td><input type="text" name="revision_rawms_data[0][rev_rawms_no]"></td>
                                                             <td><input type="text" name="revision_rawms_data[0][change_ctrl_rawms_no]"></td>
-                                                            <td><input type="date" name="revision_rawms_data[0][eff_date_rawms]"></td>
+                                                            <td><input type="date" readonly name="revision_rawms_data[0][eff_date_rawms]"></td>
                                                             <td><input type="text" name="revision_rawms_data[0][rev_reason_rawms]"></td>
                                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -29151,7 +29151,7 @@
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td><input type="text" name="revision_rawms_data[${serialNumber - 1}][rev_rawms_no]" value=""></td>
                                                         <td><input type="text" name="revision_rawms_data[${serialNumber - 1}][change_ctrl_rawms_no]" value=""></td>
-                                                        <td><input type="date" name="revision_rawms_data[${serialNumber - 1}][eff_date_rawms]" value=""></td>
+                                                        <td><input type="date" readonly name="revision_rawms_data[${serialNumber - 1}][eff_date_rawms]" value=""></td>
                                                         <td><input type="text" name="revision_rawms_data[${serialNumber - 1}][rev_reason_rawms]" value=""></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     </tr>`;
