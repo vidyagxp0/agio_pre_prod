@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('hods')->nullable();
+        Schema::table('document_contents', function (Blueprint $table) {
+
+            $table->longtext('AIQPattachement')->nullable();
+            $table->longtext('AOQPattachement')->nullable();
+            $table->longtext('APQPattachement')->nullable();
         });
     }
 
@@ -25,8 +28,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('hods')->nullable();
+        Schema::table('document_contents', function (Blueprint $table) {
+            //
         });
     }
 };

@@ -1780,6 +1780,48 @@ class DocumentController extends Controller
             $content->pvpattachement = json_encode($files);
         }
 
+        if (!empty($request->AIQPattachement)) {
+            $files = [];
+            if ($request->hasfile('AIQPattachement')) {
+                foreach ($request->file('AIQPattachement') as $file) {
+
+                    $name = $request->name . 'AIQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $content->AIQPattachement = json_encode($files);
+        }
+
+        if (!empty($request->AOQPattachement)) {
+            $files = [];
+            if ($request->hasfile('AOQPattachement')) {
+                foreach ($request->file('AOQPattachement') as $file) {
+
+                    $name = $request->name . 'AOQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $content->AOQPattachement = json_encode($files);
+        }
+
+        if (!empty($request->APQPattachement)) {
+            $files = [];
+            if ($request->hasfile('APQPattachement')) {
+                foreach ($request->file('APQPattachement') as $file) {
+
+                    $name = $request->name . 'APQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $content->APQPattachement = json_encode($files);
+        }
+
         if (!empty($request->afqpattachement)) {
             $files = [];
             if ($request->hasfile('afqpattachement')) {
@@ -4523,6 +4565,84 @@ class DocumentController extends Controller
                         // Merge existing and new files
                         $allFiles = array_merge($existingFiles, $newFiles);
                         $documentcontet->pvpattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->AIQPattachement) || !empty($request->deleted_AIQPattachement)) {
+                        $existingFiles = json_decode($documentcontet->AIQPattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_AIQPattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_AIQPattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('AIQPattachement')) {
+                            foreach ($request->file('AIQPattachement') as $file) {
+                                $name = $request->name . 'AIQPattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->AIQPattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->AOQPattachement) || !empty($request->deleted_AOQPattachement)) {
+                        $existingFiles = json_decode($documentcontet->AOQPattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_AOQPattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_AOQPattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('AOQPattachement')) {
+                            foreach ($request->file('AOQPattachement') as $file) {
+                                $name = $request->name . 'AOQPattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->AOQPattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->APQPattachement) || !empty($request->deleted_APQPattachement)) {
+                        $existingFiles = json_decode($documentcontet->APQPattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_APQPattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_APQPattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('APQPattachement')) {
+                            foreach ($request->file('APQPattachement') as $file) {
+                                $name = $request->name . 'APQPattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->APQPattachement = json_encode($allFiles);
                     }
                     
 
