@@ -571,9 +571,24 @@
                                         </script>
 
 
-
-
                                         <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiator"><b>Initiator Department</b></label>
+                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiation Group Code">Initiator Department Code</label>
+                                                    <input type="text" name="initiator_group_code"
+                                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                        readonly>
+                                                    {{-- <div class="default-name"> <span
+                                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                                </div>
+                                            </div>
+                                    {{--                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Department </b></label>
                                                 <select name="Initiator_Group"
@@ -656,6 +671,8 @@
 
                                             </div>
                                         </div>
+                                        --}}
+    
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
@@ -683,38 +700,50 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
-                                                <div><small class="text-primary">Please select related information</small>
-                                                </div>
-                                                <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    name="initiated_through"
-                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                <select name="initiated_through" id="initiated_through" 
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                     <option value="">-- select --</option>
-                                                    <option @if ($data->initiated_through == 'recall') selected @endif
-                                                        value="recall">Recall</option>
-                                                    <option @if ($data->initiated_through == 'return') selected @endif
-                                                        value="return">Return</option>
-                                                    <!-- <option @if ($data->initiated_through == 'External Audit') selected @endif
-                                                                value="deviation">Deviation</option> -->
-                                                    <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                        value="complaint">Complaint</option>
-                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                        value="regulatory">Regulatory</option>
-                                                    <!-- <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                                value="lab-incident">Lab Incident</option> -->
-                                                    <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                        value="improvement">Improvement</option>
-                                                    <option @if ($data->initiated_through == 'others') selected @endif
-                                                        value="others">Others</option>
+                                                    <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
+                                                    <option value="return" {{ $data->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
+                                                    <option value="complaint" {{ $data->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                                    <option value="regulatory" {{ $data->initiated_through == 'regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                    <option value="improvement" {{ $data->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
+                                                    <option value="others" {{ $data->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input" id="initiated_through_req">
-                                                <label for="If Other">Others<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+
+                                        <!-- Others field initially hidden -->
+                                        <div class="col-lg-6" id="initiated_through_req" 
+                                            style="display: {{ $data->initiated_through == 'others' ? 'block' : 'none' }};">
+                                            <div class="group-input">
+                                                <label for="If Other">Others <span id="required-asterisk" 
+                                                    class="text-danger {{ $data->initiated_through == 'others' ? '' : 'd-none' }}">*</span>
+                                                </label>
+                                                <textarea name="initiated_if_other" id="initiated_if_other"
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            document.getElementById('initiated_through').addEventListener('change', function() {
+                                                var othersField = document.getElementById('initiated_through_req');
+                                                var othersTextarea = document.getElementById('initiated_if_other');
+                                                var requiredAsterisk = document.getElementById('required-asterisk');
+
+                                                if (this.value === 'others') {
+                                                    othersField.style.display = 'block'; // Show textarea
+                                                    requiredAsterisk.classList.remove('d-none'); // Show red asterisk
+                                                    othersTextarea.setAttribute('required', 'required'); // Make textarea required
+                                                } else {
+                                                    othersField.style.display = 'none'; // Hide textarea
+                                                    requiredAsterisk.classList.add('d-none'); // Hide red asterisk
+                                                    othersTextarea.removeAttribute('required'); // Remove required validation
+                                                    othersTextarea.value = ''; // Clear textarea when hiding
+                                                }
+                                            });
+                                        </script>
+
                                         {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="repeat">Repeat</label>
@@ -736,72 +765,86 @@
                                         </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Type of Audit</label>
-                                                <select name="audit_type"
-                                                    onchange="otherController(this.value, 'others', 'if_other')"
+                                                <label for="audit_type">Type of Audit</label>
+                                                <select name="audit_type" id="audit_type" 
+                                                    onchange="toggleField(this.value, 'if_other_field', 'if_other_textarea', 'if_other_asterisk')"
                                                     {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option value="R&D"
-                                                        @if ($data->audit_type == 'R&D') selected @endif>R&D</option>
-                                                    <option value="GLP"
-                                                        @if ($data->audit_type == 'GLP') selected @endif>GLP</option>
-                                                    <option value="GCP"
-                                                        @if ($data->audit_type == 'GCP') selected @endif>GCP</option>
-                                                    <option value="GDP"
-                                                        @if ($data->audit_type == 'GDP') selected @endif>GDP</option>
-                                                    <option value="GEP"
-                                                        @if ($data->audit_type == 'GEP') selected @endif>GEP</option>
-                                                    <option value="ISO 17025"
-                                                        @if ($data->audit_type == 'ISO 17025') selected @endif>ISO 17025
-                                                    </option>
-                                                    <option value="others"
-                                                        @if ($data->audit_type == 'others') selected @endif>Others</option>
+                                                    <option value="R&D" {{ $data->audit_type == 'R&D' ? 'selected' : '' }}>R&D</option>
+                                                    <option value="GLP" {{ $data->audit_type == 'GLP' ? 'selected' : '' }}>GLP</option>
+                                                    <option value="GCP" {{ $data->audit_type == 'GCP' ? 'selected' : '' }}>GCP</option>
+                                                    <option value="GDP" {{ $data->audit_type == 'GDP' ? 'selected' : '' }}>GDP</option>
+                                                    <option value="GEP" {{ $data->audit_type == 'GEP' ? 'selected' : '' }}>GEP</option>
+                                                    <option value="ISO 17025" {{ $data->audit_type == 'ISO 17025' ? 'selected' : '' }}>ISO 17025</option>
+                                                    <option value="GMP" {{ $data->audit_type == 'GMP' ? 'selected' : '' }}>GMP</option>
+                                                    <option value="cGMP" {{ $data->audit_type == 'cGMP' ? 'selected' : '' }}>cGMP</option>
+                                                    <option value="others" {{ $data->audit_type == 'others' ? 'selected' : '' }}>Others</option>
                                                 </select>
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
-                                            <div class="group-input" id="if_other">
-                                                <label for="If Other">If Other<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea name="if_other" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
+                                        <!-- If Other field -->
+                                        <div class="col-lg-6" id="if_other_field" style="display: {{ $data->audit_type == 'others' ? 'block' : 'none' }};">
+                                            <div class="group-input">
+                                                <label for="If Other">If Other
+                                                    <span id="if_other_asterisk" class="text-danger {{ $data->audit_type == 'others' ? '' : 'd-none' }}">*</span>
+                                                </label>
+                                                <textarea name="if_other" id="if_other_textarea"
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="external_agencies">External Agencies</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                    name="external_agencies">
+                                                <select name="external_agencies" id="external_agencies"
+                                                    onchange="toggleField(this.value, 'others_field', 'others_textarea', 'others_asterisk')"
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data->external_agencies == 'Jordan FDA') selected @endif
-                                                        value="Jordan FDA">Jordan FDA</option>
-                                                    <option @if ($data->external_agencies == 'USFDA') selected @endif
-                                                        value="USFDA">USFDA</option>
-                                                    <option @if ($data->external_agencies == 'MHRA') selected @endif
-                                                        value="MHRA">MHRA</option>
-                                                    <option @if ($data->external_agencies == 'ANVISA') selected @endif
-                                                        value="ANVISA">ANVISA</option>
-                                                    <option @if ($data->external_agencies == 'ISO') selected @endif
-                                                        value="ISO">ISO</option>
-                                                    <option @if ($data->external_agencies == 'WHO') selected @endif
-                                                        value="WHO">WHO</option>
-                                                    <option @if ($data->external_agencies == 'Local FDA') selected @endif
-                                                        value="Local FDA">Local FDA</option>
-                                                    <option @if ($data->external_agencies == 'TGA') selected @endif
-                                                        value="TGA">TGA</option>
-                                                    <option value="others"
-                                                        @if ($data->external_agencies == 'others') selected @endif>Others
-                                                    </option>
+                                                    <option value="Jordan FDA" {{ $data->external_agencies == 'Jordan FDA' ? 'selected' : '' }}>Jordan FDA</option>
+                                                    <option value="USFDA" {{ $data->external_agencies == 'USFDA' ? 'selected' : '' }}>USFDA</option>
+                                                    <option value="MHRA" {{ $data->external_agencies == 'MHRA' ? 'selected' : '' }}>MHRA</option>
+                                                    <option value="ANVISA" {{ $data->external_agencies == 'ANVISA' ? 'selected' : '' }}>ANVISA</option>
+                                                    <option value="ISO" {{ $data->external_agencies == 'ISO' ? 'selected' : '' }}>ISO</option>
+                                                    <option value="WHO" {{ $data->external_agencies == 'WHO' ? 'selected' : '' }}>WHO</option>
+                                                    <option value="Local FDA" {{ $data->external_agencies == 'Local FDA' ? 'selected' : '' }}>Local FDA</option>
+                                                    <option value="TGA" {{ $data->external_agencies == 'TGA' ? 'selected' : '' }}>TGA</option>
+                                                    <option value="EU-GMP" {{ $data->external_agencies == 'EU-GMP' ? 'selected' : '' }}>EU-GMP</option>
+                                                    <option value="others" {{ $data->external_agencies == 'others' ? 'selected' : '' }}>Others</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+
+                                        <!-- Others field for External Agencies -->
+                                        <div class="col-lg-6" id="others_field" style="display: {{ $data->external_agencies == 'others' ? 'block' : 'none' }};">
                                             <div class="group-input">
-                                                <label for="others">Others<span
-                                                        class="text-danger d-none">*</span></label>
-                                                <textarea name="others" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
+                                                <label for="others">Others
+                                                    <span id="others_asterisk" class="text-danger {{ $data->external_agencies == 'others' ? '' : 'd-none' }}">*</span>
+                                                </label>
+                                                <textarea name="others" id="others_textarea"
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            function toggleField(selectedValue, fieldId, textareaId, asteriskId) {
+                                                var field = document.getElementById(fieldId);
+                                                var textarea = document.getElementById(textareaId);
+                                                var asterisk = document.getElementById(asteriskId);
+
+                                                if (selectedValue === 'others') {
+                                                    field.style.display = 'block';
+                                                    asterisk.classList.remove('d-none');  // ✅ Show red *
+                                                    textarea.setAttribute('required', 'required');
+                                                } else {
+                                                    field.style.display = 'none';
+                                                    asterisk.classList.add('d-none');  // ✅ Hide red *
+                                                    textarea.removeAttribute('required');
+                                                    textarea.value = ''; // Clear field when hidden
+                                                }
+                                            }
+                                        </script>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Comments">Description</label>
@@ -829,7 +872,7 @@
                                                         <tr>
                                                             <th>Row</th>
                                                             <th>Auditor Name</th>
-                                                            <th>Regulatory Agency</th>
+                                                            <th>External Agency Name</th>
                                                             <th>Designation</th>
                                                             <th>Remarks</th>
                                                             <th>Action</th>
@@ -1826,40 +1869,36 @@
                                                             <tr>
                                                                 <td disabled>{{ $serialNumber++ }}</td>
                                                                 <td>
-                                                                    <input type="text"
-                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                    <textarea 
+                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][observation]"
-                                                                        value="{{ $oogrid['observation'] }}"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>
+                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['observation'] }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text"
-                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                    <textarea 
+                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][response]"
-                                                                        value="{{ $oogrid['response'] }}"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>
+                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['response'] }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text"
-                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                    <textarea 
+                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][reference_id]"
-                                                                        value="{{ $oogrid['reference_id'] }}"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>
+                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['reference_id'] }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text"
-                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                    <textarea 
+                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][status]"
-                                                                        value="{{ $oogrid['status'] }}"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>
+                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text"
-                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                    <textarea 
+                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                         name="SummaryResponse[{{ $loop->index }}][remarks]"
-                                                                        value="{{ $oogrid['remarks'] }}"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>
+                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['remarks'] }}</textarea>
                                                                 </td>
+
                                                                 <td>
                                                                     <button class="removeRowBtn"
                                                                          {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
@@ -1918,34 +1957,36 @@
                                         <script>
                                             $(document).ready(function() {
                                                 let investdetails = 1;
-                                                $('#IncidentAdd').click(function(e) {
-                                                    function generateTableRow(serialNumber) {
-                                                        var html =
-                                                            '<tr>' +
-                                                            '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
-                                                            '"></td>' +
-                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
-                                                            investdetails + '][observation]" value=""></td>' +
-                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
-                                                            investdetails + '][response]" value=""></td>' +
-                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="SummaryResponse[' +
-                                                            investdetails + '][reference_id]" value=""></td>' +
-                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
-                                                            investdetails + '][status]" value=""></td>' +
-                                                            '<td><input type="text"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="SummaryResponse[' +
-                                                            investdetails + '][remarks]" value=""></td>' +
-                                                            '<td><button class="removeRowBtn"  {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>' +
 
-                                                            '</tr>';
-                                                        investdetails++; // Increment the row number here
-                                                        return html;
+                                                // Store the stage value in a JavaScript variable from Blade
+                                                let isDisabled = @json($data->stage == 1 || $data->stage == 0 || $data->stage == 5);
+
+                                                $('#IncidentAdd').click(function(e) {
+                                                    e.preventDefault();
+
+                                                    function generateTableRow(serialNumber) {
+                                                        return `
+                                                            <tr>
+                                                                <td><input disabled type="text" style="width:40px" value="${serialNumber}"></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][observation]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][response]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][reference_id]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][status]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][remarks]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><button type="button" class="removeRowBtn" ${isDisabled ? 'disabled' : ''}>Remove</button></td>
+                                                            </tr>
+                                                        `;
                                                     }
 
-                                                    var tableBody = $('#onservation-incident-table tbody');
-                                                    var rowCount = tableBody.children('tr').length;
-                                                    var newRow = generateTableRow(rowCount + 1);
+                                                    let tableBody = $('#onservation-incident-table tbody');
+                                                    let rowCount = tableBody.children('tr').length;
+                                                    let newRow = generateTableRow(rowCount + 1);
                                                     tableBody.append(newRow);
+                                                    
+                                                    investdetails++; // Increment counter for unique indexes
                                                 });
+
+                                                // Remove row event listener
                                                 $(document).on('click', '.removeRowBtn', function() {
                                                     $(this).closest('tr').remove();
                                                 });
@@ -1953,48 +1994,49 @@
                                         </script>
 
 
+
                                         <!-- New Grid Added  -->
 
                                         <!-- <div class="col-12">
                                                     <div class="group-input">
                                                         <label for="Remarks">Remarks @if ($data->stage == 2)
-    <span class="text-danger">*</span>
-    @endif
-        </label>
-        <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                                    </div>
-                                                </div> -->
+                                                                <span class="text-danger">*</span>
+                                                                @endif
+                                                                    </label>
+                                                                    <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
+                                                                                                                </div>
+                                                                                                            </div> -->
 
-                                        <!-- <div class="col-lg-12">
-                                                    <div class="group-input">
-                                                        <label for="Reference Recores">Reference Record</label>
-                                                        <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
-                                                            {{-- <option value="">--Select---</option> --}}
-                                                            @foreach ($old_record as $new)
-    <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
-                                                                    {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                                </option>
-    @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> -->
-                                        <!-- <div class="col-lg-12">
-                                                    <div class="group-input">
-                                                        <label for="Report Attachments">Report Attachments</label>
-                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                        {{-- <input type="file" id="myfile" name="report_file"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}> --}}
-                                                            <div class="file-attachment-field">
-                                                                <div class="file-attachment-list" id="report_attachment">
-                                                                    @if ($data->report_file)
-    @foreach (json_decode($data->report_file) as $file)
-    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                        <b>{{ $file }}</b>
-                                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                    </h6>
-    @endforeach
-    @endif
+                                                                                                    <!-- <div class="col-lg-12">
+                                                                                                                <div class="group-input">
+                                                                                                                    <label for="Reference Recores">Reference Record</label>
+                                                                                                                    <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
+                                                                                                                        {{-- <option value="">--Select---</option> --}}
+                                                                                                                        @foreach ($old_record as $new)
+                                                                <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
+                                                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                                                                                            </option>
+                                                                @endforeach
+                                                                                                                    </select>
+                                                                                                                </div>
+                                                                                                            </div> -->
+                                                                                                    <!-- <div class="col-lg-12">
+                                                                                                                <div class="group-input">
+                                                                                                                    <label for="Report Attachments">Report Attachments</label>
+                                                                                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                                                                                    {{-- <input type="file" id="myfile" name="report_file"
+                                                                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}> --}}
+                                                                                                                        <div class="file-attachment-field">
+                                                                                                                            <div class="file-attachment-list" id="report_attachment">
+                                                                                                                                @if ($data->report_file)
+                                                                @foreach (json_decode($data->report_file) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                                                                                    <b>{{ $file }}</b>
+                                                                                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                                                                                </h6>
+                                                                @endforeach
+                                                                @endif
                                                                 </div>
                                                                 <div class="add-btn">
                                                                     <div>Add</div>

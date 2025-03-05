@@ -384,7 +384,7 @@
                             <tr class="table_bg">
                                 <th class="w-20">SR no.</th>
                                 <th class="w-20">Auditor Name</th>
-                                <th class="w-20">Regulatory Agency</th>
+                                <th class="w-20">External Agency Name</th>
                                 <th class="w-20">Designation</th>
                                 <th class="w-20">Remarks</th>
 
