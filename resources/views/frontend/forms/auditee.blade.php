@@ -1439,40 +1439,40 @@
                                 </script>
 
 
-<script>
-    $(document).ready(function() {
-        let investdetails = 1;
+                                <script>
+                                    $(document).ready(function() {
+                                        let investdetails = 1;
 
-        $('#IncidentAdd').click(function(e) {
-            e.preventDefault();
+                                        $('#IncidentAdd').click(function(e) {
+                                            e.preventDefault();
 
-            function generateTableRow(serialNumber) {
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" style="width:40px" value="' + serialNumber + '"></td>' +
-                    '<td><textarea name="SummaryResponse[' + investdetails + '][observation]"></textarea></td>' +
-                    '<td><textarea name="SummaryResponse[' + investdetails + '][response]"></textarea></td>' +
-                    '<td><textarea name="SummaryResponse[' + investdetails + '][reference_id]"></textarea></td>' +
-                    '<td><textarea name="SummaryResponse[' + investdetails + '][status]"></textarea></td>' +
-                    '<td><textarea name="SummaryResponse[' + investdetails + '][remarks]"></textarea></td>' +
-                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                    '</tr>';
-                
-                investdetails++; // Increment the row number
-                return html;
-            }
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" style="width:40px" value="' + serialNumber + '"></td>' +
+                                                    '<td><textarea name="SummaryResponse[' + investdetails + '][observation]"></textarea></td>' +
+                                                    '<td><textarea name="SummaryResponse[' + investdetails + '][response]"></textarea></td>' +
+                                                    '<td><textarea name="SummaryResponse[' + investdetails + '][reference_id]"></textarea></td>' +
+                                                    '<td><textarea name="SummaryResponse[' + investdetails + '][status]"></textarea></td>' +
+                                                    '<td><textarea name="SummaryResponse[' + investdetails + '][remarks]"></textarea></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>';
+                                                
+                                                investdetails++; // Increment the row number
+                                                return html;
+                                            }
 
-            var tableBody = $('#onservation-incident-table tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
-        });
+                                            var tableBody = $('#onservation-incident-table tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
 
-        $(document).on('click', '.removeRowBtn', function() {
-            $(this).closest('tr').remove();
-        });
-    });
-</script>
+                                        $(document).on('click', '.removeRowBtn', function() {
+                                            $(this).closest('tr').remove();
+                                        });
+                                    });
+                                </script>
 
                                 {{-- grid added new --}}
 

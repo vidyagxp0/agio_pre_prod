@@ -1,5 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -16,11 +17,12 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            @if(!empty($parent_division_id))
-                {{ Helpers::getDivisionName($parent_division_id) }} / Action Item
+            @if(!empty($parent_division_id)) 
+                {{ Helpers::getDivisionName($parent_division_id) }} /
             @else
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Action Item
+                {{ Helpers::getDivisionName(session()->get('division')) }} /
             @endif
+             Action Item
         </div>
     </div>
     @php
@@ -58,7 +60,9 @@
                                 General Information
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
-                                <div class="col-lg-6">
+
+                            @if (!empty($parent_id))
+                            <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
@@ -88,6 +92,30 @@
                                         @endif
                                     </div>
                                 </div>
+
+                            @else
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input type="hidden" name="record" value="{{ $record_number }}">
+                                        <input disabled type="text" name="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        <input disabled type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id"
+                                            value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                    </div>
+                                </div>
+
+                            @endif
+                               
 
                                 <div class="col-lg-6">
                                     @if (!empty($cc->id))

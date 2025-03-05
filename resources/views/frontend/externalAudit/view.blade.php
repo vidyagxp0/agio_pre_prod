@@ -1857,6 +1857,7 @@
                                                             <th>Response</th>
                                                             <th>CAPA / Child action Reference If Any</th>
                                                             <th>Status</th>
+                                                            <!-- <th>Category</th> -->
                                                             <th>Remarks</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -1892,6 +1893,9 @@
                                                                         name="SummaryResponse[{{ $loop->index }}][status]"
                                                                         {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] }}</textarea>
                                                                 </td>
+
+                                                               
+
                                                                 <td>
                                                                     <textarea 
                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
