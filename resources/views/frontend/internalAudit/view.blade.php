@@ -1200,8 +1200,43 @@
                                                                         @endif
                                                                         </td>
 
-                                                                        <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td>
-
+                                                                        {{-- <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td> --}}
+                                                                       
+                                                                       <td>
+                                                                         <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][regulatoryagency]" @if ($data->stage != 1) disabled @endif>
+                                                                            <option value="">-Select a value-</option>
+                                                                            @php
+                                                                                $options = [
+                                                                                    "Corporate Quality Assurance",
+                                                                                    "Quality Assurance",
+                                                                                    "Quality Control",
+                                                                                    "Quality Control (Microbiology department)",
+                                                                                    "Production General",
+                                                                                    "Production Liquid Orals",
+                                                                                    "Production Tablet and Powder",
+                                                                                    "Production External (Ointment, Gels, Creams and Liquid)",
+                                                                                    "Production Capsules",
+                                                                                    "Production Injectable",
+                                                                                    "Engineering",
+                                                                                    "Human Resource",
+                                                                                    "Store",
+                                                                                    "Electronic Data Processing",
+                                                                                    "Formulation Development",
+                                                                                    "Analytical Research and Development Laboratory",
+                                                                                    "Packaging Development",
+                                                                                    "Purchase Department",
+                                                                                    "Document Cell",
+                                                                                    "Regulatory Affairs",
+                                                                                    "Pharmacovigilance"
+                                                                                ];
+                                                                            @endphp
+                                                                            @foreach ($options as $option)
+                                                                                <option value="{{ $option }}" {{ isset($audditor['regulatoryagency']) && $audditor['regulatoryagency'] == $option ? 'selected' : '' }}>
+                                                                                    {{ $option }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                       </td>
                                                                         <td>
                                                                             <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select"@if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">--Select--</option>
