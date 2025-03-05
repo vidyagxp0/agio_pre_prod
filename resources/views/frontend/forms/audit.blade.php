@@ -1019,7 +1019,35 @@
                                                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                                                     }
                                                     html += '</select></td>'+
-                                                '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+                                                // '<td><input type="text" name="AuditorNew[' + investdetails + '][regulatoryagency]" value=""></td>' +
+
+                                                '<td>' +
+                '<select name="AuditorNew[' + investdetails + '][regulatoryagency]" class="form-select">' +
+                '<option value="">Select a value</option>' +
+                '<option value="Corporate Quality Assurance">Corporate Quality Assurance</option>' +
+                '<option value="Quality Assurance">Quality Assurance</option>' +
+                '<option value="Quality Control">Quality Control</option>' +
+                '<option value="Quality Control (Microbiology department)">Quality Control (Microbiology department)</option>' +
+                '<option value="Production General">Production General</option>' +
+                '<option value="Production Liquid Orals">Production Liquid Orals</option>' +
+                '<option value="Production Tablet and Powder">Production Tablet and Powder</option>' +
+                '<option value="Production External (Ointment, Gels, Creams and Liquid)">Production External (Ointment, Gels, Creams and Liquid)</option>' +
+                '<option value="Production Capsules">Production Capsules</option>' +
+                '<option value="Production Injectable">Production Injectable</option>' +
+                '<option value="Engineering">Engineering</option>' +
+                '<option value="Human Resource">Human Resource</option>' +
+                '<option value="Store">Store</option>' +
+                '<option value="Electronic Data Processing">Electronic Data Processing</option>' +
+                '<option value="Formulation Development">Formulation Development</option>' +
+                '<option value="Analytical Research and Development Laboratory">Analytical Research and Development Laboratory</option>' +
+                '<option value="Packaging Development">Packaging Development</option>' +
+                '<option value="Purchase Department">Purchase Department</option>' +
+                '<option value="Document Cell">Document Cell</option>' +
+                '<option value="Regulatory Affairs">Regulatory Affairs</option>' +
+                '<option value="Pharmacovigilance">Pharmacovigilance</option>' +
+                '</select>' +
+                '</td>' +
+
                                                 '<td>' +
                                                 '<select name="AuditorNew[' + investdetails + '][designation]" class="form-select">' +
                                                 '<option value="">--Select--</option>' +
