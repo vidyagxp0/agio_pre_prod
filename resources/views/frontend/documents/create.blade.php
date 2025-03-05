@@ -559,7 +559,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <p id="depart-nameError" style="color:red; display: none;">** Department is required</p>
+                                    {{-- <p id="depart-nameError" style="color:red; display: none;">** Department is required</p> --}}
                                 </div>
 
                                 <div class="col-6" id="docVerContainer" style="display: none">
@@ -1551,7 +1551,7 @@
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th class="copy-name">Revision No.</th>
-                                                    <th class="copy-name">Change Control No./ DCRF No</th>
+                                                    <th class="copy-name">Change Control No.</th>
                                                     <th class="copy-name">Effective Date</th>
                                                     <th class="copy-name">Reason of revision</th>
                                                 </tr>
@@ -9380,28 +9380,27 @@
                                         </div>
                                     </div>
                             <script>
-$(document).ready(function() {
-    $('#ObservationAdd').click(function() {
-        var tableBody = $('#job-responsibilty-table tbody');
-        var lastRow = tableBody.find('tr:last');
-        var lastIndex = lastRow.length ? parseInt(lastRow.find('input[name^="summaryResult["]').attr('name').match(/\[(\d+)\]/)[1]) : 0;
+                                $(document).ready(function() {
+                                    $('#ObservationAdd').click(function() {
+                                        var tableBody = $('#job-responsibilty-table tbody');
+                                        var lastRow = tableBody.find('tr:last');
+                                        var lastIndex = lastRow.length ? parseInt(lastRow.find('input[name^="summaryResult["]').attr('name').match(/\[(\d+)\]/)[1]) : 0;
 
-        function generateTableRow(serialNumber) {
-            return `
-                <tr>
-                    <td><input disabled type="text" name="summaryResult[${serialNumber}][serial]" value="${serialNumber + 1}"></td>
-                    <td><input type="text" name="summaryResult[${serialNumber}][revision_no_tds]"></td>
-                    <td><input type="text" name="summaryResult[${serialNumber}][changContNo_tds]"></td>
-                    <td><input type="date" name="summaryResult[${serialNumber}][effectiveDate_tds]"></td>
-                    <td><input type="text" name="summaryResult[${serialNumber}][reasonRevi_tds]"></td>
-                </tr>`;
-        }
+                                        function generateTableRow(serialNumber) {
+                                            return `
+                                                <tr>
+                                                    <td><input disabled type="text" name="summaryResult[${serialNumber}][serial]" value="${serialNumber + 1}"></td>
+                                                    <td><input type="text" name="summaryResult[${serialNumber}][revision_no_tds]"></td>
+                                                    <td><input type="text" name="summaryResult[${serialNumber}][changContNo_tds]"></td>
+                                                    <td><input type="date" name="summaryResult[${serialNumber}][effectiveDate_tds]"></td>
+                                                    <td><input type="text" name="summaryResult[${serialNumber}][reasonRevi_tds]"></td>
+                                                </tr>`;
+                                        }
 
-        var newRow = generateTableRow(lastIndex + 1);
-        tableBody.append(newRow);
-    });
-});
-
+                                        var newRow = generateTableRow(lastIndex + 1);
+                                        tableBody.append(newRow);
+                                    });
+                                });
                             </script>
 
                             </div>

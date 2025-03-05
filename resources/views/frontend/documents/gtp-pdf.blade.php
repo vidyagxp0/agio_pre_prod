@@ -314,45 +314,96 @@
     </style> --}}
 
     <style>
+        
+        /*Main Table Styling */
         #isPasted {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed; /* Fix table layout to maintain structure */
+            width: 650px !important;
+        border-collapse: collapse;
+        table-layout: fixed;
         }
 
-               /* First column adjusts to its content */
+        /* First column adjusts to its content */
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; /* Prevent wrapping */
-            width: 1%; /* Shrink to fit content */
+            white-space: nowrap; 
+            width: 1%;
             vertical-align: top;
         }
 
         /* Second column takes remaining space */
         #isPasted td:last-child,
         #isPasted th:last-child {
-            width: auto; /* Take remaining space */
+            width: auto;
             vertical-align: top;
-            
+
         }
 
+        /* Common Table Cell Styling */
         #isPasted th,
         #isPasted td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Table wrapper for scrolling */
-        .table-containers {
-            width: 100%;
-            overflow-x: auto; /* Enable horsizontal scrolling */
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
-     
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
 
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 550px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
     </style>
 
 </head>
@@ -554,9 +605,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="text-left">
-                                    <div class="bold">GTP TEST :-</div>
-                                </th>
+                              
                             </tr>
                         </thead>
                     </table>
@@ -565,10 +614,7 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        {{-- @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->gtp_test, 
-                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif --}}
+                                  
 
                                         <div class="table-containers">
                                             {!! strip_tags($data->document_content->gtp_test, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
@@ -602,7 +648,7 @@
                                 <tr>
                                     <td>{{ $item['revision_no_gtp'] ?? '' }}</td>
                                     <td>{{ $item['changContNo_gtp'] ?? '' }}</td>
-                                    <td>{{ $item['effectiveDate_gtp'] ?? '' }}</td>
+                                    <td>{{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}</td>
                                     <td>{{ $item['reasonRevi_gtp'] ?? '' }}</td>
                                 </tr>
                             @endforeach

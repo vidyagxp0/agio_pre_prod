@@ -2419,9 +2419,30 @@ class DocumentController extends Controller
             $RevisionGridrawmsData->data = $request->revision_rawms_data;
             $RevisionGridrawmsData->save();
 
+            $RevisionGridrawmstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_rawmstp_data'])->firstOrNew();
+            $RevisionGridrawmstpData->document_type_id = $document->id;
+            $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
+            $RevisionGridrawmstpData->data = $request->revision_rawmstp_data;
+            $RevisionGridrawmstpData->save();
 
+            $RevisionGridpamsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_pams_data'])->firstOrNew();
+            $RevisionGridpamsData->document_type_id = $document->id;
+            $RevisionGridpamsData->identifier = 'revision_pams_data';
+            $RevisionGridpamsData->data = $request->revision_pams_data;
+            $RevisionGridpamsData->save();
 
+            $RevisionGridmfpsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_mfps_data'])->firstOrNew();
+            $RevisionGridmfpsData->document_type_id = $document->id;
+            $RevisionGridmfpsData->identifier = 'revision_mfps_data';
+            $RevisionGridmfpsData->data = $request->revision_mfps_data;
+            $RevisionGridmfpsData->save();
 
+            $RevisionGridmfpstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_mfpstp_data'])->firstOrNew();
+            $RevisionGridmfpstpData->document_type_id = $document->id;
+            $RevisionGridmfpstpData->identifier = 'revision_mfpstp_data';
+            $RevisionGridmfpstpData->data = $request->revision_mfpstp_data;
+            $RevisionGridmfpstpData->save();
+            
             $ProductSpecification = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'ProductSpecification'])->firstOrNew();
             $ProductSpecification->document_type_id = $document->id;
             $ProductSpecification->identifier = 'ProductSpecification';
@@ -2807,7 +2828,6 @@ class DocumentController extends Controller
 
         $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-    //    dd($PackingGridData);
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
 
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
@@ -2818,6 +2838,11 @@ class DocumentController extends Controller
         $RevisionGridinpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
         $RevisionGridcvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
         $RevisionGridrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
+        $RevisionGridrawmstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawmstp_data")->first();
+        $RevisionGridpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
+        $RevisionGridmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
+        $RevisionGridmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
+
 
         // dd($GtpGridData);
 
@@ -2918,6 +2943,10 @@ class DocumentController extends Controller
              'RevisionGridinpstpData',
              'RevisionGridcvstpData',
              'RevisionGridrawmsData',
+             'RevisionGridrawmstpData',
+             'RevisionGridpamsData',
+             'RevisionGridmfpsData',
+             'RevisionGridmfpstpData',
             'CalibrationQualificationstatus'
 
         ));
@@ -2944,6 +2973,7 @@ class DocumentController extends Controller
             ]);
             $lastTraining = DocumentTraining::where('document_id', $id)->first();
             $document = Document::find($id);
+        if ($document->status !== 'Effective') {
             if ($document->stage <= 7) {
                 $document->document_name = $request->document_name;
                 $document->short_description = $request->short_desc;
@@ -3003,6 +3033,7 @@ class DocumentController extends Controller
                 $document->safety_precaution = $request->safety_precaution;
                 $document->storage_condition = $request->storage_condition;
                 $document->approved_vendor = $request->approved_vendor;
+                $document->packingmaterial_specification = $request->packingmaterial_specification; 
                 $document->stp_no = $request->stp_no;
 
                 //raw material specification
@@ -3028,11 +3059,11 @@ class DocumentController extends Controller
                 $document->cvs_specificationGrid = $request->cvs_specificationGrid;
                 $document->ips_specificationGrid = $request->ips_specificationGrid;
 
-            // PIAS
+               // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
 
-            // Finished Product Specification
+               // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
                 $document->brand_name = $request->brand_name;
@@ -3046,7 +3077,7 @@ class DocumentController extends Controller
                 $document->sampling_instructions = $request->sampling_instructions;
 
 
-            //Cleaning Validation Specification
+                //Cleaning Validation Specification
                 $document->product_name_cvs = $request->product_name_cvs;
                 $document->generic_name_cvs = $request->generic_name_cvs;
                 $document->brand_name_cvs = $request->brand_name_cvs;
@@ -3059,7 +3090,7 @@ class DocumentController extends Controller
                 $document->reference_cvs = $request->reference_cvs;
                 $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
-            //Inprocess Validation specification
+               //Inprocess Validation specification
                 $document->product_name_inps = $request->product_name_inps;
                 $document->generic_name_inps = $request->generic_name_inps;
                 $document->brand_name_inps = $request->brand_name_inps;
@@ -3072,17 +3103,6 @@ class DocumentController extends Controller
                 $document->reference_inps = $request->reference_inps;
                 $document->sampling_instructions_inps = $request->sampling_instructions_inps;
 
-
-
-
-                // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
-                // try {
-                //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
-                //     $document->next_review_date = $next_review_date;
-                // } catch (\Exception $e) {
-                //     //
-                // }
-                // $document->review_period = $request->review_period;
                 $document->training_required = $request->training_required;
                 $document->attach_draft_doocument = $request->attach_draft_doocument;
                 $document->notify_to = json_encode($request->notify_to);
@@ -3095,8 +3115,6 @@ class DocumentController extends Controller
                 $document->display_user_department = $request->display_user_department;
                 $document->tds_name_code = $request->tds_name_code;
                 $document->total_no_pages = $request->total_no_pages;
-
-
 
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
@@ -3159,8 +3177,7 @@ class DocumentController extends Controller
                     $document->approver_group = implode(',', $request->approver_group);
                 }
             }
-
-
+        }    
 
             if (!empty($request->ForComANiGasProtocolfile_attach) || !empty($request->deleted_ForComANiGasProtocolfile_attach)) {
                 $existingFiles = json_decode($document->ForComANiGasProtocolfile_attach, true) ?? [];
@@ -3215,7 +3232,6 @@ class DocumentController extends Controller
                 $document->PacValRepfile_attach = json_encode($allFiles);
             }
 
-            //  hold time study report attcment updated
             // HolTimSut file attachment handling
             if (!empty($request->HolTimSutRepfile_attach) || !empty($request->deleted_HolTimSutRepfile_attach)) {
             $existingFiles = json_decode($document->HolTimSutRepfile_attach, true) ?? [];
@@ -3243,10 +3259,7 @@ class DocumentController extends Controller
             $document->HolTimSutRepfile_attach = json_encode($allFiles);
             }
 
-
             //  temperature mapping protocol report attcment updated
-
-
             if (!empty($request->TemMapProCumRepfile_attach) || !empty($request->deleted_TemMapProCumRepfile_attach)) {
             $existingFiles = json_decode($document->TemMapProCumRepfile_attach, true) ?? [];
 
@@ -3355,8 +3368,6 @@ class DocumentController extends Controller
                         $allFiles = array_merge($existingFiles, $newFiles);
                         $document->MasterFormulaRecordBMR = json_encode($allFiles);
                         }
-
-
                 //-------------------- master formula reocrd tabs update
 
                     if (!empty($request->MasterPackingRecord) || !empty($request->deleted_MasterPackingRecord)) {
@@ -3440,7 +3451,6 @@ class DocumentController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->ProValProtocol = json_encode($allFiles);
                 }
-
 
             $document->update();
 
@@ -3898,6 +3908,8 @@ class DocumentController extends Controller
             $documentcontet->procedure = $request->procedure;
             $documentcontet->revision_summary = $request->revision_summary;
             $documentcontet->safety_precautions = $request->safety_precautions;
+            $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
+
 
             // packing validation repo kp
             $documentcontet->generic_PacValRep = $request->generic_PacValRep;
@@ -4138,51 +4150,51 @@ class DocumentController extends Controller
             // ----------- Annexure V-User Requirements Specification end--------------------------
 
 
-       // ----------- Annexure VI-Functional Requirement Specification start--------------------------
+          // ----------- Annexure VI-Functional Requirement Specification start--------------------------
 
-       if (!empty($request->annex_VI_req_attachment) || !empty($request->deleted_anne_attach6)) {
-        $existingFiles = json_decode($documentcontet->annex_VI_req_attachment, true) ?? [];
+            if (!empty($request->annex_VI_req_attachment) || !empty($request->deleted_anne_attach6)) {
+                $existingFiles = json_decode($documentcontet->annex_VI_req_attachment, true) ?? [];
 
-        // Handle deleted files
-        if (!empty($request->deleted_anne_attach6)) {
-            $filesToDelete = explode(',', $request->deleted_anne_attach6);
-            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                return !in_array($file, $filesToDelete);
-            });
-        }
-
-        // Handle new files
-        $newFiles = [];
-        if ($request->hasFile('annex_VI_req_attachment')) {
-            foreach ($request->file('annex_VI_req_attachment') as $file) {
-                $name = $request->name . 'annex_VI_req_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $newFiles[] = $name;
-            }
-        }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_VI_req_attachment = json_encode($allFiles);
-        }
-
-
-        // ----------- Annexure VI-Functional Requirement Specification end--------------------------
-
-        // ----------- Annexure VII-Functional Specification start--------------------------
-
-        if (!empty($request->annex_VII_fun_attachment) || !empty($request->deleted_anne_attach7)) {
-            $existingFiles = json_decode($documentcontet->annex_VII_fun_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach7)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach7);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach6)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach6);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
 
             // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('annex_VI_req_attachment')) {
+                foreach ($request->file('annex_VI_req_attachment') as $file) {
+                    $name = $request->name . 'annex_VI_req_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $documentcontet->annex_VI_req_attachment = json_encode($allFiles);
+            }
+
+
+            // ----------- Annexure VI-Functional Requirement Specification end--------------------------
+
+            // ----------- Annexure VII-Functional Specification start--------------------------
+
+            if (!empty($request->annex_VII_fun_attachment) || !empty($request->deleted_anne_attach7)) {
+                $existingFiles = json_decode($documentcontet->annex_VII_fun_attachment, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach7)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach7);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+
+                // Handle new files
             $newFiles = [];
             if ($request->hasFile('annex_VII_fun_attachment')) {
                 foreach ($request->file('annex_VII_fun_attachment') as $file) {
@@ -4198,20 +4210,20 @@ class DocumentController extends Controller
             }
 
 
-        // ----------- Annexure VII-Functional Specification end--------------------------
+            // ----------- Annexure VII-Functional Specification end--------------------------
 
-        // ----------- Annexure VIII-Technical Specification start--------------------------
+            // ----------- Annexure VIII-Technical Specification start--------------------------
 
-        if (!empty($request->annex_VIII_tech_attachment) || !empty($request->deleted_anne_attach8)) {
-            $existingFiles = json_decode($documentcontet->annex_VIII_tech_attachment, true) ?? [];
+            if (!empty($request->annex_VIII_tech_attachment) || !empty($request->deleted_anne_attach8)) {
+                $existingFiles = json_decode($documentcontet->annex_VIII_tech_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach8)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach8);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach8)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach8);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
 
             // Handle new files
             $newFiles = [];
@@ -4230,586 +4242,586 @@ class DocumentController extends Controller
 
 
 
-        // ----------- Annexure VIII-Technical Specification end--------------------------
+                    // ----------- Annexure VIII-Technical Specification end--------------------------
 
-        // ----------- Annexure IX Functional Risk Assssment start--------------------------
+                    // ----------- Annexure IX Functional Risk Assssment start--------------------------
 
-        if (!empty($request->annex_IX_risk_attachment) || !empty($request->deleted_anne_attach9)) {
-            $existingFiles = json_decode($documentcontet->annex_IX_risk_attachment, true) ?? [];
+                    if (!empty($request->annex_IX_risk_attachment) || !empty($request->deleted_anne_attach9)) {
+                        $existingFiles = json_decode($documentcontet->annex_IX_risk_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach9)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach9);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach9)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach9);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_IX_risk_attachment')) {
-                foreach ($request->file('annex_IX_risk_attachment') as $file) {
-                    $name = $request->name . 'annex_IX_risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_IX_risk_attachment = json_encode($allFiles);
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_IX_risk_attachment')) {
+                            foreach ($request->file('annex_IX_risk_attachment') as $file) {
+                                $name = $request->name . 'annex_IX_risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_IX_risk_attachment = json_encode($allFiles);
+                        }
 
 
-        // ----------- Annexure IX Functional Risk Assssment end--------------------------
+                    // ----------- Annexure IX Functional Risk Assssment end--------------------------
 
-        // ----------- Annexure X-Design Specification start--------------------------
+                    // ----------- Annexure X-Design Specification start--------------------------
 
-        if (!empty($request->annex_X_design_attachment) || !empty($request->deleted_anne_attach10)) {
-            $existingFiles = json_decode($documentcontet->annex_X_design_attachment, true) ?? [];
+                    if (!empty($request->annex_X_design_attachment) || !empty($request->deleted_anne_attach10)) {
+                        $existingFiles = json_decode($documentcontet->annex_X_design_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach10)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach10);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach10)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach10);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_X_design_attachment')) {
-                foreach ($request->file('annex_X_design_attachment') as $file) {
-                    $name = $request->name . 'annex_X_design_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_X_design_attachment')) {
+                            foreach ($request->file('annex_X_design_attachment') as $file) {
+                                $name = $request->name . 'annex_X_design_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
 
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_X_design_attachment = json_encode($allFiles);
-            }
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_X_design_attachment = json_encode($allFiles);
+                        }
 
 
 
 
-        // ----------- Annexure X-Design Specification end--------------------------
+                    // ----------- Annexure X-Design Specification end--------------------------
 
-         // ----------- Annexure XI-Configuration Specification start--------------------------
+                    // ----------- Annexure XI-Configuration Specification start--------------------------
 
-         if (!empty($request->annex_XI_confi_attachment) || !empty($request->deleted_anne_attach11)) {
-            $existingFiles = json_decode($documentcontet->annex_XI_confi_attachment, true) ?? [];
+                    if (!empty($request->annex_XI_confi_attachment) || !empty($request->deleted_anne_attach11)) {
+                        $existingFiles = json_decode($documentcontet->annex_XI_confi_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach11)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach11);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach11)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach11);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XI_confi_attachment')) {
-                foreach ($request->file('annex_XI_confi_attachment') as $file) {
-                    $name = $request->name . 'annex_XI_confi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XI_confi_attachment')) {
+                            foreach ($request->file('annex_XI_confi_attachment') as $file) {
+                                $name = $request->name . 'annex_XI_confi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
 
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XI_confi_attachment = json_encode($allFiles);
-            }
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XI_confi_attachment = json_encode($allFiles);
+                        }
 
 
 
 
-        // ----------- Annexure XI-Configuration Specification end--------------------------
+                    // ----------- Annexure XI-Configuration Specification end--------------------------
 
-        // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start--------------------------
+                    // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start--------------------------
 
-        if (!empty($request->annex_XII_qua_proto_attachment) || !empty($request->deleted_anne_attach12)) {
-            $existingFiles = json_decode($documentcontet->annex_XII_qua_proto_attachment, true) ?? [];
+                    if (!empty($request->annex_XII_qua_proto_attachment) || !empty($request->deleted_anne_attach12)) {
+                        $existingFiles = json_decode($documentcontet->annex_XII_qua_proto_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach12)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach12);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach12)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach12);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XII_qua_proto_attachment')) {
-                foreach ($request->file('annex_XII_qua_proto_attachment') as $file) {
-                    $name = $request->name . 'annex_XII_qua_proto_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XII_qua_proto_attachment')) {
+                            foreach ($request->file('annex_XII_qua_proto_attachment') as $file) {
+                                $name = $request->name . 'annex_XII_qua_proto_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
 
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XII_qua_proto_attachment = json_encode($allFiles);
-            }
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XII_qua_proto_attachment = json_encode($allFiles);
+                        }
 
 
 
 
-        // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end--------------------------
+                    // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end--------------------------
 
-         // ----------- Annexure XIII Unit Integration Test Script start--------------------------
+                    // ----------- Annexure XIII Unit Integration Test Script start--------------------------
 
-         if (!empty($request->annex_XIII_unit_integ_attachment) || !empty($request->deleted_anne_attach13)) {
-            $existingFiles = json_decode($documentcontet->annex_XIII_unit_integ_attachment, true) ?? [];
+                    if (!empty($request->annex_XIII_unit_integ_attachment) || !empty($request->deleted_anne_attach13)) {
+                        $existingFiles = json_decode($documentcontet->annex_XIII_unit_integ_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach13)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach13);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach13)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach13);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XIII_unit_integ_attachment')) {
-                foreach ($request->file('annex_XIII_unit_integ_attachment') as $file) {
-                    $name = $request->name . 'annex_XIII_unit_integ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XIII_unit_integ_attachment = json_encode($allFiles);
-            }
-
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XIII_unit_integ_attachment')) {
+                            foreach ($request->file('annex_XIII_unit_integ_attachment') as $file) {
+                                $name = $request->name . 'annex_XIII_unit_integ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XIII_unit_integ_attachment = json_encode($allFiles);
+                        }
+
 
-
-
-        // ----------- Annexure XIII Unit Integration Test Script end--------------------------
-
-           // ----------- Annexure XIV Data Migration Protocol start--------------------------
-
-           if (!empty($request->annex_XIV_data_migra_attachment) || !empty($request->deleted_anne_attach14)) {
-            $existingFiles = json_decode($documentcontet->annex_XIV_data_migra_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach14)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach14);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XIV_data_migra_attachment')) {
-                foreach ($request->file('annex_XIV_data_migra_attachment') as $file) {
-                    $name = $request->name . 'annex_XIV_data_migra_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XIV_data_migra_attachment = json_encode($allFiles);
-            }
-
-
-
-
-        // ----------- Annexure XIV Data Migration Protocol end--------------------------
-
-        // ----------- Annexure XV Data Qualification Protocol start--------------------------
-
-        if (!empty($request->annex_XV_data_qualif_attachment) || !empty($request->deleted_anne_attach15)) {
-            $existingFiles = json_decode($documentcontet->annex_XV_data_qualif_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach15)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach15);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XV_data_qualif_attachment')) {
-                foreach ($request->file('annex_XV_data_qualif_attachment') as $file) {
-                    $name = $request->name . 'annex_XV_data_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XV_data_qualif_attachment = json_encode($allFiles);
-            }
-
-
-        // ----------- Annexure XV Data Qualification Protocol end--------------------------
-
-
-        // rajendra start
-
-        if (!empty($request->afqpattachement) || !empty($request->deleted_afqpattachement)) {
-            $existingFiles = json_decode($documentcontet->afqpattachement, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_afqpattachement)) {
-                $filesToDelete = explode(',', $request->deleted_afqpattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('afqpattachement')) {
-                foreach ($request->file('afqpattachement') as $file) {
-                    $name = $request->name . 'afqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->afqpattachement = json_encode($allFiles);
-        }
-
-        if (!empty($request->pvpattachement) || !empty($request->deleted_pvpattachement)) {
-            $existingFiles = json_decode($documentcontet->pvpattachement, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_pvpattachement)) {
-                $filesToDelete = explode(',', $request->deleted_pvpattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('pvpattachement')) {
-                foreach ($request->file('pvpattachement') as $file) {
-                    $name = $request->name . 'pvpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->pvpattachement = json_encode($allFiles);
-        }
+
+
+                    // ----------- Annexure XIII Unit Integration Test Script end--------------------------
+
+                    // ----------- Annexure XIV Data Migration Protocol start--------------------------
+
+                    if (!empty($request->annex_XIV_data_migra_attachment) || !empty($request->deleted_anne_attach14)) {
+                        $existingFiles = json_decode($documentcontet->annex_XIV_data_migra_attachment, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach14)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach14);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XIV_data_migra_attachment')) {
+                            foreach ($request->file('annex_XIV_data_migra_attachment') as $file) {
+                                $name = $request->name . 'annex_XIV_data_migra_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XIV_data_migra_attachment = json_encode($allFiles);
+                        }
+
+
+
+
+                    // ----------- Annexure XIV Data Migration Protocol end--------------------------
+
+                    // ----------- Annexure XV Data Qualification Protocol start--------------------------
+
+                    if (!empty($request->annex_XV_data_qualif_attachment) || !empty($request->deleted_anne_attach15)) {
+                        $existingFiles = json_decode($documentcontet->annex_XV_data_qualif_attachment, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach15)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach15);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XV_data_qualif_attachment')) {
+                            foreach ($request->file('annex_XV_data_qualif_attachment') as $file) {
+                                $name = $request->name . 'annex_XV_data_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XV_data_qualif_attachment = json_encode($allFiles);
+                        }
+
+
+                    // ----------- Annexure XV Data Qualification Protocol end--------------------------
+
+
+                    // rajendra start
+
+                    if (!empty($request->afqpattachement) || !empty($request->deleted_afqpattachement)) {
+                        $existingFiles = json_decode($documentcontet->afqpattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_afqpattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_afqpattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('afqpattachement')) {
+                            foreach ($request->file('afqpattachement') as $file) {
+                                $name = $request->name . 'afqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->afqpattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->pvpattachement) || !empty($request->deleted_pvpattachement)) {
+                        $existingFiles = json_decode($documentcontet->pvpattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_pvpattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_pvpattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('pvpattachement')) {
+                            foreach ($request->file('pvpattachement') as $file) {
+                                $name = $request->name . 'pvpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->pvpattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->htspattachement) || !empty($request->deleted_htspattachement)) {
+                        $existingFiles = json_decode($documentcontet->htspattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_htspattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_htspattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('htspattachement')) {
+                            foreach ($request->file('htspattachement') as $file) {
+                                $name = $request->name . 'htspattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->htspattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->afqrattachement) || !empty($request->deleted_afqrattachement)) {
+                        $existingFiles = json_decode($documentcontet->afqrattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_afqrattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_afqrattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('afqrattachement')) {
+                            foreach ($request->file('afqrattachement') as $file) {
+                                $name = $request->name . 'afqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->afqrattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->afursattachement) || !empty($request->deleted_afursattachement)) {
+                        $existingFiles = json_decode($documentcontet->afursattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_afursattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_afursattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('afursattachement')) {
+                            foreach ($request->file('afursattachement') as $file) {
+                                $name = $request->name . 'afursattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->afursattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->aqpattachement) || !empty($request->deleted_aqpattachement)) {
+                        $existingFiles = json_decode($documentcontet->aqpattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_aqpattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_aqpattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('aqpattachement')) {
+                            foreach ($request->file('aqpattachement') as $file) {
+                                $name = $request->name . 'aqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->aqpattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->aqrattachement) || !empty($request->deleted_aqrattachement)) {
+                        $existingFiles = json_decode($documentcontet->aqrattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_aqrattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_aqrattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('aqrattachement')) {
+                            foreach ($request->file('aqrattachement') as $file) {
+                                $name = $request->name . 'aqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->aqrattachement = json_encode($allFiles);
+                    }
         
 
-        if (!empty($request->htspattachement) || !empty($request->deleted_htspattachement)) {
-            $existingFiles = json_decode($documentcontet->htspattachement, true) ?? [];
+                if (!empty($request->pfmfattachement) || !empty($request->deleted_pfmfattachement)) {
+                    $existingFiles = json_decode($documentcontet->pfmfattachement, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_htspattachement)) {
-                $filesToDelete = explode(',', $request->deleted_htspattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle deleted files
+                    if (!empty($request->deleted_pfmfattachement)) {
+                        $filesToDelete = explode(',', $request->deleted_pfmfattachement);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('htspattachement')) {
-                foreach ($request->file('htspattachement') as $file) {
-                    $name = $request->name . 'htspattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('pfmfattachement')) {
+                        foreach ($request->file('pfmfattachement') as $file) {
+                            $name = $request->name . 'pfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
+
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->pfmfattachement = json_encode($allFiles);
                 }
-            }
+                
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->htspattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->rfmfattachement) || !empty($request->deleted_rfmfattachement)) {
+                    $existingFiles = json_decode($documentcontet->rfmfattachement, true) ?? [];
 
-        if (!empty($request->afqrattachement) || !empty($request->deleted_afqrattachement)) {
-            $existingFiles = json_decode($documentcontet->afqrattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_rfmfattachement)) {
+                        $filesToDelete = explode(',', $request->deleted_rfmfattachement);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_afqrattachement)) {
-                $filesToDelete = explode(',', $request->deleted_afqrattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('rfmfattachement')) {
+                        foreach ($request->file('rfmfattachement') as $file) {
+                            $name = $request->name . 'rfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('afqrattachement')) {
-                foreach ($request->file('afqrattachement') as $file) {
-                    $name = $request->name . 'afqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->rfmfattachement = json_encode($allFiles);
                 }
-            }
+                
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->afqrattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XVI_per_qualif_attachment) || !empty($request->deleted_annex_XVI_per_qualif_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XVI_per_qualif_attachment, true) ?? [];
 
-        if (!empty($request->afursattachement) || !empty($request->deleted_afursattachement)) {
-            $existingFiles = json_decode($documentcontet->afursattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XVI_per_qualif_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XVI_per_qualif_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_afursattachement)) {
-                $filesToDelete = explode(',', $request->deleted_afursattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XVI_per_qualif_attachment')) {
+                        foreach ($request->file('annex_XVI_per_qualif_attachment') as $file) {
+                            $name = $request->name . 'annex_XVI_per_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('afursattachement')) {
-                foreach ($request->file('afursattachement') as $file) {
-                    $name = $request->name . 'afursattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XVI_per_qualif_attachment = json_encode($allFiles);
                 }
-            }
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->afursattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XVII_valid_summ_attachment) || !empty($request->deleted_annex_XVII_valid_summ_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XVII_valid_summ_attachment, true) ?? [];
 
-        if (!empty($request->aqpattachement) || !empty($request->deleted_aqpattachement)) {
-            $existingFiles = json_decode($documentcontet->aqpattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XVII_valid_summ_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XVII_valid_summ_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_aqpattachement)) {
-                $filesToDelete = explode(',', $request->deleted_aqpattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XVII_valid_summ_attachment')) {
+                        foreach ($request->file('annex_XVII_valid_summ_attachment') as $file) {
+                            $name = $request->name . 'annex_XVII_valid_summ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('aqpattachement')) {
-                foreach ($request->file('aqpattachement') as $file) {
-                    $name = $request->name . 'aqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XVII_valid_summ_attachment = json_encode($allFiles);
                 }
-            }
+            
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->aqpattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XVIII_trac_matri_attachment) || !empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XVIII_trac_matri_attachment, true) ?? [];
 
-        if (!empty($request->aqrattachement) || !empty($request->deleted_aqrattachement)) {
-            $existingFiles = json_decode($documentcontet->aqrattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XVIII_trac_matri_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_aqrattachement)) {
-                $filesToDelete = explode(',', $request->deleted_aqrattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XVIII_trac_matri_attachment')) {
+                        foreach ($request->file('annex_XVIII_trac_matri_attachment') as $file) {
+                            $name = $request->name . 'annex_XVIII_trac_matri_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('aqrattachement')) {
-                foreach ($request->file('aqrattachement') as $file) {
-                    $name = $request->name . 'aqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XVIII_trac_matri_attachment = json_encode($allFiles);
                 }
-            }
+            
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->aqrattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XIX_syst_retir_attachment) || !empty($request->deleted_annex_XIX_syst_retir_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XIX_syst_retir_attachment, true) ?? [];
 
-        if (!empty($request->pfmfattachement) || !empty($request->deleted_pfmfattachement)) {
-            $existingFiles = json_decode($documentcontet->pfmfattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XIX_syst_retir_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XIX_syst_retir_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_pfmfattachement)) {
-                $filesToDelete = explode(',', $request->deleted_pfmfattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XIX_syst_retir_attachment')) {
+                        foreach ($request->file('annex_XIX_syst_retir_attachment') as $file) {
+                            $name = $request->name . 'annex_XIX_syst_retir_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('pfmfattachement')) {
-                foreach ($request->file('pfmfattachement') as $file) {
-                    $name = $request->name . 'pfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XIX_syst_retir_attachment = json_encode($allFiles);
+                } 
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->pfmfattachement = json_encode($allFiles);
-        }
-        
-
-        if (!empty($request->rfmfattachement) || !empty($request->deleted_rfmfattachement)) {
-            $existingFiles = json_decode($documentcontet->rfmfattachement, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_rfmfattachement)) {
-                $filesToDelete = explode(',', $request->deleted_rfmfattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('rfmfattachement')) {
-                foreach ($request->file('rfmfattachement') as $file) {
-                    $name = $request->name . 'rfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->rfmfattachement = json_encode($allFiles);
-        }
-        
-
-        if (!empty($request->annex_XVI_per_qualif_attachment) || !empty($request->deleted_annex_XVI_per_qualif_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XVI_per_qualif_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XVI_per_qualif_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XVI_per_qualif_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XVI_per_qualif_attachment')) {
-                foreach ($request->file('annex_XVI_per_qualif_attachment') as $file) {
-                    $name = $request->name . 'annex_XVI_per_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XVI_per_qualif_attachment = json_encode($allFiles);
-        }
-
-        if (!empty($request->annex_XVII_valid_summ_attachment) || !empty($request->deleted_annex_XVII_valid_summ_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XVII_valid_summ_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XVII_valid_summ_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XVII_valid_summ_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XVII_valid_summ_attachment')) {
-                foreach ($request->file('annex_XVII_valid_summ_attachment') as $file) {
-                    $name = $request->name . 'annex_XVII_valid_summ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XVII_valid_summ_attachment = json_encode($allFiles);
-        }
-      
-
-        if (!empty($request->annex_XVIII_trac_matri_attachment) || !empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XVIII_trac_matri_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XVIII_trac_matri_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XVIII_trac_matri_attachment')) {
-                foreach ($request->file('annex_XVIII_trac_matri_attachment') as $file) {
-                    $name = $request->name . 'annex_XVIII_trac_matri_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XVIII_trac_matri_attachment = json_encode($allFiles);
-        }
-      
-
-        if (!empty($request->annex_XIX_syst_retir_attachment) || !empty($request->deleted_annex_XIX_syst_retir_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XIX_syst_retir_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XIX_syst_retir_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XIX_syst_retir_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XIX_syst_retir_attachment')) {
-                foreach ($request->file('annex_XIX_syst_retir_attachment') as $file) {
-                    $name = $request->name . 'annex_XIX_syst_retir_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XIX_syst_retir_attachment = json_encode($allFiles);
-        } 
-
-        //rajendra end
+                //rajendra end
 
              //Equipment hold time study protocol
 
@@ -5194,10 +5206,10 @@ class DocumentController extends Controller
             $documentcontet->proposed_parameter_upcoming_batch_pvr = $request->proposed_parameter_upcoming_batch_pvr ? serialize($request->proposed_parameter_upcoming_batch_pvr) : serialize([]);
             $documentcontet->report_approval_pvr = $request->report_approval_pvr ? serialize($request->report_approval_pvr) : serialize([]);
 
-        //---------------------------process Validation Report--------------------------------------------
+            //---------------------------process Validation Report--------------------------------------------
 
 
-        //-----------------------Cleaning Validation protocol-doc ---------------------------------------
+            //-----------------------Cleaning Validation protocol-doc ---------------------------------------
 
             $documentcontet->objective_cvpd = $request->objective_cvpd ? serialize($request->objective_cvpd) : serialize([]);
             $documentcontet->scope_cvpd = $request->scope_cvpd ? serialize($request->scope_cvpd) : serialize([]);
@@ -5224,8 +5236,8 @@ class DocumentController extends Controller
             $documentcontet->summary_conclusion_cvpd = $request->summary_conclusion_cvpd ? serialize($request->summary_conclusion_cvpd) : serialize([]);
 
             $documentcontet->training_cvpd = $request->training_cvpd ? serialize($request->training_cvpd) : serialize([]);
-        //-----------------------END Cleaning validation protocol doc---------------------------------------
-        //-----------------------Cleaning Validation Report-doc ---------------------------------------
+            //-----------------------END Cleaning validation protocol doc---------------------------------------
+            //-----------------------Cleaning Validation Report-doc ---------------------------------------
 
             $documentcontet->objective_cvrd = $request->objective_cvrd ? serialize($request->objective_cvrd) : serialize([]);
             $documentcontet->scope_cvrd = $request->scope_cvrd ? serialize($request->scope_cvrd) : serialize([]);
@@ -5237,11 +5249,11 @@ class DocumentController extends Controller
             $documentcontet->analytical_report_cvrd = $request->analytical_report_cvrd ? serialize($request->analytical_report_cvrd) : serialize([]);
             $documentcontet->physical_procedure_conformance_check_cvrd = $request->physical_procedure_conformance_check_cvrd ? serialize($request->physical_procedure_conformance_check_cvrd) : serialize([]);
             $documentcontet->conclusion_cvrd = $request->conclusion_cvrd ? serialize($request->conclusion_cvrd) : serialize([]);
-        //---------------------- END-Cleaning Validation Report-doc ---------------------------------------
+           //---------------------- END-Cleaning Validation Report-doc ---------------------------------------
 
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
-            $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
+            // $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
             $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);
             $documentcontet->materials_and_equipments = $request->materials_and_equipments ? serialize($request->materials_and_equipments) : serialize([]);
@@ -5568,6 +5580,30 @@ class DocumentController extends Controller
             $RevisionGridrawmsData->identifier = 'revision_rawms_data';
             $RevisionGridrawmsData->data = $request->revision_rawms_data;
             $RevisionGridrawmsData->save();
+
+            $RevisionGridrawmstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_rawmstp_data'])->firstOrNew();
+            $RevisionGridrawmstpData->document_type_id = $document->id;
+            $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
+            $RevisionGridrawmstpData->data = $request->revision_rawmstp_data;
+            $RevisionGridrawmstpData->save();
+
+            $RevisionGridpamsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_pams_data'])->firstOrNew();
+            $RevisionGridpamsData->document_type_id = $document->id;
+            $RevisionGridpamsData->identifier = 'revision_pams_data';
+            $RevisionGridpamsData->data = $request->revision_pams_data;
+            $RevisionGridpamsData->save();
+
+            $RevisionGridmfpsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_mfps_data'])->firstOrNew();
+            $RevisionGridmfpsData->document_type_id = $document->id;
+            $RevisionGridmfpsData->identifier = 'revision_mfps_data';
+            $RevisionGridmfpsData->data = $request->revision_mfps_data;
+            $RevisionGridmfpsData->save();
+
+            $RevisionGridmfpstpData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_mfpstp_data'])->firstOrNew();
+            $RevisionGridmfpstpData->document_type_id = $document->id;
+            $RevisionGridmfpstpData->identifier = 'revision_mfpstp_data';
+            $RevisionGridmfpstpData->data = $request->revision_mfpstp_data;
+            $RevisionGridmfpstpData->save();
 
 
             $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
@@ -6471,13 +6507,29 @@ class DocumentController extends Controller
         $RevisionGridinpstpData = isset($RevisioninpstpData->data) && is_string($RevisioninpstpData->data)
                 ? json_decode($RevisioninpstpData->data, true) :(is_array($RevisioninpstpData->data) ? $RevisioninpstpData->data:[]);
 
-        $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inpstp_data")->first();
+        $RevisioncvstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_cvstp_data")->first();
         $RevisionGridcvstpData = isset($RevisioncvstpData->data) && is_string($RevisioncvstpData->data)
                 ? json_decode($RevisioncvstpData->data, true) :(is_array($RevisioncvstpData->data) ? $RevisioncvstpData->data:[]);
 
         $RevisionrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
         $RevisionGridrawmsData = isset($RevisionrawmsData->data) && is_string($RevisionrawmsData->data)
                 ? json_decode($RevisionrawmsData->data, true) :(is_array($RevisionrawmsData->data) ? $RevisionrawmsData->data:[]);
+
+        $RevisionrawmstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawmstp_data")->first();
+        $RevisionGridrawmstpData = isset($RevisionrawmstpData->data) && is_string($RevisionrawmstpData->data)
+                ? json_decode($RevisionrawmstpData->data, true) :(is_array($RevisionrawmstpData->data) ? $RevisionrawmstpData->data:[]);
+
+        $RevisionpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
+        $RevisionGridpamsData = isset($RevisionpamsData->data) && is_string($RevisionpamsData->data)
+                ? json_decode($RevisionpamsData->data, true) :(is_array($RevisionpamsData->data) ? $RevisionpamsData->data:[]);
+
+        $RevisionmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
+        $RevisionGridmfpsData = isset($RevisionmfpsData->data) && is_string($RevisionmfpsData->data)
+                ? json_decode($RevisionmfpsData->data, true) :(is_array($RevisionmfpsData->data) ? $RevisionmfpsData->data:[]);
+
+        $RevisionmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
+        $RevisionGridmfpstpData = isset($RevisionmfpstpData->data) && is_string($RevisionmfpstpData->data)
+                ? json_decode($RevisionmfpstpData->data, true) :(is_array($RevisionmfpstpData->data) ? $RevisionmfpstpData->data:[]);
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
         $SummaryDataGrid = isset($summaryResult->data) && is_string($summaryResult->data)
@@ -6577,7 +6629,7 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent','RevisionProductSpecificationData','RevisionGridInpsData','RevisionGridCvsData','RevisionGridfpstpData','RevisionGridinpstpData','RevisionGridcvstpData','RevisionGridrawmsData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent','RevisionProductSpecificationData','RevisionGridInpsData','RevisionGridCvsData','RevisionGridfpstpData','RevisionGridinpstpData','RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridrawmstpData','RevisionGridpamsData','RevisionGridmfpsData','RevisionGridmfpstpData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

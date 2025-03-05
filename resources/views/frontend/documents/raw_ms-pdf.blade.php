@@ -130,7 +130,7 @@
         }
 
         body {
-            margin-top: 250px;
+            margin-top: 180px;
             margin-bottom: 160px;
             padding-top: 60px;
             padding-bottom: 50px;
@@ -257,28 +257,29 @@
         }
     </style>
 
-    {{-- <style>
+    <style>
+        
         /*Main Table Styling */
         #isPasted {
             width: 650px !important;
-            border-collapse: collapse;
-            table-layout: auto; /* Adjusts column width dynamically */
+        border-collapse: collapse;
+        table-layout: fixed;
         }
 
         /* First column adjusts to its content */
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; /* Prevent wrapping */
-            width: 1%; /* Shrink to fit content */
+            white-space: nowrap; 
+            width: 1%;
             vertical-align: top;
         }
 
         /* Second column takes remaining space */
         #isPasted td:last-child,
         #isPasted th:last-child {
-            width: auto; /* Take remaining space */
+            width: auto;
             vertical-align: top;
-            
+
         }
 
         /* Common Table Cell Styling */
@@ -288,8 +289,8 @@
             padding: 8px;
             text-align: left;
             max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Paragraph Styling Inside Table Cells */
@@ -298,8 +299,8 @@
             text-justify: inter-word;
             margin: 0;
             max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         #isPasted img {
@@ -315,30 +316,38 @@
             height: 300px;
             margin: 5px auto;
         }
-    </style> --}}
 
-<style>
-        #isPasted {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed; /* Fix table layout to maintain structure */
+        .table-containers {
+            width: 550px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
-        #isPasted th,
-        #isPasted td {
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Table wrapper for scrolling */
-        .table-containers {
-            width: 100%;
-            overflow-x: auto; /* Enable horsizontal scrolling */
-        }
 
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
     </style>
 
 </head>
@@ -545,7 +554,7 @@
             </span>
     </footer>
 
-    <div style="margin-top: 40px;">
+    <div style="margin-top: 10px;">
         <section class="main-section" id="pdf-page">
             <section style="page-break-after: never;">
                 <div class="other-container">
@@ -553,76 +562,76 @@
                         <thead>
                             <tr>
                                 <th class="text-center">
-                                    <div class="bold">GENERAL INFORMATION</div>
+                                    <div style="font-weight: bold;">GENERAL INFORMATION</div>
                                 </th>
                             </tr>
                         </thead>
                     </table>
 
-                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 15px; page-break-inside: avoid;">
                         <tbody>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">CAS No.
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">CAS No.
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->cas_no_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->cas_no_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->molecular_formula_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->molecular_formula_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->molecular_weight_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->molecular_weight_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->storage_condition_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Retest Period
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Retest Period
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->retest_period_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_period_row_material }}</td>
                             </tr>
 
                             <tr> 
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
                                     Sampling procedure
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
                                     {!! strip_tags($data->sampling_procedure_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                 </td>
                             </tr>
 
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Item Code
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Item Code
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->item_code_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->item_code_row_material }}</td>
                             </tr>
                             <tr> 
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">
                                     Sample Quantity for analysis
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; max-height: 100px; overflow: hidden;">
                                     {!! strip_tags($data->sample_quantity_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Reserve Sample Quantity
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_quantity_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->reserve_sample_quantity_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Retest
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sample Quantity for Retest
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
                             <tr>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
                                 </td>
-                                <td style="width: 50%; padding: 5px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_row_material }}</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_row_material }}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -727,7 +736,7 @@
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
                                 </tr>
                             @endforeach
