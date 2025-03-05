@@ -1416,7 +1416,7 @@
                                         <tr>
                                             <td>{{ $item['revision_number'] ?? '' }}</td>
                                             <td>{{ $item['cc_no'] ?? '' }}</td>
-                                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                            <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-F-Y') : '' }}</td>
                                             <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                         </tr>
                                     @endforeach
