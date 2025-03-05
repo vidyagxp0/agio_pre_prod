@@ -407,43 +407,43 @@
                      </button>
                        <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
                     </button>
                      <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm13')">Checklist -Production(Liquid/Ointment Packing)
                      </button>
- 
+
                      <button class="cctablinks"  style="display:none;" id="button8" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button9" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button10" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm17')">Checklist - Stores
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button13" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button14" onclick="openCity(event, 'CCForm20')">Checklist -
                          Production (Injection Packing)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button15" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button16" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button17" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                      </button>
- 
+
                       {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
@@ -664,7 +664,7 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
                                         <select name="Initiator_Group" id="initiator_group">
@@ -693,12 +693,68 @@
                                             <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                {{-- intitaor department auto generated  --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
                                 </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Department  Code">Initiator Department  Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" readonly>
+                                            value="" readonly >
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">
@@ -1607,7 +1663,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
 
 
 
@@ -1619,7 +1675,7 @@
                                             id="addSamplePlanning">+</button>
                                            </div>
                                         </label>
-                                        
+
 
                                         <div class="responsive-table table-container" style="overflow-x: auto;  width: 100% !important;">
                                             <table class="table table-bordered" id="addSamplePlanningTable"style="">
@@ -1705,7 +1761,7 @@
                                     document.addEventListener("DOMContentLoaded", function() {
                                         let rowIndex = 1;
                                         const analysts = @json($users->toArray() ?? []);
-                                        
+
                                         document.getElementById("addSamplePlanning").addEventListener("click", function() {
                                             const tableBody = document.querySelector("#addSamplePlanningTable tbody");
                                             const newRow = document.createElement("tr");
@@ -1720,7 +1776,7 @@
                                             }
 
                                             newRow.innerHTML = `
-                                            
+
                                                                 <td>
                                                                     <input type="text" name="auditAgendaData[0][auditArea]">
                                                                 </td>
@@ -1740,7 +1796,7 @@
                                                                 <td>
                                                                     <input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]">
                                                                 </td>
-                                                                
+
                                                                 <td>
                                                                     <div class="col-md-6 new-date-data-field">
                                                                         <div class="group-input input-date">
@@ -1753,7 +1809,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                
+
                                                                 <td>
                                                                     <input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]">
                                                                 </td>
@@ -1769,7 +1825,7 @@
                                                                         ${analystOptions}
                                                                     </select>
                                                                 </td>
-                                                                
+
                                                                 <td>
                                                                     <textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea>
                                                                 </td>
@@ -1778,16 +1834,16 @@
 
                                             tableBody.appendChild(newRow);
                                             rowIndex++;
-                                            
+
                                             VirtualSelect.init({
                                                 ele: '#auditorsData_' + (rowIndex - 1),
                                                 multiple: true
-                                            }); 
+                                            });
 
                                             VirtualSelect.init({
                                                 ele: '#auditeeData_' + (rowIndex - 1),
                                                 multiple: true
-                                            }); 
+                                            });
                                         });
 
                                         document.querySelector("#addSamplePlanningTable tbody").addEventListener("click", function (e) {
@@ -1795,7 +1851,7 @@
                                                 const row = e.target.closest("tr");
                                                 row.remove();
                                             }
-                                        });                                        
+                                        });
                                     });
                                 </script>
 

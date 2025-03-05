@@ -816,7 +816,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Department </label>
                                                 <select name="Initiator_Group" id="initiator_group" @if ($data->stage != 1) disabled @endif>
@@ -899,16 +899,36 @@
                                                 <input type="hidden" name="Initiator_Group" value="{{ $data->Initiator_Group }}">
                                             @endif
                                             </div>
-                                        </div>
+                                        </div> --}}
+
+                                        {{-- initiator department form auto admin --}}
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiation Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                                {{-- <div class="default-name"> <span
+                                                id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Department  Code">Initiator Department Code</label>
                                                 <input type="text"
-                                                    name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    name="initiator_group_code"
                                                     value="{{ $data->Initiator_Group }}" id="initiator_group_code"
                                                     readonly>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
