@@ -1407,7 +1407,7 @@
                                         </div> --}}
                                         <div class="col-md-12">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Auditor Comment
+                                                <label for="Production Tablet feedback">Lead Auditor Comment
                                                     @if ($data->stage == 2)
                                                         <span class="text-danger">*</span>
                                                     @endif

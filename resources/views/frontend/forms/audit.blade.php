@@ -1088,7 +1088,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="External Auditor Details">Auditor Comment</label>
+                                        <label for="External Auditor Details">Lead Auditor Comment</label>
                                         <textarea  name="Auditor_comment" disabled></textarea>
                                     </div>
                                 </div>
