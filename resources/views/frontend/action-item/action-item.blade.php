@@ -99,7 +99,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input type="hidden" name="record" value="{{ $record_number }}">
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ str_pad($record_number, 4, '0', STR_PAD_LEFT) }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
