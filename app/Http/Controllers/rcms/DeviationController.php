@@ -1886,7 +1886,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
 
             // dd($request->Delay_Justification);
             $validator = Validator::make($request->all(), [
-                'Initiator_Group' => 'required',
+               // 'Initiator_Group' => 'required',
                 'short_description' => 'required',
                 // 'short_description_required' => 'required|in:Recurring,Non_Recurring',
                 // 'nature_of_repeat' => 'required_if:short_description_required,Recurring',
@@ -2134,7 +2134,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         }
 
         $deviation->assign_to = $request->assign_to;
-        $deviation->Initiator_Group = $request->Initiator_Group;
+       // $deviation->Initiator_Group = $request->Initiator_Group;
 
         if ($deviation->stage < 3) {
             $deviation->short_description = $request->short_description;
@@ -3347,6 +3347,32 @@ if (!empty($request->qa_head_designee_attach) || !empty($request->deleted_qa_hea
 
 
             $deviation->Investigation_attachment = json_encode($files);
+        }
+
+
+
+        if (!empty ($request->other_attachment)) {
+
+            $files = [];
+
+            if ($deviation->other_attachment) {
+                $existingFiles = json_decode($deviation->other_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = $existingFiles;
+                }
+                // $files = is_array(json_decode($deviation->QA_attachment)) ? $deviation->QA_attachment : [];
+            }
+
+            if ($request->hasfile('other_attachment')) {
+                foreach ($request->file('other_attachment') as $file) {
+                    $name = $request->name . 'other_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $deviation->other_attachment = json_encode($files);
         }
 
         if (!empty ($request->Capa_attachment)) {
@@ -5006,6 +5032,26 @@ $newDataGridFishbone->save();
             $history->save();
         }
 
+
+        if ($lastDeviation->other_attachment != $deviation->other_attachment || !empty ($request->comment)) {
+            $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
+                            ->where('activity_type', 'Other attachment')
+                            ->exists();
+            $history = new DeviationAuditTrail;
+            $history->deviation_id = $id;
+            $history->activity_type = 'Other attachment';
+             $history->previous = $lastDeviation->other_attachment;
+            $history->current = $deviation->other_attachment;
+            $history->comment = $deviation->submit_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDeviation->status;
+            $history->change_to =   "Not Applicable";
+            $history->change_from = $lastDeviation->status;
+            $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
+            $history->save();
+        }
         if ($lastDeviation->Conclusion != $deviation->Conclusion || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Conclusion')
@@ -9298,10 +9344,10 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
            $data=Deviation::find($id);
            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'DEV' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
            $count = Helpers::getChildData($id, $parent_type);
-                    $countData = $count + 1;
+           $countData = $count + 1;
                                // $relatedRecords = collect();
 
-
+           // dd($extension_record);
             $Extensionchild->save();
             return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords'));
         }

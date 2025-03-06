@@ -190,68 +190,74 @@
 
 <div class="block">
 
-    <div class="border-table">
-                    <div class="block-head">
-                    Summary Response
-                    </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">Obs.N.</th>
-                            <th class="w-60">Observation</th>
-                            <th class="w-60">Response</th>
-                            <th class="w-60">CAPA / ACTION Child Reference If Any</th>
-
-
-
-
-                        </tr>
-                        @php
-    $serialNumber = 1;
-@endphp
-@foreach ($oocgrid->data as $oogrid)
-    <tr>
-        <td disabled>{{ $serialNumber++ }}</td>
-        <td>{{$oogrid['observation']}}"</td>
-        <td>{{$oogrid['response']}}"</td>
-        <td>{{$oogrid['reference_id']}}</td>
-        
-    </tr>
-@endforeach
-    </table>
+<div class="border-table">
+    <div class="block-head">
+        Summary Response
     </div>
-             
-    
+
+    @if (!empty($oocgrid->data) && count($oocgrid->data) > 0)
+        <table>
+            <tr class="table_bg">
+                <th class="w-20">Obs.N.</th>
+                <th class="w-60">Observation</th>
+                <th class="w-60">Response</th>
+                <th class="w-60">CAPA / ACTION Child Reference If Any</th>
+                <th class="w-60">Status</th>
+                <th class="w-60">Category</th>
+                <th class="w-60">Remarks</th>
+            </tr>
+
+            @php
+                $serialNumber = 1;
+            @endphp
+
+            @foreach ($oocgrid->data as $oogrid)
+                <tr>
+                    <td>{{ $serialNumber++ }}</td>
+                    <td>{{ $oogrid['observation'] ?? 'Not Applicable' }}</td>
+                    <td>{{ $oogrid['response'] ?? 'Not Applicable'}}</td>
+                    <td>{{ $oogrid['reference_id']?? 'Not Applicable' }}</td>
+                    <td>{{ $oogrid['status'] ?? 'Not Applicable' }}</td>
+                    <td>{{ $oogrid['category'] ?? 'Not Applicable' }}</td>
+                    <td>{{ $oogrid['remarks'] ?? 'Not Applicable' }}</td>
+                </tr>
+            @endforeach
+        </table>
+    @else
+        <p>No summary responses available.</p>
+    @endif
+</div>
 
 
-    <div class="border-table">
-                    <div class="block-head">
-                    Summary Response
-                    </div>
-                    <table>
+            <!-- 
+                <div class="border-table">
+                                <div class="block-head">
+                                Summary Response
+                                </div>
+                                <table>
 
-                        <tr class="table_bg">
-                            <th class="w-20">Obs.N.</th>
-                            <th class="w-60">Status</th>
-                            <th class="w-60">Remarks</th>
+                                    <tr class="table_bg">
+                                        <th class="w-20">Obs.N.</th>
+                                        <th class="w-60">Status</th>
+                                        <th class="w-60">Remarks</th>
 
 
 
 
-                        </tr>
-                        @php
-    $serialNumber = 1;
-@endphp
-@foreach ($oocgrid->data as $oogrid)
-    <tr>
-        <td disabled>{{ $serialNumber++ }}</td>
-        <td>{{$oogrid['status']}}</td>
-        <td>{{$oogrid['remarks']}}</td>
-        
-    </tr>
-@endforeach
-    </table>
-    </div>
+                                    </tr>
+                                    @php
+                $serialNumber = 1;
+            @endphp
+            @foreach ($oocgrid->data as $oogrid)
+                <tr>
+                    <td disabled>{{ $serialNumber++ }}</td>
+                    <td>{{$oogrid['status']}}</td>
+                    <td>{{$oogrid['remarks']}}</td>
+                    
+                </tr>
+            @endforeach
+                </table>
+                </div> -->
 
     <div class="border-table">
                     <div class="block-head">

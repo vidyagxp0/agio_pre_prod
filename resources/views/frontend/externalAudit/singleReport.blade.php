@@ -382,7 +382,7 @@
                             <tr class="table_bg">
                                 <th class="w-20">SR no.</th>
                                 <th class="w-20">Auditor Name</th>
-                                <th class="w-20">Regulatory Agency</th>
+                                <th class="w-20">External Agency Name</th>
                                 <th class="w-20">Designation</th>
                                 <th class="w-20">Remarks</th>
 
@@ -427,7 +427,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->inv_attachment)
                         @foreach (json_decode($data->inv_attachment) as $key => $file)
@@ -480,6 +480,7 @@
                             <th>Response</th>
                             <th>CAPA / Child action Reference If Any </th>
                             <th>Status</th>
+                            <th>category</th>
                             <th>Remarks</th>
 
                         </tr>
@@ -498,12 +499,17 @@
 
                                     <td class="w-20">
                                         {{ isset($grid_Data_2['status']) ? $grid_Data_2['status'] : '' }}</td>
+                                   
+                                    <td class="w-20">
+                                        {{ isset($grid_Data_2['category']) ? $grid_Data_2['category'] : '' }}</td>
+                                   
                                     <td class="w-20">
                                         {{ isset($grid_Data_2['remarks']) ? $grid_Data_2['remarks'] : '' }}</td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
+                                <td>Not Applicable</td>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
                                 <td>Not Applicable</td>
@@ -525,7 +531,7 @@
 
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
-                    <th class="w-60">Batch No</th>
+                    <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data->myfile)
                     @foreach (json_decode($data->myfile) as $key => $file)
@@ -564,7 +570,7 @@
 
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule Powder Review Comment Required ? 
+                            <th class="w-20">Production Tablet/Capsule / Powder Review Comment Required ?  
                             </th>
                             <td class="w-30">
                                 <div>
@@ -575,7 +581,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production Tablet/Capsule Powder Person</th>
+                            <th class="w-20">Production Tablet/Capsule / Powder Person </th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_Person)
@@ -590,7 +596,7 @@
 
                         <tr>
 
-                            <th class="w-20">Review comment (By Production Tablet/Capsule Powder)  
+                            <th class="w-20">Review comment (By Production Tablet/Capsule / Powder)  
                             </th>
                             <td class="w-80" colspan="3">
                                 <div>
@@ -616,7 +622,7 @@ Not Applicable
                         </tr>
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule Powder Review Completed By</th>
+                            <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -643,7 +649,7 @@ Not Applicable
                 <div class="border-table">
                     <div class="head">
                         <div class="block-head">
-                        Production Tablet/Capsule Powder Attachments
+                        Production Tablet/Capsule / Powder Attachments
                         </div>
                         <table>
 
@@ -780,7 +786,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Research Development Review  Comment  Required ?
+                                <th class="w-20">Research & Development Review  Comment  Required ?
                                 </th>
                                 <td class="w-30">
                                     <div>
@@ -805,7 +811,7 @@ Not Applicable
 
                             <tr>
 
-                                <th class="w-20">Review comment (By Research Development)</th>
+                                <th class="w-20">Review Comment (By Research & Development)</th>
                                 <td class="w-80" colspan="3">
                                     <div>
                                         @if ($data1->ResearchDevelopment_assessment)
@@ -819,7 +825,7 @@ Not Applicable
                             </tr>
                             <tr>
 
-                                <th class="w-20">Research  Development Review Completed By</th>
+                                <th class="w-20">Research & Development Review Completed By</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_by)
@@ -829,7 +835,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Research Development Review Completed On</th>
+                                <th class="w-20">Research & Development Review Completed On</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->ResearchDevelopment_on)
@@ -844,7 +850,7 @@ Not Applicable
                     </div>
                     <div class="border-table">
                         <div class="block-head">
-                        Research Development Attachments
+                        Research & Development Attachment
                         </div>
                         <table>
 
@@ -2560,7 +2566,7 @@ Not Applicable
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->qa_cqa_attach)
                             @foreach (json_decode($data->qa_cqa_attach) as $key => $file)

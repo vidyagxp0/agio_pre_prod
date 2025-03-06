@@ -45,11 +45,12 @@ class ActionItemController extends Controller
     {
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = $record;
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.action-item.action-item', compact('due_date', 'record','old_record'));
+        return view('frontend.action-item.action-item', compact('due_date', 'record','old_record','record_number'));
     }
     public function index()
     {

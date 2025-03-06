@@ -271,7 +271,7 @@
                                     <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group" 
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -440,7 +440,9 @@
 
                                     <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
                                         <label for="otherFieldsUser">Other(Source of Risk/Opportunity)</label>
-                                        <input type="text" name="other_source_of_risk" class="form-control" />
+                                        
+                                        <textarea name="other_source_of_risk"  class="form-control"></textarea>
+                                        
                                     </div>
 
                                     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -485,7 +487,9 @@
 
 <div id="typeOfError" class="group-input col-6" style="display: none;">
     <label for="otherFieldsUser">Other (Type)</label>
-    <input type="text" name="other_type" class="form-control"/>
+   
+    <textarea name="other_type" class="form-control"></textarea>
+                                        
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -9332,9 +9332,22 @@ class RiskManagementController extends Controller
                 $lastDocument = RiskManagement::find($id);
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
                 $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
-
                 if ($riskAssement->stage == 1) {
-
+                     if (empty($riskAssement->document_used_risk) || empty($riskAssement->Brief_description) ||empty($riskAssement->purpose) || empty($riskAssement->reason_for_revision)) {
+                        Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'Genral Information Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+    
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'Hod Reviews'
+                            ]);
+                        }
                     $riskAssement->stage = "2";
                     $riskAssement->status = "HOD Review";
                     $riskAssement->submitted_by = Auth::user()->name;
@@ -9415,11 +9428,11 @@ class RiskManagementController extends Controller
                     // }
 
                     // Check HOD remark value
-                    if (!$riskAssement->hod_des_rev_comm) {
+                    if (empty($riskAssement->hod_des_rev_comm) || empty($riskAssement->root_cause_methodology)) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD/Designee Mandatory Tab is yet to be filled!',
+                            'message' => 'HOD / Designee And Risk Assessment Mandatory Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
 
