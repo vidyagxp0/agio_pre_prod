@@ -3203,7 +3203,15 @@
                                         @else
                                             <tr>
                                                 <td>{{ $serialNumber++ }}</td>
-                                                <td><input type="text" name="revision_history[0][revision_number]"></td>
+                                                {{-- <td><input type="text" name="revision_history[0][revision_number]"></td> --}}
+                                                <td>
+                                                    <select name="revision_history[0][revision_number]">
+                                                        <option value="">Select Revision</option>
+                                                            <option value="" >
+                                                               
+                                                            </option>
+                                                    </select>
+                                                </td>
                                                 <td><input type="text" name="revision_history[0][cc_no]"></td>
                                                 <td><input type="date" name="revision_history[0][revised_effective_date]"></td>
                                                 <td><input type="text" name="revision_history[0][reason_of_revision]"></td>
