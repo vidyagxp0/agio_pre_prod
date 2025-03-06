@@ -15190,75 +15190,97 @@
 
                     <div id="sign" class="tabcontent">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Originated By
-                                        {{-- Review Proposed By --}}
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="review-names">
-                                    <div class="orig-head">
-                                        Review Proposed On
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Originated On
-                                        {{-- Document Reuqest Approved By --}}
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Reuqest Approved On
+                                        Comments
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Writing Completed By
+                                    HOD Review By
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Writing Completed On
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <div class="col-md-6">
-                                <div class="review-names">
-                                    <div class="orig-head">
-                                        Reviewd By
+                                       HOD Review On
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Reviewd On
+                                       Comments
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Reviewed By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Reviewed On
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Comments
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Approved By
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Approved On
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Comments
                                     </div>
                                 </div>
                             </div>
