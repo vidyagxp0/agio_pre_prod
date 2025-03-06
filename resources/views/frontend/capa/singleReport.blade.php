@@ -440,7 +440,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
+                                <th class="w-60">Attachment </th>
                             </tr>
                                 @if($data->capa_attachment)
                                 @foreach(json_decode($data->capa_attachment) as $key => $file)
@@ -593,7 +593,7 @@
                                 <td class="80">@if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
 
                              </tr>
-                             <tr>
+                             <!-- <tr>
 
                                 <th class="20">Preventive Action</th>
                                 <td class="80">@if($data->preventive_action){{ $data->preventive_action }}@else Not Applicable @endif</td>
@@ -601,7 +601,7 @@
                             </table>
                         </div>
 
-                    </tr>
+                    </tr> -->
                     <div class="block-head">
                            File Attachment
                         </div>
@@ -609,7 +609,7 @@
                             <table>
                                 <tr class="table_bg">
                                     <th class="w-20">S.N.</th>
-                                    <th class="w-60">File </th>
+                                    <th class="w-60">Attachment </th>
                                 </tr>
                                     @if($data->capafileattachement)
                                     @foreach(json_decode($data->capafileattachement) as $key => $file)
@@ -650,7 +650,7 @@
                          <table>
                              <tr class="table_bg">
                                  <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
+                                 <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->hod_attachment)
                                  @foreach(json_decode($data->hod_attachment) as $key => $file)
@@ -690,7 +690,7 @@
                          <table>
                              <tr class="table_bg">
                                  <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
+                                 <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->qa_attachment)
                                  @foreach(json_decode($data->qa_attachment) as $key => $file)
@@ -729,7 +729,7 @@
                          <table>
                              <tr class="table_bg">
                                  <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
+                                 <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->qah_cq_attachment)
                                  @foreach(json_decode($data->qah_cq_attachment) as $key => $file)
@@ -772,7 +772,7 @@
                          <table>
                              <tr class="table_bg">
                                  <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
+                                 <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->initiator_capa_attachment)
                                  @foreach(json_decode($data->initiator_capa_attachment) as $key => $file)
@@ -812,7 +812,7 @@
                          <table>
                              <tr class="table_bg">
                                  <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
+                                 <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->hod_final_attachment)
                                  @foreach(json_decode($data->hod_final_attachment) as $key => $file)
@@ -853,7 +853,7 @@
                          <table>
                              <tr class="table_bg">
                                  <th class="w-20">S.N.</th>
-                                 <th class="w-60">File </th>
+                                 <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->qa_closure_attachment)
                                  @foreach(json_decode($data->qa_closure_attachment) as $key => $file)
@@ -910,7 +910,7 @@
                                 <table>
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
-                                        <th class="w-60">File </th>
+                                        <th class="w-60">Attachment </th>
                                     </tr>
                                         @if($data->closure_attachment)
                                         @foreach(json_decode($data->closure_attachment) as $key => $file)
