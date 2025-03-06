@@ -15221,9 +15221,11 @@
                     </div>
                 </div> --}}
 
+
+                   
                 <div id="sign" class="tabcontent">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Originated By
@@ -15233,84 +15235,34 @@
                                         ->join('users', 'stage_manages.user_id', '=', 'users.id')
                                         ->select('stage_manages.*', 'users.name as user_name')
                                         ->where('document_id', $document->id)
-                                        ->where('stage', 'In-Review')
+                                        ->where('stage', 'In-HOD Review')
                                         ->get();
-
                                 @endphp
                                 <div class="name">{{ $document->originator ? $document->originator->name : 'null' }}
                                 </div>
-
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Originated On
                                 </div>
-                                <div class="name">{{ $document->created_at }}</div>
+                                <div class="name">{{ \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') }}</div>
                             </div>
-
                         </div>
-
-                        {{-- <div class="col-md-6">
+                        
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Originated On
+                                    Comments
                                 </div>
-                                @php
-                                    $inreview = DB::table('stage_manages')
-                                        ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                        ->select('stage_manages.*', 'users.name as user_name')
-                                        ->where('document_id', $document->id)
-                                        ->where('stage', 'In-Approval')
-                                        ->where('deleted_at', null)
-                                        ->get();
-
-                                @endphp
                                 @foreach ($inreview as $temp)
-                                    <div class="name">{{ $temp->user_name }}
-                                                </div>
+                                   <div class="name">{{ $temp->comment }}</div>
+                                @endforeach
+                            </div>
+                        </div> 
 
-                                            </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="review-names">
-                                                    <div class="orig-head">
-                                                        Document Reuqest Approved On
-                                                    </div>
-                                                    <div class="name">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-                        {{-- <div class="col-md-6">
-                            <div class="review-names">
-                                <div class="orig-head">
-                                    Document Writing Completed By
-                                </div>
-                                @php
-                                    $inreview = DB::table('stage_manages')
-                                        ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                        ->select('stage_manages.*', 'users.name as user_name')
-                                        ->where('document_id', $document->id)
-                                        ->where('stage', 'In-Approval')
-                                        ->get();
-
-                                @endphp
-                                @foreach ($inreview as $temp)
-                                    <div class="name">{{ $temp->user_name }}</div>
-
-                                            </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="review-names">
-                                                    <div class="orig-head">
-                                                        Document Writing Completed On
-                                                    </div>
-                                                    <div class="name">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     HOD Review By
@@ -15323,29 +15275,41 @@
                                         ->where('stage', 'HOD Review-Submit')
                                         ->where('deleted_at', null)
                                         ->get();
-
                                 @endphp
+
                                 @foreach ($inhodreview as $temp)
                                     <div class="name">{{ $temp->user_name }}</div>
                                 @endforeach
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     HOD Reviewed On
                                 </div>
                                 @foreach ($inhodreview as $temp)
-                                    <div class="name">{{ $temp->created_at }}</div>
+                                  <div class="name">{{ \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') }}</div>
                                 @endforeach
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Reviewd By
+                                    Comments
+                                </div>
+                                @foreach ($inhodreview as $temp)
+                                    <div class="name">{{ $temp->comment }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    Reviewed By
                                 </div>
                                 @php
                                     $inreview = DB::table('stage_manages')
@@ -15357,23 +15321,37 @@
                                         ->get();
 
                                 @endphp
+
                                 @foreach ($inreview as $temp)
                                     <div class="name">{{ $temp->user_name }}</div>
                                 @endforeach
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Reviewed On
                                 </div>
                                 @foreach ($inreview as $temp)
-                                    <div class="name">{{ $temp->created_at }}</div>
+                                  <div class="name">{{ \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') }}</div>
                                 @endforeach
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    Comments
+                                </div>
+                                @foreach ($inreview as $temp)
+                                    <div class="name">{{ $temp->comment }}</div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Approved By
@@ -15394,16 +15372,29 @@
 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Approved On
                                 </div>
                                 @foreach ($inreview as $temp)
-                                    <div class="name">{{ $temp->created_at }}</div>
+                                    <div class="name">{{ \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') }}</div>
                                 @endforeach
                             </div>
                         </div>
+
+                        <div class="col-md-4">
+                            <div class="review-names">
+                                <div class="orig-head">
+                                    Comments
+                                </div>
+                                @foreach ($inreview as $temp)
+                                    <div class="name">{{ $temp->comment}}</div>
+                                @endforeach
+                            </div>
+                        </div>
+
+
                         {{-- <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
