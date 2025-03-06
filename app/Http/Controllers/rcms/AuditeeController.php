@@ -4093,7 +4093,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_Review != $request->Production_Table_Review && $request->Production_Table_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Review Comment Required';
+            $history->activity_type = 'Production Tablet/Capsule/Powder Review Comment Required';
             $history->previous = ucfirst($lastCft->Production_Table_Review);
             $history->current = ucfirst($request->Production_Table_Review);
             $history->comment = "Not Applicable";
@@ -4113,7 +4113,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_Person != $request->Production_Table_Person && $request->Production_Table_Person != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Person';
+            $history->activity_type = 'Production Tablet/Capsule / Powder Person ';
             $history->previous = $lastCft->Production_Table_Person;
             $history->current = $request->Production_Table_Person;
             $history->comment = "Not Applicable";
@@ -4133,7 +4133,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_Assessment != $request->Production_Table_Assessment && $request->Production_Table_Assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Review comment (By Production Tablet/Capsule Powder)';
+            $history->activity_type = 'Review comment (By Production Tablet/Capsule / Powder)';
             $history->previous = $lastCft->Production_Table_Assessment;
             $history->current = $request->Production_Table_Assessment;
             $history->comment = "Not Applicable";
@@ -4173,7 +4173,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_Attachment != $request->Production_Table_Attachment && $request->Production_Table_Attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule Powder Attachments';
+            $history->activity_type = 'Production Tablet/Capsule / Powder Attachments';
             $history->previous = $lastCft->Production_Table_Attachment;
             $history->current = implode(',',$request->Production_Table_Attachment);
             $history->comment = "Not Applicable";
@@ -4193,7 +4193,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_By != $request->Production_Table_By && $request->Production_Table_By != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder Review By';
+            $history->activity_type = 'Production Tablet/Capsule / Powder Review Completed By';
             $history->previous = $lastCft->Production_Table_Review;
             $history->current = $request->Production_Table_By;
             $history->comment = "Not Applicable";
@@ -4213,7 +4213,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->Production_Table_On != $request->Production_Table_On && $request->Production_Table_On != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Production Tablet/Capsule/Powder On';
+            $history->activity_type = 'Production Tablet/Capsule / Powder Review Completed On';
             $history->previous = $lastCft->Production_Table_On;
             $history->current = $request->Production_Table_On;
             $history->comment = "Not Applicable";
@@ -4803,7 +4803,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->ResearchDevelopment_Review != $request->ResearchDevelopment_Review && $request->ResearchDevelopment_Review != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research Development Review Comment Required ';
+            $history->activity_type = 'Research & Development Review Comment Required';
             $history->previous = ucfirst($lastCft->ResearchDevelopment_Review);
             $history->current = ucfirst($request->ResearchDevelopment_Review);
             $history->comment = "Not Applicable";
@@ -4843,7 +4843,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->ResearchDevelopment_assessment != $request->ResearchDevelopment_assessment && $request->ResearchDevelopment_assessment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Review Comment (By Research Development)';
+            $history->activity_type = 'Review Comment (By Research & Development)';
             $history->previous = $lastCft->ResearchDevelopment_assessment;
             $history->current = $request->ResearchDevelopment_assessment;
             $history->comment = "Not Applicable";
@@ -4883,7 +4883,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->ResearchDevelopment_by != $request->ResearchDevelopment_by && $request->ResearchDevelopment_by != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research & Development By';
+            $history->activity_type = 'Research & Development Review Completed By';
             $history->previous = $lastCft->ResearchDevelopment_by;
             $history->current = $request->ResearchDevelopment_by;
             $history->comment = "Not Applicable";
@@ -4903,7 +4903,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->ResearchDevelopment_on != $request->ResearchDevelopment_on && $request->ResearchDevelopment_on != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research & Development On';
+            $history->activity_type = 'Research & Development Review Completed On';
             $history->previous = $lastCft->ResearchDevelopment_on;
             $history->current = $request->ResearchDevelopment_on;
             $history->comment = "Not Applicable";
@@ -4923,7 +4923,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
         if ($lastCft->ResearchDevelopment_attachment != $request->ResearchDevelopment_attachment && $request->ResearchDevelopment_attachment != null) {
             $history = new AuditTrialExternal;
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Research Development Attachments';
+            $history->activity_type = 'Research & Development Attachment';
             $history->previous = $lastCft->ResearchDevelopment_attachment;
             $history->current =implode(',', $request->ResearchDevelopment_attachment);
             $history->comment = "Not Applicable";
