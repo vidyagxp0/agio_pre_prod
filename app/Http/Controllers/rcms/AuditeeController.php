@@ -8738,6 +8738,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
         $parent_id = $id;
          if ($request->child_type == "Action-Item") {
             $parent_id = $id;
+            $parent_division_id  = Auditee::where('id', $id)->value('division_id');
             $parentRecord = Auditee::where('id', $id)->value('record');
             $parent_type = "External Audit";
             $record = ((RecordNumber::first()->value('counter')) + 1);
@@ -8748,7 +8749,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data'));
+            return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data','parent_division_id'));
         }
         if ($request->child_type == "Observations")
         $parent_id = $id;

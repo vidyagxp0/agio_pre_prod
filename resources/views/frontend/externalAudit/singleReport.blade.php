@@ -240,7 +240,7 @@
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                                {{ $data->Initiator_Group }}
                             @else
                                 Not Applicable
                             @endif
@@ -304,6 +304,16 @@
                             @endif
                         </td>
                     </tr>
+                    <tr>
+                        <th class="w-20">If Other</th>
+                        <td class="w-30">
+                            @if ($data->if_other)
+                                {{ $data->if_other }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
 
 
                     <tr>
@@ -326,8 +336,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-
+                        </tr>
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-80" colspan="3">
@@ -561,7 +570,7 @@
         <div class="block">
             <div class="head">
                 <div class="block-head">
-                    CFT
+                    CFT Review
                 </div>
                 <div class="head">
                     <div class="block-head">
@@ -2015,7 +2024,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other1_Department_person)
-                                            {{  Helpers::getFullDepartmentName($data1->Other1_Department_person) }}
+                                            {{  $data1->Other1_Department_person ?? ''}}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2124,7 +2133,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other2_Department_person)
-                                            {{ Helpers::getFullDepartmentName($data1->Other2_Department_person) }}
+                                            {{ $data1->Other2_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2233,7 +2242,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other3_Department_person)
-                                            {{ Helpers::getFullDepartmentName($data1->Other3_Department_person) }}
+                                            {{ $data1->Other3_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2342,7 +2351,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other4_Department_person)
-                                            {{Helpers::getFullDepartmentName($data1->Other4_Department_person) }}
+                                            {{ $data1->Other4_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2451,7 +2460,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other5_Department_person)
-                                            {{ Helpers::getFullDepartmentName($data1->Other5_Department_person) }}
+                                            {{ $data1->Other5_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
