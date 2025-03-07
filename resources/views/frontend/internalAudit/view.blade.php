@@ -568,7 +568,7 @@
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> --}}
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Response</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
@@ -1637,14 +1637,14 @@
                                          <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule End Date"> End Date</label>
-                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" 
+                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}"
                                                 <div class="calenderauditee">
                                                     <input type="text"
                                                         id="audit_schedule_end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
                                                     <input type="date" name="audit_schedule_end_date" value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                 </div>
-                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  
+                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1668,14 +1668,14 @@
                                                             <th>Remarks</th>
                                                         </tr>
                                                     </thead>
-                                                   
+
                                                     <tbody>
                                                         @if ($grid_data)
                                                         @if (!empty($grid_data->area_of_audit))
                                                         @foreach (unserialize($grid_data->area_of_audit) as $key => $temps)
                                                         <tr>
                                                             <td>
-                                                            <input type="text" name="serial_number[]"   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   value="{{ $key + 1 }}"> 
+                                                            <input type="text" name="serial_number[]"   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   value="{{ $key + 1 }}">
                                                            </td>
                                                             <td>
                                                                    <input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -2151,7 +2151,7 @@
                                                     <button type="button" id="addSamplePlanning">+</button>
                                                 </div>
                                                 </label>
-                                                    
+
                                                 <div class="responsive-table table-container" style="overflow-x: auto; width: 100% !important;">
                                                     <table class="table table-bordered" id="editSamplePlanningTable">
                                                         <thead>
@@ -2171,14 +2171,14 @@
                                                         <tbody>
 
 
-                                                       
+
 
                                                             @if(!empty($json) && is_array($json))
                                                                 @foreach ($json as $key => $row)
                                                                 @php
                                                                     $selectedAuditor = isset($row['auditors']) ? explode(',', $row['auditors']) : [];
                                                                     $selectedAuditee = isset($row['auditee']) ? explode(',', $row['auditee']) : [];
-                                                                @endphp 
+                                                                @endphp
                                                                     <tr>
                                                                         <td class="row-index">{{ $key + 1 }}</td>
                                                                         <td><input type="text" name="auditAgendaData[{{ $key }}][auditArea]" value="{{ $row['auditArea'] }}"></td>
@@ -2189,7 +2189,7 @@
                                                                                         <input type="text"  style="width: 100px;" id="scheduleStartDate{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($row['scheduleStartDate']) }}" />
                                                                                         <input type="date" name="auditAgendaData[{{ $key }}][scheduleStartDate]"
                                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                            value="{{ $row['scheduleStartDate'] }}"  
+                                                                                            value="{{ $row['scheduleStartDate'] }}"
                                                                                             class="hide-input" oninput="handleDateInput(this, 'scheduleStartDate{{$key}}')" />
                                                                                     </div>
                                                                                 </div>
@@ -2203,7 +2203,7 @@
                                                                                         <input type="text" style="width: 100px;" id="scheduleEndDate{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($row['scheduleEndDate']) }}"  />
                                                                                         <input type="date" name="auditAgendaData[{{ $key }}][scheduleEndDate]"
                                                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                            value="{{ $row['scheduleEndDate'] }}"   
+                                                                                            value="{{ $row['scheduleEndDate'] }}"
                                                                                             class="hide-input" oninput="handleDateInput(this, 'scheduleEndDate{{$key}}')" />
                                                                                     </div>
                                                                                 </div>
@@ -2245,7 +2245,7 @@
                                             document.addEventListener("DOMContentLoaded", function() {
                                                 let rowIndex = {{ count($json) }};
                                                 const analysts = @json($users->toArray() ?? []);
-                                                
+
                                                 document.getElementById("addSamplePlanning").addEventListener("click", function() {
                                                     const tableBody = document.querySelector("#editSamplePlanningTable tbody");
                                                     const newRow = document.createElement("tr");
@@ -2260,9 +2260,9 @@
                                                     }
 
                                                     newRow.innerHTML = `
-                                                
+
                                                                         <td class="row-index">{{ $key + 1 }}</td>
-                                                                    
+
 
                                                                         <td>
                                                                             <input type="text" name="auditAgendaData[${rowIndex}][auditArea]">
@@ -2283,7 +2283,7 @@
                                                                         <td>
                                                                             <input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]">
                                                                         </td>
-                                                                        
+
                                                                         <td>
                                                                             <div class="col-md-6 new-date-data-field">
                                                                                 <div class="group-input input-date">
@@ -2296,7 +2296,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </td>
-                                                                        
+
                                                                         <td>
                                                                             <input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]">
                                                                         </td>
@@ -2312,7 +2312,7 @@
                                                                                 ${analystOptions}
                                                                             </select>
                                                                         </td>
-                                                                        
+
                                                                         <td>
                                                                             <textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea>
                                                                         </td>
@@ -2321,16 +2321,16 @@
 
                                                     tableBody.appendChild(newRow);
                                                     rowIndex++;
-                                                    
+
                                                     VirtualSelect.init({
                                                         ele: '#auditorsData_' + (rowIndex - 1),
                                                         multiple: true
-                                                    }); 
+                                                    });
 
                                                     VirtualSelect.init({
                                                         ele: '#auditeeData_' + (rowIndex - 1),
                                                         multiple: true
-                                                    }); 
+                                                    });
                                                 });
 
                                                 document.querySelector("#addSamplePlanningTable tbody").addEventListener("click", function (e) {
@@ -2338,7 +2338,7 @@
                                                         const row = e.target.closest("tr");
                                                         row.remove();
                                                     }
-                                                });                                        
+                                                });
                                             });
                                         </script> --}}
                                         <script>
@@ -3148,7 +3148,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                Initial Response<button type="button" name="audit-agenda-grid"
+                                                 Response<button type="button" name="audit-agenda-grid"
                                                     id="internalaudit-initial">+</button>
                                             </label>
                                             <table class="table table-bordered" id="internalaudit-initialtable">
@@ -3200,7 +3200,7 @@
                                                                                     name="Initial[{{ $loop->index }}][closure_date]"
                                                                                     id="closure_date{{ $loop->index }}_input"
                                                                                     value="{{ isset($item['closure_date']) ? $item['closure_date'] : '' }}"
-                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                                     class="hide-input"
                                                                                     onchange="handleDateInput(this, 'closure_date{{ $loop->index }}')" />
                                                                             </div>
@@ -3221,7 +3221,7 @@
                                                                                     name="Initial[{{ $loop->index }}][Actual_date]"
                                                                                     id="Actual_date{{ $loop->index }}_input"
                                                                                     value="{{ isset($item['Actual_date']) ? $item['Actual_date'] : '' }}"
-                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                                     class="hide-input"
                                                                                     onchange="handleDateInput(this, 'Actual_date{{ $loop->index }}')" />
                                                                             </div>
@@ -3278,7 +3278,7 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Audit Attachments">Audit Attachments</label>
+                                            <label for="Audit  Response Attachments">Audit  Response Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
                                             {{-- <input type="file" id="myfile" name="myfile"
@@ -3313,7 +3313,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Audit Comments">Audit Comments</label>
+                                            <label for="Audit  Response Comment">Audit  Response Comment</label>
                                             <textarea name="Audit_Comments2" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Audit_Comments2 }}</textarea>
                                         </div>
                                     </div>
