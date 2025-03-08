@@ -14229,9 +14229,7 @@
 
   <!------------------------ PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION ------------------------------------>
                 <div id="doc_pias" class="tabcontent">
-                    <div class="orig-head">
-                    PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION
-                    </div>
+                    <div class="orig-head">PRODUCT / ITEM INFORMATION - ADDENDUM FOR SPECIFICATION</div>
                     <div class="input-fields">
                        <div class="row">
 
@@ -14242,37 +14240,45 @@
                                 </div>
                             </div>
 
-
                             <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="comments">Code</label>
-                                        <select name="pia_name_code" id="">
-                                            <option value="">Select here</option>
-                                            <option value="FP" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'FP' ? 'selected' : '' }}>Finished Product</option>
-                                            <option value="IP" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'IP' ? 'selected' : '' }}>Inprocess Product</option>
-                                            <option value="CV" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'CV' ? 'selected' : '' }}>Cleaning Validation</option>
-                                            <option value="RW" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'RW' ? 'selected' : '' }}>Raw Material</option>
-                                            <option value="CM" {{ old('pia_name_code', $supplierData->pia_name_code ?? '') == 'CM' ? 'selected' : '' }}>Consumable</option>
-                                        </select>
-                                    </div>
+                                <div class="group-input">
+                                    <label for="piaNameCode">Code</label>
+                                    <select name="pia_name_code" id="piaNameCode" class="form-control">
+                                        <option value="">Select here</option>
+                                        <option value="FP" @if ($document->pia_name_code == 'FP') selected @endif>Finished Product</option>
+                                        <option value="IP" @if ($document->pia_name_code == 'IP') selected @endif>Inprocess Product</option>
+                                        <option value="CV" @if ($document->pia_name_code == 'CV') selected @endif>Cleaning Validation</option>
+                                        <option value="RW" @if ($document->pia_name_code == 'RW') selected @endif>Raw Material</option>
+                                        <option value="CM" @if ($document->pia_name_code == 'CM') selected @endif>Consumable</option>
+
+                                        <!-- <option value="FP" {{ $selectedValue === 'FP' ? 'selected' : '' }}>Finished Product</option>
+                                        <option value="IP" {{ $selectedValue === 'IP' ? 'selected' : '' }}>Inprocess Product</option>
+                                        <option value="CV" {{ $selectedValue === 'CV' ? 'selected' : '' }}>Cleaning Validation</option>
+                                        <option value="RW" {{ $selectedValue === 'RW' ? 'selected' : '' }}>Raw Material</option>
+                                        <option value="CM" {{ $selectedValue === 'CM' ? 'selected' : '' }}>Consumable</option> -->
+                                    </select>
+                                </div>
                             </div>
 
 
 
-                        @php
-                            $serialNumber = 1;
-                    
+
+
+
+
+                            @php
+                                $serialNumber = 1;
                                 $decodedProductData = [];
                                 if (!empty($ProductSpecification) && isset($ProductSpecification->data)) {
                                     $decodedProductData = is_string($ProductSpecification->data) 
                                         ? json_decode($ProductSpecification->data, true) 
                                         : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
                                 }
-                        @endphp
+                            @endphp
 
-                        <div class="group-input">
+                        <div class="group-input" id="gridTable1" style="display: none; margin-top: 20px;">
                             <label for="action-plan-grid">
-                                For Finished Product Specification use below table
+                                Finished Product Specification
                                 <button type="button" id="addRowBtndata">+</button>
                                 <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -14293,11 +14299,36 @@
                                             <th style="width: 2%">Sample Quantity</th>
                                             <th style="width: 2%">Storage Condition</th>
                                             <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
-                                            <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
-                                            <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                            <th style="width: 2%">Checked by QC (Sign/Date)</th>
+                                            <th style="width: 2%">Approved by QA (Sign/Date)</th>
                                             <th style="width: 3%">Action</th>
                                         </tr>
                                     </thead>
+
+                                     @php
+                                        // Fetching Checked By (HOD Review-Submit)
+                                        $hodreview = DB::table('stage_manages')
+                                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                            ->select('users.name as user_name')
+                                            ->where('document_id', $document->id)
+                                            ->where('stage', 'Review-Submit')
+                                            ->whereNull('deleted_at')
+                                            ->get();
+
+                                        // Fetching Approved By (Approval-Submit)
+                                        $approverreview = DB::table('stage_manages')
+                                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                            ->select('users.name as user_name')
+                                            ->where('document_id', $document->id)
+                                            ->where('stage', 'Approval-Submit')
+                                            ->whereNull('deleted_at')
+                                            ->get();
+
+                                        // Get names from the collections
+                                        $checkedBy = $hodreview->pluck('user_name')->implode(', ');
+                                        $approvedBy = $approverreview->pluck('user_name')->implode(', ');
+                                    @endphp
+
                                     <tbody>
                                         @if(!empty($decodedProductData))
                                             @foreach($decodedProductData as $key => $product)
@@ -14311,9 +14342,9 @@
                                                     <td><input type="text" name="product[{{ $key }}][shelf_life]" value="{{ $product['shelf_life'] ?? '' }}"></td>
                                                     <td><input type="text" name="product[{{ $key }}][sample_quantity]" value="{{ $product['sample_quantity'] ?? '' }}"></td>
                                                     <td><input type="text" name="product[{{ $key }}][storage_condition]" value="{{ $product['storage_condition'] ?? '' }}"></td>
-                                                    <td><input type="text" name="product[{{ $key }}][prepared_by_quality_person]" value="{{ $product['prepared_by_quality_person'] ?? '' }}"></td>
-                                                    <td><input type="text" name="product[{{ $key }}][checked_by_qc_hod_designee]" value="{{ $product['checked_by_qc_hod_designee'] ?? '' }}"></td>
-                                                    <td><input type="text" name="product[{{ $key }}][approved_by_qa_hod_designee]" value="{{ $product['approved_by_qa_hod_designee'] ?? '' }}"></td>
+                                                    <td><input type="text" name="product[{{ $key }}][prepared_by_quality_person]" value="{{ Helpers::getInitiatorName($document->originator_id) }}" readonly></td>
+                                                    <td><input type="text" name="product[{{ $key }}][checked_by_qc_hod_designee]" value="{{ $checkedBy }}" readonly></td>
+                                                    <td><input type="text" name="product[{{ $key }}][approved_by_qa_hod_designee]" value="{{ $approvedBy }}" readonly></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
                                             @endforeach
@@ -14342,6 +14373,9 @@
                         <script>
                             $(document).ready(function () {
                                 let investDetails = {{ isset($decodedProductData) ? count($decodedProductData) : 1 }};
+                                let preparedBy = "{{ Helpers::getInitiatorName($document->originator_id) }}";
+                                let checkedBy = "{{ $checkedBy }}";
+                                let approvedBy = "{{ $approvedBy }}";
 
                                 $('#addRowBtndata').click(function () {
                                     let rowCount = $('#productDetailsTable tbody tr').length + 1;
@@ -14356,9 +14390,9 @@
                                             <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
                                             <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
                                             <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
-                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]"></td>
-                                            <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]"></td>
-                                            <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]"></td>
+                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]" value="${preparedBy}" readonly></td>
+                                            <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]" readonly></td>
+                                            <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]" readonly></td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     `;
@@ -14390,9 +14424,9 @@
                                     }
                         @endphp
 
-                        <div class="group-input">
+                        <div class="group-input" id="gridTable2" style="display: none; margin-top: 20px;">
                             <label for="action-plan-grid">
-                                Raw Material Specification - Use the table below
+                                Raw Material Specification
                                 <button type="button" id="RowMaterialData">+</button>
                                 <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -14410,8 +14444,8 @@
                                             <th style="width: 2%">Sample Quantity</th>
                                             <th style="width: 2%">Storage Condition</th>
                                             <th style="width: 2%">Prepared by Quality Person (Sign/Date)</th>
-                                            <th style="width: 2%">Checked by QC (HOD/Designee) (Sign/Date)</th>
-                                            <th style="width: 2%">Approved by QA (HOD/Designee) (Sign/Date)</th>
+                                            <th style="width: 2%">Checked by QC (Sign/Date)</th>
+                                            <th style="width: 2%">Approved by QA (Sign/Date)</th>
                                             <th style="width: 3%">Action</th>
                                         </tr>
                                     </thead>
@@ -14425,9 +14459,9 @@
                                                     <td><input type="text" name="row_material[{{ $key }}][grade]" value="{{ $material['grade'] ?? '' }}"></td>
                                                     <td><input type="text" name="row_material[{{ $key }}][sample_quantity]" value="{{ $material['sample_quantity'] ?? '' }}"></td>
                                                     <td><input type="text" name="row_material[{{ $key }}][storage_condition]" value="{{ $material['storage_condition'] ?? '' }}"></td>
-                                                    <td><input type="text" name="row_material[{{ $key }}][prepared_quality_person_sign_date]" value="{{ $material['prepared_quality_person_sign_date'] ?? '' }}"></td>
-                                                    <td><input type="text" name="row_material[{{ $key }}][check_by_qc_hod_designee_sign]" value="{{ $material['check_by_qc_hod_designee_sign'] ?? '' }}"></td>
-                                                    <td><input type="text" name="row_material[{{ $key }}][approved_by_qa_hod_desinee_sign]" value="{{ $material['approved_by_qa_hod_desinee_sign'] ?? '' }}"></td>
+                                                    <td><input type="text" name="row_material[{{ $key }}][prepared_quality_person_sign_date]" value="{{ Helpers::getInitiatorName($document->originator_id) }}" readonly></td>
+                                                    <td><input type="text" name="row_material[{{ $key }}][check_by_qc_hod_designee_sign]" value="{{ $checkedBy }}" readonly></td>
+                                                    <td><input type="text" name="row_material[{{ $key }}][approved_by_qa_hod_desinee_sign]" value="{{ $approvedBy }}" readonly></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                 </tr>
                                             @endforeach
@@ -14453,6 +14487,9 @@
                         <script>
                             $(document).ready(function () {
                                 let investDetails = {{ isset($decodedMaterialData) ? count($decodedMaterialData) : 1 }};
+                                let preparedBy = "{{ Helpers::getInitiatorName($document->originator_id) }}";
+                                let checkedBy = "{{ $checkedBy }}";
+                                let approvedBy = "{{ $approvedBy }}";
 
                                 $('#RowMaterialData').click(function () {
                                     let rowCount = $('#RowMaterialTable tbody tr').length + 1;
@@ -14464,9 +14501,9 @@
                                             <td><input type="text" name="row_material[${investDetails}][grade]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]"></td>
+                                            <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]" value="${preparedBy}" readonly></td>
+                                            <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]" value="${checkedBy}" readonly></td>
+                                            <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]" value="${approvedBy}" readonly> </td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     `;
@@ -14484,6 +14521,50 @@
                                         $(this).find('td:first-child input').val(index + 1);
                                     });
                                 }
+                            });
+                        </script>
+
+                        <!-- JavaScript -->
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                        <script>
+                            $(document).ready(function () {
+                                function toggleGrids() {
+                                    var selectedCode = $("#piaNameCode").val();
+                                                                        
+                                    if (selectedCode === "CM") {
+                                        $("#gridTable1").show();
+                                    } else {
+                                        $("#gridTable1").hide();
+                                    }
+
+                                    if (selectedCode === "CV") {
+                                        $("#gridTable1").show();
+                                    } else {
+                                        $("#gridTable1").hide();
+                                    }
+                                    if (selectedCode === "IP") {
+                                        $("#gridTable1").show();
+                                    } else {
+                                        $("#gridTable1").hide();
+                                    }
+                                    if (selectedCode === "FP") {
+                                        $("#gridTable1").show();
+                                    } else {
+                                        $("#gridTable1").hide();
+                                    }
+
+                                    if (selectedCode === "RW") {
+                                        $("#gridTable2").show();
+                                    } else {
+                                        $("#gridTable2").hide();
+                                    }
+                                }
+
+                                // Run on page load to check if a value is pre-selected
+                                toggleGrids();
+
+                                // Run when selection changes
+                                $("#piaNameCode").on("change", toggleGrids);
                             });
                         </script>
 

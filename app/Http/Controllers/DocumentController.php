@@ -5707,17 +5707,17 @@ class DocumentController extends Controller
             $RevisionGridmfpstpData->save();
 
 
-            // $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
-            // $ProductSpecification->document_type_id = $document->id;
-            // $ProductSpecification->identifier = 'ProductSpecification';
-            // $ProductSpecification->data = $request->product;
-            // $ProductSpecification->save();
+            $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
+            $ProductSpecification->document_type_id = $document->id;
+            $ProductSpecification->identifier = 'ProductSpecification';
+            $ProductSpecification->data = $request->product;
+            $ProductSpecification->save();
 
-            // $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
-            // $MaterialSpecification->document_type_id = $document->id;
-            // $MaterialSpecification->identifier = 'MaterialSpecification';
-            // $MaterialSpecification->data = $request->row_material;
-            // $MaterialSpecification->save();
+            $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
+            $MaterialSpecification->document_type_id = $document->id;
+            $MaterialSpecification->identifier = 'MaterialSpecification';
+            $MaterialSpecification->data = $request->row_material;
+            $MaterialSpecification->save();
 
 
             // $Finished_Product = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product']);
