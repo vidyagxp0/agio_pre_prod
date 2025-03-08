@@ -296,15 +296,14 @@
 
                     <tr>
                         <th class="w-20">Type of Audit</th>
-                        <td class="w-30" colspan="3">
+                        <td class="w-30" >
                             @if ($data->audit_type)
                                 {{ $data->audit_type }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
+
                         <th class="w-20">If Other</th>
                         <td class="w-30">
                             @if ($data->if_other)
@@ -316,17 +315,7 @@
                     </tr>
 
 
-                    <tr>
-
-                        <th class="w-20">If Other</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->if_other)
-                                {{ $data->if_other }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <th class="w-20">External Agencies</th>
                         <td class="w-30">
@@ -336,10 +325,10 @@
                                 Not Applicable
                             @endif
                         </td>
-                        </tr>
+                    </tr>
                     <tr>
                         <th class="w-20">Others</th>
-                        <td class="w-80" colspan="3">
+                        <td class="w-30" colspan="3">
                             @if ($data->others)
                                 {{ $data->others }}
                             @else
@@ -347,6 +336,8 @@
                             @endif
                         </td>
                     </tr>
+
+                  
 
 
                     <tr>
@@ -460,7 +451,7 @@
 
 
 
-
+             <br>
 
             <div class="block">
                 <div class="block-head">
@@ -567,6 +558,7 @@
 
 
 
+        <br>
         <div class="block">
             <div class="head">
                 <div class="block-head">
@@ -2604,7 +2596,8 @@ Not Applicable
 
 
 
-
+            <br>
+            <br>
 
 
                 <div class="block">

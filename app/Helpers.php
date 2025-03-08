@@ -818,7 +818,7 @@ class Helpers
             'CLEAVALIREPORTDOC' => 'Cleaning  Validation Report',
             'QUALIPROCUMREP' => 'Qualification Protocol Cum Report',
 
-            'REQULIFICATION' => 'ReQualification Report',
+            'REQULIFICATION' => 'Area Qualification Report',
             'PROVALIPROTOCOL'=>'Process Validation protocol',
             'REQULIFICATIONPROTOCOL'=>'Area Qualification Protocol',
             'REPORTFORMEDIAFILL'=>'Report For Media Fill',

@@ -378,12 +378,28 @@
                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
                             ->select('stage_manages.*', 'users.name as user_name')
                             ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
+                            ->where('stage', 'Approval-Submit')
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA
+                        @if ($inreviews->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreviews as $temp)
+                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif 
+                    </td>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">
+                        @if ($inreviews->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreviews as $temp)
+                              <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif
+                    </th>
                     <td style="padding: 20px; border: 1px solid #ddd;">  </td>
                              
                 </tr>

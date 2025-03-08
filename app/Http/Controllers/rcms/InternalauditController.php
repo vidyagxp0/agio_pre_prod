@@ -4787,6 +4787,8 @@ if ($areIniAttachmentsSame2 != true) {
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
+
+
     //    dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
@@ -4812,6 +4814,7 @@ if ($areIniAttachmentsSame2 != true) {
         
         $auditAgendaData =InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
         $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
+
         // dd($json);
         // dd($auditAgendaData->data);
         // $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
@@ -5707,27 +5710,32 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data3 = InternalAuditObservationGrid::where(['io_id' =>$id, 'identifier' => 'observations'])->first();
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $id, 'identifier' => 'Initial'])->first();
 
+        $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
+        $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
 
-
-
-        if (!empty($grid_data)) {
-            // Unserialize the necessary fields
-            $grid_data->area_of_audit = unserialize($grid_data->area_of_audit);
-            $grid_data->start_date = unserialize($grid_data->start_date);
-            $grid_data->start_time = unserialize($grid_data->start_time);
-            $grid_data->end_date = unserialize($grid_data->end_date);
-            $grid_data->end_time = unserialize($grid_data->end_time);
-            $grid_data->auditor = unserialize($grid_data->auditor);
-            $grid_data->auditee = unserialize($grid_data->auditee);
-            $grid_data->remark = unserialize($grid_data->remark);
+      
+        
+        if (!empty($json)) {
+            // Check if keys exist before unserializing
+            $json['area_of_audit'] = isset($json['area_of_audit']) ? unserialize($json['area_of_audit']) : null;
+            $json['start_date'] = isset($json['start_date']) ? unserialize($json['start_date']) : null;
+            $json['start_time'] = isset($json['start_time']) ? unserialize($json['start_time']) : null;
+            $json['end_date'] = isset($json['end_date']) ? unserialize($json['end_date']) : null;
+            $json['end_time'] = isset($json['end_time']) ? unserialize($json['end_time']) : null;
+            $json['auditor'] = isset($json['auditor']) ? unserialize($json['auditor']) : null;
+            $json['auditee'] = isset($json['auditee']) ? unserialize($json['auditee']) : null;
+            $json['remark'] = isset($json['remark']) ? unserialize($json['remark']) : null;
         }
+
+      
+        
 
 
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview','grid_Data3','grid_Data5'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','checklist1','checklist2','checklist3','checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','grid_data','auditorview','grid_Data3','grid_Data5','json'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
