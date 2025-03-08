@@ -3088,6 +3088,8 @@ class DocumentController extends Controller
                // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
+                $document->select_specification = $request->select_specification;
+
 
                // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
@@ -6644,6 +6646,28 @@ class DocumentController extends Controller
             'effective_date' => $document ? $document->effective_date : null
         ]);
     }
+
+    public function getRecordsByType(Request $request)
+    {
+        $allowedTypes = ['FPS', 'INPS', 'CVS', 'RAWMS'];
+        
+        $records = Document::whereIn('document_type_id', $allowedTypes)->get();
+    
+        $formattedRecords = [];
+    
+        foreach ($records as $data) {
+            $revisionNumber = $data->revision_number ?? '00';
+    
+            // Har record ke document_type_id ke according format set karna
+            $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT) . "-" . $revisionNumber;
+            $formattedRecords[] = $formattedRecord;
+        }
+    
+        return response()->json($formattedRecords);
+    }
+    
+    
+    
     
 
 

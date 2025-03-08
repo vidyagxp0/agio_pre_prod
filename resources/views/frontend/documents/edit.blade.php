@@ -14243,29 +14243,48 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="piaNameCode">Code</label>
-                                    <select name="pia_name_code" id="piaNameCode" class="form-control">
+                                    <select name="pia_name_code" id="piaNameCode">
                                         <option value="">Select here</option>
                                         <option value="FP" @if ($document->pia_name_code == 'FP') selected @endif>Finished Product</option>
                                         <option value="IP" @if ($document->pia_name_code == 'IP') selected @endif>Inprocess Product</option>
                                         <option value="CV" @if ($document->pia_name_code == 'CV') selected @endif>Cleaning Validation</option>
                                         <option value="RW" @if ($document->pia_name_code == 'RW') selected @endif>Raw Material</option>
                                         <option value="CM" @if ($document->pia_name_code == 'CM') selected @endif>Consumable</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                                        <!-- <option value="FP" {{ $selectedValue === 'FP' ? 'selected' : '' }}>Finished Product</option>
-                                        <option value="IP" {{ $selectedValue === 'IP' ? 'selected' : '' }}>Inprocess Product</option>
-                                        <option value="CV" {{ $selectedValue === 'CV' ? 'selected' : '' }}>Cleaning Validation</option>
-                                        <option value="RW" {{ $selectedValue === 'RW' ? 'selected' : '' }}>Raw Material</option>
-                                        <option value="CM" {{ $selectedValue === 'CM' ? 'selected' : '' }}>Consumable</option> -->
+                        
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="piaNameCode">Specification</label>
+                                    <select id="recordSelect" name="select_specification">
+                                        <option value=" ">Select Specification</option>
                                     </select>
                                 </div>
                             </div>
 
 
+                            <script>
+                                $(document).ready(function () {
+                                    $.ajax({
+                                        url: "{{ route('getRecordsByType') }}", 
+                                        type: "GET",
+                                        success: function (response) {
+                                            var select = $("#recordSelect");
+                                            select.empty();
+                                            select.append('<option value="">Select Specification</option>');
+
+                                            $.each(response, function (index, value) {
+                                                select.append('<option value="' + value + '">' + value + '</option>');
+                                            });
+                                        }
+                                    });
+                                });
+                            </script>
 
 
-
-
-
+                            
                             @php
                                 $serialNumber = 1;
                                 $decodedProductData = [];
@@ -14278,7 +14297,7 @@
 
                         <div class="group-input" id="gridTable1" style="display: none; margin-top: 20px;">
                             <label for="action-plan-grid">
-                                Finished Product Specification
+                                Product Specification
                                 <button type="button" id="addRowBtndata">+</button>
                                 <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -14502,8 +14521,8 @@
                                             <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]" value="${preparedBy}" readonly></td>
-                                            <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]" value="${checkedBy}" readonly></td>
-                                            <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]" value="${approvedBy}" readonly> </td>
+                                            <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]" readonly></td>
+                                            <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]" readonly> </td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
                                         </tr>
                                     `;
@@ -14526,7 +14545,7 @@
 
                         <!-- JavaScript -->
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                        <script>
+                        {{-- <script>
                             $(document).ready(function () {
                                 function toggleGrids() {
                                     var selectedCode = $("#piaNameCode").val();
@@ -14566,7 +14585,32 @@
                                 // Run when selection changes
                                 $("#piaNameCode").on("change", toggleGrids);
                             });
+                        </script> --}}
+
+                        <script>
+                            $(document).ready(function () {
+                                function toggleGrids() {
+                                    var selectedCode = $("#piaNameCode").val();
+
+                                    if (["FP", "IP", "CV", "CM"].includes(selectedCode)) {
+                                        $("#gridTable1").show();
+                                    } else {
+                                        $("#gridTable1").hide();
+                                    }
+
+                                    if (selectedCode === "RW") {
+                                        $("#gridTable2").show();
+                                    } else {
+                                        $("#gridTable2").hide();
+                                    }
+                                }
+
+                                toggleGrids();
+
+                                $("#piaNameCode").on("change", toggleGrids);
+                            });
                         </script>
+
 
 
 

@@ -395,24 +395,7 @@
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Specification No.:
                         
                     <span>
-                        @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
-
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    {{$document->pia_name_code}}S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @else
-                                    {{$document->pia_name_code}}S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
-                                @endif
-                        @else
-                            
-                                @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    {{$document->pia_name_code}}S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @else
-                                    {{$document->pia_name_code}}S/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
-                                @endif
-                        @endif
+                       {{ $document->select_specification }}
                     </span>
                     
                     

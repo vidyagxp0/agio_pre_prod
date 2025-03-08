@@ -130,6 +130,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/printAnnexurePDF/{id}', [DocumentController::class, 'printAnnexurePDF']);
     
     Route::get('/get-effective-date', [DocumentController::class, 'getEffectiveDate']);
+    Route::get('/get-records', [DocumentController::class, 'getRecordsByType'])->name('getRecordsByType');
+
 
     Route::get('document/view-attachments/{id}', [DocumentController::class, 'viewAttachments'])->name('view.attachments');
 
