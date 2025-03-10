@@ -14350,7 +14350,7 @@
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        STAGE 1 : POWEDER MFG & FILLING
+                                        STAGE 1 : Powder Manufacturing and Packing
                                     </div>
 
                                     <div class="col-12">
