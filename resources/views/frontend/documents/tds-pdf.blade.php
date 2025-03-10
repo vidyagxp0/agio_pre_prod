@@ -473,8 +473,8 @@
         /*Main Table Styling */
         #isPasted {
             width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         /* First column adjusts to its content */
@@ -529,7 +529,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 690px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 

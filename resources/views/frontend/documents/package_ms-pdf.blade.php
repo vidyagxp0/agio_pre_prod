@@ -125,13 +125,14 @@
             left: 0;
             width: 100%;
             z-index: 1000;
+            margin-bottom:100px;
             /* height: 60px; */
 
         }
 
         body {
-            margin-top: 250px;
-            margin-bottom: 180px;
+            margin-top: 260px;
+            margin-bottom: 170px;
             /* padding-top: 30px;
             padding-bottom: 50px;  */
         }
@@ -380,7 +381,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>
+                    <td style="font-size: 14px;">
                         @if(!empty( $document->packing_material_name))
                           {{ $document->packing_material_name }}
                         @else
@@ -552,7 +553,6 @@
                     </tr> 
                 </tbody>
             </table>
-
 
             <span>
                 Format No.: QA/097/F7-00 
