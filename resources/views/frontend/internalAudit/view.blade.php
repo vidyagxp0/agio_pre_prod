@@ -650,12 +650,7 @@
 
 
 
-                                                    <!-- @foreach ($users as $key => $user)
-                                                        <option value="{{ $user->name }}"
-                                                            @if ($user->id == $data->assign_to) selected @endif>
-                                                            {{ $user->name }}
-                                                        </option>
-                                                    @endforeach -->
+                                                   
                                                 </select>
                                                 @if ($data->stage != 1)
                                                 <!-- Hidden field to retain the value if select is disabled -->
@@ -1302,7 +1297,7 @@
                                         <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Auditee Comment
-                                                    @if ($data->stage == 2)
+                                                    @if ($data->stage == 2 && Auth::user()->id == $data->assign_to)
                                                         <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
@@ -1313,7 +1308,7 @@
                                                 </div>
 
                                                 <textarea class="summernote Auditee_comment"
-                                                    name="Auditee_comment" id="summernote-18" {{ $data->stage == 2 ? '' : 'readonly' }}
+                                                    name="Auditee_comment" id="summernote-18" {{ ($data->stage == 2 && Auth::user()->id == $data->assign_to) ? '' : 'readonly' }}
                                                     {{--@if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
                                                         readonly
                                                     @endif--}}
@@ -1353,7 +1348,7 @@
                                         <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Auditor Comment
-                                                    @if ($data->stage == 2)
+                                                    @if ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew'])
                                                         <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
@@ -1363,7 +1358,7 @@
                                                     </small>
                                                 </div>
                                                 <textarea class="summernote Auditor_comment"
-                                                name="Auditor_comment" id="summernote-18" {{ $data->stage == 2 ? '' : 'readonly' }}
+                                                name="Auditor_comment" id="summernote-18"  {{ ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew']) ? '' : 'readonly' }}
                                              {{--@if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)readonly
                                              @endif--}}
                                              >{{ $data->Auditor_comment}}</textarea>
