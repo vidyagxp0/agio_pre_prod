@@ -2961,11 +2961,21 @@
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
                                                                      <textarea name="observations[{{ $loop->index }}][observation]">{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
                                                                 </td>
-                                                                <td>
+                                                                {{-- <td> --}}
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}"> --}}
-                                                                    <textarea name="observations[{{ $loop->index }}][category]">{{ isset($item['category']) ? $item['category'] : '' }}</textarea>
+                                                                    {{-- <textarea name="observations[{{ $loop->index }}][category]">{{ isset($item['category']) ? $item['category'] : '' }}</textarea> --}}
 
+                                                                {{-- </td> --}}
+                                                                <td>
+                                                                    <select name="observations[{{ $loop->index }}][category]" class="form-select">
+                                                                        <option value="">-- Select Category --</option>
+                                                                        <option value="Major" {{ isset($item['category']) && $item['category'] == 'Major' ? 'selected' : '' }}>Major</option>
+                                                                        <option value="Minor" {{ isset($item['category']) && $item['category'] == 'Minor' ? 'selected' : '' }}>Minor</option>
+                                                                        <option value="Critical" {{ isset($item['category']) && $item['category'] == 'Critical' ? 'selected' : '' }}>Critical</option>
+                                                                    </select>
                                                                 </td>
+                                                                
+
                                                                 <td>
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"> --}}
                                                                     <textarea name="observations[{{ $loop->index }}][remarks]">{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
@@ -15326,7 +15336,14 @@
                         serialNumber +
                         '"></td>' +
                         '<td><textarea name="observations[' + serialNumber + '][observation]"></textarea></td>' +
-                        '<td><textarea name="observations[' + serialNumber + '][category]"></textarea></td>' +
+                        '<td>' +
+                            '<select name="observations[' + serialNumber + '][category]" class="form-select">' +
+                                '<option value="">-- Select Category --</option>' +
+                                '<option value="Major">Major</option>' +
+                                '<option value="Minor">Minor</option>' +
+                                '<option value="Critical">Critical</option>' +
+                            '</select>' +
+                        '</td>' +
                         '<td><textarea name="observations[' + serialNumber + '][remarks]"></textarea></td>' +
                         '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';
