@@ -3477,6 +3477,9 @@ class DocumentController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->ProValProtocol = json_encode($allFiles);
                 }
+                $document->reviewer_comments = $request->reviewer_comments;
+                $document->approved_by_comment = $request->approved_by_comment;
+    
 
             $document->update();
 

@@ -1923,12 +1923,12 @@
                                                 @if (Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}"
                                                         @if ($document->reviewers) @php
-                                $data = explode(",", $document->reviewers);
-                                $count = count($data);
-                            @endphp
-                            @for ($i = 0; $i < $count; $i++)
-                                @if ($data[$i] == $lan->id)
-                                    selected @endif
+                                                    $data = explode(",", $document->reviewers);
+                                                    $count = count($data);
+                                                @endphp
+                                                @for ($i = 0; $i < $count; $i++)
+                                                    @if ($data[$i] == $lan->id)
+                                                        selected @endif
                                                         @endfor
                                                 @endif>
                                                 {{ $lan->name }}
@@ -2044,6 +2044,8 @@
                                 @endif
 
                             </div>
+
+                            
 
                         @if($document->document_type_id == 'SOP')
                             <div class="col-md-6">  
@@ -11707,6 +11709,84 @@
                                         }
                                     }
                                 </script>
+
+
+
+<!-- Comment Section for Each Reviewer -->
+<div class="col-12 mt-3">
+    <label for="reviewer_comments"><b>Reviewer Comments</b></label>
+
+    @php
+        $assignedReviewers = explode(",", $document->reviewers);
+        $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
+    @endphp
+
+    @foreach ($assignedReviewers as $reviewerId)
+        @php
+            $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
+        @endphp
+
+        @if ($reviewerUser)
+            <div class="comment-box">
+                <label><b>{{ $reviewerUser->name }}</b></label>
+                <input type="text" class="form-control reviewer-comment" 
+                    name="reviewer_comments[{{ $reviewerUser->id }}]" 
+                    value="{{ $reviewerComments[$reviewerUser->id] ?? '' }}"
+                    placeholder="Enter your comment...">
+            </div>
+        @endif
+    @endforeach
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.remove-file').forEach(button => {
+            button.addEventListener('click', function () {
+                const fileName = this.getAttribute('data-file-name');
+                const fileContainer = this.closest('.file-container');
+
+                if (fileContainer) {
+                    fileContainer.style.display = 'none';
+
+                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                    if (hiddenInput) {
+                        hiddenInput.remove();
+                    }
+
+                    const deletedFilesInput = document.getElementById('deleted_ProValProtocol');
+                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                    deletedFiles.push(fileName);
+                    deletedFilesInput.value = deletedFiles.join(',');
+                }
+            });
+        });
+    });
+
+    function addMultipleFiles(input, listId) {
+        let fileList = document.getElementById(listId);
+        for (let file of input.files) {
+            let fileContainer = document.createElement('h6');
+            fileContainer.classList.add('file-container', 'text-dark');
+            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+            let fileText = document.createElement('b');
+            fileText.textContent = file.name;
+
+            let removeLink = document.createElement('a');
+            removeLink.classList.add('remove-file');
+            removeLink.dataset.fileName = file.name;
+            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+            removeLink.addEventListener('click', function () {
+                fileContainer.style.display = 'none';
+            });
+
+            fileContainer.appendChild(fileText);
+            fileContainer.appendChild(removeLink);
+            fileList.appendChild(fileContainer);
+        }
+    }
+</script>
+
 
 
 
