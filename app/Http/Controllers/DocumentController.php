@@ -2985,6 +2985,37 @@ class DocumentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+
+     public function documentReviewComment($id, Request $request)
+     {
+ 
+         $document = Document::findOrFail($id);
+ 
+         $currentUserId = auth()->id();
+ 
+         // Decode existing comments or initialize an empty array
+         $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
+         $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
+ 
+         // Update only the current user's comment
+         if ($request->has("reviewer_comments.$currentUserId")) {
+             $reviewerComments[$currentUserId] = $request->input("reviewer_comments.$currentUserId");
+         }
+ 
+         if ($request->has("approver_comments.$currentUserId")) {
+             $approverComments[$currentUserId] = $request->input("approver_comments.$currentUserId");
+         }
+ 
+         // Save back the updated comments
+         $document->reviewer_comments = json_encode($reviewerComments);
+         $document->approver_comments = json_encode($approverComments);
+         $document->save();
+ 
+         return back()->with('success', 'Your comment has been saved successfully.');
+       
+     }
+
     public function update($id, Request $request)
     {
         $document = Document::find($id);

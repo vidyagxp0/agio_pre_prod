@@ -132,7 +132,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('/get-effective-date', [DocumentController::class, 'getEffectiveDate']);
 
     Route::get('document/view-attachments/{id}', [DocumentController::class, 'viewAttachments'])->name('view.attachments');
-
+    Route::post('documentReviewComment/{id}', [DocumentController::class, 'documentReviewComment'])->name('documentReviewComment');
+   
         
     Route::resource('documentsContent', DocumentContentController::class);
     Route::get('doc-details/{id}', [DocumentDetailsController::class, 'viewdetails']);
