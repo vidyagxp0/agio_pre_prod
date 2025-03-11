@@ -435,8 +435,6 @@
                                 </a>
                             @endif
 
-
-
                         </div>
                     </div>
 
@@ -1384,7 +1382,7 @@
                 <form action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="stage_id" value="11" />
+                    <input type="hidden" name="stage_id" value="12" />
                     <input type="hidden" name="document_id" value="{{ $document->id }}">
                     <!-- Modal body -->
                     <div class="modal-body">

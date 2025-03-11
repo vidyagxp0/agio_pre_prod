@@ -54,7 +54,6 @@ class DocumentDetailsController extends Controller
   function sendforstagechanage(Request $request)
   {
 
-    // dd($request->all());
     if ($request->username == Auth::user()->email) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
@@ -777,7 +776,7 @@ class DocumentDetailsController extends Controller
                   'document_number' => $document->document_number,
                   'status' => 'Effective'
                 ])->first();
-                
+
                 if ($old_document) {
                   $old_document->stage = 12;
                   $old_document->status = 'Obsolete';
@@ -794,7 +793,7 @@ class DocumentDetailsController extends Controller
                 // 
               }
             }
-            if ($request->stage_id == 11) {
+            if ($request->stage_id == 12) {
               $document['stage'] = $request->stage_id;
               $document['status'] = Stage::where('id', $request->stage_id)->value('name');
             }

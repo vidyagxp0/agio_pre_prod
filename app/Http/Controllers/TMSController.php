@@ -503,7 +503,7 @@ class TMSController extends Controller
                 
                 $document->doc = Document::find($id);
                 $document->doc->stage = 10;
-                $document->doc->status = "Effective";
+                $document->doc->status = "In-Effective";
                 
                 $documentTraining = DocumentTraining::where('document_id', $id)->first();
                 if ($documentTraining && $documentTraining->status == "Complete") {
