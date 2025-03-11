@@ -220,7 +220,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Division Code</th>
+                        <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
                             @if ($data->division_id)
                                 {{ Helpers::getDivisionName($data->division_id) }}
@@ -384,7 +384,7 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">File</th>
+                            <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->file_attach)
                             @php $files = json_decode($data->file_attach); @endphp
@@ -456,7 +456,7 @@ Not Applicable
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->qa_head)
                         @php $files = json_decode($data->qa_head); @endphp
@@ -557,7 +557,7 @@ Not Applicable
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">File</th>
+                            <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->Support_doc)
                             @php $files = json_decode($data->Support_doc); @endphp
@@ -611,7 +611,7 @@ Not Applicable
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->final_attach)
                         @php $files = json_decode($data->final_attach); @endphp

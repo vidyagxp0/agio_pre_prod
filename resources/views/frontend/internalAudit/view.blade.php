@@ -1718,27 +1718,27 @@
                                          <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule End Date"> End Date</label>
-                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --
+                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" 
                                                 <div class="calenderauditee">
                                                     <input type="text"
                                                         id="audit_schedule_end_date" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
                                                     <input type="date" name="audit_schedule_end_date" value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                 </div>
-                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --
+                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
-                                                    Audit Agenda<button type="button" name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                    Audit Agenda <button type="button" name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         onclick="addAuditAgenda('audit-agenda-grid')"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="audit-agenda-grid">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th>Sr. no. </th>
                                                             <th>Area of Audit</th>
                                                             <th>Scheduled Start Date</th>
                                                             <th>Scheduled Start Time</th>
@@ -1749,14 +1749,17 @@
                                                             <th>Remarks</th>
                                                         </tr>
                                                     </thead>
+                                                   
                                                     <tbody>
                                                         @if ($grid_data)
                                                         @if (!empty($grid_data->area_of_audit))
                                                         @foreach (unserialize($grid_data->area_of_audit) as $key => $temps)
                                                         <tr>
-                                                            <td><input disabled type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
-
-                                                            <td><input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            <td>
+                                                            <input type="text" name="serial_number[]"   {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   value="{{ $key + 1 }}"> 
+                                                           </td>
+                                                            <td>
+                                                                   <input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
 
@@ -2234,7 +2237,7 @@
                                                     <table class="table table-bordered" id="editSamplePlanningTable">
                                                         <thead>
                                                             <tr>
-                                                                <!-- <th>#</th> -->
+                                                                <th>Sr.no.</th>
                                                                 <th>Area of Audit</th>
                                                                 <th>Scheduled Start Date</th>
                                                                 <th>Scheduled Start Time</th>
@@ -2247,6 +2250,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+
+
+                                                       
+
                                                             @if(!empty($json) && is_array($json))
                                                                 @foreach ($json as $key => $row)
                                                                 @php
@@ -2254,7 +2261,7 @@
                                                                     $selectedAuditee = isset($row['auditee']) ? explode(',', $row['auditee']) : [];
                                                                 @endphp 
                                                                     <tr>
-                                                                        <!-- <td class="row-index">{{ $key + 1 }}</td> -->
+                                                                        <td class="row-index">{{ $key + 1 }}</td>
                                                                         <td><input type="text" name="auditAgendaData[{{ $key }}][auditArea]" value="{{ $row['auditArea'] }}"></td>
                                                                         <td>
                                                                             <div class="col-md-6 new-date-data-field">
@@ -2315,7 +2322,7 @@
                                             </div>
                                         </div>
 
-                                        <script>
+                                        {{-- <script>
                                             document.addEventListener("DOMContentLoaded", function() {
                                                 let rowIndex = {{ count($json) }};
                                                 const analysts = @json($users->toArray() ?? []);
@@ -2334,7 +2341,10 @@
                                                     }
 
                                                     newRow.innerHTML = `
-                                                    
+                                                
+                                                                        <td class="row-index">{{ $key + 1 }}</td>
+                                                                    
+
                                                                         <td>
                                                                             <input type="text" name="auditAgendaData[${rowIndex}][auditArea]">
                                                                         </td>
@@ -2411,6 +2421,100 @@
                                                     }
                                                 });                                        
                                             });
+                                        </script> --}}
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+    let rowIndex = {{ count($json) }};
+    const analysts = @json($users->toArray() ?? []);
+
+    document.getElementById("addSamplePlanning").addEventListener("click", function() {
+        const tableBody = document.querySelector("#editSamplePlanningTable tbody");
+        const newRow = document.createElement("tr");
+
+        let analystOptions = `<option value="">Select Auditor</option>`;
+        if (Array.isArray(analysts)) {
+            analysts.forEach(analyst => {
+                analystOptions += `<option value="${analyst.id}">${analyst.name}</option>`;
+            });
+        } else {
+            console.warn("Auditor data is not an array");
+        }
+
+        newRow.innerHTML = `
+            <td class="row-index"></td> <!-- Sr. No will be updated dynamically -->
+            <td><input type="text" name="auditAgendaData[${rowIndex}][auditArea]"></td>
+            <td>
+                <div class="col-md-6 new-date-data-field">
+                    <div class="group-input input-date">
+                        <div class="calenderauditee">
+                            <input type="text" id="scheduleStartDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
+                            <input type="date" name="auditAgendaData[${rowIndex}][scheduleStartDate]"
+                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                class="hide-input" oninput="handleDateInput(this, 'scheduleStartDate${rowIndex}')" />
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td><input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]"></td>
+            <td>
+                <div class="col-md-6 new-date-data-field">
+                    <div class="group-input input-date">
+                        <div class="calenderauditee">
+                            <input type="text" id="scheduleEndDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
+                            <input type="date" name="auditAgendaData[${rowIndex}][scheduleEndDate]"
+                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                class="hide-input" oninput="handleDateInput(this, 'scheduleEndDate${rowIndex}')" />
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td><input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]"></td>
+            <td>
+                <select multiple id="auditorsData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditors]">
+                    ${analystOptions}
+                </select>
+            </td>
+            <td>
+                <select multiple id="auditeeData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditee]">
+                    ${analystOptions}
+                </select>
+            </td>
+            <td><textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea></td>
+            <td><button type="button" class="removeRowBtn">Remove</button></td>
+        `;
+
+        tableBody.appendChild(newRow);
+        rowIndex++;
+
+        updateRowNumbers(); // Function to update Sr. No
+
+        VirtualSelect.init({
+            ele: '#auditorsData_' + (rowIndex - 1),
+            multiple: true
+        });
+
+        VirtualSelect.init({
+            ele: '#auditeeData_' + (rowIndex - 1),
+            multiple: true
+        });
+    });
+
+    document.querySelector("#editSamplePlanningTable tbody").addEventListener("click", function(e) {
+        if (e.target && e.target.classList.contains("removeRowBtn")) {
+            e.target.closest("tr").remove();
+            updateRowNumbers(); // Function to update Sr. No after row removal
+        }
+    });
+
+    function updateRowNumbers() {
+        document.querySelectorAll("#editSamplePlanningTable tbody tr").forEach((row, index) => {
+            row.querySelector(".row-index").textContent = index + 1;
+        });
+    }
+
+    updateRowNumbers(); // Initial call to set correct numbers
+});
+
                                         </script>
 
                                         <div class="col-lg-12">

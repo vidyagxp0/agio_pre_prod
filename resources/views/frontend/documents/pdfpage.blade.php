@@ -699,7 +699,7 @@
                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
                             ->select('stage_manages.*', 'users.name as user_name')
                             ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
+                            ->where('stage', 'HOD Review-Submit')
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
@@ -1416,7 +1416,7 @@
                                         <tr>
                                             <td>{{ $item['revision_number'] ?? '' }}</td>
                                             <td>{{ $item['cc_no'] ?? '' }}</td>
-                                            <td>{{ $item['revised_effective_date'] ?? '' }}</td>
+                                            <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-F-Y') : '' }}</td>
                                             <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                         </tr>
                                     @endforeach
@@ -1523,12 +1523,12 @@
                                             {{ $data->short_description }}
                                         </td>
                                     </tr>
-                                    <tr>
+                                    {{-- <tr>
                                         <th class="w-30 text-left vertical-baseline">Description</th>
                                         <td class="w-70 text-left">
                                             {{ $data->description }}
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                     @php
                                         $last = DB::table('document_histories')
                                             ->where('document_id', $data->id)
@@ -1579,7 +1579,6 @@
                             ->where('document_id', $data->id)
                             ->where('stage', 'Reviewed')
                             ->get();
-                        // dd($signatureReviewerData);
                         $signatureApprovalData = DB::table('stage_manages')
                             ->where('document_id', $data->id)
                             ->where('stage', 'Approved')
@@ -1599,7 +1598,6 @@
                                         <th class="text-left w-25">Status</th>
                                         <th class="text-left w-25">E-Signature</th>
                                         <th class="text-left w-25">Comments</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -1745,9 +1743,7 @@
                                             @endif
                                         @endfor
 
-
                                     @endif
-
                                 </tbody>
                             </table>
                         </div>

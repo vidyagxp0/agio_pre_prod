@@ -274,7 +274,7 @@
                     <table>
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">File </th>
+                            <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->Attachments)
                             @foreach (json_decode($data->Attachments) as $key => $file)
@@ -320,7 +320,7 @@
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">File </th>
+                        <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->acknowledge_Attachment)
                         @foreach (json_decode($data->acknowledge_Attachment) as $key => $file)
@@ -367,7 +367,7 @@
             <table>
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
-                    <th class="w-60">File </th>
+                    <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->Effectiveness_check_Attachment)
                     @foreach (json_decode($data->Effectiveness_check_Attachment) as $key => $file)
@@ -429,7 +429,7 @@
             <table>
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
-                    <th class="w-60">File </th>
+                    <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->Attachment)
                     @foreach (json_decode($data->Attachment) as $key => $file)
@@ -473,7 +473,7 @@
             <table>
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
-                    <th class="w-60">File </th>
+                    <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->qa_cqa_review_Attachment)
                     @foreach (json_decode($data->qa_cqa_review_Attachment) as $key => $file)
@@ -517,7 +517,7 @@
             <table>
                 <tr class="table_bg">
                     <th class="w-20">S.N.</th>
-                    <th class="w-60">File </th>
+                    <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->qa_cqa_approval_Attachment)
                     @foreach (json_decode($data->qa_cqa_approval_Attachment) as $key => $file)
