@@ -295,6 +295,10 @@
 
                 <button class="tablinks hidden-tabs" data-id="PACKVALIPROTOCOL" onclick="openData(event, 'doc-pvp')">Packing validation Protocol</button>
 
+                <button class="tablinks hidden-tabs" data-id="ANNACINQULIPROTOCOL" onclick="openData(event, 'doc-AIQP')">Annexure For Acceptance Of Installation Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNACOPERQULIPROTOCOL" onclick="openData(event, 'doc-AOQP')">Annexure For Acceptance Of Operational Qualification Protocol</button>
+                <button class="tablinks hidden-tabs" data-id="ANNACPERMQULIPROTOCOL" onclick="openData(event, 'doc-APQP')">Annexure For Acceptance Of Performance Qualification Protocol</button>
+
                 <button class="tablinks hidden-tabs" data-id="PACKVALIREPORT" onclick="openData(event, 'doc-PacValRep')">Packing Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="FOCONITOGENPROTOCOL" onclick="openData(event, 'doc-FoCoANGsP')">Format For Compressed Air And Nitrogen Gas System Protocol</button>
 
@@ -1551,7 +1555,7 @@
                                                 <tr>
                                                     <th>Sr. No.</th>
                                                     <th class="copy-name">Revision No.</th>
-                                                    <th class="copy-name">Change Control No./ DCRF No</th>
+                                                    <th class="copy-name">Change Control No.</th>
                                                     <th class="copy-name">Effective Date</th>
                                                     <th class="copy-name">Reason of revision</th>
                                                 </tr>
@@ -8623,17 +8627,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-                                function addMultipleFiles(input, listId) {
-                                    let fileList = document.getElementById(listId);
-                                    fileList.innerHTML = ""; // Clear previous files (if needed)
 
-                                    for (let file of input.files) {
-                                        let fileItem = document.createElement("div");
-                                        fileItem.textContent = file.name;
-                                        fileList.appendChild(fileItem);
+                                <script>
+                                    function addMultipleFiles(input, listId) {
+                                        let fileList = document.getElementById(listId);
+                                        fileList.innerHTML = ""; // Clear previous files (if needed)
+
+                                        for (let file of input.files) {
+                                            let fileItem = document.createElement("div");
+                                            fileItem.textContent = file.name;
+                                            fileList.appendChild(fileItem);
+                                        }
                                     }
-                                }
                                 </script>
 
                                 <div class="button-block">
@@ -9380,28 +9385,27 @@
                                         </div>
                                     </div>
                             <script>
-$(document).ready(function() {
-    $('#ObservationAdd').click(function() {
-        var tableBody = $('#job-responsibilty-table tbody');
-        var lastRow = tableBody.find('tr:last');
-        var lastIndex = lastRow.length ? parseInt(lastRow.find('input[name^="summaryResult["]').attr('name').match(/\[(\d+)\]/)[1]) : 0;
+                                $(document).ready(function() {
+                                    $('#ObservationAdd').click(function() {
+                                        var tableBody = $('#job-responsibilty-table tbody');
+                                        var lastRow = tableBody.find('tr:last');
+                                        var lastIndex = lastRow.length ? parseInt(lastRow.find('input[name^="summaryResult["]').attr('name').match(/\[(\d+)\]/)[1]) : 0;
 
-        function generateTableRow(serialNumber) {
-            return `
-                <tr>
-                    <td><input disabled type="text" name="summaryResult[${serialNumber}][serial]" value="${serialNumber + 1}"></td>
-                    <td><input type="text" name="summaryResult[${serialNumber}][revision_no_tds]"></td>
-                    <td><input type="text" name="summaryResult[${serialNumber}][changContNo_tds]"></td>
-                    <td><input type="date" name="summaryResult[${serialNumber}][effectiveDate_tds]"></td>
-                    <td><input type="text" name="summaryResult[${serialNumber}][reasonRevi_tds]"></td>
-                </tr>`;
-        }
+                                        function generateTableRow(serialNumber) {
+                                            return `
+                                                <tr>
+                                                    <td><input disabled type="text" name="summaryResult[${serialNumber}][serial]" value="${serialNumber + 1}"></td>
+                                                    <td><input type="text" name="summaryResult[${serialNumber}][revision_no_tds]"></td>
+                                                    <td><input type="text" name="summaryResult[${serialNumber}][changContNo_tds]"></td>
+                                                    <td><input type="date" name="summaryResult[${serialNumber}][effectiveDate_tds]"></td>
+                                                    <td><input type="text" name="summaryResult[${serialNumber}][reasonRevi_tds]"></td>
+                                                </tr>`;
+                                        }
 
-        var newRow = generateTableRow(lastIndex + 1);
-        tableBody.append(newRow);
-    });
-});
-
+                                        var newRow = generateTableRow(lastIndex + 1);
+                                        tableBody.append(newRow);
+                                    });
+                                });
                             </script>
 
                             </div>
@@ -14410,6 +14414,152 @@ $(document).ready(function() {
 
                     {{-- Rajendra code end   --}}
 
+                    <div id="doc-AIQP" class="tabcontent">
+                        <div class="orig-head">Annexure For Acceptance Of Installation Qualification Protocol</div>
+                            <div class="input-fields">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments"> Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachement_AIQP"></div>
+
+                                                <div class="add-btn">
+                                                    <label for="AIQPfile" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="AIQPfile" name="AIQPattachement[]"
+                                                        oninput="addMultipleFiles(this, 'attachement_AIQP')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function addMultipleFiles(input, listId) {
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = ""; // Clear previous files (if needed)
+
+                                            for (let file of input.files) {
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+                                            }
+                                        }
+                                    </script>
+
+                                </div>
+                            </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-AOQP" class="tabcontent">
+                        <div class="orig-head">Annexure For Acceptance Of Operational Qualification Protocol</div>
+                            <div class="input-fields">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments"> Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachement_AOQP"></div>
+
+                                                <div class="add-btn">
+                                                    <label for="AOQPfile" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="AOQPfile" name="AOQPattachement[]"
+                                                        oninput="addMultipleFiles(this, 'attachement_AOQP')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function addMultipleFiles(input, listId) {
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = ""; // Clear previous files (if needed)
+
+                                            for (let file of input.files) {
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+                                            }
+                                        }
+                                    </script>
+
+                                </div>
+                            </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-APQP" class="tabcontent">
+                        <div class="orig-head">Annexure For Acceptance Of Performance Qualification Protocol</div>
+                            <div class="input-fields">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Closure Attachments"> Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="attachement_APQP"></div>
+
+                                                <div class="add-btn">
+                                                    <label for="APQPfile" style="cursor: pointer;">Add</label>
+                                                    <input type="file" id="APQPfile" name="APQPattachement[]"
+                                                        oninput="addMultipleFiles(this, 'attachement_APQP')" multiple hidden>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function addMultipleFiles(input, listId) {
+                                            let fileList = document.getElementById(listId);
+                                            fileList.innerHTML = ""; // Clear previous files (if needed)
+
+                                            for (let file of input.files) {
+                                                let fileItem = document.createElement("div");
+                                                fileItem.textContent = file.name;
+                                                fileList.appendChild(fileItem);
+                                            }
+                                        }
+                                    </script>
+
+                                </div>
+                            </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    
+
 
                     {{-- Raw Material Specifications Tabs --}}
                     <div id="doc-rawms" class="tabcontent">
@@ -15040,75 +15190,97 @@ $(document).ready(function() {
 
                     <div id="sign" class="tabcontent">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Originated By
-                                        {{-- Review Proposed By --}}
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
-                                <div class="review-names">
-                                    <div class="orig-head">
-                                        Review Proposed On
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Originated On
-                                        {{-- Document Reuqest Approved By --}}
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Reuqest Approved On
+                                        Comments
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Writing Completed By
+                                    HOD Review By
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Writing Completed On
-                                    </div>
-                                </div>
-                            </div> --}}
-                            <div class="col-md-6">
-                                <div class="review-names">
-                                    <div class="orig-head">
-                                        Reviewd By
+                                       HOD Review On
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Reviewd On
+                                       Comments
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Reviewed By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Reviewed On
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Comments
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Approved By
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Approved On
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Comments
                                     </div>
                                 </div>
                             </div>

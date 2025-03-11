@@ -363,6 +363,8 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
+
+
         //$reviewer = User::get();
         $reviewer = DB::table('user_roles')
             ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -1535,9 +1537,9 @@ class DocumentController extends Controller
             $content->annex_II_risk_attachment = json_encode($files);
         }
 
-    // ----------- Annexure II-Initial Risk Assessment end--------------------------
+        // ----------- Annexure II-Initial Risk Assessment end--------------------------
 
-     // ----------- Annexure III-ERES Assessment start--------------------------
+        // ----------- Annexure III-ERES Assessment start--------------------------
 
      if (!empty($request->annex_III_eres_attachment)) {
         $files = [];
@@ -1549,89 +1551,89 @@ class DocumentController extends Controller
             }
         }
         $content->annex_III_eres_attachment = json_encode($files);
-    }
-
-    // ----------- Annexure III-ERES Assessment end--------------------------
-
-     // ----------- Annexure IV-Validation Plan start--------------------------
-
-     if (!empty($request->annex_IV_plan_attachment)) {
-        $files = [];
-        if ($request->hasfile('annex_IV_plan_attachment')) {
-            foreach ($request->file('annex_IV_plan_attachment') as $file) {
-                $name = $request->name . 'annex_IV_plan_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                $file->move('upload/', $name);
-                $files[] = $name;
             }
-        }
-        $content->annex_IV_plan_attachment = json_encode($files);
-    }
 
-    // ----------- Annexure IV-Validation Plan end--------------------------
+            // ----------- Annexure III-ERES Assessment end--------------------------
 
-    // ----------- Annexure V-User Requirements Specification start--------------------------
+            // ----------- Annexure IV-Validation Plan start--------------------------
 
-    if (!empty($request->annex_V_user_attachment)) {
-        $files = [];
-        if ($request->hasfile('annex_V_user_attachment')) {
-            foreach ($request->file('annex_V_user_attachment') as $file) {
-                $name = $request->name . 'annex_V_user_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                $file->move('upload/', $name);
-                $files[] = $name;
-            }
-        }
-        $content->annex_V_user_attachment = json_encode($files);
-    }
-
-
-    // ----------- Annexure V-User Requirements Specification end--------------------------
-
-
-       // ----------- Annexure VI-Functional Requirement Specification start--------------------------
-
-       if (!empty($request->annex_VI_req_attachment)) {
-        $files = [];
-        if ($request->hasfile('annex_VI_req_attachment')) {
-            foreach ($request->file('annex_VI_req_attachment') as $file) {
-                $name = $request->name . 'annex_VI_req_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                $file->move('upload/', $name);
-                $files[] = $name;
-            }
-        }
-        $content->annex_VI_req_attachment = json_encode($files);
-    }
-
-        // ----------- Annexure VI-Functional Requirement Specification end--------------------------
-
-        // ----------- Annexure VII-Functional Specification start--------------------------
-
-        if (!empty($request->annex_VII_fun_attachment)) {
-            $files = [];
-            if ($request->hasfile('annex_VII_fun_attachment')) {
-                foreach ($request->file('annex_VII_fun_attachment') as $file) {
-                    $name = $request->name . 'annex_VII_fun_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+            if (!empty($request->annex_IV_plan_attachment)) {
+                $files = [];
+                if ($request->hasfile('annex_IV_plan_attachment')) {
+                    foreach ($request->file('annex_IV_plan_attachment') as $file) {
+                        $name = $request->name . 'annex_IV_plan_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
                 }
+                $content->annex_IV_plan_attachment = json_encode($files);
             }
-            $content->annex_VII_fun_attachment = json_encode($files);
-        }
 
-        // ----------- Annexure VII-Functional Specification end--------------------------
+            // ----------- Annexure IV-Validation Plan end--------------------------
 
-        // ----------- Annexure VIII-Technical Specification start--------------------------
+            // ----------- Annexure V-User Requirements Specification start--------------------------
 
-        if (!empty($request->annex_VIII_tech_attachment)) {
-        $files = [];
-        if ($request->hasfile('annex_VIII_tech_attachment')) {
-            foreach ($request->file('annex_VIII_tech_attachment') as $file) {
-                $name = $request->name . 'annex_VIII_tech_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                $file->move('upload/', $name);
-                $files[] = $name;
+            if (!empty($request->annex_V_user_attachment)) {
+                $files = [];
+                if ($request->hasfile('annex_V_user_attachment')) {
+                    foreach ($request->file('annex_V_user_attachment') as $file) {
+                        $name = $request->name . 'annex_V_user_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $content->annex_V_user_attachment = json_encode($files);
             }
-        }
-        $content->annex_VIII_tech_attachment = json_encode($files);
-        }
+
+
+            // ----------- Annexure V-User Requirements Specification end--------------------------
+
+
+            // ----------- Annexure VI-Functional Requirement Specification start--------------------------
+
+            if (!empty($request->annex_VI_req_attachment)) {
+                $files = [];
+                if ($request->hasfile('annex_VI_req_attachment')) {
+                    foreach ($request->file('annex_VI_req_attachment') as $file) {
+                        $name = $request->name . 'annex_VI_req_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $content->annex_VI_req_attachment = json_encode($files);
+            }
+
+                // ----------- Annexure VI-Functional Requirement Specification end--------------------------
+
+                // ----------- Annexure VII-Functional Specification start--------------------------
+
+                if (!empty($request->annex_VII_fun_attachment)) {
+                    $files = [];
+                    if ($request->hasfile('annex_VII_fun_attachment')) {
+                        foreach ($request->file('annex_VII_fun_attachment') as $file) {
+                            $name = $request->name . 'annex_VII_fun_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                            $file->move('upload/', $name);
+                            $files[] = $name;
+                        }
+                    }
+                    $content->annex_VII_fun_attachment = json_encode($files);
+                }
+
+                // ----------- Annexure VII-Functional Specification end--------------------------
+
+                // ----------- Annexure VIII-Technical Specification start--------------------------
+
+                if (!empty($request->annex_VIII_tech_attachment)) {
+                $files = [];
+                if ($request->hasfile('annex_VIII_tech_attachment')) {
+                    foreach ($request->file('annex_VIII_tech_attachment') as $file) {
+                        $name = $request->name . 'annex_VIII_tech_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $content->annex_VIII_tech_attachment = json_encode($files);
+                }
 
         // ----------- Annexure VIII-Technical Specification end--------------------------
 
@@ -1669,20 +1671,20 @@ class DocumentController extends Controller
 
             // ----------- Annexure XI Configuration Specification start--------------------------
 
-    if (!empty($request->annex_XI_confi_attachment)) {
-        $files = [];
-        if ($request->hasfile('annex_XI_confi_attachment')) {
-            foreach ($request->file('annex_XI_confi_attachment') as $file) {
-                $name = $request->name . 'annex_XI_confi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                $file->move('upload/', $name);
-                $files[] = $name;
+        if (!empty($request->annex_XI_confi_attachment)) {
+            $files = [];
+            if ($request->hasfile('annex_XI_confi_attachment')) {
+                foreach ($request->file('annex_XI_confi_attachment') as $file) {
+                    $name = $request->name . 'annex_XI_confi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
             }
+            $content->annex_XI_confi_attachment = json_encode($files);
         }
-        $content->annex_XI_confi_attachment = json_encode($files);
-    }
 
 
-    // ----------- Annexure XI Configuration Specification end--------------------------
+        // ----------- Annexure XI Configuration Specification end--------------------------
 
 
        // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start--------------------------
@@ -1697,11 +1699,11 @@ class DocumentController extends Controller
             }
         }
         $content->annex_XII_qua_proto_attachment = json_encode($files);
-    }
+        }
 
-        // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end--------------------------
+            // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end--------------------------
 
-        // ----------- Annexure XIII Unit Integration Test Script start--------------------------
+            // ----------- Annexure XIII Unit Integration Test Script start--------------------------
 
         if (!empty($request->annex_XIII_unit_integ_attachment)) {
             $files = [];
@@ -1778,6 +1780,48 @@ class DocumentController extends Controller
 
             }
             $content->pvpattachement = json_encode($files);
+        }
+
+        if (!empty($request->AIQPattachement)) {
+            $files = [];
+            if ($request->hasfile('AIQPattachement')) {
+                foreach ($request->file('AIQPattachement') as $file) {
+
+                    $name = $request->name . 'AIQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $content->AIQPattachement = json_encode($files);
+        }
+
+        if (!empty($request->AOQPattachement)) {
+            $files = [];
+            if ($request->hasfile('AOQPattachement')) {
+                foreach ($request->file('AOQPattachement') as $file) {
+
+                    $name = $request->name . 'AOQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $content->AOQPattachement = json_encode($files);
+        }
+
+        if (!empty($request->APQPattachement)) {
+            $files = [];
+            if ($request->hasfile('APQPattachement')) {
+                foreach ($request->file('APQPattachement') as $file) {
+
+                    $name = $request->name . 'APQPattachement' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+            }
+            $content->APQPattachement = json_encode($files);
         }
 
         if (!empty($request->afqpattachement)) {
@@ -2745,8 +2789,21 @@ class DocumentController extends Controller
         $parentChildRecords = DB::table('action_items')->get();
         $specifications = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications'])->first();
         $specifications_testing = specifications::where(['specification_id' => $document->id, 'identifier' => 'specifications_testing'])->first();
-        $specifications->data = json_decode($specifications->data, true);
-        $specifications_testing->data = json_decode($specifications_testing->data, true);
+        
+        // Check if $specifications exists before accessing 'data'
+        if ($specifications) {
+            $specifications->data = json_decode($specifications->data, true);
+        } else {
+            $specifications = (object) ['data' => []]; // Empty object with default data
+        }
+        
+        // Check if $specifications_testing exists before accessing 'data'
+        if ($specifications_testing) {
+            $specifications_testing->data = json_decode($specifications_testing->data, true);
+        } else {
+            $specifications_testing = (object) ['data' => []]; // Empty object with default data
+        }
+        
 
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
@@ -2787,7 +2844,6 @@ class DocumentController extends Controller
         $documentLanguages = DocumentLanguage::all();
 
 
-        /////////
         if ($document->revised == 'Yes') {
             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
         } else {
@@ -2817,18 +2873,25 @@ class DocumentController extends Controller
             }
         }
 
-
-
-        $SpecificationData = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION')->first();
-        $Specification_Validation_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION')->first();
-        $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id)->where('identifier', "CalibrationQualificationStatus")->first();
-
+        $revisedDocuments = Document::where('revised', 'Yes')->get()->map(function ($document) {
+            $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+            $currentId = str_pad($document->id, 3, '0', STR_PAD_LEFT);
+        
+            if (in_array($document->sop_type_short, ['EOP', 'IOP'])) {
+                $sopNumber = "{$document->department_id}/{$document->sop_type_short}/{$currentId}-{$revisionNumber}";
+            } else {
+                $sopNumber = "{$document->sop_type_short}/{$document->department_id}/{$currentId}-{$revisionNumber}";
+            }
+        
+            return $sopNumber;
+        });
+        
+        $revisedSopNumbers = $revisedDocuments->toArray();
+        
+        
 
         $hods = User::get();
 
-        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
-        $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-    //    dd($PackingGridData);
         $GtpGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
 
         $RevisionHistoryData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
@@ -2845,48 +2908,20 @@ class DocumentController extends Controller
         $RevisionGridmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
 
 
-        // dd($GtpGridData);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
 
-        $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
-
-        // $RowSpecification_Data = DocumentGrid::where('document_type_id', $id)->where('identifier', "Row_Materail")->first();
-
-        $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
-
-
-        $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id)->where('identifier', "CLEANING_VALIDATION")->first();
-
-
-        $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
-
         $sampleReconcilation = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "sampleReconcilation")->first();
-
-
         if ($sampleReconcilation && !empty($sampleReconcilation->data)) {
             $sampleReconcilation->data = json_decode($sampleReconcilation->data, true);
         }
-
-
-
-        //----------
-
-
-        $SpecificationData_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SpecificationCleaningValidationSpecification')->first();
-        $Specification_Validation_Data_CVS = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
-
-        $SpecificationData_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'specificationInprocessValidationSpecification')->first();
-        $Specification_Validation_Data_invs = DocumentGrid::where('document_type_id', $id)->where('identifier', 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
-
 
         $summaryResult = TDSDocumentGrid::where('tds_id', $id)->where('identifier', "summaryResult")->first();
 
         if ($summaryResult && !empty($summaryResult->data)) {
         $summaryResult->data = json_decode($summaryResult->data, true);
         }
-
 
         // $hods = DB::table('user_roles')
         //     ->join('users', 'user_roles.user_id', '=', 'users.id')
@@ -2896,9 +2931,6 @@ class DocumentController extends Controller
         //     ->groupBy('user_roles.q_m_s_processes_id', 'users.id', 'users.role', 'users.name') // Include all selected columns in the group by clause
         //     ->get();
 
-
-
-        // dd($document);
         return view('frontend.documents.edit', compact(
             'document',
             'departments',
@@ -2923,21 +2955,12 @@ class DocumentController extends Controller
             'document_distribution_grid',
             'specifications',
             'specifications_testing',
-            'SpecificationData',
-            'Specification_Validation_Data',
-            'testDataDecoded',
-            'PackingGridData',
-            'MaterialSpecification',
-            'ProductSpecification',
-            'sampleReconcilation',
             'summaryResult',
-            'Finished_Product',
-            'Inprocess_standard',
-            'CLEANING_VALIDATION',
             'GtpGridData',
+            'RevisionHistoryData',
             'currentId',
-            'Specification_Validation_Data_CVS',
-             'SpecificationData_CVS','SpecificationData_invs','Specification_Validation_Data_invs','revisionNumber','RevisionHistoryData','RevisionGridData',
+             'revisionNumber',
+            'RevisionGridData',
              'RevisionGridInpsData',
              'RevisionGridCvsData',
              'RevisionGridfpstpData',
@@ -2948,7 +2971,9 @@ class DocumentController extends Controller
              'RevisionGridpamsData',
              'RevisionGridmfpsData',
              'RevisionGridmfpstpData',
-            'CalibrationQualificationstatus'
+             'ProductSpecification',
+             'MaterialSpecification',
+             'revisedSopNumbers'
 
         ));
     }
@@ -2974,6 +2999,7 @@ class DocumentController extends Controller
             ]);
             $lastTraining = DocumentTraining::where('document_id', $id)->first();
             $document = Document::find($id);
+        if ($document->status !== 'Effective') {
             if ($document->stage <= 7) {
                 $document->document_name = $request->document_name;
                 $document->short_description = $request->short_desc;
@@ -3059,11 +3085,11 @@ class DocumentController extends Controller
                 $document->cvs_specificationGrid = $request->cvs_specificationGrid;
                 $document->ips_specificationGrid = $request->ips_specificationGrid;
 
-            // PIAS
+               // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
 
-            // Finished Product Specification
+               // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
                 $document->brand_name = $request->brand_name;
@@ -3077,7 +3103,7 @@ class DocumentController extends Controller
                 $document->sampling_instructions = $request->sampling_instructions;
 
 
-            //Cleaning Validation Specification
+                //Cleaning Validation Specification
                 $document->product_name_cvs = $request->product_name_cvs;
                 $document->generic_name_cvs = $request->generic_name_cvs;
                 $document->brand_name_cvs = $request->brand_name_cvs;
@@ -3090,7 +3116,7 @@ class DocumentController extends Controller
                 $document->reference_cvs = $request->reference_cvs;
                 $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
-            //Inprocess Validation specification
+               //Inprocess Validation specification
                 $document->product_name_inps = $request->product_name_inps;
                 $document->generic_name_inps = $request->generic_name_inps;
                 $document->brand_name_inps = $request->brand_name_inps;
@@ -3103,17 +3129,6 @@ class DocumentController extends Controller
                 $document->reference_inps = $request->reference_inps;
                 $document->sampling_instructions_inps = $request->sampling_instructions_inps;
 
-
-
-
-                // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
-                // try {
-                //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
-                //     $document->next_review_date = $next_review_date;
-                // } catch (\Exception $e) {
-                //     //
-                // }
-                // $document->review_period = $request->review_period;
                 $document->training_required = $request->training_required;
                 $document->attach_draft_doocument = $request->attach_draft_doocument;
                 $document->notify_to = json_encode($request->notify_to);
@@ -3126,8 +3141,6 @@ class DocumentController extends Controller
                 $document->display_user_department = $request->display_user_department;
                 $document->tds_name_code = $request->tds_name_code;
                 $document->total_no_pages = $request->total_no_pages;
-
-
 
                 if ($request->keywords) {
                     $document->keywords = implode(',', $request->keywords);
@@ -3190,8 +3203,7 @@ class DocumentController extends Controller
                     $document->approver_group = implode(',', $request->approver_group);
                 }
             }
-
-
+        }    
 
             if (!empty($request->ForComANiGasProtocolfile_attach) || !empty($request->deleted_ForComANiGasProtocolfile_attach)) {
                 $existingFiles = json_decode($document->ForComANiGasProtocolfile_attach, true) ?? [];
@@ -3246,7 +3258,6 @@ class DocumentController extends Controller
                 $document->PacValRepfile_attach = json_encode($allFiles);
             }
 
-            //  hold time study report attcment updated
             // HolTimSut file attachment handling
             if (!empty($request->HolTimSutRepfile_attach) || !empty($request->deleted_HolTimSutRepfile_attach)) {
             $existingFiles = json_decode($document->HolTimSutRepfile_attach, true) ?? [];
@@ -3274,10 +3285,7 @@ class DocumentController extends Controller
             $document->HolTimSutRepfile_attach = json_encode($allFiles);
             }
 
-
             //  temperature mapping protocol report attcment updated
-
-
             if (!empty($request->TemMapProCumRepfile_attach) || !empty($request->deleted_TemMapProCumRepfile_attach)) {
             $existingFiles = json_decode($document->TemMapProCumRepfile_attach, true) ?? [];
 
@@ -3386,8 +3394,6 @@ class DocumentController extends Controller
                         $allFiles = array_merge($existingFiles, $newFiles);
                         $document->MasterFormulaRecordBMR = json_encode($allFiles);
                         }
-
-
                 //-------------------- master formula reocrd tabs update
 
                     if (!empty($request->MasterPackingRecord) || !empty($request->deleted_MasterPackingRecord)) {
@@ -3416,7 +3422,7 @@ class DocumentController extends Controller
                         $document->MasterPackingRecord = json_encode($allFiles);
                         }
 
-         //-------------------- Site Master Fileatt reocrd tabs update
+                //-------------------- Site Master Fileatt reocrd tabs update
 
                     if (!empty($request->SiteMasterFileatt) || !empty($request->deleted_SiteMasterFileatt)) {
                         $existingFiles = json_decode($document->SiteMasterFileatt, true) ?? [];
@@ -3471,7 +3477,6 @@ class DocumentController extends Controller
                 $allFiles = array_merge($existingFiles, $newFiles);
                 $document->ProValProtocol = json_encode($allFiles);
                 }
-
 
             $document->update();
 
@@ -3929,6 +3934,8 @@ class DocumentController extends Controller
             $documentcontet->procedure = $request->procedure;
             $documentcontet->revision_summary = $request->revision_summary;
             $documentcontet->safety_precautions = $request->safety_precautions;
+            $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
+
 
             // packing validation repo kp
             $documentcontet->generic_PacValRep = $request->generic_PacValRep;
@@ -4169,51 +4176,51 @@ class DocumentController extends Controller
             // ----------- Annexure V-User Requirements Specification end--------------------------
 
 
-       // ----------- Annexure VI-Functional Requirement Specification start--------------------------
+           // ----------- Annexure VI-Functional Requirement Specification start--------------------------
 
-       if (!empty($request->annex_VI_req_attachment) || !empty($request->deleted_anne_attach6)) {
-        $existingFiles = json_decode($documentcontet->annex_VI_req_attachment, true) ?? [];
+            if (!empty($request->annex_VI_req_attachment) || !empty($request->deleted_anne_attach6)) {
+                $existingFiles = json_decode($documentcontet->annex_VI_req_attachment, true) ?? [];
 
-        // Handle deleted files
-        if (!empty($request->deleted_anne_attach6)) {
-            $filesToDelete = explode(',', $request->deleted_anne_attach6);
-            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                return !in_array($file, $filesToDelete);
-            });
-        }
-
-        // Handle new files
-        $newFiles = [];
-        if ($request->hasFile('annex_VI_req_attachment')) {
-            foreach ($request->file('annex_VI_req_attachment') as $file) {
-                $name = $request->name . 'annex_VI_req_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $newFiles[] = $name;
-            }
-        }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_VI_req_attachment = json_encode($allFiles);
-        }
-
-
-        // ----------- Annexure VI-Functional Requirement Specification end--------------------------
-
-        // ----------- Annexure VII-Functional Specification start--------------------------
-
-        if (!empty($request->annex_VII_fun_attachment) || !empty($request->deleted_anne_attach7)) {
-            $existingFiles = json_decode($documentcontet->annex_VII_fun_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach7)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach7);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach6)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach6);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
 
             // Handle new files
+            $newFiles = [];
+            if ($request->hasFile('annex_VI_req_attachment')) {
+                foreach ($request->file('annex_VI_req_attachment') as $file) {
+                    $name = $request->name . 'annex_VI_req_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/'), $name);
+                    $newFiles[] = $name;
+                }
+            }
+
+                // Merge existing and new files
+                $allFiles = array_merge($existingFiles, $newFiles);
+                $documentcontet->annex_VI_req_attachment = json_encode($allFiles);
+            }
+
+
+            // ----------- Annexure VI-Functional Requirement Specification end--------------------------
+
+            // ----------- Annexure VII-Functional Specification start--------------------------
+
+            if (!empty($request->annex_VII_fun_attachment) || !empty($request->deleted_anne_attach7)) {
+                $existingFiles = json_decode($documentcontet->annex_VII_fun_attachment, true) ?? [];
+
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach7)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach7);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
+
+                // Handle new files
             $newFiles = [];
             if ($request->hasFile('annex_VII_fun_attachment')) {
                 foreach ($request->file('annex_VII_fun_attachment') as $file) {
@@ -4229,20 +4236,20 @@ class DocumentController extends Controller
             }
 
 
-        // ----------- Annexure VII-Functional Specification end--------------------------
+            // ----------- Annexure VII-Functional Specification end--------------------------
 
-        // ----------- Annexure VIII-Technical Specification start--------------------------
+            // ----------- Annexure VIII-Technical Specification start--------------------------
 
-        if (!empty($request->annex_VIII_tech_attachment) || !empty($request->deleted_anne_attach8)) {
-            $existingFiles = json_decode($documentcontet->annex_VIII_tech_attachment, true) ?? [];
+            if (!empty($request->annex_VIII_tech_attachment) || !empty($request->deleted_anne_attach8)) {
+                $existingFiles = json_decode($documentcontet->annex_VIII_tech_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach8)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach8);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                // Handle deleted files
+                if (!empty($request->deleted_anne_attach8)) {
+                    $filesToDelete = explode(',', $request->deleted_anne_attach8);
+                    $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                        return !in_array($file, $filesToDelete);
+                    });
+                }
 
             // Handle new files
             $newFiles = [];
@@ -4261,586 +4268,664 @@ class DocumentController extends Controller
 
 
 
-        // ----------- Annexure VIII-Technical Specification end--------------------------
+                    // ----------- Annexure VIII-Technical Specification end--------------------------
 
-        // ----------- Annexure IX Functional Risk Assssment start--------------------------
+                    // ----------- Annexure IX Functional Risk Assssment start--------------------------
 
-        if (!empty($request->annex_IX_risk_attachment) || !empty($request->deleted_anne_attach9)) {
-            $existingFiles = json_decode($documentcontet->annex_IX_risk_attachment, true) ?? [];
+                    if (!empty($request->annex_IX_risk_attachment) || !empty($request->deleted_anne_attach9)) {
+                        $existingFiles = json_decode($documentcontet->annex_IX_risk_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach9)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach9);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach9)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach9);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_IX_risk_attachment')) {
-                foreach ($request->file('annex_IX_risk_attachment') as $file) {
-                    $name = $request->name . 'annex_IX_risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_IX_risk_attachment = json_encode($allFiles);
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_IX_risk_attachment')) {
+                            foreach ($request->file('annex_IX_risk_attachment') as $file) {
+                                $name = $request->name . 'annex_IX_risk_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_IX_risk_attachment = json_encode($allFiles);
+                        }
 
 
-        // ----------- Annexure IX Functional Risk Assssment end--------------------------
+                    // ----------- Annexure IX Functional Risk Assssment end--------------------------
 
-        // ----------- Annexure X-Design Specification start--------------------------
+                    // ----------- Annexure X-Design Specification start--------------------------
 
-        if (!empty($request->annex_X_design_attachment) || !empty($request->deleted_anne_attach10)) {
-            $existingFiles = json_decode($documentcontet->annex_X_design_attachment, true) ?? [];
+                    if (!empty($request->annex_X_design_attachment) || !empty($request->deleted_anne_attach10)) {
+                        $existingFiles = json_decode($documentcontet->annex_X_design_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach10)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach10);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach10)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach10);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_X_design_attachment')) {
-                foreach ($request->file('annex_X_design_attachment') as $file) {
-                    $name = $request->name . 'annex_X_design_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_X_design_attachment')) {
+                            foreach ($request->file('annex_X_design_attachment') as $file) {
+                                $name = $request->name . 'annex_X_design_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
 
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_X_design_attachment = json_encode($allFiles);
-            }
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_X_design_attachment = json_encode($allFiles);
+                        }
 
 
 
 
-        // ----------- Annexure X-Design Specification end--------------------------
+                    // ----------- Annexure X-Design Specification end--------------------------
 
-         // ----------- Annexure XI-Configuration Specification start--------------------------
+                    // ----------- Annexure XI-Configuration Specification start--------------------------
 
-         if (!empty($request->annex_XI_confi_attachment) || !empty($request->deleted_anne_attach11)) {
-            $existingFiles = json_decode($documentcontet->annex_XI_confi_attachment, true) ?? [];
+                    if (!empty($request->annex_XI_confi_attachment) || !empty($request->deleted_anne_attach11)) {
+                        $existingFiles = json_decode($documentcontet->annex_XI_confi_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach11)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach11);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach11)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach11);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XI_confi_attachment')) {
-                foreach ($request->file('annex_XI_confi_attachment') as $file) {
-                    $name = $request->name . 'annex_XI_confi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XI_confi_attachment')) {
+                            foreach ($request->file('annex_XI_confi_attachment') as $file) {
+                                $name = $request->name . 'annex_XI_confi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
 
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XI_confi_attachment = json_encode($allFiles);
-            }
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XI_confi_attachment = json_encode($allFiles);
+                        }
 
 
 
 
-        // ----------- Annexure XI-Configuration Specification end--------------------------
+                    // ----------- Annexure XI-Configuration Specification end--------------------------
 
-        // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start--------------------------
+                    // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol start--------------------------
 
-        if (!empty($request->annex_XII_qua_proto_attachment) || !empty($request->deleted_anne_attach12)) {
-            $existingFiles = json_decode($documentcontet->annex_XII_qua_proto_attachment, true) ?? [];
+                    if (!empty($request->annex_XII_qua_proto_attachment) || !empty($request->deleted_anne_attach12)) {
+                        $existingFiles = json_decode($documentcontet->annex_XII_qua_proto_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach12)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach12);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach12)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach12);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XII_qua_proto_attachment')) {
-                foreach ($request->file('annex_XII_qua_proto_attachment') as $file) {
-                    $name = $request->name . 'annex_XII_qua_proto_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XII_qua_proto_attachment')) {
+                            foreach ($request->file('annex_XII_qua_proto_attachment') as $file) {
+                                $name = $request->name . 'annex_XII_qua_proto_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
 
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XII_qua_proto_attachment = json_encode($allFiles);
-            }
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XII_qua_proto_attachment = json_encode($allFiles);
+                        }
 
 
 
 
-        // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end--------------------------
+                    // ----------- Annexure XII Installation Infrastructure Operational Performance Qualification Protocol end--------------------------
 
-         // ----------- Annexure XIII Unit Integration Test Script start--------------------------
+                    // ----------- Annexure XIII Unit Integration Test Script start--------------------------
 
-         if (!empty($request->annex_XIII_unit_integ_attachment) || !empty($request->deleted_anne_attach13)) {
-            $existingFiles = json_decode($documentcontet->annex_XIII_unit_integ_attachment, true) ?? [];
+                    if (!empty($request->annex_XIII_unit_integ_attachment) || !empty($request->deleted_anne_attach13)) {
+                        $existingFiles = json_decode($documentcontet->annex_XIII_unit_integ_attachment, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach13)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach13);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach13)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach13);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XIII_unit_integ_attachment')) {
-                foreach ($request->file('annex_XIII_unit_integ_attachment') as $file) {
-                    $name = $request->name . 'annex_XIII_unit_integ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XIII_unit_integ_attachment = json_encode($allFiles);
-            }
-
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XIII_unit_integ_attachment')) {
+                            foreach ($request->file('annex_XIII_unit_integ_attachment') as $file) {
+                                $name = $request->name . 'annex_XIII_unit_integ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XIII_unit_integ_attachment = json_encode($allFiles);
+                        }
+
 
-
-
-        // ----------- Annexure XIII Unit Integration Test Script end--------------------------
-
-           // ----------- Annexure XIV Data Migration Protocol start--------------------------
-
-           if (!empty($request->annex_XIV_data_migra_attachment) || !empty($request->deleted_anne_attach14)) {
-            $existingFiles = json_decode($documentcontet->annex_XIV_data_migra_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach14)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach14);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XIV_data_migra_attachment')) {
-                foreach ($request->file('annex_XIV_data_migra_attachment') as $file) {
-                    $name = $request->name . 'annex_XIV_data_migra_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XIV_data_migra_attachment = json_encode($allFiles);
-            }
-
-
-
-
-        // ----------- Annexure XIV Data Migration Protocol end--------------------------
-
-        // ----------- Annexure XV Data Qualification Protocol start--------------------------
-
-        if (!empty($request->annex_XV_data_qualif_attachment) || !empty($request->deleted_anne_attach15)) {
-            $existingFiles = json_decode($documentcontet->annex_XV_data_qualif_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_anne_attach15)) {
-                $filesToDelete = explode(',', $request->deleted_anne_attach15);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XV_data_qualif_attachment')) {
-                foreach ($request->file('annex_XV_data_qualif_attachment') as $file) {
-                    $name = $request->name . 'annex_XV_data_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-                // Merge existing and new files
-                $allFiles = array_merge($existingFiles, $newFiles);
-                $documentcontet->annex_XV_data_qualif_attachment = json_encode($allFiles);
-            }
-
-
-        // ----------- Annexure XV Data Qualification Protocol end--------------------------
-
-
-        // rajendra start
-
-        if (!empty($request->afqpattachement) || !empty($request->deleted_afqpattachement)) {
-            $existingFiles = json_decode($documentcontet->afqpattachement, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_afqpattachement)) {
-                $filesToDelete = explode(',', $request->deleted_afqpattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('afqpattachement')) {
-                foreach ($request->file('afqpattachement') as $file) {
-                    $name = $request->name . 'afqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->afqpattachement = json_encode($allFiles);
-        }
-
-        if (!empty($request->pvpattachement) || !empty($request->deleted_pvpattachement)) {
-            $existingFiles = json_decode($documentcontet->pvpattachement, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_pvpattachement)) {
-                $filesToDelete = explode(',', $request->deleted_pvpattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('pvpattachement')) {
-                foreach ($request->file('pvpattachement') as $file) {
-                    $name = $request->name . 'pvpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->pvpattachement = json_encode($allFiles);
-        }
+
+
+                    // ----------- Annexure XIII Unit Integration Test Script end--------------------------
+
+                    // ----------- Annexure XIV Data Migration Protocol start--------------------------
+
+                    if (!empty($request->annex_XIV_data_migra_attachment) || !empty($request->deleted_anne_attach14)) {
+                        $existingFiles = json_decode($documentcontet->annex_XIV_data_migra_attachment, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach14)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach14);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XIV_data_migra_attachment')) {
+                            foreach ($request->file('annex_XIV_data_migra_attachment') as $file) {
+                                $name = $request->name . 'annex_XIV_data_migra_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XIV_data_migra_attachment = json_encode($allFiles);
+                        }
+
+
+
+
+                    // ----------- Annexure XIV Data Migration Protocol end--------------------------
+
+                    // ----------- Annexure XV Data Qualification Protocol start--------------------------
+
+                    if (!empty($request->annex_XV_data_qualif_attachment) || !empty($request->deleted_anne_attach15)) {
+                        $existingFiles = json_decode($documentcontet->annex_XV_data_qualif_attachment, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_anne_attach15)) {
+                            $filesToDelete = explode(',', $request->deleted_anne_attach15);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('annex_XV_data_qualif_attachment')) {
+                            foreach ($request->file('annex_XV_data_qualif_attachment') as $file) {
+                                $name = $request->name . 'annex_XV_data_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                            // Merge existing and new files
+                            $allFiles = array_merge($existingFiles, $newFiles);
+                            $documentcontet->annex_XV_data_qualif_attachment = json_encode($allFiles);
+                        }
+
+
+                    // ----------- Annexure XV Data Qualification Protocol end--------------------------
+
+
+                    // rajendra start
+
+                    if (!empty($request->afqpattachement) || !empty($request->deleted_afqpattachement)) {
+                        $existingFiles = json_decode($documentcontet->afqpattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_afqpattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_afqpattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('afqpattachement')) {
+                            foreach ($request->file('afqpattachement') as $file) {
+                                $name = $request->name . 'afqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->afqpattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->pvpattachement) || !empty($request->deleted_pvpattachement)) {
+                        $existingFiles = json_decode($documentcontet->pvpattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_pvpattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_pvpattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('pvpattachement')) {
+                            foreach ($request->file('pvpattachement') as $file) {
+                                $name = $request->name . 'pvpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->pvpattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->AIQPattachement) || !empty($request->deleted_AIQPattachement)) {
+                        $existingFiles = json_decode($documentcontet->AIQPattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_AIQPattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_AIQPattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('AIQPattachement')) {
+                            foreach ($request->file('AIQPattachement') as $file) {
+                                $name = $request->name . 'AIQPattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->AIQPattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->AOQPattachement) || !empty($request->deleted_AOQPattachement)) {
+                        $existingFiles = json_decode($documentcontet->AOQPattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_AOQPattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_AOQPattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('AOQPattachement')) {
+                            foreach ($request->file('AOQPattachement') as $file) {
+                                $name = $request->name . 'AOQPattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->AOQPattachement = json_encode($allFiles);
+                    }
+
+                    if (!empty($request->APQPattachement) || !empty($request->deleted_APQPattachement)) {
+                        $existingFiles = json_decode($documentcontet->APQPattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_APQPattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_APQPattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('APQPattachement')) {
+                            foreach ($request->file('APQPattachement') as $file) {
+                                $name = $request->name . 'APQPattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->APQPattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->htspattachement) || !empty($request->deleted_htspattachement)) {
+                        $existingFiles = json_decode($documentcontet->htspattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_htspattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_htspattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('htspattachement')) {
+                            foreach ($request->file('htspattachement') as $file) {
+                                $name = $request->name . 'htspattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->htspattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->afqrattachement) || !empty($request->deleted_afqrattachement)) {
+                        $existingFiles = json_decode($documentcontet->afqrattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_afqrattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_afqrattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('afqrattachement')) {
+                            foreach ($request->file('afqrattachement') as $file) {
+                                $name = $request->name . 'afqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->afqrattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->afursattachement) || !empty($request->deleted_afursattachement)) {
+                        $existingFiles = json_decode($documentcontet->afursattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_afursattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_afursattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('afursattachement')) {
+                            foreach ($request->file('afursattachement') as $file) {
+                                $name = $request->name . 'afursattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->afursattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->aqpattachement) || !empty($request->deleted_aqpattachement)) {
+                        $existingFiles = json_decode($documentcontet->aqpattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_aqpattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_aqpattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('aqpattachement')) {
+                            foreach ($request->file('aqpattachement') as $file) {
+                                $name = $request->name . 'aqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->aqpattachement = json_encode($allFiles);
+                    }
+                    
+
+                    if (!empty($request->aqrattachement) || !empty($request->deleted_aqrattachement)) {
+                        $existingFiles = json_decode($documentcontet->aqrattachement, true) ?? [];
+
+                        // Handle deleted files
+                        if (!empty($request->deleted_aqrattachement)) {
+                            $filesToDelete = explode(',', $request->deleted_aqrattachement);
+                            $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                                return !in_array($file, $filesToDelete);
+                            });
+                        }
+
+                        // Handle new files
+                        $newFiles = [];
+                        if ($request->hasFile('aqrattachement')) {
+                            foreach ($request->file('aqrattachement') as $file) {
+                                $name = $request->name . 'aqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                                $file->move(public_path('upload/'), $name);
+                                $newFiles[] = $name;
+                            }
+                        }
+
+                        // Merge existing and new files
+                        $allFiles = array_merge($existingFiles, $newFiles);
+                        $documentcontet->aqrattachement = json_encode($allFiles);
+                    }
         
 
-        if (!empty($request->htspattachement) || !empty($request->deleted_htspattachement)) {
-            $existingFiles = json_decode($documentcontet->htspattachement, true) ?? [];
+                if (!empty($request->pfmfattachement) || !empty($request->deleted_pfmfattachement)) {
+                    $existingFiles = json_decode($documentcontet->pfmfattachement, true) ?? [];
 
-            // Handle deleted files
-            if (!empty($request->deleted_htspattachement)) {
-                $filesToDelete = explode(',', $request->deleted_htspattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle deleted files
+                    if (!empty($request->deleted_pfmfattachement)) {
+                        $filesToDelete = explode(',', $request->deleted_pfmfattachement);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('htspattachement')) {
-                foreach ($request->file('htspattachement') as $file) {
-                    $name = $request->name . 'htspattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('pfmfattachement')) {
+                        foreach ($request->file('pfmfattachement') as $file) {
+                            $name = $request->name . 'pfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
+
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->pfmfattachement = json_encode($allFiles);
                 }
-            }
+                
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->htspattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->rfmfattachement) || !empty($request->deleted_rfmfattachement)) {
+                    $existingFiles = json_decode($documentcontet->rfmfattachement, true) ?? [];
 
-        if (!empty($request->afqrattachement) || !empty($request->deleted_afqrattachement)) {
-            $existingFiles = json_decode($documentcontet->afqrattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_rfmfattachement)) {
+                        $filesToDelete = explode(',', $request->deleted_rfmfattachement);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_afqrattachement)) {
-                $filesToDelete = explode(',', $request->deleted_afqrattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('rfmfattachement')) {
+                        foreach ($request->file('rfmfattachement') as $file) {
+                            $name = $request->name . 'rfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('afqrattachement')) {
-                foreach ($request->file('afqrattachement') as $file) {
-                    $name = $request->name . 'afqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->rfmfattachement = json_encode($allFiles);
                 }
-            }
+                
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->afqrattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XVI_per_qualif_attachment) || !empty($request->deleted_annex_XVI_per_qualif_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XVI_per_qualif_attachment, true) ?? [];
 
-        if (!empty($request->afursattachement) || !empty($request->deleted_afursattachement)) {
-            $existingFiles = json_decode($documentcontet->afursattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XVI_per_qualif_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XVI_per_qualif_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_afursattachement)) {
-                $filesToDelete = explode(',', $request->deleted_afursattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XVI_per_qualif_attachment')) {
+                        foreach ($request->file('annex_XVI_per_qualif_attachment') as $file) {
+                            $name = $request->name . 'annex_XVI_per_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('afursattachement')) {
-                foreach ($request->file('afursattachement') as $file) {
-                    $name = $request->name . 'afursattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XVI_per_qualif_attachment = json_encode($allFiles);
                 }
-            }
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->afursattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XVII_valid_summ_attachment) || !empty($request->deleted_annex_XVII_valid_summ_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XVII_valid_summ_attachment, true) ?? [];
 
-        if (!empty($request->aqpattachement) || !empty($request->deleted_aqpattachement)) {
-            $existingFiles = json_decode($documentcontet->aqpattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XVII_valid_summ_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XVII_valid_summ_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_aqpattachement)) {
-                $filesToDelete = explode(',', $request->deleted_aqpattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XVII_valid_summ_attachment')) {
+                        foreach ($request->file('annex_XVII_valid_summ_attachment') as $file) {
+                            $name = $request->name . 'annex_XVII_valid_summ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('aqpattachement')) {
-                foreach ($request->file('aqpattachement') as $file) {
-                    $name = $request->name . 'aqpattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XVII_valid_summ_attachment = json_encode($allFiles);
                 }
-            }
+            
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->aqpattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XVIII_trac_matri_attachment) || !empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XVIII_trac_matri_attachment, true) ?? [];
 
-        if (!empty($request->aqrattachement) || !empty($request->deleted_aqrattachement)) {
-            $existingFiles = json_decode($documentcontet->aqrattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XVIII_trac_matri_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_aqrattachement)) {
-                $filesToDelete = explode(',', $request->deleted_aqrattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XVIII_trac_matri_attachment')) {
+                        foreach ($request->file('annex_XVIII_trac_matri_attachment') as $file) {
+                            $name = $request->name . 'annex_XVIII_trac_matri_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('aqrattachement')) {
-                foreach ($request->file('aqrattachement') as $file) {
-                    $name = $request->name . 'aqrattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XVIII_trac_matri_attachment = json_encode($allFiles);
                 }
-            }
+            
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->aqrattachement = json_encode($allFiles);
-        }
-        
+                if (!empty($request->annex_XIX_syst_retir_attachment) || !empty($request->deleted_annex_XIX_syst_retir_attachment)) {
+                    $existingFiles = json_decode($documentcontet->annex_XIX_syst_retir_attachment, true) ?? [];
 
-        if (!empty($request->pfmfattachement) || !empty($request->deleted_pfmfattachement)) {
-            $existingFiles = json_decode($documentcontet->pfmfattachement, true) ?? [];
+                    // Handle deleted files
+                    if (!empty($request->deleted_annex_XIX_syst_retir_attachment)) {
+                        $filesToDelete = explode(',', $request->deleted_annex_XIX_syst_retir_attachment);
+                        $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
+                            return !in_array($file, $filesToDelete);
+                        });
+                    }
 
-            // Handle deleted files
-            if (!empty($request->deleted_pfmfattachement)) {
-                $filesToDelete = explode(',', $request->deleted_pfmfattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
+                    // Handle new files
+                    $newFiles = [];
+                    if ($request->hasFile('annex_XIX_syst_retir_attachment')) {
+                        foreach ($request->file('annex_XIX_syst_retir_attachment') as $file) {
+                            $name = $request->name . 'annex_XIX_syst_retir_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                            $file->move(public_path('upload/'), $name);
+                            $newFiles[] = $name;
+                        }
+                    }
 
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('pfmfattachement')) {
-                foreach ($request->file('pfmfattachement') as $file) {
-                    $name = $request->name . 'pfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
+                    // Merge existing and new files
+                    $allFiles = array_merge($existingFiles, $newFiles);
+                    $documentcontet->annex_XIX_syst_retir_attachment = json_encode($allFiles);
+                } 
 
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->pfmfattachement = json_encode($allFiles);
-        }
-        
-
-        if (!empty($request->rfmfattachement) || !empty($request->deleted_rfmfattachement)) {
-            $existingFiles = json_decode($documentcontet->rfmfattachement, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_rfmfattachement)) {
-                $filesToDelete = explode(',', $request->deleted_rfmfattachement);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('rfmfattachement')) {
-                foreach ($request->file('rfmfattachement') as $file) {
-                    $name = $request->name . 'rfmfattachement' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->rfmfattachement = json_encode($allFiles);
-        }
-        
-
-        if (!empty($request->annex_XVI_per_qualif_attachment) || !empty($request->deleted_annex_XVI_per_qualif_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XVI_per_qualif_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XVI_per_qualif_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XVI_per_qualif_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XVI_per_qualif_attachment')) {
-                foreach ($request->file('annex_XVI_per_qualif_attachment') as $file) {
-                    $name = $request->name . 'annex_XVI_per_qualif_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XVI_per_qualif_attachment = json_encode($allFiles);
-        }
-
-        if (!empty($request->annex_XVII_valid_summ_attachment) || !empty($request->deleted_annex_XVII_valid_summ_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XVII_valid_summ_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XVII_valid_summ_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XVII_valid_summ_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XVII_valid_summ_attachment')) {
-                foreach ($request->file('annex_XVII_valid_summ_attachment') as $file) {
-                    $name = $request->name . 'annex_XVII_valid_summ_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XVII_valid_summ_attachment = json_encode($allFiles);
-        }
-      
-
-        if (!empty($request->annex_XVIII_trac_matri_attachment) || !empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XVIII_trac_matri_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XVIII_trac_matri_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XVIII_trac_matri_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XVIII_trac_matri_attachment')) {
-                foreach ($request->file('annex_XVIII_trac_matri_attachment') as $file) {
-                    $name = $request->name . 'annex_XVIII_trac_matri_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XVIII_trac_matri_attachment = json_encode($allFiles);
-        }
-      
-
-        if (!empty($request->annex_XIX_syst_retir_attachment) || !empty($request->deleted_annex_XIX_syst_retir_attachment)) {
-            $existingFiles = json_decode($documentcontet->annex_XIX_syst_retir_attachment, true) ?? [];
-
-            // Handle deleted files
-            if (!empty($request->deleted_annex_XIX_syst_retir_attachment)) {
-                $filesToDelete = explode(',', $request->deleted_annex_XIX_syst_retir_attachment);
-                $existingFiles = array_filter($existingFiles, function($file) use ($filesToDelete) {
-                    return !in_array($file, $filesToDelete);
-                });
-            }
-
-            // Handle new files
-            $newFiles = [];
-            if ($request->hasFile('annex_XIX_syst_retir_attachment')) {
-                foreach ($request->file('annex_XIX_syst_retir_attachment') as $file) {
-                    $name = $request->name . 'annex_XIX_syst_retir_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
-                    $file->move(public_path('upload/'), $name);
-                    $newFiles[] = $name;
-                }
-            }
-
-            // Merge existing and new files
-            $allFiles = array_merge($existingFiles, $newFiles);
-            $documentcontet->annex_XIX_syst_retir_attachment = json_encode($allFiles);
-        } 
-
-        //rajendra end
+                //rajendra end
 
              //Equipment hold time study protocol
 
@@ -5186,7 +5271,7 @@ class DocumentController extends Controller
 
             //////PRVP End /////////////////
 
-         //---------------------------process Validation Report--------------------------------------------
+            //---------------------------process Validation Report--------------------------------------------
 
             $documentcontet->generic_pvr = $request->generic_pvr;
             $documentcontet->product_code_pvr = $request->product_code_pvr;
@@ -5225,10 +5310,10 @@ class DocumentController extends Controller
             $documentcontet->proposed_parameter_upcoming_batch_pvr = $request->proposed_parameter_upcoming_batch_pvr ? serialize($request->proposed_parameter_upcoming_batch_pvr) : serialize([]);
             $documentcontet->report_approval_pvr = $request->report_approval_pvr ? serialize($request->report_approval_pvr) : serialize([]);
 
-        //---------------------------process Validation Report--------------------------------------------
+            //---------------------------process Validation Report--------------------------------------------
 
 
-        //-----------------------Cleaning Validation protocol-doc ---------------------------------------
+            //-----------------------Cleaning Validation protocol-doc ---------------------------------------
 
             $documentcontet->objective_cvpd = $request->objective_cvpd ? serialize($request->objective_cvpd) : serialize([]);
             $documentcontet->scope_cvpd = $request->scope_cvpd ? serialize($request->scope_cvpd) : serialize([]);
@@ -5255,8 +5340,8 @@ class DocumentController extends Controller
             $documentcontet->summary_conclusion_cvpd = $request->summary_conclusion_cvpd ? serialize($request->summary_conclusion_cvpd) : serialize([]);
 
             $documentcontet->training_cvpd = $request->training_cvpd ? serialize($request->training_cvpd) : serialize([]);
-        //-----------------------END Cleaning validation protocol doc---------------------------------------
-        //-----------------------Cleaning Validation Report-doc ---------------------------------------
+            //-----------------------END Cleaning validation protocol doc---------------------------------------
+            //-----------------------Cleaning Validation Report-doc ---------------------------------------
 
             $documentcontet->objective_cvrd = $request->objective_cvrd ? serialize($request->objective_cvrd) : serialize([]);
             $documentcontet->scope_cvrd = $request->scope_cvrd ? serialize($request->scope_cvrd) : serialize([]);
@@ -5268,11 +5353,11 @@ class DocumentController extends Controller
             $documentcontet->analytical_report_cvrd = $request->analytical_report_cvrd ? serialize($request->analytical_report_cvrd) : serialize([]);
             $documentcontet->physical_procedure_conformance_check_cvrd = $request->physical_procedure_conformance_check_cvrd ? serialize($request->physical_procedure_conformance_check_cvrd) : serialize([]);
             $documentcontet->conclusion_cvrd = $request->conclusion_cvrd ? serialize($request->conclusion_cvrd) : serialize([]);
-        //---------------------- END-Cleaning Validation Report-doc ---------------------------------------
+           //---------------------- END-Cleaning Validation Report-doc ---------------------------------------
 
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
-            $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
+            // $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
             $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);
             $documentcontet->materials_and_equipments = $request->materials_and_equipments ? serialize($request->materials_and_equipments) : serialize([]);
@@ -5350,31 +5435,28 @@ class DocumentController extends Controller
             if (!empty($request->distribution)) {
                 $documentcontet->distribution = serialize($request->distribution);
             }
-          //  dd($documentcontet);
 
             $documentcontet->save();
 
             $specification_id = $document->id;
 
-            //Master Finished Product Specification grid
-            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
-            $specifications->specification_id = $specification_id;
-            $specifications->identifier = 'specifications';
-            $specifications->data = json_encode($request->specifications);
-            $specifications->save();
+            // $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->firstOrNew();
+            // $specifications->specification_id = $specification_id;
+            // $specifications->identifier = 'specifications';
+            // $specifications->data = json_encode($request->specifications);
+            // $specifications->save();
 
-            //Master Finished Product Standard Testing Procedure grid
-            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
-            $specifications->specification_id = $specification_id;
-            $specifications->identifier = 'specifications_testing';
-            $specifications->data = json_encode($request->specifications_testing);
-            $specifications->save();
+            // $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->firstOrNew();
+            // $specifications->specification_id = $specification_id;
+            // $specifications->identifier = 'specifications_testing';
+            // $specifications->data = json_encode($request->specifications_testing);
+            // $specifications->save();
 
-            $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'Row_Materail'])->firstOrNew();
-            $RowSpecification_Data->document_type_id = $document->id;
-            $RowSpecification_Data->identifier = 'Row_Materail';
-            $RowSpecification_Data->data = $request->Row_Materail;
-            $RowSpecification_Data->save();
+            // $RowSpecification_Data = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'Row_Materail'])->firstOrNew();
+            // $RowSpecification_Data->document_type_id = $document->id;
+            // $RowSpecification_Data->identifier = 'Row_Materail';
+            // $RowSpecification_Data->data = $request->Row_Materail;
+            // $RowSpecification_Data->save();
 
             if ($lastContent->purpose != $documentcontet->purpose || !empty($request->purpose_comment)) {
                 $history = new DocumentHistory;
@@ -5525,25 +5607,25 @@ class DocumentController extends Controller
 
 
 
-            $DocumentGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest']);
-            $DocumentGridData->document_type_id = $document->id;
-            $DocumentGridData->identifier = 'Rowmaterialtest';
-            $DocumentGridData->data = $request->test;
-            $DocumentGridData->save();
+            // $DocumentGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest']);
+            // $DocumentGridData->document_type_id = $document->id;
+            // $DocumentGridData->identifier = 'Rowmaterialtest';
+            // $DocumentGridData->data = $request->test;
+            // $DocumentGridData->save();
 
-            $CalibrationQualificationstatus = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'CalibrationQualificationStatus'])->firstOrNew();
-            $CalibrationQualificationstatus->document_type_id = $document->id;
-            $CalibrationQualificationstatus->identifier = 'CalibrationQualificationStatus';
-            $CalibrationQualificationstatus->data = $request->qualitycontrol_1;
-            $CalibrationQualificationstatus->save();
+            // $CalibrationQualificationstatus = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'CalibrationQualificationStatus'])->firstOrNew();
+            // $CalibrationQualificationstatus->document_type_id = $document->id;
+            // $CalibrationQualificationstatus->identifier = 'CalibrationQualificationStatus';
+            // $CalibrationQualificationstatus->data = $request->qualitycontrol_1;
+            // $CalibrationQualificationstatus->save();
 
 
 
-            $PackingGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata']);
-            $PackingGridData->document_type_id = $document->id;
-            $PackingGridData->identifier = 'Packingmaterialdata';
-            $PackingGridData->data = $request->packingtest;
-            $PackingGridData->save();
+            // $PackingGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata']);
+            // $PackingGridData->document_type_id = $document->id;
+            // $PackingGridData->identifier = 'Packingmaterialdata';
+            // $PackingGridData->data = $request->packingtest;
+            // $PackingGridData->save();
 
             $GtpGridData = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'gtp']);
             $GtpGridData->document_type_id = $document->id;
@@ -5625,77 +5707,74 @@ class DocumentController extends Controller
             $RevisionGridmfpstpData->save();
 
 
-            $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
-            $ProductSpecification->document_type_id = $document->id;
-            $ProductSpecification->identifier = 'ProductSpecification';
-            $ProductSpecification->data = $request->product;
-            $ProductSpecification->save();
+            // $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
+            // $ProductSpecification->document_type_id = $document->id;
+            // $ProductSpecification->identifier = 'ProductSpecification';
+            // $ProductSpecification->data = $request->product;
+            // $ProductSpecification->save();
+
+            // $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
+            // $MaterialSpecification->document_type_id = $document->id;
+            // $MaterialSpecification->identifier = 'MaterialSpecification';
+            // $MaterialSpecification->data = $request->row_material;
+            // $MaterialSpecification->save();
 
 
+            // $Finished_Product = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product']);
+            // $Finished_Product->document_type_id = $document->id;
+            // $Finished_Product->identifier = 'Finished_Product';
+            // $Finished_Product->data = $request->item;
+            // $Finished_Product->save();
 
-            $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
-            $MaterialSpecification->document_type_id = $document->id;
-            $MaterialSpecification->identifier = 'MaterialSpecification';
-            $MaterialSpecification->data = $request->row_material;
-            $MaterialSpecification->save();
+            // $Inprocess_standard = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard']);
+            // $Inprocess_standard->document_type_id = $document->id;
+            // $Inprocess_standard->identifier = 'Inprocess_standard';
+            // $Inprocess_standard->data = $request->item;
+            // $Inprocess_standard->save();
 
-
-            $Finished_Product = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product']);
-            $Finished_Product->document_type_id = $document->id;
-            $Finished_Product->identifier = 'Finished_Product';
-            $Finished_Product->data = $request->item;
-            $Finished_Product->save();
-
-            $Inprocess_standard = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard']);
-            $Inprocess_standard->document_type_id = $document->id;
-            $Inprocess_standard->identifier = 'Inprocess_standard';
-            $Inprocess_standard->data = $request->item;
-            $Inprocess_standard->save();
-
-            $CLEANING_VALIDATION = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION']);
-            $CLEANING_VALIDATION->document_type_id = $document->id;
-            $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-            $CLEANING_VALIDATION->data = $request->cleaning_validation;
-            $CLEANING_VALIDATION->save();
+            // $CLEANING_VALIDATION = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION']);
+            // $CLEANING_VALIDATION->document_type_id = $document->id;
+            // $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
+            // $CLEANING_VALIDATION->data = $request->cleaning_validation;
+            // $CLEANING_VALIDATION->save();
 
 
-            $SpecificationData = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION']);
-            $SpecificationData->document_type_id = $document->id;
-            $SpecificationData->identifier = 'SPECIFICATION';
-            $SpecificationData->data = $request->specification_details;
-            $SpecificationData->save();
+            // $SpecificationData = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION']);
+            // $SpecificationData->document_type_id = $document->id;
+            // $SpecificationData->identifier = 'SPECIFICATION';
+            // $SpecificationData->data = $request->specification_details;
+            // $SpecificationData->save();
 
-            $Specification_Validation_Data = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION']);
-            $Specification_Validation_Data->document_type_id = $document->id;
-            $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
-            $Specification_Validation_Data->data = $request->specification_validation_details;
-            $Specification_Validation_Data->save();
+            // $Specification_Validation_Data = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION']);
+            // $Specification_Validation_Data->document_type_id = $document->id;
+            // $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+            // $Specification_Validation_Data->data = $request->specification_validation_details;
+            // $Specification_Validation_Data->save();
+
+            // $SpecificationData_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SpecificationCleaningValidationSpecification']);
+            // $SpecificationData_CVS->document_type_id = $document->id;
+            // $SpecificationData_CVS->identifier = 'SpecificationCleaningValidationSpecification';
+            // $SpecificationData_CVS->data = $request->specification_details_cvs;
+            // $SpecificationData_CVS->save();
+
+            // $Specification_Validation_Data_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification']);
+            // $Specification_Validation_Data_CVS->document_type_id = $document->id;
+            // $Specification_Validation_Data_CVS->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
+            // $Specification_Validation_Data_CVS->data = $request->specification_validation_details_cvs;
+            // $Specification_Validation_Data_CVS->save();
 
 
-            $SpecificationData_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SpecificationCleaningValidationSpecification']);
-            $SpecificationData_CVS->document_type_id = $document->id;
-            $SpecificationData_CVS->identifier = 'SpecificationCleaningValidationSpecification';
-            $SpecificationData_CVS->data = $request->specification_details_cvs;
-            $SpecificationData_CVS->save();
+            // $SpecificationData_invs = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification']);
+            // $SpecificationData_invs->document_type_id = $document->id;
+            // $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
+            // $SpecificationData_invs->data = $request->specification_details_inps;
+            // $SpecificationData_invs->save();
 
-            $Specification_Validation_Data_CVS = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification']);
-            $Specification_Validation_Data_CVS->document_type_id = $document->id;
-            $Specification_Validation_Data_CVS->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
-            $Specification_Validation_Data_CVS->data = $request->specification_validation_details_cvs;
-            $Specification_Validation_Data_CVS->save();
-
-
-            $SpecificationData_invs = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification']);
-            $SpecificationData_invs->document_type_id = $document->id;
-            $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
-            $SpecificationData_invs->data = $request->specification_details_inps;
-            $SpecificationData_invs->save();
-
-            $Specification_Validation_Data_invs = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification']);
-            $Specification_Validation_Data_invs->document_type_id = $document->id;
-            $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
-            $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
-            $Specification_Validation_Data_invs->save();
+            // $Specification_Validation_Data_invs = DocumentGrid::firstOrNew(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification']);
+            // $Specification_Validation_Data_invs->document_type_id = $document->id;
+            // $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+            // $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
+            // $Specification_Validation_Data_invs->save();
 
 
             if (!empty($request->file_attach) || !empty($request->deleted_file_attach)) {
@@ -6021,16 +6100,6 @@ class DocumentController extends Controller
            $document->save();
 
 
-
-
-
-
-
-
-
-
-
-
             toastr()->success('Document Updated');
             if (Helpers::checkRoles(3)) {
                 return redirect('doc-details/' . $id);
@@ -6273,140 +6342,7 @@ class DocumentController extends Controller
         }
     }
 
-    // working code here
-    // public function viewPdf($id)
-    // {
-
-    //     $depaArr = ['ACC' => 'Accounting', 'ACC3' => 'Accounting',];
-    //     $data = Document::find($id);
-    //     //$data->department = Department::find($data->department_id);
-    //     $department = Department::find(Auth::user()->departmentid);
-    //     $document = Document::find($id);
-
-    //     if ($document->revised == 'Yes') {
-    //         $latestRevision = Document::where('revised_doc', $document->id)
-    //                                    ->max('minor');
-    //         $revisionNumber = $latestRevision ? (int)$latestRevision + 1 : 1;
-    //         $revisionNumber = str_pad($revisionNumber, 2, '0', STR_PAD_LEFT);
-    //     } else {
-    //         $revisionNumber = '00';
-    //     }
-
-    //     // department code wise number
-    //     // $documents = Document::orderBy('department_id')->get();
-    //     $departmentId = $document->department_id;
-
-    //     if (!$departmentId) {
-    //         return redirect()->back()->withErrors(['error' => 'Department ID not associated with this document']);
-    //     }
-
-    //     $documents = Document::where('department_id', $departmentId)->orderBy('id')->get();
-
-    //     $counter = 0;
-    //     foreach ($documents as $doc) {
-    //         $counter++;
-    //         $doc->currentId = $counter;
-
-
-    //         if ($doc->id == $id) {
-    //             $currentId = $doc->currentId;
-    //         }
-    //     }
-
-
-    //     if ($department) {
-    //         $data['department_name'] = $department->name;
-    //     } else {
-    //         $data['department_name'] = '';
-    //     }
-    //     $data->department = $department;
-
-    //     $data['originator'] = User::where('id', $data->originator_id)->value('name');
-    //     $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
-    //     $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
-    //     $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-
-    //     $data['document_division'] = Division::where('id', $data->division_id)->value('name');
-    //     $data['year'] = Carbon::parse($data->created_at)->format('Y');
-    //     $data['document_content'] = DocumentContent::where('document_id', $id)->first();
-
-    //     $documentContent = DocumentContent::where('document_id', $id)->first();
-    //     $annexures = [];
-    //     if (!empty($documentContent->annexuredata)) {
-    //         $annexures = unserialize($documentContent->annexuredata);
-    //     }
-
-
-    //     // pdf related work
-    //     $pdf = App::make('dompdf.wrapper');
-    //     $time = Carbon::now();
-
-    //     // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'))->render();
-    //     // $pdf = PDF::loadview('frontend.documents.new-pdf', compact('data', 'time', 'document'))
-    //     $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','annexures','currentId','revisionNumber'))
-    //         ->setOptions([
-    //             'defaultFont' => 'sans-serif',
-    //             'isHtml5ParserEnabled' => true,
-    //             'isRemoteEnabled' => true,
-    //             'isPhpEnabled' => true,
-    //         ]);
-    //     $pdf->setPaper('A4');
-    //     $pdf->render();
-    //     $canvas = $pdf->getDomPDF()->getCanvas();
-    //     $canvas->set_default_view('FitB');
-    //     $height = $canvas->get_height();
-    //     $width = $canvas->get_width();
-
-    //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-
-    //     $canvas->page_text(
-    //         $width / 4,
-    //         $height / 2,
-    //         Helpers::getDocStatusByStage($data->stage),
-    //         null,
-    //         25,
-    //         [0, 0, 0],
-    //         2,
-    //         6,
-    //         -20
-    //     );
-
-    //     if ($data->documents) {
-
-    //         $pdfArray = explode(',', $data->documents);
-    //         foreach ($pdfArray as $pdfFile) {
-    //             $existingPdfPath = public_path('upload/PDF/' . $pdfFile);
-    //             $permissions = 0644; // Example permission value, change it according to your needs
-    //             if (file_exists($existingPdfPath)) {
-    //                 // Create a new Dompdf instance
-    //                 $options = new Options();
-    //                 $options->set('chroot', public_path());
-    //                 $options->set('isPhpEnabled', true);
-    //                 $options->set('isRemoteEnabled', true);
-    //                 $options->set('isHtml5ParserEnabled', true);
-    //                 $options->set('allowedFileExtensions', ['pdf']); // Allow PDF file extension
-
-    //                 $dompdf = new Dompdf($options);
-
-    //                 chmod($existingPdfPath, $permissions);
-
-    //                 // Load the existing PDF file
-    //                 $dompdf->loadHtmlFile($existingPdfPath);
-
-    //                 // Render the PDF
-    //                 $dompdf->render();
-
-    //                 // Output the PDF to the browser
-    //                 $dompdf->stream();
-    //             }
-    //         }
-    //     }
-
-    //     return $pdf->stream('SOP' . $id . '.pdf');
-    // }
-
-
-    //working code according to document
+  
     public function viewPdf($id)
     {
 
@@ -6480,35 +6416,23 @@ class DocumentController extends Controller
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
 
-        $Finished_Product = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_Product")->first();
-        $FinishedData = isset($Finished_Product->data) && is_string($Finished_Product->data)
-        ? json_decode($Finished_Product->data, true) :(is_array($Finished_Product->data) ? $Finished_Product->data:[]);
-
-        $Inprocess_standard = DocumentGrid::where('document_type_id', $id)->where('identifier', "Inprocess_standard")->first();
-        $Inprocess_standardData = isset($Inprocess_standard->data) && is_string($Inprocess_standard->data)
-        ? json_decode($Inprocess_standard->data, true) :(is_array($Inprocess_standard->data) ? $Inprocess_standard->data:[]);
-
-        $CLEANING_VALIDATION = DocumentGrid::where('document_type_id', $id)->where('identifier', "CLEANING_VALIDATION")->first();
-        $CLEANING_VALIDATIONData = isset($CLEANING_VALIDATION->data) && is_string($CLEANING_VALIDATION->data)
-        ? json_decode($CLEANING_VALIDATION->data, true) :(is_array($CLEANING_VALIDATION->data) ? $CLEANING_VALIDATION->data:[]);
-
-
-        $testDataDecoded = DocumentGrid::where('document_type_id', $id)->where('identifier', "Rowmaterialtest")->first();
-            $testData = isset($testDataDecoded->data) && is_string($testDataDecoded->data)
-            ? json_decode($testDataDecoded->data, true) :(is_array($testDataDecoded->data) ? $testDataDecoded->data:[]);
-
+      
 
         $PackingGridData = DocumentGrid::where('document_type_id', $id)->where('identifier', "Packingmaterialdata")->first();
-        $PackingDataGrid = isset($PackingGridData->data) && is_string($PackingGridData->data)
-            ? json_decode($PackingGridData->data, true) :(is_array($PackingGridData->data) ? $PackingGridData->data:[]);
-
+        $PackingDataGrid = ($PackingGridData && isset($PackingGridData->data) && is_string($PackingGridData->data))
+            ? json_decode($PackingGridData->data, true)
+            : ($PackingGridData && is_array($PackingGridData->data) ? $PackingGridData->data : []);
+    
         $GtpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "gtp")->first();
-        $GtpGridData = isset($GtpData->data) && is_string($GtpData->data)
-            ? json_decode($GtpData->data, true) :(is_array($GtpData->data) ? $GtpData->data:[]);
+        $GtpGridData = ($GtpData && isset($GtpData->data) && is_string($GtpData->data))
+            ? json_decode($GtpData->data, true)
+            : ($GtpData && is_array($GtpData->data) ? $GtpData->data : []);
 
         $RevisionData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_history")->first();
-        $RevisionGridData = isset($RevisionData->data) && is_string($RevisionData->data)
-            ? json_decode($RevisionData->data, true) :(is_array($RevisionData->data) ? $RevisionData->data:[]);
+        $RevisionGridData = ($RevisionData && isset($RevisionData->data) && is_string($RevisionData->data))
+            ? json_decode($RevisionData->data, true)
+            : ($RevisionData && is_array($RevisionData->data) ? $RevisionData->data : []);
+
 
         $RevisionInpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_inps_data")->first();
         $RevisionGridInpsData = isset($RevisionInpsData->data) && is_string($RevisionInpsData->data)
@@ -6558,54 +6482,37 @@ class DocumentController extends Controller
         $sampleReconcilationDataGrid = isset($sampleReconcilation->data) && is_string($sampleReconcilation->data)
             ? json_decode($sampleReconcilation->data, true) :(is_array($sampleReconcilation->data) ? $sampleReconcilation->data:[]);
 
+
+
         $specificationsGridData = specifications::where('specification_id', $id)->where('identifier', "specifications_testing")->first();
-        $SpecificationDataGrid = isset($specificationsGridData->data) && is_string($specificationsGridData->data)
-            ? json_decode($specificationsGridData->data, true) :(is_array($specificationsGridData->data) ? $specificationsGridData->data:[]);
+        $SpecificationDataGrid = $specificationsGridData && isset($specificationsGridData->data) && is_string($specificationsGridData->data)
+            ? json_decode($specificationsGridData->data, true)
+            : ($specificationsGridData && is_array($specificationsGridData->data) ? $specificationsGridData->data : []);
 
         $specifications = specifications::where('specification_id', $id)->where('identifier', "specifications")->first();
-        $SpecificationGrid = isset($specifications->data) && is_string($specifications->data)
-            ? json_decode($specifications->data, true) :(is_array($specifications->data) ? $specifications->data:[]);
+        $SpecificationGrid = $specifications && isset($specifications->data) && is_string($specifications->data)
+            ? json_decode($specifications->data, true)
+            : ($specifications && is_array($specifications->data) ? $specifications->data : []);
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
-
-        $ProductSpecificationData = isset($ProductSpecification->data) && is_string($ProductSpecification->data) ? json_decode($ProductSpecification->data,true) : (is_array($ProductSpecification->data) ? $ProductSpecification->data :[]);
-
+        $ProductSpecificationData = $ProductSpecification && isset($ProductSpecification->data) && is_string($ProductSpecification->data)
+            ? json_decode($ProductSpecification->data, true)
+            : ($ProductSpecification && is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
+    
         $MaterialSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "MaterialSpecification")->first();
-        $MaterialSpecificationData = isset($MaterialSpecification->data) && is_string($MaterialSpecification->data) ? json_decode($MaterialSpecification->data,true) : (is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+        $MaterialSpecificationData = $MaterialSpecification && isset($MaterialSpecification->data) && is_string($MaterialSpecification->data)
+            ? json_decode($MaterialSpecification->data, true)
+            : ($MaterialSpecification && is_array($MaterialSpecification->data) ? $MaterialSpecification->data : []);
+    
+        $Finished_product_specification = DocumentGrid::where('document_type_id', $id)->where('identifier', "Finished_product_specification")->first();
+        $finishedProductSpecificationData = $Finished_product_specification && isset($Finished_product_specification->data) && is_string($Finished_product_specification->data)
+            ? json_decode($Finished_product_specification->data, true)
+            : ($Finished_product_specification && is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
 
-
-
-        $Finished_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION')->first();
-        $finishedProductSpecificationData = isset($Finished_product_specification->data) && is_string($Finished_product_specification->data) ? json_decode($Finished_product_specification->data) : (is_array($Finished_product_specification->data) ? $Finished_product_specification->data : []);
-
-        $Revision_product_specification  = DocumentGrid::where('document_type_id',$id)->where('identifier','revision_data')->first();
-        $RevisionProductSpecificationData = isset($Revision_product_specification->data) && is_string($Revision_product_specification->data) ? json_decode($Revision_product_specification->data) : (is_array($Revision_product_specification->data) ? $Revision_product_specification->data : []);
-
-
-        $specificationValidation = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION')->first();
-        $specificationValidationData = isset($specificationValidation->data)&& is_string($specificationValidation->data) ? json_decode($specificationValidation->data,true) :(is_array($specificationValidation->data) ? $specificationValidation->data:[]);
-
-        $CalibrationQualificationstatus = DocumentGrid::where('document_type_id', $id)->where('identifier', "CalibrationQualificationStatus")->first();
-
-
-        $calibrationdata = isset($CalibrationQualificationstatus->data) && is_string($CalibrationQualificationstatus->data) ? json_decode($CalibrationQualificationstatus->data) : (is_array($CalibrationQualificationstatus->data) ? $CalibrationQualificationstatus->data : []);
-
-
-        $Finished_product_specification_cvs  = DocumentGrid::where('document_type_id',$id)->where('identifier','SpecificationCleaningValidationSpecification')->first();
-        $finishedProductSpecificationData_CVS = isset($Finished_product_specification_cvs->data) && is_string($Finished_product_specification_cvs->data) ? json_decode($Finished_product_specification_cvs->data) : (is_array($Finished_product_specification_cvs->data) ? $Finished_product_specification_cvs->data : []);
-
-        $specificationValidation_cvs = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_CleaningValidationSpecification')->first();
-        $specificationValidationData_cvs = isset($specificationValidation_cvs->data)&& is_string($specificationValidation_cvs->data) ? json_decode($specificationValidation_cvs->data,true) :(is_array($specificationValidation_cvs->data) ? $specificationValidation_cvs->data:[]);
-
-
-       $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','specificationInprocessValidationSpecification')->first();
-        $data_inproces_specification = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
-
-
-        $specificationValidation_inps = DocumentGrid::where('document_type_id',$id)->where('identifier','SPECIFICATION_VALIDATION_Inprocess_Validation_Specification')->first();
-        $specificationValidationData_inps = isset($specificationValidation_inps->data)&& is_string($specificationValidation_inps->data) ? json_decode($specificationValidation_inps->data,true) :(is_array($specificationValidation_inps->data) ? $specificationValidation_inps->data:[]);
-
-
+        $Revision_product_specification = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_data")->first();
+        $RevisionProductSpecificationData = $Revision_product_specification && isset($Revision_product_specification->data) && is_string($Revision_product_specification->data)
+            ? json_decode($Revision_product_specification->data, true)
+            : ($Revision_product_specification && is_array($Revision_product_specification->data) ? $Revision_product_specification->data : []);
 
         $documentContent = DocumentContent::where('document_id', $id)->first();
 
@@ -6648,7 +6555,11 @@ class DocumentController extends Controller
         $time = Carbon::now();
 
         try {
-            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','testData','PackingDataGrid','sampleReconcilationDataGrid','SummaryDataGrid','SpecificationGrid','SpecificationDataGrid','ProductSpecificationData','MaterialSpecificationData','FinishedData','Inprocess_standardData','CLEANING_VALIDATIONData','GtpGridData','finishedProductSpecificationData','specificationValidationData','finishedProductSpecificationData_CVS','specificationValidationData_cvs','data_inproces_specification','specificationValidationData_inps','RevisionGridData','calibrationdata','documentContent','RevisionProductSpecificationData','RevisionGridInpsData','RevisionGridCvsData','RevisionGridfpstpData','RevisionGridinpstpData','RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridrawmstpData','RevisionGridpamsData','RevisionGridmfpsData','RevisionGridmfpstpData'))
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','documentContent','RevisionGridData','GtpGridData','PackingDataGrid','RevisionGridfpstpData',
+            'RevisionGridCvsData','RevisionGridInpsData','RevisionGridinpstpData',
+            'RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridrawmstpData',
+            'RevisionGridpamsData','RevisionGridmfpsData','RevisionGridmfpstpData','SummaryDataGrid','sampleReconcilationDataGrid',
+            'SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','finishedProductSpecificationData','RevisionProductSpecificationData'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -6663,18 +6574,6 @@ class DocumentController extends Controller
         $width = $canvas->get_width();
 
         $canvas->page_script('$pdf->set_opacity(0.2,"Multiply");');
-
-        // $canvas->page_text(
-        //     $width / 2.4,
-        //     $height / 2,
-        //     Helpers::getDocStatusByStage($data->stage),
-        //     null,
-        //     25,
-        //     [0, 0, 0],
-        //     2,
-        //     6,
-        //     -20
-        // );
 
         $watermarkText = strtoupper(Helpers::getDocStatusByStage($data->stage));
 
@@ -6732,6 +6631,20 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
     }
+
+    public function getEffectiveDate(Request $request)
+    {
+        $revisionNumber = $request->query('revision_number');
+    
+        $document = Document::where('revised_doc', $revisionNumber)
+            ->where('status', 'Effective')
+            ->first();
+    
+        return response()->json([
+            'effective_date' => $document ? $document->effective_date : null
+        ]);
+    }
+    
 
 
     public function viewAttachments($id)
@@ -7660,8 +7573,7 @@ class DocumentController extends Controller
     //     }
     // }
 
-        public function revision(Request $request, $id)
-        {
+    public function revision(Request $request, $id){
 
             $document = Document::find($id);
 
@@ -7672,9 +7584,9 @@ class DocumentController extends Controller
 
             // **Step 1: Find the latest revised_doc for this document_number**
             $lastRevision = Document::where('record', $document->record)
-                                     ->whereNotNull('revised_doc')
-                                     ->orderBy('revised_doc', 'desc') // Get the highest revised_doc
-                                     ->first();
+                ->whereNotNull('revised_doc')
+                ->orderBy('revised_doc', 'desc') // Get the highest revised_doc
+                ->first();
 
             // **Step 2: Determine the next revision number**
             $nextRevision = $lastRevision ? $lastRevision->revised_doc + 1 : 1;
@@ -7691,17 +7603,17 @@ class DocumentController extends Controller
             }
 
             // **Step 4: Check if this version already exists**
-            $revisionExists = Document::where([
-                'document_type_id' => $document->document_type_id,
-                'document_number' => $document->document_number,
-                'major' => $requestedMajor,
-                'minor' => $requestedMinor
-            ])->first();
+            // $revisionExists = Document::where([
+            //     'document_type_id' => $document->document_type_id,
+            //     'document_number' => $document->document_number,
+            //     'major' => $requestedMajor,
+            //     'minor' => $requestedMinor
+            // ])->first();
 
-            if ($revisionExists) {
-                toastr()->error('A document with this version already exists!');
-                return redirect()->back();
-            }
+            // if ($revisionExists) {
+            //     toastr()->error('A document with this version already exists!');
+            //     return redirect()->back();
+            // }
 
             // **Step 5: Mark original document as revised**
             $document->revision = 'Yes';
@@ -7711,7 +7623,7 @@ class DocumentController extends Controller
             // **Step 6: Create a new revision**
             $newdoc = $document->replicate();
             $newdoc->revised = 'Yes';
-            $newdoc->revised_doc = $nextRevision;  // **This will be incremented correctly**
+            $newdoc->revised_doc = $nextRevision;
             $newdoc->major = $requestedMajor;
             $newdoc->minor = $requestedMinor;
             $newdoc->reason = $request->reason;
@@ -7721,8 +7633,7 @@ class DocumentController extends Controller
             $newdoc->status = Stage::where('id', 1)->value('name');
             $newdoc->save();
 
-
-            \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
+            // \Log::info("New Document Saved: Major: $newdoc->major, Minor: $newdoc->minor");
 
             $docContent = DocumentContent::where('document_id', $document->id)->first();
             if ($docContent) {
@@ -7753,189 +7664,101 @@ class DocumentController extends Controller
                 $distribution->document_id = $newdoc->id;
                 $distribution->save();
             }
-            $specification_id = $document->id;
-            $specifications = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications'])->first();
-            if ($specifications) {
-                $distribution = $specifications->replicate();
-                $distribution->identifier = 'specifications';
-                $distribution->specification_id = $newdoc->id;
-                $distribution->save();
-            }
 
-            $specifications_testing = specifications::where(['specification_id' => $specification_id, 'identifier' => 'specifications_testing'])->first();
-            if ($specifications_testing) {
-                $distribution = $specifications_testing->replicate();
-                $distribution->identifier = 'specifications_testing';
-                $distribution->specification_id = $newdoc->id;
-                $distribution->save();
-            }
+            // $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
+            // $DocumentGridData = $DocumentGridData->replicate();
+            // $DocumentGridData->document_type_id = $newdoc->id;
+            // $DocumentGridData->identifier = 'Rowmaterialtest';
+            // $DocumentGridData->save();
 
+            // $PackingGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata'])->first();
+            // $PackingGridData = $PackingGridData->replicate();
+            // $PackingGridData->document_type_id = $newdoc->id;
+            // $PackingGridData->identifier = 'Packingmaterialdata';
+            // $PackingGridData->save();
 
-            $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
+            // $GtpGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
+            // $GtpGridData = $GtpGridData->replicate();
+            // $GtpGridData->document_type_id = $newdoc->id;
+            // $GtpGridData->identifier = 'gtp';
+            // $GtpGridData->save();
 
-            $DocumentGridData = $DocumentGridData->replicate();
-            $DocumentGridData->document_type_id = $newdoc->id;
-            $DocumentGridData->identifier = 'Rowmaterialtest';
+            // $ProductSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification'])->first();
+            // $ProductSpecification = $ProductSpecification->replicate();
+            // $ProductSpecification->document_type_id = $newdoc->id;
+            // $ProductSpecification->identifier = 'ProductSpecification';
+            // $ProductSpecification->save();
 
-            $DocumentGridData->save();
+            // $MaterialSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification'])->first();
+            // $MaterialSpecification = $MaterialSpecification->replicate();
+            // $MaterialSpecification->document_type_id = $newdoc->id;
+            // $MaterialSpecification->identifier = 'MaterialSpecification';
+            // $MaterialSpecification->save();
 
+            // $Finished_Product = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product'])->first();
+            // $Finished_Product = $Finished_Product->replicate();
+            // $Finished_Product->document_type_id = $newdoc->id;
+            // $Finished_Product->identifier = 'Finished_Product';
+            // $Finished_Product->save();
 
+            // $Inprocess_standard = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard'])->first();
+            // $Inprocess_standard = $Inprocess_standard->replicate();
+            // $Inprocess_standard->document_type_id = $newdoc->id;
+            // $Inprocess_standard->identifier = 'Inprocess_standard';
+            // $Inprocess_standard->save();
 
+            // $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
+            // $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
+            // $CLEANING_VALIDATION->document_type_id = $newdoc->id;
+            // $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
+            // $CLEANING_VALIDATION->save();
 
-            $PackingGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata'])->first();
-            $PackingGridData = $PackingGridData->replicate();
-            $PackingGridData->document_type_id = $newdoc->id;
-            $PackingGridData->identifier = 'Packingmaterialdata';
+            // $SpecificationData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION'])->first();
+            // $SpecificationData = $SpecificationData->replicate();
+            // $SpecificationData->document_type_id = $newdoc->id;
+            // $SpecificationData->identifier = 'SPECIFICATION';
+            // $SpecificationData->save();
 
-            $PackingGridData->save();
+            // $Specification_Validation_Data = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION'])->first();
+            // $Specification_Validation_Data = $Specification_Validation_Data->replicate();
+            // $Specification_Validation_Data->document_type_id = $newdoc->id;
+            // $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
+            // $Specification_Validation_Data->save();
 
-            $GtpGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
-            $GtpGridData = $GtpGridData->replicate();
-            $GtpGridData->document_type_id = $newdoc->id;
-            $GtpGridData->identifier = 'gtp';
+            //     // Cleaning Specification Validation
+            // $SpecificationData_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->first();
+            // $SpecificationData_cvs = $SpecificationData_cvs->replicate();
+            // $SpecificationData_cvs->document_type_id = $newdoc->id;
+            // $SpecificationData_cvs->identifier = 'SpecificationCleaningValidationSpecification';
+            // $SpecificationData_cvs->save();
 
-            $GtpGridData->save();
+            // $Specification_Validation_Data_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->first();
+            // $Specification_Validation_Data_cvs = $Specification_Validation_Data_cvs->replicate();
+            // $Specification_Validation_Data_cvs->document_type_id = $newdoc->id;
+            // $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
+            // $Specification_Validation_Data_cvs->save();
 
+            //         // Inprocess  Validation Specification
+            // $SpecificationData_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->first();
+            // $SpecificationData_inps = $SpecificationData_inps->replicate();
+            // $SpecificationData_inps->document_type_id = $newdoc->id;
+            // $SpecificationData_inps->identifier = 'specificationInprocessValidationSpecification';
+            // $SpecificationData_inps->save();
 
+            // $Specification_Validation_Data_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->first();
+            // $Specification_Validation_Data_inps = $Specification_Validation_Data_inps->replicate();
+            // $Specification_Validation_Data_inps->document_type_id = $newdoc->id;
+            // $Specification_Validation_Data_inps->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
+            // $Specification_Validation_Data_inps->save();
 
-            $ProductSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification'])->first();
-            $ProductSpecification = $ProductSpecification->replicate();
-            $ProductSpecification->document_type_id = $newdoc->id;
-            $ProductSpecification->identifier = 'ProductSpecification';
+            DocumentService::update_document_numbers();
 
-            $ProductSpecification->save();
-
-
-
-            $MaterialSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification'])->first();
-            $MaterialSpecification = $MaterialSpecification->replicate();
-            $MaterialSpecification->document_type_id = $newdoc->id;
-            $MaterialSpecification->identifier = 'MaterialSpecification';
-
-            // dd($MaterialSpecification);
-            $MaterialSpecification->save();
-
-
-
-
-
-            $Finished_Product = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product'])->first();
-            $Finished_Product = $Finished_Product->replicate();
-            $Finished_Product->document_type_id = $newdoc->id;
-            $Finished_Product->identifier = 'Finished_Product';
-
-            // dd($Finished_Product);
-            $Finished_Product->save();
-
-            $Inprocess_standard = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard'])->first();
-            $Inprocess_standard = $Inprocess_standard->replicate();
-            $Inprocess_standard->document_type_id = $newdoc->id;
-            $Inprocess_standard->identifier = 'Inprocess_standard';
-
-            $Inprocess_standard->save();
-
-            $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
-            $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
-            $CLEANING_VALIDATION->document_type_id = $newdoc->id;
-            $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-
-            // dd($CLEANING_VALIDATION);
-            $CLEANING_VALIDATION->save();
-
-        DocumentService::update_document_numbers();
-
-        $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
-        $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
-        $CLEANING_VALIDATION->document_type_id = $newdoc->id;
-        $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-       // dd($CLEANING_VALIDATION);
-        $CLEANING_VALIDATION->save();
-
-
-        $SpecificationData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION'])->first();
-        $SpecificationData = $SpecificationData->replicate();
-
-        $SpecificationData->document_type_id = $newdoc->id;
-        $SpecificationData->identifier = 'SPECIFICATION';
-        $SpecificationData->save();
-
-        $Specification_Validation_Data = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION'])->first();
-
-        $Specification_Validation_Data = $Specification_Validation_Data->replicate();
-        $Specification_Validation_Data->document_type_id = $newdoc->id;
-        $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
-        //dd($Specification_Validation_Data);
-        $Specification_Validation_Data->save();
-
-    // Cleaning Specification Validation
-        $SpecificationData_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->first();
-        $SpecificationData_cvs = $SpecificationData_cvs->replicate();
-
-        $SpecificationData_cvs->document_type_id = $newdoc->id;
-        $SpecificationData_cvs->identifier = 'SpecificationCleaningValidationSpecification';
-        $SpecificationData_cvs->save();
-
-        $Specification_Validation_Data_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->first();
-
-        $Specification_Validation_Data_cvs = $Specification_Validation_Data_cvs->replicate();
-        $Specification_Validation_Data_cvs->document_type_id = $newdoc->id;
-        $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
-        //dd($Specification_Validation_Data_cvs);
-        $Specification_Validation_Data_cvs->save();
-
-
-
-        // Inprocess  Validation Specification
-        $SpecificationData_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->first();
-        $SpecificationData_inps = $SpecificationData_inps->replicate();
-
-        $SpecificationData_inps->document_type_id = $newdoc->id;
-        $SpecificationData_inps->identifier = 'specificationInprocessValidationSpecification';
-        $SpecificationData_inps->save();
-
-        $Specification_Validation_Data_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->first();
-
-        $Specification_Validation_Data_inps = $Specification_Validation_Data_inps->replicate();
-        $Specification_Validation_Data_inps->document_type_id = $newdoc->id;
-        $Specification_Validation_Data_inps->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
-        //dd($Specification_Validation_Data_inps);
-        $Specification_Validation_Data_inps->save();
-
-
-
-       //---------------------------------------------------------------------------------------------
-
-
-
-       $SpecificationData_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->firstOrNew();;
-       $SpecificationData_invs->document_type_id = $document->id;
-       $SpecificationData_invs->identifier = 'specificationInprocessValidationSpecification';
-       $SpecificationData_invs->data = $request->specification_details_inps;
-       $SpecificationData_invs->save();
-
-       $Specification_Validation_Data_invs = DocumentGrid::where(['document_type_id' => $document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->firstOrNew();;
-       $Specification_Validation_Data_invs->document_type_id = $document->id;
-       $Specification_Validation_Data_invs->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
-       $Specification_Validation_Data_invs->data = $request->specification_validation_details_inps;
-       $Specification_Validation_Data_invs->save();
-
-
-
-
-
-        //--------------------------------------------------------------------------------------------
-
-
-
-    DocumentService::update_document_numbers();
-
-        toastr()->success('Document has been revised successfully! You can now edit the content.');
-        return redirect()->route('documents.edit', $newdoc->id);
+            toastr()->success('Document has been revised successfully! You can now edit the content.');
+            return redirect()->route('documents.edit', $newdoc->id);
     }
 
 
-    public function printPDFAnx($id)
-    {
+    public function printPDFAnx($id){
 
         $issue_copies = request('issue_copies');
         $print_reason = request('print_reason');

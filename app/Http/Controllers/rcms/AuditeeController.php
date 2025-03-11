@@ -1735,7 +1735,7 @@ class AuditeeController extends Controller
             // Define the mapping of field keys to more descriptive names
             $fieldNames = [
                 'auditornew' => 'Auditor Name',
-                'regulatoryagency' => 'Regulatory Agency',
+                'regulatoryagency' => 'External Agency Name',
                 'designation' => 'Designation',
                 'remarks' => 'Remarks'
             ];
@@ -3876,7 +3876,7 @@ if (!empty($request->AuditorNew)) {
      // Define the mapping of field keys to more descriptive names
      $fieldNames = [
         'auditornew' => 'Auditor Name',
-        'regulatoryagency' => 'Regulatory Agency',
+        'regulatoryagency' => 'External Agency Name',
         'designation' => 'Designation',
         'remarks' => 'Remarks',
   

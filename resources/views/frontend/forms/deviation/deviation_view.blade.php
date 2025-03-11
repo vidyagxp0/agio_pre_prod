@@ -1092,7 +1092,7 @@
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA/CQA Initial Assessment</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm7')">CFT Review</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm16')">QA/CQA Final Assessment</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm17')">QA/CQA Head/ Designee Approval</button>
                     <button id="investigationButton" class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm9')">Investigation</button>
@@ -1244,7 +1244,7 @@
 
 
 
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="initiator-group">Initiation Department<span
                                                     class = "text-danger">*</span></label>
@@ -1320,7 +1320,28 @@
                                         @error('Initiator_Group')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> -->
+
+
+                                    <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiator"><b>Initiation Department</b></label>
+                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                                    <input type="text" name="initiator_group_code"
+                                                        value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                        readonly>
+                                                    {{-- <div class="default-name"> <span
+                                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                                </div>
+                                            </div>
+
 
 
                                     <div class="col-12">
@@ -1446,7 +1467,7 @@
         minuteIncrement: 1 // Set minute increment to 1
     });
 </script>
-
+<!-- 
 <div class="col-lg-6">
     <div class="group-input">
         <label for="Facility">Deviation Observed By</label>
@@ -1465,7 +1486,20 @@
             @endif
         </select>
     </div>
-</div>
+</div> -->
+
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Deviation Observed By">Deviation Observed By<span
+                                                    class="text-danger">*</span></label>
+                                           
+                                            <input name="Facility" id="docname" type="text"
+                                                value="{{ $data->Facility }}"
+                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        </div>
+                                       
+                                    </div>
 
 
 <div class="col-6 new-date-data-field">
@@ -1525,128 +1559,72 @@
 </script>
 
 
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="audit type">Deviation Related To <span
-                                                    class="text-danger">*</span></label>
-                                            <select multiple
-                                                name="audit_type[]"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="audit_type">
-                                                <option
-                                                    value="Facility"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>
-                                                    Facility</option>
-                                                <option value="Equipment/Instrument"
-                                                    {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>
-                                                    Equipment/Instrument</option>
-                                                <option value="Documentationerror"
-                                                    {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>
-                                                    Documentation error</option>
-                                                <option value="STP/ADS_instruction"
-                                                    {{ strpos($data->audit_type, 'STP/ADS_instruction') !== false ? 'selected' : '' }}>
-                                                    STP/ADS instruction</option>
-                                                <option value="Packaging&Labelling"
-                                                    {{ strpos($data->audit_type, 'Packaging&Labelling') !== false ? 'selected' : '' }}>
-                                                    Packaging & Labelling</option>
-                                                <option value="Material_System"
-                                                    {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>
-                                                    Material System</option>
-                                                <option value="Laboratory_Instrument/System"
-                                                    {{ strpos($data->audit_type, 'Laboratory_Instrument/System') !== false ? 'selected' : '' }}>
-                                                    Laboratory Instrument/System</option>
-                                                <option value="Utility_System"
-                                                    {{ strpos($data->audit_type, 'Utility_System') !== false ? 'selected' : '' }}>
-                                                    Utility System</option>
-                                                <option value="Computer_System"
-                                                    {{ strpos($data->audit_type, 'Computer_System') !== false ? 'selected' : '' }}>
-                                                    Computer System</option>
-                                                <option value="Document"
-                                                    {{ strpos($data->audit_type, 'Document') !== false ? 'selected' : '' }}>
-                                                    Document</option>
-                                                <option value="Data integrity"
-                                                    {{ strpos($data->audit_type, 'Data integrity') !== false ? 'selected' : '' }}>
-                                                    Data integrity</option>
-                                                <option value="SOP Instruction"
-                                                    {{ strpos($data->audit_type, 'SOP Instruction') !== false ? 'selected' : '' }}>
-                                                    SOP Instruction</option>
-                                                <option value="BMR/ECR Instruction"
-                                                    {{ strpos($data->audit_type, 'BMR/ECR Instruction') !== false ? 'selected' : '' }}>
-                                                    BMR/ECR Instruction</option>
-                                                <option value="Water System"
-                                                    {{ strpos($data->audit_type, 'Water System') !== false ? 'selected' : '' }}>
-                                                    Water System</option>
-                                                <option value="Anyother(specify)"
-                                                    {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>
-                                                    Anyother(specify)</option>
-                                                <option value="Process"
-                                                    {{ strpos($data->audit_type, 'Process') !== false ? 'selected' : '' }}>
-                                                    Process</option>
-                                            </select>
-                                        </div>
-                                        @error('audit_type')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                   <!-- Deviation Related To Selection -->
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="audit_type">Deviation Related To <span class="text-danger">*</span></label>
+        <select multiple name="audit_type[]" id="audit_type" class="form-control" 
+            {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+            <option value="Facility" {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>Facility</option>
+            <option value="Equipment/Instrument" {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>Equipment/Instrument</option>
+            <option value="Documentationerror" {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>Documentation error</option>
+            <option value="STP/ADS_instruction" {{ strpos($data->audit_type, 'STP/ADS_instruction') !== false ? 'selected' : '' }}>STP/ADS instruction</option>
+            <option value="Packaging&Labelling" {{ strpos($data->audit_type, 'Packaging&Labelling') !== false ? 'selected' : '' }}>Packaging & Labelling</option>
+            <option value="Material_System" {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>Material System</option>
+            <option value="Laboratory_Instrument/System" {{ strpos($data->audit_type, 'Laboratory_Instrument/System') !== false ? 'selected' : '' }}>Laboratory Instrument/System</option>
+            <option value="Utility_System" {{ strpos($data->audit_type, 'Utility_System') !== false ? 'selected' : '' }}>Utility System</option>
+            <option value="Computer_System" {{ strpos($data->audit_type, 'Computer_System') !== false ? 'selected' : '' }}>Computer System</option>
+            <option value="Document" {{ strpos($data->audit_type, 'Document') !== false ? 'selected' : '' }}>Document</option>
+            <option value="Data integrity" {{ strpos($data->audit_type, 'Data integrity') !== false ? 'selected' : '' }}>Data integrity</option>
+            <option value="SOP Instruction" {{ strpos($data->audit_type, 'SOP Instruction') !== false ? 'selected' : '' }}>SOP Instruction</option>
+            <option value="BMR/ECR Instruction" {{ strpos($data->audit_type, 'BMR/ECR Instruction') !== false ? 'selected' : '' }}>BMR/ECR Instruction</option>
+            <option value="Water System" {{ strpos($data->audit_type, 'Water System') !== false ? 'selected' : '' }}>Water System</option>
+            <option value="Anyother(specify)" {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>Any other (specify)</option>
+            <option value="Process" {{ strpos($data->audit_type, 'Process') !== false ? 'selected' : '' }}>Process</option>
+        </select>
+    </div>
+    @error('audit_type')
+        <div class="text-danger">{{ $message }}</div>
+    @enderror
+</div>
 
+<!-- Other Field (Initially Hidden) -->
+<div id="others_block" class="col-md-6 group-input" style="display: none;">
+    <label for="others">Others <span id="asteriskInOther" style="display: none;" class="text-danger">*</span></label>
+    <textarea class="tiny" name="others" id="others_field"
+        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $data->others }}</textarea>
+</div>
 
-                                    <!-- <div class="col-lg-6" id="others_block"
-                                        @if (strpos($data->audit_type, 'Anyother(specify)')) style="display: none" @endif>
-                                        <div class="group-input">
-                                            <label for="others">Others <span id="asteriskInOther"
-                                                    style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" class="otherrr" name="others"
-                                                  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="others" value="{{ $data->others }}">
-                                            @error('others')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div> -->
+<!-- jQuery Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $('#audit_type').change(function () {
+            var selectedValues = $(this).val() || []; // Get selected values as an array
+            var isOtherSelected = selectedValues.includes('Anyother(specify)');
 
+            if (isOtherSelected) {
+                $('#others_block').show();
+                $('#others_field').prop('required', true);
+                $('#asteriskInOther').show();
+            } else {
+                $('#others_block').hide();
+                $('#others_field').prop('required', false);
+                $('#asteriskInOther').hide();
+            }
+        });
 
-                                    <div class="col-md-6">
-                                            <div class="group-input">
-                                            <label for="others">Others <span id="asteriskInOther"
-                                                    style="display: {{ $data->audit_type == 'Anyother(specify)' ? 'inline' : 'none' }}"
-                                                    class="text-danger">*</span></label>
+        // Ensure the field remains visible if already selected on page load (useful for form errors)
+        var preSelectedValues = $('#audit_type').val() || [];
+        if (preSelectedValues.includes('Anyother(specify)')) {
+            $('#others_block').show();
+            $('#others_field').prop('required', true);
+            $('#asteriskInOther').show();
+        }
+    });
+</script>
 
-                                                <textarea class="tiny" name="others"   {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    id="summernote-2">{{ $data->others }}</textarea>
-                                            </div>
-
-                                        </div>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function() {
-                                            var selectField = document.getElementById('audit_type');
-                                            var inputsToToggle = [];
-
-                                            // Add elements with class 'facility-name' to inputsToToggle
-                                            var facilityNameInputs = document.getElementsByClassName('otherrr');
-                                            for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                inputsToToggle.push(facilityNameInputs[i]);
-                                            }
-
-
-                                            selectField.addEventListener('change', function() {
-                                                // var isRequired = this.value === 'Anyother(specify)';
-                                                var isRequired = this.value.includes('Anyother(specify)');
-                                                console.log('isRequired', isRequired)
-
-                                                inputsToToggle.forEach(function(input) {
-                                                    input.required = isRequired;
-                                                    console.log(input.required, isRequired, 'input req');
-                                                });
-
-                                                document.getElementById('others_block').style.display = isRequired ? 'block' : 'none';
-
-                                                // Show or hide the asterisk icon based on the selected value
-                                                var asteriskIcon = document.getElementById('asteriskInOther');
-                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                            });
-                                        });
-                                    </script>
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System
@@ -2764,7 +2742,9 @@
                                 </script>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Capa Required">CAPA Required? <span class="text-danger">*</span></label>
+                                            <label for="Capa Required">CAPA Required? @if ($data->stage == 3)  
+                                                    <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
+                                                   @endif</label>
                                             <select name="capa_required" id="capa_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                                 <option value="select">-- Select --</option>
                                                 <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
@@ -2813,7 +2793,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">QRM Required?<span class="text-danger">*</span></label>
+                                        <label for="initiator-group">QRM Required?@if ($data->stage == 3)  
+                                                    <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
+                                                   @endif</label>
                                         <select name="qrm_required" id="qrm_required"
                                             {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                             <option value="">-- Select --</option>
@@ -2866,8 +2848,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="initiator-group">Investigation Required?<span
-                                                class = "text-danger">*</span></label>
+                                        <label for="initiator-group">Investigation Required?@if ($data->stage == 3)  
+                                                    <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
+                                                   @endif</label>
                                         <select name="Investigation_required"
                                         {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                             id="Investigation_required">
@@ -8133,7 +8116,7 @@
 
                                     <div class="col-lg-6 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
+                                            <label for="Contract Giver notification">Contract Giver comment update by <span
                                                     id="asteriskPT" class="text-danger">*</span></label>
                                             <select @if ($data->stage == 4) disabled @endif
                                                 name="ContractGiver_person" id="ContractGiver_person">
@@ -8269,7 +8252,7 @@
 
                                     <div class="col-lg-6 ContractGiver">
                                         <div class="group-input">
-                                            <label for="Contract Giver notification">Contract Giver Person <span
+                                            <label for="Contract Giver notification">Contract Giver comment update by <span
                                                     id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select @if ($data->stage == 4) disabled @endif
@@ -8418,6 +8401,8 @@
                                     </div>
                                 </div>
 
+
+                            {{--
                                 <div class="col-lg-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department
@@ -8430,9 +8415,22 @@
                                             @endforeach
                                         </select>
                                         @if ($data->stage != 3)
-                                        <!-- Hidden field to retain the value if select is disabled -->
+                                      
                                         <input type="hidden" name="Other1_Department_person" value="{{ $data1->Other1_Department_person }}">
                                     @endif
+                                    </div>
+                                </div>
+                            --}}
+
+                            <div class="col-lg-12 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Department1">Other's 1 Department
+                                            <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="text" name="Other1_Department_person" id="Other1_Department_person"
+                                            value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                     </div>
                                 </div>
 
@@ -8566,6 +8564,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -8663,7 +8662,7 @@
                                 @endif
                                 </div>
                             </div>
-
+                        {{--
                             <div class="col-lg-12 Other2_reviews">
                                 <div class="group-input">
                                     <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
@@ -8679,6 +8678,17 @@
                                 @endif
                                 </div>
                             </div>
+                            --}}
+                            <div class="col-lg-12 Other2_reviews">
+                                    <div class="group-input">
+                                        <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+
+                                        <input type="text" name="Other2_Department_person" id="Other2_Department_person"
+                                                value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                                @if ($data->stage != 2) readonly @endif>
+                                    </div>
+                            </div>
+                            
 
                             <div class="col-md-12 mb-3 Other2_reviews">
                                 <div class="group-input">
@@ -8811,7 +8821,7 @@
                                 @endif
                                 </div>
                             </div>
-
+                          {{--
                             <div class="col-lg-12 Other3_reviews">
                                 <div class="group-input">
                                     <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
@@ -8826,6 +8836,16 @@
                                     <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
                                 @endif
                                 </div>
+                            </div>
+                         --}}
+                            <div class="col-lg-12 Other3_reviews">
+                                    <div class="group-input">
+                                        <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                        
+                                        <input type="text" name="Other3_Department_person" id="Other3_Department_person"
+                                                value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                                @if ($data->stage != 2) readonly @endif>
+                                    </div>
                             </div>
 
                             <div class="col-md-12 mb-3 Other3_reviews">
@@ -8962,7 +8982,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="col-lg-12 Other4_reviews">
                                 <div class="group-input">
@@ -8979,6 +8999,17 @@
                                     @endif
                                 </div>
                             </div>
+                            --}}
+                            <div class="col-lg-12 Other4_reviews">
+                                   <div class="group-input">
+                                        <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
+
+                                        <input type="text" name="Other4_Department_person" id="Other4_Department_person"
+                                                value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                            @if ($data->stage != 2) readonly @endif>
+
+                                    </div>
+                                </div>
 
                             <div class="col-md-12 mb-3 Other4_reviews">
                                 <div class="group-input">
@@ -9116,7 +9147,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="col-lg-12 Other5_reviews">
                                 <div class="group-input">
@@ -9131,6 +9162,17 @@
                                         <!-- Hidden field to retain the value if select is disabled -->
                                         <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
                                     @endif
+                                </div>
+                            </div>
+                             --}}
+
+                            <div class="col-lg-12 Other5_reviews">
+                                <div class="group-input">
+                                    <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
+
+                                    <input type="text" name="Other5_Department_person" id="Other5_Department_person"
+                                            value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                            @if ($data->stage != 2) readonly @endif>
                                 </div>
                             </div>
 
@@ -9823,116 +9865,216 @@
                         </div>
 
                         <div class="col-lg-12 others-section" style="display: none;">
-    <div class="group-input">
-        <label for="other_specify">Others</label>
-        <textarea name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
-    </div>
-</div>
+                        <div class="group-input">
+                            <label for="other_specify">Others</label>
+                            <textarea name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
+                        </div>
+                    </div>
 
-<div class="col-12 mb-4 failure" id="fmea-section">
-    <div class="group-input failure">
-        <label for="agenda">
-            Failure Mode and Effect Analysis
-            <button type="button" name="agenda" onclick="addRiskAssessmentdata_1('risk-assessment-risk-management_2')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
-            <span class="text-primary" data-bs-toggle="modal"
-            data-bs-target="#observation-field-instruction-modalInferenceFMEA"
-            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-            (Launch Instruction)
-        </span>
-        </label>
-        <div class="table-responsive failure">
-            <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management_2">
-                <thead>
-                    <tr>
-                        <th colspan="1" style="text-align:center;"></th>
-                        <th colspan="2" style="text-align:center;">Risk Identification</th>
-                        <th colspan="1" style="text-align:center;">Risk Analysis</th>
-                        <th colspan="4" style="text-align:center;">Risk Evaluation</th>
-                        <th colspan="1" style="text-align:center;">Risk Control</th>
-                        <th colspan="6" style="text-align:center;">Risk Evaluation</th>
-                        <th colspan="4" style="text-align:center;"></th>
-                    </tr>
-                    <tr>
-                        <th>Row #</th>
-                        <th>Activity</th>
-                        <th>Possible Risk/Failure (Identified Risk)</th>
-                        <th>Consequences of Risk/Potential Causes</th>
-                        <th>Severity (S)</th>
-                        <th>Probability (P)</th>
-                        <th>Detection (D)</th>
-                        <th>Risk Level(RPN)</th>
-                        <th>Control Measures recommended/ Risk mitigation proposed</th>
-                        <th>Severity (S)</th>
-                        <th>Probability (P)</th>
-                        <th>Detection (D)</th>
-                        <th>Risk Level (RPN)</th>
-                        <th>Category of Risk Level (Low, Medium and High)</th>
-                        <th>Risk Acceptance (Y/N)</th>
-                        <th>Traceability document</th>
-                        <!-- <th>Others</th>
-                        <th>Attchment</th> -->
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @if (!empty($riskEffectAnalysis->risk_factor_1))
-                   
-                    @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
-                        <tr>
-                            <td>{{ $key + 1 }}</td>
-                <!-- <td><input name="risk_factor_1[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td> -->
 
-                <td>
-                <textarea name="risk_factor_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
-                </td>
-                <td>
-                    <textarea name="problem_cause_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                        {{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}
-                    </textarea>
-                </td>
+                    <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="other_attachment">Other attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="other_attachment">
+                                                @if ($data->other_attachment)
+                                                    @foreach(json_decode($data->other_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
+                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
+                                                            </a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
+                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
+                                                            </a>
+                                                            <input type="hidden" name="existing_other_attachment[]" value="{{ $file }}">
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="other_attachment[]"
+                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    oninput="addMultipleFiles(this, 'other_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                <td>
-                    <textarea name="existing_risk_control_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                        {{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}
-                    </textarea>
-                </td>
+                                <!-- Hidden field to keep track of files to be deleted -->
+                                <input type="hidden" id="deleted_other_attachment" name="deleted_other_attachment" value="">
 
-                <td>
-                    <select onchange="calculateInitialResult_1(this)" class="fieldR" name="initial_severity_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                        <option value="">-- Select --</option>
-                        <option value="1" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 1 ? 'selected' : '' }}>1-Insignificant</option>
-                        <option value="2" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 2 ? 'selected' : '' }}>2-Minor</option>
-                        <option value="3" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 3 ? 'selected' : '' }}>3-Major</option>
-                        <option value="4" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 4 ? 'selected' : '' }}>4-Critical</option>
-                        <option value="5" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 5 ? 'selected' : '' }}>5-Catastrophic</option>
-                    </select>
-                </td>
-                <td>
-                    <select onchange="calculateInitialResult_1(this)" class="fieldP" name="initial_probability_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                        <option value="">-- Select --</option>
-                        <option value="1" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 1 ? 'selected' : '' }}>1-Very rare</option>
-                        <option value="2" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 2 ? 'selected' : '' }}>2-Unlikely</option>
-                        <option value="3" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 3 ? 'selected' : '' }}>3-Possibly</option>
-                        <option value="4" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 4 ? 'selected' : '' }}>4-Likely</option>
-                        <option value="5" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 5 ? 'selected' : '' }}>5-Almost certain</option>
-                    </select>
-                </td>
-                <td>
-                    <select onchange="calculateInitialResult_1(this)" class="fieldN" name="initial_detectability_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                        <option value="">-- Select --</option>
-                        <option value="1" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 1 ? 'selected' : '' }}>1-Always detected</option>
-                        <option value="2" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 2 ? 'selected' : '' }}>2-Likely to detect</option>
-                        <option value="3" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 3 ? 'selected' : '' }}>3-Possible to detect</option>
-                        <option value="4" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 4 ? 'selected' : '' }}>4-Unlikely to detect</option>
-                        <option value="5" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 5 ? 'selected' : '' }}>5-Not detectable</option>
-                    </select>
-                </td>
-                <td><input name="initial_rpn_1[]" type="text" class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}" readonly {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
-                <td>
-                    <textarea name="risk_control_measure_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                        {{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}
-                    </textarea>
-                </td>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const removeButtons = document.querySelectorAll('.remove-file');
+
+                                        removeButtons.forEach(button => {
+                                            button.addEventListener('click', function() {
+                                                const fileName = this.getAttribute('data-file-name');
+                                                const fileContainer = this.closest('.file-container');
+
+                                                // Hide the file container
+                                                if (fileContainer) {
+                                                    fileContainer.style.display = 'none';
+                                                    // Remove hidden input associated with this file
+                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
+                                                    if (hiddenInput) {
+                                                        hiddenInput.remove();
+                                                    }
+
+                                                    // Add the file name to the deleted files list
+                                                    const deletedFilesInput = document.getElementById('deleted_other_attachment');
+                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
+                                                    deletedFiles.push(fileName);
+                                                    deletedFilesInput.value = deletedFiles.join(',');
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    function addMultipleFiles(input, id) {
+                                        const fileListContainer = document.getElementById(id);
+                                        const files = input.files;
+
+                                        for (let i = 0; i < files.length; i++) {
+                                            const file = files[i];
+                                            const fileName = file.name;
+                                            const fileContainer = document.createElement('h6');
+                                            fileContainer.classList.add('file-container', 'text-dark');
+                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
+
+                                            const fileText = document.createElement('b');
+                                            fileText.textContent = fileName;
+
+                                            const viewLink = document.createElement('a');
+                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
+                                            viewLink.target = '_blank';
+                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
+
+                                            const removeLink = document.createElement('a');
+                                            removeLink.classList.add('remove-file');
+                                            removeLink.dataset.fileName = fileName;
+                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
+                                            removeLink.addEventListener('click', function() {
+                                                fileContainer.style.display = 'none';
+                                            });
+
+                                            fileContainer.appendChild(fileText);
+                                            fileContainer.appendChild(viewLink);
+                                            fileContainer.appendChild(removeLink);
+
+                                            fileListContainer.appendChild(fileContainer);
+                                        }
+                                    }
+                                </script>
+
+
+                <div class="col-12 mb-4 failure" id="fmea-section">
+                    <div class="group-input failure">
+                        <label for="agenda">
+                            Failure Mode and Effect Analysis
+                            <button type="button" name="agenda" onclick="addRiskAssessmentdata_1('risk-assessment-risk-management_2')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                            <span class="text-primary" data-bs-toggle="modal"
+                            data-bs-target="#observation-field-instruction-modalInferenceFMEA"
+                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                            (Launch Instruction)
+                        </span>
+                        </label>
+                        <div class="table-responsive failure">
+                            <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management_2">
+                                <thead>
+                                    <tr>
+                                        <th colspan="1" style="text-align:center;"></th>
+                                        <th colspan="2" style="text-align:center;">Risk Identification</th>
+                                        <th colspan="1" style="text-align:center;">Risk Analysis</th>
+                                        <th colspan="4" style="text-align:center;">Risk Evaluation</th>
+                                        <th colspan="1" style="text-align:center;">Risk Control</th>
+                                        <th colspan="6" style="text-align:center;">Risk Evaluation</th>
+                                        <th colspan="4" style="text-align:center;"></th>
+                                    </tr>
+                                    <tr>
+                                        <th>Row #</th>
+                                        <th>Activity</th>
+                                        <th>Possible Risk/Failure (Identified Risk)</th>
+                                        <th>Consequences of Risk/Potential Causes</th>
+                                        <th>Severity (S)</th>
+                                        <th>Probability (P)</th>
+                                        <th>Detection (D)</th>
+                                        <th>Risk Level(RPN)</th>
+                                        <th>Control Measures recommended/ Risk mitigation proposed</th>
+                                        <th>Severity (S)</th>
+                                        <th>Probability (P)</th>
+                                        <th>Detection (D)</th>
+                                        <th>Risk Level (RPN)</th>
+                                        <th>Category of Risk Level (Low, Medium and High)</th>
+                                        <th>Risk Acceptance (Y/N)</th>
+                                        <th>Traceability document</th>
+                                        <!-- <th>Others</th>
+                                        <th>Attchment</th> -->
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @if (!empty($riskEffectAnalysis->risk_factor_1))
+                                
+                                    @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                <!-- <td><input name="risk_factor_1[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td> -->
+
+                                <td>
+                                <textarea name="risk_factor_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
+                                </td>
+                                <td>
+                                    <textarea name="problem_cause_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        {{ unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null }}
+                                    </textarea>
+                                </td>
+
+                                <td>
+                                    <textarea name="existing_risk_control_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        {{ unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null }}
+                                    </textarea>
+                                </td>
+
+                                <td>
+                                    <select onchange="calculateInitialResult_1(this)" class="fieldR" name="initial_severity_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        <option value="">-- Select --</option>
+                                        <option value="1" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 1 ? 'selected' : '' }}>1-Insignificant</option>
+                                        <option value="2" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 2 ? 'selected' : '' }}>2-Minor</option>
+                                        <option value="3" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 3 ? 'selected' : '' }}>3-Major</option>
+                                        <option value="4" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 4 ? 'selected' : '' }}>4-Critical</option>
+                                        <option value="5" {{ (unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null) == 5 ? 'selected' : '' }}>5-Catastrophic</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select onchange="calculateInitialResult_1(this)" class="fieldP" name="initial_probability_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        <option value="">-- Select --</option>
+                                        <option value="1" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 1 ? 'selected' : '' }}>1-Very rare</option>
+                                        <option value="2" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 2 ? 'selected' : '' }}>2-Unlikely</option>
+                                        <option value="3" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 3 ? 'selected' : '' }}>3-Possibly</option>
+                                        <option value="4" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 4 ? 'selected' : '' }}>4-Likely</option>
+                                        <option value="5" {{ (unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null) == 5 ? 'selected' : '' }}>5-Almost certain</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select onchange="calculateInitialResult_1(this)" class="fieldN" name="initial_detectability_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        <option value="">-- Select --</option>
+                                        <option value="1" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 1 ? 'selected' : '' }}>1-Always detected</option>
+                                        <option value="2" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 2 ? 'selected' : '' }}>2-Likely to detect</option>
+                                        <option value="3" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 3 ? 'selected' : '' }}>3-Possible to detect</option>
+                                        <option value="4" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 4 ? 'selected' : '' }}>4-Unlikely to detect</option>
+                                        <option value="5" {{ (unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null) == 5 ? 'selected' : '' }}>5-Not detectable</option>
+                                    </select>
+                                </td>
+                                <td><input name="initial_rpn_1[]" type="text" class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null }}" readonly {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}></td>
+                                <td>
+                                    <textarea name="risk_control_measure_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        {{ unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null }}
+                                    </textarea>
+                                </td>
 
                 <!-- Repeat for other fields as needed -->
 
@@ -10418,11 +10560,17 @@
                                                                     Machine</option>
                                                             </select>
                                                         </td>
-                                                        <td>
+                                                        <!-- <td>
                                                             <input type="text" name="inference_remarks[]"
                                                                 value="{{ $inference_remarks[$key] ?? '' }}"
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                                        </td> -->
+
+                                                        <td>
+                                                            <textarea name="inference_remarks[]" 
+                                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>{{ $inference_remarks[$key] ?? '' }}</textarea>
                                                         </td>
+
                                                         <td>
                                                             <button type="button" class="removeRowBtn"
                                                                 {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
@@ -10523,8 +10671,8 @@
                                 cell2.innerHTML =
                                     "<select  name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Mother Environment'>Mother Environment</option><option value='Man'>Man</option><option value='Machine'>Machine</option></select>";
 
-                                var cell3 = newRow.insertCell(2);
-                                cell3.innerHTML = "<input type='text'  name='inference_remarks[]'>";
+                                    var cell3 = newRow.insertCell(2);
+                                cell3.innerHTML = "<textarea name='inference_remarks[]'></textarea>";
 
                                 var cell4 = newRow.insertCell(3);
                                 cell4.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
@@ -11947,15 +12095,15 @@
 
 
                     <div class="col-12 mb-4" id="fmea-section">
-    <div class="group-input">
-        <label for="agenda">
-            Failure Mode and Effect Analysis
-            <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
-            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modalInferenceFMEA" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
-        </label>
-        <div class="table-responsive">
-            <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
-                <thead>
+            <div class="group-input">
+                <label for="agenda">
+                    Failure Mode and Effect Analysis
+                    <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modalInferenceFMEA" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
+                </label>
+                <div class="table-responsive">
+                    <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
+                        <thead>
                     <!-- First Row: Merged Headers -->
                     <tr>
                         <th colspan="1" style="text-align:center;"></th>
@@ -15848,4 +15996,34 @@
             });
         }
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        function setupPersonToDepartmentMapping(personSelectId, departmentInputId, usersData) {
+            let personSelect = document.getElementById(personSelectId);
+            let departmentInput = document.getElementById(departmentInputId);
+
+            if (personSelect && departmentInput) {
+                personSelect.addEventListener("change", function () {
+                    let selectedPerson = personSelect.value;
+                    departmentInput.value = usersData[selectedPerson] || ""; // Assign department or clear field
+                });
+            }
+        }
+
+        // Store user department data
+        let userDepartments = {
+            @foreach ($users as $user)
+                "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+            @endforeach
+        };
+
+        // Apply function to "Other's 1 Person" and "Other's 1 Department"
+        setupPersonToDepartmentMapping("Other1_person", "Other1_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other2_person", "Other2_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other3_person", "Other3_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other4_person", "Other4_Department_person", userDepartments);
+        setupPersonToDepartmentMapping("Other5_person", "Other5_Department_person", userDepartments);
+    });
+</script>
+
 @endsection

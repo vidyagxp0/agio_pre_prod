@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('hods')->nullable();
+        Schema::table('deviations', function (Blueprint $table) {
+            $table->longtext('other_attachment')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('hods')->nullable();
+        Schema::table('deviations', function (Blueprint $table) {
+            //
         });
     }
 };

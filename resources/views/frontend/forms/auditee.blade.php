@@ -237,7 +237,7 @@
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button> -->
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Summary Response</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Aprroval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
@@ -321,7 +321,7 @@
 
 
 
-
+                            {{--
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Department <span
@@ -372,13 +372,76 @@
                                                 Pharmacovigilance</option>
                                         </select>
 
-                                        {{-- Uncomment if validation needed --}}
-                                        {{-- @error('Initiator_Group')
-            <p class="text-danger">{{ $message }}</p>
-        @enderror --}}
+                                    </div>
+                                </div>
+                            --}}
+
+
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
 
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+                                                
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                            value="" readonly>
+                                    </div>
+                                </div>
+                           
+                            {{--
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Department Code </label>
@@ -386,7 +449,7 @@
                                             value="" readonly>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label>
@@ -418,9 +481,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
-                                        <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through"
-                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                        <select name="initiated_through" id="initiated_through">
                                             <option value="">-- select --</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
@@ -433,12 +494,35 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
-                                        <label for="If Other">Others<span class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_if_other"></textarea>
+
+                                                            
+                                <!-- Hidden "Others" field initially -->
+                                <div class="col-lg-6" id="initiated_through_req" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="If Other">Others <span id="required-asterisk" class="text-danger">*</span></label>
+                                        <textarea name="initiated_if_other" id="initiated_if_other"></textarea>
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.getElementById('initiated_through').addEventListener('change', function() {
+                                        var othersField = document.getElementById('initiated_through_req');
+                                        var othersTextarea = document.getElementById('initiated_if_other');
+                                        var requiredAsterisk = document.getElementById('required-asterisk');
+
+                                        if (this.value === 'others') {
+                                            othersField.style.display = 'block'; // Show textarea
+                                            requiredAsterisk.style.display = 'inline'; // Show red asterisk
+                                            othersTextarea.setAttribute('required', 'required'); // Make textarea required
+                                        } else {
+                                            othersField.style.display = 'none'; // Hide textarea
+                                            requiredAsterisk.style.display = 'none'; // Hide red asterisk
+                                            othersTextarea.removeAttribute('required'); // Remove required validation
+                                            othersTextarea.value = ''; // Clear textarea when hiding
+                                        }
+                                    });
+                                </script>
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
@@ -461,8 +545,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_type">Type of Audit</label>
-                                        <select name="audit_type"
-                                            onchange="otherController(this.value, 'others', 'type_of_audit_req')">
+                                        <select name="audit_type" id="audit_type">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="R&D">R&D</option>
                                             <option value="GLP">GLP</option>
@@ -470,19 +553,42 @@
                                             <option value="GDP">GDP</option>
                                             <option value="GEP">GEP</option>
                                             <option value="ISO 17025">ISO 17025</option>
+                                            <option value="GMP">GMP</option>
+                                            <option value="cGMP">cGMP</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="type_of_audit_req">
-                                        <label for="If Other">If Others<span class="text-danger d-none">*</span></label>
-                                        <textarea name="if_other"></textarea>
+
+                                <div class="col-lg-6" id="type_of_audit_req" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="if_other">If Others <span id="required-asterisk" class="text-danger">*</span></label>
+                                        <textarea name="if_other" id="if_other"></textarea>
                                         @error('if_other')
-                                            <p class="text-danger">this field is required</p>
+                                            <p class="text-danger">This field is required</p>
                                         @enderror
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.getElementById('audit_type').addEventListener('change', function() {
+                                        var othersField = document.getElementById('type_of_audit_req');
+                                        var othersTextarea = document.getElementById('if_other');
+                                        var requiredAsterisk = document.getElementById('required-asterisk');
+
+                                        if (this.value === 'others') {
+                                            othersField.style.display = 'block'; // Show textarea
+                                            requiredAsterisk.style.display = 'inline'; // Show red asterisk
+                                            othersTextarea.setAttribute('required', 'required'); // Make textarea required
+                                        } else {
+                                            othersField.style.display = 'none'; // Hide textarea
+                                            requiredAsterisk.style.display = 'none'; // Hide red asterisk
+                                            othersTextarea.removeAttribute('required'); // Remove required validation
+                                            othersTextarea.value = ''; // Clear textarea when hiding
+                                        }
+                                    });
+                                </script>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="external_agencies">External Agencies</label>
@@ -496,17 +602,17 @@
                                             <option value="WHO">WHO</option>
                                             <option value="Local FDA">Local FDA</option>
                                             <option value="TGA">TGA</option>
+                                            <option value="EU-GMP">EU-GMP</option>
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="external_agencies_req">
-                                        <label for="others" id="others-label">Others<span id="required-asterisk"
-                                                class="text-danger d-none">*</span></label>
+                                <div class="col-lg-6" id="external_agencies_req" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="others" id="others-label">Others <span id="required-asterisk" class="text-danger">*</span></label>
                                         <textarea name="others" id="others"></textarea>
-                                        @error('if_other')
+                                        @error('others')
                                             <p class="text-danger">This field is required</p>
                                         @enderror
                                     </div>
@@ -514,20 +620,23 @@
 
                                 <script>
                                     document.getElementById('external_agencies').addEventListener('change', function() {
+                                        var othersField = document.getElementById('external_agencies_req');
                                         var othersTextarea = document.getElementById('others');
                                         var requiredAsterisk = document.getElementById('required-asterisk');
 
                                         if (this.value === 'Others') {
-                                            // Show the red asterisk and set textarea to required
-                                            requiredAsterisk.classList.remove('d-none');
-                                            othersTextarea.setAttribute('required', 'required');
+                                            othersField.style.display = 'block'; // Show textarea
+                                            requiredAsterisk.style.display = 'inline'; // Show red asterisk
+                                            othersTextarea.setAttribute('required', 'required'); // Make textarea required
                                         } else {
-                                            // Hide the red asterisk and remove the required attribute
-                                            requiredAsterisk.classList.add('d-none');
-                                            othersTextarea.removeAttribute('required');
+                                            othersField.style.display = 'none'; // Hide textarea
+                                            requiredAsterisk.style.display = 'none'; // Hide red asterisk
+                                            othersTextarea.removeAttribute('required'); // Remove required validation
+                                            othersTextarea.value = ''; // Clear textarea when hiding
                                         }
                                     });
                                 </script>
+
 
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -565,7 +674,7 @@
                                                 <tr>
                                                     <th>Row</th>
                                                     <th>Auditor Name</th>
-                                                    <th>Regulatory Agency</th>
+                                                    <th>External Agency Name</th>
                                                     <th>Designation</th>
                                                     <th>Remarks</th>
                                                     <th>Action</th>
@@ -1245,48 +1354,55 @@
                                 {{-- grid added new --}}
 
                                 <div class="col-12">
-                                    <div class="group-input" id="IncidentRow">
-                                        <label for="root_cause">
-                                            Summary Response
-                                            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Summary Response
+            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal"
+                data-bs-target="#observation-field-instruction-modal"
+                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
 
-                                        <table class="table table-bordered" id="onservation-incident-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row</th>
-                                                    <th>Observation</th>
-                                                    <th>Response</th>
-                                                    <th>CAPA / Child action Reference If Any</th>
-                                                    <th>Status</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $serialNumber = 1;
-                                                @endphp
-                                                <tr>
-                                                    <td disabled>{{ $serialNumber++ }}</td>
-                                                    <td><input type="text" name="SummaryResponse[0][observation]"></td>
-                                                    <td><input type="text" name="SummaryResponse[0][response]"></td>
-                                                    <td><input type="text" name="SummaryResponse[0][reference_id]">
-                                                    </td>
-                                                    <td><input type="text" name="SummaryResponse[0][status]"></td>
-                                                    <td><input type="text" name="SummaryResponse[0][remarks]"></td>
-                                                    <td><button class="removeRowBtn">Remove</button>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </div>
-                                </div>
+        <table class="table table-bordered" id="onservation-incident-table">
+            <thead>
+                <tr>
+                    <th>Row</th>
+                    <th>Observation</th>
+                    <th>Response</th>
+                    <th>CAPA / Child action Reference If Any</th>
+                    <th>Status</th>
+                    <th>Category</th>
+                    <th>Remarks</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @php
+                    $serialNumber = 1;
+                @endphp
+                <tr>
+                    <td><input disabled type="text" style="width:40px" value="{{ $serialNumber++ }}"></td>
+                    <td><textarea name="SummaryResponse[0][observation]"></textarea></td>
+                    <td><textarea name="SummaryResponse[0][response]"></textarea></td>
+                    <td><textarea name="SummaryResponse[0][reference_id]"></textarea></td>
+                    <td><textarea name="SummaryResponse[0][status]"></textarea></td>
+                    <td>
+                        <select name="SummaryResponse[0][category]" class="form-select">
+                            <option value="">--Select--</option>
+                            <option value="Major">Major</option>
+                            <option value="Minor">Minor</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </td>
+                    <td><textarea name="SummaryResponse[0][remarks]"></textarea></td>
+                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
 
                                 <script>
@@ -1331,42 +1447,48 @@
                                 </script>
 
 
+                              
                                 <script>
                                     $(document).ready(function() {
                                         let investdetails = 1;
+
                                         $('#IncidentAdd').click(function(e) {
+                                            e.preventDefault();
+
                                             function generateTableRow(serialNumber) {
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" style ="width:15px" value="' + serialNumber +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="SummaryResponse[' + investdetails +
-                                                    '][observation]" value=""></td>' +
-                                                    '<td><input type="text" name="SummaryResponse[' + investdetails +
-                                                    '][response]" value=""></td>' +
-                                                    '<td><input type="text" name="SummaryResponse[' + investdetails +
-                                                    '][reference_id]" value=""></td>' +
-                                                    '<td><input type="text" name="SummaryResponse[' + investdetails +
-                                                    '][status]" value=""></td>' +
-                                                    '<td><input type="text" name="SummaryResponse[' + investdetails +
-                                                    '][remarks]" value=""></td>' +
-                                                    '<td><button class="removeRowBtn">Remove</button>' +
-                                                    '</tr>';
-                                                investdetails++; // Increment the row number here
-                                                return html;
+                                                return `
+                                                    <tr>
+                                                        <td><input disabled type="text" style="width:40px" value="${serialNumber}"></td>
+                                                        <td><textarea name="SummaryResponse[${investdetails}][observation]"></textarea></td>
+                                                        <td><textarea name="SummaryResponse[${investdetails}][response]"></textarea></td>
+                                                        <td><textarea name="SummaryResponse[${investdetails}][reference_id]"></textarea></td>
+                                                        <td><textarea name="SummaryResponse[${investdetails}][status]"></textarea></td>
+                                                        <td>
+                                                            <select name="SummaryResponse[${investdetails}][category]" class="form-select">
+                                                                <option value="">--Select--</option>
+                                                                <option value="Major">Major</option>
+                                                                <option value="Minor">Minor</option>
+                                                                <option value="Critical">Critical</option>
+                                                            </select>
+                                                        </td>
+                                                        <td><textarea name="SummaryResponse[${investdetails}][remarks]"></textarea></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
+                                                `;
                                             }
 
-                                            var tableBody = $('#onservation-incident-table tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
+                                            let tableBody = $('#onservation-incident-table tbody');
+                                            let rowCount = tableBody.children('tr').length;
+                                            let newRow = generateTableRow(rowCount + 1);
                                             tableBody.append(newRow);
+                                            investdetails++; // Increment the row number
                                         });
+
                                         $(document).on('click', '.removeRowBtn', function() {
                                             $(this).closest('tr').remove();
                                         });
                                     });
                                 </script>
-
                                 {{-- grid added new --}}
 
 
@@ -1455,7 +1577,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Production Tablet">Production Tablet/Capsule Powder Review Comment Required</label>
+                                        <label for="Production Tablet">Production Tablet/Capsule / Powder Review Comment Required ?</label>
                                         <select name="Production_Table_Review" id="Production_Table_Review" disabled>
                                             <option value="">-- Select --</option>
                                             <option value='yes'>
@@ -1661,7 +1783,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Research Development"> Research Development Review Comment Required ?</label>
+                                        <label for="Research Development">Research & Development Review  Comment  Required ?</label>
                                         <select name="ResearchDevelopment_Review" id="ResearchDevelopment_Review"
                                             disabled>
                                             <option value="">-- Select --</option>

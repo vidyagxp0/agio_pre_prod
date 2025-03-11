@@ -253,28 +253,30 @@
         }
     </style>
     
-    {{-- <style>
-         /*Main Table Styling */
+
+    <style>
+        
+        /*Main Table Styling */
         #isPasted {
-            width: 650px !important;
+            width: 690px !important;
             border-collapse: collapse;
-            table-layout: auto; /* Adjusts column width dynamically */
+            table-layout: fixed;
         }
 
         /* First column adjusts to its content */
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; /* Prevent wrapping */
-            width: 1%; /* Shrink to fit content */
+            white-space: nowrap; 
+            width: 1%;
             vertical-align: top;
         }
 
         /* Second column takes remaining space */
         #isPasted td:last-child,
         #isPasted th:last-child {
-            width: auto; /* Take remaining space */
+            width: auto;
             vertical-align: top;
-            
+
         }
 
         /* Common Table Cell Styling */
@@ -283,9 +285,9 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px !important;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         /* Paragraph Styling Inside Table Cells */
@@ -293,9 +295,9 @@
             text-align: justify;
             text-justify: inter-word;
             margin: 0;
-            max-width: 500px !important;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         #isPasted img {
@@ -311,30 +313,38 @@
             height: 300px;
             margin: 5px auto;
         }
-    </style> --}}
 
-    <style>
-        #isPasted {
-            width: 100% !important;
-            border-collapse: collapse;
-            table-layout: fixed; /* Fix table layout to maintain structure */
+        .table-containers {
+            width: 550px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
-        #isPasted th,
-        #isPasted td {
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Table wrapper for scrolling */
-        .table-containers {
-            width: 100%;
-            overflow-x: auto; /* Enable horsizontal scrolling */
-        }
 
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
     </style>
 
 </head>
@@ -368,12 +378,28 @@
                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
                             ->select('stage_manages.*', 'users.name as user_name')
                             ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
+                            ->where('stage', 'Approval-Submit')
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($data->originator_id) }}</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
+                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA
+                        @if ($inreviews->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreviews as $temp)
+                                <div>{{ $temp->user_name ?: 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif 
+                    </td>
+                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 16px;">
+                        @if ($inreviews->isEmpty())
+                            <div>Yet Not Performed</div>
+                        @else
+                            @foreach ($inreviews as $temp)
+                              <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : 'Yet Not Performed' }}</div>
+                            @endforeach
+                        @endif
+                    </th>
                     <td style="padding: 20px; border: 1px solid #ddd;">  </td>
                              
                 </tr>

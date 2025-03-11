@@ -706,7 +706,7 @@
                         </th>
                         <td class="w-80" colspan="3">
                             @if ($data->protocol_based_study_hypthesis_study_ooc)
-                                {{ $data->protocol_based_study_hypthesis_study_ooc }}
+                            {{ strip_tags($data->protocol_based_study_hypthesis_study_ooc ?? 'Not Applicable') }}
                             @else
                                 Not Applicable
                             @endif
@@ -726,7 +726,7 @@
                         <th class="w-20">Plan of Protocol Study/ Hypothesis Study</th>
                         <td class="w-80" colspan="3">
                             @if ($data->plan_of_protocol_study_hypothesis_study)
-                                {{ $data->plan_of_protocol_study_hypothesis_study }}
+                                {!! $data->plan_of_protocol_study_hypothesis_study !!}
                             @else
                                 Not Applicable
                             @endif
@@ -748,7 +748,7 @@
                         <th class="w-20">Conclusion of Protocol based Study/Hypothesis Study</th>
                         <td class="w-80" colspan="3">
                             @if ($data->conclusion_of_protocol_based_study_hypothesis_study_ooc)
-                                {{ $data->conclusion_of_protocol_based_study_hypothesis_study_ooc }}
+                                {!! $data->conclusion_of_protocol_based_study_hypothesis_study_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -811,7 +811,7 @@
                         <th class="w-20">Additional Remarks (if any)</th>
                         <td class="w-80" colspan="3">
                             @if ($data->additional_remarks_stage_ooc)
-                                {{ $data->additional_remarks_stage_ooc }}
+                                {!! $data->additional_remarks_stage_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -821,7 +821,7 @@
                         <th class="w-20">Corrective Action</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capas_ooc)
-                                {{ $data->initiated_through_capas_ooc }}
+                                {!! $data->initiated_through_capas_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -831,7 +831,7 @@
                         <th class="w-20">Preventive Action</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capa_prevent_ooc)
-                                {{ $data->initiated_through_capa_prevent_ooc }}
+                                {!! $data->initiated_through_capa_prevent_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -841,7 +841,7 @@
                         <th class="w-20">Corrective and Preventive Action</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initiated_through_capa_corrective_ooc)
-                                {{ $data->initiated_through_capa_corrective_ooc }}
+                                {!! $data->initiated_through_capa_corrective_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -851,7 +851,7 @@
                         <th class="w-20">Phase IA Summary</th>
                         <td class="w-80" colspan="3">
                             @if ($data->phase_ia_investigation_summary)
-                                {{ $data->phase_ia_investigation_summary }}
+                                {!! $data->phase_ia_investigation_summary !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1033,7 +1033,7 @@
                         <th class="w-20">Impact Assessment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initiated_throug_stageii_ooc)
-                                {{ $data->initiated_throug_stageii_ooc }}
+                                {!! $data->initiated_throug_stageii_ooc !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1063,7 +1063,7 @@
                         <th class="w-20">Result of Recalibration</th>
                         <td class="w-80" colspan="3">
                             @if ($data->is_repeat_reanalysis_stageii_ooc)
-                                {{ $data->is_repeat_reanalysis_stageii_ooc }}
+                                {!! $data->is_repeat_reanalysis_stageii_ooc !!}
                             @else
                                 Not Applicable
                             @endif
