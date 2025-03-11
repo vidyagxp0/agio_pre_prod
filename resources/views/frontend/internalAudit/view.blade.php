@@ -650,7 +650,7 @@
 
 
 
-                                                   
+
                                                 </select>
                                                 @if ($data->stage != 1)
                                                 <!-- Hidden field to retain the value if select is disabled -->
@@ -2969,7 +2969,7 @@
                                                                         <option value="Critical" {{ isset($item['category']) && $item['category'] == 'Critical' ? 'selected' : '' }}>Critical</option>
                                                                     </select>
                                                                 </td>
-                                                                
+
 
                                                                 <td>
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"> --}}
@@ -3710,12 +3710,12 @@
                                                                         <option value="No"
                                                                             {{ $data->response_1 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_1 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_1) || $data->response_1 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
+
                                                             {{-- <td>
                                                     <textarea name="what_will_not_be"></textarea> --}}
                                                             <td style="vertical-align: middle;">
@@ -3741,9 +3741,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_2 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_2 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_2) || $data->response_2 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -3770,9 +3769,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_3 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_3 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_3) || $data->response_3 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -3799,9 +3797,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_4 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_4 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_4) || $data->response_4 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -3834,9 +3831,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_5 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_5 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_5) || $data->response_5 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -3868,9 +3864,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_6 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_6 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_6) || $data->response_6 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -3899,9 +3894,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_7 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_7 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_7) || $data->response_7 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -3931,9 +3925,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_8 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_8 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_8) || $data->response_8 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -3965,9 +3958,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_9 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_9 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_9) || $data->response_9 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -3999,9 +3991,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_10 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_10 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_10) || $data->response_10 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -4034,9 +4025,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_11 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_11 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_11) || $data->response_11 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4068,9 +4058,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_12 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_12 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_12) || $data->response_12 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4102,9 +4091,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_13 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_13 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_13) || $data->response_13 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -4156,9 +4144,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_14 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_14 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_14) || $data->response_14 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4186,9 +4173,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_15 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_15 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_15) || $data->response_15 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4215,9 +4201,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_16 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_16 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_16) || $data->response_16 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4248,9 +4233,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_17 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_17 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_17) || $data->response_17 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -4283,9 +4267,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_18 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_18 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_18) || $data->response_18 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4317,9 +4300,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_19 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_19 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_19) || $data->response_19 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4357,9 +4339,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_20 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_20 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_20) || $data->response_20 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4388,9 +4369,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_21 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_21 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_21) || $data->response_21 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4419,9 +4399,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_22 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_22 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_22) || $data->response_22 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4451,9 +4430,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_23 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_23 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_23) || $data->response_23 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4483,9 +4461,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_24 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_24 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_24) || $data->response_24 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4513,9 +4490,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_25 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_25 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_25) || $data->response_25 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4544,9 +4520,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_26 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_26 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_26) || $data->response_26 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4574,9 +4549,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_27 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_27 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_27) || $data->response_27 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4602,9 +4576,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_28 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_28 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_28) || $data->response_28 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4632,9 +4605,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_29 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_29 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_29) || $data->response_29 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4663,9 +4635,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_30 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_30 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_30) || $data->response_30 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4692,9 +4663,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_31 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_31 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_31) || $data->response_31 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4723,9 +4693,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_32 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_32 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_32) || $data->response_32 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4755,9 +4724,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_33 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_33 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_33) || $data->response_33 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4785,9 +4753,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_34 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_34 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_34) || $data->response_34 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4815,9 +4782,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_35 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_35 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_35) || $data->response_35 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4844,9 +4810,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_36 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_36 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_36) || $data->response_36 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4874,9 +4839,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_37 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_37 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_37) || $data->response_37 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4903,9 +4867,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_38 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_38 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_38) || $data->response_38 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4933,9 +4896,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_39 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_39 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_39) || $data->response_39 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4962,9 +4924,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_40 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_40 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_40) || $data->response_40 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -4994,9 +4955,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_41 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_41 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_41) || $data->response_41 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5024,9 +4984,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_42 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_42 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_42) || $data->response_42 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5054,9 +5013,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_43 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_43 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_43) || $data->response_43 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5084,9 +5042,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_44 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_44 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_44) || $data->response_44 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5114,9 +5071,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_45 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_45 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_45) || $data->response_45 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5142,9 +5098,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_46 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_46 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_46) || $data->response_46 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5170,9 +5125,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_47 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_47 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_47) || $data->response_47 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5199,9 +5153,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_48 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_48 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_48) || $data->response_48 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5227,9 +5180,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_49 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_49 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_49) || $data->response_49 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5257,9 +5209,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_50 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_50 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_50) || $data->response_50 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5286,9 +5237,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_51 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_51 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_51) || $data->response_51 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5316,9 +5266,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_52 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_52 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_52) || $data->response_52 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5345,9 +5294,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_53 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_53 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_53) || $data->response_53 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5374,9 +5322,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_54 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_54 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_54) || $data->response_54 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5404,9 +5351,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_55 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_55 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_55) || $data->response_55 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5434,9 +5380,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_56 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_56 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_56) || $data->response_56 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5464,9 +5409,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_57 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_57 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_57) || $data->response_57 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5521,9 +5465,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_58 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_58 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_58) || $data->response_58 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
 
@@ -5559,9 +5502,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_59 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_59 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_59) || $data->response_59 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5592,9 +5534,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_60 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_60 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_60) || $data->response_60 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5626,9 +5567,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_61 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_61 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_61) || $data->response_61 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5659,9 +5599,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_62 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_62 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_62) || $data->response_62 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5692,9 +5631,8 @@
                                                                         <option value="No"
                                                                             {{ $data->response_63 == 'No' ? 'selected' : '' }}>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            {{ $data->response_63 == 'N/A' ? 'selected' : '' }}>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($data->response_63) || $data->response_63 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5807,9 +5745,11 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_1) {{ $checklist1->tablet_compress_response_1 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
+                                                                        {{-- <option value="N/A"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_1) {{ $checklist1->tablet_compress_response_1 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            N/A</option> --}}
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_1) || $checklist1->tablet_compress_response_1 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5843,9 +5783,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_2) || $checklist1->tablet_compress_response_2 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -5881,9 +5820,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_3) {{ $checklist1->tablet_compress_response_3 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_3) {{ $checklist1->tablet_compress_response_3 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_3) || $checklist1->tablet_compress_response_3 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -5921,9 +5859,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_4) {{ $checklist1->tablet_compress_response_4 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_4) {{ $checklist1->tablet_compress_response_4 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_4) || $checklist1->tablet_compress_response_4 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -5961,9 +5898,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_5) {{ $checklist1->tablet_compress_response_5 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_5) {{ $checklist1->tablet_compress_response_5 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_5) || $checklist1->tablet_compress_response_5 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -6002,9 +5938,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == 'No' ? 'selected' : '' }} @endif>
                                                                             No </option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_6) || $checklist1->tablet_compress_response_6 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6037,9 +5972,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_7) || $checklist1->tablet_compress_response_7 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6075,9 +6009,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_8) {{ $checklist1->tablet_compress_response_8 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_8) {{ $checklist1->tablet_compress_response_8 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_8) || $checklist1->tablet_compress_response_8 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6116,9 +6049,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_9) {{ $checklist1->tablet_compress_response_9 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_9) {{ $checklist1->tablet_compress_response_9 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_9) || $checklist1->tablet_compress_response_9 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6155,9 +6087,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_10) {{ $checklist1->tablet_compress_response_10 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_10) {{ $checklist1->tablet_compress_response_10 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_10) || $checklist1->tablet_compress_response_10 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6195,9 +6126,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_11) || $checklist1->tablet_compress_response_11 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6234,9 +6164,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_12) || $checklist1->tablet_compress_response_12 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6276,9 +6205,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_13) {{ $checklist1->tablet_compress_response_13 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_13) {{ $checklist1->tablet_compress_response_13 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_13) || $checklist1->tablet_compress_response_13 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6316,9 +6244,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_14) {{ $checklist1->tablet_compress_response_14 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_14) {{ $checklist1->tablet_compress_response_14 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_14) || $checklist1->tablet_compress_response_14 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6354,9 +6281,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_15) || $checklist1->tablet_compress_response_15 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6393,9 +6319,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_16) || $checklist1->tablet_compress_response_16 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6433,9 +6358,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_17) {{ $checklist1->tablet_compress_response_17 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option
-                                                                            value="N/A"@if ($checklist1 && $checklist1->tablet_compress_response_17) {{ $checklist1->tablet_compress_response_17 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_17) || $checklist1->tablet_compress_response_17 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6472,9 +6396,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_18) {{ $checklist1->tablet_compress_response_18 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option
-                                                                            value="N/A"@if ($checklist1 && $checklist1->tablet_compress_response_18) {{ $checklist1->tablet_compress_response_18 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_18) || $checklist1->tablet_compress_response_18 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6512,9 +6435,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_19) {{ $checklist1->tablet_compress_response_19 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option
-                                                                            value="N/A"@if ($checklist1 && $checklist1->tablet_compress_response_19) {{ $checklist1->tablet_compress_response_19 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_19) || $checklist1->tablet_compress_response_19 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6553,9 +6475,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_20) {{ $checklist1->tablet_compress_response_20 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option
-                                                                            value="N/A"@if ($checklist1 && $checklist1->tablet_compress_response_20) {{ $checklist1->tablet_compress_response_20 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_20) || $checklist1->tablet_compress_response_20 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6592,9 +6513,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_21) || $checklist1->tablet_compress_response_21 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6631,9 +6551,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_22) {{ $checklist1->tablet_compress_response_22 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_22) {{ $checklist1->tablet_compress_response_22 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_22) || $checklist1->tablet_compress_response_22 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6669,9 +6588,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_23) || $checklist1->tablet_compress_response_23 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6707,9 +6625,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_24) || $checklist1->tablet_compress_response_24 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6746,9 +6663,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_25) || $checklist1->tablet_compress_response_25 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6785,9 +6701,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_26) || $checklist1->tablet_compress_response_26 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6826,9 +6741,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_27) || $checklist1->tablet_compress_response_27 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6865,9 +6779,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_28) || $checklist1->tablet_compress_response_28 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6904,9 +6817,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_29) || $checklist1->tablet_compress_response_29 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6943,9 +6855,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_30) || $checklist1->tablet_compress_response_30 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -6982,9 +6893,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_31) || $checklist1->tablet_compress_response_31 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7020,9 +6930,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_32) || $checklist1->tablet_compress_response_32 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7058,9 +6967,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_33) || $checklist1->tablet_compress_response_33 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7096,9 +7004,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_34) || $checklist1->tablet_compress_response_34 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7134,9 +7041,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_35) || $checklist1->tablet_compress_response_35 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7172,9 +7078,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_36) || $checklist1->tablet_compress_response_36 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7210,9 +7115,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_37) || $checklist1->tablet_compress_response_37 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7249,9 +7153,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_38) || $checklist1->tablet_compress_response_38 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7287,9 +7190,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_39) || $checklist1->tablet_compress_response_39 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7326,9 +7228,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_40) || $checklist1->tablet_compress_response_40 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7365,9 +7266,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_40) || $checklist1->tablet_compress_response_40 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7404,9 +7304,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_42) || $checklist1->tablet_compress_response_42 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7467,9 +7366,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_43) || $checklist1->tablet_compress_response_43 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7510,9 +7408,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_44) || $checklist1->tablet_compress_response_44 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7549,9 +7446,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_45) || $checklist1->tablet_compress_response_45 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7589,9 +7485,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_46) || $checklist1->tablet_compress_response_46 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7628,9 +7523,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_47) || $checklist1->tablet_compress_response_47 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7668,9 +7562,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_48) || $checklist1->tablet_compress_response_48 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7707,9 +7600,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist1->tablet_compress_response_49) || $checklist1->tablet_compress_response_49 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7834,9 +7726,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_1) {{ $checklist2->tablet_coating_response_1 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_1) {{ $checklist2->tablet_coating_response_1 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_1) || $checklist2->tablet_coating_response_1 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                     </select>
                                                                 </div>
                                                             </td>
@@ -7870,9 +7761,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_2) || $checklist2->tablet_coating_response_2 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7909,9 +7799,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_3) || $checklist2->tablet_coating_response_3 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7949,9 +7838,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_4) || $checklist2->tablet_coating_response_4 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -7990,9 +7878,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_5) || $checklist2->tablet_coating_response_5 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8032,9 +7919,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_6) || $checklist2->tablet_coating_response_6 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8071,9 +7957,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_7) || $checklist2->tablet_coating_response_7 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8109,9 +7994,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_8) || $checklist2->tablet_coating_response_8 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8150,9 +8034,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_9) || $checklist2->tablet_coating_response_9 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8189,9 +8072,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_10) || $checklist2->tablet_coating_response_10 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8230,9 +8112,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_11) || $checklist2->tablet_coating_response_11 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8270,9 +8151,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_12) || $checklist2->tablet_coating_response_12 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8311,9 +8191,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_13) || $checklist2->tablet_coating_response_13 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8352,9 +8231,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_14) || $checklist2->tablet_coating_response_14 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8391,9 +8269,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_15) || $checklist2->tablet_coating_response_15 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8429,9 +8306,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_16) || $checklist2->tablet_coating_response_16 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8468,9 +8344,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_17) || $checklist2->tablet_coating_response_17 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8507,9 +8382,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_18) || $checklist2->tablet_coating_response_18 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8546,9 +8420,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_19) || $checklist2->tablet_coating_response_19 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8585,9 +8458,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_20) || $checklist2->tablet_coating_response_20 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8623,9 +8495,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_21) || $checklist2->tablet_coating_response_21 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8661,9 +8532,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_22) || $checklist2->tablet_coating_response_22 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8699,9 +8569,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_23) || $checklist2->tablet_coating_response_23 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8737,9 +8606,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_23) || $checklist2->tablet_coating_response_23 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8777,9 +8645,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_25) || $checklist2->tablet_coating_response_25 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8815,9 +8682,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_26) || $checklist2->tablet_coating_response_26 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8853,9 +8719,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_27) || $checklist2->tablet_coating_response_27 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -8891,9 +8755,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_28) || $checklist2->tablet_coating_response_28 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -8929,9 +8792,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_29) || $checklist2->tablet_coating_response_29 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -8964,12 +8825,8 @@
                                                                         <option value="Yes"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == 'Yes' ? 'selected' : '' }} @endif>
                                                                             Yes</option>
-                                                                        <option value="No"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == 'No' ? 'selected' : '' }} @endif>
-                                                                            No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_30) || $checklist2->tablet_coating_response_30 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9004,9 +8861,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_31) || $checklist2->tablet_coating_response_31 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9041,9 +8897,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_32) || $checklist2->tablet_coating_response_32 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9078,9 +8933,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_33) || $checklist2->tablet_coating_response_33 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9115,9 +8969,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_34) || $checklist2->tablet_coating_response_34 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9153,9 +9006,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_35) || $checklist2->tablet_coating_response_35 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9190,9 +9042,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_36) || $checklist2->tablet_coating_response_36 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9228,9 +9079,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_37) || $checklist2->tablet_coating_response_37 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9265,9 +9115,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_38) || $checklist2->tablet_coating_response_38 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9303,9 +9152,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_39) || $checklist2->tablet_coating_response_39 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9341,9 +9189,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_40) || $checklist2->tablet_coating_response_40 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9379,9 +9226,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_41) || $checklist2->tablet_coating_response_41 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9416,9 +9262,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_42) || $checklist2->tablet_coating_response_42 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9453,9 +9298,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_43) || $checklist2->tablet_coating_response_43 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9516,9 +9360,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_44) || $checklist2->tablet_coating_response_44 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9559,9 +9402,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_45) || $checklist2->tablet_coating_response_45 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9597,9 +9439,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_46) || $checklist2->tablet_coating_response_46 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9637,9 +9478,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_47) || $checklist2->tablet_coating_response_47 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9677,9 +9517,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_48) || $checklist2->tablet_coating_response_48 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9716,9 +9555,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist2->tablet_coating_response_49) || $checklist2->tablet_coating_response_49 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -9880,9 +9718,10 @@
                                                                             <option value="No"
                                                                                 @if ($checklist3 && $checklist3->{'tablet_capsule_packing_' . ($index + 1)} == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist3 && $checklist3->{'tablet_capsule_packing_' . ($index + 1)} == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A"
+                                                                                @if (empty($checklist3) || empty($checklist3->{'tablet_capsule_packing_' . (20 + $index + 1)}) || $checklist3->{'tablet_capsule_packing_' . (20 + $index + 1)} == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -9938,9 +9777,10 @@
                                                                             <option value="No"
                                                                                 @if ($checklist3 && $checklist3->{'tablet_capsule_packing_' . (20 + $index + 1)} == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist3 && $checklist3->{'tablet_capsule_packing_' . (20 + $index + 1)} == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A"
+                                                                                @if (empty($checklist3) || empty($checklist3->{'tablet_capsule_packing_' . (20 + $index + 1)}) || $checklist3->{'tablet_capsule_packing_' . (20 + $index + 1)} == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -10055,9 +9895,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_1) {{ $checklist4->capsule_response_1 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_1) {{ $checklist4->capsule_response_1 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_1) || $checklist4->capsule_response_1 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10091,9 +9930,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_2) {{ $checklist4->capsule_response_2 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_2) {{ $checklist4->capsule_response_2 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_2) || $checklist4->capsule_response_2 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -10129,9 +9966,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_3) {{ $checklist4->capsule_response_3 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_3) {{ $checklist4->capsule_response_3 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_3) || $checklist4->capsule_response_3 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10168,9 +10004,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_4) {{ $checklist4->capsule_response_4 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_4) {{ $checklist4->capsule_response_4 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_4) || $checklist4->capsule_response_4 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10206,9 +10041,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_5) {{ $checklist4->capsule_response_5 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_5) {{ $checklist4->capsule_response_5 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_5) || $checklist4->capsule_response_5 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10247,9 +10081,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_6) {{ $checklist4->capsule_response_6 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_6) {{ $checklist4->capsule_response_6 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_6) || $checklist4->capsule_response_6 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10285,9 +10118,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_7) {{ $checklist4->capsule_response_7 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_7) {{ $checklist4->capsule_response_7 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_7) || $checklist4->capsule_response_7 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10322,9 +10154,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_8) {{ $checklist4->capsule_response_8 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_8) {{ $checklist4->capsule_response_8 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_8) || $checklist4->capsule_response_8 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10360,9 +10191,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_9) {{ $checklist4->capsule_response_9 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_9) {{ $checklist4->capsule_response_9 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_9) || $checklist4->capsule_response_9 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10397,9 +10227,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_10) {{ $checklist4->capsule_response_10 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_10) {{ $checklist4->capsule_response_10 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_10) || $checklist4->capsule_response_10 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10435,9 +10264,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_11) {{ $checklist4->capsule_response_11 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_11) {{ $checklist4->capsule_response_11 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_11) || $checklist4->capsule_response_11 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10472,9 +10300,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_12) {{ $checklist4->capsule_response_12 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_12) {{ $checklist4->capsule_response_12 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_12) || $checklist4->capsule_response_12 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10511,9 +10338,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_13) {{ $checklist4->capsule_response_13 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_13) {{ $checklist4->capsule_response_13 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_13) || $checklist4->capsule_response_13 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10548,9 +10374,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_14) {{ $checklist4->capsule_response_14 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_14) {{ $checklist4->capsule_response_14 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_14) || $checklist4->capsule_response_14 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10588,9 +10413,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_15) {{ $checklist4->capsule_response_15 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_15) {{ $checklist4->capsule_response_15 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_15) || $checklist4->capsule_response_15 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10626,9 +10450,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_16) {{ $checklist4->capsule_response_16 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_16) {{ $checklist4->capsule_response_16 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_16) || $checklist4->capsule_response_16 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10662,9 +10485,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_17) {{ $checklist4->capsule_response_17 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_17) {{ $checklist4->capsule_response_17 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_17) || $checklist4->capsule_response_17 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10701,9 +10523,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_18) {{ $checklist4->capsule_response_18 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_18) {{ $checklist4->capsule_response_18 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_18) || $checklist4->capsule_response_18 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10740,9 +10561,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_19) {{ $checklist4->capsule_response_19 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_19) {{ $checklist4->capsule_response_19 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_19) || $checklist4->capsule_response_19 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10780,9 +10600,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_20) {{ $checklist4->capsule_response_20 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_20) {{ $checklist4->capsule_response_20 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_20) || $checklist4->capsule_response_20 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10818,9 +10637,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_21) {{ $checklist4->capsule_response_21 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_21) {{ $checklist4->capsule_response_21 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_21) || $checklist4->capsule_response_21 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10856,9 +10674,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_22) {{ $checklist4->capsule_response_22 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_22) {{ $checklist4->capsule_response_22 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_22) || $checklist4->capsule_response_22 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10894,9 +10711,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_23) {{ $checklist4->capsule_response_23 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_23) {{ $checklist4->capsule_response_23 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_23) || $checklist4->capsule_response_23 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10932,9 +10748,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_24) {{ $checklist4->capsule_response_24 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_24) {{ $checklist4->capsule_response_24 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_24) || $checklist4->capsule_response_24 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -10972,9 +10787,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_25) {{ $checklist4->capsule_response_25 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_25) {{ $checklist4->capsule_response_25 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_25) || $checklist4->capsule_response_25 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -11012,9 +10825,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_26) {{ $checklist4->capsule_response_26 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_26) {{ $checklist4->capsule_response_26 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_26) || $checklist4->capsule_response_26 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11050,9 +10862,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_27) {{ $checklist4->capsule_response_27 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_27) {{ $checklist4->capsule_response_27 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_27) || $checklist4->capsule_response_27 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11084,9 +10895,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_28) {{ $checklist4->capsule_response_28 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_28) {{ $checklist4->capsule_response_28 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_28) || $checklist4->capsule_response_28 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -11118,9 +10927,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_29) {{ $checklist4->capsule_response_29 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_29) {{ $checklist4->capsule_response_29 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_29) || $checklist4->capsule_response_29 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11151,9 +10959,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_30) {{ $checklist4->capsule_response_30 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_30) {{ $checklist4->capsule_response_30 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_30) || $checklist4->capsule_response_30 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11184,9 +10991,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_31) {{ $checklist4->capsule_response_31 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_31) {{ $checklist4->capsule_response_31 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_31) || $checklist4->capsule_response_31 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11218,9 +11024,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_32) {{ $checklist4->capsule_response_32 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_32) {{ $checklist4->capsule_response_32 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_32) || $checklist4->capsule_response_32 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11253,9 +11058,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_33) {{ $checklist4->capsule_response_33 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_33) {{ $checklist4->capsule_response_33 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_33) || $checklist4->capsule_response_33 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11288,9 +11092,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_34) {{ $checklist4->capsule_response_34 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_34) {{ $checklist4->capsule_response_34 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_34) || $checklist4->capsule_response_34 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11322,9 +11125,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_35) {{ $checklist4->capsule_response_35 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_35) {{ $checklist4->capsule_response_35 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_35) || $checklist4->capsule_response_35 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11356,9 +11158,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_36) {{ $checklist4->capsule_response_36 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_36) {{ $checklist4->capsule_response_36 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_36) || $checklist4->capsule_response_36 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11390,9 +11191,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_37) {{ $checklist4->capsule_response_37 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_37) {{ $checklist4->capsule_response_37 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_37) || $checklist4->capsule_response_37 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11424,9 +11224,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_38) {{ $checklist4->capsule_response_38 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_38) {{ $checklist4->capsule_response_38 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_38) || $checklist4->capsule_response_38 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11459,9 +11258,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_39) {{ $checklist4->capsule_response_39 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_39) {{ $checklist4->capsule_response_39 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_39) || $checklist4->capsule_response_39 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11493,9 +11291,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_40) {{ $checklist4->capsule_response_40 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_40) {{ $checklist4->capsule_response_40 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_40) || $checklist4->capsule_response_40 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11529,9 +11326,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_41) {{ $checklist4->capsule_response_41 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_41) {{ $checklist4->capsule_response_41 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_41) || $checklist4->capsule_response_41 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -11562,9 +11357,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_42) {{ $checklist4->capsule_response_42 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_42) {{ $checklist4->capsule_response_42 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_42) || $checklist4->capsule_response_42 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11596,9 +11390,7 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_43) {{ $checklist4->capsule_response_43 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_43) {{ $checklist4->capsule_response_43 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_43) || $checklist4->capsule_response_43 == 'N/A' ? 'selected' : '' }}>N/A</option>
 
                                                                     </select>
                                                                 </div>
@@ -11631,9 +11423,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_44) {{ $checklist4->capsule_response_44 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_44) {{ $checklist4->capsule_response_44 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_44) || $checklist4->capsule_response_44 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11688,9 +11479,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_45) {{ $checklist4->capsule_response_45 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_45) {{ $checklist4->capsule_response_45 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_45) || $checklist4->capsule_response_45 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11724,9 +11514,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_46) {{ $checklist4->capsule_response_46 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_46) {{ $checklist4->capsule_response_46 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_46) || $checklist4->capsule_response_46 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11760,9 +11549,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_47) {{ $checklist4->capsule_response_47 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_47) {{ $checklist4->capsule_response_47 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_47) || $checklist4->capsule_response_47 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11797,9 +11585,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_48) {{ $checklist4->capsule_response_48 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_48) {{ $checklist4->capsule_response_48 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_48) || $checklist4->capsule_response_48 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11833,9 +11620,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_49) {{ $checklist4->capsule_response_49 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_49) {{ $checklist4->capsule_response_49 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_49) || $checklist4->capsule_response_49 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11868,9 +11654,8 @@
                                                                         <option value="No"
                                                                             @if ($checklist4 && $checklist4->capsule_response_50) {{ $checklist4->capsule_response_50 == 'No' ? 'selected' : '' }} @endif>
                                                                             No</option>
-                                                                        <option value="N/A"
-                                                                            @if ($checklist4 && $checklist4->capsule_response_50) {{ $checklist4->capsule_response_50 == 'N/A' ? 'selected' : '' }} @endif>
-                                                                            N/A</option>
+                                                                            <option value="N/A" {{ empty($checklist4->capsule_response_50) || $checklist4->capsule_response_50 == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                     </select>
                                                                 </div>
@@ -11900,38 +11685,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments"> Supporting Attachment </label>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="file_attach_add_1">
-                                                @if ($data->file_attach_add_1)
-                                                @foreach (json_decode($data->file_attach_add_1) as $file)
-                                                    <h6 type="button" class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attach_add_1[]"
-                                                    oninput="addMultipleFiles(this, 'file_attach_add_1')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -12066,9 +11820,8 @@
                                                                             <option value="No"
                                                                                 @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist6->tabletmanufacturingProperty) || $checklist6->tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -12130,9 +11883,8 @@
                                                                             <option value="No"
                                                                                 @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist6->tabletmanufacturingProperty) || $checklist6->tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -12195,9 +11947,8 @@
                                                                             <option value="No"
                                                                                 @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist6 && $checklist6->$tabletmanufacturingProperty == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist6->tabletmanufacturingProperty) || $checklist6->tabletmanufacturingProperty == 'N/A' ? 'selected' : '' }}>N/A</option>
+
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -12408,7 +12159,7 @@
                                                                             name="liquid_ointments_response_{{ $index + 1 }}"
                                                                             id="liquid_ointments_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist5 && $checklist5->$liquidOintmentsResponse == 'Yes') selected @endif>
@@ -12416,9 +12167,22 @@
                                                                             <option value="No"
                                                                                 @if ($checklist5 && $checklist5->$liquidOintmentsResponse == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist5->liquidOintmentsResponse) || $checklist5->liquidOintmentsResponse == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+
+                                                                                <option value="Yes"
+                                                                                @if ($checklist5 && isset($checklist5->$liquidOintmentsResponse) && $checklist5->$liquidOintmentsResponse == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist5 && isset($checklist5->$liquidOintmentsResponse) && $checklist5->$liquidOintmentsResponse == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist5 && $checklist5->$liquidOintmentsResponse == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist5) || empty($checklist5->$liquidOintmentsResponse) || $checklist5->$liquidOintmentsResponse == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -12473,7 +12237,7 @@
                                                                             name="liquid_ointments_response_{{ $index + 43 }}"
                                                                             id="liquid_ointments_response_{{ $index + 43 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist5 && $checklist5->$liquidOintmentsResponse == 'Yes') selected @endif>
@@ -12481,9 +12245,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist5 && $checklist5->$liquidOintmentsResponse == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist5->liquidOintmentsResponse) || $checklist5->liquidOintmentsResponse == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist5 && isset($checklist5->$liquidOintmentsResponse) && $checklist5->$liquidOintmentsResponse == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist5 && isset($checklist5->$liquidOintmentsResponse) && $checklist5->$liquidOintmentsResponse == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist5 && $checklist5->$liquidOintmentsResponse == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist5) || empty($checklist5->$liquidOintmentsResponse) || $checklist5->$liquidOintmentsResponse == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -12659,7 +12435,7 @@
                                                                             name="ointment_packing_{{ $index + 1 }}"
                                                                             id="ointment_packing_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist7 && $checklist7->$ointmentPacking == 'Yes') selected @endif>
@@ -12667,9 +12443,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist7 && $checklist7->$ointmentPacking == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist7->ointmentPacking) || $checklist7->ointmentPacking == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist7 && isset($checklist7->$ointmentPacking) && $checklist7->$ointmentPacking == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist7 && isset($checklist7->$ointmentPacking) && $checklist7->$ointmentPacking == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist7 && $checklist7->$ointmentPacking == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist7) || empty($checklist7->$ointmentPacking) || $checklist7->$ointmentPacking == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -12912,7 +12700,7 @@
                                                                             name="engineering_response_{{ $index + 1 }}"
                                                                             id="engineering_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist9 && $checklist9->$engineeringresponce == 'Yes') selected @endif>
@@ -12920,9 +12708,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist9 && $checklist9->$engineeringresponce == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist9->engineeringresponce) || $checklist9->engineeringresponce == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist9) || empty($checklist9->$engineeringresponce) || $checklist9->$engineeringresponce == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -12974,17 +12774,29 @@
                                                                             name="building_response_{{ $index + 1 }}"
                                                                             id="building_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                           {{-- <option value="">Select an Option
                                                                             </option>
-                                                                            <option value="Yes"
+                                                                             <option value="Yes"
                                                                                 @if ($checklist9 && $checklist9->$engineeringresponce == 'Yes') selected @endif>
                                                                                 Yes</option>
                                                                             <option value="No"
                                                                                 @if ($checklist9 && $checklist9->$engineeringresponce == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist9->engineeringresponce) || $checklist9->engineeringresponce == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist9) || empty($checklist9->$engineeringresponce) || $checklist9->$engineeringresponce == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -13038,7 +12850,7 @@
                                                                             name="hvac_response_{{ $index + 1 }}"
                                                                             id="hvac_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist9 && $checklist9->$engineeringresponce == 'Yes') selected @endif>
@@ -13046,9 +12858,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist9 && $checklist9->$engineeringresponce == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist9->engineeringresponce) || $checklist9->engineeringresponce == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist9 && isset($checklist9->$engineeringresponce) && $checklist9->$engineeringresponce == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist9 && $checklist9->$engineeringresponce == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist9) || empty($checklist9->$engineeringresponce) || $checklist9->$engineeringresponce == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -13294,16 +13118,30 @@
                                                                             id="quality_control_response_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
-                                                                            </option>
+                                                                            {{-- </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist10 && $checklist10->$qualitycontrol == 'Yes') selected @endif>
                                                                                 Yes</option>
                                                                             <option value="No"
                                                                                 @if ($checklist10 && $checklist10->$qualitycontrol == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist10 && $checklist10->$qualitycontrol == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist10->qualitycontrol) || $checklist10->qualitycontrol == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+
+                                                                                <option value="Yes"
+                                                                                    @if ($checklist10 && isset($checklist10->$qualitycontrol) && $checklist10->$qualitycontrol == 'Yes') selected @endif>
+                                                                                    Yes
+                                                                                </option>
+
+                                                                                <option value="No"
+                                                                                    @if ($checklist10 && isset($checklist10->$qualitycontrol) && $checklist10->$qualitycontrol == 'No') selected @endif>
+                                                                                    No
+                                                                                </option>
+
+                                                                                <option value="N/A"
+                                                                                    @if (empty($checklist10) || empty($checklist10->$qualitycontrol) || $checklist10->$qualitycontrol == 'N/A') selected @endif>
+                                                                                    N/A
+                                                                                </option>
+
 
                                                                         </select>
                                                                     </div>
@@ -13452,15 +13290,28 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
                                                                             </option>
-                                                                            <option value="Yes"
+                                                                            {{-- <option value="Yes"
                                                                                 @if ($checklist11 && $checklist11->$checkliststores == 'Yes') selected @endif>
                                                                                 Yes</option>
                                                                             <option value="No"
                                                                                 @if ($checklist11 && $checklist11->$checkliststores == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist11->checkliststores) || $checklist11->checkliststores == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+
+                                                                                <option value="Yes"
+                                                                                @if ($checklist11 && isset($checklist11->$checkliststores) && $checklist11->$checkliststores == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist11 && isset($checklist11->$checkliststores) && $checklist11->$checkliststores == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist11 && $checklist11->$checkliststores == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist11) || empty($checklist11->$checkliststores) || $checklist11->$checkliststores == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -13610,15 +13461,28 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
                                                                             <option value="">Select an Option
                                                                             </option>
-                                                                            <option value="Yes"
+                                                                            {{-- <option value="Yes"
                                                                                 @if ($checklist12 && $checklist12->$checklistHR == 'Yes') selected @endif>
                                                                                 Yes</option>
                                                                             <option value="No"
                                                                                 @if ($checklist12 && $checklist12->$checklistHR == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist12->checklistHR) || $checklist12->checklistHR == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist12 && isset($checklist12->$checklistHR) && $checklist12->$checklistHR == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist12 && isset($checklist12->$checklistHR) && $checklist12->$checklistHR == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist12 && $checklist12->$checklistHR == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist12) || empty($checklist12->$checklistHR) || $checklist12->$checklistHR == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
+
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -13806,7 +13670,7 @@
                                                                             name="response_dispensing_{{ $index + 1 }}"
                                                                             id="response_dispensing_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist13 && $checklist13->$response_dispensing_name == 'Yes') selected @endif>
@@ -13814,9 +13678,22 @@
                                                                             <option value="No"
                                                                                 @if ($checklist13 && $checklist13->$response_dispensing_name == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist13->response_dispensing_name) || $checklist13->response_dispensing_name == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+
+                                                                                <option value="Yes"
+                                                                                @if ($checklist13 && isset($checklist13->$response_dispensing_name) && $checklist13->$response_dispensing_name == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist13 && isset($checklist13->$response_dispensing_name) && $checklist13->$response_dispensing_name == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist13 && $checklist13->$response_dispensing_name == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist13) || empty($checklist13->$response_dispensing_name) || $checklist13->$response_dispensing_name == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -13872,7 +13749,7 @@
                                                                             name="response_injection_{{ $index + 1 }}"
                                                                             id="response_injection_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist13 && $checklist13->$response_injection_name == 'Yes') selected @endif>
@@ -13880,9 +13757,22 @@
                                                                             <option value="No"
                                                                                 @if ($checklist13 && $checklist13->$response_injection_name == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist13->response_injection_name) || $checklist13->response_injection_name == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist13 && isset($checklist13->$response_injection_name) && $checklist13->$response_injection_name == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist13 && isset($checklist13->$response_injection_name) && $checklist13->$response_injection_name == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist13 && $checklist13->$response_injection_name == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist13) || empty($checklist13->$response_injection_name) || $checklist13->$response_injection_name == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
+
 
                                                                         </select>
                                                                     </div>
@@ -13945,9 +13835,8 @@
                                                                             <option value="No"
                                                                                 @if ($checklist13 && $checklist13->$response_documentation_name == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist13 && $checklist13->$response_documentation_name == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist13->response_documentation_name) || $checklist13->response_documentation_name == 'N/A' ? 'selected' : '' }}>N/A</option>
+
 
                                                                         </select>
                                                                     </div>
@@ -14121,7 +14010,7 @@
                                                                             name="response_injection_packing_{{ $index + 1 }}"
                                                                             id="response_documentation_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist14 && $checklist14->$response_injection_name == 'Yes') selected @endif>
@@ -14129,9 +14018,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist14 && $checklist14->$response_injection_name == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist14->response_injection_name) || $checklist14->response_injection_name == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist14 && isset($checklist14->$response_injection_name) && $checklist14->$response_injection_name == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist14 && isset($checklist14->$response_injection_name) && $checklist14->$response_injection_name == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist14 && $checklist14->$response_injection_name == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist14) || empty($checklist14->$response_injection_name) || $checklist14->$response_injection_name == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -14187,7 +14088,7 @@
                                                                             name="response_documentation_production_{{ $index + 1 }}"
                                                                             id="response_documentation_production_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist14 && $checklist14->$response_production == 'Yes') selected @endif>
@@ -14195,9 +14096,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist14 && $checklist14->$response_production == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist14->response_production) || $checklist14->response_production == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist14 && isset($checklist14->$response_production) && $checklist14->$response_production == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist14 && isset($checklist14->$response_production) && $checklist14->$response_production == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist14 && $checklist14->$response_production == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist14) || empty($checklist14->$response_production) || $checklist14->$response_production == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -14386,7 +14299,7 @@
                                                                             name="response_powder_manufacturing_filling_{{ $index + 1 }}"
                                                                             id="response_powder_manufacturing_filling_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist15 && $checklist15->$response_name_manufacturingnew == 'Yes') selected @endif>
@@ -14394,9 +14307,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist15 && $checklist15->$response_name_manufacturingnew == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist15->response_name_manufacturingnew) || $checklist15->response_name_manufacturingnew == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist15 && isset($checklist15->$response_name_manufacturingnew) && $checklist15->$response_name_manufacturingnew == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist15 && isset($checklist15->$response_name_manufacturingnew) && $checklist15->$response_name_manufacturingnew == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist15 && $checklist15->$response_name_manufacturingnew == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist15) || empty($checklist15->$response_name_manufacturingnew) || $checklist15->$response_name_manufacturingnew == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -14450,7 +14375,7 @@
                                                                             name="response_packing_{{ $index + 1 }}"
                                                                             id="response_packing_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist15 && $checklist15->$response_name_manufacturing == 'Yes') selected @endif>
@@ -14458,9 +14383,21 @@
                                                                             <option value="No"
                                                                                 @if ($checklist15 && $checklist15->$response_name_manufacturing == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist15->response_name_manufacturing) || $checklist15->response_name_manufacturing == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist15 && isset($checklist15->$response_name_manufacturing) && $checklist15->$response_name_manufacturing == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist15 && isset($checklist15->$response_name_manufacturing) && $checklist15->$response_name_manufacturing == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist15 && $checklist15->$response_name_manufacturing == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist15) || empty($checklist15->$response_name_manufacturing) || $checklist15->$response_name_manufacturing == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
@@ -14513,7 +14450,7 @@
                                                                             name="powder_response_packing_{{ $index + 1 }}"
                                                                             id="powder_response_packing_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist15 && $checklist15->$powder_response_name_manufacturing == 'Yes') selected @endif>
@@ -14521,10 +14458,22 @@
                                                                             <option value="No"
                                                                                 @if ($checklist15 && $checklist15->$powder_response_name_manufacturing == 'No') selected @endif>
                                                                                 No</option>
-                                                                            <option value="N/A"
-                                                                                @if ($checklist15 && $checklist15->$powder_response_name_manufacturing == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                <option value="N/A" {{ empty($checklist15->powder_response_name_manufacturing) || $checklist15->powder_response_name_manufacturing == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
 
+                                                                                <option value="Yes"
+                                                                                @if ($checklist15 && isset($checklist15->$powder_response_name_manufacturing) && $checklist15->$powder_response_name_manufacturing == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist15 && isset($checklist15->$powder_response_name_manufacturing) && $checklist15->$powder_response_name_manufacturing == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
+                                                                            <option value="N/A"
+                                                                                @if (empty($checklist15) || empty($checklist15->$powder_response_name_manufacturing) || $checklist15->$powder_response_name_manufacturing == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
                                                                         </select>
                                                                     </div>
                                                                 </td>
@@ -14687,7 +14636,7 @@
                                                                             name="response_analytical_research_development_{{ $index + 1 }}"
                                                                             id="response_analytical_research_development_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist16 && $checklist16->$response_name_analytical_research == 'Yes') selected @endif>
@@ -14695,9 +14644,22 @@
                                                                             <option value="No"
                                                                                 @if ($checklist16 && $checklist16->$response_name_analytical_research == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist16->response_name_analytical_research) || $checklist16->response_name_analytical_research == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+                                                                                <option value="Yes"
+                                                                                @if ($checklist16 && isset($checklist16->$response_name_analytical_research) && $checklist16->$response_name_analytical_research == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist16 && isset($checklist16->$response_name_analytical_research) && $checklist16->$response_name_analytical_research == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist16 && $checklist16->$response_name_analytical_research == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist16) || empty($checklist16->$response_name_analytical_research) || $checklist16->$response_name_analytical_research == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
+
 
                                                                         </select>
                                                                     </div>
@@ -14858,7 +14820,7 @@
                                                                             name="response_formulation_research_development_{{ $index + 1 }}"
                                                                             id="response_formulation_research_development_{{ $index + 1 }}"
                                                                             style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
-                                                                            <option value="">Select an Option
+                                                                            {{-- <option value="">Select an Option
                                                                             </option>
                                                                             <option value="Yes"
                                                                                 @if ($checklist17 && $checklist17->$response_name_formulation == 'Yes') selected @endif>
@@ -14866,9 +14828,22 @@
                                                                             <option value="No"
                                                                                 @if ($checklist17 && $checklist17->$response_name_formulation == 'No') selected @endif>
                                                                                 No</option>
+                                                                                <option value="N/A" {{ empty($checklist17->response_name_formulation) || $checklist17->response_name_formulation == 'N/A' ? 'selected' : '' }}>N/A</option> --}}
+
+                                                                                <option value="Yes"
+                                                                                @if ($checklist17 && isset($checklist17->$response_name_formulation) && $checklist17->$response_name_formulation == 'Yes') selected @endif>
+                                                                                Yes
+                                                                            </option>
+
+                                                                            <option value="No"
+                                                                                @if ($checklist17 && isset($checklist17->$response_name_formulation) && $checklist17->$response_name_formulation == 'No') selected @endif>
+                                                                                No
+                                                                            </option>
+
                                                                             <option value="N/A"
-                                                                                @if ($checklist17 && $checklist17->$response_name_formulation == 'N/A') selected @endif>
-                                                                                N/A</option>
+                                                                                @if (empty($checklist17) || empty($checklist17->$response_name_formulation) || $checklist17->$response_name_formulation == 'N/A') selected @endif>
+                                                                                N/A
+                                                                            </option>
 
                                                                         </select>
                                                                     </div>
