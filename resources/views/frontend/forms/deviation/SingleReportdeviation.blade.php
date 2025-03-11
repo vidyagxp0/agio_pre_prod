@@ -253,9 +253,10 @@
                             @endif
                         </td>
 
+                       
                         {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30"> {{ Helpers::getDivisionName(session()->get('division')) }}</td>
+                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
@@ -1075,6 +1076,7 @@
                             </table>
                         </div>
                     </div>
+                    <br>
 
                     <div class="block">
                         <div class="head">
@@ -3139,6 +3141,7 @@
 
 
 
+                        <br>
 
                         <div class="block">
                         <div class="block-head">
@@ -3585,6 +3588,7 @@
                                     </div>
                                 </div>
 
+                                <br>
                                 <div class="block-head">
                                     Fishbone or Ishikawa Diagram
                                 </div>
@@ -5099,6 +5103,8 @@
                         </table>
                     </div>
 
+                    <br>
+
                     <div class="block">
                         <div class="block-head">
                             QA/CQA Implementation Verification
@@ -5145,6 +5151,7 @@
 
                         </table>
                     </div>
+                    <br>QA/CQA Implementation Verification
                     <div class="block">
                         <div class="block-head">
                         Head QA/CQA / Designee Closure Approval

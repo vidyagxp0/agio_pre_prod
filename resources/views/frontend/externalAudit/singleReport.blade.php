@@ -262,7 +262,7 @@
 
 
                     <tr>
-                        <th class="w-20">Short Description</th>
+                        <th class="w-20"> Short Description </th>
                         <td class="w-80" colspan="3">
                             @if ($data->short_description)
                                 {{ $data->short_description }}
@@ -348,6 +348,8 @@
                             @endif
                         </td>
                     </tr>
+
+                    
                     <tr>
                         <th class="w-20">Start Date of Audit</th>
                         <td class="w-30">
@@ -380,7 +382,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">SR no.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-20">Auditor Name</th>
                                 <th class="w-20">External Agency Name</th>
                                 <th class="w-20">Designation</th>
@@ -426,7 +428,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->inv_attachment)
@@ -475,7 +477,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">SR no.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th>Observation</th>
                             <th>Response</th>
                             <th>CAPA / Child action Reference If Any </th>
@@ -530,7 +532,7 @@
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data->myfile)
@@ -654,7 +656,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Production_Table_Attachment)
@@ -756,7 +758,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Production_Injection_Attachment)
@@ -855,7 +857,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->ResearchDevelopment_attachment)
@@ -954,7 +956,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Human_Resource_attachment)
@@ -1054,7 +1056,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->CorporateQualityAssurance_attachment)
@@ -1154,7 +1156,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Store_attachment)
@@ -1254,7 +1256,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Engineering_attachment)
@@ -1353,7 +1355,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->RegulatoryAffair_attachment)
@@ -1453,7 +1455,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Quality_Assurance_attachment)
@@ -1553,7 +1555,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->ProductionLiquid_attachment)
@@ -1652,7 +1654,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Quality_Control_attachment)
@@ -1755,7 +1757,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Microbiology_attachment)
@@ -1856,7 +1858,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Environment_Health_Safety_attachment)
@@ -1957,7 +1959,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->ContractGiver_attachment)
@@ -2068,7 +2070,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Other1_attachment)
@@ -2177,7 +2179,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Other2_attachment)
@@ -2286,7 +2288,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Other3_attachment)
@@ -2395,7 +2397,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Other4_attachment)
@@ -2504,7 +2506,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data1->Other5_attachment)
@@ -2565,7 +2567,7 @@ Not Applicable
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->qa_cqa_attach)

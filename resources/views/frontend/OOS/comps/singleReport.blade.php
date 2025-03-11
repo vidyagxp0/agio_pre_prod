@@ -245,7 +245,7 @@
         <div class="content-table">
             <!-- start block -->
             <div class="block">
-                <div class="block-head">General Information</div>
+                <div class="block-head">General Information </div>
                 <table>
                     <tr>
                         <th class="w-20">Type</th>
@@ -352,7 +352,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
+                                <th class="w-60"> Attachement </th>
                             </tr>
                             @if ($data->initial_attachment_gi)
                             @foreach ($data->initial_attachment_gi as $key => $file)
@@ -405,7 +405,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
+                            <th style="width: 4%">Sr.No.</th>
                             <th style="width: 10%">Item/Product Code</th>
                             <th style="width: 8%"> Batch No*.</th>
                             <th style="width: 8%"> Mfg.Date</th>
@@ -444,7 +444,7 @@
                    <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
+                            <th style="width: 4%">Sr.No.</th>
                             <th style="width: 8%">Analyst Name</th>
                             <th style="width: 10%">Others (Specify)</th>
                             <th style="width: 10%"> In- Process Sample Stage.</th>
@@ -483,7 +483,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                               <th style="width: 4%">Row#</th>
+                               <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 8%">AR Number</th>
                                 <th style="width: 12%">Condition: Temperature & RH</th>
                                 <th style="width: 12%">Interval</th>
@@ -516,7 +516,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                               <th style="width: 4%">Row#</th>
+                               <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 16%">Pack Details (if any)</th>
                                 <th style="width: 16%">Specification No.</th>
                                 <th style="width: 16%">Sample Description</th>
@@ -547,7 +547,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                        <th style="width: 4%">Row#</th>
+                        <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 8%">AR Number.</th>
                                 <th style="width: 8%">Test Name of OOS/OOT</th>
                                 <th style="width: 12%">Results Obtained</th>
@@ -598,7 +598,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
+                            <th style="width: 4%">Sr.No.</th>
                             <th style="width: 8%"> Name of Product</th>
                             <th style="width: 8%"> A.R.No </th>
                             <th style="width: 8%"> Sampled on </th>
@@ -639,7 +639,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
+                            <th style="width: 4%">Sr.No.</th>
                             <th style="width: 8%"> Name of instrument</th>
                             <th style="width: 8%"> Instrument Id Number</th>
                             <th style="width: 8%"> Calibrated On</th>
@@ -683,7 +683,7 @@
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-80">File </th>
+                        <th class="w-80"> Attachment</th>
                     </tr>
                     @if ($data->hod_attachment1)
                     @foreach ($data->hod_attachment1 as $key => $file)
@@ -719,7 +719,7 @@
               <table>
                   <tr class="table_bg">
                       <th class="w-20">S.N.</th>
-                      <th class="w-80">File </th>
+                      <th class="w-80"> Attachment </th>
                   </tr>
                   @if ($data->QA_Head_attachment1)
                   @foreach ($data->QA_Head_attachment1 as $key => $file)
@@ -753,7 +753,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment </th>
                             </tr>
                             @if ($data->QA_Head_primary_attachment1)
                             @foreach ($data->QA_Head_primary_attachment1 as $key => $file)
@@ -914,7 +914,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment</th>
                             </tr>
                             @if ($data->file_attachments_pli)
                             @foreach ($data->file_attachments_pli as $key => $file)
@@ -937,7 +937,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80"> Attachment</th>
                       </tr>
                       @if ($data->supporting_attachments_plir)
                       @foreach ($data->supporting_attachments_plir as $key => $file)
@@ -975,7 +975,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment </th>
                             </tr>
                             @if ($data->supporting_attachment_plic)
                             @foreach ($data->supporting_attachment_plic as $key => $file)
@@ -1010,7 +1010,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
+                            <th style="width: 4%">Sr.No.</th>
                             <th style="width: 30%">OOS Number</th>
                             <th style="width: 40%">Description of OOS</th>
                             <th style="width: 20%">Previous OOS Root Cause</th>
@@ -1051,7 +1051,7 @@
                  <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th style="width: 4%">Row#</th>
+                            <th style="width: 4%">Sr.No.</th>
                             <th style="width: 14%">CAPA Requirement</th>
                             <th style="width: 14%">CAPA Reference Number</th>
                         </tr>
@@ -1088,7 +1088,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment</th>
                             </tr>
                             @if ($data->hod_attachment2)
                             @foreach ($data->hod_attachment2 as $key => $file)
@@ -1122,7 +1122,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment </th>
                             </tr>
                             @if ($data->QA_Head_attachment2)
                             @foreach ($data->QA_Head_attachment2 as $key => $file)
@@ -1165,7 +1165,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80"> Attachment</th>
                       </tr>
                       @if ($data->QA_Head_primary_attachment2)
                       @foreach ($data->QA_Head_primary_attachment2 as $key => $file)
@@ -1321,7 +1321,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment </th>
                             </tr>
                             @if ($data->file_attachment_IB_Inv)
                                 @foreach ($data->file_attachment_IB_Inv as $key => $file)
@@ -1355,7 +1355,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment </th>
                             </tr>
                             @if ($data->hod_attachment3)
                             @foreach ($data->hod_attachment3 as $key => $file)
@@ -1389,7 +1389,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80"> Attachment </th>
                       </tr>
                       @if ($data->QA_Head_attachment3)
                       @foreach ($data->QA_Head_attachment3 as $key => $file)
@@ -1437,7 +1437,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80"> Attachment</th>
                       </tr>
                       @if ($data->QA_Head_primary_attachment3)
                       @foreach ($data->QA_Head_primary_attachment3 as $key => $file)
@@ -1535,7 +1535,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment</th>
                             </tr>
                             @if ($data->file_attachments_pII)
                             @foreach ($data->file_attachments_pII as $key => $file)
@@ -1590,7 +1590,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment</th>
                             </tr>
                             @if ($data->attachments_piiqcr)
                             @foreach ($data->attachments_piiqcr as $key => $file)
@@ -1625,7 +1625,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80"> Attachment </th>
                       </tr>
                       @if ($data->hod_attachment4)
                       @foreach ($data->hod_attachment4 as $key => $file)
@@ -1660,7 +1660,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80"> Attachment </th>
                             </tr>
                             @if ($data->QA_Head_attachment4)
                             @foreach ($data->QA_Head_attachment4 as $key => $file)
@@ -1700,7 +1700,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80">  Attachment</th>
                             </tr>
                             @if ($data->QA_Head_primary_attachment4)
                             @foreach ($data->QA_Head_primary_attachment4 as $key => $file)
@@ -1799,7 +1799,7 @@
                             <table>
                                 <tr class="table_bg">
                                     <th class="w-20">S.N.</th>
-                                    <th class="w-80">File </th>
+                                    <th class="w-80"> Attachment </th>
                                 </tr>
                                 @if ($data->hod_attachment5)
                                 @foreach ($data->hod_attachment5 as $key => $file)
@@ -1833,7 +1833,7 @@
                                 <table>
                                     <tr class="table_bg">
                                         <th class="w-20">S.N.</th>
-                                        <th class="w-80">File </th>
+                                        <th class="w-80"> Attachment </th>
                                     </tr>
                                     @if ($data->QA_Head_attachment5)
                                     @foreach ($data->QA_Head_attachment5 as $key => $file)
@@ -1867,7 +1867,7 @@
                                     <table>
                                         <tr class="table_bg">
                                             <th class="w-20">S.N.</th>
-                                            <th class="w-80">File </th>
+                                            <th class="w-80"> Attachment </th>
                                         </tr>
                                         @if ($data->QA_Head_primary_attachment4)
                                         @foreach ($data->QA_Head_primary_attachment4 as $key => $file)
@@ -1898,7 +1898,7 @@
                                         <table>
                                             <tr class="table_bg">
                                                 <th class="w-20">S.N.</th>
-                                                <th class="w-80">File </th>
+                                                <th class="w-80"> Attachment </th>
                                             </tr>
                                             @if ($data->addendum_attachment_uaa)
                                             @foreach ($data->addendum_attachment_uaa as $key => $file)
@@ -1948,7 +1948,7 @@
                                     <table>
                                         <tr class="table_bg">
                                             <th class="w-20">S.N.</th>
-                                            <th class="w-80">File </th>
+                                            <th class="w-80"> Attachment </th>
                                         </tr>
                                         @if ($data->disposition_attachment_bd)
                                         @foreach ($data->disposition_attachment_bd as $key => $file)
@@ -1993,7 +1993,7 @@
                                                 <table>
                                                     <tr class="table_bg">
                                                         <th class="w-20">S.N.</th>
-                                                        <th class="w-80">File </th>
+                                                        <th class="w-80"> Attachment </th>
                                                     </tr>
                                                     @if ($data->additional_testing_attachment_atp)
                                                     @foreach ($data->additional_testing_attachment_atp as $key => $file)
@@ -2065,7 +2065,7 @@
                                                 <div class="border-table">
                                                 <table>
                                                         <tr class="table_bg">
-                                                            <th style="width: 4%">Row#</th>
+                                                            <th style="width: 4%">Sr.No.</th>
                                                                 <th style="width: 14%">Analysis Detials</th>
                                                                 <th style="width: 10%">Hypo./Exp./Add.Test PR No.</th>
                                                                 <th style="width: 10%">Results</th>
@@ -2099,8 +2099,8 @@
                                             <div class="border-table">
                                                 <table>
                                                     <tr class="table_bg">
-                                                        <th class="w-20">S.N.</th>
-                                                        <th class="w-80">File </th>
+                                                        <th class="w-20">Sr.No.</th>
+                                                        <th class="w-80"> Attachment </th>
                                                     </tr>
                                                     @if ($data->file_attachments_if_any_ooscattach)
                                                     @foreach ($data->file_attachments_if_any_ooscattach as $key => $file)
@@ -2131,7 +2131,7 @@
                                                 <table>
                                                     <tr class="table_bg">
                                                         <th class="w-20">S.N.</th>
-                                                        <th class="w-80">File </th>
+                                                        <th class="w-80"> Attachment </th>
                                                     </tr>
                                                     @if ($data->conclusion_attachment_ocr)
                                                     @foreach ($data->conclusion_attachment_ocr as $key => $file)
@@ -2163,7 +2163,7 @@
                                                 <table>
                                                     <tr class="table_bg">
                                                         <th class="w-20">S.N.</th>
-                                                        <th class="w-80">File </th>
+                                                        <th class="w-80"> Attachment </th>
                                                     </tr>
                                                     @if ($data->cq_attachment_ocqr)
                                                     @foreach ($data->cq_attachment_ocqr as $key => $file)
@@ -2196,7 +2196,7 @@
                                                 <table>
                                                     <tr class="table_bg">
                                                         <th class="w-20">S.N.</th>
-                                                        <th class="w-80">File </th>
+                                                        <th class="w-80"> Attachment </th>
                                                     </tr>
                                                     @if ($data->addendum_attachment_uaa)
                                                     @foreach ($data->addendum_attachment_uaa as $key => $file)
@@ -2218,9 +2218,6 @@
                             <!-- close block -->
                                 </div>
           </div>
-
-
-
 
     <footer>
         <table>

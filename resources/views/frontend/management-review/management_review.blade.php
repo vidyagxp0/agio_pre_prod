@@ -800,7 +800,7 @@
                                         <table class="table table-bordered" id="agenda">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:5%">Row #</th>
+                                                    <th style="width:5%">Sr.No.</th>
                                                     <th>Date</th>
                                                     <th>Topic</th>
                                                     <th>Responsible</th>
@@ -1387,7 +1387,7 @@
                                     <table class="table table-bordered" id="performance_evaluation">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%">Row #</th>
+                                                <th style="width:5%">Sr.No.</th>
                                                 <th>Monitoring</th>
                                                 <th>Measurement</th>
                                                 <th>Analysis</th>
@@ -1588,7 +1588,7 @@
                                     <table class="table table-bordered" id="management_review_participants">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%">Row #</th>
+                                                <th style="width:5%">Sr.No.</th>
                                                 <th>Invited Person</th>
                                                 <th>Designation</th>
                                                 <th>Department</th>

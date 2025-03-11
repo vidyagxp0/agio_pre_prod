@@ -1253,7 +1253,6 @@ class DeviationController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
-
            }
            if (!empty ($request->division_id)){
             $history = new DeviationAuditTrail();
@@ -1270,7 +1269,6 @@ class DeviationController extends Controller
             $history->change_from = "Initiator";
             $history->action_name = 'Create';
             $history->save();
-
            }
 
             if (!empty ($request->intiation_date)){
@@ -2030,7 +2028,6 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
                 $deviation->Immediate_Action_Take = $request->Immediate_Action_Take ? $request->Immediate_Action_Take : $deviation->Immediate_Action_Take;
                 $deviation->Corrective_Action_Details = $request->Corrective_Action_Details ? $request->Corrective_Action_Details : $deviation->Corrective_Action_Details;
                 $deviation->Preventive_Action_Details = $request->Preventive_Action_Details ? $request->Preventive_Action_Details : $deviation->Preventive_Action_Details;
-
                 $deviation->capa_completed_date = $request->capa_completed_date ? $request->capa_completed_date : $deviation->capa_completed_date;
                 $deviation->Interim_Control = $request->Interim_Control ? $request->Interim_Control : $deviation->Interim_Control;
                 $deviation->Corrective_Action_Taken = $request->Corrective_Action_Taken ? $request->Corrective_Action_Taken : $deviation->Corrective_Action_Taken;
@@ -2272,11 +2269,7 @@ $deviation->Pending_initiator_update = $request->Pending_initiator_update;
        // dd($previousDetail_1);
 
         $data8->deviation_grid_id = $deviation->id;
-        $data8->type = "effect_analysis";
-
-
-
-        
+        $data8->type = "effect_analysis"; 
         // Serialize and update the data, ensuring that we always update the fields
         $data8->risk_factor = serialize($request->risk_factor ?? []);
         $data8->risk_element = serialize($request->risk_element ?? []);
@@ -9310,6 +9303,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
     public function deviation_child_1(Request $request, $id)
     {
+      
+
 
         $cft = [];
         $parent_id = $id;
@@ -9318,25 +9313,27 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('d-M-Y');
+        // $due_date = $formattedDate->format('d-M-Y');
         $parent_record = Deviation::where('id', $id)->value('record');
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_division_id = Deviation::where('id', $id)->value('division_id');
         $parent_initiator_id = Deviation::where('id', $id)->value('initiator_id');
         $parent_intiation_date = Deviation::where('id', $id)->value('intiation_date');
+        $parent_due_date=Deviation::where('id', $id)->value('due_date');
         $parent_created_at = Deviation::where('id', $id)->value('created_at');
         $parent_short_description = Deviation::where('id', $id)->value('short_description');
         $hod = User::where('role', 4)->get();
         if ($request->child_type == "extension") {
-            $parent_due_date = "";
+            // $parent_due_date = "";
             $parent_id = $id;
             $parent_name = $request->parent_name;
-            if ($request->due_date) {
-                $parent_due_date = $request->due_date;
-            }
+            // if ($request->due_date) {
+            //     $parent_due_date = $request->due_date;
+            // }
 
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
             $Extensionchild = Deviation::find($id);
 
             $Extensionchild->Extensionchild = $record_number;
@@ -9346,10 +9343,12 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
            $count = Helpers::getChildData($id, $parent_type);
            $countData = $count + 1;
                                // $relatedRecords = collect();
+  
 
-           // dd($extension_record);
+
+        //    dd($extension_record);
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'parent_created_at','relatedRecords', 'parent_intiation_date','parent_due_date',));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
@@ -9364,7 +9363,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
             $Capachild->save();
 
-            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft'));
+            return view('frontend.forms.capa', compact('parent_id','relatedRecords','record_number', 'parent_record','parent_type', 'record',  'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name','reference_record', 'parent_division_id', 'parent_record', 'old_records', 'cft','parent_due_date',));
         } elseif ($request->child_type == "Action_Item")
          {
             $parent_name = "Action Item";
@@ -9374,7 +9373,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $actionchild->save();
             
             
-            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.action-item', compact('old_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'parent_id', 'parent_type','parent_due_date',));
         }
 
         elseif ($request->child_type == "effectiveness_check")
@@ -9383,7 +9382,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $effectivenesschild = Deviation::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
-        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type','parent_due_date',));
         }
         elseif ($request->child_type == "Change_control") {
             $parent_name = "CAPA";
@@ -9392,14 +9391,14 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
             $Changecontrolchild->save();
 
-            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type','parent_due_date',));
         }
         else {
             $parent_name = "Root";
             $Rootchild = Deviation::find($id);
             $Rootchild->Rootchild = $record_number;
             $Rootchild->save();
-            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'due_date', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', ));
+            return view('frontend.forms.root-cause-analysis', compact('parent_id', 'parent_record','parent_type', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record','parent_due_date','parent_due_date',));
         }
     }
 
