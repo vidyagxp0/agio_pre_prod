@@ -62,6 +62,7 @@
                                         @endif
 
                                     @endif
+                                   
 
                                     @if ($showEdit)
                                     {{-- <a href="{{ route('documents.edit', $document->id) }}" class="button">Edit</a> --}}
@@ -313,6 +314,78 @@
                             </div>
                         </div>
                     @endif
+
+                    @if ($document->stage == 10)              
+    <div class="col-8">
+        <div class="inner-block tracker">
+            <div class="d-flex justify-content-between align-items-center reviewer">
+                <div class="main-title">
+                    Record Workflow
+                </div>
+
+                <div class="buttons">
+                    @if ($stageEffective && empty($stageEffective_submit))
+                        @if ($stageEffective->stage != 'Effective')
+                            <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                Reject&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                            </button>
+                        @endif
+                    @endif
+                    
+                    <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                        Effective&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                    </button>
+                    <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                        Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="status">
+                <div class="head">Current Status</div>
+                <div class="progress-bars">
+                    @if ($document->stage >= 10)
+                        <div class="active">Draft</div>
+                    @else
+                        @if ($stageEffective)
+                            @if ($stageEffective->stage == 'In-Effective')
+                                <div class="active">Draft</div>
+                            @else
+                                <div>Draft</div>
+                            @endif
+                        @else
+                            <div>Draft</div>
+                        @endif
+                    @endif
+
+                    @if ($stageEffective)
+                        @if ($stageEffective->stage == 'In-Effective')
+                            <div class="active">Effective</div> <!-- Fixed here -->
+                        @else
+                            <div>Effective</div>
+                        @endif
+                    @else
+                        <div>Effective</div>
+                    @endif
+
+                    @if ($stageEffective_submit)
+                        @if ($stageEffective_submit->stage == 'Effective-Submit')
+                            {{-- <div class="active">Submitted</div> --}}
+                        @else
+                            {{-- <div>Submitted</div> --}}
+                        @endif
+                    @else
+                        {{-- <div>Submitted</div> --}}
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+
+
+                    
                     <div class="col-4">
                         <div>
                             @if($document->document_type_id == 'SOP')
@@ -917,6 +990,8 @@
                                             <td>{{ $user->department }}</td>
                                             @if (@$user->status->stage=='Review-submit' || @$user->status->stage=='Approved' ||  @$user->status->stage=='Approval-Submit')
                                                 <td>Approved <i class="fa-solid fa-circle-check text-success"></i></td>
+                                            @elseif(@$user->status->stage=='Review-submit' || @$user->status->stage=='Effective' ||  @$user->status->stage=='Effective-Submit')
+                                               <td>Effective <i class="fa-solid fa-circle-check text-success"></i></td>    
                                             @elseif($user->reject)
                                                 <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
                                             @else
@@ -1148,6 +1223,18 @@
                         @endif
                     @endif
 
+                    @if ($document->stage == 10)
+                        <input type="hidden" name="stage_id" value="Effective" />
+                    @endif
+
+                    @if ($stageEffective)
+                        @if ($stageEffective->stage == 'Effective')
+                            <input type="hidden" name="stage_id" value="Effective-Submit" />
+                        @endif
+                    @endif
+
+                    
+
                 @else
                    
                     @if ($document->stage == 5)
@@ -1160,6 +1247,10 @@
 
                     @if ($document->stage == 6)
                         <input type="hidden" name="stage_id" value="Approved" />
+                    @endif
+
+                    @if ($document->stage == 10)
+                        <input type="hidden" name="stage_id" value="Effective" />
                     @endif
                 
                 @endif

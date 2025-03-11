@@ -299,6 +299,24 @@ class Helpers
         }
     }
 
+    // public static function checkRoles_check_approvers($document)
+    // {
+    //     if ($document->approvers) {
+    //         $datauser = explode(',', $document->approvers);
+    //         for ($i = 0; $i < count($datauser); $i++) {
+    //             if ($datauser[$i] == Auth::user()->id) {
+    //                 if($document->stage >= 10){
+    //                     return true;
+    //                 } else {
+    //                     return false;
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
 
     public static function checkRoles_check_hods($document)
     {
@@ -1130,9 +1148,12 @@ class Helpers
                 $status = $training_required ? 'Traning-Complete' : 'Obsolete';
                 break;
             case '10':
-                $status = $training_required ? 'Effective' : 'Effective';
+                $status = $training_required ? 'In-Effective' : 'In-Effective';
                 break;
             case '11':
+                $status = 'Effective';
+                break;
+            case '12':
                 $status = 'Obsolete';
                 break;
             case '13':

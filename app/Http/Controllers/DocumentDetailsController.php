@@ -53,7 +53,8 @@ class DocumentDetailsController extends Controller
 
   function sendforstagechanage(Request $request)
   {
-    // return $request;
+
+    // dd($request->all());
     if ($request->username == Auth::user()->email) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
@@ -732,8 +733,44 @@ class DocumentDetailsController extends Controller
                 }
               }
             }
-
             if ($request->stage_id == 10) {
+             
+              $document['stage'] = $request->stage_id;
+              $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+              $document->update();
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Send for In-Effective';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'Approved';
+              $history->change_to = 'In-Effective';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'Approved';
+              $history->save();
+
+              $traning = DocumentTraining::where('document_id', $document->id)->first();
+              if ($traning) {
+                $traning->trainer = User::find($traning->trainer);
+                try {
+                  Mail::send(
+                    'mail.for_training',
+                    ['document' => $document],
+                    function ($message) use ($traning) {
+                      $message->to($traning->trainer->email)
+                        ->subject('Document is for training');
+                    }
+                  );
+                } catch (\Exception $e) {
+                }
+              }
+            }
+            if ($request->stage_id == 11) {
+              // dd($request->stage_id == 11);
               $document->effective_date = Carbon::now()->format('Y-m-d');
 
               if ($document->revised == 'Yes') {
@@ -743,15 +780,13 @@ class DocumentDetailsController extends Controller
                 ])->first();
 
                 if ($old_document) {
-                  $old_document->stage = 11;
+                  $old_document->stage = 12;
                   $old_document->status = 'Obsolete';
                   $old_document->save();
                 }
               }
 
               try {
-                // $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
-                // $document->next_review_date = $next_review_date;
 
                 $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->subDay()->format('Y-m-d');
                 $document->next_review_date = $next_review_date;

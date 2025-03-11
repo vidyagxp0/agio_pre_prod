@@ -140,13 +140,6 @@
                                         </button>
                                     @endif
 
-                                    {{-- @if ($document->stage == 3)
-                                        <input type="hidden" name="stage_id" value="4" />
-                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
-                                            Send For Approval<i class="fa-regular fa-paper-plane"></i>
-                                        </button>
-                                    @endif --}}
-
                                     @if ($document->training_required == 'yes')
                                         @if ($document->stage == 7)
                                             <input type="hidden" name="stage_id" value="6" />
@@ -185,12 +178,6 @@
                                         </button>
                                     @endif
 
-                                    {{-- @if ($document->stage == 3)
-                                        <input type="hidden" name="stage_id" value="4" />
-                                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
-                                            Send For Approval<i class="fa-regular fa-paper-plane"></i>
-                                        </button>
-                                    @endif --}}
 
                                     @if ($document->training_required == 'yes')
                                         @if ($document->stage == 7)
@@ -207,7 +194,7 @@
                                         @endif
                                     @elseif($document->training_required == 'no')
                                         @if ($document->stage == 7)
-                                            <input type="hidden" name="stage_id" value="8" />
+                                            <input type="hidden" name="stage_id" value="10" />
                                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                                 Send For Effective<i class="fa-regular fa-paper-plane"></i>
                                             </button>
@@ -248,19 +235,14 @@
                                             @endif
                                             @if ($document->stage >= 5)
                                                 <div class="active">Reviewed</div>
-                                                {{-- && $document->stage < 10 --}}
                                             @else
                                                 <div class="">Reviewed</div>
                                             @endif
                                             @if ($document->stage >= 6)
                                                 <div class="active">For-Approval</div>
-                                                {{-- && $document->stage < 10 --}}
                                             @else
                                                 <div class="">For-Approval</div>
                                             @endif
-                                            {{-- @if ($document->stage == 10)
-                                            <div class="active">Rejected</div>
-                                            @endif --}}
                                             @if ($document->stage >= 7)
                                                 <div class="active">Approved</div>
                                             @else
@@ -280,11 +262,16 @@
                                             @endif
 
                                             @if ($document->stage >= 10)
+                                                <div class="active">In-Effective</div>
+                                            @else
+                                                <div class="">In-Effective</div>
+                                            @endif
+                                            @if ($document->stage == 11)
                                                 <div class="active">Effective</div>
                                             @else
                                                 <div class="">Effective</div>
                                             @endif
-                                            @if ($document->stage == 11)
+                                            @if ($document->stage == 12)
                                                 <div class="active">Obsolete</div>
                                             @else
                                                 <div class="">Obsolete</div>
@@ -341,11 +328,16 @@
                                             @endif
 
                                             @if ($document->stage >= 10)
+                                                <div class="active">In-Effective</div>
+                                            @else
+                                                <div class="">In-Effective</div>
+                                            @endif
+                                            @if ($document->stage == 11)
                                                 <div class="active">Effective</div>
                                             @else
                                                 <div class="">Effective</div>
                                             @endif
-                                            @if ($document->stage == 11)
+                                            @if ($document->stage == 12)
                                                 <div class="active">Obsolete</div>
                                             @else
                                                 <div class="">Obsolete</div>
@@ -1316,13 +1308,20 @@
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
                         @if ($document->stage == 10)
+                            <input type="hidden" name="stage_id" value="11" />
+                        @endif
+                        @if ($document->stage == 11)
                             <input type="hidden" name="stage_id" value="13" />
                         @endif
+                        
                     @else
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
                         @if ($document->stage == 10)
+                            <input type="hidden" name="stage_id" value="11" />
+                        @endif
+                        @if ($document->stage == 11)
                             <input type="hidden" name="stage_id" value="13" />
                         @endif
                     @endif
