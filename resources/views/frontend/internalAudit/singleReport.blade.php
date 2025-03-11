@@ -220,7 +220,7 @@
                         <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-30">
@@ -531,7 +531,7 @@
                     <div class="block-head">
                         Audit Agenda
                     </div>
-        
+
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -545,7 +545,7 @@
                                 <th>Auditee</th>
                                 <th>Remark</th>
                             </tr>
-        
+
                             @if (!empty($json) && is_array($json))
                             @php $srNo = 1; @endphp
                             @foreach ($json as $row)
@@ -570,7 +570,14 @@
                             @endif
                         </table>
                     </div>
-        
+                    <table>
+
+                        <tr style="display: none;">
+                            <th class="w-20">Checklists</th>
+                            <td class="w-80"> @if($data->checklistss){{ $data->checklistss }}@else Not Applicable @endif</td>
+                        </tr>
+                    </table>
+
             <table>
 
                 <tr>
@@ -589,7 +596,7 @@
 
 
 
-   
+
 
 
 
@@ -701,7 +708,8 @@
     ];
     @endphp
 
-    @if(!empty($data))
+
+    @if(!empty($data)  && in_array('1', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -807,7 +815,7 @@
     "Current version of SOP's is available in respective areas?",
     ];
     @endphp
-    @if(!empty($checklist3))
+    @if(!empty($checklist3) && in_array('4', explode(',', $data->checklists)))
 
     <div class="inner-block">
         <div class="content-table">
@@ -934,7 +942,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist1))
+    @if(!empty($checklist1) && in_array('2', explode(',', $data->checklists)))
 
 
     <div class="inner-block">
@@ -1064,7 +1072,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist2))
+    @if(!empty($checklist2) && in_array('3', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1199,7 +1207,7 @@
     // 'Is there any area cleaning record available for all individual areas?',
     // 'Current version of SOPs available in respective areas?'];
     @endphp
-    @if(!empty($checklist4))
+    @if(!empty($checklist4) && in_array('5', explode(',', $data->checklists)) )
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1330,7 +1338,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist5))
+    @if(!empty($checklist5) && in_array('7', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1471,7 +1479,7 @@
 
 
     @endphp
-    @if(!empty($checklist6))
+    @if(!empty($checklist6) && in_array('6', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1583,7 +1591,7 @@
 
 
     @endphp
-    @if(!empty($checklist7))
+    @if(!empty($checklist7) && in_array('8', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1700,7 +1708,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist9))
+    @if(!empty($checklist9) && in_array('9', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1883,7 +1891,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist10))
+    @if(!empty($checklist10) && in_array('10', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1983,7 +1991,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist11))
+    @if(!empty($checklist11) && in_array('11', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2088,12 +2096,13 @@
     ];
     @endphp
 
-    @if(!empty($checklist12))
+    @if(!empty($checklist12) && in_array('12', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
             <div class="block-head">
-                Checklist - Stores
+                {{-- Checklist - Stores --}}
+                Checklist - Human Resource and Administration
             </div>
             <div>
                 @php
@@ -2233,7 +2242,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist13))
+    @if(!empty($checklist13) && in_array('13', explode(',', $data->checklists)) )
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2373,7 +2382,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist14))
+    @if(!empty($checklist14) && in_array('14', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2517,7 +2526,7 @@
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
                                                                     <div class="block-head">
-                                                                        Checklist - Production (Powder Manufacturing and Packing)   
+                                                                        Checklist - Production (Powder Manufacturing and Packing)
 
                                                                     </div>
                                                                     <div>
@@ -2533,13 +2542,13 @@
                                                                                         'questions' => $questions_packing_manufacturing,
                                                                                         'prefix' => 2
                                                                                 ],
-                                                                                
-                                    
-                                                                                
-                                                            
+
+
+
+
                                                                             ];
                                                                         @endphp
-                                                            
+
                                                                         @foreach ($checklists as $checklist)
                                                                             <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
                                                                                 {{ $checklist['title'] }}
@@ -2585,7 +2594,7 @@
     <!-- </div> -->
     </div>
     </div> --}}
-    @if(!empty($checklist15))
+    @if(!empty($checklist15) && in_array('15', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2695,7 +2704,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist16))
+    @if(!empty($checklist16) && in_array('16', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2793,7 +2802,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist17))
+    @if(!empty($checklist17) && in_array('17', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <div class="block-head">
@@ -2890,7 +2899,7 @@
         @endif
 
     </table>
-    
+
 
     </div>
     @endif
@@ -3033,9 +3042,9 @@
                     </table>
                 </div>
             </div>
-           
 
-           
+
+
 
 
             <!-- <tr>
