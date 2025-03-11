@@ -512,9 +512,9 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Auditee Department Head <span class="text-danger"></span>
+                                            Auditee Department Head <span class="text-danger">*</span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -554,13 +554,13 @@
 
                                   <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span> </label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY"  required/>
 
                                             <!-- Editable date input (hidden) -->
-                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" required
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -664,7 +664,7 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
                                         <select name="Initiator_Group" id="initiator_group">
@@ -693,7 +693,61 @@
                                             <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
                                 </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+                                                
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Department  Code">Initiator Department  Code</label>
@@ -720,8 +774,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Auditee department Name</label>
-                                        <select name="auditee_department">
+                                        <label for="Initiator Group">Auditee department Name <span class="text-danger">*</span> </label>
+                                        <select name="auditee_department" required >
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QA">Quality Assurance</option>
