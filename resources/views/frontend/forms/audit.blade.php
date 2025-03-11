@@ -407,47 +407,47 @@
                      </button>
                        <button class="cctablinks" style="display:none;" id="button5" onclick="openCity(event, 'CCForm11')">Checklist - Production (Capsule)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button6" onclick="openCity(event, 'CCForm12')">Checklist - Production(Liquid/Ointment Dispensing & Manufacturing)
                     </button>
                      <button class="cctablinks" style="display:none;" id="button7" onclick="openCity(event, 'CCForm13')">Checklist -Production(Liquid/Ointment Packing)
                      </button>
- 
+
                      <button class="cctablinks"  style="display:none;" id="button8" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button9" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button10" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button11" onclick="openCity(event, 'CCForm17')">Checklist - Stores
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button12" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource and Administration
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button13" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button14" onclick="openCity(event, 'CCForm20')">Checklist -
                          Production (Injection Packing)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button15" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button16" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
                      </button>
- 
+
                      <button class="cctablinks" style="display:none;" id="button17" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                      </button>
- 
+
                       {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                                          <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
@@ -512,9 +512,9 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Auditee Department Head <span class="text-danger"></span>
+                                            Auditee Department Head <span class="text-danger">*</span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -554,13 +554,13 @@
 
                                   <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span> </label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY"  required/>
 
                                             <!-- Editable date input (hidden) -->
-                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" required
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -664,7 +664,7 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Department </label>
                                         <select name="Initiator_Group" id="initiator_group">
@@ -693,7 +693,61 @@
                                             <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
                                 </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+                                                
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Department  Code">Initiator Department  Code</label>
@@ -720,8 +774,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Auditee department Name</label>
-                                        <select name="auditee_department">
+                                        <label for="Initiator Group">Auditee department Name <span class="text-danger">*</span> </label>
+                                        <select name="auditee_department" required >
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QA">Quality Assurance</option>
@@ -1607,7 +1661,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
 
 
 
@@ -1619,7 +1673,7 @@
                                             id="addSamplePlanning">+</button>
                                            </div>
                                         </label>
-                                        
+
 
                                         <div class="responsive-table table-container" style="overflow-x: auto;  width: 100% !important;">
                                             <table class="table table-bordered" id="addSamplePlanningTable"style="">
@@ -1705,7 +1759,7 @@
                                     document.addEventListener("DOMContentLoaded", function() {
                                         let rowIndex = 1;
                                         const analysts = @json($users->toArray() ?? []);
-                                        
+
                                         document.getElementById("addSamplePlanning").addEventListener("click", function() {
                                             const tableBody = document.querySelector("#addSamplePlanningTable tbody");
                                             const newRow = document.createElement("tr");
@@ -1720,7 +1774,7 @@
                                             }
 
                                             newRow.innerHTML = `
-                                            
+
                                                                 <td>
                                                                     <input type="text" name="auditAgendaData[0][auditArea]">
                                                                 </td>
@@ -1740,7 +1794,7 @@
                                                                 <td>
                                                                     <input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]">
                                                                 </td>
-                                                                
+
                                                                 <td>
                                                                     <div class="col-md-6 new-date-data-field">
                                                                         <div class="group-input input-date">
@@ -1753,7 +1807,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </td>
-                                                                
+
                                                                 <td>
                                                                     <input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]">
                                                                 </td>
@@ -1769,7 +1823,7 @@
                                                                         ${analystOptions}
                                                                     </select>
                                                                 </td>
-                                                                
+
                                                                 <td>
                                                                     <textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea>
                                                                 </td>
@@ -1778,16 +1832,16 @@
 
                                             tableBody.appendChild(newRow);
                                             rowIndex++;
-                                            
+
                                             VirtualSelect.init({
                                                 ele: '#auditorsData_' + (rowIndex - 1),
                                                 multiple: true
-                                            }); 
+                                            });
 
                                             VirtualSelect.init({
                                                 ele: '#auditeeData_' + (rowIndex - 1),
                                                 multiple: true
-                                            }); 
+                                            });
                                         });
 
                                         document.querySelector("#addSamplePlanningTable tbody").addEventListener("click", function (e) {
@@ -1795,7 +1849,7 @@
                                                 const row = e.target.closest("tr");
                                                 row.remove();
                                             }
-                                        });                                        
+                                        });
                                     });
                                 </script>
 
@@ -2268,7 +2322,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
-                                            Initial Response<button type="button" name="audit-agenda-grid"
+                                            Response<button type="button" name="audit-agenda-grid"
                                                 id="internalaudit-initial" disabled>+</button>
                                         </label>
                                         <table class="table table-bordered" id="internalaudit-initialtable">
@@ -2337,7 +2391,7 @@
                                                                 <input type="date"
                                                                     name="Initial[0][closure_date]"
                                                                     id="closure_date_input"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                     class="hide-input"
                                                                     onchange="handleDateInput(this, 'closure_date'); updateEndDateMin('closure_date_input', 'End_date__input')" />
                                                             </div>
@@ -2356,7 +2410,7 @@
                                                                 <input type="date"
                                                                     name="Initial[0][Actual_date]"
                                                                     id="Actual_date_input"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                     class="hide-input"
                                                                     onchange="handleDateInput(this, 'Actual_date'); updateEndDateMin('Actual_date_input', 'End_date__input')" />
                                                             </div>
@@ -2389,7 +2443,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Audit Attachments</label>
+                                        <label for="Audit  Response Attachments">Audit  Response Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="myfile[]" multiple> --}}
@@ -2410,7 +2464,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Comments">Audit Comments</label>
+                                        <label for="Audit  Response Comment">Audit  Response Comment</label>
                                         <textarea name="Audit_Comments2" disabled></textarea>
                                     </div>
                                 </div>
@@ -22410,7 +22464,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    STAGE 1 : POWEDER MFG & FILLING
+                                    STAGE 1 : Powder Manufacturing and Packing
                                 </div>
 
                                 <div class="col-12">
