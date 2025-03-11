@@ -213,7 +213,7 @@
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
-                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="IPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
                 <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'doc_CVS')">Cleaning Validation Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
@@ -236,8 +236,8 @@
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
-                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">PACKING MATERIAL SPECIFICATION</button>
+                <button class="tablinks hidden-tabs" data-id="RMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
+                <button class="tablinks hidden-tabs" data-id="PMS" onclick="openData(event, 'doc_pams')">PACKING MATERIAL SPECIFICATION</button>
                 <button class="tablinks hidden-tabs" data-id="PROCUMREPORT" onclick="openData(event, 'doc_PCR')">Protocol Cum Report</button>
                 {{-- <button class="tablinks hidden-tabs" data-id="TEMPMAPPING" onclick="openData(event, 'doc-temper_maping')">Temperature Mapping Protocol Cum Report</button> --}}
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
@@ -3356,7 +3356,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -3518,7 +3518,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -6314,8 +6314,8 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="comments">TDS Code</label>
-                                        <select name="tds_name_code" id="">
+                                        <label for="comments">TDS Type</label>
+                                        <select name="tds_name_code" id="tds_name_code">
                                             <option value="">Select here</option>
                                             <option {{ $document->tds_name_code == 'FP' ? 'selected' : '' }}
                                                         value="FP">Finished Product</option>
@@ -6362,17 +6362,17 @@
                                 </div>
 
 
-                                    <div class="col-12 sub-head">
-                                        A) Summary of Results
+                            <div class="col-12 sub-head">
+                                A) Summary of Results
 
-                                        <div class="group-input">
-                                            <label for="procedure"></label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
-                                                    require completion</small></div>
-                                            <textarea name="tds_result" id="" class="summernote">{{ $document->document_content ? $document->document_content->tds_result : '' }}</textarea>
-                                           
-                                        </div>
-                                    </div>
+                                <div class="group-input">
+                                    <label for="procedure"></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea name="tds_result" id="" class="summernote">{{ $document->document_content ? $document->document_content->tds_result : '' }}</textarea>
+                                    
+                                </div>
+                            </div>
                              
                             
 
@@ -6405,56 +6405,54 @@
                                 </div>
                             </div>
 
-                                <div class="col-12 sub-head">
-                                        Sample Reconcilation
-                                </div>
-                                    <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            <button type="button" name="audit-agenda-grid" id="ObservationSample">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="job-ObservationSample-table" style="width: 100%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 5%;">Sr No.</th>
-                                                        <th>Test Name</th>
-                                                        <th>Quantity Required for test as per STP</th>
-                                                        <th>Quantity Used for test</th>
-                                                        <th>Used by (Sign/Date)</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
 
-                                                    @php
-                                                    $ProductDetails = 1;
-                                                    @endphp
+                                <div class="group-input">
+                                    <label for="audit-agenda-grid">
+                                        Sample Reconcilation<button type="button" name="audit-agenda-grid" id="ObservationSample">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="job-ObservationSample-table" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%;">Sr No.</th>
+                                                    <th>Test Name</th>
+                                                    <th>Quantity Required for test as per STP</th>
+                                                    <th>Quantity Used for test</th>
+                                                    <th>Used by (Sign/Date)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
 
-                                                    @if(!empty($sampleReconcilation) && is_array($sampleReconcilation->data))
-                                                        @foreach($sampleReconcilation->data as $index => $detail)
-                                                            <tr>
-                                                                <td>{{ $ProductDetails++ }}</td>
-                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][test_name]" value="{{ $detail['test_name'] ?? '' }}"></td>
-                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_test_stp]" value="{{ $detail['quantity_test_stp'] ?? '' }}"></td>
-                                                                <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_userd_test]" value="{{ $detail['quantity_userd_test'] ?? '' }}"></td>
-                                                                <td></td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @else
+                                                @php
+                                                 $ProductDetails = 1;
+                                                @endphp
+
+                                                @if(!empty($sampleReconcilation) && is_array($sampleReconcilation->data))
+                                                    @foreach($sampleReconcilation->data as $index => $detail)
                                                         <tr>
-                                                            <td><input disabled type="text" name="sampleReconcilation[0][serial]" value="1"></td>
-                                                            <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
-                                                            <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
-                                                            <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
+                                                            <td>{{ $ProductDetails++ }}</td>
+                                                            <td><input type="text" name="sampleReconcilation[{{$index}}][test_name]" value="{{ $detail['test_name'] ?? '' }}"></td>
+                                                            <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_test_stp]" value="{{ $detail['quantity_test_stp'] ?? '' }}"></td>
+                                                            <td><input type="text" name="sampleReconcilation[{{$index}}][quantity_userd_test]" value="{{ $detail['quantity_userd_test'] ?? '' }}"></td>
                                                             <td></td>
                                                         </tr>
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input disabled type="text" name="sampleReconcilation[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="sampleReconcilation[0][test_name]"></td>
+                                                        <td><input type="text" name="sampleReconcilation[0][quantity_test_stp]"></td>
+                                                        <td><input type="text" name="sampleReconcilation[0][quantity_userd_test]"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endif
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
 
                                 <script>
                                     $(document).ready(function() {
@@ -6487,84 +6485,117 @@
                                     });
                                 </script>
 
-                                <div class="group-input">
-                                    <label for="audit-agenda-grid">
-                                        <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width:5%">Sr. No.</th>
-                                                    <th class="">Revision No.</th>
-                                                    <th class="">Change Control No./ DCRF No</th>
-                                                    <th class="">Effective Date</th>
-                                                    <th class="">Reason of revision</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            @php
-                                                $ProductDetails = 1;
-                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
-                                            @endphp
-
-                                                @if(!empty($summaryResult) && is_array($summaryResult->data))
-                                                    @foreach($summaryResult->data as $index => $detail)
-                                                        <tr>
-                                                            <td>{{ $ProductDetails++ }}</td>
-                                                            <td><input type="text" name="summaryResult[{{$index}}][revision_no_tds]" value="{{ $detail['revision_no_tds'] ?? '' }}"></td>
-                                                            <td><input type="text" name="summaryResult[{{$index}}][changContNo_tds]" value="{{ $detail['changContNo_tds'] ?? '' }}"></td>
-                                                            <td><input type="date" readonly name="summaryResult[{{$index}}][effectiveDate_tds]" value="{{ $effectiveDate ?? '' }}"></td>
-                                                            <td><input type="text" name="summaryResult[{{$index}}][reasonRevi_tds]" value="{{ $detail['reasonRevi_tds'] ?? '' }}"></td>
-
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
-                                                        <td><input type="text" name="summaryResult[0][revision_no_tds]"></td>
-                                                        <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>
-                                                        <td><input type="date" readonly name="summaryResult[0][effectiveDate_tds]"></td>
-                                                        <td><input type="text" name="summaryResult[0][reasonRevi_tds]"></td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
+                                    <div id="ir_test_field" style="display: none;">
+                                        <div class="group-input">
+                                            <label for="procedure">Individual Identification Test By IR</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                                    require completion</small></div>
+                                            <textarea name="IR_Test" id="" class="summernote">{{ $document->IR_Test ? $document->IR_Test : '' }}</textarea>
+                                        </div>
                                     </div>
-                                </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#ObservationAdd').click(function(e) {
-                                        function generateTableRow(serialNumber) {
 
-                                            var html =
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            let tdsSelect = document.getElementById("tds_name_code");
+                                            let irTestField = document.getElementById("ir_test_field");
+
+                                            function toggleIRTestField() {
+                                                if (tdsSelect.value === "RW") {
+                                                    irTestField.style.display = "block";
+                                                } else {
+                                                    irTestField.style.display = "none";
+                                                }
+                                            }
+
+                                            // Run function on page load (for edit mode)
+                                            toggleIRTestField();
+
+                                            // Add event listener for changes
+                                            tdsSelect.addEventListener("change", toggleIRTestField);
+                                        });
+                                    </script>
+
+
+                                     
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Revision History<button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:5%">Sr. No.</th>
+                                                        <th class="">Revision No.</th>
+                                                        <th class="">Change Control No.</th>
+                                                        <th class="">Effective Date</th>
+                                                        <th class="">Reason of revision</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @php
+                                                    $ProductDetails = 1;
+                                                    $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
+                                                @endphp
+
+                                                    @if(!empty($summaryResult) && is_array($summaryResult->data))
+                                                        @foreach($summaryResult->data as $index => $detail)
+                                                            <tr>
+                                                                <td>{{ $ProductDetails++ }}</td>
+                                                                <td><input type="text" name="summaryResult[{{$index}}][revision_no_tds]" value="{{ $detail['revision_no_tds'] ?? '' }}"></td>
+                                                                <td><input type="text" name="summaryResult[{{$index}}][changContNo_tds]" value="{{ $detail['changContNo_tds'] ?? '' }}"></td>
+                                                                <td><input type="date" readonly name="summaryResult[{{$index}}][effectiveDate_tds]" value="{{ $effectiveDate ?? '' }}"></td>
+                                                                <td><input type="text" name="summaryResult[{{$index}}][reasonRevi_tds]" value="{{ $detail['reasonRevi_tds'] ?? '' }}"></td>
+
+                                                            </tr>
+                                                        @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
+                                                            <td><input type="text" name="summaryResult[0][revision_no_tds]"></td>
+                                                            <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>
+                                                            <td><input type="date" readonly name="summaryResult[0][effectiveDate_tds]"></td>
+                                                            <td><input type="text" name="summaryResult[0][reasonRevi_tds]"></td>
+                                                        </tr>
+                                                    @endif
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#ObservationAdd').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
                                                 '<tr>' +
-                                                    '<td><input disabled type="text" name="summaryResult[' + serialNumber +
-                                                    '][serial]" value="' + serialNumber +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="summaryResult[' + serialNumber +
-                                                    '][revision_no_tds]"></td>' +
-                                                    '<td><input type="text" name="summaryResult[' + serialNumber +
-                                                    '][changContNo_tds]"></td>' +
-                                                    '<td><input type="date" readonly name="summaryResult[' + serialNumber +
-                                                    '][effectiveDate_tds]"></td>' +
-                                                    '<td><input type="text" name="summaryResult[' + serialNumber +
-                                                    '][reasonRevi_tds]"></td>' +
+                                                '<td><input disabled type="text" name="summaryResult[' + serialNumber +
+                                                '][serial]" value="' + serialNumber +
+                                                '"></td>' +
+                                                '<td><input type="text" name="summaryResult[' + serialNumber +
+                                                '][revision_no_tds]"></td>' +
+                                                '<td><input type="text" name="summaryResult[' + serialNumber +
+                                                '][changContNo_tds]"></td>' +
+                                                '<td><input type="date" readonly name="summaryResult[' + serialNumber +
+                                                '][effectiveDate_tds]"></td>' +
+                                                '<td><input type="text" name="summaryResult[' + serialNumber +
+                                                '][reasonRevi_tds]"></td>' +
                                                 '</tr>';
 
-                                            return html;
-                                        }
+                                                return html;
+                                            }
 
-                                        var tableBody = $('#job-responsibilty-table tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount + 1);
-                                        tableBody.append(newRow);
+                                            var tableBody = $('#job-responsibilty-table tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
                                     });
-                                });
-                            </script>
+                                </script>
 
                             </div>
 
@@ -6759,7 +6790,7 @@
                                             <tr>
                                                 <th style="width: 2%">Sr. No.</th>
                                                 <th style="width: 12%">Revision No.</th>
-                                                <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                <th style="width: 12%">Change Control No.</th>
                                                 <th style="width: 12%">Effective Date</th>
                                                 <th style="width: 30%">Reason of revision</th>
                                                 <th style="width: 3%">Action</th>
@@ -7108,7 +7139,7 @@
                                             <tr>
                                                 <th style="width: 2%">Sr. No.</th>
                                                 <th style="width: 12%">Revision No.</th>
-                                                <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                <th style="width: 12%">Change Control No.</th>
                                                 <th style="width: 12%">Effective Date</th>
                                                 <th style="width: 30%">Reason of revision</th>
                                                 <th style="width: 3%">Action</th>
@@ -7362,7 +7393,7 @@
                                             <tr>
                                                 <th style="width: 2%">Sr. No.</th>
                                                 <th style="width: 12%">Revision No.</th>
-                                                <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                <th style="width: 12%">Change Control No.</th>
                                                 <th style="width: 12%">Effective Date</th>
                                                 <th style="width: 30%">Reason of revision</th>
                                                 <th style="width: 3%">Action</th>
@@ -10364,7 +10395,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -10519,7 +10550,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -10675,7 +10706,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -10811,8 +10842,7 @@
                                                     {{ $tempHistory->created_at }}
                                                 </p>
                                                 <input class="input-field"
-                                                    style="background: #ffff0061;
-                                        color: black;"
+                                                    style="background: #ffff0061;color: black;"
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -10833,7 +10863,7 @@
                                                     <tr>
                                                         <th style="width:5%">Sr. No.</th>
                                                         <th class="">Revision No.</th>
-                                                        <th class="">Change Control No./ DCRF No</th>
+                                                        <th class="">Change Control No.</th>
                                                         <th class="">Effective Date</th>
                                                         <th class="">Reason of revision</th>
                                                         <th style="width: 2%">Action</th>
@@ -10990,7 +11020,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -12171,7 +12201,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -14006,18 +14036,36 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="brand-name">Molecular Formula</label>
                                         <input type="text" name="molecular_formula_row_material" value="{{$document->molecular_formula_row_material}}">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Molecular Formula
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="molecular_formula_row_material" id="" class="summernote">{{ $document->molecular_formula_row_material ? $document->molecular_formula_row_material : '' }}</textarea>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
+
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="label-claim">Molecular Weight</label>
                                         <input type="text" name="molecular_weight_row_material" value="{{$document->molecular_weight_row_material}}">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                     Molecular Weight
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="molecular_weight_row_material" id="" class="summernote">{{ $document->molecular_weight_row_material ? $document->molecular_weight_row_material : '' }}</textarea>
+                                    </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="product-code">Storage Condition</label>
@@ -14099,10 +14147,18 @@
                                         <input type="text" name="retest_sample_quantity_row_material" value="{{$document->retest_sample_quantity_row_material}}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="sampling-instructions">Sampling Instructions, Warnings, and Precautions</label>
                                         <input type="text" name="sampling_instructions_row_material" value="{{$document->sampling_instructions_row_material}}">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-12 sub-head">
+                                    Sampling Instructions, Warnings, and Precautions
+                                    <div class="group-input">
+                                        <label for="procedure"></label>
+                                        <textarea name="sampling_instructions_row_material" id="" class="summernote">{{ $document->sampling_instructions_row_material ? $document->sampling_instructions_row_material : '' }}</textarea>
                                     </div>
                                 </div>
 
@@ -14127,7 +14183,7 @@
                                                     <tr>
                                                         <th style="width: 2%">Sr. No.</th>
                                                         <th style="width: 12%">Revision No.</th>
-                                                        <th style="width: 12%">Change Control No./ DCRF No</th>
+                                                        <th style="width: 12%">Change Control No.</th>
                                                         <th style="width: 12%">Effective Date</th>
                                                         <th style="width: 30%">Reason of revision</th>
                                                         <th style="width: 3%">Action</th>
@@ -14255,33 +14311,42 @@
                             </div>
 
                         
-                            <div class="col-md-6">
-                                <div class="group-input">
-                                    <label for="piaNameCode">Specification</label>
-                                    <select id="recordSelect" name="select_specification">
-                                        <option value=" ">Select Specification</option>
-                                    </select>
-                                </div>
+                        <div class="col-md-6">
+                            <div class="group-input">
+                                <label for="piaNameCode">Specification No.</label>
+                                <select id="recordSelect" name="select_specification">
+                                    <option value="">Select Specification</option>
+                                </select>
                             </div>
+                        </div>
 
+                        <!-- Hidden input to store the saved value -->
+                        <input type="hidden" id="saved_specification" value="{{ old('select_specification', $document->select_specification ?? '') }}">
 
-                            <script>
-                                $(document).ready(function () {
-                                    $.ajax({
-                                        url: "{{ route('getRecordsByType') }}", 
-                                        type: "GET",
-                                        success: function (response) {
-                                            var select = $("#recordSelect");
-                                            select.empty();
-                                            select.append('<option value="">Select Specification</option>');
+                        <script>
+                            $(document).ready(function () {
+                                $.ajax({
+                                    url: "{{ route('getRecordsByType') }}", 
+                                    type: "GET",
+                                    success: function (response) {
+                                        var select = $("#recordSelect");
+                                        var savedValue = $("#saved_specification").val(); // Get saved value
 
-                                            $.each(response, function (index, value) {
+                                        select.empty();
+                                        select.append('<option value="">Select Specification</option>');
+
+                                        $.each(response, function (index, value) {
+                                            if (value == savedValue) {
+                                                select.append('<option value="' + value + '" selected>' + value + '</option>');
+                                            } else {
                                                 select.append('<option value="' + value + '">' + value + '</option>');
-                                            });
-                                        }
-                                    });
+                                            }
+                                        });
+                                    }
                                 });
-                            </script>
+                            });
+                        </script>
+
 
 
                             

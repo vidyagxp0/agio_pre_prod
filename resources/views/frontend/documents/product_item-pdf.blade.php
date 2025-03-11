@@ -431,11 +431,86 @@
         </span>
     </footer>
 
+   
+    @if($document->pia_name_code === 'RW')    
+
     <table style="margin-top: 15px;">
         <thead>
             <tr>
                 <th class="text-left">
-                    <div class="bold">Finished Product Specification</div>
+                    <div class="bold">Raw Material specification</div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+    <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Item Code</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Vendor Name</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Grade</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Sample quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!empty($MaterialSpecificationData))
+            @foreach ($MaterialSpecificationData as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['item_code'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['vendor_name'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['grade'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['sample_quantity'] ?? '' }}</td>
+                 
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+            </tr>
+        @endif
+        </tbody>
+    </table>
+
+    <table style="margin-top: 20px; width: 100%; border-collapse: collapse; border: 1px solid black;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
+                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Storage condition</th>
+                <th style="border: 1px solid black; width: 30%; font-weight: bold;">Prepared by Quality Person (Sign/Date)</th>
+                <th style="border: 1px solid black; width: 30%; font-weight: bold;">Checked by QC (Sign/Date)</th>
+                <th style="border: 1px solid black; width: 30%; font-weight: bold;">Approved by QA (Sign/Date)</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!empty($MaterialSpecificationData))
+            @foreach ($MaterialSpecificationData as $key => $item)
+                <tr>
+                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['storage_condition'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['prepared_quality_person_sign_date'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: center;">{{ $item['check_by_qc_hod_designee_sign'] ?? '' }}</td>
+                    <td style="border: 1px solid black; text-align: left;">{{ $item['approved_by_qa_hod_desinee_sign'] ?? '' }}</td>
+                 
+                </tr>
+            @endforeach
+        @else
+            <tr>
+                <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
+            </tr>
+        @endif
+        </tbody>
+    </table>
+
+    @else
+
+    <table style="margin-top: 15px;">
+        <thead>
+            <tr>
+                <th class="text-left">
+                    <div class="bold">Product Specification</div>
                 </th>
             </tr>
         </thead>
@@ -508,75 +583,7 @@
         </tbody>
     </table>
 
-    <table style="margin-top: 15px;">
-        <thead>
-            <tr>
-                <th class="text-left">
-                    <div class="bold">Raw Material specification</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
-
-    <table style="width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Item Code</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Vendor Name</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Grade</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Sample quantity</th>
-            </tr>
-        </thead>
-        <tbody>
-        @if (!empty($MaterialSpecificationData))
-            @foreach ($MaterialSpecificationData as $key => $item)
-                <tr>
-                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
-                    <td style="border: 1px solid black; text-align: left;">{{ $item['item_code'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item['vendor_name'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item['grade'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: left;">{{ $item['sample_quantity'] ?? '' }}</td>
-                 
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
-            </tr>
-        @endif
-        </tbody>
-    </table>
-
-    <table style="margin-top: 20px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Storage condition</th>
-                <th style="border: 1px solid black; width: 30%; font-weight: bold;">Prepared by Quality Person (Sign/Date)</th>
-                <th style="border: 1px solid black; width: 30%; font-weight: bold;">Checked by QC (Sign/Date)</th>
-                <th style="border: 1px solid black; width: 30%; font-weight: bold;">Approved by QA (Sign/Date)</th>
-            </tr>
-        </thead>
-        <tbody>
-        @if (!empty($MaterialSpecificationData))
-            @foreach ($MaterialSpecificationData as $key => $item)
-                <tr>
-                    <td style="border: 1px solid black; text-align: center;">{{ $key + 1 }}</td>
-                    <td style="border: 1px solid black; text-align: left;">{{ $item['storage_condition'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item['prepared_quality_person_sign_date'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: center;">{{ $item['check_by_qc_hod_designee_sign'] ?? '' }}</td>
-                    <td style="border: 1px solid black; text-align: left;">{{ $item['approved_by_qa_hod_desinee_sign'] ?? '' }}</td>
-                 
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td colspan="5" style="border: 1px solid black; text-align: center; font-weight: bold;">No Data Available</td>
-            </tr>
-        @endif
-        </tbody>
-    </table>
+    @endif
 
 
 

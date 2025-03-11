@@ -448,7 +448,7 @@
                    @if ($document->revised === 'Yes')
                    CVS/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
-                   Nill
+                   Nil
                    @endif
                    </span>
                 </td>
@@ -470,15 +470,15 @@
                                 @endphp
 
                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                        CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                        CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                     @else
-                                        CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                        CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                     @endif
                             @else
                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                       CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                     @else
-                                    CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                       CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                     @endif
                             @endif
                         </span>
@@ -735,7 +735,7 @@
             <thead>
                 <tr>
                     <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                     <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                     <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                 </tr>

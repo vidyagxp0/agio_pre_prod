@@ -446,7 +446,7 @@
                             @if ($document->revised === 'Yes')
                              {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
                             @else
-                              Nill
+                              Nil
                             @endif
                         </span>
                     </td>
@@ -468,15 +468,15 @@
                                 @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    MFPSTP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @else
-                                  MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                  MFPSTP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @endif
                             @else                        
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    MFPSTP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @else
-                                    MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    MFPSTP/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @endif
                             @endif
                         </span>

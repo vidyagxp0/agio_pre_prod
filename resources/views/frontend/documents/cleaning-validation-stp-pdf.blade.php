@@ -443,7 +443,7 @@
                         @if ($document->revised === 'Yes')
                         CVSTP/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
-                         Nill
+                         Nil
                         @endif
                    </span>
                 
@@ -596,7 +596,7 @@
                     <thead>
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                             <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                         </tr>

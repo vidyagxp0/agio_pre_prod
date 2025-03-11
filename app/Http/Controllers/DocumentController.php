@@ -3076,6 +3076,7 @@ class DocumentController extends Controller
                 $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
                 $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
                 $document->rawmaterials_specifications = $request->rawmaterials_specifications;
+                $document->IR_Test = $request->IR_Test;
 
                 //raw material stp
                 $document->product_name_rawmstp = $request->product_name_rawmstp;
@@ -3085,13 +3086,13 @@ class DocumentController extends Controller
                 $document->cvs_specificationGrid = $request->cvs_specificationGrid;
                 $document->ips_specificationGrid = $request->ips_specificationGrid;
 
-               // PIAS
+                // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
                 $document->select_specification = $request->select_specification;
 
 
-               // Finished Product Specification
+                // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
                 $document->brand_name = $request->brand_name;
@@ -6532,10 +6533,10 @@ class DocumentController extends Controller
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'IPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'RMS' => 'frontend.documents.raw_ms-pdf',
+            'PMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
@@ -6649,17 +6650,15 @@ class DocumentController extends Controller
 
     public function getRecordsByType(Request $request)
     {
-        $allowedTypes = ['FPS', 'INPS', 'CVS', 'RAWMS'];
+        $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
         
         $records = Document::whereIn('document_type_id', $allowedTypes)->get();
     
         $formattedRecords = [];
     
         foreach ($records as $data) {
-            $revisionNumber = $data->revision_number ?? '00';
-    
-            // Har record ke document_type_id ke according format set karna
-            $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT) . "-" . $revisionNumber;
+            
+            $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT);
             $formattedRecords[] = $formattedRecord;
         }
     
@@ -7052,10 +7051,10 @@ class DocumentController extends Controller
                 'SOP' => 'frontend.documents.pdfpage',
                 'BOM' => 'frontend.documents.bom-pdf',
                 'FPS' => 'frontend.documents.finished-product-pdf',
-                'INPS' => 'frontend.documents.inprocess_s-pdf',
+                'IPS' => 'frontend.documents.inprocess_s-pdf',
                 'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-                'RAWMS' => 'frontend.documents.raw_ms-pdf',
-                'PAMS' => 'frontend.documents.package_ms-pdf',
+                'RMS' => 'frontend.documents.raw_ms-pdf',
+                'PMS' => 'frontend.documents.package_ms-pdf',
                 'PIAS' => 'frontend.documents.product_item-pdf',
                 'MFPS' => 'frontend.documents.mfps-pdf',
                 'MFPSTP' => 'frontend.documents.mfpstp-pdf',
