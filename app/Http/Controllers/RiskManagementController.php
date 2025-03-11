@@ -4810,23 +4810,59 @@ class RiskManagementController extends Controller
         //     }
         //     $history->save();
         // }
+
+        // if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'Production Liquid Attachment';
+
+        //     // Convert arrays to comma-separated strings
+        //     $previousAttachment = is_array($lastCft->ProductionLiquid_attachment)
+        //         ? implode(', ', $lastCft->ProductionLiquid_attachment)
+        //         : $lastCft->ProductionLiquid_attachment;
+
+        //     $currentAttachment = is_array($Cft->ProductionLiquid_attachment)
+        //         ? implode(', ', $Cft->ProductionLiquid_attachment)
+        //         : $Cft->ProductionLiquid_attachment;
+
+        //     $history->previous = str_replace(',', ', ', $previousAttachment);
+        //     $history->current = str_replace(',', ', ', $currentAttachment);
+        //     $history->comment = $Cft->ProductionLiquid_attachment_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastCft->status;
+        //     $history->change_to = "Null";
+        //     $history->change_from = $lastCft->status;
+
+        //     // New condition added here
+        //     if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+
+        //     $history->save();
+        // }
+
+        
         if ($lastCft->ProductionLiquid_attachment != $request->ProductionLiquid_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
-            $history->activity_type = 'Production Liquid Attachment';
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Production Injection Attachment';
 
             // Convert arrays to comma-separated strings
             $previousAttachment = is_array($lastCft->ProductionLiquid_attachment)
                 ? implode(', ', $lastCft->ProductionLiquid_attachment)
                 : $lastCft->ProductionLiquid_attachment;
 
-            $currentAttachment = is_array($Cft->ProductionLiquid_attachment)
-                ? implode(', ', $Cft->ProductionLiquid_attachment)
-                : $Cft->ProductionLiquid_attachment;
+            $currentAttachment = is_array($data->ProductionLiquid_attachment)
+                ? implode(', ', $data->ProductionLiquid_attachment)
+                : $data->ProductionLiquid_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->ProductionLiquid_attachment_comment;
+            $history->comment = $data->ProductionLiquid_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -4844,32 +4880,6 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        // if ($lastCft->ProductionLiquid_attachment != $data->ProductionLiquid_attachment || !empty($request->ProductionLiquid_attachment)) {
-
-        //     $history = new RiskAuditTrail();
-        //     $history->risk_id = $id;
-        //     $history->activity_type = 'Production Liquid Attachment';
-
-        //     // Convert arrays to JSON strings if necessary
-        //     $history->previous = is_array($lastCft->ProductionLiquid_attachment) ? json_encode($lastCft->ProductionLiquid_attachment) : $lastCft->ProductionLiquid_attachment;
-        //     $history->current = is_array($data->ProductionLiquid_attachment) ? json_encode($data->ProductionLiquid_attachment) : $data->ProductionLiquid_attachment;
-        //     $history->comment = is_array($request->ProductionLiquid_attachment) ? json_encode($request->ProductionLiquid_attachment) : $request->ProductionLiquid_attachment;
-
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastCft->status;
-        //     $history->change_to = "Not Applicable";
-        //     $history->change_from = $lastCft->status;
-
-        //     if (is_null($lastCft->ProductionLiquid_attachment) || $lastCft->ProductionLiquid_attachment === '') {
-        //         $history->action_name = "New";
-        //     } else {
-        //         $history->action_name = "Update";
-        //     }
-
-        //     $history->save();
-        // }
         if ($lastCft->ProductionLiquid_by != $request->ProductionLiquid_by && $request->ProductionLiquid_by != null) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
@@ -5180,7 +5190,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Store_attachment != $request->Store_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Store Attachment';
 
             // Convert arrays to comma-separated strings
@@ -5188,13 +5198,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Store_attachment)
                 : $lastCft->Store_attachment;
 
-            $currentAttachment = is_array($Cft->Store_attachment)
-                ? implode(', ', $Cft->Store_attachment)
-                : $Cft->Store_attachment;
+            $currentAttachment = is_array($data->Store_attachment)
+                ? implode(', ', $data->Store_attachment)
+                : $data->Store_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Store_attachment_comment;
+            $history->comment = $data->Store_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -5337,7 +5347,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Quality_Control_attachment != $request->Quality_Control_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Quality Control Attachment';
 
             // Convert arrays to comma-separated strings
@@ -5345,13 +5355,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Quality_Control_attachment)
                 : $lastCft->Quality_Control_attachment;
 
-            $currentAttachment = is_array($Cft->Quality_Control_attachment)
-                ? implode(', ', $Cft->Quality_Control_attachment)
-                : $Cft->Quality_Control_attachment;
+            $currentAttachment = is_array($data->Quality_Control_attachment)
+                ? implode(', ', $data->Quality_Control_attachment)
+                : $data->Quality_Control_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Quality_Control_attachment_comment;
+            $history->comment = $data->Quality_Control_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -5720,7 +5730,7 @@ class RiskManagementController extends Controller
         }
         if ($lastCft->Engineering_attachment != $request->Engineering_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Engineering Attachment';
 
             // Convert arrays to comma-separated strings
@@ -5728,13 +5738,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Engineering_attachment)
                 : $lastCft->Engineering_attachment;
 
-            $currentAttachment = is_array($Cft->Engineering_attachment)
-                ? implode(', ', $Cft->Engineering_attachment)
-                : $Cft->Engineering_attachment;
+            $currentAttachment = is_array($data->Engineering_attachment)
+                ? implode(', ', $data->Engineering_attachment)
+                : $data->Engineering_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Engineering_attachment_comment;
+            $history->comment = $data->Engineering_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -5905,7 +5915,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Human_Resource_attachment != $request->Human_Resource_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Human Resource Attachment';
 
             // Convert arrays to comma-separated strings
@@ -5913,13 +5923,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Human_Resource_attachment)
                 : $lastCft->Human_Resource_attachment;
 
-            $currentAttachment = is_array($Cft->Human_Resource_attachment)
-                ? implode(', ', $Cft->Human_Resource_attachment)
-                : $Cft->Human_Resource_attachment;
+            $currentAttachment = is_array($data->Human_Resource_attachment)
+                ? implode(', ', $data->Human_Resource_attachment)
+                : $data->Human_Resource_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Human_Resource_attachment_comment;
+            $history->comment = $data->Human_Resource_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6088,7 +6098,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->Microbiology_attachment != $request->Microbiology_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Microbiology Attachment';
 
             // Convert arrays to comma-separated strings
@@ -6096,13 +6106,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Microbiology_attachment)
                 : $lastCft->Microbiology_attachment;
 
-            $currentAttachment = is_array($Cft->Microbiology_attachment)
-                ? implode(', ', $Cft->Microbiology_attachment)
-                : $Cft->Microbiology_attachment;
+            $currentAttachment = is_array($data->Microbiology_attachment)
+                ? implode(', ', $data->Microbiology_attachment)
+                : $data->Microbiology_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Microbiology_attachment_comment;
+            $history->comment = $data->Microbiology_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6264,7 +6274,7 @@ class RiskManagementController extends Controller
         }
         if ($lastCft->RegulatoryAffair_attachment != $request->RegulatoryAffair_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Regulatory Affair Attachment';
 
             // Convert arrays to comma-separated strings
@@ -6272,13 +6282,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->RegulatoryAffair_attachment)
                 : $lastCft->RegulatoryAffair_attachment;
 
-            $currentAttachment = is_array($Cft->RegulatoryAffair_attachment)
-                ? implode(', ', $Cft->RegulatoryAffair_attachment)
-                : $Cft->RegulatoryAffair_attachment;
+            $currentAttachment = is_array($data->RegulatoryAffair_attachment)
+                ? implode(', ', $data->RegulatoryAffair_attachment)
+                : $data->RegulatoryAffair_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->RegulatoryAffair_attachment_comment;
+            $history->comment = $data->RegulatoryAffair_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6451,7 +6461,7 @@ class RiskManagementController extends Controller
 
         if ($lastCft->CorporateQualityAssurance_attachment != $request->CorporateQualityAssurance_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Corporate Quality Assurance Attachment';
 
             // Convert arrays to comma-separated strings
@@ -6459,13 +6469,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->CorporateQualityAssurance_attachment)
                 : $lastCft->CorporateQualityAssurance_attachment;
 
-            $currentAttachment = is_array($Cft->CorporateQualityAssurance_attachment)
-                ? implode(', ', $Cft->CorporateQualityAssurance_attachment)
-                : $Cft->CorporateQualityAssurance_attachment;
+            $currentAttachment = is_array($data->CorporateQualityAssurance_attachment)
+                ? implode(', ', $data->CorporateQualityAssurance_attachment)
+                : $data->CorporateQualityAssurance_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->CorporateQualityAssurance_attachment_comment;
+            $history->comment = $data->CorporateQualityAssurance_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -6628,7 +6638,7 @@ class RiskManagementController extends Controller
         }
         if ($lastCft->Environment_Health_Safety_attachment != $request->Environment_Health_Safety_attachment) {
             $history = new RiskAuditTrail();
-            $history->risk_id = $Cft->id;
+            $history->risk_id = $data->id;
             $history->activity_type = 'Environment Health Safety Attachment';
 
             // Convert arrays to comma-separated strings
@@ -6636,13 +6646,13 @@ class RiskManagementController extends Controller
                 ? implode(', ', $lastCft->Environment_Health_Safety_attachment)
                 : $lastCft->Environment_Health_Safety_attachment;
 
-            $currentAttachment = is_array($Cft->Environment_Health_Safety_attachment)
-                ? implode(', ', $Cft->Environment_Health_Safety_attachment)
-                : $Cft->Environment_Health_Safety_attachment;
+            $currentAttachment = is_array($data->Environment_Health_Safety_attachment)
+                ? implode(', ', $data->Environment_Health_Safety_attachment)
+                : $data->Environment_Health_Safety_attachment;
 
             $history->previous = str_replace(',', ', ', $previousAttachment);
             $history->current = str_replace(',', ', ', $currentAttachment);
-            $history->comment = $Cft->Environment_Health_Safety_attachment_comment;
+            $history->comment = $data->Environment_Health_Safety_attachment_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

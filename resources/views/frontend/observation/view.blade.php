@@ -12,8 +12,10 @@
         header {
             display: none;
         }
+
     </style>
     <style>
+        
         header .header_rcms_bottom {
             display: none;
         }
@@ -747,7 +749,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th style="width: 8%">Sr.No</th>
-                                                            <th style="width: 80%">Observation</th>
+                                                            <th style="width:40%">Observation</th>
+                                                            <th style="width: 40%">Category</th>
                                                             <th style="width: 12%">Action</th>
 
                                                         </tr>
@@ -765,6 +768,15 @@
                                                                             name="observation[{{ $loop->index }}][non_compliance]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                             value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}">
                                                                     </td>
+                                                                    <td>
+                                                                     <select name="observation[{{ $loop->index }}][category]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                      <option value="">Select Category</option>
+                                                                      <option value="major" {{ isset($datas['category']) && $datas['category'] == 'major' ? 'selected' : '' }}>major</option>
+                                                                     <option value="minor" {{ isset($datas['category']) && $datas['category'] == 'minor' ? 'selected' : '' }}>minor</option>
+                                                                     <option value="critical" {{ isset($datas['category']) && $datas['category'] == 'critical' ? 'selected' : '' }}>critical</option>
+                                                                    </select>
+                                                                    </td>
+
                                                                     <td><button type="text"
                                                                             class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
@@ -788,6 +800,13 @@
                                                                     '"></td>' +
                                                                     '<td><input type="text" name="observation[' + serialNumber +
                                                                     '][non_compliance]"></td>' +
+                                                                    '<td><select name="observation[' + serialNumber + '][category]">' +
+                                                                        '<option value="">Select Category</option>' +
+                                                                         '<option value="major">major</option>' +
+                                                                         '<option value="minor">minor</option>' +
+                                                                         '<option value="critical">critical</option>' +
+                                                                    '</select></td>'
+
                                                                     '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                                                                     '</tr>';
@@ -930,10 +949,14 @@
                                                                             name="response[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><input type="text"
-                                                                            name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                            value="{{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}">
-                                                                    </td>
+                                                                    <td>
+    <textarea 
+        name="response[{{ $loop->index }}][response_detail]" 
+        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+        {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}
+    </textarea>
+</td>
+
                                                                     <td><button type="text"
                                                                             class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
@@ -945,39 +968,42 @@
                                             </div>
                                             </div>
 
-
                                             <script>
-                                                    $(document).ready(function() {
-                                                        $('#Details-add8').click(function(e) {
-                                                            function generateTableRow(serialNumber) {
-                                                                var data = @json($grid_Data2);
-                                                                var html = '';
-                                                                html += '<tr>' +
-                                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                                                                    '"></td>' +
-                                                                    '<td><input type="text" name="response[' + serialNumber +
-                                                                    '][response_detail]"></td>' +
-                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                                                   $(document).ready(function() {
+                                                   $('#Details-add8').click(function(e) {
+                                                      function generateTableRow(serialNumber) {
+                                                       var html = '';
 
-                                                                    '</tr>';
+                                                      html += '<tr>' +
+                                                     '<td style="width: 8%; text-align: center;">' + 
+                                                      '<input disabled type="text" name="serial[]" value="' + serialNumber + '" style="width: 100%;">' + 
+                                                      '</td>' +
+                                                      '<td style="width: 70%;">' + 
+                                                      '<textarea name="response[' + serialNumber + '][response_detail]" style="width: 100%; min-height: 50px;"></textarea>' + 
+                                                      '</td>' +
+                                                   '<td style="width: 12%; text-align: left; padding-left: 10px;">' + 
+                                                   '<button type="button" class="removeRowBtn" style="width: auto; padding: 3px 8px; font-size: 14px;">Remove</button>' + 
+                                             '</td>' +
+                                       '</tr>';
 
-                                                                    for (var i = 0; i < data.length; i++) {
-                                                                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-                                                                    }
+                               return html;
+                            }
 
-                                                                html += '</select></td>' +
-                                                                    '</tr>';
+                       var tableBody = $('#Details-table8 tbody');
+                       var rowCount = tableBody.children('tr').length;
+                       var newRow = generateTableRow(rowCount + 1);
+                       tableBody.append(newRow);
+                     });
 
-                                                                return html;
-                                                            }
+    // Remove button functionality
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove(); 
+    });
+});
+</script>
+``
 
-                                                            var tableBody = $('#Details-table8 tbody');
-                                                            var rowCount = tableBody.children('tr').length;
-                                                            var newRow = generateTableRow(rowCount + 1);
-                                                            tableBody.append(newRow);
-                                                        });
-                                                    });
-                                                </script>
+
 
                                         <!-- <div class="col-lg-12 new-date-data-field">
                                             <div class="group-input input-date">
@@ -1195,8 +1221,8 @@
                                                             <th style="width: 20px;">S.No.</th>
                                                             <th>Action</th>
                                                             <th>Responsible</th>
-                                                            <th>Deadline</th>
-                                                            <th>Item Status</th>
+                                                            <th>Target Completion Date</th>
+                                                            <th>Action Status</th>
                                                             <th style="width: 15%">Action</th>
                                                         </tr>
                                                     </thead>
