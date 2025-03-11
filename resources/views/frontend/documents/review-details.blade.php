@@ -1206,7 +1206,7 @@
                         <input type="hidden" name="stage_id" value="Reviewed" />
                     @endif
 
-                    @if ($stagereview)
+                    @if ($stagereview && $document->stage < 10)
                         @if ($stagereview->stage == 'Reviewed')
                             <input type="hidden" name="stage_id" value="Review-Submit" />
                         @endif
@@ -1217,14 +1217,14 @@
                         <input type="hidden" name="stage_id" value="Approved" />
                     @endif
 
-                    @if ($stageapprove)
+                    @if ($stageapprove && $document->stage < 10)
                         @if ($stageapprove->stage == 'Approved')
                             <input type="hidden" name="stage_id" value="Approval-Submit" />
                         @endif
                     @endif
 
                     @if ($document->stage == 10)
-                        <input type="hidden" name="stage_id" value="Effective" />
+                        <input type="hidden" name="stage_id" value="11" />
                     @endif
 
                     @if ($stageEffective)

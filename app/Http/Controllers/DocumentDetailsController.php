@@ -770,7 +770,6 @@ class DocumentDetailsController extends Controller
               }
             }
             if ($request->stage_id == 11) {
-              // dd($request->stage_id == 11);
               $document->effective_date = Carbon::now()->format('Y-m-d');
 
               if ($document->revised == 'Yes') {
@@ -778,7 +777,7 @@ class DocumentDetailsController extends Controller
                   'document_number' => $document->document_number,
                   'status' => 'Effective'
                 ])->first();
-
+                
                 if ($old_document) {
                   $old_document->stage = 12;
                   $old_document->status = 'Obsolete';

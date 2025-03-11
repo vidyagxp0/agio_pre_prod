@@ -227,7 +227,7 @@ class MytaskController extends Controller
         $stageapprove_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
 
         $stageEffective = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Effective")->latest()->first();
-        $stageEffective_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Effective-Submit")->latest()->first();
+        $stageEffective_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage', 10)->latest()->first();
        // $stageapprove = '';
         //$stageapprove_submit = '';
         $hod_reject = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-HOD")->latest()->first();
