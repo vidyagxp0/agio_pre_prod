@@ -447,7 +447,7 @@
                             @if ($document->revised === 'Yes')
                             RMS/00{{ $document->revised_doc }}-0{{ $document->major }}
                             @else
-                             Nill
+                             Nil
                             @endif
                    </span>
                 
@@ -463,6 +463,25 @@
             <tbody>
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">Reference:
+                        <span>
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
+                                @endphp
+
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                        RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @else
+                                        RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @endif
+                            @else
+                                    @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                    RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @else
+                                    RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    @endif
+                            @endif
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -575,16 +594,31 @@
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->cas_no_row_material }}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->molecular_formula_row_material }}</td>
+                            </tr> --}}
+                            <tr> 
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->molecular_formula_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->molecular_weight_row_material }}</td>
+                            </tr> --}}
+
+                            <tr> 
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->molecular_weight_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
                             </tr>
+
+
                             <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Storage Condition
                                 </td>
@@ -628,11 +662,21 @@
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
-                            <tr>
+                            {{-- <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_row_material }}</td>
+                            </tr> --}}
+
+                            <tr> 
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions,warning and precautions</td>
+                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
+                                    {!! strip_tags($data->sampling_instructions_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                </td>
                             </tr>
+
+
+
                         </tbody>
                     </table>
                 </div>
@@ -725,7 +769,7 @@
                     <thead>
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                             <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                         </tr>

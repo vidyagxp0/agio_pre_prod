@@ -441,7 +441,7 @@
                    @if ($document->revised === 'Yes')
                    FPS/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
-                    Nill
+                    Nil
                    @endif
                    </span>
                 
@@ -464,15 +464,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @else
-                                    FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                   FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @else
-                                   FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                   FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @endif
                         @endif
                         </span>
@@ -671,7 +671,7 @@
         <thead>
             <tr>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
-                <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                <th style="border: 1px solid black; font-weight: bold; width:30%">Change Control No.</th>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
                 <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
             </tr>

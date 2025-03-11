@@ -3076,6 +3076,7 @@ class DocumentController extends Controller
                 $document->retest_sample_quantity_row_material = $request->retest_sample_quantity_row_material;
                 $document->sampling_instructions_row_material = $request->sampling_instructions_row_material;
                 $document->rawmaterials_specifications = $request->rawmaterials_specifications;
+                $document->IR_Test = $request->IR_Test;
 
                 //raw material stp
                 $document->product_name_rawmstp = $request->product_name_rawmstp;
@@ -3085,11 +3086,13 @@ class DocumentController extends Controller
                 $document->cvs_specificationGrid = $request->cvs_specificationGrid;
                 $document->ips_specificationGrid = $request->ips_specificationGrid;
 
-               // PIAS
+                // PIAS
                 $document->pia_name = $request->pia_name;
                 $document->pia_name_code = $request->pia_name_code;
+                $document->select_specification = $request->select_specification;
 
-               // Finished Product Specification
+
+                // Finished Product Specification
                 $document->fsproduct_name = $request->fsproduct_name;
                 $document->generic_name = $request->generic_name;
                 $document->brand_name = $request->brand_name;
@@ -5707,17 +5710,17 @@ class DocumentController extends Controller
             $RevisionGridmfpstpData->save();
 
 
-            // $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
-            // $ProductSpecification->document_type_id = $document->id;
-            // $ProductSpecification->identifier = 'ProductSpecification';
-            // $ProductSpecification->data = $request->product;
-            // $ProductSpecification->save();
+            $ProductSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification']);
+            $ProductSpecification->document_type_id = $document->id;
+            $ProductSpecification->identifier = 'ProductSpecification';
+            $ProductSpecification->data = $request->product;
+            $ProductSpecification->save();
 
-            // $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
-            // $MaterialSpecification->document_type_id = $document->id;
-            // $MaterialSpecification->identifier = 'MaterialSpecification';
-            // $MaterialSpecification->data = $request->row_material;
-            // $MaterialSpecification->save();
+            $MaterialSpecification = DocumentGrid::firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification']);
+            $MaterialSpecification->document_type_id = $document->id;
+            $MaterialSpecification->identifier = 'MaterialSpecification';
+            $MaterialSpecification->data = $request->row_material;
+            $MaterialSpecification->save();
 
 
             // $Finished_Product = DocumentGrid :: firstOrNew(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product']);
@@ -6530,10 +6533,10 @@ class DocumentController extends Controller
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'INPS' => 'frontend.documents.inprocess_s-pdf',
+            'IPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RAWMS' => 'frontend.documents.raw_ms-pdf',
-            'PAMS' => 'frontend.documents.package_ms-pdf',
+            'RMS' => 'frontend.documents.raw_ms-pdf',
+            'PMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
@@ -6644,6 +6647,26 @@ class DocumentController extends Controller
             'effective_date' => $document ? $document->effective_date : null
         ]);
     }
+
+    public function getRecordsByType(Request $request)
+    {
+        $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
+        
+        $records = Document::whereIn('document_type_id', $allowedTypes)->get();
+    
+        $formattedRecords = [];
+    
+        foreach ($records as $data) {
+            
+            $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT);
+            $formattedRecords[] = $formattedRecord;
+        }
+    
+        return response()->json($formattedRecords);
+    }
+    
+    
+    
     
 
 
@@ -7028,10 +7051,10 @@ class DocumentController extends Controller
                 'SOP' => 'frontend.documents.pdfpage',
                 'BOM' => 'frontend.documents.bom-pdf',
                 'FPS' => 'frontend.documents.finished-product-pdf',
-                'INPS' => 'frontend.documents.inprocess_s-pdf',
+                'IPS' => 'frontend.documents.inprocess_s-pdf',
                 'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-                'RAWMS' => 'frontend.documents.raw_ms-pdf',
-                'PAMS' => 'frontend.documents.package_ms-pdf',
+                'RMS' => 'frontend.documents.raw_ms-pdf',
+                'PMS' => 'frontend.documents.package_ms-pdf',
                 'PIAS' => 'frontend.documents.product_item-pdf',
                 'MFPS' => 'frontend.documents.mfps-pdf',
                 'MFPSTP' => 'frontend.documents.mfpstp-pdf',
