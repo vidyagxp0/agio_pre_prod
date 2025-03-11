@@ -10959,7 +10959,7 @@
                                      Standard Testing Procedure
                                     <div class="group-input">
                                         <label for="procedure"></label>
-                                        <textarea name="rawmaterials_testing" id="summernote" class="summernote">{{ $document->rawmaterials_testing ? $document->rawmaterials_testing : '' }}</textarea>
+                                        <textarea name="rawmaterials_testing" id="" class="summernote">{{ $document->rawmaterials_testing ? $document->rawmaterials_testing : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
                                             @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                                 @php
