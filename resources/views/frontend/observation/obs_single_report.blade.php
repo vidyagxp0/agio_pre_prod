@@ -325,7 +325,7 @@
                     <table class="table table-bordered" id="Details-table">
                         <thead>
                             <tr class="table_bg">
-                                <th style="width: 8%">Row#</th>
+                                <th style="width: 8%">Sr.No</th>
                                 <th style="width: 80%">Observation</th>
                             </tr>
                         </thead>
@@ -353,8 +353,8 @@
                <div class="border-table">
                  <table>
                      <tr class="table_bg">
-                         <th class="w-20">S.N.</th>
-                         <th class="w-60">File </th>
+                         <th class="w-20">Sr.No</th>
+                         <th class="w-60">Attachment </th>
                      </tr>
                          @if($data->attach_files_gi)
                          @foreach(json_decode($data->attach_files_gi) as $key => $file)
@@ -391,7 +391,7 @@
                     <table class="table table-bordered" id="Details-table">
                         <thead>
                             <tr class="table_bg">
-                                <th style="width: 8%">Row#</th>
+                                <th style="width: 8%">Sr.No</th>
                                 <th style="width: 80%">Response Details</th>
                             </tr>
                         </thead>
@@ -419,7 +419,7 @@
                     <table class="table table-bordered" id="Details-table">
                         <thead>
                             <tr class="table_bg">
-                                <th style="width: 8%">Row#</th>
+                                <th style="width: 8%">Sr.No</th>
                                 <th style="width: 80%">Corrective Actions</th>
                             </tr>
                         </thead>
@@ -449,7 +449,7 @@
                     <table class="table table-bordered" id="Details-table">
                         <thead>
                             <tr class="table_bg">
-                                <th style="width: 8%">Row#</th>
+                                <th style="width: 8%">Sr.No</th>
                                 <th style="width: 80%">Preventive Action </th>
                             </tr>
                         </thead>
@@ -476,11 +476,11 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20" style="width: 25px;">S.No.</th>
+                            <th class="w-20" style="width: 25px;">Sr.No</th>
                             <th class="w-20">Action</th>
                             <th class="w-20">Responsible</th>
-                            <th class="w-20">Deadline</th>
-                            <th class="w-20">Item Status</th>
+                            <th class="w-20">Target Completion Date</th>
+                            <th class="w-20">Action Status</th>
                         </tr>
                         @foreach (unserialize($griddata->action) as $key => $temps)
                             <tr>
@@ -510,6 +510,8 @@
                         Not Applicable
                     @endif
                 </div>
+                <br>
+                
            
             <div class="block-head">
                 Response And CAPA Attachments
@@ -517,8 +519,8 @@
                <div class="border-table">
                  <table>
                      <tr class="table_bg">
-                         <th class="w-20">S.N.</th>
-                         <th class="w-60">File </th>
+                         <th class="w-20">Sr.No</th>
+                         <th class="w-60">Attachment </th>
                      </tr>
                          @if($data->response_capa_attach)
                          @foreach(json_decode($data->response_capa_attach) as $key => $file)
@@ -576,6 +578,7 @@
                         Not Applicable
                     @endif
                 </div>
+                <br>
  
             <div class="block-head">
                 Response Summary
@@ -611,8 +614,8 @@
                <div class="border-table">
                  <table>
                      <tr class="table_bg">
-                         <th class="w-20">S.N.</th>
-                         <th class="w-60">File </th>
+                         <th class="w-20">Sr.No</th>
+                         <th class="w-60">Attachment </th>
                      </tr>
                          @if($data->impact_analysis)
                          @foreach(json_decode($data->impact_analysis) as $key => $file)
@@ -657,8 +660,8 @@
                <div class="border-table">
                  <table>
                      <tr class="table_bg">
-                         <th class="w-20">S.N.</th>
-                         <th class="w-60">File </th>
+                         <th class="w-20">Sr.No</th>
+                         <th class="w-60">Attachment </th>
                      </tr>
                          @if($data->attach_files2)
                          @foreach(json_decode($data->attach_files2) as $key => $file)

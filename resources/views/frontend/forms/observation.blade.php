@@ -8,6 +8,7 @@
         header {
             display: none;
         }
+        
     </style>
 
     <script>
@@ -97,7 +98,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assign_to1">Auditee Department Head</label>
+                                        <label for="assign_to1">Auditee department Head</label>
                                         <select name="assign_to">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
@@ -198,7 +199,7 @@
                                             <input type="text" id="due_date_display" name="due_date" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
                                 
                                             <!-- Editable date input (hidden) -->
-                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -452,15 +453,24 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width: 8%">Sr.No</th>
-                                                    <th style="width: 80%">Observation</th>
+                                                    <th style="width: 40%">Observation</th>
+                                                    <th style="width: 40%">Category</th>
                                                     <th style="width: 12%">Action</th>
-
+                                                         
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="observation[0][serial]"
                                                         value="1"></td>
                                                 <td><input type="text" name="observation[0][non_compliance]"></td>
+                                                <td>
+                                                <select name="observation[0][category]" class="category">
+                                                    <option value="select">Select Category</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="minor">Minor</option>
+                                                     <option value="critical">Critical</option>
+                                                </select>
+                                               </td>  
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
@@ -477,7 +487,16 @@
                                                         '"></td>' +
                                                         '<td><input type="text" name="observation[' + serialNumber +
                                                         '][non_compliance]"></td>' +
+
                                                         '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+
+                                                        '<td><select name="observation[' + serialNumber + '][category]" class="category">' +
+                                                            '<option value="select"></option>' +
+                                                            '<option value="major">Major</option>' +
+                                                            '<option value="minor">Minor</option>' +
+                                                            '<option value="critical">Critical</option>' +
+                                                        '</select></td>' +
+
                                                         '</tr>';
 
                                                     return html;
@@ -537,8 +556,9 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="response[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="response[0][response_detail]"></td>
+                                                        value="1" style="flex-grow: 1; width: 100%;"></td>
+                                                        
+                                                <td><textarea name="response[0][response_detail]" style="flex-grow: 1; width: 100%;"></textarea></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
@@ -553,8 +573,8 @@
                                                     html += '<tr>' +
                                                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                         '"></td>' +
-                                                        '<td><input type="text" name="response[' + serialNumber +
-                                                        '][response_detail]"></td>' +
+                                                        '<td><textarea  name="response[' + serialNumber +
+                                                        '][response_detail]"></textarea></td>' +
                                                         '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                                                         '</tr>';
 
@@ -697,14 +717,14 @@
                                                     <th style="width: 25px;">S.No.</th>
                                                     <th>Action</th>
                                                     <th>Responsible</th>
-                                                    <th>Deadline</th>
-                                                    <th>Item Status</th>
+                                                    <th>Target Completion Date</th>
+                                                    <th>Action Status</th>
                                                     <th style="width: 15%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>Deadline
+                                                </td>
                                                 <td><input type="text" name="action[]"></td>
                                                 {{-- <td><input type="text" name="responsible[]"></td> --}}
                                                 <td> <select id="select-state" placeholder="Select..."

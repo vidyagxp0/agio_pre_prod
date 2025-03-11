@@ -439,7 +439,7 @@
                       <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No</th>
                                 <th class="w-60">Attachment </th>
                             </tr>
                                 @if($data->capa_attachment)
@@ -485,7 +485,7 @@
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-10">Row #</th>
+                                <th class="w-10">Sr.No</th>
                                 <th class="w-20">Product / Material Name</th>
                                 <th class="w-20">Product /Material Batch No./Lot No./AR No.</th>
                                 <th class="w-20">Product / Material Manufacturing Date</th>
@@ -539,7 +539,7 @@
                         <div>
                             <table>
                                 <tr class="table_bg">
-                                    <th class="w-25">Row #</th>
+                                    <th class="w-25">Sr.No</th>
                                     <th class="w-25">Equipment/Instruments Name</th>
                                     <th class="w-25">Equipment/Instrument ID</th>
                                     <th class="w-25">Equipment/Instruments Comments</th>
@@ -608,7 +608,7 @@
                           <div class="border-table">
                             <table>
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No</th>
                                     <th class="w-60">Attachment </th>
                                 </tr>
                                     @if($data->capafileattachement)
@@ -649,7 +649,7 @@
                        <div class="border-table">
                          <table>
                              <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
+                                 <th class="w-20">Sr.No</th>
                                  <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->hod_attachment)
@@ -689,7 +689,7 @@
                        <div class="border-table">
                          <table>
                              <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
+                                 <th class="w-20">Sr.No</th>
                                  <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->qa_attachment)
@@ -728,7 +728,7 @@
                        <div class="border-table">
                          <table>
                              <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
+                                 <th class="w-20">Sr.No</th>
                                  <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->qah_cq_attachment)
@@ -771,7 +771,7 @@
                        <div class="border-table">
                          <table>
                              <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
+                                 <th class="w-20">Sr.No</th>
                                  <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->initiator_capa_attachment)
@@ -811,7 +811,7 @@
                        <div class="border-table">
                          <table>
                              <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
+                                 <th class="w-20">Sr.No</th>
                                  <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->hod_final_attachment)
@@ -852,7 +852,7 @@
                        <div class="border-table">
                          <table>
                              <tr class="table_bg">
-                                 <th class="w-20">S.N.</th>
+                                 <th class="w-20">Sr.No</th>
                                  <th class="w-60">Attachment </th>
                              </tr>
                                  @if($data->qa_closure_attachment)
@@ -909,7 +909,7 @@
                             <div class="border-table">
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No</th>
                                         <th class="w-60">Attachment </th>
                                     </tr>
                                         @if($data->closure_attachment)

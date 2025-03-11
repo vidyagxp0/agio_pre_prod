@@ -383,7 +383,7 @@ Not Applicable
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No</th>
                             <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->file_attach)
@@ -455,7 +455,7 @@ Not Applicable
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No</th>
                         <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->qa_head)
@@ -556,7 +556,7 @@ Not Applicable
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No</th>
                             <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->Support_doc)
@@ -610,7 +610,7 @@ Not Applicable
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No</th>
                         <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->final_attach)
