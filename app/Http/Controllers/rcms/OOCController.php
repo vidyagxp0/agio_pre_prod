@@ -83,9 +83,9 @@ class OOCController extends Controller
 
         $data->Summary_closure = $request->Summary_closure;
         $data->qa_comments_description_ooc = $request->qa_comments_description_ooc;
-        
+
         $data->is_repeat_assingable_ooc = $request->is_repeat_assingable_ooc;
-        
+
         $data->protocol_based_study_hypthesis_study_ooc = $request->protocol_based_study_hypthesis_study_ooc;
         $data->justification_for_protocol_study_hypothesis_study_ooc = $request->justification_for_protocol_study_hypothesis_study_ooc;
         $data->plan_of_protocol_study_hypothesis_study = $request->plan_of_protocol_study_hypothesis_study;
@@ -104,7 +104,7 @@ class OOCController extends Controller
         $data->is_repeat_stageii_ooc = $request->is_repeat_stageii_ooc;
         $data->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
         $data->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
-        
+
         $data->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
         $data->ooc_logged_by = $request->ooc_logged_by;
         $data->qa_assign_person = $request->qa_assign_person;
@@ -114,7 +114,7 @@ class OOCController extends Controller
         $data->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
         $data->initiated_through_stageii_ooc = $request->initiated_through_stageii_ooc;
         $data->justification_for_recalibration = $request->justification_for_recalibration;
-        
+
         $data->is_repeat_reanalysis_stageii_ooc = $request->is_repeat_reanalysis_stageii_ooc;
         $data->initiated_through_stageii_cause_failure_ooc = $request->initiated_through_stageii_cause_failure_ooc;
         $data->is_repeat_capas_ooc = $request->is_repeat_capas_ooc;
@@ -145,7 +145,7 @@ class OOCController extends Controller
         $data->phase_IB_HODREMARKS = $request->phase_IB_HODREMARKS;
         $data->phase_IB_qareviewREMARKS = $request->phase_IB_qareviewREMARKS;
         $data->qPIBaHremarksnewfield = $request->qPIBaHremarksnewfield;
-        
+
         // Handling attachments
         if (!empty($request->initial_attachment_qahead_ooc)) {
             $files = [];
@@ -343,7 +343,7 @@ class OOCController extends Controller
 
         $data->save();
         // dd($data);
-        
+
 
 
         // ====================counter===================//
@@ -501,7 +501,7 @@ class OOCController extends Controller
             $history->save();
         }
 
-         
+
         if(!empty($data->last_calibration_date)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
@@ -552,7 +552,7 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
 
         if(!empty($data->initiated_if_other)) {
             $history = new OOCAuditTrail();
@@ -743,7 +743,7 @@ class OOCController extends Controller
             $history->save();
         }
 
-        
+
         // HOD Attachment
         if(!empty($data->attachments_hod_ooc)) {
             $history = new OOCAuditTrail();
@@ -784,7 +784,7 @@ class OOCController extends Controller
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
             $history->activity_type = 'QA Head Primary Review Attachment';
-            $history->previous = "Null"; 
+            $history->previous = "Null";
             // $history->current = $data->initial_attachment_capa_ooc;
             $history->current = str_replace(',', ', ', $data->initial_attachment_capa_ooc);
             $history->comment = "Null";
@@ -849,7 +849,7 @@ class OOCController extends Controller
             $history->save();
         }
 
-        
+
         if (!empty($data->is_repeat_assingable_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
@@ -883,7 +883,7 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
         if (!empty($data->protocol_based_study_hypthesis_study_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
@@ -918,7 +918,7 @@ class OOCController extends Controller
             $history->save();
         }
 
-        
+
         if (!empty($data->plan_of_protocol_study_hypothesis_study)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
@@ -1055,7 +1055,7 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
         if (!empty($data->additional_remarks_stage_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
@@ -1071,7 +1071,7 @@ class OOCController extends Controller
             $history->change_from = "Initiation";
             $history->action_name = "Create";
             $history->save();
-        } 
+        }
         if (!empty($data->initiated_through_capas_ooc)) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
@@ -1105,7 +1105,7 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
             if (!empty($data->initiated_through_capa_corrective_ooc)) {
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $data->id;
@@ -1122,7 +1122,7 @@ class OOCController extends Controller
                 $history->action_name = "Create";
                 $history->save();
             }
-        
+
             if (!empty($data->phase_ia_investigation_summary)) {
                 $history = new OOCAuditTrail();
                 $history->ooc_id = $data->id;
@@ -1161,7 +1161,7 @@ class OOCController extends Controller
             $history = new OOCAuditTrail();
             $history->ooc_id = $data->id;
             $history->activity_type = 'Phase IA HOD Attachment';
-            $history->previous = "Null"; 
+            $history->previous = "Null";
             // $history->current = json_encode($data->attachments_hodIAHODPRIMARYREVIEW_ooc);
             $history->current = str_replace(',', ', ', $data->attachments_hodIAHODPRIMARYREVIEW_ooc);
             $history->comment = "Not Applicable";
@@ -1605,7 +1605,7 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
+
 
         if(!empty($data->is_repeat_realease_stageii_ooc)) {
             $history = new OOCAuditTrail();
@@ -1658,8 +1658,8 @@ class OOCController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
-        
-        
+
+
         $oocGrid = $data->id;
 
         if (!empty($request->instrumentdetails)) {
@@ -2063,7 +2063,7 @@ class OOCController extends Controller
 
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
         $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
-        
+
         return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution'));
     }
 
@@ -2127,13 +2127,13 @@ class OOCController extends Controller
         $ooc->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
 
         $ooc->assignable_cause_identified = $request->assignable_cause_identified;
-        
-        
+
+
         $ooc->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
         $ooc->initiated_through_stageii_ooc = $request->initiated_through_stageii_ooc;
         $ooc->is_repeat_reanalysis_stageii_ooc = $request->is_repeat_reanalysis_stageii_ooc;
         $ooc->justification_for_recalibration = $request->justification_for_recalibration;
-        
+
         $ooc->initiated_through_stageii_cause_failure_ooc = $request->initiated_through_stageii_cause_failure_ooc;
         $ooc->is_repeat_capas_ooc = $request->is_repeat_capas_ooc;
         $ooc->initiated_through_capas_ooc = $request->initiated_through_capas_ooc;
@@ -2237,7 +2237,7 @@ class OOCController extends Controller
         }
 
 
-        
+
 
 
 
@@ -2449,7 +2449,7 @@ class OOCController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
 
@@ -2471,7 +2471,7 @@ class OOCController extends Controller
             } else {
                 $history->action_name = "Update";
             }
-            
+
             $history->save();
         }
 
@@ -2488,14 +2488,14 @@ class OOCController extends Controller
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
-            
+
             if (is_null($lastDocumentOoc->last_calibration_date) || $lastDocumentOoc->last_calibration_date === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->description_ooc != $ooc->description_ooc) {
@@ -2561,7 +2561,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         // if ($lastDocumentOoc->is_repeat_capas_ooc != $ooc->is_repeat_capas_ooc) {
@@ -2583,7 +2583,7 @@ class OOCController extends Controller
         //         $history->action_name = "Update";
         //     }
         //     $history->save();
-            
+
         // }
 
         if ($lastDocumentOoc->is_repeat_ooc != $ooc->is_repeat_ooc ) {
@@ -2715,7 +2715,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->ooc_due_date != $ooc->ooc_due_date ) {
@@ -2868,7 +2868,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->analysis_remarks_stage_ooc != $ooc->analysis_remarks_stage_ooc) {
@@ -3065,7 +3065,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
 
@@ -3243,7 +3243,7 @@ class OOCController extends Controller
             }
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->initiated_through_capa_prevent_ooc != $ooc->initiated_through_capa_prevent_ooc) {
@@ -3265,7 +3265,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->initiated_through_capa_corrective_ooc != $ooc->initiated_through_capa_corrective_ooc) {
@@ -3287,7 +3287,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->phase_ia_investigation_summary != $ooc->phase_ia_investigation_summary) {
@@ -3313,7 +3313,7 @@ class OOCController extends Controller
             }
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->phase_IA_HODREMARKS != $ooc->phase_IA_HODREMARKS) {
@@ -3390,7 +3390,7 @@ class OOCController extends Controller
 
         if (
             isset($ooc->assignable_cause_identified) &&
-            !empty($ooc->assignable_cause_identified) && 
+            !empty($ooc->assignable_cause_identified) &&
             ($lastDocumentOoc->assignable_cause_identified !== $ooc->assignable_cause_identified)
         ) {
             $history = new OOCAuditTrail();
@@ -3408,7 +3408,7 @@ class OOCController extends Controller
             $history->action_name = is_null($lastDocumentOoc->assignable_cause_identified) ? "New" : "Update";
             $history->save();
         }
-        
+
         if ($lastDocumentOoc->qaHremarksnewfield != $ooc->qaHremarksnewfield) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
@@ -3703,7 +3703,7 @@ class OOCController extends Controller
             }
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->initiated_through_capa_prevent_ooc_IB != $ooc->initiated_through_capa_prevent_ooc_IB) {
@@ -3729,7 +3729,7 @@ class OOCController extends Controller
             }
             }
             $history->save();
-            
+
         }
 
 
@@ -3756,7 +3756,7 @@ class OOCController extends Controller
             }
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->phase_ib_investigation_summary != $ooc->phase_ib_investigation_summary) {
@@ -3778,7 +3778,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->initial_attachment_reanalysisi_ooc != $ooc->initial_attachment_reanalysisi_ooc) {
@@ -3802,7 +3802,7 @@ class OOCController extends Controller
                 $history->action_name = "Update";
             }
             $history->save();
-            
+
         }
 
         if ($lastDocumentOoc->phase_IB_HODREMARKS != $ooc->phase_IB_HODREMARKS) {
@@ -3878,7 +3878,7 @@ class OOCController extends Controller
         }
 
         if (
-            isset($ooc->is_repeat_realease_stageii_ooc) && 
+            isset($ooc->is_repeat_realease_stageii_ooc) &&
             !empty($ooc->is_repeat_realease_stageii_ooc) &&
             ($lastDocumentOoc->is_repeat_realease_stageii_ooc !== $ooc->is_repeat_realease_stageii_ooc)
         ) {
@@ -3894,13 +3894,13 @@ class OOCController extends Controller
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
-        
-            $history->action_name = (is_null($lastDocumentOoc->is_repeat_realease_stageii_ooc) || $lastDocumentOoc->is_repeat_realease_stageii_ooc === '') 
-                                    ? "New" 
+
+            $history->action_name = (is_null($lastDocumentOoc->is_repeat_realease_stageii_ooc) || $lastDocumentOoc->is_repeat_realease_stageii_ooc === '')
+                                    ? "New"
                                     : "Update";
             $history->save();
         }
-        
+
         if ($lastDocumentOoc->qPIBaHremarksnewfield != $ooc->qPIBaHremarksnewfield) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
@@ -4315,8 +4315,8 @@ class OOCController extends Controller
         return str_replace(' ', '_', strtolower($question)) . '_remark';
     }
 
-    
-    
+
+
 
 
     public function OOCStateChange(Request $request, $id)
@@ -4326,7 +4326,7 @@ class OOCController extends Controller
             $lastDocumentOOC = OutOfCalibration::find($id);
 
             if ($oocchange->stage == 1) {
-                
+
                 if (!$oocchange->description_ooc) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
@@ -4334,7 +4334,7 @@ class OOCController extends Controller
                         'message' => 'Short Description is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4344,7 +4344,7 @@ class OOCController extends Controller
                         'type' => 'success',
                     ]);
                 }
-                
+
                 $oocchange->stage = "2";
                 $oocchange->submitted_by = Auth::user()->name;
                 $oocchange->submitted_on = Carbon::now()->format('d-M-Y');
@@ -4396,13 +4396,13 @@ class OOCController extends Controller
                     //     // }
                     // }
 
-                    
+
                 // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'Opened', 'HOD Primary Review', $isInitial);
                 $oocchange->update();
                 toastr()->success('HOD Primary Review');
                 return back();
             }
-            
+
 
             if ($oocchange->stage == 2) {
                 if (!$oocchange->HOD_Remarks) {
@@ -4412,7 +4412,7 @@ class OOCController extends Controller
                         'message' => 'HOD Primary Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4469,7 +4469,7 @@ class OOCController extends Controller
                 //         // }
                 //     }
 
-                
+
                 // $this->saveAuditTrail($id, $lastDocumentOOC, $oocchange, 'HOD Primary Review', 'HOD Primary Review Complete');
                 $oocchange->update();
                 toastr()->success('QA Head Primary Review');
@@ -4477,7 +4477,7 @@ class OOCController extends Controller
             }
 
             if ($oocchange->stage == 3) {
-            
+
                 if (!$oocchange->qaheadremarks) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
@@ -4485,7 +4485,7 @@ class OOCController extends Controller
                         'message' => 'QA Head Primary Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4560,7 +4560,7 @@ class OOCController extends Controller
                         'message' => 'Evaluation Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4635,7 +4635,7 @@ class OOCController extends Controller
                         'message' => 'Phase IA HOD Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4709,7 +4709,7 @@ class OOCController extends Controller
                         'message' => 'Phase IA QA Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4785,7 +4785,7 @@ class OOCController extends Controller
                         'message' => 'P-IA QAH Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4857,7 +4857,7 @@ class OOCController extends Controller
                         'message' => 'Rectification by Service Engineer required and Proposed By is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4875,7 +4875,7 @@ class OOCController extends Controller
                 //         'message' => 'Proposed By is yet to be filled!',
                 //         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                 //     ]);
-            
+
                 //     return redirect()->back();
                 // } else {
                 //     // Flash message for success (when the form is filled correctly)
@@ -4946,7 +4946,7 @@ class OOCController extends Controller
                         'message' => 'Phase IB HOD Primary Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -4955,7 +4955,7 @@ class OOCController extends Controller
                         'message' => 'Sent for Phase IB QA Review',
                         'type' => 'success',
                     ]);
-                }            
+                }
                 $oocchange->stage = "12";
                 $oocchange->Phase_IB_HOD_Review_Completed_BY = Auth::user()->name;
                 $oocchange->Phase_IB_HOD_Review_Completed_ON = Carbon::now()->format('d-M-Y');
@@ -5019,7 +5019,7 @@ class OOCController extends Controller
                         'message' => 'Phase IB QA Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -5028,7 +5028,7 @@ class OOCController extends Controller
                         'message' => 'Sent for P-IB QAH Review',
                         'type' => 'success',
                     ]);
-                }            
+                }
 
                 $oocchange->stage = "13";
                 $oocchange->Phase_IB_QA_Review_Complete_12_by = Auth::user()->name;
@@ -5090,7 +5090,7 @@ class OOCController extends Controller
                         'message' => 'P-IB QAH Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -5099,7 +5099,7 @@ class OOCController extends Controller
                         'message' => 'Sent for Closed Done',
                         'type' => 'success',
                     ]);
-                }            
+                }
                 $oocchange->stage = "14";
                 $oocchange->P_IB_Assignable_Cause_Found_by = Auth::user()->name;
                 $oocchange->P_IB_Assignable_Cause_Found_on = Carbon::now()->format('d-M-Y');
@@ -5150,7 +5150,7 @@ class OOCController extends Controller
                 toastr()->success('Closed Done');
                 return back();
             }
-        
+
 
         } else {
             toastr()->error('E-signature Not match');
@@ -5174,7 +5174,7 @@ class OOCController extends Controller
                         'message' => 'P-IA QAH Remarks is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
-            
+
                     return redirect()->back();
                 } else {
                     // Flash message for success (when the form is filled correctly)
@@ -5198,7 +5198,7 @@ class OOCController extends Controller
                 } else {
                     $history->previous = $lastDocumentOOC->correction_r_completed_by . ' , ' . $lastDocumentOOC->correction_r_completed_on;
                 }
-                
+
                 $history->current = $oocchange->correction_r_completed_by . ' , ' . $oocchange->correction_r_completed_on;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
@@ -5240,7 +5240,7 @@ class OOCController extends Controller
                 return back();
             }
 
-        
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -5253,7 +5253,7 @@ class OOCController extends Controller
             $ooc = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
 
-            if ($ooc->stage == 23) 
+            if ($ooc->stage == 23)
             {
                 $ooc->stage = "4";
                 $ooc->status = "Phase II B QA Review ";
@@ -5290,7 +5290,7 @@ class OOCController extends Controller
             //    {
             //  // if($u->q_m_s_divisions_id == $extensionNew->division_id){
             //     $email = Helpers::getUserEmail($u->user_id);
-            //         if ($email !== null) 
+            //         if ($email !== null)
             //         {
             //             Mail::send(
             //                 'mail.view-mail',
@@ -5815,7 +5815,7 @@ class OOCController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
         }
          else {
             toastr()->error('E-signature Not match');
@@ -5857,13 +5857,13 @@ class OOCController extends Controller
             $ooc = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
             $oocchange = OutOfCalibration::find($id);
-            
+
             $ooc->stage = "0";
             $ooc->status = "Closed - Cancelled";
             $ooc->cancelled_by = Auth::user()->name;
             $ooc->cancelled_on = Carbon::now()->format('d-M-Y');
             $ooc->cancell_comment =$request->comment;
-            
+
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
             $history->activity_type = 'Cancel By  ,   Cancel On';
@@ -5894,7 +5894,7 @@ class OOCController extends Controller
             {
                 // if($u->q_m_s_divisions_id == $extensionNew->division_id){
               $email = Helpers::getUserEmail($u->user_id);
-                    if ($email !== null) 
+                    if ($email !== null)
                     {
                         Mail::send(
                             'mail.view-mail',
@@ -5910,7 +5910,7 @@ class OOCController extends Controller
             $ooc->update();
             toastr()->success('Document Sent');
             return back();
-            
+
 
 
 
@@ -5949,7 +5949,7 @@ class OOCController extends Controller
             return back();
 
 
-           
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -5972,6 +5972,7 @@ class OOCController extends Controller
                $currentDate = Carbon::now();
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
+               $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
 
 
                $formattedDate = $currentDate->addDays(30);
@@ -5999,13 +6000,13 @@ class OOCController extends Controller
 
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $parentRecord = OutOfCalibration::where('id', $id)->value('record');
-                   
+
                    return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data'));
                }
                if ($request->revision == "Root-Cause-Analysis") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-               
+
             }
             if ($request->revision == "Resampling") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -6019,8 +6020,8 @@ class OOCController extends Controller
             $data=OutOfCalibration::find($id);
             $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
-            $countData = $count + 1; 
-            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData'));
+            $countData = $count + 1;
+            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData','parent_division_id',));
 
         }
 
@@ -6045,7 +6046,7 @@ class OOCController extends Controller
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
-               
+
 
 
                $formattedDate = $currentDate->addDays(30);
@@ -6060,7 +6061,7 @@ class OOCController extends Controller
 
             //     $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             //     $parentRecord = OutOfCalibration::where('id', $id)->value('record');
-                
+
 
             //     return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record'));
             // }
@@ -6082,7 +6083,7 @@ class OOCController extends Controller
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $parentRecord = OutOfCalibration::where('id', $id)->value('record');
-                
+
                 return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record','parentRecord','data_record','data'));
 
             }
@@ -6106,9 +6107,9 @@ class OOCController extends Controller
                 $data=OutOfCalibration::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1; 
+                $countData = $count + 1;
                 return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
-    
+
             }
     }
     public function OOCChildExtension(Request $request ,$id)
@@ -6142,9 +6143,9 @@ class OOCController extends Controller
                 $data=OutOfCalibration::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1; 
+                $countData = $count + 1;
                 return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
-    
+
             }
     }
     public function OOCChildAction(Request $request ,$id)
@@ -6178,9 +6179,9 @@ class OOCController extends Controller
                 $data=OutOfCalibration::find($id);
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
-                $countData = $count + 1; 
+                $countData = $count + 1;
                 return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
-    
+
             }
             if ($request->revision == "Action-child") {
                 $parent_due_date = "";
@@ -6225,7 +6226,7 @@ class OOCController extends Controller
             $audit = OOCAuditTrail::where('ooc_id', $id)->paginate(500);
 
             $data = OOCAuditTrail::where('ooc_id', $id)->get();
-           
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.OOC.auditReport', compact('data', 'doc','audit'))
