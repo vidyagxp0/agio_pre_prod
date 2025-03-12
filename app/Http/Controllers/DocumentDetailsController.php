@@ -702,26 +702,29 @@ class DocumentDetailsController extends Controller
               $assignedReviewers = explode(",", $document->reviewers);
               $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
           
-              // Check if all assigned reviewers have provided comments
-              foreach ($assignedReviewers as $reviewerId) {
-                  if (!isset($reviewerComments[$reviewerId]) || empty(trim($reviewerComments[$reviewerId]))) {
-                      Session::flash('swal', [
-                          'type' => 'warning',
-                          'title' => 'Mandatory Fields!',
-                          'message' => 'All assigned reviewers must provide their comments before proceeding.'
-                      ]);
+              $skipValidationTypes = ['SOP', 'BOM', 'FPS', 'INPS', 'CVS', 'RAWMS', 'PAMS', 'PIAS', 'MFPS', 'MFPSTP', 'FPSTP', 'INPSTP', 'CVSTP', 'RMSTP', 'BMR', 'BPR', 'SPEC', 'STP', 'TDS', 'GTP'];
           
-                      return redirect()->back();
+              if (!in_array($document->document_type_id, $skipValidationTypes)) {
+                  // Check if all assigned reviewers have provided comments
+                  foreach ($assignedReviewers as $reviewerId) {
+                      if (!isset($reviewerComments[$reviewerId]) || empty(trim($reviewerComments[$reviewerId]))) {
+                          Session::flash('swal', [
+                              'type' => 'warning',
+                              'title' => 'Mandatory Fields!',
+                              'message' => 'All assigned reviewers must provide their comments before proceeding.'
+                          ]);
+          
+                          return redirect()->back();
+                      }
                   }
               }
           
-              // If all comments are provided, proceed with success message
+              // If all comments are provided OR validation skipped, proceed with success message
               Session::flash('swal', [
                   'type' => 'success',
                   'title' => 'Success',
                   'message' => 'Document Sent'
               ]);
-        
           
             
               $document['stage'] = $request->stage_id;
