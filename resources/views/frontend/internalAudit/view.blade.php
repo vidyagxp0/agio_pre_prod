@@ -2224,7 +2224,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                          />
                                                     <input type="date" id="audit_start_date_checkdate"
-                                                        name="audit_start_date" 
+                                                        name="audit_start_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_start_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
@@ -2240,7 +2240,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                          />
                                                     <input type="date" id="audit_end_date_checkdate"
-                                                        name="audit_end_date" 
+                                                        name="audit_end_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_end_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
@@ -3067,7 +3067,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 </td>
                                                                 <td>
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
-                                                                     <textarea name="observations[{{ $loop->index }}][observation]" {{ $data->stage == 3 ? "required" : 'disabled' }}>{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
+                                                                     <textarea name="observations[{{ $loop->index }}][observation]" {{ $data->stage == 3 ? "required" : 'readonly' }}>{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
                                                                 </td>
                                                                 {{-- <td> --}}
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}"> --}}
@@ -3075,7 +3075,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                                                 {{-- </td> --}}
                                                                 <td>
-                                                                    <select name="observations[{{ $loop->index }}][category]" {{ $data->stage == 3 ? "" : 'disabled' }} class="form-select">
+                                                                    <select name="observations[{{ $loop->index }}][category]" {{ $data->stage == 3 ? "" : 'readonly' }} class="form-select">
                                                                         <option value="">-- Select Category --</option>
                                                                         <option value="Major" {{ isset($item['category']) && $item['category'] == 'Major' ? 'selected' : '' }}>Major</option>
                                                                         <option value="Minor" {{ isset($item['category']) && $item['category'] == 'Minor' ? 'selected' : '' }}>Minor</option>
@@ -3290,12 +3290,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         name="Initial[0][serial_number]" value="1">
                                                                 </td>
                                                                 <td>
-                                                                    {{-- <input type="text" name="Initial[{{ $loop->index }}][observation]"value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
-                                                                    <textarea name="Initial[{{ $loop->index }}][observation]" {{ $data->stage == 4 ? 'required' : 'disabled' }}>{{ isset($item['observation']) ? $item['observation'] : '' }} </textarea>
+                                                                    <textarea name="Initial[{{ $loop->index }}][observation]" {{ $data->stage == 4 ? 'required' : 'readonly' }}>{{ isset($item['observation']) ? $item['observation'] : '' }} </textarea>
                                                                 </td>
                                                                 <td>
                                                                     {{-- <input type="text" name="Initial[{{ $loop->index }}][impact_assesment]" value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}"> --}}
-                                                                    <textarea name="Initial[{{ $loop->index }}][impact_assesment]" {{ $data->stage == 4 ? 'required' : 'disabled' }}>{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}</textarea>
+                                                                    <textarea name="Initial[{{ $loop->index }}][impact_assesment]" {{ $data->stage == 4 ? 'required' : 'readonly' }}>{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}</textarea>
 
                                                                 </td>
                                                                 <td>

@@ -1717,7 +1717,7 @@ class InternalauditController extends Controller
 
     public function update(request $request, $id)
     {
-        
+
        // dd($request->all());
         $lastDocument = InternalAudit::find($id);
         $internalAudit = InternalAudit::find($id);
@@ -1779,8 +1779,8 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         // $internalAudit->refrence_record=implode(',', $request->refrence_record);
-        $internalAudit->refrence_record = is_array($request->refrence_record) 
-    ? implode(',', $request->refrence_record) 
+        $internalAudit->refrence_record = is_array($request->refrence_record)
+    ? implode(',', $request->refrence_record)
     : $request->refrence_record;
         $internalAudit->severity_level_form= $request->severity_level_form;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
@@ -3860,7 +3860,7 @@ if ($areIniAttachmentsSame2 != true) {
                 ->where('previous', $previousAttachments2) // Match the previous value
                 ->where('current', $internalAudit->file_attachment_guideline) // Match the current value
                 ->exists();
-        
+
             // Prepare the new history entry
             $history = new InternalAuditTrial;
             $history->InternalAudit_id = $id;
@@ -3874,18 +3874,18 @@ if ($areIniAttachmentsSame2 != true) {
             $history->origin_state = $lastDocument->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocument->status;
-        
+
             // Determine if it's a new entry or an update
             if ($lastDocumentAuditTrail) {
                 $history->action_name = "Update"; // Entry exists, treat as an update
             } else {
                 $history->action_name = "New"; // No similar entry, treat as new
             }
-        
+
             // Save the history record
             $history->save();
         }
-        
+
                 $previousAttachments4 = $lastDocument->report_file;
                 $areIniAttachmentsSame4 = $previousAttachments4 == $internalAudit->report_file;
 
@@ -4522,7 +4522,7 @@ if ($areIniAttachmentsSame2 != true) {
         $internalAuditComments->save();
 
 
-        
+
 
         // Fetch the existing record from the database based on the incident ID
             $data3 = InternalAuditGrid::where('audit_id', $internalAudit->id)
@@ -4559,7 +4559,7 @@ if ($areIniAttachmentsSame2 != true) {
                 $data3->auditee = implode(',', $request->auditee); // Save as a comma-separated string
             }
 
-            
+
             if (!empty($request->remark)) {
                 $data3->remark = serialize($request->remark);
             }
@@ -4814,7 +4814,7 @@ if ($areIniAttachmentsSame2 != true) {
         $grid_Data5 = InternalAuditObservationGrid::where(['io_id' => $internal_id, 'identifier' => 'Initial'])->firstOrCreate();
         $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
 
-        
+
         $auditAgendaData =InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
         $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
 
@@ -5025,6 +5025,25 @@ if ($areIniAttachmentsSame2 != true) {
             }
 
             if ($changeControl->stage == 3) {
+                if ((empty($changeControl->checklists) || empty($changeControl->Comments))
+                && (!isset($changeControl->auditAgendaData) || empty($changeControl->auditAgendaData['auditArea'])))
+                            {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Audit Preparation and Execution Tab and Audit Observation Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed -Done'
+                    ]);
+                }
+
                 $changeControl->stage = "4";
                 $changeControl->status = " Response";
                 $changeControl->audit_mgr_more_info_reqd_by = Auth::user()->name;
@@ -5078,6 +5097,24 @@ if ($areIniAttachmentsSame2 != true) {
                 return back();
             }
             if ($changeControl->stage == 4) {
+
+                if (!isset($changeControl->Initial) || empty($changeControl->Initial['observation']))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Response  Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed -Done'
+                    ]);
+                }
                 $changeControl->stage = "5";
                 $changeControl->status = "Response Verification";
                 $changeControl->audit_observation_submitted_by = Auth::user()->name;
@@ -5113,6 +5150,24 @@ if ($areIniAttachmentsSame2 != true) {
             }
 
             if ($changeControl->stage == 5) {
+
+                if (empty($changeControl->res_ver ))
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'Response Verification Tab is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Closed -Done'
+                    ]);
+                }
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
                 $changeControl->audit_lead_more_info_reqd_by = Auth::user()->name;
@@ -5716,8 +5771,8 @@ if ($areIniAttachmentsSame2 != true) {
         $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->first();
         $json = $auditAgendaData ? json_decode($auditAgendaData->data, true) : [];
 
-      
-        
+
+
         if (!empty($json)) {
             // Check if keys exist before unserializing
             $json['area_of_audit'] = isset($json['area_of_audit']) ? unserialize($json['area_of_audit']) : null;
@@ -5730,8 +5785,8 @@ if ($areIniAttachmentsSame2 != true) {
             $json['remark'] = isset($json['remark']) ? unserialize($json['remark']) : null;
         }
 
-      
-        
+
+
 
 
         if (!empty($data)) {
