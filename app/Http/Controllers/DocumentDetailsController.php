@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Session;
 
 class DocumentDetailsController extends Controller
 {
@@ -698,6 +699,31 @@ class DocumentDetailsController extends Controller
               }
             }
             if ($request->stage_id == 6) {
+              $assignedReviewers = explode(",", $document->reviewers);
+              $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
+          
+              // Check if all assigned reviewers have provided comments
+              foreach ($assignedReviewers as $reviewerId) {
+                  if (!isset($reviewerComments[$reviewerId]) || empty(trim($reviewerComments[$reviewerId]))) {
+                      Session::flash('swal', [
+                          'type' => 'warning',
+                          'title' => 'Mandatory Fields!',
+                          'message' => 'All assigned reviewers must provide their comments before proceeding.'
+                      ]);
+          
+                      return redirect()->back();
+                  }
+              }
+          
+              // If all comments are provided, proceed with success message
+              Session::flash('swal', [
+                  'type' => 'success',
+                  'title' => 'Success',
+                  'message' => 'Document Sent'
+              ]);
+        
+          
+            
               $document['stage'] = $request->stage_id;
               $document['status'] = Stage::where('id', $request->stage_id)->value('name');
               $document->update();
