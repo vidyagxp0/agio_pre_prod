@@ -206,20 +206,21 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initiator Department </th>
-                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Department Code</th>
-                        <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
+                        <th class="w-20">Auditee Department Head</th>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Auditee Department Head</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
-
+                        <th class="w-20">Initiator Department </th>
+                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiator Department Code</th>
+                        <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-30">
@@ -524,6 +525,60 @@
                         </div>
                     </td>
                 </tr>
+            </table>
+            <div class="block">
+                <div class="block">
+                    <div class="block-head">
+                        Audit Agenda
+                    </div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S No.</th>
+                                <th>Area of Audit</th>
+                                <th>Start Date</th>
+                                <th>Start Time</th>
+                                <th>End Date</th>
+                                <th>End Time</th>
+                                <th>Auditor</th>
+                                <th>Auditee</th>
+                                <th>Remark</th>
+                            </tr>
+
+                            @if (!empty($json) && is_array($json))
+                            @php $srNo = 1; @endphp
+                            @foreach ($json as $row)
+                            @if (is_array($row)) {{-- Ensure it's a valid row --}}
+                            <tr>
+                                <td>{{ $srNo++ }}</td>
+                                <td>{{ $row['auditArea'] ?? 'N/A' }}</td>
+                                <td>{{ $row['scheduleStartDate'] ?? 'N/A' }}</td>
+                                <td>{{ $row['scheduleStartTime'] ?? 'N/A' }}</td>
+                                <td>{{ $row['scheduleEndDate'] ?? 'N/A' }}</td>
+                                <td>{{ $row['scheduleEndTime'] ?? 'N/A' }}</td>
+                                <td>{{ $row['auditors'] ?? 'N/A' }}</td>
+                                <td>{{ $row['auditee'] ?? 'N/A' }}</td>
+                                <td>{{ $row['auditComment'] ?? 'N/A' }}</td>
+                            </tr>
+                            @endif
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="9" style="text-align: center;">No Data Available</td>
+                            </tr>
+                            @endif
+                        </table>
+                    </div>
+                    <table>
+
+                        <tr style="display: none;">
+                            <th class="w-20">Checklists</th>
+                            <td class="w-80"> @if($data->checklistss){{ $data->checklistss }}@else Not Applicable @endif</td>
+                        </tr>
+                    </table>
+
+            <table>
 
                 <tr>
                     <th class="w-20">Audit Comments</th>
@@ -541,50 +596,7 @@
 
 
 
-    <div class="block">
-        <div class="block">
-            <div class="block-head">
-                Audit Agenda
-            </div>
 
-            <div class="border-table">
-                <table>
-                    <tr class="table_bg">
-                        <th class="w-20">S No.</th>
-                        <th>Area of Audit</th>
-                        <th>Start Date</th>
-                        <th>Start Time</th>
-                        <th>End Date</th>
-                        <th>End Time</th>
-                        <th>Auditor</th>
-                        <th>Auditee</th>
-                        <th>Remark</th>
-                    </tr>
-
-                    @if (!empty($json) && is_array($json))
-                    @php $srNo = 1; @endphp
-                    @foreach ($json as $row)
-                    @if (is_array($row)) {{-- Ensure it's a valid row --}}
-                    <tr>
-                        <td>{{ $srNo++ }}</td>
-                        <td>{{ $row['auditArea'] ?? 'N/A' }}</td>
-                        <td>{{ $row['scheduleStartDate'] ?? 'N/A' }}</td>
-                        <td>{{ $row['scheduleStartTime'] ?? 'N/A' }}</td>
-                        <td>{{ $row['scheduleEndDate'] ?? 'N/A' }}</td>
-                        <td>{{ $row['scheduleEndTime'] ?? 'N/A' }}</td>
-                        <td>{{ $row['auditors'] ?? 'N/A' }}</td>
-                        <td>{{ $row['auditee'] ?? 'N/A' }}</td>
-                        <td>{{ $row['auditComment'] ?? 'N/A' }}</td>
-                    </tr>
-                    @endif
-                    @endforeach
-                    @else
-                    <tr>
-                        <td colspan="9" style="text-align: center;">No Data Available</td>
-                    </tr>
-                    @endif
-                </table>
-            </div>
 
 
 
@@ -696,7 +708,8 @@
     ];
     @endphp
 
-    @if(!empty($data))
+
+    @if(!empty($data)  && in_array('1', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -802,7 +815,7 @@
     "Current version of SOP's is available in respective areas?",
     ];
     @endphp
-    @if(!empty($checklist3))
+    @if(!empty($checklist3) && in_array('4', explode(',', $data->checklists)))
 
     <div class="inner-block">
         <div class="content-table">
@@ -929,7 +942,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist1))
+    @if(!empty($checklist1) && in_array('2', explode(',', $data->checklists)))
 
 
     <div class="inner-block">
@@ -1059,7 +1072,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist2))
+    @if(!empty($checklist2) && in_array('3', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1194,7 +1207,7 @@
     // 'Is there any area cleaning record available for all individual areas?',
     // 'Current version of SOPs available in respective areas?'];
     @endphp
-    @if(!empty($checklist4))
+    @if(!empty($checklist4) && in_array('5', explode(',', $data->checklists)) )
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1325,7 +1338,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist5))
+    @if(!empty($checklist5) && in_array('7', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1466,7 +1479,7 @@
 
 
     @endphp
-    @if(!empty($checklist6))
+    @if(!empty($checklist6) && in_array('6', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1578,7 +1591,7 @@
 
 
     @endphp
-    @if(!empty($checklist7))
+    @if(!empty($checklist7) && in_array('8', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1695,7 +1708,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist9))
+    @if(!empty($checklist9) && in_array('9', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1878,7 +1891,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist10))
+    @if(!empty($checklist10) && in_array('10', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -1978,7 +1991,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist11))
+    @if(!empty($checklist11) && in_array('11', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2083,12 +2096,13 @@
     ];
     @endphp
 
-    @if(!empty($checklist12))
+    @if(!empty($checklist12) && in_array('12', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
             <div class="block-head">
-                Checklist - Stores
+                {{-- Checklist - Stores --}}
+                Checklist - Human Resource and Administration
             </div>
             <div>
                 @php
@@ -2228,7 +2242,7 @@
     'Current version of SOP’s is available in respective areas?',
     ];
     @endphp
-    @if(!empty($checklist13))
+    @if(!empty($checklist13) && in_array('13', explode(',', $data->checklists)) )
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2368,7 +2382,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist14))
+    @if(!empty($checklist14) && in_array('14', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2512,7 +2526,7 @@
                                                                 <div class="content-table">
                                                                 <!-- <div class="border-table"> -->
                                                                     <div class="block-head">
-                                                                        Checklist - Production (Powder Manufacturing and Packing)   
+                                                                        Checklist - Production (Powder Manufacturing and Packing)
 
                                                                     </div>
                                                                     <div>
@@ -2528,13 +2542,13 @@
                                                                                         'questions' => $questions_packing_manufacturing,
                                                                                         'prefix' => 2
                                                                                 ],
-                                                                                
-                                    
-                                                                                
-                                                            
+
+
+
+
                                                                             ];
                                                                         @endphp
-                                                            
+
                                                                         @foreach ($checklists as $checklist)
                                                                             <div class="block" style="color: #4274da; display: inline-block; border-bottom: 1px solid #4274da;">
                                                                                 {{ $checklist['title'] }}
@@ -2580,7 +2594,7 @@
     <!-- </div> -->
     </div>
     </div> --}}
-    @if(!empty($checklist15))
+    @if(!empty($checklist15) && in_array('15', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2690,7 +2704,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist16))
+    @if(!empty($checklist16) && in_array('16', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <!-- <div class="border-table"> -->
@@ -2788,7 +2802,7 @@
     ];
     @endphp
 
-    @if(!empty($checklist17))
+    @if(!empty($checklist17) && in_array('17', explode(',', $data->checklists)))
     <div class="inner-block">
         <div class="content-table">
             <div class="block-head">
@@ -2853,6 +2867,40 @@
         </div>
         <!-- </div> -->
     </div>
+
+    <table>
+
+        <tr>
+            <th class="w-20">Final Comments</th>
+            <td class="w-80"> @if($data->tablet_compress_response_final_comment){{ $data->tablet_compress_response_final_comment }}@else Not Applicable @endif</td>
+        </tr>
+    </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->supproting_attachment)
+        @foreach(json_decode($data->supproting_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     </div>
     @endif
 
@@ -2951,21 +2999,11 @@
                             @if($data->refrence_record){{ Helpers::getDivisionName( $data->refrence_record )}}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif
                     </td>
                 </tr>
-                <tr>
-                    <th class="w-20">Audit Comments
-                    </th>
-                    <td class="w-80">
-                        <div>
-                            @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
-                        </div>
-                    </td>
-                </tr>
-
             </table>
 
             <div class="block">
                 <div class="block-head">
-                    Initial Response
+                     Response
                 </div>
 
                 <div class="border-table">
@@ -3006,6 +3044,9 @@
             </div>
 
 
+
+
+
             <!-- <tr>
 
                             <th class="w-20">Due Date Extension Justification</th>
@@ -3044,7 +3085,7 @@
             </div>
             <div class="border-table">
                 <div class="block-head">
-                    Audit Attachments
+                    Audit Response Attachments
                 </div>
                 <table>
 
@@ -3067,6 +3108,19 @@
                     @endif
                 </table>
             </div>
+            <table>
+                <tr>
+                    <th class="w-20">Audit Response Comment
+
+                    </th>
+                    <td class="w-80">
+                        <div>
+                            @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
         </div>
         <div class="block">
             <div class="block-head">

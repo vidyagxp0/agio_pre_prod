@@ -1778,7 +1778,10 @@ class InternalauditController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->refrence_record=implode(',', $request->refrence_record);
+        // $internalAudit->refrence_record=implode(',', $request->refrence_record);
+        $internalAudit->refrence_record = is_array($request->refrence_record) 
+    ? implode(',', $request->refrence_record) 
+    : $request->refrence_record;
         $internalAudit->severity_level_form= $request->severity_level_form;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;

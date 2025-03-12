@@ -447,7 +447,7 @@
                       {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button> --}}
                       <button class="cctablinks" onclick="openCity(event, 'CCForm25')">Audit Observation</button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Pending Response</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Response</button>
                       <button class="cctablinks" onclick="openCity(event, 'CCForm26')">Response Verification</button>
                                          <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
@@ -512,9 +512,9 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Auditee Department Head <span class="text-danger"></span>
+                                            Auditee Department Head <span class="text-danger">*</span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -554,13 +554,13 @@
 
                                   <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span> </label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
-                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date_display" name="due_date" placeholder="DD-MMM-YYYY"  required/>
 
                                             <!-- Editable date input (hidden) -->
-                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" value="{{ date('Y-m-d') }}" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" required
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
@@ -694,11 +694,10 @@
                                         </select>
                                     </div>
                                 </div> --}}
-                                {{-- intitaor department auto generated  --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -731,7 +730,7 @@
                                                 "Human Resource": "HR",
                                                 "Banking": "BNK",
                                                 "Marketing": "MRKT",
-
+                                                
                                             };
 
                                             // Get the Initiator Department input
@@ -749,7 +748,6 @@
                                             }
                                         });
                                     </script>
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Department  Code">Initiator Department  Code</label>
@@ -776,8 +774,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Auditee department Name</label>
-                                        <select name="auditee_department">
+                                        <label for="Initiator Group">Auditee department Name <span class="text-danger">*</span> </label>
+                                        <select name="auditee_department" required >
                                             <option value="">Select Department</option>
                                             <option value="CQA">Corporate Quality Assurance</option>
                                             <option value="QA">Quality Assurance</option>
@@ -2379,7 +2377,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
-                                            Initial Response<button type="button" name="audit-agenda-grid"
+                                            Response<button type="button" name="audit-agenda-grid"
                                                 id="internalaudit-initial" disabled>+</button>
                                         </label>
                                         <table class="table table-bordered" id="internalaudit-initialtable">
@@ -2448,7 +2446,7 @@
                                                                 <input type="date"
                                                                     name="Initial[0][closure_date]"
                                                                     id="closure_date_input"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                     class="hide-input"
                                                                     onchange="handleDateInput(this, 'closure_date'); updateEndDateMin('closure_date_input', 'End_date__input')" />
                                                             </div>
@@ -2467,7 +2465,7 @@
                                                                 <input type="date"
                                                                     name="Initial[0][Actual_date]"
                                                                     id="Actual_date_input"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                     class="hide-input"
                                                                     onchange="handleDateInput(this, 'Actual_date'); updateEndDateMin('Actual_date_input', 'End_date__input')" />
                                                             </div>
@@ -2500,7 +2498,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Audit Attachments</label>
+                                        <label for="Audit  Response Attachments">Audit  Response Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input type="file" id="myfile" name="myfile[]" multiple> --}}
@@ -2521,7 +2519,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Comments">Audit Comments</label>
+                                        <label for="Audit  Response Comment">Audit  Response Comment</label>
                                         <textarea name="Audit_Comments2" disabled></textarea>
                                     </div>
                                 </div>
@@ -22521,7 +22519,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    STAGE 1 : POWEDER MFG & FILLING
+                                    STAGE 1 : Powder Manufacturing and Packing
                                 </div>
 
                                 <div class="col-12">

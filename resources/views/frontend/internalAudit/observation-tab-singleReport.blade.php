@@ -161,11 +161,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Single Report
+                   Audit Observation Report
                 </td>
-                <td class="w-30">
+                <td class="w-10">
                     <div class="logo">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrea9eMhBk2x4bUAwSzPRHm49lrqzVodbT6g&s" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -189,7 +189,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Internal Audit Observation Tab
+                    Audit Observation Report Tab
                 </div>
 
                 <div style="font-weight: 200">Internal Audit (Observations/Discrepancy)</div>
