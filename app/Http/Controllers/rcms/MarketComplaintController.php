@@ -60,10 +60,10 @@ class MarketComplaintController extends Controller
         // Manually assigning each field from the request
         $marketComplaint->initiator_id = Auth::user()->id;
         $marketComplaint->division_id = $request->division_id;
-        $marketComplaint->initiator_group = $request->initiator_group;
+        $marketComplaint->initiator_group = $request->Initiator_Group;
         $marketComplaint->intiation_date = $request->intiation_date;
         $marketComplaint->due_date_gi = $request->due_date_gi;
-        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
+        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code;
         $marketComplaint->record = ((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->if_other_gi = $request->if_other_gi;

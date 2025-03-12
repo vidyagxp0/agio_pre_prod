@@ -611,7 +611,7 @@
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Complaint Acknowledgement</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Head Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Investigation </button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Investigation CAPA And Root Cause Analysis</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CFT Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Verification by QA/CQA</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">QA/CQA Head Approval</button>
@@ -657,7 +657,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Division Code"><b>Division Code </b></label>
+                                    <label for="Division Code"><b>Site / Location </b></label>
                                     <input disabled type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName($data->division_id) }}">
                                     <input type="hidden" name="division_id" value="{{ $data->division_id }}">
@@ -827,7 +827,7 @@
 
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Initiator Department</b></label>
                                     <select name="initiator_group"
@@ -892,15 +892,35 @@
                                 @error('initiator_group')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>
+                            </div> --}}
+
                             <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator"><b>Initiator Department</b></label>
+                                    <input disabled type="text" name="Initiator_Group" id="initiator_group"
+                                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                    <input type="text" name="initiator_group_code"
+                                        value="{{ $data->initiator_group_code_gi }}" id="initiator_group_code"
+                                        readonly>
+                                    {{-- <div class="default-name"> <span
+                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                </div>
+                            </div>
+
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Department Code</label>
                                     <input type="text" name="initiator_group_code_gi"
                                         value="{{ $data->initiator_group_code_gi }}" id="initiator_group_code_gi"
                                         readonly>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
@@ -1069,7 +1089,7 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Complaint</label>
+                                    <label for="Initiator Group">Complainant</label>
                                     <input type="text"
                                         name="complainant_gi"{{ $data->stage == 1 ? '' : 'readonly' }}
                                         value="{{ $data->complainant_gi }}">
@@ -1119,8 +1139,7 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Details Of Nature Market Complaint">Details Of Nature Market
-                                        Complaint</label>
+                                    <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote"
@@ -1146,7 +1165,7 @@
                                     <table class="table table-bordered" id="ProductsDetails" style="width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th style="width: 100px;">Row #</th>
+                                                <th style="width: 100px;">Sr. No.</th>
                                                 <th>Product Name</th>
                                                 <th>Batch No.</th>
                                                 <th>Mfg. Date</th>
@@ -1186,7 +1205,7 @@
                                                                             id="text_date_{{ $index }}_info_mfg_date"
                                                                             type="text"
                                                                             name="serial_number_gi[{{ $index }}][info_mfg_date]"
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                             placeholder="DD-MMM-YYYY"
                                                                             value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
                                                                             readonly
@@ -1194,7 +1213,7 @@
                                                                         <input type="date"
                                                                             {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             name="serial_number_gi[{{ $index }}][info_mfg_date]"
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                             value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
                                                                             id="date_{{ $index }}_info_mfg_date"
                                                                             class="hide-input show_date"
@@ -1373,7 +1392,7 @@
                                         <table class="table table-bordered" id="traceblity" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Product Name</th>
                                                     <th>Batch No.</th>
                                                     <th>Manufacturing Location</th>
@@ -1655,7 +1674,7 @@
                                 </textarea>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Report Review (Final Review shall be done after QA Verification)
@@ -1671,7 +1690,7 @@
                                         <table class="table table-bordered" id="team_members_details" style="width: %;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Names</th>
                                                     <th>Designation</th>
                                                     <th>Department</th>
@@ -1759,7 +1778,7 @@
                                                     {{-- @else
                                                 <tr>
                                                     <td colspan="9">No product details found</td>
-                                                </tr> --}}
+                                                </tr>
                                                 @endif
 
 
@@ -1767,10 +1786,10 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
-                            <script>
+                            {{-- <script>
                                 function showDatePicker(dateInputId) {
                                     document.getElementById(dateInputId).click();
                                 }
@@ -1784,9 +1803,9 @@
                                     }).replace(/ /g, '-');
                                     document.getElementById(displayInputId).value = formattedDate;
                                 }
-                            </script>
+                            </script> --}}
 
-                            <script>
+                            {{-- <script>
                                 $(document).ready(function() {
                                     let indexTeam = {{ !empty($team_members) && is_array($team_members->data) ? count($team_members->data) : 0 }};
 
@@ -1823,10 +1842,10 @@
                                         tableBody.append(newRow);
                                     });
                                 });
-                            </script>
+                            </script> --}}
 
 
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Report Approval by Head QA/CQA (Final Approval shall be done after QA Verification)
@@ -1843,7 +1862,7 @@
                                             style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Names</th>
                                                     <th>Designation</th>
                                                     <th>Department</th>
@@ -1922,11 +1941,11 @@
                                         </table>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
 
-                            <script>
+                            {{-- <script>
                                 function showDatePicker(dateInputId) {
                                     document.getElementById(dateInputId).click();
                                 }
@@ -2000,7 +2019,7 @@
                                         textInput.value = '';
                                     }
                                 }
-                            </script>
+                            </script> --}}
 
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
@@ -2062,7 +2081,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product/Material Details
+                                        Product Details
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -2075,7 +2094,7 @@
                                         <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Product Name</th>
                                                     <th>Batch No.</th>
                                                     <th>Mfg. Date</th>
@@ -2116,7 +2135,7 @@
                                                                                 id="text_date_{{ $index }}_mfg_date_pmd_ca"
                                                                                 type="text"
                                                                                 name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                                 placeholder="DD-MMM-YYYY"
                                                                                 value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
                                                                                 readonly
@@ -2125,7 +2144,7 @@
                                                                             <input type="date"
                                                                                 {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                                 name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                                 value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
                                                                                 id="date_{{ $index }}_mfg_date_pmd_ca"
                                                                                 class="hide-input show_date"
@@ -3192,7 +3211,7 @@
                                         <table class="table table-bordered" id="Investing_team" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Name</th>
                                                     <th>Department</th>
                                                     <th>Remarks</th>
@@ -3530,7 +3549,7 @@
                                             style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Possibility</th>
                                                     <th>Facts/Controls</th>
                                                     <th>Probable Cause</th>
