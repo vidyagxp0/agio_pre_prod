@@ -533,30 +533,96 @@
             }
     </style> --}}
 
-<style>
+    <style>
+        
+        /*Main Table Styling */
         #isPasted {
-            width: 100% !important;
+            width: 690px !important;
             border-collapse: collapse;
-            table-layout: fixed; /* Fix table layout to maintain structure */
+            table-layout: fixed;
         }
 
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
         #isPasted th,
         #isPasted td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
+            max-width: 500px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
-        /* Table wrapper for scrolling */
-        .table-containers {
-            width: 100%;
-            overflow-x: auto; /* Enable horsizontal scrolling */
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
-     
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
 
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
     </style>
 
 </head>
@@ -638,11 +704,11 @@
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Effective Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
                     @if ($data->training_required == 'yes')
-                        @if ($data->stage >= 10)
+                        @if ($data->stage >= 11)
                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                         @endif
                     @else
-                        @if ($data->stage > 7)
+                        @if ($data->stage > 10)
                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                         @endif
                     @endif
@@ -660,7 +726,12 @@
                         {{ Helpers::getFullDepartmentName($data->department_id) }}</td>
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Next Review Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
-                        {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
+                        {{-- {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }} --}}
+                        @if($data->stage == 11)
+                            {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
+                        @else
+                            
+                        @endif
                     </td>
                 </tr>
                 <tr>
@@ -672,9 +743,9 @@
                                 ->value('typecode');
                         @endphp
                         @if ($document->revised === 'Yes')
-                        {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
+                        {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                         @else
-                        Nill
+                        Nil
                         @endif
                     </td>
                 </tr>

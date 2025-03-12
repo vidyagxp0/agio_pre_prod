@@ -502,7 +502,7 @@
                         @if ($document->revised === 'Yes')
                         {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
-                        Nill
+                        Nil
                         @endif
                         </span>
                     </td>

@@ -53,6 +53,10 @@ class StageSeeder extends Seeder
         $stage->save();
 
         $stage = new Stage();
+        $stage->name = "In-Effective";
+        $stage->save();
+
+        $stage = new Stage();
         $stage->name = "Effective";
         $stage->save();
 

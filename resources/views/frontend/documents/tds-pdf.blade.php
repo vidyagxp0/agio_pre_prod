@@ -473,8 +473,8 @@
         /*Main Table Styling */
         #isPasted {
             width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         /* First column adjusts to its content */
@@ -529,7 +529,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 690px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
@@ -926,6 +926,36 @@
                         </tr>
                     </table>
                 </div>
+
+                    @if($data->tds_name_code === 'RW' )
+                        <div class="other-container ">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">
+                                            <div class="bold">Individual Identification Test By IR:</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
+                            <div class="custom-procedure-block">
+                                <div class="custom-container">
+                                    <div class="custom-table-wrapper" id="custom-table2">
+                                        <div class="custom-procedure-content">
+                                            <div class="custom-content-wrapper">
+                                                <div class="table-containers">
+                                                    {!! strip_tags($data->IR_Test, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+            
+                        </div>
+                    @endif
+
+
 
                 <div class="other-container">
                     <table>

@@ -283,7 +283,7 @@
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <!-- Tabs that should be hidden initially -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
-                <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
+                <button class="tablinks hidden-tabs" data-id="IPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
                 <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'doc_CVS')">Cleaning Validation Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
@@ -302,10 +302,10 @@
                 <button class="tablinks hidden-tabs" data-id="PACKVALIREPORT" onclick="openData(event, 'doc-PacValRep')">Packing Validation Report</button>
                 <button class="tablinks hidden-tabs" data-id="FOCONITOGENPROTOCOL" onclick="openData(event, 'doc-FoCoANGsP')">Format For Compressed Air And Nitrogen Gas System Protocol</button>
 
-                <button class="tablinks hidden-tabs" data-id="RAWMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
+                <button class="tablinks hidden-tabs" data-id="RMS" onclick="openData(event, 'doc-rawms')">Raw Material Specification</button>
 
                 <button class="tablinks hidden-tabs" data-id="RMSTP" onclick="openData(event, 'doc_rmstp')">Raw Material Standard Testing Procedure</button>
-                <button class="tablinks hidden-tabs" data-id="PAMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
+                <button class="tablinks hidden-tabs" data-id="PMS" onclick="openData(event, 'doc_pams')">Packing Material Specification</button>
                 <button class="tablinks hidden-tabs" data-id="PROVALIPROTOCOL" onclick="openData(event, 'doc_prvp')">Process Validation Protocol</button>
 
                 <button class="tablinks hidden-tabs" data-id="PIAS" onclick="openData(event, 'doc_pias')">Product / Item Information-Addendum Specification</button>
@@ -7785,7 +7785,7 @@
                                                     <tr>
                                                         <th style="width:5%">Sr. No.</th>
                                                         <th class="">Revision No.</th>
-                                                        <th class="">Change Control No./ DCRF No</th>
+                                                        <th class="">Change Control No.</th>
                                                         <th class="">Effective Date</th>
                                                         <th class="">Reason of revision</th>
                                                     </tr>
@@ -9113,7 +9113,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="comments">TDS Code</label>
+                                        <label for="comments">TDS Type</label>
                                         <select name="tds_name_code" id="">
                                             <option value="">Select here</option>
                                             <option value="FP">Finished Product</option>

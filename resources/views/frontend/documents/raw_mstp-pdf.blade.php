@@ -444,7 +444,7 @@
                    @if ($document->revised === 'Yes')
                    RMSTP/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
-                    Nill
+                    Nil
                    @endif
                    </span>
                 
@@ -577,7 +577,7 @@
                     <thead style="width:20%">
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:60%">Reason of revision</th>
 

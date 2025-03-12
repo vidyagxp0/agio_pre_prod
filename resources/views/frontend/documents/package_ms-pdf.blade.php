@@ -125,13 +125,14 @@
             left: 0;
             width: 100%;
             z-index: 1000;
+            margin-bottom:100px;
             /* height: 60px; */
 
         }
 
         body {
-            margin-top: 250px;
-            margin-bottom: 180px;
+            margin-top: 260px;
+            margin-bottom: 170px;
             /* padding-top: 30px;
             padding-bottom: 50px;  */
         }
@@ -380,7 +381,7 @@
         <table class="border border-top-none" style="width: 100%;">
             <tbody>
                 <tr>
-                    <td>
+                    <td style="font-size: 14px;">
                         @if(!empty( $document->packing_material_name))
                           {{ $document->packing_material_name }}
                         @else
@@ -449,7 +450,7 @@
                         @if ($document->revised === 'Yes')
                         PMS/00{{ $document->revised_doc }}-0{{ $document->major }}
                         @else
-                         Nill
+                         Nil
                         @endif
                     </span> 
                 
@@ -552,7 +553,6 @@
                     </tr> 
                 </tbody>
             </table>
-
 
             <span>
                 Format No.: QA/097/F7-00 
@@ -707,7 +707,7 @@
                     <thead>
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                             <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                         </tr>

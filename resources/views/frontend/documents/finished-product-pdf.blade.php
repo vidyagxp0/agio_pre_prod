@@ -259,14 +259,12 @@
 
     <style>
         
-        /*Main Table Styling */
         #isPasted {
             width: 690px !important;
         border-collapse: collapse;
         table-layout: fixed;
         }
 
-        /* First column adjusts to its content */
         #isPasted td:first-child,
         #isPasted th:first-child {
             white-space: nowrap; 
@@ -274,7 +272,6 @@
             vertical-align: top;
         }
 
-        /* Second column takes remaining space */
         #isPasted td:last-child,
         #isPasted th:last-child {
             width: auto;
@@ -282,7 +279,6 @@
 
         }
 
-        /* Common Table Cell Styling */
         #isPasted th,
         #isPasted td {
             border: 1px solid #000 !important;
@@ -293,7 +289,6 @@
             overflow-wrap: break-word;
         }
 
-        /* Paragraph Styling Inside Table Cells */
         #isPasted td > p {
             text-align: justify;
             text-justify: inter-word;
@@ -304,22 +299,21 @@
         }
 
         #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-            height: 100%; /* Maintain image aspect ratio */
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
+            max-width: 500px !important;
+            height: 100%;
+            display: block;
+            margin: 5px auto;
         }
 
-        /* If you want larger images */
         #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            max-width: 400px !important;
             height: 300px;
             margin: 5px auto;
         }
 
         .table-containers {
-            width: 550px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
+            width: 610px;
+            overflow-x: fixed;
         }
 
     
@@ -447,7 +441,7 @@
                    @if ($document->revised === 'Yes')
                    FPS/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
-                    Nill
+                    Nil
                    @endif
                    </span>
                 
@@ -470,15 +464,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @else
-                                    FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                   FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @else
-                                   FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                   FPSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
                                 @endif
                         @endif
                         </span>
@@ -638,8 +632,6 @@
     </section>
 </div>
 
-
-
     <div class="other-container ">
         <table>
             <thead>
@@ -655,11 +647,6 @@
                 <div class="custom-table-wrapper" id="custom-table2">
                     <div class="custom-procedure-content">
                         <div class="custom-content-wrapper">
-                            {{-- @if ($data->document_content)
-                                {!! strip_tags($data->document_content->tds_result, 
-                                '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                            @endif --}}
-
                             <div class="table-containers">
                                 {!! strip_tags($data->fps_specificationGrid, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                             </div>
@@ -684,7 +671,7 @@
         <thead>
             <tr>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
-                <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                <th style="border: 1px solid black; font-weight: bold; width:30%">Change Control No.</th>
                 <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
                 <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
             </tr>
@@ -705,17 +692,8 @@
                         <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
                     </tr>
                 @endif
-
-
-
         </tbody>
     </table>
-
-
-
-
-
-
 
     <script type="text/php">
         if (isset($pdf)) {
