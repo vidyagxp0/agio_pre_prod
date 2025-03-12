@@ -2610,7 +2610,7 @@
                                                     <th style="width: 5%;">Sr. No.</th>
                                                     <th style="width: 40%;">Requirements</th>
                                                     <th style="width: 10%;">Yes/No</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion</th>
+                                                    {{-- <th style="width: 20%;">Expected date of investigation completion</th> --}}
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
@@ -2654,12 +2654,12 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr1"
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr2"
@@ -2686,12 +2686,12 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc1"
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc2"
@@ -2718,12 +2718,12 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs1"
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs2"
@@ -2750,12 +2750,12 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm1"
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm2"
@@ -2782,12 +2782,12 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth1"
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth2"
@@ -2800,6 +2800,7 @@
                                     </div>
                                 </div>
                             </div>
+
 
                             <script>
                                 function toggleInputs(radioName, textarea1, textarea2) {
@@ -2827,6 +2828,27 @@
                             </script>
 
 
+                    {{-- <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="due_date">Expected date of investigation completion</label>
+                            <div class="calenderauditee">
+                                @php
+                                    $Date = isset($data->Expecteddate_of_investigation_completion)
+                                        ? new \DateTime($data->Expecteddate_of_investigation_completion)
+                                        : null;
+                                @endphp
+                                <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
+                                    value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
+
+                                <input type="date" name="Expecteddate_of_investigation_completion" id="Expecteddate_of_investigation_completion" class="hide-input"
+                                    value="{{ $data->Expecteddate_of_investigation_completion ?? '' }}"
+                                    oninput="handleDateInput(this, 'due_date_display')"
+                                    {{ $data->stage == 1 ? '' : 'readonly' }} />
+
+
+                            </div>
+                        </div>
+                    </div> --}}
 
                             {{-- <div class="col-12">
                                 <div class="group-input">
@@ -3184,7 +3206,8 @@
                                 {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/GeneralInformationComplaint_report',$data->id) }}">Report
+                            </a> </button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
