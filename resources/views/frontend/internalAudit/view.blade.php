@@ -957,7 +957,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Initiator Department</b></label>
-                                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
                                         </div>
@@ -1190,10 +1190,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 <label for="Audit Start Date">Scheduled audit date <span class="text-danger">*</span> </label>
                                                 {{-- <input type="date" name="audit_start_date"> --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MM-YYYY"  {{ $data->stage == 3 ? 'required' : 'disabled' }}/>
+                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MM-YYYY"  {{ $data->stage == 1 ? 'required' : 'disabled' }}/>
                                                     <input type="date" name="sch_audit_start_date" id="sch_audit_start_date" value="{{ $data->sch_audit_start_date }}"
                                                         class="hide-input" {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                        oninput="handleDateInput(this, 'sch_audit_start_date')" {{ $data->stage == 3 ? 'required' : 'disabled' }}  />
+                                                        oninput="handleDateInput(this, 'sch_audit_start_date')"   />
                                                 </div>
                                             </div>
                                         </div>
@@ -1252,7 +1252,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         </td>
 
                                                                         {{-- <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td> --}}
-                                                                       
+
                                                                        <td>
                                                                          <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][regulatoryagency]" @if ($data->stage != 1) disabled @endif>
                                                                             <option value="">-Select a value-</option>
@@ -2224,7 +2224,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                          />
                                                     <input type="date" id="audit_start_date_checkdate"
-                                                        name="audit_start_date" required
+                                                        name="audit_start_date" 
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_start_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
@@ -2240,7 +2240,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                          />
                                                     <input type="date" id="audit_end_date_checkdate"
-                                                        name="audit_end_date" required
+                                                        name="audit_end_date" 
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_end_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
