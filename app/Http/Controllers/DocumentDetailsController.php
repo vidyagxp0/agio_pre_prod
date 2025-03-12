@@ -53,7 +53,6 @@ class DocumentDetailsController extends Controller
 
   function sendforstagechanage(Request $request)
   {
-
     if ($request->username == Auth::user()->email) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
@@ -64,7 +63,7 @@ class DocumentDetailsController extends Controller
         // $fullPermission = UserRole::where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])->get();
         // $fullPermissionIds = $fullPermission->pluck('q_m_s_roles_id')->toArray();
 
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 6 || $request->stage_id == 8 || $request->stage_id == 11) {
+        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 6 || $request->stage_id == 8 || $request->stage_id == 10 || $request->stage_id == 12) {
 
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
@@ -630,7 +629,7 @@ class DocumentDetailsController extends Controller
           }
         }
 
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 10 || $request->stage_id == 11) {
+        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 10 || $request->stage_id == 11 || $request->stage_id == 12) {
 
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
@@ -768,6 +767,7 @@ class DocumentDetailsController extends Controller
                 }
               }
             }
+
             if ($request->stage_id == 11) {
               $document->effective_date = Carbon::now()->format('Y-m-d');
 

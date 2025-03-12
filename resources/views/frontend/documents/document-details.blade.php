@@ -206,7 +206,7 @@
                             </div>
                             <div class="status">
                                 <div class="head">Current Status</div>
-                                @if ($document->stage < 13)
+                                @if ($document->stage < 14)
                                     <div class="progress-bars">
                                         @if($document->document_type_id == 'SOP')
                                             @if ($document->stage >= 1)
@@ -266,7 +266,7 @@
                                             @else
                                                 <div class="">In-Effective</div>
                                             @endif
-                                            @if ($document->stage == 11)
+                                            @if ($document->stage >= 11)
                                                 <div class="active">Effective</div>
                                             @else
                                                 <div class="">Effective</div>
@@ -332,7 +332,7 @@
                                             @else
                                                 <div class="">In-Effective</div>
                                             @endif
-                                            @if ($document->stage == 11)
+                                            @if ($document->stage >= 11)
                                                 <div class="active">Effective</div>
                                             @else
                                                 <div class="">Effective</div>
@@ -1521,22 +1521,22 @@
                         @if ($document->stage == 9)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
+                        {{-- @if ($document->stage == 10)
                             <input type="hidden" name="stage_id" value="11" />
-                        @endif
+                        @endif --}}
                         @if ($document->stage == 11)
-                            <input type="hidden" name="stage_id" value="13" />
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                         
                     @else
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
+                        {{-- @if ($document->stage == 10)
                             <input type="hidden" name="stage_id" value="11" />
-                        @endif
+                        @endif --}}
                         @if ($document->stage == 11)
-                            <input type="hidden" name="stage_id" value="13" />
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                     @endif
                 
@@ -1559,15 +1559,21 @@
                         @if ($document->stage == 9)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
+                        {{-- @if ($document->stage == 10)
                             <input type="hidden" name="stage_id" value="13" />
+                        @endif --}}
+                        @if ($document->stage == 11)
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                     @else
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
-                            <input type="hidden" name="stage_id" value="13" />
+                        {{-- @if ($document->stage == 10)
+                            <input type="hidden" name="stage_id" value="11" />
+                        @endif --}}
+                        @if ($document->stage == 11)
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                     @endif
                 

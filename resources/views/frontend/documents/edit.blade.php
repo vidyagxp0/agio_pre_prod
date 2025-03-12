@@ -3184,12 +3184,23 @@
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td>
-                                                       <select name="revision_history[{{ $key }}][revision_number]">
-                                                            <option value="">Select Revision</option>
-                                                            @foreach($revisedSopNumbers as $revision)
-                                                                <option value="{{ $revision }}" 
-                                                                    {{ isset($gtp_data['revision_number']) && $gtp_data['revision_number'] == $revision ? 'selected' : '' }}>
-                                                                    {{ $revision }}
+
+                                                        <select name="revision_history[{{ $key }}][revision_number]">
+
+                                                        <option value="" selected>Select Revision Number</option>
+
+                                                            @php
+                                                                $revisions = ['00'];
+                                                                if ($document->revised === 'Yes') {
+                                                                    for ($i = 1; $i <= $document->revised_doc; $i++) {
+                                                                        $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+                                                                    }
+                                                                }
+                                                            @endphp
+
+                                                            @foreach ($revisions as $rev)
+                                                                <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
+                                                                   {{ $rev }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
