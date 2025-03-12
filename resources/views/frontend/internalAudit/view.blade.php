@@ -259,8 +259,34 @@ document.addEventListener("DOMContentLoaded", function () {
                                 html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                             }
                             html += '</select></td>'+
-                        '<td><input type="text" name="AuditorNew[' + investdetails +
-                        '][regulatoryagency]" value=""></td>' +
+                        // '<td><input type="text" name="AuditorNew[' + investdetails +
+                        // '][regulatoryagency]" value=""></td>' +
+                        '<td>' +
+                '<select name="AuditorNew[' + investdetails + '][regulatoryagency]" class="form-select">' +
+                '<option value="">Select a value</option>' +
+                '<option value="Corporate Quality Assurance">Corporate Quality Assurance</option>' +
+                '<option value="Quality Assurance">Quality Assurance</option>' +
+                '<option value="Quality Control">Quality Control</option>' +
+                '<option value="Quality Control (Microbiology department)">Quality Control (Microbiology department)</option>' +
+                '<option value="Production General">Production General</option>' +
+                '<option value="Production Liquid Orals">Production Liquid Orals</option>' +
+                '<option value="Production Tablet and Powder">Production Tablet and Powder</option>' +
+                '<option value="Production External (Ointment, Gels, Creams and Liquid)">Production External (Ointment, Gels, Creams and Liquid)</option>' +
+                '<option value="Production Capsules">Production Capsules</option>' +
+                '<option value="Production Injectable">Production Injectable</option>' +
+                '<option value="Engineering">Engineering</option>' +
+                '<option value="Human Resource">Human Resource</option>' +
+                '<option value="Store">Store</option>' +
+                '<option value="Electronic Data Processing">Electronic Data Processing</option>' +
+                '<option value="Formulation Development">Formulation Development</option>' +
+                '<option value="Analytical Research and Development Laboratory">Analytical Research and Development Laboratory</option>' +
+                '<option value="Packaging Development">Packaging Development</option>' +
+                '<option value="Purchase Department">Purchase Department</option>' +
+                '<option value="Document Cell">Document Cell</option>' +
+                '<option value="Regulatory Affairs">Regulatory Affairs</option>' +
+                '<option value="Pharmacovigilance">Pharmacovigilance</option>' +
+                '</select>' +
+                '</td>' +
                         '<td>' +
                         '<select name="AuditorNew[' + investdetails +
                         '][designation]" class="form-select">' +
@@ -930,12 +956,30 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiation Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                                {{-- <div class="default-name"> <span
+                                                id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-6">
+                                            <div class="group-input">
                                                 <label for="Initiator Department  Code">Initiator Department Code</label>
                                                 <input type="text"
                                                     name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                   readonly  value="{{ $data->initiator_group_code }}" id="initiator_group_code">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
@@ -1207,8 +1251,43 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         @endif
                                                                         </td>
 
-                                                                        <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td>
-
+                                                                        {{-- <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td> --}}
+                                                                       
+                                                                       <td>
+                                                                         <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][regulatoryagency]" @if ($data->stage != 1) disabled @endif>
+                                                                            <option value="">-Select a value-</option>
+                                                                            @php
+                                                                                $options = [
+                                                                                    "Corporate Quality Assurance",
+                                                                                    "Quality Assurance",
+                                                                                    "Quality Control",
+                                                                                    "Quality Control (Microbiology department)",
+                                                                                    "Production General",
+                                                                                    "Production Liquid Orals",
+                                                                                    "Production Tablet and Powder",
+                                                                                    "Production External (Ointment, Gels, Creams and Liquid)",
+                                                                                    "Production Capsules",
+                                                                                    "Production Injectable",
+                                                                                    "Engineering",
+                                                                                    "Human Resource",
+                                                                                    "Store",
+                                                                                    "Electronic Data Processing",
+                                                                                    "Formulation Development",
+                                                                                    "Analytical Research and Development Laboratory",
+                                                                                    "Packaging Development",
+                                                                                    "Purchase Department",
+                                                                                    "Document Cell",
+                                                                                    "Regulatory Affairs",
+                                                                                    "Pharmacovigilance"
+                                                                                ];
+                                                                            @endphp
+                                                                            @foreach ($options as $option)
+                                                                                <option value="{{ $option }}" {{ isset($audditor['regulatoryagency']) && $audditor['regulatoryagency'] == $option ? 'selected' : '' }}>
+                                                                                    {{ $option }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                       </td>
                                                                         <td>
                                                                             <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select"@if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">--Select--</option>
@@ -1379,8 +1458,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div> --}}
                                         <div class="col-md-12">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Auditor Comment
-                                                    @if ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew'])
+                                                <label for="Production Tablet feedback">Lead Auditor Comment
+                                                    @if ($data->stage == 2)
                                                         <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
