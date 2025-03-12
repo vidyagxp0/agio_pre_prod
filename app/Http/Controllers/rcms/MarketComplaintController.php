@@ -100,6 +100,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->review_of_Batch_Packing_record_bpr_gi = $request->review_of_Batch_Packing_record_bpr_gi;
         $marketComplaint->review_of_packing_materials_used_in_batch_packing_gi = $request->review_of_packing_materials_used_in_batch_packing_gi;
         $marketComplaint->review_of_analytical_data_gi = $request->review_of_analytical_data_gi;
+        $marketComplaint->Expecteddate_of_investigation_completion = $request->Expecteddate_of_investigation_completion;
+        $marketComplaint->review_of_complaint_sample_if = $request->review_of_complaint_sample_if;
         $marketComplaint->review_of_training_record_of_concern_persons_gi = $request->review_of_training_record_of_concern_persons_gi;
         $marketComplaint->rev_eq_inst_qual_calib_record_gi = $request->rev_eq_inst_qual_calib_record_gi;
         $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi = $request->review_of_equipment_break_down_and_maintainance_record_gi;
@@ -1348,6 +1350,38 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+        if (!empty($marketComplaint->Expecteddate_of_investigation_completion)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Expected Date of Investigation Completion';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->Expecteddate_of_investigation_completion;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->review_of_complaint_sample_if)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of Complaint Sample (if applicable)';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->review_of_complaint_sample_if;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
 
         if (!empty($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
             $history = new MarketComplaintAuditTrial();
@@ -2430,6 +2464,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->review_of_Batch_Packing_record_bpr_gi = $request->review_of_Batch_Packing_record_bpr_gi;
         $marketComplaint->review_of_packing_materials_used_in_batch_packing_gi = $request->review_of_packing_materials_used_in_batch_packing_gi;
         $marketComplaint->review_of_analytical_data_gi = $request->review_of_analytical_data_gi;
+        $marketComplaint->Expecteddate_of_investigation_completion = $request->Expecteddate_of_investigation_completion;
+        $marketComplaint->review_of_complaint_sample_if = $request->review_of_complaint_sample_if;
         $marketComplaint->review_of_training_record_of_concern_persons_gi = $request->review_of_training_record_of_concern_persons_gi;
         $marketComplaint->rev_eq_inst_qual_calib_record_gi = $request->rev_eq_inst_qual_calib_record_gi;
         $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi = $request->review_of_equipment_break_down_and_maintainance_record_gi;
@@ -3554,6 +3590,46 @@ class MarketComplaintController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
             if (is_null($lastmarketComplaint->review_of_analytical_data_gi)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastmarketComplaint->Expecteddate_of_investigation_completion != $marketComplaint->Expecteddate_of_investigation_completion) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Expected Date of Investigation Completion';
+            $history->previous = $lastmarketComplaint->Expecteddate_of_investigation_completion;
+            $history->current = $marketComplaint->Expecteddate_of_investigation_completion;
+            $history->comment = $request->Expecteddate_of_investigation_completion_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+            if (is_null($lastmarketComplaint->Expecteddate_of_investigation_completion)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastmarketComplaint->review_of_complaint_sample_if != $marketComplaint->review_of_complaint_sample_if) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of Complaint Sample (if applicable)';
+            $history->previous = $lastmarketComplaint->review_of_complaint_sample_if;
+            $history->current = $marketComplaint->review_of_complaint_sample_if;
+            $history->comment = $request->review_of_complaint_sample_if_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+            if (is_null($lastmarketComplaint->review_of_complaint_sample_if)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

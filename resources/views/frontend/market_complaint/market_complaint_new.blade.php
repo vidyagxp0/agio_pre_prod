@@ -2089,7 +2089,7 @@
                                                     <th style="width: 5%;">Sr. No.</th>
                                                     <th style="width: 40%;">Requirements</th>
                                                     <th style="width: 10%;">Yes/No</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion</th>
+                                                    {{-- <th style="width: 20%;">Expected date of investigation completion</th> --}}
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
@@ -2127,11 +2127,11 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2151,11 +2151,11 @@
                                                                 onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2175,11 +2175,11 @@
                                                                 onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2199,11 +2199,11 @@
                                                                 onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2223,11 +2223,11 @@
                                                                 onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2266,7 +2266,18 @@
                                 });
                             </script>
 
-
+<div class="col-lg-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="Scheduled Start Date">Expected Date of Investigation Completion</label>
+        <div class="calenderauditee">
+            <input type="text" id="Expecteddate_of_investigation_completion" readonly placeholder="DD-MMM-YYYY"
+                value="" />
+            <input type="date" id="due_date_checkdate" value="" name="Expecteddate_of_investigation_completion"
+                min="" class="hide-input"
+                oninput="handleDateInput(this, 'Expecteddate_of_investigation_completion');" />
+        </div>
+    </div>
+</div>
                             {{-- <div class="sub-head">
                                 Proposal to accomplish investigation:
                             </div>

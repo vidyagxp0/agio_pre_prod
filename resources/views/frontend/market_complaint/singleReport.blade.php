@@ -785,7 +785,7 @@
                                 <th style="width: 5%;">Sr. No.</th>
                                 <th style="width: 40%;">Requirements</th>
                                 <th style="width: 10%;">Yes/No</th>
-                                <th style="width: 20%;">Expected Date of Investigation Completion</th>
+                                {{-- <th style="width: 20%;">Expected Date of Investigation Completion</th> --}}
                                 <th>Remarks</th>
                             </tr>
                         </thead>
@@ -794,35 +794,35 @@
                                 <td class="text-center">1</td>
                                 <td>Complaint Sample Required</td>
                                 <td>{{ $proposalData['Complaint sample Required']['csr3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td>
+                                {{-- <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Complaint sample Required']['csr2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">2</td>
                                 <td>Additional Info. From Complaint</td>
                                 <td>{{ $proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td>
+                                {{-- <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">3</td>
                                 <td>Analysis of Complaint Sample</td>
                                 <td>{{ $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td>
+                                {{-- <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">4</td>
                                 <td>QRM Approach</td>
                                 <td>{{ $proposalData['QRM Approach']['qrm3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td>
+                                {{-- <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['QRM Approach']['qrm2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">5</td>
                                 <td>Others</td>
                                 <td>{{ $proposalData['Others']['oth3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td>
+                                {{-- <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Others']['oth2'] ?? 'N/A' }}</td>
                             </tr>
                         </tbody>
@@ -830,6 +830,14 @@
 
                 </div>
 
+                <table>
+                    <tr>
+                        <th class="w-20">Expected Date of Investigation Completion</th>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->Expecteddate_of_investigation_completion) ?? 'Not Applicable' }}</td>
+                        {{-- <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td> --}}
+                    </tr>
+                </table>
 
 
 
@@ -1109,6 +1117,10 @@
                     <tr>
                         <th class="w-20">Review Of Analytical Data</th>
                         <td class="w-80">{!! $data->review_of_analytical_data_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Review of Complaint Sample (if applicable)</th>
+                        <td class="w-80">{!! $data->review_of_complaint_sample_if ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Review Of Training Record Of Concern Persons</th>

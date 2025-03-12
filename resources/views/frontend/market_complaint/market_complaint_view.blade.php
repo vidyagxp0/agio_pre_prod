@@ -2828,27 +2828,57 @@
                             </script>
 
 
-                    {{-- <div class="col-lg-6 new-date-data-field">
-                        <div class="group-input input-date">
-                            <label for="due_date">Expected date of investigation completion</label>
-                            <div class="calenderauditee">
-                                @php
-                                    $Date = isset($data->Expecteddate_of_investigation_completion)
-                                        ? new \DateTime($data->Expecteddate_of_investigation_completion)
-                                        : null;
-                                @endphp
-                                <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"
-                                    value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
-
-                                <input type="date" name="Expecteddate_of_investigation_completion" id="Expecteddate_of_investigation_completion" class="hide-input"
-                                    value="{{ $data->Expecteddate_of_investigation_completion ?? '' }}"
-                                    oninput="handleDateInput(this, 'due_date_display')"
-                                    {{ $data->stage == 1 ? '' : 'readonly' }} />
 
 
-                            </div>
-                        </div>
-                    </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due_date">Expected Date of Investigation Completion</label>
+                                        <div class="calenderauditee">
+                                            @php
+                                                $DateExpectdate = isset($data->Expecteddate_of_investigation_completion)
+                                                    ? new \DateTime($data->Expecteddate_of_investigation_completion)
+                                                    : null;
+                                            @endphp
+                                            {{-- Format the date as desired --}}
+                                            <input type="text" id="due_date_display_expected" placeholder="DD-MMM-YYYY"
+                                                value="{{ $DateExpectdate ? $DateExpectdate->format('d-M-Y') : '' }}" readonly />
+
+                                            <input type="date" name="Expecteddate_of_investigation_completion" id="Expecteddate_of_investigation_completion" class="hide-input"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="{{ $data->Expecteddate_of_investigation_completion ?? '' }}"
+                                                oninput="handleDateInput(this, 'due_date_display_expected')"
+                                                {{ $data->stage == 1 ? '' : 'readonly' }} />
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    function handleDateInput(input, displayId) {
+                                        var display = document.getElementById(displayId);
+                                        var date = new Date(input.value);
+                                        var options = {
+                                            day: '2-digit',
+                                            month: 'short', // Change 'short' instead of 'Short'
+                                            year: 'numeric'
+                                        };
+                                        var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        display.value = formattedDate;
+                                    }
+                                </script>
+
+
+                                <style>
+                                    .hide-input{
+                                        display: none;
+                                    }
+                                </style>
+
+
+
+                            
+
 
                             {{-- <div class="col-12">
                                 <div class="group-input">
@@ -3448,6 +3478,18 @@
                                     </div>
                                 @endif
                             </div>
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Review of Complaint Sample (if applicable)">Review of Complaint Sample (if applicable)</label>
+                                    <div>
+                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                    </div>
+                                    <textarea class="summernote" name="review_of_complaint_sample_if" id="summernote-1"
+                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_complaint_sample_if }}</textarea>
+                                </div>
+                            </div>
+                            
 
                             <div class="col-md-12 mb-3">
                                 @if ($data->stage == 3)
