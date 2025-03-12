@@ -62,10 +62,10 @@ class ManagementReviewController extends Controller
             toastr()->error("Short description is required");
             return redirect()->back();
         }
-         if (!$request->initiator_Group) {
-            toastr()->error("Initiator Department is required");
-            return redirect()->back();
-        }
+        //  if (!$request->initiator_Group) {
+        //     toastr()->error("Initiator Department is required");
+        //     return redirect()->back();
+        // }
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
         // $management->assign_to = 1;//$request->assign_to;
@@ -1134,15 +1134,6 @@ class ManagementReviewController extends Controller
         if (!empty($request->department)) {
             $data3->department = serialize($request->department);
         }
-        if (!empty($request->meeting_Attended)) {
-            $data3->meeting_Attended = serialize($request->meeting_Attended);
-        }
-        if (!empty($request->designee_Name)) {
-            $data3->designee_Name = serialize($request->designee_Name);
-        }
-        if (!empty($request->designee_Department)) {
-            $data3->designee_Department = serialize($request->designee_Department);
-        }
         if (!empty($request->remarks)) {
             $data3->remarks = serialize($request->remarks);
         }
@@ -1151,9 +1142,6 @@ class ManagementReviewController extends Controller
             'invited_Person' => 'Invited Person	',
             'designee' => 'Designation',
             'department' => 'Department',
-            'meeting_Attended' => 'Meeting Attended	',
-            'designee_Name' => 'Designee Name	',
-            'designee_Department' => 'Designee Department/Designation	',
             'remarks' => 'Remarks'
         ];
 
@@ -1163,9 +1151,6 @@ class ManagementReviewController extends Controller
                 'invited_Person' => null,
                 'designee' => null,
                 'department' => null,
-                'meeting_Attended' => null,
-                'designee_Name' => null,
-                'designee_Department' => null,
                 'remarks' => null
             ];
 
@@ -1174,9 +1159,6 @@ class ManagementReviewController extends Controller
                 'invited_Person' => $invited_Person,
                 'designee' => $request->designee[$index],
                 'department' => $request->department[$index],
-                'meeting_Attended' => $request->meeting_Attended[$index],
-                'designee_Name' => $request->designee_Name[$index],
-                'designee_Department' => $request->designee_Department[$index],
                 'remarks' => $request->remarks[$index],
             ];
 
@@ -8277,9 +8259,6 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             'invited_Person' => !is_null($data3->invited_Person) ? unserialize($data3->invited_Person) : null,
             'designee' => !is_null($data3->designee) ? unserialize($data3->designee) : null,
             'department' => !is_null($data3->department) ? unserialize($data3->department) : null,
-            'meeting_Attended' => !is_null($data3->meeting_Attended) ? unserialize($data3->meeting_Attended) : null,
-            'designee_Name' => !is_null($data3->designee_Name) ? unserialize($data3->designee_Name) : null,
-            'designee_Department' => !is_null($data3->designee_Department) ? unserialize($data3->designee_Department) : null,
             'remarks' => !is_null($data3->remarks) ? unserialize($data3->remarks) : null,
         ];
         $data3->review_id = $management->id;
@@ -8293,15 +8272,9 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         if (!empty($request->department)) {
             $data3->department = serialize($request->department);
         }
-        if (!empty($request->meeting_Attended)) {
-            $data3->meeting_Attended = serialize($request->meeting_Attended);
-        }
-        if (!empty($request->designee_Name)) {
-            $data3->designee_Name = serialize($request->designee_Name);
-        }
-        if (!empty($request->designee_Department)) {
-            $data3->designee_Department = serialize($request->designee_Department);
-        }
+
+
+
         if (!empty($request->remarks)) {
             $data3->remarks = serialize($request->remarks);
         }
@@ -8311,9 +8284,6 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
             'invited_Person' => 'Invited Person',
             'designee' => 'Designation',
             'department' => 'Department',
-            'meeting_Attended' => 'Meeting Attended',
-            'designee_Name' => 'Designee Name',
-            'designee_Department' => 'Designee Department/Designation',
             'remarks' => 'Remarks'
         ];
 
@@ -8325,9 +8295,6 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                     'invited_Person' => $previousDetails['invited_Person'][$index] ?? null,
                     'designee' => $previousDetails['designee'][$index] ?? null,
                     'department' => $previousDetails['department'][$index] ?? null,
-                    'meeting_Attended' => $previousDetails['meeting_Attended'][$index] ?? null,
-                    'designee_Name' => $previousDetails['designee_Name'][$index] ?? null,
-                    'designee_Department' => $previousDetails['designee_Department'][$index] ?? null,
                     'remarks' => $previousDetails['remarks'][$index] ?? null,
                 ];
 
@@ -8336,9 +8303,6 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                     'invited_Person' => $invited_Person,
                     'designee' => $request->designee[$index],
                     'department' => $request->department[$index],
-                    'meeting_Attended' => $request->meeting_Attended[$index],
-                    'designee_Name' => $request->designee_Name[$index],
-                    'designee_Department' => $request->designee_Department[$index],
                     'remarks' => $request->remarks[$index],
                 ];
 
