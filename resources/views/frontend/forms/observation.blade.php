@@ -96,88 +96,42 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="assign_to1">Auditee department Head</label>
-                                        <select name="assign_to">
-                                            <option value="">-- Select --</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="assign_to1">Auditee Department Head</label>
+                                            <select name="assign_to" id="assign_to">
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}" data-dept="{{ Helpers::getUsersDepartmentName($data->departmentid) }}">
+                                                        {{ $data->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group"><b>Auditee Department Name</b></label>
-                                <select name="auditee_department" id="auditee_department">
-                                    <option value="" data-code="">-- Select --</option>
-                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('auditee_department') == 'Corporate Quality Assurance') selected @endif>
-                                        Corporate Quality Assurance
-                                    </option>
-                                    <option value="Quality Assurance" data-code="QA" @if (old('auditee_department') == 'Quality Assurance') selected @endif>
-                                        Quality Assurance
-                                    </option>
-                                    <option value="Quality Control" data-code="QC" @if (old('auditee_department') == 'Quality Control') selected @endif>
-                                        Quality Control
-                                    </option>
-                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('auditee_department') == 'Quality Control (Microbiology department') selected @endif>
-                                        Quality Control (Microbiology department)
-                                    </option>
-                                    <option value="Production General" data-code="PG" @if (old('auditee_department') == 'Production General') selected @endif>
-                                        Production General
-                                    </option>
-                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('auditee_department') == 'Production Liquid Orals') selected @endif>
-                                        Production Liquid Orals
-                                    </option>
-                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('auditee_department') == 'Production Tablet and Powder') selected @endif>
-                                        Production Tablet and Powder
-                                    </option>
-                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('auditee_department') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
-                                        Production External (Ointment, Gels, Creams and Liquid)
-                                    </option>
-                                    <option value="Production Capsules" data-code="PC" @if (old('auditee_department') == 'Production Capsules') selected @endif>
-                                        Production Capsules
-                                    </option>
-                                    <option value="Production Injectable" data-code="PI" @if (old('auditee_department') == 'Production Injectable') selected @endif>
-                                        Production Injectable
-                                    </option>
-                                    <option value="Engineering" data-code="ENG" @if (old('auditee_department') == 'Engineering') selected @endif>
-                                        Engineering
-                                    </option>
-                                    <option value="Human Resource" data-code="HR" @if (old('auditee_department') == 'Human Resource') selected @endif>
-                                        Human Resource
-                                    </option>
-                                    <option value="Store" data-code="ST" @if (old('auditee_department') == 'Store') selected @endif>
-                                        Store
-                                    </option>
-                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('auditee_department') == 'Electronic Data Processing') selected @endif>
-                                        Electronic Data Processing
-                                    </option>
-                                    <option value="Formulation Development" data-code="FD" @if (old('auditee_department') == 'Formulation Development') selected @endif>
-                                        Formulation Development
-                                    </option>
-                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('auditee_department') == 'Analytical research and Development Laboratory') selected @endif>
-                                        Analytical research and Development Laboratory
-                                    </option>
-                                    <option value="Packaging Development" data-code="PD" @if (old('auditee_department') == 'Packaging Development') selected @endif>
-                                        Packaging Development
-                                    </option>
-                                    <option value="Purchase Department" data-code="PD" @if (old('auditee_department') == 'Purchase Department') selected @endif>
-                                        Purchase Department
-                                    </option>
-                                    <option value="Document Cell" data-code="DC" @if (old('auditee_department') == 'Document Cell') selected @endif>
-                                        Document Cell
-                                    </option>
-                                    <option value="Regulatory Affairs" data-code="RA" @if (old('auditee_department') == 'Regulatory Affairs') selected @endif>
-                                        Regulatory Affairs
-                                    </option>
-                                    <option value="Pharmacovigilance" data-code="PV" @if (old('auditee_department') == 'Pharmacovigilance') selected @endif>
-                                        Pharmacovigilance
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="initiator_group"><b>Auditee Department Name</b></label>
+                                            <input type="text" id="auditee_department" name="auditee_department" readonly>
+                        
+                                        </div>
+                                    </div>
+
+                                        <script>
+                                            document.getElementById("assign_to").addEventListener("change", function () {
+                                                // Get the selected option
+                                                var selectedOption = this.options[this.selectedIndex];
+
+                                                // Get the department name from the data attribute
+                                                var departmentName = selectedOption.getAttribute("data-dept");
+
+                                                // Update the department input field
+                                                document.getElementById("auditee_department").value = departmentName ;
+                                            });
+                                        </script>
+                          
+
                         {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Observation Report Due Date</label>
@@ -616,8 +570,8 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="corrective[0][serial]"
                                                         value="1"></td>
-                                                <td><input type="text" name="corrective[0][corrective_action]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><textarea  name="corrective[0][corrective_action]"></textarea></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></textarea></td>
                                             </tbody>
 
                                         </table>
@@ -631,9 +585,9 @@
                                                     html += '<tr>' +
                                                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                         '"></td>' +
-                                                        '<td><input type="text" name="corrective[' + serialNumber +
-                                                        '][corrective_action]"></td>' +
-                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                        '<td><textarea>  name="corrective[' + serialNumber +
+                                                        '][corrective_action]"></textarea></td>' +
+                                                        '<td><button type="button" class="removeRowBtn" >Remove</button></td>' +
                                                         '</tr>';
 
                                                     return html;
@@ -673,8 +627,8 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="preventive[0][serial]"
                                                         value="1"></td>
-                                                <td><input type="text" name="preventive[0][preventive_action]"></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><textarea type="text" name="preventive[0][preventive_action]"></textarea></td>
+                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
                                         </table>
@@ -688,9 +642,9 @@
                                                     html += '<tr>' +
                                                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                         '"></td>' +
-                                                        '<td><input type="text" name="preventive[' + serialNumber +
-                                                        '][preventive_action]"></td>' +
-                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                        '<td><textarea type="text" name="preventive[' + serialNumber +
+                                                        '][preventive_action]"></textarea></td>' +
+                                                        '<td><button type="button" class="removeRowBtn" >Remove</button></td>' +
                                                         '</tr>';
 
                                                     return html;
@@ -836,7 +790,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken"></textarea>
+                                        <textarea class="summernote" name="action_taken" ></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -845,7 +799,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="response_summary">Response Summary</label>
-                                        <textarea name="response_summary"></textarea>
+                                        <textarea class="summernote" name="response_summary"></textarea>
                                     </div>
                                 </div>
 
@@ -862,12 +816,6 @@
                                                     oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="related_url">Related URL</label>
-                                        <input type="text" name="related_url">
                                     </div>
                                 </div>
                                
@@ -966,28 +914,28 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="col-lg-4">
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
                                                 <div class="static">Not Applicable</div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
+                                        </div> -->
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required On">More Info Required On</label>
                                                 <div class="static">Not Applicable</div>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
+                                        </div> -->
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">More Info Required Comment</label>
                                                 <div class="static">Not Applicable</div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-12">
                                             <div class="sub-head">CAPA Plan Proposed</div>
@@ -1240,5 +1188,54 @@
                 $('.on-submit-disable-button').prop('disabled', true);
             });
         });
+    </script>
+    <script>
+        VirtualSelect.init({
+            ele: '#reference_record, #notify_to'
+        });
+
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        let referenceCount = 1;
+
+        function addReference() {
+            referenceCount++;
+            let newReference = document.createElement('div');
+            newReference.classList.add('row', 'reference-data-' + referenceCount);
+            newReference.innerHTML = `
+            <div class="col-lg-6">
+                <input type="text" name="reference-text">
+            </div>
+            <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div><div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div>
+        `;
+            let referenceContainer = document.querySelector('.reference-data');
+            referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
+        }
     </script>
 @endsection

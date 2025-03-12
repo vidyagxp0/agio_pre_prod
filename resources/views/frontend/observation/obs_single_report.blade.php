@@ -327,6 +327,7 @@
                             <tr class="table_bg">
                                 <th style="width: 8%">Sr.No</th>
                                 <th style="width: 80%">Observation</th>
+                                <th style="width: 40%">Category</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -336,6 +337,10 @@
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</td>
+                                <td>{{ isset($datas['category']) ? $datas['category'] : '' }}</td>
+
+                               
+
                             </tr>
                         @endforeach
                         @endif
@@ -595,14 +600,14 @@
             <table>
                     <tr>
 
-                    <th class="w-20">Related URL</th>
+                    <!-- <th class="w-20">Related URL</th>
                     <td class="w-80">
                         @if ($data->related_url)
                             {{ $data->related_url }}
                         @else
                             Not Applicable
                         @endif
-                    </td>
+                    </td> -->
 
                 </tr>
 
@@ -754,11 +759,11 @@
             </table>
            
  
-        <div class="block-head">
+        <!-- <div class="block-head">
            More Info Required
-        </div>
+        </div> -->
 
-       <table>
+       <!-- <table>
                 <tr>
                     <th class="w-20">More Info Required By</th>
                     <td class="w-80">
@@ -788,7 +793,7 @@
                     </td>
                 </tr>
 
-       </table>
+       </table> -->
        <div class="block-head">
         CAPA Plan Proposed
      </div>

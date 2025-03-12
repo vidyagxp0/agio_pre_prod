@@ -352,7 +352,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
+                                <th class="w-60">Attachment </th>
                             </tr>
                             @if ($data->initial_attachment_gi)
                             @foreach ($data->initial_attachment_gi as $key => $file)
@@ -542,6 +542,34 @@
                 </div>
             </div>
              <!-- OOS Details  -->
+             @php
+    $rawAttachments = $datagridIII['oos_file_attachment'] ?? "Not Applicable";
+    $attachments = $rawAttachments;
+    if (is_string($rawAttachments)) {
+        $decoded = json_decode($rawAttachments, true);
+        // If decoding was successful and we got an array, use it.
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            $attachments = $decoded;
+        }
+    }
+    // If we have an array (even if nested), flatten it.
+    if (is_array($attachments)) {
+        $flatten = function($array) use (&$flatten) {
+            $flat = [];
+            foreach ($array as $item) {
+                if (is_array($item)) {
+                    $flat = array_merge($flat, $flatten($item));
+                } else {
+                    $flat[] = $item;
+                }
+            }
+            return $flat;
+        };
+        $attachments = implode(', ', $flatten($attachments));
+    }
+@endphp
+
+
             <div class="block">
                 <div class="block-head"> OOS/OOT Details</div>
                 <div class="border-table">
@@ -564,12 +592,7 @@
                             <td class="w-15">{{ $datagridIII['oos_test_name'] ?  $datagridIII['oos_test_name']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_results_obtained'] ?  $datagridIII['oos_results_obtained']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridIII['oos_specification_limit'] ?  $datagridIII['oos_specification_limit']: "Not Applicable"}}</td>
-                            <td class="w-15">
-                                {{ isset($datagridIII['oos_file_attachment']) && is_array($datagridIII['oos_file_attachment']) 
-                                    ? implode(', ', $datagridIII['oos_file_attachment']) 
-                                    : ($datagridIII['oos_file_attachment'] ?? "Not Applicable") 
-                                }}
-                            </td>
+                            <td class="w-15">{{ $attachments }}</td>
 
                             <td class="w-15">{{ $datagridIII['oos_submit_on'] ?  Helpers::getdateFormat($datagridIII['oos_submit_on'] ?? ''): "Not Applicable" }}
                             </td>
@@ -683,7 +706,7 @@
                 <table>
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-80">File </th>
+                        <th class="w-80">Attachment </th>
                     </tr>
                     @if ($data->hod_attachment1)
                     @foreach ($data->hod_attachment1 as $key => $file)
@@ -753,7 +776,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80">Attachment </th>
                             </tr>
                             @if ($data->QA_Head_primary_attachment1)
                             @foreach ($data->QA_Head_primary_attachment1 as $key => $file)
@@ -776,7 +799,13 @@
                 <div class="block-head">Phase IA Investigation</div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Workbench Evaluation</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->Comments_plidata ){{ $data->Comments_plidata }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        {{-- @if($data->Comments_plidata ){{ $data->Comments_plidata }} @else Not Applicable @endif --}}
+                        @if ($data)
+                            {!! strip_tags($data->Comments_plidata, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
+                    </span>
                 </div>
 
 
@@ -795,23 +824,48 @@
 
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Checklist Outcome</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->justify_if_no_field_alert_pli ){{ $data->justify_if_no_field_alert_pli }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        {{-- -  @if($data->justify_if_no_field_alert_pli ){{ $data->justify_if_no_field_alert_pli }} @else Not Applicable @endif</span> --}}
+                        @if ($data)
+                            {!! strip_tags($data->justify_if_no_field_alert_pli, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Immediate action taken</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->root_comment ){{ $data->root_comment }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        <!-- @if($data->root_comment ){{ $data->root_comment }} @else Not Applicable @endif</span> -->
+                        @if ($data)
+                            {!! strip_tags($data->root_comment, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Delay Justification For Investigation</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->justify_if_no_analyst_int_pli ){{ $data->justify_if_no_analyst_int_pli }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        {{--  @if($data->justify_if_no_analyst_int_pli ){{ $data->justify_if_no_analyst_int_pli }} @else Not Applicable @endif</span> --}}
+                        @if ($data)
+                            {!! strip_tags($data->justify_if_no_analyst_int_pli, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Analyst Interview Details</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->analyst_interview_pli ){{ $data->analyst_interview_pli }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        {{--   @if($data->analyst_interview_pli ){{ $data->analyst_interview_pli }} @else Not Applicable @endif</span> --}}
+                        @if ($data)
+                            {!! strip_tags($data->analyst_interview_pli, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Any Other Cause/Suspected Cause</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        {{--   @if($data->Any_other_cause ){{ $data->Any_other_cause }} @else Not Applicable @endif</span> --}}
+                        @if ($data)
+                            {!! strip_tags($data->Any_other_cause, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Any Other Batches Analyzed</label>
@@ -827,7 +881,12 @@
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Summary of Investigation</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->summary_of_prelim_investiga_plic ){{ $data->summary_of_prelim_investiga_plic }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        <!-- @if($data->summary_of_prelim_investiga_plic ){{ $data->summary_of_prelim_investiga_plic }} @else Not Applicable @endif</span> -->
+                        @if ($data)
+                            {!! strip_tags($data->summary_of_prelim_investiga_plic, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
             </div>
             <div class="block">
@@ -852,7 +911,12 @@
             </div>
                     <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">OOS/OOT Category (If Others)</label>
-                        <span style="font-size:0.8rem; margin-left:10px">@if($data->oos_category_others_plic ){{ $data->oos_category_others_plic }} @else Not Applicable @endif</span>
+                        <span style="font-size:0.8rem; margin-left:10px">
+                             {{--   @if($data->oos_category_others_plic ){{ $data->oos_category_others_plic }} @else Not Applicable @endif</span>  --}}
+                             @if ($data)
+                            {!! strip_tags($data->oos_category_others_plic, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                     </div>
                     <div class="block">
                     <table>
@@ -866,7 +930,12 @@
                     </div>
                     <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">OOS/OOT Review For Similar Nature</label>
-                        <span style="font-size:0.8rem; margin-left:10px">@if($data->review_comments_plir ){{ $data->review_comments_plir }} @else Not Applicable @endif</span>
+                        <span style="font-size:0.8rem; margin-left:10px">
+                         {{--    @if($data->review_comments_plir ){{ $data->review_comments_plir }} @else Not Applicable @endif</span> --}} 
+                         @if ($data)
+                            {!! strip_tags($data->review_comments_plir, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                     </div>
                     <div class="block">
                     <table>
@@ -890,7 +959,12 @@
                 </div>
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Results Of Retest/Re-Measurement</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->Description_Deviation ){{ $data->Description_Deviation }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                       {{--  @if($data->Description_Deviation ){{ $data->Description_Deviation }} @else Not Applicable @endif</span>   --}}
+                       @if ($data)
+                            {!! strip_tags($data->Description_Deviation, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
                 </div>
 
 
@@ -914,7 +988,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80">Attachment</th>
                             </tr>
                             @if ($data->file_attachments_pli)
                             @foreach ($data->file_attachments_pli as $key => $file)
@@ -937,7 +1011,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80">Attachments</th>
                       </tr>
                       @if ($data->supporting_attachments_plir)
                       @foreach ($data->supporting_attachments_plir as $key => $file)
@@ -1088,7 +1162,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80">Attachment</th>
                             </tr>
                             @if ($data->hod_attachment2)
                             @foreach ($data->hod_attachment2 as $key => $file)
@@ -1122,7 +1196,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80">Attachment</th>
                             </tr>
                             @if ($data->QA_Head_attachment2)
                             @foreach ($data->QA_Head_attachment2 as $key => $file)
@@ -1165,7 +1239,7 @@
                   <table>
                       <tr class="table_bg">
                           <th class="w-20">S.N.</th>
-                          <th class="w-80">File </th>
+                          <th class="w-80">Attachment</th>
                       </tr>
                       @if ($data->QA_Head_primary_attachment2)
                       @foreach ($data->QA_Head_primary_attachment2 as $key => $file)
@@ -1321,7 +1395,7 @@
                         <table>
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
-                                <th class="w-80">File </th>
+                                <th class="w-80">Attachment </th>
                             </tr>
                             @if ($data->file_attachment_IB_Inv)
                                 @foreach ($data->file_attachment_IB_Inv as $key => $file)
@@ -1478,7 +1552,8 @@
                   </div>
                   <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Delay Justification For Investigation</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->reason_manufacturing_delay ){{ $data->reason_manufacturing_delay }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        @if($data->reason_manufacturing_delay ){{ $data->reason_manufacturing_delay }} @else Not Applicable @endif</span>
                   </div>
                   <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Any Other Cause/Suspected Cause</label>
@@ -1498,10 +1573,15 @@
                         </tr>
                    </table>
                   </div>
-                  <div class = "inner-block">
+                  Results Of Repeat TestingResults Of Repeat Testing   <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">OOS/OOT Category If Others</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->if_others_oos_category ){{ $data->if_others_oos_category }} @else Not Applicable @endif</span>
-                  </div>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                         @if($data->if_others_oos_category ){!! $data->if_others_oos_category !!} @else Not Applicable @endif</span>
+                       {{-- @if ($data)
+                            {!! strip_tags($data->if_others_oos_category, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif --}}
+                  </div> 
                   <div class="block">
                     <table>
                         <tr>
@@ -1751,7 +1831,13 @@
                     </div>
                     <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Results Of Repeat Testing IIB Inv.</label>
-                        <span style="font-size:0.8rem; margin-left:10px">@if($data->result_of_rep_test_IIB ){{ $data->result_of_rep_test_IIB }} @else Not Applicable @endif</span>
+                        <span style="font-size:0.8rem; margin-left:10px">
+                           {{--   @if($data->result_of_rep_test_IIB ){{ $data->result_of_rep_test_IIB }} @else Not Applicable @endif</span> --}}
+                           @if ($data)
+                            {!! strip_tags($data->result_of_rep_test_IIB, 
+                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                        @endif
+
                     </div>
                     <div class = "inner-block">
                         <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Laboratory Investigation Hypothesis Details</label>

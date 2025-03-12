@@ -329,21 +329,11 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Short Description">Auditee Department Name<span
-                                                        class="text-danger"></span></label>
-                                                <select name="auditee_department" id="auditee_department"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option selected disabled value="">---Select---</option>
-                                                    @foreach (Helpers::getInitiatorGroups() as $code => $auditee_department)
-                                                        <option value="{{ $auditee_department }}"
-                                                            data-code="{{ $code }}"
-                                                            @if ($data->auditee_department == $auditee_department) selected @endif>
-                                                            {{ $auditee_department }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                              <label for="Short Description">Auditee Department Name<span class="text-danger"></span></label>
+                                              <input type="text" id="auditee_department" name="auditee_department" 
+                                               value="{{ $data->auditee_department ?? 'N/A' }}" readonly>
                                         </div>
+                                     </div>
 
                               
                                 
@@ -1001,7 +991,7 @@
     });
 });
 </script>
-``
+
 
 
 
@@ -1038,12 +1028,18 @@
                                                                             name="corrective[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><input type="text"
-                                                                            name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                            value="{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}">
+                                                                    <td>
+                                                                         <textarea name="corrective[{{ $loop->index }}][corrective_action]" 
+                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $datas['corrective_action'] ?? '' }}</textarea>
                                                                     </td>
-                                                                    <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+
+                                                                  <td>
+                                                                     <button type="button" class="removeRowBtn" 
+                                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                       Remove
+                                                                    </button>
+                                                                 </td>
+
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1063,8 +1059,8 @@
                                                                 html += '<tr>' +
                                                                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                                     '"></td>' +
-                                                                    '<td><input type="text" name="corrective[' + serialNumber +
-                                                                    '][corrective_action]"></td>' +
+                                                                    '<td><textarea  name="corrective[' + serialNumber +
+                                                                    '][corrective_action]"></textarea></td>' +
                                                                     '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                                                                     '</tr>';
@@ -1114,16 +1110,17 @@
 
                                                     @if ($grid_Data4 && is_array($grid_Data4->data))
                                                     @foreach ($grid_Data4->data as $datas)
-                                                                <tr>
+                                                               
                                                                     <td><input disabled type="text"
                                                                             name="preventive[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><input type="text"
-                                                                            name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                            value="{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}">
+                                                                    <td>
+                                                                        <textarea name="preventive[{{ $loop->index }}][preventive_action]]"
+                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
                                                                     </td>
-                                                                    <td><button type="text"
+
+                                                                    <td><button type="button"
                                                                             class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
@@ -1144,9 +1141,8 @@
                                                                 html += '<tr>' +
                                                                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                                     '"></td>' +
-                                                                    '<td><input type="text" name="preventive[' + serialNumber +
-                                                                    '][preventive_action]"></td>' +
-                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                                                                  '<td><textarea name="preventive[' + serialNumber + '][preventive_action]"></textarea></td>' +
+                                                                  '<td><button type="button" class="removeRowBtn">Remove</button></td>'
 
                                                                     '</tr>';
 
@@ -1425,7 +1421,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action_taken">Action Taken</label>
-                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->action_taken }}</textarea>
+                                                <textarea name="action_taken" class="summernote"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1434,7 +1430,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="response_summary">Response Summary</label>
-                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
+                                                <textarea name="response_summary" class="summernote" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->response_summary }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 new-date-data-field">
@@ -1499,14 +1495,6 @@
                                 </div>
 
 
-                                        <div class="col-lg-12">
-                                            <div class="group-input">
-                                                <label for="related_url">Related URL</label>
-                                                <input type="text" name="related_url"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->related_url }}">
-                                            </div>
-                                        </div>
                                         
                                     </div>
                                     <div class="button-block">
@@ -1597,11 +1585,11 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="sub-head">More Info Required</div>
-                                        </div>
+                                        </div> -->
 
-                                        <div class="col-lg-4">
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required By">More Info Required By</label>
                                                 @if ($data->more_info_required_by)
@@ -1610,8 +1598,8 @@
                                                     Not Applicable
                                                 @endif
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
+                                        </div> -->
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="More Info Required On">More Info Required On</label>
                                                 @if ($data->more_info_required_on)
@@ -1620,8 +1608,8 @@
                                                     Not Applicable
                                                 @endif
                                             </div>
-                                        </div>
-                                        <div class="col-lg-4">
+                                        </div> -->
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Submitted on">More Info Required Comment</label>
                                                 @if ($data->more_info_required_comment)
@@ -1630,7 +1618,7 @@
                                                     Not Applicable
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-12">
                                             <div class="sub-head">CAPA Plan Proposed</div>
@@ -2266,4 +2254,53 @@
                     $('#rchars').text(textlen);
                 });
             </script>
+             <script>
+        VirtualSelect.init({
+            ele: '#reference_record, #notify_to'
+        });
+
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        let referenceCount = 1;
+
+        function addReference() {
+            referenceCount++;
+            let newReference = document.createElement('div');
+            newReference.classList.add('row', 'reference-data-' + referenceCount);
+            newReference.innerHTML = `
+            <div class="col-lg-6">
+                <input type="text" name="reference-text">
+            </div>
+            <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div><div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div>
+        `;
+            let referenceContainer = document.querySelector('.reference-data');
+            referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
+        }
+    </script>
         @endsection
