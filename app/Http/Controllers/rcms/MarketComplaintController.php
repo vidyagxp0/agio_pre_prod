@@ -9795,8 +9795,9 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $data_record = Helpers::getDivisionName($p_record->division_id) . '/' . 'MC' . '/' . date('Y') . '/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = MarketComplaint::where('id', $id)->value('record');
             $data = MarketComplaint::find($id);
+            $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record', 'data', 'parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
+            return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
         } elseif ($request->revision == "rca") {
             //  return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -9969,7 +9970,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
         return view('frontend.market_complaint.singleReport', compact('data', 'prductgigrid'));
     }
-    
+
 
     public function General_Complaint_report(Request $request, $id)
     {
