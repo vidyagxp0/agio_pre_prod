@@ -32,7 +32,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Head Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings & Summary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT Action</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CFT HOD Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Verification</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
@@ -105,7 +105,8 @@
                                     </div>
 
                                 </div> --}}
-                                <div class="row">
+
+                                {{-- <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="initiator_group"><b>Initiator Department<span
@@ -119,7 +120,6 @@
                                                 @endforeach
                                             </select>
 
-                                            {{-- Display error message if validation fails --}}
                                             @error('initiator_Group')
                                                 <div class="text-danger">
                                                     {{ $message }}
@@ -136,7 +136,70 @@
                                                 value="" disabled>
                                         </div>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
                                 </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group Code">Initiation Department Code</label>
+                                                <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                                    value="" readonly>
+                                            </div>
+                                        </div>
 
 
 
@@ -1183,12 +1246,9 @@
                                             <thead>
                                                 <tr>
                                                     <th style="width:5%">Row #</th>
-                                                    <th>Invited Person</th>
+                                                    <th>Name Of Person</th>
                                                     <th>Designation</th>
                                                     <th>Department</th>
-                                                    <th>Meeting Attended</th>
-                                                    <th>Designee Name</th>
-                                                    <th>Designee Department/Designation</th>
                                                     <th>Remarks</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -1201,9 +1261,6 @@
                                                     <td><input type="text" name="invited_Person[]"></td>
                                                     <td><input type="text" name="designee[]"></td>
                                                     <td><input type="text" name="department[]"></td>
-                                                    <td><input type="text" name="meeting_Attended[]"></td>
-                                                    <td><input type="text" name="designee_Name[]"></td>
-                                                    <td><input type="text" name="designee_Department[]"></td>
                                                     <td><input type="text" name="remarks[]"></td>
                                                     <td> <button type="button" class="removeRowBtn">remove
                                                         </button></td>

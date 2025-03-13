@@ -731,7 +731,7 @@
 
         });
 
-       
+
 
         $(document).on('click', '.abbreviationbtnRemove', function(e) {
             e.preventDefault();
@@ -739,7 +739,7 @@
         })
 
 
-        //ashish code 
+        //ashish code
 
 
 
@@ -795,7 +795,7 @@
         });
 
 
-        
+
     $('#active_raw_material_pvrbtnadd').click(function(e) {
 
     var html =
@@ -806,7 +806,7 @@
     });
 
 
-                    
+
     $('#primary_packingmaterial_pvrbtnadd').click(function(e) {
 
     var html =
@@ -994,9 +994,9 @@
             $('#definitiondiv').append(html);
 
         });
-        
 
-        
+
+
 
         $('#responsibilityhtpsbtnadd').click(function(e) {
 
@@ -1639,7 +1639,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
     //   -------------Packing validation tabs end report by kp-----------
 
 
-    
+
 
     //   -------------Format for commpressed air and nitrogen gas system protocal tabs start report by kp-----------
 
@@ -2225,7 +2225,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         let subformatdocumentsAdd= 0;
         let subexecutiontteamAdd= 0;
         let subformatidentificationAdd= 0;
-       
+
 
         //Process validation interim report
         let subcritical_quality_pvirAdd = 0;
@@ -2236,7 +2236,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         let subSummarypvirAdd = 0;
         let subConclusion_pvirAdd = 0;
         let subreport_approvalpvirAdd = 0;
-        
+
 
         let subPurpose_PaVaReKpAdd = 0;
         let subScope_PaVaReKpAdd = 0;
@@ -2345,7 +2345,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         let subconclusion_pvrAdd=0;
         let subproposed_parameter_upcoming_batch_pvrAdd=0;
         let subreport_approval_pvrAdd=0;
-        
+
 
         let subResponsibilitiesAdd = 0;
         let subReferencesssAdd = 0;
@@ -2420,7 +2420,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         let subanalytical_report_cvrdAdd=0;
         let subphysical_procedure_conformance_check_cvrdAdd=0;
         let subconclusion_cvrdAdd=0;
-        
+
 
 
 
@@ -2483,7 +2483,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
 
         });
-      
+
 
         $(document).on('click', '.subresponsibilityhtpsAdd', function(e) {
             e.preventDefault();
@@ -2975,7 +2975,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-      
+
       // Conclusion
 
         $(document).on('click', '.subConclusion_pvirAdd', function(e) {
@@ -3278,7 +3278,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subDeviationhtpsAdd', function(e) {
             e.preventDefault();
             subDeviationhtpsAdd = Math.round(Math.random() * 10000);
@@ -3779,7 +3779,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        //saurav 
+        //saurav
         $(document).on('click', '.subResponsibilitiesAdd', function(e) {
             e.preventDefault();
             subResponsibilitiesAdd = Math.round(Math.random() * 10000);
@@ -4473,7 +4473,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
 
 
-        
+
         $(document).on('click', '.subresponsibilities_cvpdAdd', function(e) {
             e.preventDefault();
             subresponsibilities_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4496,7 +4496,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         ////////////////////////
 
 
-        
+
         $(document).on('click', '.subidentification_sensitive_product_contamination_cvpdAdd', function(e) {
             e.preventDefault();
             subidentification_sensitive_product_contamination_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4514,7 +4514,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.submatrix_worstcase_approach_cvpdAdd', function(e) {
             e.preventDefault();
             submatrix_worstcase_approach_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4533,7 +4533,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subacceptance_criteria_cvpdAdd', function(e) {
             e.preventDefault();
             subacceptance_criteria_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4552,7 +4552,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.sublist_equipment_internal_surface_cvpdAdd', function(e) {
             e.preventDefault();
             sublist_equipment_internal_surface_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4571,7 +4571,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subidentification_clean_surfaces_cvpdAdd', function(e) {
             e.preventDefault();
             subidentification_clean_surfaces_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4590,7 +4590,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subsampling_method_cvpdAdd', function(e) {
             e.preventDefault();
             subsampling_method_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4608,7 +4608,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.subrecovery_studies_cvpdAdd', function(e) {
             e.preventDefault();
             subrecovery_studies_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4627,7 +4627,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subcalculating_carry_over_cvpdAdd', function(e) {
             e.preventDefault();
             subcalculating_carry_over_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4645,7 +4645,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.subcalculating_rinse_analysis_cvpdAdd', function(e) {
             e.preventDefault();
             subcalculating_rinse_analysis_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4664,7 +4664,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subgeneral_procedure_clean_cvpdAdd', function(e) {
             e.preventDefault();
             subgeneral_procedure_clean_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4682,7 +4682,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.subanalytical_method_validation_cvpdAdd', function(e) {
             e.preventDefault();
             subanalytical_method_validation_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4700,7 +4700,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.sublist_cleaning_sop_cvpdAdd', function(e) {
             e.preventDefault();
             sublist_cleaning_sop_cvpdAdd = Math.round(Math.random() * 10000);
@@ -4803,7 +4803,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
          // cleaning validation Report.doc
 
-         
+
         $(document).on('click', '.subobjective_cvrdAdd', function(e) {
             e.preventDefault();
             subobjective_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4822,7 +4822,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subscope_cvrdAdd', function(e) {
             e.preventDefault();
             subscope_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4858,7 +4858,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subresponsibilities_cvrdAdd', function(e) {
             e.preventDefault();
             subresponsibilities_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4877,7 +4877,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subanalysis_methodology_cvrdAdd', function(e) {
             e.preventDefault();
             subanalysis_methodology_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4896,7 +4896,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subrecovery_study_report_cvrdAdd', function(e) {
             e.preventDefault();
             subrecovery_study_report_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4916,7 +4916,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
 
 
-         
+
         $(document).on('click', '.subacceptance_critria_cvrdAdd', function(e) {
             e.preventDefault();
             subacceptance_critria_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4935,7 +4935,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subanalytical_report_cvrdAdd', function(e) {
             e.preventDefault();
             subanalytical_report_cvrdAdd = Math.round(Math.random() * 10000);
@@ -4954,7 +4954,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-          
+
         $(document).on('click', '.subphysical_procedure_conformance_check_cvrdAdd', function(e) {
             e.preventDefault();
             subphysical_procedure_conformance_check_cvrdAdd = Math.round(Math.random() * 10000);
@@ -5405,7 +5405,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subconclusion_cvrdAdd', function(e) {
             e.preventDefault();
             subconclusion_cvrdAdd = Math.round(Math.random() * 10000);
@@ -5637,7 +5637,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
 
             });
 
-        // saurav code end 
+        // saurav code end
 
 
         //ashish subcategory
@@ -5695,7 +5695,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 closestSingleBlock.after('<div class="subSinglebatchdetail_pvrBlock">' + html + '</div>');
             }
         });
-       
+
 
 
 
@@ -5715,7 +5715,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 closestSingleBlock.after('<div class="subSinglerefrence_document_pvrBlock">' + html + '</div>');
             }
         });
-       
+
 
 
 
@@ -5741,7 +5741,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.subactive_raw_material_pvrAdd', function(e) {
             e.preventDefault();
             subactive_raw_material_pvrAdd = Math.round(Math.random() * 10000);
@@ -5852,7 +5852,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
                 closestSingleBlock.after('<div class="subSingleresult_of_packing_finished_pvrBlock">' + html + '</div>');
             }
         });
-        
+
 
 
         $(document).on('click', '.subcriticalprocess_parameter_pvrAdd', function(e) {
@@ -5910,7 +5910,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.subcleaningvalidation_pvrAdd', function(e) {
             e.preventDefault();
             subcleaningvalidation_pvrAdd = Math.round(Math.random() * 10000);
@@ -5929,7 +5929,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-        
+
         $(document).on('click', '.substability_study_pvrAdd', function(e) {
             e.preventDefault();
             substability_study_pvrAdd = Math.round(Math.random() * 10000);
@@ -5964,7 +5964,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-        
+
         $(document).on('click', '.subchangecontrol_pvrAdd', function(e) {
             e.preventDefault();
             subchangecontrol_pvrAdd = Math.round(Math.random() * 10000);
@@ -6266,7 +6266,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-       
+
 
 
 
@@ -6306,7 +6306,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         });
 
 
-       
+
 
         $(document).on('click', '.subAnnexureAdd', function(e) {
             e.preventDefault();
@@ -6325,7 +6325,7 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             }
         });
 
-       
+
 
 
 
@@ -6587,7 +6587,11 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
             var myarr = departmentCode;
             var url = "{{ route('data', [':myarr']) }}";
             url = url.replace(':myarr', myarr);
-            // url = url.replace('http:', 'https:');
+
+            if (window.location.href.indexOf('mydemosoftware') !== -1) {
+                url = url.replace('http:', 'https:')
+            }
+
             $('#question-list').empty();
             $.ajax({
                 url: url,
@@ -6604,7 +6608,11 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         var quesData = selectQuestion;
         var url = "{{ route('questiondata', [':quesData']) }}";
         url = url.replace(':quesData', quesData);
-        // url = url.replace('http:', 'https:');
+
+        if (window.location.href.indexOf('mydemosoftware') !== -1) {
+            url = url.replace('http:', 'https:')
+        }
+
         $('#selected-list').empty();
         $.ajax({
             url: url,
@@ -6620,7 +6628,11 @@ $('#Summary_PaVaReKpbtnadd').click(function(e) {
         var question = question;
         var url = "{{ route('datag', [':question']) }}";
         url = url.replace(':question', question);
-        // url = url.replace('http:', 'https:');
+
+        if (window.location.href.indexOf('mydemosoftware') !== -1) {
+            url = url.replace('http:', 'https:')
+        }
+
         $('#selected-question').empty();
         $.ajax({
             url: url,
