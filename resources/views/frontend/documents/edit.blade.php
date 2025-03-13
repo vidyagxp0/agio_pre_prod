@@ -209,7 +209,7 @@
             <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document Information</button>
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
-                <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
+                <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'doc-content')">Document Content</button>
 
                 <!-- Hidden Tabs (Only Show Based on document_type_id) -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>

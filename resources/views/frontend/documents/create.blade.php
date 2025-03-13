@@ -280,7 +280,7 @@
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
                  information</button>
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
-                <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
+                <button class="tablinks hidden-tabs" data-id="SOP" onclick="openData(event, 'doc-content')">Document Content</button>
                 <!-- Tabs that should be hidden initially -->
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
                 <button class="tablinks hidden-tabs" data-id="IPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>

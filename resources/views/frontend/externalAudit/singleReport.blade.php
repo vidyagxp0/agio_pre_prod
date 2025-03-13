@@ -240,7 +240,7 @@
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                                {{ $data->Initiator_Group }}
                             @else
                                 Not Applicable
                             @endif
@@ -325,6 +325,8 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Others</th>
                         <td class="w-30" colspan="3">
                             @if ($data->others)
@@ -352,7 +354,7 @@
                         <th class="w-20">Start Date of Audit</th>
                         <td class="w-30">
                             @if ($data->start_date_gi)
-                                {{ $data->start_date_gi }}
+                                {{  Helpers::getdateFormat($data->start_date_gi) }}
                             @else
                                 Not Applicable
                             @endif
@@ -361,7 +363,7 @@
                         <th class="w-20">End Date of Audith</th>
                         <td class="w-30" colspan="3">
                             @if ($data->end_date_gi)
-                                {{ $data->end_date_gi }}
+                                {{ Helpers::getdateFormat($data->end_date_gi) }}
                             @else
                                 Not Applicable
                             @endif
@@ -560,7 +562,7 @@
         <div class="block">
             <div class="head">
                 <div class="block-head">
-                    CFT
+                    CFT Review
                 </div>
                 <div class="head">
                     <div class="block-head">
@@ -570,7 +572,7 @@
 
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule / Powder Review Comment Required ?  
+                            <th class="w-20">Production Tablet/Capsule / Powder Review Comment Required ?   
                             </th>
                             <td class="w-30">
                                 <div>
@@ -581,7 +583,7 @@
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production Tablet/Capsule / Powder Person </th>
+                            <th class="w-20">Production Tablet/Capsule / Powder Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_Person)
@@ -596,7 +598,7 @@
 
                         <tr>
 
-                            <th class="w-20">Review comment (By Production Tablet/Capsule / Powder)  
+                            <th class="w-20">Review comment (By Production Tablet/Capsule / Powder)
                             </th>
                             <td class="w-80" colspan="3">
                                 <div>
@@ -622,7 +624,7 @@ Not Applicable
                         </tr>
                         <tr>
 
-                            <th class="w-20">Production Tablet/Capsule/Powder Review Completed By</th>
+                            <th class="w-20">Production Tablet/Capsule /  Powder Review Completed By</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_By)
@@ -632,7 +634,7 @@ Not Applicable
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Production Tablet/Capsule/Powder Review Completed On</th>
+                            <th class="w-20">Production Tablet/Capsule / Powder Review Completed On</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Production_Table_On)
@@ -2014,7 +2016,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other1_Department_person)
-                                            {{  Helpers::getFullDepartmentName($data1->Other1_Department_person) }}
+                                            {{  $data1->Other1_Department_person ?? ''}}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2123,7 +2125,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other2_Department_person)
-                                            {{ Helpers::getFullDepartmentName($data1->Other2_Department_person) }}
+                                            {{ $data1->Other2_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2232,7 +2234,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other3_Department_person)
-                                            {{ Helpers::getFullDepartmentName($data1->Other3_Department_person) }}
+                                            {{ $data1->Other3_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2341,7 +2343,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other4_Department_person)
-                                            {{Helpers::getFullDepartmentName($data1->Other4_Department_person) }}
+                                            {{ $data1->Other4_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2450,7 +2452,7 @@ Not Applicable
                                 <td class="w-30">
                                     <div>
                                         @if ($data1->Other5_Department_person)
-                                            {{ Helpers::getFullDepartmentName($data1->Other5_Department_person) }}
+                                            {{ $data1->Other5_Department_person ?? '' }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -2603,64 +2605,84 @@ Not Applicable
                         Activity Log
                     </div>
                     <table>
-                        <tr>
-                            <th class="w-20">Audit Details Summary By</th>
-                            <td class="w-30">{{ $data->audit_details_summary_by }}</td>
-                            <th class="w-20">Audit Details Summary On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->audit_details_summary_on) }}</td>
-                            <th class="w-20">Audit Details Summary Comment</th>
-                            <td class="w-30">{{ $data->audit_details_summary_on_comment }}</td>
-                        </tr>
+                    <tr>
+                        <th class="w-20">Audit Details Summary By</th>
+                        <td class="w-30">{{ $data->audit_details_summary_by ?? 'Not Applicable' }}</td>
+
+                        <th class="w-20">Audit Details Summary On</th>
+                        <td class="w-30">
+                            {{ !empty($data->audit_details_summary_on) ? Helpers::getdateFormat($data->audit_details_summary_on) : 'Not Applicable' }}
+                        </td>
+
+                        <th class="w-20">Audit Details Summary Comment</th>
+                        <td class="w-30">{{ $data->audit_details_summary_on_comment ?? 'Not Applicable' }}</td>
+                    </tr>
+
                         <tr>
                             <th class="w-20">Cancel By</th>
-                            <td class="w-30">{{ $data->cancelled_by }}</td>
+                            <td class="w-30">{{ $data->cancelled_by  ?? 'Not Applicable'}}</td>
                             <th class="w-20">Cancel On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                            <td class="w-30">
+                                  {{ !empty($data->cancelled_on) ? Helpers::getdateFormat($data->cancelled_on) : 'Not Applicable' }}
+                            </td>
                             <th class="w-20">Cancel Comment</th>
-                            <td class="w-30">{{ $data->cancelled_on_comment }}</td>
+                            <td class="w-30">{{ $data->cancelled_on_comment ?? 'Not Applicable' }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">Summary and Response Complete by</th>
-                            <td class="w-30">{{ $data->summary_and_response_com_by }}</td>
+                            <td class="w-30">{{ $data->summary_and_response_com_by ?? 'Not Applicable' }}</td>
                             <th class="w-20">Summary and Response Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->summary_and_response_com_on) }}</td>
+                            <td class="w-30">
+                                {{ !empty($data->summary_and_response_com_on) ? Helpers::getdateFormat($data->summary_and_response_com_on) : 'Not Applicable' }}
+                            </td>
                             <th class="w-20">Summary and Response Complete Comment</th>
-                            <td class="w-30">{{ $data->summary_and_response_com_on_comment }}</td>
+                            <td class="w-30">{{ $data->summary_and_response_com_on_comment ?? 'Not Applicable' }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">CFT Review Not Required By</th>
-                            <td class="w-30">{{ $data->cft_review_not_req_by }}</td>
+                            <td class="w-30">{{ $data->cft_review_not_req_by ?? 'Not Applicable' }}</td>
                             <th class="w-20">CFT Review Not Required On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->cft_review_not_req_on) }}</td>
+                            <td class="w-30">
+                                {{ !empty($data->cft_review_not_req_on) ? Helpers::getdateFormat($data->cft_review_not_req_on) : 'Not Applicable' }}
+                   
+                            </td>
                             <th class="w-20">CFT Review Not Required Comment</th>
-                            <td class="w-30">{{ $data->cft_review_not_req_on_comment }}</td>
+                            <td class="w-30">{{ $data->cft_review_not_req_on_comment ?? 'Not Applicable' }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">CFT Review Complete By</th>
-                            <td class="w-30">{{ $data->cft_review_complete_by }}</td>
+                            <td class="w-30">{{ $data->cft_review_complete_by ?? 'Not Applicable' }}</td>
                             <th class="w-20">CFT Review Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->cft_review_complete_on) }}</td>
+                            <td class="w-30">
+                                 {{ !empty($data->cft_review_complete_on) ? Helpers::getdateFormat($data->cft_review_complete_on) : 'Not Applicable' }}
+                            </td>
                             <th class="w-20">CFT Review Complete Comment</th>
-                            <td class="w-30">{{ $data->cft_review_complete_comment }}</td>
+                            <td class="w-30">{{ $data->cft_review_complete_comment ?? 'Not Applicable' }}</td>
                         </tr>
 
 
                         <tr>
                             <th class="w-20">Send to Opened By</th>
-                            <td class="w-30">{{ $data->send_to_opened_by }}</td>
+                            <td class="w-30">{{ $data->send_to_opened_by ?? 'Not Applicable' }}</td>
                             <th class="w-20">Send to Opened On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->send_to_opened_on) }}</td>
+                            <td class="w-30">
+                              {{ !empty($data->send_to_opened_on) ? Helpers::getdateFormat($data->send_to_opened_on) : 'Not Applicable' }}
+                   
+                            </td>
                             <th class="w-20">Send to Opened Comment</th>
-                            <td class="w-30">{{ $data->send_to_opened_comment }}</td>
+                            <td class="w-30">{{ $data->send_to_opened_comment ?? 'Not Applicable' }}</td>
                         </tr>
                         <tr>
                             <th class="w-20">Approval Complete By
                             </th>
-                            <td class="w-30">{{ $data->approval_complete_by }}</td>
+                            <td class="w-30">{{ $data->approval_complete_by ?? 'Not Applicable' }}</td>
                             <th class="w-20">Approval Complete On</th>
-                            <td class="w-30">{{ Helpers::getdateFormat($data->approval_complete_on) }}</td>
+                            <td class="w-30">
+                            {{ !empty($data->approval_complete_on) ? Helpers::getdateFormat($data->approval_complete_on) : 'Not Applicable' }}
+                   
+                            </td>
                             <th class="w-20">Approval Complete Comment</th>
-                            <td class="w-30">{{ $data->approval_complete_on_comment }}</td>
+                            <td class="w-30">{{ $data->approval_complete_on_comment ?? 'Not Applicable' }}</td>
                         </tr>
                        
 
