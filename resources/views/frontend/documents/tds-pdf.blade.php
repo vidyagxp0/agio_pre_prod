@@ -879,8 +879,8 @@
                                     <tr>
                                         <td style="border: 1px solid black; text-align: center;">{{ $count }}</td>
                                         <td style="border: 1px solid black; text-align: left;">{{ $item['test_name'] ?? '' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_test_stp'] ?? 'N/A' }}</td>
-                                        <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_userd_test'] ?? 'N/A' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_test_stp'] ?? '' }}</td>
+                                        <td style="border: 1px solid black; text-align: center;">{{ $item['quantity_userd_test'] ?? '' }}</td>
                                         <td style="border: 1px solid black; text-align: center;"></td>
                                     </tr>
                                     @php $count++; @endphp

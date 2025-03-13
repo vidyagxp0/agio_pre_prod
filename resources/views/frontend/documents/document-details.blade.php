@@ -433,6 +433,83 @@
                                 <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
                                     View Attachments
                                 </a>
+
+                                <table class="border" style="width: 100%; border-collapse: collapse; text-align: left; margin: 20px auto; font-size: 16px;">
+                                    <thead>
+                                        <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 20%;"></th>
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 25%;">Prepared By</th>
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 25%;">Checked By</th>
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 25%;">Approved By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            @php
+                                                $inreviews = DB::table('stage_manages')
+                                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                                    ->select('stage_manages.*', 'users.name as user_name')
+                                                    ->where('document_id', $document->id)
+                                                    ->where('stage', 'HOD Review-Submit')
+                                                    ->whereNull('deleted_at')
+                                                    ->get();
+                                            @endphp
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold;">Sign</th>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($document->originator_id) }}</td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreviews->isEmpty())
+                                                    <div> - </div>
+                                                @else
+                                                    @foreach ($inreviews as $temp)
+                                                        <div>{{ $temp->user_name ?: '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            @php
+                                                $inreview = DB::table('stage_manages')
+                                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                                    ->select('stage_manages.*', 'users.name as user_name')
+                                                    ->where('document_id', $document->id)
+                                                    ->where('stage', 'Approval-Submit')
+                                                    ->whereNull('deleted_at')
+                                                    ->get();
+                                            @endphp
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreview->isEmpty())
+                                                    <div>-</div>
+                                                @else
+                                                    @foreach ($inreview as $temp)
+                                                        <div>{{ $temp->user_name ?: '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td style="padding: 5px; border: 1px solid #ddd; font-weight: bold;">Date</td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                {{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                                            </td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreviews->isEmpty())
+                                                    <div>-</div>
+                                                @else
+                                                    @foreach ($inreviews as $temp)
+                                                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreview->isEmpty())
+                                                    <div>-</div>
+                                                @else
+                                                    @foreach ($inreview as $temp)
+                                                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             @endif
 
                         </div>
@@ -653,6 +730,7 @@
                             </form>
                         </div>
                     </div> --}}
+
 
                 </div>
             </div>
