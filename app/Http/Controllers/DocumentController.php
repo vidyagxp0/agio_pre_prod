@@ -6665,6 +6665,7 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
     }
+    
 
     public function getEffectiveDate(Request $request)
     {
@@ -6678,6 +6679,9 @@ class DocumentController extends Controller
             'effective_date' => $document ? $document->effective_date : null
         ]);
     }
+
+
+
 
     public function getRecordsByType(Request $request)
     {
@@ -6697,9 +6701,6 @@ class DocumentController extends Controller
     }
     
     
-    
-    
-
 
     public function viewAttachments($id)
     {
@@ -6710,7 +6711,6 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
         }
     
-        // document_type_id ke hisaab se blade file map karna
         $viewName = match ($data->document_type_id) {
             
             'BMR' => 'frontend.documents.bmr-pdf',
@@ -6772,6 +6772,7 @@ class DocumentController extends Controller
             'VMP' => 'frontend.documents.csv.valid_master_plan',
             default => 'NA',
         };
+
         $attachmentFields = [
             'BMR' => 'bmrattachment',
             'BPR' => 'bprattachment',
@@ -6834,7 +6835,6 @@ class DocumentController extends Controller
     
         $attachments = [];
     
-        // Agar document_type_id ka attachment field exist karta ho to usko extract karo
         if (isset($attachmentFields[$data->document_type_id])) {
             $attachmentField = $attachmentFields[$data->document_type_id];
             

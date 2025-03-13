@@ -3176,34 +3176,30 @@
 
                                     @endphp
 
-
-
-
                                         @if(!empty($GtpData))
                                             @foreach($GtpData as $key => $gtp_data)
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td>
 
-                                                        <select name="revision_history[{{ $key }}][revision_number]">
-
-                                                        <option value="" selected>Select Revision Number</option>
-
-                                                            @php
-                                                                $revisions = ['00'];
-                                                                if ($document->revised === 'Yes') {
-                                                                    for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                        $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                                    }
+                                                    <select name="revision_history[{{ $key }}][revision_number]" onchange="getEffectiveDate(this, {{ $document->id }}, {{ $key }})">
+                                                        <option value="">Select Revision Number</option>
+                                                        @php
+                                                            $revisions = ['00'];
+                                                            if ($document->revised === 'Yes') {
+                                                                for ($i = 1; $i <= $document->revised_doc; $i++) {
+                                                                    $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
                                                                 }
-                                                            @endphp
+                                                            }
+                                                        @endphp
 
-                                                            @foreach ($revisions as $rev)
-                                                                <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                                   {{ $rev }}
-                                                                </option>
-                                                            @endforeach
-                                                        </select>
+                                                        @foreach ($revisions as $rev)
+                                                            <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
+                                                                {{ $rev }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
                                                     </td>
                                                     <td><input type="text" name="revision_history[{{ $key }}][cc_no]" value="{{ $gtp_data['cc_no'] ?? '' }}"></td>
                                                     <td><input type="date" name="revision_history[{{ $key }}][revised_effective_date]" value="{{ $gtp_data['revised_effective_date'] ?? '' }}"></td>
@@ -3248,13 +3244,21 @@
                                     var newRow = `
                                         <tr>
                                             <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
+                                            
                                             <td>
-                                                <select name="revision_history[${serialNumber - 1}][revision_number]">
-                                                    <option value="">Select Revision</option>
-                                                    @foreach($revisedSopNumbers as $revision)
-                                                        <option value="{{ $revision }}" 
-                                                            {{ isset($gtp_data['revision_number']) && $gtp_data['revision_number'] == $revision ? 'selected' : '' }}>
-                                                            {{ $revision }}
+                                            <select name="revision_history[${serialNumber - 1}][revision_number]" onchange="getEffectiveDate(this, {{ $document->id }}, ${serialNumber - 1})">
+                                                    <option value="">Select Revision Number</option>
+                                                    @php
+                                                        $revisions = ['00'];
+                                                        if ($document->revised === 'Yes') {
+                                                            for ($i = 1; $i <= $document->revised_doc; $i++) {
+                                                                $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+                                                            }
+                                                        }
+                                                    @endphp
+                                                    @foreach ($revisions as $rev)
+                                                        <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
+                                                            {{ $rev }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -3268,36 +3272,37 @@
                                     $('#Details-table-revision tbody').append(newRow);
                                 });
 
-                                // Remove row functionality
                                 $(document).on('click', '.removeRowBtn', function() {
                                     $(this).closest('tr').remove();
-                                    updateSerialNumbers(); // Update serial numbers after removal
+                                    updateSerialNumbers();
                                 });
                             });
                         </script>
 
                         <script>
-                            document.addEventListener("DOMContentLoaded", function () {
-                                document.querySelectorAll("select[name^='revision_history']").forEach(select => {
-                                    select.addEventListener("change", function () {
-                                        let revisionNumber = this.value; 
-                                        let row = this.closest("tr");
-                                        let effectiveDateInput = row.querySelector("input[name^='revision_history'][name$='[revised_effective_date]']");
+                            function getEffectiveDate(selectElement, documentId, key) {
+                                var revisionNumber = selectElement.value;
 
-                                        if (revisionNumber) {
-                                            fetch(`/get-effective-date?revision_number=${revisionNumber}`)
-                                                .then(response => response.json())
-                                                .then(data => {
-                                                    effectiveDateInput.value = data.effective_date ? data.effective_date : "";
-                                                })
-                                                .catch(error => console.error("Error:", error));
-                                        } else {
-                                            effectiveDateInput.value = "";
+                                if (revisionNumber) {
+                                    $.ajax({
+                                        url: '/get-effective-date',
+                                        method: 'GET',
+                                        data: {
+                                            document_id: documentId,
+                                            revision_number: revisionNumber
+                                        },
+                                        success: function(response) {
+                                            if (response.effective_date) {
+                                                $('input[name="revision_history[' + key + '][revised_effective_date]"]').val(response.effective_date);
+                                            }
                                         }
                                     });
-                                });
-                            });
+                                }
+                            }
+
                         </script>
+
+
 
 
                     <div class="button-block">
