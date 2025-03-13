@@ -574,7 +574,7 @@
                                         <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator"><b>Initiator Department</b></label>
-                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                    <input readonly type="text" name="Initiator_Group" id="initiator_group" 
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
                                         </div>
@@ -1865,60 +1865,59 @@
                                                     <tbody>
                                                         @php
                                                             $serialNumber = 1;
+                                                            
                                                         @endphp
                                                         @foreach ($oocgrid->data as $oogrid)
-                                                            <tr>
-                                                                <td disabled>{{ $serialNumber++ }}</td>
-                                                                <td>
-                                                                    <textarea 
-                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                        name="SummaryResponse[{{ $loop->index }}][observation]"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['observation'] }}</textarea>
-                                                                </td>
-                                                                <td>
-                                                                    <textarea 
-                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                        name="SummaryResponse[{{ $loop->index }}][response]"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['response'] }}</textarea>
-                                                                </td>
-                                                                <td>
-                                                                    <textarea 
-                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                        name="SummaryResponse[{{ $loop->index }}][reference_id]"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['reference_id'] }}</textarea>
-                                                                </td>
-                                                                <td>
-                                                                    <textarea 
-                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                        name="SummaryResponse[{{ $loop->index }}][status]"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] }}</textarea>
-                                                                </td>
+                                                        <tr>
+                                                            <td disabled>{{ $serialNumber++ }}</td>
+                                                            <td>
+                                                                <textarea 
+                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    name="SummaryResponse[{{ $loop->index }}][observation]"
+                                                                    {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['observation'] ?? '' }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea 
+                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    name="SummaryResponse[{{ $loop->index }}][response]"
+                                                                    {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['response'] ?? '' }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea 
+                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    name="SummaryResponse[{{ $loop->index }}][reference_id]"
+                                                                    {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['reference_id'] ?? '' }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea 
+                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    name="SummaryResponse[{{ $loop->index }}][status]"
+                                                                    {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] ?? '' }}</textarea>
+                                                            </td>
+                                                            <td style="width: 91px;">
+                                                                <select
+                                                                    name="SummaryResponse[{{ $loop->index }}][category]"
+                                                                    class="form-select"
+                                                                    {{ in_array($data->stage, [0,1, 5]) ? 'disabled' : '' }}>
+                                                                    <option value="">--Select--</option>
+                                                                    <option value="Major" {{ ($oogrid['category'] ?? '') == 'Major' ? 'selected' : '' }}>Major</option>
+                                                                    <option value="Minor" {{ ($oogrid['category'] ?? '') == 'Minor' ? 'selected' : '' }}>Minor</option>
+                                                                    <option value="Critical" {{ ($oogrid['category'] ?? '') == 'Critical' ? 'selected' : '' }}>Critical</option>
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <textarea 
+                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    name="SummaryResponse[{{ $loop->index }}][remarks]"
+                                                                    {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['remarks'] ?? '' }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <button class="removeRowBtn"
+                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}>Remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
 
-                                                                <td>
-                                                                    <select
-                                                                        name="SummaryResponse[{{ $loop->index }}][category]"
-                                                                        class="form-select"
-                                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
-                                                                        <option value="">--Select--</option>
-                                                                        <option value="Major" {{ $oogrid['category'] == 'Major' ? 'selected' : '' }}>Major</option>
-                                                                        <option value="Minor" {{ $oogrid['category'] == 'Minor' ? 'selected' : '' }}>Minor</option>
-                                                                        <option value="Critical" {{ $oogrid['category'] == 'Critical' ? 'selected' : '' }}>Critical</option>
-                                                                    </select>
-                                                                </td>
-
-                                                                <td>
-                                                                    <textarea 
-                                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                        name="SummaryResponse[{{ $loop->index }}][remarks]"
-                                                                        {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['remarks'] }}</textarea>
-                                                                </td>
-
-                                                                <td>
-                                                                    <button class="removeRowBtn"
-                                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -6293,7 +6292,7 @@
                                         @if ($data->stage == 2 || $data->stage == 3)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Microbiology"> Microbiology Review Comment  Required ?  <span
+                                                    <label for="Microbiology"> Microbiology Review Comment Required ?  <span
                                                             class="text-danger">*</span></label>
                                                     <select name="Microbiology_Review" id="Microbiology_Review">
                                                         <option value="">-- Select --</option>
@@ -7345,7 +7344,8 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option>
+                                           
+                                            <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -7521,7 +7521,9 @@
                                             <option value="">-- Select --</option>
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                            <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option>
+                                          
+                                            <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+                                        
                                         </select>
                                     </div>
                                 </div>
@@ -7653,7 +7655,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other2_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif value='na'>NA</option>
+                                      
                                     </select>
                                 </div>
                             </div>
@@ -7794,7 +7797,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other3_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif value='na'>NA</option>
+                                      
                                     </select>
                                 </div>
                             </div>
@@ -7937,7 +7941,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other4_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif value='na'>NA</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -8084,7 +8089,8 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other5_review == 'na') selected @endif>NA</option>
+                                        <option @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif value='na'>NA</option>
+                                      
                                     </select>
                                 </div>
                             </div>
