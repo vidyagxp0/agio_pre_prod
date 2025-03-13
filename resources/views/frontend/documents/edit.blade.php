@@ -119,7 +119,7 @@
         }
     </script> --}}
 
-<script>
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             let docTypeSelect = document.getElementById("doc-type");
             let allTabs = document.querySelectorAll(".hidden-tabs");
@@ -175,8 +175,8 @@
         padding: 8px;
         text-align: left;
         max-width: 500px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     /* Paragraph Styling Inside Table Cells */
@@ -185,8 +185,8 @@
         text-justify: inter-word;
         margin: 0;
         max-width: 500px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
 
     #isPasted img {
@@ -14409,7 +14409,7 @@
                                         // Fetching Checked By (HOD Review-Submit)
                                         $hodreview = DB::table('stage_manages')
                                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                            ->select('users.name as user_name')
+                                            ->select('users.name as user_name','stage_manages.updated_at as review_date')
                                             ->where('document_id', $document->id)
                                             ->where('stage', 'Review-Submit')
                                             ->whereNull('deleted_at')
@@ -14418,15 +14418,22 @@
                                         // Fetching Approved By (Approval-Submit)
                                         $approverreview = DB::table('stage_manages')
                                             ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                                            ->select('users.name as user_name')
+                                            ->select('users.name as user_name','stage_manages.updated_at as approval_date')
                                             ->where('document_id', $document->id)
                                             ->where('stage', 'Approval-Submit')
                                             ->whereNull('deleted_at')
                                             ->get();
 
-                                        // Get names from the collections
-                                        $checkedBy = $hodreview->pluck('user_name')->implode(', ');
-                                        $approvedBy = $approverreview->pluck('user_name')->implode(', ');
+                                        $checkedBy = $hodreview->map(function($review) {
+                                                    return $review->user_name . ' (' . \Carbon\Carbon::parse($review->review_date)->format('d-m-Y') . ')';
+                                                })->implode(', ');
+
+                                        $approvedBy = $approverreview->map(function($approval) {
+                                                        return $approval->user_name . ' (' . \Carbon\Carbon::parse($approval->approval_date)->format('d-m-Y') . ')';
+                                                    })->implode(', ');
+
+                                        $preparedBy = Helpers::getInitiatorName($document->originator_id) . ' (' . \Carbon\Carbon::now()->format('d-m-Y') . ')';
+
                                     @endphp
 
                                     <tbody>
@@ -14442,7 +14449,7 @@
                                                     <td><input type="text" name="product[{{ $key }}][shelf_life]" value="{{ $product['shelf_life'] ?? '' }}"></td>
                                                     <td><input type="text" name="product[{{ $key }}][sample_quantity]" value="{{ $product['sample_quantity'] ?? '' }}"></td>
                                                     <td><input type="text" name="product[{{ $key }}][storage_condition]" value="{{ $product['storage_condition'] ?? '' }}"></td>
-                                                    <td><input type="text" name="product[{{ $key }}][prepared_by_quality_person]" value="{{ Helpers::getInitiatorName($document->originator_id) }}" readonly></td>
+                                                    <td><input type="text" name="product[{{ $key }}][prepared_by_quality_person]" value="{{ $preparedBy }}" readonly></td>
                                                     <td><input type="text" name="product[{{ $key }}][checked_by_qc_hod_designee]" value="{{ $checkedBy }}" readonly></td>
                                                     <td><input type="text" name="product[{{ $key }}][approved_by_qa_hod_designee]" value="{{ $approvedBy }}" readonly></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
@@ -14473,6 +14480,7 @@
                         <script>
                             $(document).ready(function () {
                                 let investDetails = {{ isset($decodedProductData) ? count($decodedProductData) : 1 }};
+                                let currentDate = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
                                 let preparedBy = "{{ Helpers::getInitiatorName($document->originator_id) }}";
                                 let checkedBy = "{{ $checkedBy }}";
                                 let approvedBy = "{{ $approvedBy }}";
@@ -14490,7 +14498,7 @@
                                             <td><input type="text" name="product[${investDetails}][shelf_life]"></td>
                                             <td><input type="text" name="product[${investDetails}][sample_quantity]"></td>
                                             <td><input type="text" name="product[${investDetails}][storage_condition]"></td>
-                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]" value="${preparedBy}" readonly></td>
+                                            <td><input type="text" name="product[${investDetails}][prepared_by_quality_person]" value="${preparedBy} (${currentDate})" readonly></td>
                                             <td><input type="text" name="product[${investDetails}][checked_by_qc_hod_designee]" readonly></td>
                                             <td><input type="text" name="product[${investDetails}][approved_by_qa_hod_designee]" readonly></td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
@@ -14559,7 +14567,7 @@
                                                     <td><input type="text" name="row_material[{{ $key }}][grade]" value="{{ $material['grade'] ?? '' }}"></td>
                                                     <td><input type="text" name="row_material[{{ $key }}][sample_quantity]" value="{{ $material['sample_quantity'] ?? '' }}"></td>
                                                     <td><input type="text" name="row_material[{{ $key }}][storage_condition]" value="{{ $material['storage_condition'] ?? '' }}"></td>
-                                                    <td><input type="text" name="row_material[{{ $key }}][prepared_quality_person_sign_date]" value="{{ Helpers::getInitiatorName($document->originator_id) }}" readonly></td>
+                                                    <td><input type="text" name="row_material[{{ $key }}][prepared_quality_person_sign_date]" value="{{ $preparedBy }}" readonly></td>
                                                     <td><input type="text" name="row_material[{{ $key }}][check_by_qc_hod_designee_sign]" value="{{ $checkedBy }}" readonly></td>
                                                     <td><input type="text" name="row_material[{{ $key }}][approved_by_qa_hod_desinee_sign]" value="{{ $approvedBy }}" readonly></td>
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
@@ -14587,6 +14595,7 @@
                         <script>
                             $(document).ready(function () {
                                 let investDetails = {{ isset($decodedMaterialData) ? count($decodedMaterialData) : 1 }};
+                                let currentDate = new Date().toLocaleDateString('en-GB').replace(/\//g, '-');
                                 let preparedBy = "{{ Helpers::getInitiatorName($document->originator_id) }}";
                                 let checkedBy = "{{ $checkedBy }}";
                                 let approvedBy = "{{ $approvedBy }}";
@@ -14601,7 +14610,7 @@
                                             <td><input type="text" name="row_material[${investDetails}][grade]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][sample_quantity]"></td>
                                             <td><input type="text" name="row_material[${investDetails}][storage_condition]"></td>
-                                            <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]" value="${preparedBy}" readonly></td>
+                                            <td><input type="text" name="row_material[${investDetails}][prepared_quality_person_sign_date]" value="${preparedBy}" (${currentDate}) readonly></td>
                                             <td><input type="text" name="row_material[${investDetails}][check_by_qc_hod_designee_sign]" readonly></td>
                                             <td><input type="text" name="row_material[${investDetails}][approved_by_qa_hod_desinee_sign]" readonly> </td>
                                             <td><button type="button" class="removeRowBtn">Remove</button></td>
@@ -15721,6 +15730,7 @@
     </div>
 
     <script>
+        
         var editor = new FroalaEditor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
@@ -15732,11 +15742,11 @@
             videoUploadParam: 'image_param',
             videoUploadURL: "{{ route('api.upload.file') }}",
             videoMaxSize: 500 * 1024 * 1024,
-        });
-
-
+         });
+         
         $(".summernote-disabled").FroalaEditor("edit.off");
     </script>
+
     <script>
         VirtualSelect.init({
             ele: '#reference_record,#parent_child, #notify_to'
