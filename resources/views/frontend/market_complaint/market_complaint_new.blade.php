@@ -1573,14 +1573,28 @@
                                                         <td><input disabled type="text"
                                                                 name="brain_stroming_details[0][serial]" value="1">
                                                         </td>
-                                                        <td><input type="text"
-                                                                name="brain_stroming_details[0][possibility_bssd]"></td>
-                                                        <td><input type="text"
+                                                        <td>
+                                                            <textarea  name="brain_stroming_details[0][possibility_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="brain_stroming_details[0][factscontrols_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="brain_stroming_details[0][probable_cause_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="brain_stroming_details[0][remarks_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+
+
+                                                        {{-- <td><input type="text"
+                                                                name="brain_stroming_details[0][possibility_bssd]"></td> --}}
+                                                        {{-- <td><input type="text"
                                                                 name="brain_stroming_details[0][factscontrols_bssd]"></td>
                                                         <td><input type="text"
                                                                 name="brain_stroming_details[0][probable_cause_bssd]"></td>
                                                         <td><input type="text"
-                                                                name="brain_stroming_details[0][remarks_bssd]"></td>
+                                                                name="brain_stroming_details[0][remarks_bssd]"></td> --}}
                                                         <td><button type="button" class="removeRowBtn">Remove</button>
                                                         </td>
                                                     </tr>
@@ -1601,20 +1615,30 @@
 
                                             function generateTableRow(serialNumber) {
                                                 var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][possibility_bssd]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][factscontrols_bssd]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][probable_cause_bssd]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][remarks_bssd]"></td>' +
+                                                '<tr>' +
+                                                    '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][possibility_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][remarks_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
                                                     '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                    '</tr>';
+                                                '</tr>';
                                                 return html;
+
+                                                    // '<tr>' +
+                                                    // '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][possibility_bssd]"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][factscontrols_bssd]"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][probable_cause_bssd]"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][remarks_bssd]"></td>' +
+                                                    // '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    // '</tr>';
+
                                             }
 
                                             var tableBody = $('#brain_stroming_details tbody');
