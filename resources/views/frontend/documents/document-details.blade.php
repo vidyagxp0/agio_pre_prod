@@ -272,7 +272,7 @@
                                                 <div class="">Effective</div>
                                             @endif
                                             @if ($document->stage == 12)
-                                                <div class="active">Obsolete</div>
+                                                <div class="bg-danger">Obsolete</div>
                                             @else
                                                 <div class="">Obsolete</div>
                                             @endif
@@ -338,7 +338,7 @@
                                                 <div class="">Effective</div>
                                             @endif
                                             @if ($document->stage == 12)
-                                                <div class="active">Obsolete</div>
+                                                <div class="bg-danger">Obsolete</div>
                                             @else
                                                 <div class="">Obsolete</div>
                                             @endif

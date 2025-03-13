@@ -1229,7 +1229,7 @@
 
                     @if ($stageEffective)
                         @if ($stageEffective->stage == 'Effective')
-                            <input type="hidden" name="stage_id" value="Effective-Submit" />
+                            <input type="hidden" name="stage_id" value="11" />
                         @endif
                     @endif
 
@@ -1250,7 +1250,7 @@
                     @endif
 
                     @if ($document->stage == 10)
-                        <input type="hidden" name="stage_id" value="Effective" />
+                        <input type="hidden" name="stage_id" value="11" />
                     @endif
                 
                 @endif
