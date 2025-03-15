@@ -6564,10 +6564,10 @@ class DocumentController extends Controller
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'IPS' => 'frontend.documents.inprocess_s-pdf',
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RMS' => 'frontend.documents.raw_ms-pdf',
-            'PMS' => 'frontend.documents.package_ms-pdf',
+            'RAWMS' => 'frontend.documents.raw_ms-pdf',
+            'PAMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
@@ -6685,7 +6685,7 @@ class DocumentController extends Controller
 
     public function getRecordsByType(Request $request)
     {
-        $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
+        $allowedTypes = ['FPS', 'INPS', 'CVS', 'RAWMS'];
         
         $records = Document::whereIn('document_type_id', $allowedTypes)->get();
     
@@ -7082,10 +7082,10 @@ class DocumentController extends Controller
                 'SOP' => 'frontend.documents.pdfpage',
                 'BOM' => 'frontend.documents.bom-pdf',
                 'FPS' => 'frontend.documents.finished-product-pdf',
-                'IPS' => 'frontend.documents.inprocess_s-pdf',
+                'INPS' => 'frontend.documents.inprocess_s-pdf',
                 'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-                'RMS' => 'frontend.documents.raw_ms-pdf',
-                'PMS' => 'frontend.documents.package_ms-pdf',
+                'RAWMS' => 'frontend.documents.raw_ms-pdf',
+                'PAMS' => 'frontend.documents.package_ms-pdf',
                 'PIAS' => 'frontend.documents.product_item-pdf',
                 'MFPS' => 'frontend.documents.mfps-pdf',
                 'MFPSTP' => 'frontend.documents.mfpstp-pdf',

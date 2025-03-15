@@ -441,7 +441,7 @@
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
                             
-                            @elseif(in_array($document->document_type_id, ['BOM', 'FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                            @elseif(in_array($document->document_type_id, ['BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
                                 
