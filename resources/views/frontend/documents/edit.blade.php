@@ -6561,7 +6561,26 @@
                                                         @foreach($summaryResult->data as $index => $detail)
                                                             <tr>
                                                                 <td>{{ $ProductDetails++ }}</td>
-                                                                <td><input type="text" name="summaryResult[{{$index}}][revision_no_tds]" value="{{ $detail['revision_no_tds'] ?? '' }}"></td>
+                                                                <td>
+                                                                    {{-- <input type="text" name="summaryResult[{{$index}}][revision_no_tds]" value="{{ $detail['revision_no_tds'] ?? '' }}"> --}}
+                                                                    <select name="summaryResult[{{ $index }}][revision_no_tds]" onchange="getEffectiveDate(this, {{ $document->id }}, {{ $index }})">
+                                                                        <option value="">Select Revision Number</option>
+                                                                        @php
+                                                                            $revisions = ['00'];
+                                                                            if ($document->revised === 'Yes') {
+                                                                                for ($i = 1; $i <= $document->revised_doc; $i++) {
+                                                                                    $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+                                                                                }
+                                                                            }
+                                                                        @endphp
+
+                                                                        @foreach ($revisions as $rev)
+                                                                            <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
+                                                                                {{ $rev }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
                                                                 <td><input type="text" name="summaryResult[{{$index}}][changContNo_tds]" value="{{ $detail['changContNo_tds'] ?? '' }}"></td>
                                                                 <td><input type="date" readonly name="summaryResult[{{$index}}][effectiveDate_tds]" value="{{ $effectiveDate ?? '' }}"></td>
                                                                 <td><input type="text" name="summaryResult[{{$index}}][reasonRevi_tds]" value="{{ $detail['reasonRevi_tds'] ?? '' }}"></td>
@@ -6571,7 +6590,15 @@
                                                     @else
                                                         <tr>
                                                             <td><input disabled type="text" name="summaryResult[0][serial]" value="1"></td>
-                                                            <td><input type="text" name="summaryResult[0][revision_no_tds]"></td>
+                                                            <td>
+                                                                {{-- <input type="text" name="summaryResult[0][revision_no_tds]"> --}}
+                                                            <select name="summaryResult[0][revision_no_tds]">
+                                                                <option value="">Select Revision</option>
+                                                                    <option value="" >
+                                                                        
+                                                                    </option>
+                                                            </select>
+                                                            </td>
                                                             <td><input type="text" name="summaryResult[0][changContNo_tds]"></td>
                                                             <td><input type="date" readonly name="summaryResult[0][effectiveDate_tds]"></td>
                                                             <td><input type="text" name="summaryResult[0][reasonRevi_tds]"></td>
@@ -6604,7 +6631,6 @@
 
                                                 return html;
                                             }
-
                                             var tableBody = $('#job-responsibilty-table tbody');
                                             var rowCount = tableBody.children('tr').length;
                                             var newRow = generateTableRow(rowCount + 1);
@@ -6612,9 +6638,30 @@
                                         });
                                     });
                                 </script>
+                        <script>
+                            function getEffectiveDate(selectElement, documentId, key) {
+                                var revisionNumber = selectElement.value;
+
+                                if (revisionNumber) {
+                                    $.ajax({
+                                        url: '/get-effective-date',
+                                        method: 'GET',
+                                        data: {
+                                            document_id: documentId,
+                                            revision_number: revisionNumber
+                                        },
+                                        success: function(response) {
+                                            if (response.effective_date) {
+                                                $('input[name="summaryResult[' + key + '][revision_no_tds]"]').val(response.effective_date);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
+                        </script>
 
                             </div>
-
                          <div class="button-block">
                             <button type="submit" value="save" name="submit" id="DocsaveButton"
                                 class="saveButton">Save</button>
