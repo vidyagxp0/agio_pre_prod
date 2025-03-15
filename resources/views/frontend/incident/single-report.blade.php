@@ -240,7 +240,8 @@
                         <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                                {{-- {{ Helpers::getFullDepartmentName($data->Initiator_Group) }} --}}
+                                {{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}
                             @else
                                 Not Applicable
                             @endif
@@ -252,8 +253,8 @@
                     <tr>
                         <th class="w-20">Initiation Department Code</th>
                         <td class="w-30">
-                            @if ($data->Initiator_Group)
-                                {{ $data->Initiator_Group }}
+                            @if ($data->initiator_group_code)
+                                {{ $data->initiator_group_code }}
                             @else
                                 Not Applicable
                             @endif
@@ -421,7 +422,7 @@
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                             <thead>
                                 <tr class="table_bg">
-                                    <th style="width: 5%">Row#</th>
+                                    <th style="width: 5%">Sr. No.</th>
                                     <th style="width: 12%">Name</th>
                                     <th style="width: 16%">ID Number</th>
                                     <th style="width: 15%">Remarks</th>
@@ -480,7 +481,7 @@
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                             <thead>
                                 <tr class="table_bg">
-                                    <th style="width: 4%">Row#</th>
+                                    <th style="width: 4%">Sr. No.</th>
                                     <th style="width: 16%">Document Name</th>
                                     <th style="width: 12%">Document Number</th>
                                     <th style="width: 16%">Remarks</th>
@@ -539,7 +540,7 @@
                         <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                             <thead>
                                 <tr class="table_bg">
-                                    <th style="width: 4%">Row#</th>
+                                    <th style="width: 4%">Sr. No.</th>
                                     <th style="width: 12%">Product Material</th>
                                     <th style="width: 16%">Stage</th>
                                     <th style="width: 16%">A.R.No. / Batch No</th>
@@ -649,7 +650,7 @@
             <br>
             <div class="block">
                 <div class="block-head">
-                    HOD Review
+                    HOD initial Review
                 </div>
                 <table>
                     <tr>
