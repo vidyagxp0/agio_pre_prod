@@ -577,39 +577,48 @@
                                 </div>
                             </div> --}}
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Is Repeat"><b>Is Repeat</b></label>
-                                        <select name="is_repeat_ooc" id="is_repeat_ooc">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            {{-- <option value="NA">NA</option> --}}
-
-                                        </select>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initiator Group"></label>
-                                    <select name="is_repeat_ooc" onchange="">
-                                        <option value="0">-- select --</option>
-                                        <option value="YES">Yes</option>
-                                        <option value="NO">No</option>
-
+                                    <label for="Is Repeat"><b>Is Repeat</b></label>
+                                    <select name="is_repeat_ooc" id="is_repeat_ooc" onchange="toggleRepeatNature()">
+                                        <option value="0">-- Select --</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
-
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Repeat Nature">Repeat Nature</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="Repeat_Nature" id="summernote-1"></textarea>
+                            <div class="col-md-12 mb-3" id="repeat_nature_field" style="display: none;">
+                                <div class="group-input">
+                                    <label for="Repeat Nature">
+                                        Repeat Nature <span id="repeat_required" style="color: red; display: none;">*</span>
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                     </div>
+                                    <textarea class="summernote" name="Repeat_Nature" id="repeat_nature"></textarea>
                                 </div>
+                            </div>
+
+                            <script>
+                                function toggleRepeatNature() {
+                                    var repeatSelect = document.getElementById("is_repeat_ooc");
+                                    var repeatField = document.getElementById("repeat_nature_field");
+                                    var repeatRequired = document.getElementById("repeat_required");
+                                    var repeatTextarea = document.getElementById("repeat_nature");
+
+                                    if (repeatSelect.value === "Yes") {
+                                        repeatField.style.display = "block";
+                                        repeatRequired.style.display = "inline";
+                                        repeatTextarea.setAttribute("required", "required");
+                                    } else {
+                                        repeatField.style.display = "none";
+                                        repeatRequired.style.display = "none";
+                                        repeatTextarea.removeAttribute("required");
+                                    }
+                                }
+                            </script>
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">

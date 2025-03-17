@@ -1423,51 +1423,51 @@
 
 
 
-<div class="col-lg-12">
-    <div class="group-input">
-        <label for="Is Repeat"><b>Is Repeat</b></label>
-        <select id="is_repeat_ooc" name="is_repeat_ooc" 
-            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} onchange="toggleRepeatNature()">
-            <option value="0" {{ $ooc->is_repeat_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
-            <option value="Yes" {{ $ooc->is_repeat_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-            <option value="No" {{ $ooc->is_repeat_ooc == 'No' ? 'selected' : '' }}>No</option>
-        </select>
-    </div>
-</div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Is Repeat"><b>Is Repeat</b></label>
+                                    <select id="is_repeat_ooc" name="is_repeat_ooc" 
+                                        {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} onchange="toggleRepeatNature()">
+                                        <option value="0" {{ $ooc->is_repeat_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+                                        <option value="Yes" {{ $ooc->is_repeat_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="No" {{ $ooc->is_repeat_ooc == 'No' ? 'selected' : '' }}>No</option>
+                                    </select>
+                                </div>
+                            </div>
 
-<div class="col-md-12 mb-3" id="repeat_nature_field" style="display: none;">
-    <div class="group-input">
-        <label for="Repeat Nature">Repeat Nature <span id="repeat-required-star" class="text-danger" style="display: none;">*</span></label>
-        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-        <textarea class="summernote" name="Repeat_Nature" id="repeat_nature_textarea" 
-            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->Repeat_Nature }}</textarea>
-    </div>
-</div>
+                            <div class="col-md-12 mb-3" id="repeat_nature_field" style="display: none;">
+                                <div class="group-input">
+                                    <label for="Repeat Nature">Repeat Nature <span id="repeat-required-star" class="text-danger" style="display: none;">*</span></label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="Repeat_Nature" id="repeat_nature_textarea" 
+                                        {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->Repeat_Nature }}</textarea>
+                                </div>
+                            </div>
 
-<script>
-    function toggleRepeatNature() {
-        var select = document.getElementById("is_repeat_ooc");
-        var repeatField = document.getElementById("repeat_nature_field");
-        var requiredStar = document.getElementById("repeat-required-star");
-        var textarea = document.getElementById("repeat_nature_textarea");
+                            <script>
+                                function toggleRepeatNature() {
+                                    var select = document.getElementById("is_repeat_ooc");
+                                    var repeatField = document.getElementById("repeat_nature_field");
+                                    var requiredStar = document.getElementById("repeat-required-star");
+                                    var textarea = document.getElementById("repeat_nature_textarea");
 
-        if (select.value === "Yes") {
-            repeatField.style.display = "block";
-            requiredStar.style.display = "inline";
-            textarea.setAttribute("required", "required");
-            textarea.removeAttribute("disabled");
-        } else {
-            repeatField.style.display = "none";
-            requiredStar.style.display = "none";
-            textarea.removeAttribute("required");
-            textarea.setAttribute("disabled", "disabled");
-        }
-    }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        toggleRepeatNature(); // Ensure correct visibility on page load
-    });
-</script>
+                                    if (select.value === "Yes") {
+                                        repeatField.style.display = "block";
+                                        requiredStar.style.display = "inline";
+                                        textarea.setAttribute("required", "required");
+                                        textarea.removeAttribute("disabled");
+                                    } else {
+                                        repeatField.style.display = "none";
+                                        requiredStar.style.display = "none";
+                                        textarea.removeAttribute("required");
+                                        textarea.setAttribute("disabled", "disabled");
+                                    }
+                                }
+                                
+                                document.addEventListener("DOMContentLoaded", function() {
+                                    toggleRepeatNature(); // Ensure correct visibility on page load
+                                });
+                            </script>
 
 
                                 <div class="col-lg-12">
