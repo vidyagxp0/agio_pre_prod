@@ -282,6 +282,8 @@
                                         </div>
                                     </div> -->
 
+                              {{--                         
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department <span
@@ -311,9 +313,7 @@
                                             <option value="RA">Regulatory Affairs</option>
                                             <option value="PV">Pharmacovigilance</option>
                                         </select>
-                                        {{-- @error('Initiator_Group')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror --}}
+                                        
                                     </div>
                                 </div>
 
@@ -341,6 +341,75 @@
                                         document.getElementById('initiator_group_code').value = selectedValue;
                                     });
                                 </script>
+
+
+                                --}}
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiation Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+                                                
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                            value="" readonly>
+                                    </div>
+                                </div>
+
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -453,20 +522,14 @@
 
 
 
-
-
-
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through" onchange="">
+                                        <select name="initiated_through" id="initiated_through" onchange="toggleOtherField()">
                                             <option value="0">-- select --</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
                                             <option value="deviation">Deviation</option>
                                             <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
                                             <option value="lab-incident">Lab Incident</option>
                                             <option value="improvement">Improvement</option>
                                             <option value="others">Others</option>
@@ -474,16 +537,33 @@
                                     </div>
                                 </div>
 
-
-
-                                <div class="col-md-12 mb-3">
+                                <div class="col-md-12 mb-3" id="if_other_field" style="display: none;">
                                     <div class="group-input">
-                                        <label for="If Other">If Other</label>
+                                        <label for="If Other">If Other <span id="required-star" class="text-danger" style="display: none;">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="initiated_if_other" id="summernote-1"></textarea>
                                     </div>
                                 </div>
+
+                                <script>
+                                    function toggleOtherField() {
+                                        var select = document.getElementById("initiated_through");
+                                        var otherField = document.getElementById("if_other_field");
+                                        var requiredStar = document.getElementById("required-star");
+                                        var textarea = document.getElementById("summernote-1");
+
+                                        if (select.value === "others") {
+                                            otherField.style.display = "block";
+                                            requiredStar.style.display = "inline";
+                                            textarea.setAttribute("required", "required");
+                                        } else {
+                                            otherField.style.display = "none";
+                                            requiredStar.style.display = "none";
+                                            textarea.removeAttribute("required");
+                                        }
+                                    }
+                                </script>
                                 {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="affected documents closed"><b>Affected Documents Closed</b></label>
@@ -591,17 +671,17 @@
                                         <label for="search">
                                             OOC Logged by <span class="text-danger"></span>
                                         </label>
-                                        <!-- <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="ooc_logged_by">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
-    <option value="{{ $data->id }}">{{ $data->name }}</option>
-    @endforeach
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
-                                        @error('assign_to')
-        <p class="text-danger">{{ $message }}</p>
-    @enderror -->
+                                        @error('ooc_logged_by')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
 
-                                        <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text" />
+                                        <!-- <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text" /> -->
 
                                     </div>
                                 </div>
@@ -609,9 +689,7 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">OOC Logged On <span class="text-danger"></span></label>
-                                        <p class="text-primary"> last date this record should be closed by</p>
-
-                                        <div class="calenderauditee">
+                                         <div class="calenderauditee">
                                             <input type="text" id="ooc_due_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="ooc_due_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'ooc_due_date')" />
@@ -629,7 +707,7 @@
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
+                                                
                                             </span>
                                         </label>
 
@@ -939,7 +1017,7 @@
                                 {{-- <div class="sub-head">Checklist</div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="checklist">Phase IA Inv. Checklist</label>
+                                        <label for="checklist">Phase IA Investigation Checklist</label>
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -1684,7 +1762,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Corrective Action">Corrective action IB Inv.</label>
+                                        <label for="Corrective Action">Corrective action IB Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea name="initiated_through_capas_ooc_IB" disabled id="summernote-1"></textarea>
@@ -1693,7 +1771,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Preventive Action">Preventive action IB Inv.</label>
+                                        <label for="Preventive Action">Preventive action IB Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea name="initiated_through_capa_prevent_ooc_IB" disabled id="summernote-1"></textarea>
@@ -1703,7 +1781,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Corrective & Preventive Action">Corrective and preventive action IB
-                                            Inv.</label>
+                                        Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea name="initiated_through_capa_corrective_ooc_IB" disabled id="summernote-1"></textarea>

@@ -324,26 +324,44 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned To
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to"
-                                        {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}>
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
+                                <div class="group-input">
+                                    <label for="search">
+                                        Assigned To
+                                        @if($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to"
+                                        @if($data->stage != 1) class="readonly-select" @endif>
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $value)
+                                            <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                                value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="assign_to" value="{{ $data->assign_to }}">
                                 </div>
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var selectField = document.getElementById('select-state');
+                                    if (selectField.classList.contains('readonly-select')) {
+                                        selectField.addEventListener('mousedown', function (e) {
+                                            e.preventDefault();
+                                        });
+                                    }
+                                });
+                            </script>
 
 
                                 <div class="col-md-6 new-unique-date-data-field">
                                     <div class="group-input input-unique-date">
-                                        <label for="unique_due_date">Due Date <span class="text-danger"></span></label>
+                                        <label for="unique_due_date">Due Date 
+                                        @if($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif    
+                                       </label>
                                         <p class="text-primary">Last date this record should be closed by</p>
 
                                         <div class="unique-calenderauditee" style="position: relative;">
@@ -411,8 +429,10 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        <label for="Short Description">Short Description 
+                                        @if($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif</label><span id="rchars">255</span>
                                         characters remaining
                                         {{-- <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea> --}}
                                         <input type="text" name="short_description" id="docname" required
@@ -438,7 +458,11 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
+                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan 
+                                        @if($data->stage == 1)
+                                            <span class="text-danger">*</span>
+                                        @endif
+                                        </b></label>
                                         <input type="text" name="Effectiveness_check_Plan"
                                             {{ $data->stage == 1 ? '' : 'readonly' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
@@ -594,7 +618,7 @@
                             <div class="group-input">
                                 <label for="Effectiveness Results">Effectiveness Results</label>
                                 <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results"
-                                    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->Effectiveness_Results }} </textarea>
+                                    {{$data->stage == 3 ? '' : 'readonly' }}>{{ $data->Effectiveness_Results }} </textarea>
                             </div>
                         </div>
                         @endif
@@ -644,7 +668,8 @@
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="Effectiveness Summary">Effectiveness Summary</label>
+                                <label for="Effectiveness Summary">Effectiveness Summary <span
+                                style="color: red;">*</span></label>
                                 <textarea name="effect_summary" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->effect_summary }}</textarea>
                             </div>
                         </div>
