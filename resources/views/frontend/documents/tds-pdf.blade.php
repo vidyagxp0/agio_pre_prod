@@ -973,7 +973,7 @@
                             <thead>
                                 <tr>
                                     <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                                    {{-- <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th> --}}
+                                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                                     <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                                     <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                                 </tr>
@@ -984,14 +984,14 @@
                                     @foreach ($SummaryDataGrid as $key => $item)
                                         <tr>
                                             <td>{{ $item['revision_no_tds'] ?? '' }}</td>
-                                            {{-- <td>{{ $item['changContNo_tds'] ?? '' }}</td> --}}
+                                            <td>{{ $item['changContNo_tds'] ?? '' }}</td>
                                             <td>{{ $item['effectiveDate_tds'] ?? '' }}</td>
                                             <td>{{ $item['reasonRevi_tds'] ?? '' }}</td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="3" style="text-align: center; font-weight: bold;">No Data Available</td>
+                                        <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
                                     </tr>
                                 @endif
                             </tbody>
