@@ -6714,13 +6714,13 @@ class DocumentController extends Controller
         $viewName = match ($data->document_type_id) {
             
             'BMR' => 'frontend.documents.bmr-pdf',
-            'BPR' => 'frontend.documents.bpr-pdf',
-            'PROTO' => 'frontend.documents.proto-pdf',
+            // 'BPR' => 'frontend.documents.bpr-pdf',
+            // 'PROTO' => 'frontend.documents.proto-pdf',
             'STUDYPROTOCOL' => 'frontend.documents.protocol.study_protocol',
             'STUDY' => 'frontend.documents.reports.study_report',
             'EQUIPMENTHOLDREPORT' => 'frontend.documents.reports.equipment_hold_report',
             'TEMPMAPPING' => 'frontend.documents.reports.temperatur-mapping-report',
-            'REPORT' => 'frontend.documents.report-pdf',
+            // 'REPORT' => 'frontend.documents.report-pdf',
             'PROVALIDRE' => 'frontend.documents.reports.process-validation-report',
             'PROCUMREPORT' => 'frontend.documents.reports.procumreport',
             'REQULIFICATION'=>'frontend.documents.reports.requlification',
@@ -6775,13 +6775,13 @@ class DocumentController extends Controller
 
         $attachmentFields = [
             'BMR' => 'bmrattachment',
-            'BPR' => 'bprattachment',
-            'PROTO' => 'protoattachment',
+            // 'BPR' => 'bprattachment',
+            // 'PROTO' => 'protoattachment',
             'STUDYPROTOCOL' => 'studyattachment',
             'STUDY' => 'studyattachment',
             'EQUIPMENTHOLDREPORT' => 'studyattachment',
             'TEMPMAPPING' => 'studyattachment',
-            'REPORT' => 'studyattachment',
+            // 'REPORT' => 'studyattachment',
             'PROCUMREPORT' => 'studyattachment',
             'REQULIFICATION' => 'studyattachment',
             'EQUIPMENTHOLDPROTOCOL' => 'studyattachment',

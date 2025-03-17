@@ -54,6 +54,7 @@ class DocumentDetailsController extends Controller
 
   function sendforstagechanage(Request $request)
   {
+    // dd($request->all());
     if ($request->username == Auth::user()->email) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
@@ -802,9 +803,10 @@ class DocumentDetailsController extends Controller
 
               if ($document->revised == 'Yes') {
                 $old_document = Document::where([
-                  'document_number' => $document->document_number,
+                  'record' => $document->record,
                   'status' => 'Effective'
                 ])->first();
+
 
                 if ($old_document) {
                   $old_document->stage = 12;

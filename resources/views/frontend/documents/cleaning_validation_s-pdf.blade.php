@@ -305,7 +305,7 @@
         }
 
         #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            max-width: 600px !important; /* Ensure image doesn't overflow the cell */
             height: 100%; /* Maintain image aspect ratio */
             display: block; /* Remove extra space below the image */
             margin: 5px auto; /* Add spacing and center align */
@@ -319,7 +319,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 650px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 

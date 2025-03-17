@@ -257,7 +257,7 @@
         
         /*Main Table Styling */
         #isPasted {
-            width: 650px !important;
+            width: 690px !important;
         border-collapse: collapse;
         table-layout: fixed;
         }
@@ -314,7 +314,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 650px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 

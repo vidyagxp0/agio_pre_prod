@@ -319,7 +319,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 650px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
