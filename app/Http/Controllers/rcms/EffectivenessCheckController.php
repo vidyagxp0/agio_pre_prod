@@ -1334,6 +1334,23 @@ class EffectivenessCheckController extends Controller
             $lastopenState = EffectivenessCheck::find($id);
             if ($effective->stage == 1) {
 
+                if (!$effective->Effectiveness_check_Plan) {
+
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'General Information Tab is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Acknowledge state'
+                    ]);
+                }
+
                     $effective->stage = '2';
                     $effective->status = 'Acknowledge';
                     $effective->submit_by = Auth::user()->name;
@@ -1524,11 +1541,11 @@ class EffectivenessCheckController extends Controller
             }
             if ($effective->stage == 3) {
 
-                if (!$effective->Effectiveness_Results) {
+                if (!$effective->Effectiveness_Results || !$effective->effect_summary ) {
 
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Effectiveness Results is yet to be filled!',
+                        'message' => 'Effectiveness Check Results Tab is yet to be filled!',
                         'type' => 'warning',
                     ]);
 

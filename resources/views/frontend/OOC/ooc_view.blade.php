@@ -1212,8 +1212,8 @@
                                 </script>
 
 
-
-
+                            {{-- 
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department</label>
@@ -1279,11 +1279,10 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiation Group Code">Initiation Department Code</label>
+                                        <label for="Initiation Group Code">Initiation Department</label>
                                         <input type="text" name="initiator_group_code"
                                             value="{{ $ooc->Initiator_Group }}" id="initiator_group_code" readonly>
-                                        {{-- <div class="default-name"> <span
-                                                    id="initiator_group_code">{{ $ooc->Initiator_Group }}</span></div> --}}
+                                        
                                     </div>
                                 </div>
 
@@ -1293,6 +1292,30 @@
                                         document.getElementById('initiator_group_code').value = selectedValue;
                                     });
                                 </script>
+                            
+                            --}}
+
+
+
+                                <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
+                                </div>
+                                <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiation Group Code">Initiation Department Code</label>
+                                            <input type="text" name="initiator_group_code"
+                                                value="{{ $ooc->initiator_group_code }}" id="initiator_group_code"
+                                                readonly>
+                                            {{-- <div class="default-name"> <span
+                                            id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                        </div>
+                                </div>
+
+
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">

@@ -98,9 +98,10 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger"></span>
+                                            Assigned To <span
+                                            class="text-danger">*</span> 
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -113,7 +114,8 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span
+                                        class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
                                             <input type="text" id="due_date_display" readonly
@@ -122,7 +124,7 @@
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date_display')" />
+                                                oninput="handleDateInput(this, 'due_date_display')"  required />
                                         </div>
                                     </div>
                                 </div>

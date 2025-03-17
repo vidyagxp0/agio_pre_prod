@@ -588,8 +588,10 @@
                                                     id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                                 </div>
                                             </div>
-                                    {{--                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                    {{--                                        
+                                        
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Department </b></label>
                                                 <select name="Initiator_Group"
                                                     {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
