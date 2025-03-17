@@ -1372,86 +1372,103 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
                                         <select name="initiated_through"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} onchange="">
-                                            <option value="0">-- select --</option>
-                                            <option value="recall"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'recall' ? 'selected' : '' }}>
-                                                Recall</option>
-                                            <option value="return"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'return' ? 'selected' : '' }}>
-                                                Return</option>
-                                            <option value="deviation"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'deviation' ? 'selected' : '' }}>
-                                                Deviation</option>
-                                            <option value="complaint"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'complaint' ? 'selected' : '' }}>
-                                                Complaint</option>
-                                            <option value="regulatory"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'regulatory' ? 'selected' : '' }}>
-                                                Regulatory</option>
-                                            <option value="lab-incident"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'lab-incident' ? 'selected' : '' }}>
-                                                Lab Incident</option>
-                                            <option value="improvement"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'improvement' ? 'selected' : '' }}>
-                                                Improvement</option>
-                                            <option value="others"
-                                                {{ isset($ooc) && $ooc->initiated_through == 'others' ? 'selected' : '' }}>
-                                                Others</option>
+                                            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} onchange="toggleOtherField()">
+                                            <option value="">-- select --</option>
+                                            <option value="deviation" {{ isset($ooc) && $ooc->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                            <option value="complaint" {{ isset($ooc) && $ooc->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                            <option value="lab-incident" {{ isset($ooc) && $ooc->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+                                            <option value="improvement" {{ isset($ooc) && $ooc->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
+                                            <option value="others" {{ isset($ooc) && $ooc->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
                                         </select>
                                     </div>
                                 </div>
 
-
-                                <div class="col-md-12 mb-3">
+                                <div class="col-md-12 mb-3" id="if_other_field" style="display: none;">
                                     <div class="group-input">
-                                        <label for="If Other">If Other</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_if_other" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                            || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->initiated_if_other }}</textarea>
+                                        <label for="If Other">If Other <span id="required-star" class="text-danger" style="display: none;">*</span></label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <textarea class="summernote" name="initiated_if_other" id="summernote-1"
+                                            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->initiated_if_other }}</textarea>
                                     </div>
                                 </div>
 
+                                <script>
+                                    function toggleOtherField() {
+                                        var select = document.querySelector("select[name='initiated_through']");
+                                        var otherField = document.getElementById("if_other_field");
+                                        var requiredStar = document.getElementById("required-star");
+                                        var textarea = document.getElementById("summernote-1");
+
+                                        if (select.value === "others") {
+                                            otherField.style.display = "block";
+                                            requiredStar.style.display = "inline";
+                                            textarea.setAttribute("required", "required");
+                                        } else {
+                                            otherField.style.display = "none";
+                                            requiredStar.style.display = "none";
+                                            textarea.removeAttribute("required");
+                                        }
+                                    }
+                                    
+                                    document.addEventListener("DOMContentLoaded", function() {
+                                        toggleOtherField(); // Ensure correct visibility on page load
+                                    });
+                                </script>
 
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Is Repeat"><b>Is Repeat</b></label>
-                                        <select id="initiator_group" name="is_repeat_ooc"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
-                                            <option value="0" {{ $ooc->is_repeat_ooc == '0' ? 'selected' : '' }}>--
-                                                Select --</option>
-                                            <option value="Yes" {{ $ooc->is_repeat_ooc == 'Yes' ? 'selected' : '' }}>
-                                                Yes</option>
-                                            <option value="No" {{ $ooc->is_repeat_ooc == 'No' ? 'selected' : '' }}>No
-                                            </option>
-                                            {{-- <option value="NA" {{ $ooc->is_repeat_ooc == 'NA' ? 'selected' : '' }}>NA</option> --}}
-                                        </select>
-                                    </div>
-                                </div>
 
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Repeat Nature">Repeat Nature</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="Repeat_Nature" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
-                                        {{ $ooc->Repeat_Nature }}
-                                    </textarea>
-                                    </div>
-                                </div>
+<div class="col-lg-12">
+    <div class="group-input">
+        <label for="Is Repeat"><b>Is Repeat</b></label>
+        <select id="is_repeat_ooc" name="is_repeat_ooc" 
+            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} onchange="toggleRepeatNature()">
+            <option value="0" {{ $ooc->is_repeat_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
+            <option value="Yes" {{ $ooc->is_repeat_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
+            <option value="No" {{ $ooc->is_repeat_ooc == 'No' ? 'selected' : '' }}>No</option>
+        </select>
+    </div>
+</div>
+
+<div class="col-md-12 mb-3" id="repeat_nature_field" style="display: none;">
+    <div class="group-input">
+        <label for="Repeat Nature">Repeat Nature <span id="repeat-required-star" class="text-danger" style="display: none;">*</span></label>
+        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+        <textarea class="summernote" name="Repeat_Nature" id="repeat_nature_textarea" 
+            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->Repeat_Nature }}</textarea>
+    </div>
+</div>
+
+<script>
+    function toggleRepeatNature() {
+        var select = document.getElementById("is_repeat_ooc");
+        var repeatField = document.getElementById("repeat_nature_field");
+        var requiredStar = document.getElementById("repeat-required-star");
+        var textarea = document.getElementById("repeat_nature_textarea");
+
+        if (select.value === "Yes") {
+            repeatField.style.display = "block";
+            requiredStar.style.display = "inline";
+            textarea.setAttribute("required", "required");
+            textarea.removeAttribute("disabled");
+        } else {
+            repeatField.style.display = "none";
+            requiredStar.style.display = "none";
+            textarea.removeAttribute("required");
+            textarea.setAttribute("disabled", "disabled");
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        toggleRepeatNature(); // Ensure correct visibility on page load
+    });
+</script>
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -1540,20 +1557,23 @@
                                         <label for="search">
                                             OOC Logged by <span class="text-danger"></span>
                                         </label>
-                                        <!-- <select id="select-state" placeholder="Select..." name="assign_to" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
-                                                                                            <option value="">-- Select a value --</option>
-                                                                                            @foreach ($users as $key => $value)
-    <option  @if ($ooc->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
-    @endforeach
-                                                                                        </select>
-                                                                                        @error('assign_to')
-        <p class="text-danger">{{ $message }}</p>
-    @enderror -->
+                                        <select id="select-state" placeholder="Select..." name="ooc_logged_by"
+                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                                            <option value="">-- Select a value --</option>
+                                            @foreach ($users as $key => $value)
+                                                <option @if ($ooc->ooc_logged_by == $value->id) selected @endif
+                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('ooc_logged_by')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
 
-                                        <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text"
+                                        <!-- <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text"
                                             value = "{{ $ooc->ooc_logged_by }}"
                                             {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
+                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} /> -->
                                     </div>
                                 </div>
 
@@ -1593,8 +1613,7 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="ooc_due_date">OOC Logged On <span class="text-danger"></span></label>
-                                        <p class="text-primary">Last date this record should be closed by</p>
-
+                                      
                                         <div class="calenderauditee">
                                             <input type="text" id="ooc_due_date_display" readonly
                                                 placeholder="DD-MM-YYYY"
@@ -1640,7 +1659,7 @@
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
+                                               
                                             </span>
                                         </label>
 
@@ -2066,7 +2085,7 @@
                                 {{-- <div class="sub-head">Checklist</div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="checklist">Phase IA Inv. Checklist</label>
+                                        <label for="checklist">Phase IA Investigation Checklist</label>
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -3119,7 +3138,7 @@
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Corrective Action">Corrective action IB Inv.</label>
+                            <label for="Corrective Action">Corrective action IB Investigation</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
                             <textarea name="initiated_through_capas_ooc_IB" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
@@ -3129,7 +3148,7 @@
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Preventive Action">Preventive action IB Inv.</label>
+                            <label for="Preventive Action">Preventive action IB Investigation</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
                             <textarea name="initiated_through_capa_prevent_ooc_IB" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
@@ -3139,7 +3158,7 @@
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Corrective & Preventive Action">Corrective and preventive action IB Inv.</label>
+                            <label for="Corrective & Preventive Action">Corrective and preventive action IB Investigation</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
                             <textarea name="initiated_through_capa_corrective_ooc_IB"

@@ -324,24 +324,35 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned To
+                                <div class="group-input">
+                                    <label for="search">
+                                        Assigned To
                                         @if($data->stage == 1)
                                             <span class="text-danger">*</span>
                                         @endif
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to"
-                                        {{ $data->stage == 0 || $data->stage == 7 || $data->stage == 9 ? 'disabled' : '' }}>
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to"
+                                        @if($data->stage != 1) class="readonly-select" @endif>
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $value)
+                                            <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                                value="{{ $value->id }}">{{ $value->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="assign_to" value="{{ $data->assign_to }}">
                                 </div>
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var selectField = document.getElementById('select-state');
+                                    if (selectField.classList.contains('readonly-select')) {
+                                        selectField.addEventListener('mousedown', function (e) {
+                                            e.preventDefault();
+                                        });
+                                    }
+                                });
+                            </script>
 
 
                                 <div class="col-md-6 new-unique-date-data-field">
@@ -600,14 +611,14 @@
 
                                         </label>
                                         <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results" required
-                                            {{ $data->stage == 3 ? '' : 'disabled' }} required>{{ $data->Effectiveness_Results }}</textarea>
+                                            {{ $data->stage == 3 ? '' : 'readonly' }} required>{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                             </div>
                         @else
                             <div class="group-input">
                                 <label for="Effectiveness Results">Effectiveness Results</label>
                                 <textarea type="text" name="Effectiveness_Results" id="Effectiveness_Results"
-                                    {{$data->stage == 3 ? '' : 'disabled' }}>{{ $data->Effectiveness_Results }} </textarea>
+                                    {{$data->stage == 3 ? '' : 'readonly' }}>{{ $data->Effectiveness_Results }} </textarea>
                             </div>
                         </div>
                         @endif
