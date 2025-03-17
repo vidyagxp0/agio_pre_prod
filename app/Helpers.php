@@ -806,7 +806,7 @@ class Helpers
             'FPSTP' => 'Finished product Standard Testing Procedure',
             'INPSTP' => 'Inprocess Standard Testing Procedure',
             'CVSTP' => 'Cleaning validation Standard Testing Procedure',
-            'RMS' => 'Raw Material Specification',
+            'RAWMS' => 'Raw Material Specification',
             'RMSTP' => 'Raw Material Standard Testing Procedure',
             'PAMS' =>'Packing Material Specification',
             'PIAS' =>'Product / Item Information-Addendum for Specification',
