@@ -27,7 +27,13 @@ class ExtensionNewController extends Controller
 
     public function index(Request $request)
     {
+
+       
         $data = "test";
+        // $currentExtensionId = extension_new::max('id') ?? 1;
+        // $previousExtensionId = $currentExtensionId - 1;
+        // $previousDueDate = extension_new::where('id', $previousExtensionId)->value('proposed_due_date');
+        // dd($previousDueDate);
         $record_numbers = (RecordNumber::first()->value('counter')) + 1;
         $record_number = str_pad($record_numbers, 4, '0', STR_PAD_LEFT);
         $reviewers = DB::table('user_roles')
@@ -87,8 +93,12 @@ class ExtensionNewController extends Controller
             $relatedRecords = $relatedRecords->merge($records);
         }
 
-        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords', 'record_number'));
+        $parent_due_date = '';
+        
+
+        return View('frontend.extension.extension_new', compact('data', 'reviewers', 'approvers', 'relatedRecords', 'record_number','parent_due_date'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -592,6 +602,9 @@ class ExtensionNewController extends Controller
     public function show(Request $request, $id)
     {
         $extensionNew = extension_new::find($id);
+        // $currentExtensionId = $id;
+        // $previousExtensionId = $currentExtensionId - 1;
+        // $previousDueDate = extension_new::where('id', $previousExtensionId)->value('proposed_due_date');
         // if ($extensionNew->parent_type == "LabIncident") {
         //     $count = extension_new::where('parent_type', 'LabIncident')->count();
         // }

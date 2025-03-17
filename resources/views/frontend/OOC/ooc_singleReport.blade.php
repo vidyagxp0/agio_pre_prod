@@ -425,7 +425,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 20px;">Sr No.</th>
+                                <th class="w-20" style="width: 20px;">Sr.No.</th>
                                 <th class="w-20">Instrument Name</th>
                                 <th class="w-20">Instrument ID</th>
                                 <th class="w-20">Remarks</th>
@@ -616,7 +616,7 @@
                     <table>
                         <thead>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 20px;">Sr No.</th>
+                                <th class="w-20" style="width: 20px;">Sr.No.</th>
                                 <th class="w-20" style="width: 55%;">Question</th>
                                 <th class="w-20" style="width: 100px;">Response</th>
                                 <th class="w-20" style="width: 100px;">Remarks</th>
