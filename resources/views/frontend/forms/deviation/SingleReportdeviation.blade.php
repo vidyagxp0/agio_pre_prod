@@ -285,6 +285,17 @@
                                 Not Applicable
                             @endif
                         </td>
+
+                    </tr>
+                    <tr>
+                    <th class="w-20">Initiation Department Code</th>
+                        <td class="w-30">
+                            @if ($data->initiator_group_code)
+                                {{ $data->initiator_group_code }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
 
                 </table>
@@ -439,14 +450,17 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20"> Description of Deviation</th>
-                        <td class="w-30">
+                    <th class="w-20"> Description of Deviation</th>
+                        <td class="w-30" colspan="3">
                             @if ($data->discb_deviat)
                                 {{ $data->discb_deviat }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
+                        
                         <th class="w-20">HOD Person</th>
                         <td class="w-30">
                             @if ($data->Hod_person_to)
@@ -478,17 +492,21 @@
 
                     </tr>
 
+
                     <tr>
-                        <th class="w-20"> Immediate Action (if any)</th>
-                        <td class="w-30">
+                    <th class="w-20"> Immediate Action (if any)</th>
+                        <td class="w-30" colspan="3">
                             @if ($data->Immediate_Action)
                                 {{ $data->Immediate_Action }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
+                        
                         <th class="w-20">Preliminary Impact of Deviation</th>
-                        <td class="w-30">
+                        <td class="w-30" colspan="3">
                             @if ($data->Preliminary_Impact)
                                 {{ strip_tags($data->Preliminary_Impact) }}
                             @else
@@ -843,7 +861,19 @@
                     QA/CQA Initial Assessment
                 </div>
                 <table>
+
+                <tr>
+                <th class="w-20">Initial Deviation category</th>
+                        <td class="w-30">
+                            @if ($data->Deviation_category)
+                                {{ Ucfirst($data->Deviation_category) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                </tr>
                     <tr>
+                        
                         <th class="w-20">CAPA Required</th>
                         <td class="w-30">
                             @if ($data->capa_required)
@@ -872,14 +902,7 @@
                             @endif
                         </td>
 
-                        <th class="w-20">Initial Deviation category</th>
-                        <td class="w-30">
-                            @if ($data->Deviation_category)
-                                {{ Ucfirst($data->Deviation_category) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        
 
                     </tr>
                 </table>
@@ -2407,7 +2430,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <th class="w-20">Contract Giver Person</th>
+                                    <th class="w-20">Contract Giver comment update by</th>
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->ContractGiver_person)
@@ -2836,14 +2859,14 @@
                                 @if ($data1->Other3_attachment)
                                     @foreach (json_decode($data1->Other3_attachment) as $key => $file)
                                         <tr>
-                                            <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20">{{ $key + 1 }}</td>
                                             <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
                                                     target="_blank"><b>{{ $file }}</b></a> </td>
                                         </tr>
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td class="w-20">4</td>
+                                        <td class="w-20">1</td>
                                         <td class="w-20">Not Applicable</td>
                                     </tr>
                                 @endif
@@ -3750,239 +3773,269 @@
                             </style>
 
 
-    <div class="block-head">Failure Mode And Effect Analysis</div>
-    <div class="table-responsive">
-    <table class="tableFMEA">
-        <thead>
-            <tr class="table_bg" style="text-align: center; vertical-align: middle; padding: 20px;">
-                <th class="thFMEA" rowspan="2">Row #</th>
-                <th class="thFMEA" colspan="2">Risk Identification</th>
-                <th class="thFMEA">Risk Analysis</th>
-                <th class="thFMEA" colspan="4">Risk Evaluation</th>
-                <th class="thFMEA">Risk Control</th>
-                <th class="thFMEA" colspan="6">Risk Evaluation</th>
-                {{-- <th class="thFMEA">Risk Level</th>
-                <th class="thFMEA">Risk Acceptance (Y/N)</th> --}}
-                <th class="thFMEA" rowspan="2">Traceability Document</th>
-                <!-- <th class="thFMEA"></th>
-                <th class="thFMEA"></th> -->
-                
-            </tr>
-            <tr class="table_bg">
-                <th class="thFMEA">Activity</th>
-                <th class="thFMEA">Possible Risk/Failure</th>
-                <th class="thFMEA">Consequences of Risk/Potential Causes</th>
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">Risk Level(RPN)</th>
-                <th class="thFMEA">Control Measures</th>
-                <th class="thFMEA">Severity (S)</th>
-                <th class="thFMEA">Probability (P)</th>
-                <th class="thFMEA">Detection (D)</th>
-                <th class="thFMEA">RPN</th>
-                <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
-                <th class="thFMEA">Risk Acceptance (Y/N)</th>
-                <!-- <th class="thFMEA">Others</th>
-                <th class="thFMEA">Attchment</th> -->
-                
-                {{-- <th></th> --}}
-            </tr>
-        </thead>
-        <tbody>
-    @if (!empty($riskEffectAnalysis->risk_factor_1) && is_string($riskEffectAnalysis->risk_factor_1) && @unserialize($riskEffectAnalysis->risk_factor_1) !== false)
-        @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
-            <tr>
-                <td class="tdFMEA">{{ $key + 1 }}</td>
-                <td class="tdFMEA">{{ $riskFactor }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->problem_cause_1) && @unserialize($riskEffectAnalysis->problem_cause_1) ? unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->existing_risk_control_1) && @unserialize($riskEffectAnalysis->existing_risk_control_1) ? unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_severity_1) && @unserialize($riskEffectAnalysis->initial_severity_1) ? unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_detectability_1) && @unserialize($riskEffectAnalysis->initial_detectability_1) ? unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_probability_1) && @unserialize($riskEffectAnalysis->initial_probability_1) ? unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_rpn_1) && @unserialize($riskEffectAnalysis->initial_rpn_1) ? unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_control_measure_1) && @unserialize($riskEffectAnalysis->risk_control_measure_1) ? unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_severity_1) && @unserialize($riskEffectAnalysis->residual_severity_1) ? unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_probability_1) && @unserialize($riskEffectAnalysis->residual_probability_1) ? unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_detectability_1) && @unserialize($riskEffectAnalysis->residual_detectability_1) ? unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_rpn_1) && @unserialize($riskEffectAnalysis->residual_rpn_1) ? unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance_1) && @unserialize($riskEffectAnalysis->risk_acceptance_1) ? unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance3) && @unserialize($riskEffectAnalysis->risk_acceptance3) ? unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->mitigation_proposal_1) && @unserialize($riskEffectAnalysis->mitigation_proposal_1) ? unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null : null }}</td>
-                <!-- <td class="tdFMEA">{{ is_string($riskEffectAnalysis->conclusion) && @unserialize($riskEffectAnalysis->conclusion) ? unserialize($riskEffectAnalysis->conclusion)[$key] ?? null : null }}</td>
-                <td class="tdFMEA">{{ is_string($riskEffectAnalysis->attachment) && @unserialize($riskEffectAnalysis->attachment) ? unserialize($riskEffectAnalysis->attachment)[$key] ?? null : null }}</td> -->
-            </tr>
-        @endforeach
-    @else
-        <tr>
-            <td colspan="18">No data available.</td>
-        </tr>
-    @endif
-</tbody>
 
-    </table>
-</div>
+                        <div class="border-table">
+                            <div class="block-head">
+                            Other attachment
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->other_attachment)
+                                    @foreach (json_decode($data->other_attachment) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
 
 
+                            <div class="block-head">Failure Mode And Effect Analysis</div>
+                            <div class="table-responsive">
+                            <table class="tableFMEA">
+                                <thead>
+                                    <tr class="table_bg" style="text-align: center; vertical-align: middle; padding: 20px;">
+                                        <th class="thFMEA" rowspan="2">Row #</th>
+                                        <th class="thFMEA" colspan="2">Risk Identification</th>
+                                        <th class="thFMEA">Risk Analysis</th>
+                                        <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                                        <th class="thFMEA">Risk Control</th>
+                                        <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                        {{-- <th class="thFMEA">Risk Level</th>
+                                        <th class="thFMEA">Risk Acceptance (Y/N)</th> --}}
+                                        <th class="thFMEA" rowspan="2">Traceability Document</th>
+                                        <!-- <th class="thFMEA"></th>
+                                        <th class="thFMEA"></th> -->
+                                        
+                                    </tr>
+                                    <tr class="table_bg">
+                                        <th class="thFMEA">Activity</th>
+                                        <th class="thFMEA">Possible Risk/Failure</th>
+                                        <th class="thFMEA">Consequences of Risk/Potential Causes</th>
+                                        <th class="thFMEA">Severity (S)</th>
+                                        <th class="thFMEA">Probability (P)</th>
+                                        <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level(RPN)</th>
+                                        <th class="thFMEA">Control Measures</th>
+                                        <th class="thFMEA">Severity (S)</th>
+                                        <th class="thFMEA">Probability (P)</th>
+                                        <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">RPN</th>
+                                        <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
+                                        <th class="thFMEA">Risk Acceptance (Y/N)</th>
+                                        <!-- <th class="thFMEA">Others</th>
+                                        <th class="thFMEA">Attchment</th> -->
+                                        
+                                        {{-- <th></th> --}}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            @if (!empty($riskEffectAnalysis->risk_factor_1) && is_string($riskEffectAnalysis->risk_factor_1) && @unserialize($riskEffectAnalysis->risk_factor_1) !== false)
+                                @foreach (unserialize($riskEffectAnalysis->risk_factor_1) as $key => $riskFactor)
+                                    <tr>
+                                        <td class="tdFMEA">{{ $key + 1 }}</td>
+                                        <td class="tdFMEA">{{ $riskFactor }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->problem_cause_1) && @unserialize($riskEffectAnalysis->problem_cause_1) ? unserialize($riskEffectAnalysis->problem_cause_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->existing_risk_control_1) && @unserialize($riskEffectAnalysis->existing_risk_control_1) ? unserialize($riskEffectAnalysis->existing_risk_control_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_severity_1) && @unserialize($riskEffectAnalysis->initial_severity_1) ? unserialize($riskEffectAnalysis->initial_severity_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_detectability_1) && @unserialize($riskEffectAnalysis->initial_detectability_1) ? unserialize($riskEffectAnalysis->initial_detectability_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_probability_1) && @unserialize($riskEffectAnalysis->initial_probability_1) ? unserialize($riskEffectAnalysis->initial_probability_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->initial_rpn_1) && @unserialize($riskEffectAnalysis->initial_rpn_1) ? unserialize($riskEffectAnalysis->initial_rpn_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_control_measure_1) && @unserialize($riskEffectAnalysis->risk_control_measure_1) ? unserialize($riskEffectAnalysis->risk_control_measure_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_severity_1) && @unserialize($riskEffectAnalysis->residual_severity_1) ? unserialize($riskEffectAnalysis->residual_severity_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_probability_1) && @unserialize($riskEffectAnalysis->residual_probability_1) ? unserialize($riskEffectAnalysis->residual_probability_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_detectability_1) && @unserialize($riskEffectAnalysis->residual_detectability_1) ? unserialize($riskEffectAnalysis->residual_detectability_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->residual_rpn_1) && @unserialize($riskEffectAnalysis->residual_rpn_1) ? unserialize($riskEffectAnalysis->residual_rpn_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance_1) && @unserialize($riskEffectAnalysis->risk_acceptance_1) ? unserialize($riskEffectAnalysis->risk_acceptance_1)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->risk_acceptance3) && @unserialize($riskEffectAnalysis->risk_acceptance3) ? unserialize($riskEffectAnalysis->risk_acceptance3)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->mitigation_proposal_1) && @unserialize($riskEffectAnalysis->mitigation_proposal_1) ? unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null : null }}</td>
+                                        <!-- <td class="tdFMEA">{{ is_string($riskEffectAnalysis->conclusion) && @unserialize($riskEffectAnalysis->conclusion) ? unserialize($riskEffectAnalysis->conclusion)[$key] ?? null : null }}</td>
+                                        <td class="tdFMEA">{{ is_string($riskEffectAnalysis->attachment) && @unserialize($riskEffectAnalysis->attachment) ? unserialize($riskEffectAnalysis->attachment)[$key] ?? null : null }}</td> -->
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="18">No data available.</td>
+                                </tr>
+                            @endif
+                        </tbody>
+
+                            </table>
+                        </div>
 
 
 
 
 
 
-{{-- <table>
 
 
-    <thead>
-        <tr class="table_bg">
-            <th class="w-20">Row #</th>
-            <th class="w-20">Activity</th>
-            <th class="w-20">Possible Risk/Failure (Identified Risk)</th>
-            <th class="w-20">Consequences of Risk/Potential Causes</th>
-
-        </tr>
-    </thead>
-    <tbody>
-        @php
-            $measurement_1 = unserialize($riskEffectAnalysis->risk_factor_1);
-            $measurement_2 = unserialize($riskEffectAnalysis->problem_cause_1);
-            $measurement_3 = unserialize($riskEffectAnalysis->existing_risk_control_1);
-            $row_number = 1;
-        @endphp
-
-         @for ($i = 0; $i < count($measurement_1); $i++)
-            <tr>
-                <td class="w-10">{{ $row_number++ }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
-            </tr>
-        @endfor
-    </tbody>
-</table> --}}
-
-{{-- <table>
-    <thead>
-        <tr class="table_bg">
-            <th class="w-10">Row #</th>
-            <th class="w-20">Initial Severity (S)</th>
-            <th class="w-20">Initial Probability (P)</th>
-            <th class="w-20">Initial Detectability (D)</th>
-            <th class="w-20">RPN</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php
-            $measurement_4 = unserialize($riskEffectAnalysis->initial_severity_1);
-            $measurement_5 = unserialize($riskEffectAnalysis->initial_probability_1);
-            $measurement_6 = unserialize($riskEffectAnalysis->initial_detectability_1);
-            $measurement_7 = unserialize($riskEffectAnalysis->initial_rpn_1);
-            $row_number = 1; // Reset row number
-        @endphp
-
-         @for ($i = 0; $i < count($measurement_4); $i++)
-            <tr>
-                <td class="w-10">{{ $row_number++ }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
-            </tr>
-        @endfor
-    </tbody>
-</table> --}}
-
-{{-- <table>
-    <thead>
-        <tr class="table_bg">
-            <th class="w-10">Row #</th>
-            <th class="w-20">Control Measures recommended/ Risk mitigation proposed</th>
-            <th class="w-20">Residual Severity (S)</th>
-            <th class="w-20">Residual Probability (P)</th>
-            <th class="w-20">Residual Detectability (D)</th>
-            <th class="w-20">Risk Level (RPN)</th>
-        </tr>
-    </thead>
-    <tbody>
-        @php
-            $measurement_8 = unserialize($riskEffectAnalysis->risk_control_measure_1);
-            $measurement_9 = unserialize($riskEffectAnalysis->residual_severity_1);
-            $measurement_10 = unserialize($riskEffectAnalysis->residual_probability_1);
-            $measurement_11 = unserialize($riskEffectAnalysis->residual_detectability_1);
-            $measurement_12 = unserialize($riskEffectAnalysis->residual_rpn_1);
-            $row_number = 1; // Reset row number
-        @endphp
-
-        @if (is_array($measurement_8))
-            @for ($i = 0; $i < count($measurement_8); $i++)
-                <tr>
-                    <td class="w-10">{{ $row_number++ }}</td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}
-                    </td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}
-                    </td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}
-                    </td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}
-                    </td>
-                    <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}
-                    </td>
-                </tr>
-            @endfor
-        @else
-            <tr>
-                <td colspan="6">No measurements available</td>
-            </tr>
-        @endif
-
-    </tbody>
-</table> --}}
-
-{{-- <table>
-    <thead>
-        <tr class="table_bg">
-            <th class="w-10">Row #</th>
-            <th class="w-20">Category of Risk Level (Low, Medium, and High)</th>
-            <th class="w-20">Risk Acceptance (Y/N)</th>
-            <th class="w-20">Traceability document</th>
-        </tr>
-    </thead>
-
-    <tbody>
-     @php
-        $measurement_13 = unserialize($riskEffectAnalysis->risk_acceptance_1);
-        $measurement_14 = unserialize($riskEffectAnalysis->risk_acceptance3);
-        $measurement_15 = unserialize($riskEffectAnalysis->mitigation_proposal_1);
-        $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
-        $row_number = 1;
-    @endphp
-
-        @php
-            $measurement_13 = unserialize($riskEffectAnalysis->risk_acceptance_1);
-            $measurement_14 = unserialize($riskEffectAnalysis->risk_acceptance3);
-            $measurement_15 = unserialize($riskEffectAnalysis->mitigation_proposal_1);
-
-            // Ensure each variable is an array; if not, set it to an empty array
-            $measurement_13 = is_array($measurement_13) ? $measurement_13 : [];
-            $measurement_14 = is_array($measurement_14) ? $measurement_14 : [];
-            $measurement_15 = is_array($measurement_15) ? $measurement_15 : [];
-
-            // Now you can safely use count() since all variables are arrays
-            $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
-            $row_number = 1;
-        @endphp
+                        {{-- <table>
 
 
-        @for ($i = 0; $i < $max_count; $i++)
-            <tr>
-                <td class="w-10">{{ $row_number++ }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
-                <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
-            </tr>
-        @endfor
-    </tbody>
-</table> --}}
+                            <thead>
+                                <tr class="table_bg">
+                                    <th class="w-20">Row #</th>
+                                    <th class="w-20">Activity</th>
+                                    <th class="w-20">Possible Risk/Failure (Identified Risk)</th>
+                                    <th class="w-20">Consequences of Risk/Potential Causes</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $measurement_1 = unserialize($riskEffectAnalysis->risk_factor_1);
+                                    $measurement_2 = unserialize($riskEffectAnalysis->problem_cause_1);
+                                    $measurement_3 = unserialize($riskEffectAnalysis->existing_risk_control_1);
+                                    $row_number = 1;
+                                @endphp
+
+                                @for ($i = 0; $i < count($measurement_1); $i++)
+                                    <tr>
+                                        <td class="w-10">{{ $row_number++ }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_1[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_2[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_3[$i] ?? 'Not Applicable') }}</td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table> --}}
+
+                        {{-- <table>
+                            <thead>
+                                <tr class="table_bg">
+                                    <th class="w-10">Row #</th>
+                                    <th class="w-20">Initial Severity (S)</th>
+                                    <th class="w-20">Initial Probability (P)</th>
+                                    <th class="w-20">Initial Detectability (D)</th>
+                                    <th class="w-20">RPN</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $measurement_4 = unserialize($riskEffectAnalysis->initial_severity_1);
+                                    $measurement_5 = unserialize($riskEffectAnalysis->initial_probability_1);
+                                    $measurement_6 = unserialize($riskEffectAnalysis->initial_detectability_1);
+                                    $measurement_7 = unserialize($riskEffectAnalysis->initial_rpn_1);
+                                    $row_number = 1; // Reset row number
+                                @endphp
+
+                                @for ($i = 0; $i < count($measurement_4); $i++)
+                                    <tr>
+                                        <td class="w-10">{{ $row_number++ }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_4[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_5[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_6[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_7[$i] ?? 'Not Applicable') }}</td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table> --}}
+
+                        {{-- <table>
+                            <thead>
+                                <tr class="table_bg">
+                                    <th class="w-10">Row #</th>
+                                    <th class="w-20">Control Measures recommended/ Risk mitigation proposed</th>
+                                    <th class="w-20">Residual Severity (S)</th>
+                                    <th class="w-20">Residual Probability (P)</th>
+                                    <th class="w-20">Residual Detectability (D)</th>
+                                    <th class="w-20">Risk Level (RPN)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $measurement_8 = unserialize($riskEffectAnalysis->risk_control_measure_1);
+                                    $measurement_9 = unserialize($riskEffectAnalysis->residual_severity_1);
+                                    $measurement_10 = unserialize($riskEffectAnalysis->residual_probability_1);
+                                    $measurement_11 = unserialize($riskEffectAnalysis->residual_detectability_1);
+                                    $measurement_12 = unserialize($riskEffectAnalysis->residual_rpn_1);
+                                    $row_number = 1; // Reset row number
+                                @endphp
+
+                                @if (is_array($measurement_8))
+                                    @for ($i = 0; $i < count($measurement_8); $i++)
+                                        <tr>
+                                            <td class="w-10">{{ $row_number++ }}</td>
+                                            <td class="w-20">{{ htmlspecialchars($measurement_8[$i] ?? 'Not Applicable') }}
+                                            </td>
+                                            <td class="w-20">{{ htmlspecialchars($measurement_9[$i] ?? 'Not Applicable') }}
+                                            </td>
+                                            <td class="w-20">{{ htmlspecialchars($measurement_10[$i] ?? 'Not Applicable') }}
+                                            </td>
+                                            <td class="w-20">{{ htmlspecialchars($measurement_11[$i] ?? 'Not Applicable') }}
+                                            </td>
+                                            <td class="w-20">{{ htmlspecialchars($measurement_12[$i] ?? 'Not Applicable') }}
+                                            </td>
+                                        </tr>
+                                    @endfor
+                                @else
+                                    <tr>
+                                        <td colspan="6">No measurements available</td>
+                                    </tr>
+                                @endif
+
+                            </tbody>
+                        </table> --}}
+
+                        {{-- <table>
+                            <thead>
+                                <tr class="table_bg">
+                                    <th class="w-10">Row #</th>
+                                    <th class="w-20">Category of Risk Level (Low, Medium, and High)</th>
+                                    <th class="w-20">Risk Acceptance (Y/N)</th>
+                                    <th class="w-20">Traceability document</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            @php
+                                $measurement_13 = unserialize($riskEffectAnalysis->risk_acceptance_1);
+                                $measurement_14 = unserialize($riskEffectAnalysis->risk_acceptance3);
+                                $measurement_15 = unserialize($riskEffectAnalysis->mitigation_proposal_1);
+                                $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
+                                $row_number = 1;
+                            @endphp
+
+                                @php
+                                    $measurement_13 = unserialize($riskEffectAnalysis->risk_acceptance_1);
+                                    $measurement_14 = unserialize($riskEffectAnalysis->risk_acceptance3);
+                                    $measurement_15 = unserialize($riskEffectAnalysis->mitigation_proposal_1);
+
+                                    // Ensure each variable is an array; if not, set it to an empty array
+                                    $measurement_13 = is_array($measurement_13) ? $measurement_13 : [];
+                                    $measurement_14 = is_array($measurement_14) ? $measurement_14 : [];
+                                    $measurement_15 = is_array($measurement_15) ? $measurement_15 : [];
+
+                                    // Now you can safely use count() since all variables are arrays
+                                    $max_count = max(count($measurement_13), count($measurement_14), count($measurement_15));
+                                    $row_number = 1;
+                                @endphp
+
+
+                                @for ($i = 0; $i < $max_count; $i++)
+                                    <tr>
+                                        <td class="w-10">{{ $row_number++ }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_13[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_14[$i] ?? 'Not Applicable') }}</td>
+                                        <td class="w-20">{{ htmlspecialchars($measurement_15[$i] ?? 'Not Applicable') }}</td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table> --}}
 
 
 

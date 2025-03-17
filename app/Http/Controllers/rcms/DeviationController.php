@@ -1800,7 +1800,6 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         $deviation->Delay_Justification = $request->Delay_Justification;
 
 
-
         $whyData = [];
         if (!empty($request->why_questions) && !empty($request->why_answers)) {
             foreach ($request->why_questions as $index => $question) {
@@ -4022,11 +4021,7 @@ $newDataGridFishbone->save();
                 }
             }
 
-
-
-
-
-             if ($lastDeviation->due_date != $deviation->due_date || !empty ($request->comment)) {
+        if ($lastDeviation->due_date != $deviation->due_date || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Due Date')
                             ->exists();
@@ -4187,7 +4182,8 @@ $newDataGridFishbone->save();
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-         if ($lastDeviation->deviation_time != $deviation->deviation_time || !empty ($request->comment)) {
+        
+        if ($lastDeviation->deviation_time != $deviation->deviation_time || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'Deviation Observed On (Time)')
                             ->exists();
@@ -5032,6 +5028,9 @@ $newDataGridFishbone->save();
             $history->save();
         }
 
+
+
+       
 
         if ($lastDeviation->other_attachment != $deviation->other_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
@@ -9349,7 +9348,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
            // dd($extension_record);
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_type','extension_record','parent_record', 'parent_name','countData', 'record_number', 'parent_due_date', 'due_date', 'parent_created_at','relatedRecords','parent_division_id'));
         }
         $old_record = Deviation::select('id', 'division_id', 'record')->get();
         // dd($request->child_type)
