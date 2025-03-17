@@ -535,14 +535,12 @@
 
     <style>
         
-        /*Main Table Styling */
         #isPasted {
             width: 690px !important;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
-        /* First column adjusts to its content */
         #isPasted td:first-child,
         #isPasted th:first-child {
             white-space: nowrap; 
@@ -550,7 +548,6 @@
             vertical-align: top;
         }
 
-        /* Second column takes remaining space */
         #isPasted td:last-child,
         #isPasted th:last-child {
             width: auto;
@@ -558,7 +555,6 @@
 
         }
 
-        /* Common Table Cell Styling */
         #isPasted th,
         #isPasted td {
             border: 1px solid #000 !important;
@@ -569,7 +565,6 @@
             overflow-wrap: break-word;
         }
 
-        /* Paragraph Styling Inside Table Cells */
         #isPasted td > p {
             text-align: justify;
             text-justify: inter-word;
@@ -582,20 +577,19 @@
         #isPasted img {
             max-width: 500px !important;
             height: 100%;
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
+            display: block;
+            margin: 5px auto;
         }
 
-        /* If you want larger images */
         #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            max-width: 400px !important;
             height: 300px;
             margin: 5px auto;
         }
 
         .table-containers {
             width: 690px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
+            overflow-x: fixed;
         }
 
     
@@ -681,6 +675,7 @@
 
                     <td style="width: 23%; padding: 5px; text-align: left">
                     
+                    
                     @if($document->revised == 'Yes')
                         @php
                             $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
@@ -727,7 +722,7 @@
                     <td style="width: 22%; padding: 5px; text-align: left" class="doc-num">Next Review Date:</td>
                     <td style="width: 23%; padding: 5px; text-align: left">
                         {{-- {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }} --}}
-                        @if($data->stage == 11)
+                        @if($data->stage >= 11)
                             {{ $data->next_review_date ? \Carbon\Carbon::parse($data->next_review_date)->format('d-M-Y') : '-' }}
                         @else
                             
@@ -742,11 +737,28 @@
                                 ->where('name', $document->document_type_name)
                                 ->value('typecode');
                         @endphp
-                        @if ($document->revised === 'Yes')
+                        {{-- @if ($document->revised === 'Yes')
                         {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
                         @else
                         Nil
+                        @endif --}}
+
+
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad(max(0, $document->revised_doc - 1), 2, '0', STR_PAD_LEFT);
+                            @endphp
+                            @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @endif
+                        @else                        
+                            Nil
                         @endif
+
+
+
                     </td>
                 </tr>
             </tbody>

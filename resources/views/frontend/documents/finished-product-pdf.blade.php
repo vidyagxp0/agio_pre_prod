@@ -414,11 +414,11 @@
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
                         <span>@if ($data->training_required == 'yes')
-                            @if ($data->stage >= 10)
+                            @if ($data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @else
-                            @if ($data->stage > 7)
+                            @if ($data->stage > 10)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @endif
@@ -438,11 +438,20 @@
                            ->where('name', $document->document_type_name)
                            ->value('typecode');
                    @endphp
-                   @if ($document->revised === 'Yes')
+                   {{-- @if ($document->revised === 'Yes')
                    FPS/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
                     Nil
-                   @endif
+                   @endif --}}
+
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
+                            @endphp
+                            FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                        @else                        
+                            Nil
+                        @endif
                    </span>
                 
                     </td>

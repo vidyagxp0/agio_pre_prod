@@ -6564,10 +6564,10 @@ class DocumentController extends Controller
             'SOP' => 'frontend.documents.pdfpage',
             'BOM' => 'frontend.documents.bom-pdf',
             'FPS' => 'frontend.documents.finished-product-pdf',
-            'IPS' => 'frontend.documents.inprocess_s-pdf',
+            'INPS' => 'frontend.documents.inprocess_s-pdf',
             'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-            'RMS' => 'frontend.documents.raw_ms-pdf',
-            'PMS' => 'frontend.documents.package_ms-pdf',
+            'RAWMS' => 'frontend.documents.raw_ms-pdf',
+            'PAMS' => 'frontend.documents.package_ms-pdf',
             'PIAS' => 'frontend.documents.product_item-pdf',
             'MFPS' => 'frontend.documents.mfps-pdf',
             'MFPSTP' => 'frontend.documents.mfpstp-pdf',
@@ -6665,6 +6665,7 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'PDF generation failed']);
         }
     }
+    
 
     public function getEffectiveDate(Request $request)
     {
@@ -6679,9 +6680,12 @@ class DocumentController extends Controller
         ]);
     }
 
+
+
+
     public function getRecordsByType(Request $request)
     {
-        $allowedTypes = ['FPS', 'IPS', 'CVS', 'RMS'];
+        $allowedTypes = ['FPS', 'INPS', 'CVS', 'RAWMS'];
         
         $records = Document::whereIn('document_type_id', $allowedTypes)->get();
     
@@ -6697,9 +6701,6 @@ class DocumentController extends Controller
     }
     
     
-    
-    
-
 
     public function viewAttachments($id)
     {
@@ -6710,7 +6711,6 @@ class DocumentController extends Controller
             return redirect()->back()->withErrors(['error' => 'Document type ID is missing']);
         }
     
-        // document_type_id ke hisaab se blade file map karna
         $viewName = match ($data->document_type_id) {
             
             'BMR' => 'frontend.documents.bmr-pdf',
@@ -6772,6 +6772,7 @@ class DocumentController extends Controller
             'VMP' => 'frontend.documents.csv.valid_master_plan',
             default => 'NA',
         };
+
         $attachmentFields = [
             'BMR' => 'bmrattachment',
             'BPR' => 'bprattachment',
@@ -6834,7 +6835,6 @@ class DocumentController extends Controller
     
         $attachments = [];
     
-        // Agar document_type_id ka attachment field exist karta ho to usko extract karo
         if (isset($attachmentFields[$data->document_type_id])) {
             $attachmentField = $attachmentFields[$data->document_type_id];
             
@@ -7082,10 +7082,10 @@ class DocumentController extends Controller
                 'SOP' => 'frontend.documents.pdfpage',
                 'BOM' => 'frontend.documents.bom-pdf',
                 'FPS' => 'frontend.documents.finished-product-pdf',
-                'IPS' => 'frontend.documents.inprocess_s-pdf',
+                'INPS' => 'frontend.documents.inprocess_s-pdf',
                 'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
-                'RMS' => 'frontend.documents.raw_ms-pdf',
-                'PMS' => 'frontend.documents.package_ms-pdf',
+                'RAWMS' => 'frontend.documents.raw_ms-pdf',
+                'PAMS' => 'frontend.documents.package_ms-pdf',
                 'PIAS' => 'frontend.documents.product_item-pdf',
                 'MFPS' => 'frontend.documents.mfps-pdf',
                 'MFPSTP' => 'frontend.documents.mfpstp-pdf',

@@ -15,7 +15,6 @@ class StageSeeder extends Seeder
      */
     public function run()
     {
-        //
         $stage = new Stage();
         $stage->name = "Draft";
         $stage->save();
@@ -59,6 +58,10 @@ class StageSeeder extends Seeder
         $stage = new Stage();
         $stage->name = "Effective";
         $stage->save();
+        
+        $stage = new Stage();
+        $stage->name = "Obsolete";
+        $stage->save();
 
         $stage = new Stage();
         $stage->name = "Cancel-by-Reviewer";
@@ -68,9 +71,7 @@ class StageSeeder extends Seeder
         $stage->name = "Cancel-by-Approver";
         $stage->save();
 
-        $stage = new Stage();
-        $stage->name = "Obsolete";
-        $stage->save();
+
 
         $stage = new RecordNumber();
         $stage->counter = 0;

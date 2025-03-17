@@ -4,7 +4,23 @@
                     DOCUMENT TRACKER
     ======================================= --}}
 
-    
+      <!-- Example Blade View -->
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
+</head>
+@if(Session::has('swal'))
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            Swal.fire({
+                title: "{{ Session::get('swal.title') }}",
+                text: "{{ Session::get('swal.message') }}",
+                icon: "{{ Session::get('swal.type') }}"
+            });
+        });
+    </script>
+@endif
+
     <div id="document-tracker">
         <div class="container-fluid">
             <div class="tracker-container">
@@ -206,7 +222,7 @@
                             </div>
                             <div class="status">
                                 <div class="head">Current Status</div>
-                                @if ($document->stage < 13)
+                                @if ($document->stage < 14)
                                     <div class="progress-bars">
                                         @if($document->document_type_id == 'SOP')
                                             @if ($document->stage >= 1)
@@ -266,13 +282,13 @@
                                             @else
                                                 <div class="">In-Effective</div>
                                             @endif
-                                            @if ($document->stage == 11)
+                                            @if ($document->stage >= 11)
                                                 <div class="active">Effective</div>
                                             @else
                                                 <div class="">Effective</div>
                                             @endif
                                             @if ($document->stage == 12)
-                                                <div class="active">Obsolete</div>
+                                                <div class="bg-danger">Obsolete</div>
                                             @else
                                                 <div class="">Obsolete</div>
                                             @endif
@@ -332,13 +348,13 @@
                                             @else
                                                 <div class="">In-Effective</div>
                                             @endif
-                                            @if ($document->stage == 11)
+                                            @if ($document->stage >= 11)
                                                 <div class="active">Effective</div>
                                             @else
                                                 <div class="">Effective</div>
                                             @endif
                                             @if ($document->stage == 12)
-                                                <div class="active">Obsolete</div>
+                                                <div class="bg-danger">Obsolete</div>
                                             @else
                                                 <div class="">Obsolete</div>
                                             @endif
@@ -425,7 +441,7 @@
                                 <iframe id="theFrame" width="100%" height="800"
                                     src="{{ url('documents/annexureviewpdf/' . $document->id) }}#toolbar=0"></iframe>
                             
-                            @elseif(in_array($document->document_type_id, ['BOM', 'FPS', 'IPS','CVS','RMS','PMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                            @elseif(in_array($document->document_type_id, ['BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
                                 <iframe id="theFrame" width="100%" height="800"
                                 src="{{ url('documents/viewpdf/' . $document->id) }}#toolbar=0"></iframe>
                                 
@@ -433,6 +449,83 @@
                                 <a href="{{ route('view.attachments', $document->id) }}" target="_blank" class="btn btn-primary mt-3">
                                     View Attachments
                                 </a>
+
+                                <table class="border" style="width: 100%; border-collapse: collapse; text-align: left; margin: 20px auto; font-size: 16px;">
+                                    <thead>
+                                        <tr style="background-color: #f4f4f4; border-bottom: 2px solid #ddd;">
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 20%;"></th>
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 25%;">Prepared By</th>
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 25%;">Checked By</th>
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold; width: 25%;">Approved By</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            @php
+                                                $inreviews = DB::table('stage_manages')
+                                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                                    ->select('stage_manages.*', 'users.name as user_name')
+                                                    ->where('document_id', $document->id)
+                                                    ->where('stage', 'HOD Review-Submit')
+                                                    ->whereNull('deleted_at')
+                                                    ->get();
+                                            @endphp
+                                            <th style="padding: 5px; border: 1px solid #ddd; font-weight: bold;">Sign</th>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">{{ Helpers::getInitiatorName($document->originator_id) }}</td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreviews->isEmpty())
+                                                    <div> - </div>
+                                                @else
+                                                    @foreach ($inreviews as $temp)
+                                                        <div>{{ $temp->user_name ?: '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            @php
+                                                $inreview = DB::table('stage_manages')
+                                                    ->join('users', 'stage_manages.user_id', '=', 'users.id')
+                                                    ->select('stage_manages.*', 'users.name as user_name')
+                                                    ->where('document_id', $document->id)
+                                                    ->where('stage', 'Approval-Submit')
+                                                    ->whereNull('deleted_at')
+                                                    ->get();
+                                            @endphp
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreview->isEmpty())
+                                                    <div>-</div>
+                                                @else
+                                                    @foreach ($inreview as $temp)
+                                                        <div>{{ $temp->user_name ?: '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr style="border-bottom: 1px solid #ddd;">
+                                            <td style="padding: 5px; border: 1px solid #ddd; font-weight: bold;">Date</td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                {{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}
+                                            </td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreviews->isEmpty())
+                                                    <div>-</div>
+                                                @else
+                                                    @foreach ($inreviews as $temp)
+                                                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                            <td style="padding: 5px; border: 1px solid #ddd;">
+                                                @if ($inreview->isEmpty())
+                                                    <div>-</div>
+                                                @else
+                                                    @foreach ($inreview as $temp)
+                                                        <div>{{ $temp->created_at ? \Carbon\Carbon::parse($temp->created_at)->format('d-M-Y') : '-' }}</div>
+                                                    @endforeach
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             @endif
 
                         </div>
@@ -442,71 +535,73 @@
                         <div class="inner-block doc-overview">
 
                         <form method="POST" action="{{ route('documentReviewComment', $document->id) }}" enctype="multipart/form-data">
-                                @csrf
-                                <!-- Reviewer Comments Section -->
-                                <div class="col-12 mt-3">
-                                    <div class="orig-head">
-                                        <label for="reviewer_comments"><b style="color:#4274da;">Reviewer Comments Given By</b></label>
-                                    </div>
-                                    
-                                    @php
-                                        $assignedReviewers = explode(",", $document->reviewers);
-                                        $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
-                                        $currentUserId = auth()->id();
-                                    @endphp
-                                    
-                                    @foreach ($assignedReviewers as $reviewerId)
-                                        @php
-                                            $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
-                                        @endphp
-                                        
-                                        @if ($reviewerUser)
-                                            <div class="comment-box">
-                                                <label><b>{{ $reviewerUser->name }} Reviewer Comments</b></label>
-                                                <input type="text" class="form-control reviewer-comment" 
-                                                    name="reviewer_comments[{{ $reviewerUser->id }}]" 
-                                                    value="{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}"
-                                                    placeholder="Enter your comment..."
-                                                    @if($currentUserId != $reviewerUser->id) disabled @endif>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                            @csrf
+                            
+                            <!-- Reviewer Comments Section -->
+                            <div class="col-12 mt-3">
+                                <div class="orig-head">
+                                    <label for="reviewer_comments"><b style="color:#4274da;">Reviewer Comments Given By</b></label>
                                 </div>
                                 
-                                <!-- Approver Comments Section -->
-                                <div class="col-12 mt-3">
-                                    <div class="orig-head">
-                                        <label for="approver_comments"><b style="color:#4274da;">Approver Comments Given By</b></label>
-                                    </div>
-                                    
+                                @php
+                                    $assignedReviewers = explode(",", $document->reviewers);
+                                    $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
+                                    $currentUserId = auth()->id();
+                                @endphp
+                                
+                                @foreach ($assignedReviewers as $reviewerId)
                                     @php
-                                        $assignedApprovers = explode(",", $document->approvers);
-                                        $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
+                                        $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
                                     @endphp
                                     
-                                    @foreach ($assignedApprovers as $approverId)
-                                        @php
-                                            $approverUser = DB::table('users')->where('id', $approverId)->first();
-                                        @endphp
-                                        
-                                        @if ($approverUser)
-                                            <div class="comment-box">
-                                                <label><b>{{ $approverUser->name }} Approver Comments</b></label>
-                                                <input type="text" class="form-control approver-comment" 
-                                                    name="approver_comments[{{ $approverUser->id }}]" 
-                                                    value="{{ old('approver_comments.' . $approverUser->id, $approverComments[$approverUser->id] ?? '') }}"
-                                                    placeholder="Enter your comment..."
-                                                    @if($currentUserId != $approverUser->id) disabled @endif>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                    @if ($reviewerUser)
+                                        <div class="comment-box">
+                                            <label><b>{{ $reviewerUser->name }} Reviewer Comments</b></label>
+                                            <textarea class="form-control reviewer-comment" 
+                                                name="reviewer_comments[{{ $reviewerUser->id }}]" 
+                                                placeholder="Enter your comment..." 
+                                                rows="3" 
+                                                @if($currentUserId != $reviewerUser->id) disabled @endif>{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}</textarea>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            
+                            <!-- Approver Comments Section -->
+                            <div class="col-12 mt-3">
+                                <div class="orig-head">
+                                    <label for="approver_comments"><b style="color:#4274da;">Approver Comments Given By</b></label>
                                 </div>
                                 
-                                <!-- Submit Button -->
-                                <div class="col-12 mt-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
+                                @php
+                                    $assignedApprovers = explode(",", $document->approvers);
+                                    $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
+                                @endphp
+                                
+                                @foreach ($assignedApprovers as $approverId)
+                                    @php
+                                        $approverUser = DB::table('users')->where('id', $approverId)->first();
+                                    @endphp
+                                    
+                                    @if ($approverUser)
+                                        <div class="comment-box">
+                                            <label><b>{{ $approverUser->name }} Approver Comments</b></label>
+                                            <textarea class="form-control approver-comment" 
+                                                name="approver_comments[{{ $approverUser->id }}]" 
+                                                placeholder="Enter your comment..." 
+                                                rows="3" 
+                                                @if($currentUserId != $approverUser->id) disabled @endif>{{ old('approver_comments.' . $approverUser->id, $approverComments[$approverUser->id] ?? '') }}</textarea>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+
                         </div>
                     </div>
                     @else
@@ -514,71 +609,73 @@
                         <div class="inner-block doc-overview">
 
                         <form method="POST" action="{{ route('documentReviewComment', $document->id) }}" enctype="multipart/form-data">
-                                @csrf
-                                <!-- Reviewer Comments Section -->
-                                <div class="col-12 mt-3">
-                                    <div class="orig-head">
-                                        <label for="reviewer_comments"><b style="color:#4274da;">Reviewer Comments Given By</b></label>
-                                    </div>
-                                    
-                                    @php
-                                        $assignedReviewers = explode(",", $document->reviewers);
-                                        $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
-                                        $currentUserId = auth()->id();
-                                    @endphp
-                                    
-                                    @foreach ($assignedReviewers as $reviewerId)
-                                        @php
-                                            $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
-                                        @endphp
-                                        
-                                        @if ($reviewerUser)
-                                            <div class="comment-box">
-                                                <label><b>{{ $reviewerUser->name }} Reviewer Comments</b></label>
-                                                <input type="text" class="form-control reviewer-comment" 
-                                                    name="reviewer_comments[{{ $reviewerUser->id }}]" 
-                                                    value="{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}"
-                                                    placeholder="Enter your comment..."
-                                                    @if($currentUserId != $reviewerUser->id) disabled @endif>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                            @csrf
+                            
+                            <!-- Reviewer Comments Section -->
+                            <div class="col-12 mt-3">
+                                <div class="orig-head">
+                                    <label for="reviewer_comments"><b style="color:#4274da;">Reviewer Comments Given By</b></label>
                                 </div>
                                 
-                                <!-- Approver Comments Section -->
-                                <div class="col-12 mt-3">
-                                    <div class="orig-head">
-                                        <label for="approver_comments"><b style="color:#4274da;">Approver Comments Given By</b></label>
-                                    </div>
-                                    
+                                @php
+                                    $assignedReviewers = explode(",", $document->reviewers);
+                                    $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
+                                    $currentUserId = auth()->id();
+                                @endphp
+                                
+                                @foreach ($assignedReviewers as $reviewerId)
                                     @php
-                                        $assignedApprovers = explode(",", $document->approvers);
-                                        $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
+                                        $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
                                     @endphp
                                     
-                                    @foreach ($assignedApprovers as $approverId)
-                                        @php
-                                            $approverUser = DB::table('users')->where('id', $approverId)->first();
-                                        @endphp
-                                        
-                                        @if ($approverUser)
-                                            <div class="comment-box">
-                                                <label><b>{{ $approverUser->name }} Approver Comments</b></label>
-                                                <input type="text" class="form-control approver-comment" 
-                                                    name="approver_comments[{{ $approverUser->id }}]" 
-                                                    value="{{ old('approver_comments.' . $approverUser->id, $approverComments[$approverUser->id] ?? '') }}"
-                                                    placeholder="Enter your comment..."
-                                                    @if($currentUserId != $approverUser->id) disabled @endif>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                    @if ($reviewerUser)
+                                        <div class="comment-box">
+                                            <label><b>{{ $reviewerUser->name }} Reviewer Comments</b></label>
+                                            <textarea class="form-control reviewer-comment" 
+                                                name="reviewer_comments[{{ $reviewerUser->id }}]" 
+                                                placeholder="Enter your comment..." 
+                                                rows="3" 
+                                                @if($currentUserId != $reviewerUser->id) disabled @endif>{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}</textarea>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            
+                            <!-- Approver Comments Section -->
+                            <div class="col-12 mt-3">
+                                <div class="orig-head">
+                                    <label for="approver_comments"><b style="color:#4274da;">Approver Comments Given By</b></label>
                                 </div>
                                 
-                                <!-- Submit Button -->
-                                <div class="col-12 mt-3">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </form>
+                                @php
+                                    $assignedApprovers = explode(",", $document->approvers);
+                                    $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
+                                @endphp
+                                
+                                @foreach ($assignedApprovers as $approverId)
+                                    @php
+                                        $approverUser = DB::table('users')->where('id', $approverId)->first();
+                                    @endphp
+                                    
+                                    @if ($approverUser)
+                                        <div class="comment-box">
+                                            <label><b>{{ $approverUser->name }} Approver Comments</b></label>
+                                            <textarea class="form-control approver-comment" 
+                                                name="approver_comments[{{ $approverUser->id }}]" 
+                                                placeholder="Enter your comment..." 
+                                                rows="3" 
+                                                @if($currentUserId != $approverUser->id) disabled @endif>{{ old('approver_comments.' . $approverUser->id, $approverComments[$approverUser->id] ?? '') }}</textarea>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </div>
+                            
+                            <!-- Submit Button -->
+                            <div class="col-12 mt-3">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+
                         </div>
                     </div>
                     @endif
@@ -653,6 +750,7 @@
                             </form>
                         </div>
                     </div> --}}
+
 
                 </div>
             </div>
@@ -1521,22 +1619,22 @@
                         @if ($document->stage == 9)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
+                        {{-- @if ($document->stage == 10)
                             <input type="hidden" name="stage_id" value="11" />
-                        @endif
+                        @endif --}}
                         @if ($document->stage == 11)
-                            <input type="hidden" name="stage_id" value="13" />
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                         
                     @else
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
+                        {{-- @if ($document->stage == 10)
                             <input type="hidden" name="stage_id" value="11" />
-                        @endif
+                        @endif --}}
                         @if ($document->stage == 11)
-                            <input type="hidden" name="stage_id" value="13" />
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                     @endif
                 
@@ -1559,15 +1657,21 @@
                         @if ($document->stage == 9)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
+                        {{-- @if ($document->stage == 10)
                             <input type="hidden" name="stage_id" value="13" />
+                        @endif --}}
+                        @if ($document->stage == 11)
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                     @else
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="10" />
                         @endif
-                        @if ($document->stage == 10)
-                            <input type="hidden" name="stage_id" value="13" />
+                        {{-- @if ($document->stage == 10)
+                            <input type="hidden" name="stage_id" value="11" />
+                        @endif --}}
+                        @if ($document->stage == 11)
+                            <input type="hidden" name="stage_id" value="14" />
                         @endif
                     @endif
                 
