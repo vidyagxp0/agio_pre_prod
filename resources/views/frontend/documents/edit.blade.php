@@ -16685,11 +16685,11 @@
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',
             imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ url('api/upload-files') }}",
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
             fileUploadParam: 'image_param',
-            fileUploadURL: "{{ url('api/upload-files')}}",
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
             videoUploadParam: 'image_param',
-            videoUploadURL: "{{ url('api/upload-files') }}",
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
             videoMaxSize: 500 * 1024 * 1024,
          });
          
