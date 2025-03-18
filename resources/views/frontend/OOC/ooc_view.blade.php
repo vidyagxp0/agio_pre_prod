@@ -1468,7 +1468,17 @@
                                     toggleRepeatNature(); // Ensure correct visibility on page load
                                 });
                             </script>
+                                
 
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Details of OOC">Details of OOC</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="details_of_ooc" id="repeat_nature_textarea" 
+                                        {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->details_of_ooc }}</textarea>
+                                </div>
+                            </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -2996,17 +3006,18 @@
                                     <span class="text-danger">*</span>
                                 @endif
                             </label>
-                            <input type="text" name="is_repeat_proposed_stage_ooc"
-                                id="is_repeat_proposed_stage_ooc" value="{{ $ooc->is_repeat_proposed_stage_ooc }}"
-                                class="form-control {{ $errors->has('is_repeat_proposed_stage_ooc') ? 'is-invalid' : '' }}"{{ $ooc->stage == 10 ? 'required' : '' }}
-                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
-
-                            @if ($errors->has('is_repeat_proposed_stage_ooc'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('is_repeat_proposed_stage_ooc') }}
-                                </div>
-                            @endif
+                           <select id="select-state" placeholder="Select..." name="is_repeat_compiled_stageii_ooc"
+                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                            <option value="">-- Select a value --</option>
+                            @foreach ($users as $key => $value)
+                                <option @if ($ooc->is_repeat_compiled_stageii_ooc == $value->id) selected @endif
+                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                            </select>
+                            @error('is_repeat_compiled_stageii_ooc')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -3048,22 +3059,24 @@
 
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Initiator Group">Compiled by</label>
-                            <!-- <select name="is_repeat_compiled_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} onchange="">
-                                                                                        <option value="0" {{ $ooc->is_repeat_compiled_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                                                        <option value="Yes" {{ $ooc->is_repeat_compiled_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                                                        <option value="No" {{ $ooc->is_repeat_compiled_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
-
-                                                                                    </select> -->
-                            <input type = "text" name = "is_repeat_compiled_stageii_ooc"
-                                id = "is_repeat_compiled_stageii_ooc"
-                                value = "{{ $ooc->is_repeat_compiled_stageii_ooc }}"
-                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
-
+                            <label for="Initiator Group">Complied By @if ($ooc->stage == 10)
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
+                           <select id="select-state" placeholder="Select..." name="compiled_by"
+                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                            <option value="">-- Select a value --</option>
+                            @foreach ($users as $key => $value)
+                                <option @if ($ooc->compiled_by == $value->id) selected @endif
+                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                            </select>
+                            @error('compiled_by')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
-
 
                     <!-- <div class="col-lg-6">
                                                                                 <div class="group-input">
@@ -3156,6 +3169,8 @@
                         </div>
                     </div>
 
+
+                {{--
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
                             <label for="Corrective & Preventive Action">Corrective and preventive action IB Investigation</label>
@@ -3166,7 +3181,7 @@
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->initiated_through_capa_corrective_ooc_IB }}</textarea>
                         </div>
                     </div>
-
+                --}}
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">

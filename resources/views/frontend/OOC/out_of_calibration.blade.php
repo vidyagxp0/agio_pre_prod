@@ -620,6 +620,23 @@
                             </script>
 
 
+
+
+
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Details of OOC">
+                                    Details of OOC
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                    </div>
+                                    <textarea class="summernote" name="details_of_ooc" id="details_of_ooc"></textarea>
+                                </div>
+                            </div>
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initial Attachment</label>
@@ -1786,7 +1803,9 @@
                                         <textarea name="initiated_through_capa_prevent_ooc_IB" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
+                                 
 
+                            {{--  
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Corrective & Preventive Action">Corrective and preventive action IB
@@ -1796,7 +1815,7 @@
                                         <textarea name="initiated_through_capa_corrective_ooc_IB" disabled id="summernote-1"></textarea>
                                     </div>
                                 </div>
-
+                            --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Cause for failure">Phase IB Summary</label>
