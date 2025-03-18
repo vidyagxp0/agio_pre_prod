@@ -242,17 +242,10 @@
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        {{-- <th class="w-20">Initiated Through</th>
-                        <td class="w-80">
-                            @if ($data->initiated_by)
-                                {{ $data->initiated_by }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td> --}}
 
-                        <th class="w-20">Department</th>
-                        @php
+
+                        {{-- <th class="w-20">Department</th> --}}
+                        {{-- @php
                             $departments = [
                                 'CQA' => 'Corporate Quality Assurance',
                                 'QA' => 'Quality Assurance',
@@ -276,10 +269,19 @@
                                 'RA' => 'Regulatory Affairs',
                                 'PV' => 'Pharmacovigilance',
                             ];
-                        @endphp
-                        <td class="w-80">
+                        @endphp --}}
+                        {{-- <td class="w-80">
                             @if ($data->Department)
                                 {{ Helpers::getFullDepartmentName($data->Department) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td> --}}
+
+                        <th class="w-20">Department</th>
+                        <td class="w-30">
+                            @if ($data->Initiator_Group)
+                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
@@ -287,13 +289,14 @@
                     </tr>
                     <tr>
                         <th class="w-20">Department Code</th>
-                        <td class="w-80">
+                        <td class="w-30">
                             @if ($data->department_code)
                                 {{ $data->department_code }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+
 
                         <th class="w-20">Document Type</th>
                         <td class="w-80">
@@ -566,7 +569,7 @@
                                 @foreach (unserialize($grid_Data->ListOfImpactingDocument) as $key => $dataDemo)
                                 <tr>
                                     <td class="w-15">{{ $dataDemo ? $key +1  : "Not Applicable" }}</td>
-        
+
                                     <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
                                 </tr>
                                 @endforeach
@@ -1263,7 +1266,7 @@
                         </td>
                     </tr>
 
-                   
+
 
 
                 </table>

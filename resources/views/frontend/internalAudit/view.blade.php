@@ -1198,8 +1198,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                             </div>
                                         </div>
 
-
-
                                             <div class="col-12">
                                                 <div class="group-input" id="IncidentRow">
                                                     <label for="root_cause">
@@ -1211,6 +1209,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                             (Launch Instruction)
                                                         </span>
+                                                        <span class="text-danger">*</span>
                                                     </label>
 
                                                     <table class="table table-bordered"
@@ -1236,7 +1235,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         <td>{{ $serialNumber++ }}</td>
 
                                                                         <td>
-                                                                            <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][auditornew]" @if ($data->stage != 1) readonly @endif>
+                                                                            <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][auditornew]" @if ($data->stage != 1) readonly @endif required>
                                                                                 <option value="">-Select-</option>
                                                                                 @foreach ($users as $value)
                                                                                     <option value="{{ $value->id }}"
@@ -2276,9 +2275,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         </thead>
                                                         <tbody>
 
-
-
-
                                                             @if(!empty($json) && is_array($json))
                                                                 @foreach ($json as $key => $row)
                                                                 @php
@@ -2451,96 +2447,96 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </script> --}}
                                         <script>
                                             document.addEventListener("DOMContentLoaded", function() {
-    let rowIndex = {{ count($json) }};
-    const analysts = @json($users->toArray() ?? []);
+                                                let rowIndex = {{ count($json) }};
+                                                const analysts = @json($users->toArray() ?? []);
 
-    document.getElementById("addSamplePlanning").addEventListener("click", function() {
-        const tableBody = document.querySelector("#editSamplePlanningTable tbody");
-        const newRow = document.createElement("tr");
+                                                document.getElementById("addSamplePlanning").addEventListener("click", function() {
+                                                    const tableBody = document.querySelector("#editSamplePlanningTable tbody");
+                                                    const newRow = document.createElement("tr");
 
-        let analystOptions = `<option value="">Select Auditor</option>`;
-        if (Array.isArray(analysts)) {
-            analysts.forEach(analyst => {
-                analystOptions += `<option value="${analyst.id}">${analyst.name}</option>`;
-            });
-        } else {
-            console.warn("Auditor data is not an array");
-        }
+                                                    let analystOptions = `<option value="">Select Auditor</option>`;
+                                                    if (Array.isArray(analysts)) {
+                                                        analysts.forEach(analyst => {
+                                                            analystOptions += `<option value="${analyst.id}">${analyst.name}</option>`;
+                                                        });
+                                                    } else {
+                                                        console.warn("Auditor data is not an array");
+                                                    }
 
-        newRow.innerHTML = `
-            <td class="row-index"></td> <!-- Sr. No will be updated dynamically -->
-            <td><input type="text" name="auditAgendaData[${rowIndex}][auditArea]"></td>
-            <td>
-                <div class="col-md-6 new-date-data-field">
-                    <div class="group-input input-date">
-                        <div class="calenderauditee">
-                            <input type="text" id="scheduleStartDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
-                            <input type="date" name="auditAgendaData[${rowIndex}][scheduleStartDate]"
-                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                class="hide-input" oninput="handleDateInput(this, 'scheduleStartDate${rowIndex}')" />
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td><input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]"></td>
-            <td>
-                <div class="col-md-6 new-date-data-field">
-                    <div class="group-input input-date">
-                        <div class="calenderauditee">
-                            <input type="text" id="scheduleEndDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
-                            <input type="date" name="auditAgendaData[${rowIndex}][scheduleEndDate]"
-                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                class="hide-input" oninput="handleDateInput(this, 'scheduleEndDate${rowIndex}')" />
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td><input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]"></td>
-            <td>
-                <select multiple id="auditorsData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditors]">
-                    ${analystOptions}
-                </select>
-            </td>
-            <td>
-                <select multiple id="auditeeData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditee]">
-                    ${analystOptions}
-                </select>
-            </td>
-            <td><textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea></td>
-            <td><button type="button" class="removeRowBtn">Remove</button></td>
-        `;
+                                                    newRow.innerHTML = `
+                                                        <td class="row-index"></td> <!-- Sr. No will be updated dynamically -->
+                                                        <td><input type="text" name="auditAgendaData[${rowIndex}][auditArea]"></td>
+                                                        <td>
+                                                            <div class="col-md-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="scheduleStartDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="auditAgendaData[${rowIndex}][scheduleStartDate]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            class="hide-input" oninput="handleDateInput(this, 'scheduleStartDate${rowIndex}')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="time" name="auditAgendaData[${rowIndex}][scheduleStartTime]"></td>
+                                                        <td>
+                                                            <div class="col-md-6 new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">
+                                                                        <input type="text" id="scheduleEndDate${rowIndex}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="auditAgendaData[${rowIndex}][scheduleEndDate]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            class="hide-input" oninput="handleDateInput(this, 'scheduleEndDate${rowIndex}')" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="time" name="auditAgendaData[${rowIndex}][scheduleEndTime]"></td>
+                                                        <td>
+                                                            <select multiple id="auditorsData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditors]">
+                                                                ${analystOptions}
+                                                            </select>
+                                                        </td>
+                                                        <td>
+                                                            <select multiple id="auditeeData_${rowIndex}" name="auditAgendaData[${rowIndex}][auditee]">
+                                                                ${analystOptions}
+                                                            </select>
+                                                        </td>
+                                                        <td><textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    `;
 
-        tableBody.appendChild(newRow);
-        rowIndex++;
+                                                    tableBody.appendChild(newRow);
+                                                    rowIndex++;
 
-        updateRowNumbers(); // Function to update Sr. No
+                                                    updateRowNumbers(); // Function to update Sr. No
 
-        VirtualSelect.init({
-            ele: '#auditorsData_' + (rowIndex - 1),
-            multiple: true
-        });
+                                                    VirtualSelect.init({
+                                                        ele: '#auditorsData_' + (rowIndex - 1),
+                                                        multiple: true
+                                                    });
 
-        VirtualSelect.init({
-            ele: '#auditeeData_' + (rowIndex - 1),
-            multiple: true
-        });
-    });
+                                                    VirtualSelect.init({
+                                                        ele: '#auditeeData_' + (rowIndex - 1),
+                                                        multiple: true
+                                                    });
+                                                });
 
-    document.querySelector("#editSamplePlanningTable tbody").addEventListener("click", function(e) {
-        if (e.target && e.target.classList.contains("removeRowBtn")) {
-            e.target.closest("tr").remove();
-            updateRowNumbers(); // Function to update Sr. No after row removal
-        }
-    });
+                                                document.querySelector("#editSamplePlanningTable tbody").addEventListener("click", function(e) {
+                                                    if (e.target && e.target.classList.contains("removeRowBtn")) {
+                                                        e.target.closest("tr").remove();
+                                                        updateRowNumbers(); // Function to update Sr. No after row removal
+                                                    }
+                                                });
 
-    function updateRowNumbers() {
-        document.querySelectorAll("#editSamplePlanningTable tbody tr").forEach((row, index) => {
-            row.querySelector(".row-index").textContent = index + 1;
-        });
-    }
+                                                function updateRowNumbers() {
+                                                    document.querySelectorAll("#editSamplePlanningTable tbody tr").forEach((row, index) => {
+                                                        row.querySelector(".row-index").textContent = index + 1;
+                                                    });
+                                                }
 
-    updateRowNumbers(); // Initial call to set correct numbers
-});
+                                                updateRowNumbers(); // Initial call to set correct numbers
+                                            });
 
                                         </script>
 
