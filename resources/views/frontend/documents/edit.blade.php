@@ -143,65 +143,157 @@
         });
     </script>
 
-  <style>
+    {{-- <style>
 
         /*Main Table Styling */
-    #isPasted {
-        width: 650px !important;
-        border-collapse: collapse;
-        table-layout: fixed; /* Adjusts column width dynamically */
-    }
+        #isPasted {
+            width: 650px !important;
+            border-collapse: collapse;
+            table-layout: fixed; /* Adjusts column width dynamically */
+        }
 
-    /* First column adjusts to its content */
-    #isPasted td:first-child,
-    #isPasted th:first-child {
-        white-space: nowrap; /* Prevent wrapping */
-        width: 1%; /* Shrink to fit content */
-        vertical-align: top;
-    }
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; /* Prevent wrapping */
+            width: 1%; /* Shrink to fit content */
+            vertical-align: top;
+        }
 
-    /* Second column takes remaining space */
-    #isPasted td:last-child,
-    #isPasted th:last-child {
-        width: auto; /* Take remaining space */
-        vertical-align: top;
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto; /* Take remaining space */
+            vertical-align: top;
 
-    }
+        }
 
-    /* Common Table Cell Styling */
-    #isPasted th,
-    #isPasted td {
-        border: 1px solid #000 !important;
-        padding: 8px;
-        text-align: left;
-        max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
 
-    /* Paragraph Styling Inside Table Cells */
-    #isPasted td > p {
-        text-align: justify;
-        text-justify: inter-word;
-        margin: 0;
-        max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
 
-    #isPasted img {
-        max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-        height: 100%; /* Maintain image aspect ratio */
-        display: block; /* Remove extra space below the image */
-        margin: 5px auto; /* Add spacing and center align */
-    }
+        #isPasted img {
+            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            height: 100%; /* Maintain image aspect ratio */
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
 
-    /* If you want larger images */
-    #isPasted td img {
-        max-width: 400px !important; /* Adjust this to your preferred maximum width */
-        height: 300px;
-        margin: 5px auto;
-    }
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+    </style> --}}
+        <style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
     </style>
 
     <div id="data-fields">
@@ -3235,7 +3327,7 @@
                             $(document).ready(function() {
                                 function updateSerialNumbers() {
                                     $('#Details-table-revision tbody tr').each(function(index) {
-                                        $(this).find('td:first-child input').val(index + 1); // Update Sr. No
+                                        $(this).find('td:first-child input').val(index + 1);
                                         $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
                                     });
                                 }
@@ -3280,7 +3372,7 @@
                             });
                         </script>
 
-                        <script>
+                        {{-- <script>
                             function getEffectiveDate(selectElement, documentId, key) {
                                 var revisionNumber = selectElement.value;
 
@@ -3301,9 +3393,40 @@
                                 }
                             }
 
-                        </script>
+                        </script> --}}
 
+                    <script>
+                       function getEffectiveDate(selectElement) {
+    var key = $(selectElement).data('key'); // Get row index
+    var revisionNumber = $(selectElement).val(); // Get selected revision number
+    var documentId = {{ $document->id }};
 
+    if (revisionNumber) {
+        $.ajax({
+            url: '/get-effective-date',
+            method: 'GET',
+            data: {
+                document_id: documentId,
+                revision_number: revisionNumber
+            },
+            success: function (response) {
+                if (response.effective_dates) {
+                    Object.keys(response.effective_dates).forEach(function (revDoc) {
+                        // Fill the effective date for each previous revision
+                        $('input.effective-date[data-revised-doc="' + revDoc + '"]').val(response.effective_dates[revDoc]);
+                    });
+                }
+            }
+        });
+    }
+}
+
+// Trigger when revision number changes
+$(document).on('change', '.revision-select', function () {
+    getEffectiveDate(this);
+});
+
+                    </script>
 
 
                     <div class="button-block">

@@ -382,7 +382,7 @@
                             ->where('deleted_at', null)
                             ->get();
                     @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA
+                    <td style="padding: 10px; border: 1px solid #ddd; font-size: 16px; font-weight: bold;">Approved By:Head QA/CQA
                         @if ($inreviews->isEmpty())
                             <div>Yet Not Performed</div>
                         @else
