@@ -470,11 +470,11 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Document Type">
-                                            Document Type<span class="text-danger"></span>
+                                            Document Type<span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="document_type"
+                                        <input type="text" name="document_type" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                            value="{{ $showdata->document_type }}">
+                                            value="{{ $showdata->document_type }}" required>
                                     </div>
                                 </div>
 
@@ -484,7 +484,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
-                                            value="{{ $showdata->short_description }}"
+                                            value="{{ $showdata->short_description }}" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
@@ -581,7 +581,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Parent Record Number<span class="text-danger">*</span></label>
-                                        <input type="text" name="reference" maxlength="255"
+                                        <input type="text" name="reference" maxlength="255" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             value="{{ $showdata->reference }}"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} required>
@@ -593,7 +593,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Error Observed on Page  No. <span class="text-danger">*</span></label>
-                                        <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16"
+                                        <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} required>{{ $showdata->Observation_on_Page_No }}</textarea>
                                     </div>
@@ -603,7 +603,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Brief Description">Brief Description of error <span class="text-danger">*</span></label>
-                                        <textarea class="summernote" name="brief_description" id="summernote-16"
+                                        <textarea class="summernote" name="brief_description" id="summernote-16" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }} required>{{ $showdata->brief_description }}</textarea>
                                     </div>
@@ -613,7 +613,7 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Document title">Document title <span
                                                 class="text-danger">*</span></label>
-                                        <input type="text" name="document_title" maxlength="255"
+                                        <input type="text" name="document_title" maxlength="255" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_title }}">
                                     </div>
@@ -628,7 +628,7 @@
                                             Type Of Error<span class="text-danger">*</span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="type_of_error"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} {{ $showdata->stage != 1 ? 'readonly' : '' }}>
                                             <option value="">-- Select a value --</option>
                                             <option value="Typographical Error (TE)"
                                                 {{ $showdata->type_of_error == 'Typographical Error (TE)' ? 'selected' : '' }}>
@@ -650,8 +650,8 @@
 
 
                                 <div id="typeOfErrorBlock" class="group-input col-6" style="display:none;">
-                                    <label for="otherFieldsUser">Other</label>
-                                    <input type="text" name="otherFieldsUser" class="form-control"
+                                    <label for="otherFieldsUser">Other <span class="text-danger">*</span></label>
+                                    <input type="text" name="otherFieldsUser" class="form-control" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                         value="{{ old('otherFieldsUser', $showdata->otherFieldsUser ?? '') }}" />
                                 </div>
 
@@ -682,22 +682,19 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Correction Of Error">Correction Of Error
-                                            required</label>
-                                        <textarea class="summernote" name="Correction_Of_Error" id="summernote-16"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>{{ $showdata->Correction_Of_Error }}</textarea>
+                                            required <span class="text-danger">*</span></label>
+                                        <textarea class="summernote" name="Correction_Of_Error" id="summernote-16" {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>{{ $showdata->Correction_Of_Error }}</textarea>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Department Head <span class="text-danger"></span>
+                                            Department Head <span class="text-danger">*</span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="department_head_to"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>
                                             <option value="">Select a Value</option>
                                             @foreach ($users as $value)
                                                 <option @if ($showdata->department_head_to == $value->id) selected @endif
@@ -711,28 +708,28 @@
                                 </div>
 
                                 <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <label for="search">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <select id="select-state" placeholder="Select..." name="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <option value="">Select a value</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            @foreach ($users as $key => $value)
-    <option  @if ($showdata->department_head_to == $value->name) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
-    @endforeach
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        @error('department_head_to')
-        <p class="text-danger">{{ $message }}</p>
-    @enderror
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div> -->
+                                <div class="group-input">
+                                    <label for="search">
+                                        <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $key => $value)
+                                            <option  @if ($showdata->department_head_to == $value->name) selected @endif  value="{{ $value->name }}">{{ $value->name }}</option>
+                                            @endforeach
+                                                            </select>
+                                                            @error('department_head_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                                                                        </div>
+                                                                                    </div> -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            QA reviewer <span class="text-danger"></span>
+                                            QA reviewer <span class="text-danger">*</span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="qa_reviewer"
-                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
+                                        <select id="select-state" placeholder="Select..." name="qa_reviewer" {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key => $value)
                                                 <option @if ($showdata->qa_reviewer == $value->id) selected @endif
@@ -748,34 +745,22 @@
 
                                 {{-- <div class="sub-head">Details</div> --}}
                                 <div class="group-input">
-
-
-                                    <!-- <label for="audit-agenda-grid">
-                                        <div class="sub-head">Details
-                                            <button type="button" name="details" id="Details-add"
-                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                Launch Deviation
-                                            </span>
-                                        </div>
-                                    </label> -->
                                     <label for="action-plan-grid">
-                                        Details<button type="button" name="action-plan-grid"
-                                                id="Details_add" {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>+</button>
+                                        Details<button type="button" name="action-plan-grid" {{ $showdata->stage != 1 ? 'disabled' : '' }}
+                                                id="Details_add" {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             Launch Deviation
                                         </span>
+                                        <span class="text-danger">*</span>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} >
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 2%">Row#</th>
+                                                    <th style="width: 2%">Sr.No.</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
                                                     <!-- <th style="width: 16%"> Prepared By</th>
                                                                 <th style="width: 15%">Checked By</th>
@@ -835,13 +820,6 @@
                                         </table>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
 
 
 
@@ -2756,18 +2734,14 @@
                                             <label for="All Impacting Documents Corrected">
                                                 All Impacting Documents Corrected</label>
                                         @endif
-                                        {{-- <label for="All Impacting Documents Corrected">
-                                            All Impacting Documents Corrected <span class="text-danger"></span>
-                                        </label> --}}
-                                        <select id="select-state" placeholder="Select..."
+
+                                        <select id="select-state" placeholder="Select..."  {{$showdata->stage == 5 ? 'required' : ''}}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             name="All_Impacting_Documents_Corrected"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
-                                            <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes
-                                            </option>
-                                            <option value="No" @if ($showdata->All_Impacting_Documents_Corrected == 'No') selected @endif>No
-                                            </option>
+                                            <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes </option>
+                                            <option value="No" @if ($showdata->All_Impacting_Documents_Corrected == 'No') selected @endif>No </option>
                                         </select>
                                     </div>
                                 </div>
