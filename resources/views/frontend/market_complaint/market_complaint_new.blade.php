@@ -178,7 +178,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Complaint Acknowledgement</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">QA/CQA Head Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Investigation </button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation CAPA And Root Cause Analysis </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CFT Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Verification by QA/CQA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA/CQA Head Approval</button>
@@ -219,7 +219,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label disabled for="Short Description">Division Code<span
+                                        <label disabled for="Short Description">Site / Location<span
                                                 class="text-danger"></span></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
@@ -336,7 +336,7 @@
                                 </script>
 
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Department</b></label>
                                         <select name="initiator_group" id="initiator_group">
@@ -367,11 +367,72 @@
                                                 <option value="PV">Pharmacovigilance</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi"
+                                            value="" >
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
                                             value="" readonly>
                                     </div>
                                 </div>
@@ -501,7 +562,7 @@
                                 {{-- ===changes according client requerement ======= --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Complaint</label>
+                                        <label for="Initiator Group">Complainant</label>
                                         <input type="text" name="complainant_gi">
 
                                     </div>
@@ -571,8 +632,7 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Details Of Nature Market Complaint">Details Of Nature Market
-                                            Complaint</label>
+                                        <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="details_of_nature_market_complaint_gi" id="summernote-1">
@@ -598,7 +658,7 @@
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
+                                                        <th style="width: 100px;">Sr. No.</th>
                                                         <th>Product Name</th>
                                                         <th>Batch No.</th>
                                                         <th>Mfg. Date</th>
@@ -631,7 +691,7 @@
                                                                         <!-- Hidden date input field for actual date handling -->
                                                                         <input type="date"
                                                                             name="serial_number_gi[0][info_mfg_date]"
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                             {{-- max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" --}} value=""
                                                                             id="date_0_date_input"
                                                                             class="hide-input show_date"
@@ -787,7 +847,7 @@
                                             <table class="table table-bordered" id="traceblity" style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
+                                                        <th style="width: 100px;">Sr. No.</th>
                                                         <th>Product Name</th>
                                                         <th>Batch No.</th>
                                                         <th>Manufacturing Location</th>
@@ -1002,7 +1062,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Report Review (Final Review shall be done after QA Verification)
@@ -1018,7 +1078,7 @@
                                                 style="width: %;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
+                                                        <th style="width: 100px;">Sr. No.</th>
                                                         <th>Names</th>
                                                         <th>Designation</th>
                                                         <th>Department</th>
@@ -1062,7 +1122,7 @@
                                                     </td>
 
 
-                                                    {{-- <td>
+                                                     <td>
                                                         <div class="new-date-data-field">
                                                             <div class="group-input input-date">
                                                                 <div class="calenderauditee">
@@ -1077,7 +1137,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td> --}}
+                                                    </td>
 
                                                     <td><button type="button" class="removeRowBtn">Remove</button></td>
 
@@ -1123,9 +1183,9 @@
                                             tableBody.append(newRow);
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Report Approval by Head QA/CQA (Final Approvalshall be done after QA
@@ -1141,7 +1201,7 @@
                                             <table class="table table-bordered" id="report_approval_table">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
+                                                        <th style="width: 100px;">Sr. No.</th>
                                                         <th>Names</th>
                                                         <th>Designation</th>
                                                         <th>Department</th>
@@ -1230,7 +1290,7 @@
                                             tableBody.append(newRow);
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton on-submit-disable-button">Save</button>
@@ -1318,7 +1378,7 @@
                                             <table class="table table-bordered" id="Investing_team" style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
+                                                        <th style="width: 100px;">Sr. No.</th>
                                                         <th>Name</th>
                                                         <th>Department</th>
                                                         <th>Remarks</th>
@@ -1500,7 +1560,7 @@
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
+                                                        <th style="width: 100px;">Sr. No.</th>
                                                         <th>Possibility</th>
                                                         <th>Facts/Controls</th>
                                                         <th>Probable Cause</th>
@@ -1513,14 +1573,28 @@
                                                         <td><input disabled type="text"
                                                                 name="brain_stroming_details[0][serial]" value="1">
                                                         </td>
-                                                        <td><input type="text"
-                                                                name="brain_stroming_details[0][possibility_bssd]"></td>
-                                                        <td><input type="text"
+                                                        <td>
+                                                            <textarea  name="brain_stroming_details[0][possibility_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="brain_stroming_details[0][factscontrols_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="brain_stroming_details[0][probable_cause_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="brain_stroming_details[0][remarks_bssd]" rows="2" style="width: 100%;"></textarea>
+                                                        </td>
+
+
+                                                        {{-- <td><input type="text"
+                                                                name="brain_stroming_details[0][possibility_bssd]"></td> --}}
+                                                        {{-- <td><input type="text"
                                                                 name="brain_stroming_details[0][factscontrols_bssd]"></td>
                                                         <td><input type="text"
                                                                 name="brain_stroming_details[0][probable_cause_bssd]"></td>
                                                         <td><input type="text"
-                                                                name="brain_stroming_details[0][remarks_bssd]"></td>
+                                                                name="brain_stroming_details[0][remarks_bssd]"></td> --}}
                                                         <td><button type="button" class="removeRowBtn">Remove</button>
                                                         </td>
                                                     </tr>
@@ -1541,20 +1615,30 @@
 
                                             function generateTableRow(serialNumber) {
                                                 var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][possibility_bssd]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][factscontrols_bssd]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][probable_cause_bssd]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber +
-                                                    '][remarks_bssd]"></td>' +
+                                                '<tr>' +
+                                                    '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][possibility_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
+                                                    '<td><textarea name="brain_stroming_details[' + serialNumber + '][remarks_bssd]" rows="2" style="width: 100%;"></textarea></td>' +
                                                     '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                    '</tr>';
+                                                '</tr>';
                                                 return html;
+
+                                                    // '<tr>' +
+                                                    // '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][possibility_bssd]"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][factscontrols_bssd]"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][probable_cause_bssd]"></td>' +
+                                                    // '<td><input type="text" name="brain_stroming_details[' + serialNumber +
+                                                    // '][remarks_bssd]"></td>' +
+                                                    // '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    // '</tr>';
+
                                             }
 
                                             var tableBody = $('#brain_stroming_details tbody');
@@ -1751,7 +1835,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product/Material Details
+                                        Product Details
                                         <button type="button" id="promate_add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
@@ -1763,7 +1847,7 @@
                                         <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 100px;">Row #</th>
+                                                    <th style="width: 100px;">Sr. No.</th>
                                                     <th>Product Name</th>
                                                     <th>Batch No.</th>
                                                     <th>Mfg. Date</th>
@@ -1792,7 +1876,7 @@
                                                                         readonly placeholder="DD-MMM-YYYY" />
                                                                     <input type="date"
                                                                         name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                                         {{-- min="{{ today()->subDays(1000)->format('Y-m-d') }}" --}} id="date_0_mfg_date_pmd_ca"
                                                                         class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -2029,7 +2113,7 @@
                                                     <th style="width: 5%;">Sr. No.</th>
                                                     <th style="width: 40%;">Requirements</th>
                                                     <th style="width: 10%;">Yes/No</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion</th>
+                                                    {{-- <th style="width: 20%;">Expected date of investigation completion</th> --}}
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
@@ -2067,11 +2151,11 @@
                                                             <span>No</span>
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2091,11 +2175,11 @@
                                                                 onchange="toggleInputs('afc1_yesno', 'afc1', 'afc2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2115,11 +2199,11 @@
                                                                 onchange="toggleInputs('acs1_yesno', 'acs1', 'acs2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2139,11 +2223,11 @@
                                                                 onchange="toggleInputs('qrm1_yesno', 'qrm1', 'qrm2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2163,11 +2247,11 @@
                                                                 onchange="toggleInputs('oth1_yesno', 'oth1', 'oth2')"> No
                                                         </label>
                                                     </td>
-                                                    <td>
+                                                    {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
                                                         </div>
-                                                    </td>
+                                                    </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;" disabled></textarea>
@@ -2206,7 +2290,18 @@
                                 });
                             </script>
 
-
+<div class="col-lg-6 new-date-data-field">
+    <div class="group-input input-date">
+        <label for="Scheduled Start Date">Expected Date of Investigation Completion</label>
+        <div class="calenderauditee">
+            <input type="text" id="Expecteddate_of_investigation_completion" readonly placeholder="DD-MMM-YYYY"
+                value="" />
+            <input type="date" id="due_date_checkdate" value="" name="Expecteddate_of_investigation_completion"
+                min="" class="hide-input"
+                oninput="handleDateInput(this, 'Expecteddate_of_investigation_completion');" />
+        </div>
+    </div>
+</div>
                             {{-- <div class="sub-head">
                                 Proposal to accomplish investigation:
                             </div>

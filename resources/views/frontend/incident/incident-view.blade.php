@@ -1002,7 +1002,7 @@
                         <!-- Tab links -->
                         <div class="cctab">
                             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD initial Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head/Designee Approval</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Initiator Update</button>
@@ -1117,13 +1117,14 @@
                                                 // Set the formatted due date value to the input field
                                                 document.getElementById('due_date').value = dueDateFormatted;
                                             </script>
+                                            
 
-                                                <div class="col-lg-6">
+                                                {{-- <div class="col-lg-6">
                                                     <div class="group-input">
                                                         <label for="Initiator Group"><b>Initiation Department
                                                         </b> <span
                                                                 class="text-danger">*</span></label>
-                                                        <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}                                                            >
+                                                        <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}                                                            > --}}
                                                             {{-- <option value="CQA" @if ($data->Initiator_Group == 'CQA') selected @endif> Corporate  Quality Assurance</option>
                                                             <option value="QAB" @if ($data->Initiator_Group == 'QAB') selected @endif> Quality  Assurance Biopharma</option>
                                                             <option value="QAB" @if ($data->Initiator_Group == 'QC') selected @endif> Quality  Control</option>
@@ -1144,7 +1145,7 @@
                                                             <option value="BA" @if ($data->Initiator_Group == 'BA') selected @endif> Business  Administration</option>
                                                             <option value="DC" @if ($data->Initiator_Group == 'DC') selected @endif>  Document Cell</option>
                                                             <option value="PG"  @if ($data->Initiator_Group == 'PG') selected @endif>Production General</option> --}}
-                                                                <option value="">Select Department</option>
+                                                                {{-- <option value="">Select Department</option>
                                                                 <option value="CQA"  @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
                                                                 <option value="QA" @if ($data->Initiator_Group == 'QA') selected @endif >Quality Assurance</option>
                                                                 <option value="QC"  @if ($data->Initiator_Group == 'QC') selected @endif>Quality Control</option>
@@ -1174,15 +1175,34 @@
                                                     @error('Initiator_Group')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
+                                                </div> --}}
+
+                                                <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                                        <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="Initiation Group Code">Initiation Department Code</label>
+                                                        <input type="text" name="initiator_group_code"
+                                                            value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                            readonly>
+                                                        {{-- <div class="default-name"> <span
+                                                        id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                                    </div>
+                                                </div>
+
+                                                {{-- <div class="col-lg-6">
                                                     <div class="group-input">
                                                         <label for="Initiator Group Code">Initiation Department Code</label>
                                                         <input type="text" name="initiator_group_code" value="{{ $data->initiator_group_code }}"
                                                             id="initiator_group_code" readonly>
                                                     </div>
-                                                </div>
+                                                </div> --}}
 
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1709,18 +1729,18 @@
                                                         class="text-danger">*</span>
                                                     <button type="button" name="audit-agenda-grid"
                                                         id="ObservationAdd" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
+                                                    {{-- <span class="text-primary" data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                         (Launch Instruction)
-                                                    </span>
+                                                    </span> --}}
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="onservation-field-table"
                                                         style="width: 100%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 5%">Row#</th>
+                                                                <th style="width: 5%">Sr. No.</th>
                                                                 <th style="width: 12%">Name</th>
                                                                 <th style="width: 16%">ID Number</th>
                                                                 <th style="width: 15%">Remarks</th>
@@ -1844,18 +1864,18 @@
                                                     <button type="button"
                                                         name="audit-agenda-grid"
                                                         value="audit-agenda-grid" id="ReferenceDocument" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
+                                                    {{-- <span class="text-primary" data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal1"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                         (Launch Instruction)
-                                                    </span>
+                                                    </span> --}}
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="ReferenceDocument_details"
                                                         style="width: 100%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 4%">Row#</th>
+                                                                <th style="width: 4%">Sr. No.</th>
                                                                 <th style="width: 12%">Document Number</th>
                                                                 {{--<th style="width: 16%"> Reference Document Name</th>--}}
                                                                 <th style="width: 16%">Document Name</th>
@@ -1966,18 +1986,18 @@
                                                             Product / Material Details
                                                             <button type="button" name="audit-agenda-grid"
                                                                 id="Product_Details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                                            <span class="text-primary" data-bs-toggle="modal"
+                                                            {{-- <span class="text-primary" data-bs-toggle="modal"
                                                                 data-bs-target="#observation-field-instruction-modal2"
                                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                                 (Launch Instruction)
-                                                            </span>
+                                                            </span> --}}
                                                         </label>
                                                         <div class="table-responsive">
                                                             <table class="table table-bordered" id="Product_Details_Details"
                                                                 style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th style="width: 4%">Row#</th>
+                                                                        <th style="width: 4%">Sr. No.</th>
                                                                         <th style="width: 12%">Product / Material</th>
                                                                         <th style="width: 16%">Stage</th>
                                                                         <th style="width: 16%">A.R.No. / Batch No</th>
@@ -2074,7 +2094,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="Description_incident"
+                                                    <textarea class="summernote" name="Description_incident"
                                                         id="summernote-1" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
                                                 </div>
                                                 @error('Description_incident')
@@ -2087,7 +2107,7 @@
                                                             class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
-                                                    <textarea class="tiny" name="investigation"
+                                                    <textarea class="summernote" name="investigation"
                                                         id="summernote-1" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->investigation }}</textarea>
                                                 </div>
                                                 @error('investigation')
@@ -9048,7 +9068,14 @@
                     }
                 }
             </script>
-            <script>
+            {{-- <script>
+                document.getElementById('initiator_group').addEventListener('change', function() {
+                    var selectedValue = this.value;
+                    document.getElementById('initiator_group_code').value = selectedValue;
+                });
+            </script> --}}
+             <script>
+                // JavaScript
                 document.getElementById('initiator_group').addEventListener('change', function() {
                     var selectedValue = this.value;
                     document.getElementById('initiator_group_code').value = selectedValue;

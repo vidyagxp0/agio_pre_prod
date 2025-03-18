@@ -502,8 +502,8 @@ class TMSController extends Controller
                 $TrainingHistory->save();
                 
                 $document->doc = Document::find($id);
-                $document->doc->stage = 10;
-                $document->doc->status = "In-Effective";
+                $document->doc->stage = 9;
+                $document->doc->status = "Training-Complete";
                 
                 $documentTraining = DocumentTraining::where('document_id', $id)->first();
                 if ($documentTraining && $documentTraining->status == "Complete") {

@@ -642,7 +642,7 @@ dd($pre);
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">HOD initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">QA Initial Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Head/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
@@ -851,14 +851,78 @@ dd($pre);
                                             @if (isset($data->Initiator_Group) && $data->Initiator_Group == $Initiator_Group)
                                                     selected
                                                 @endif>
-                                            {{ $Initiator_Group }}
+                                            {{ $647Initiator_Group }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>--}}
 
+                        {{-- new department --}}
                         <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator"><b>Initiator Department</b></label>
+                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                            </div>
+                        </div>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    // Define department name to code mapping
+                                    const departmentMapping = {
+                                        "Calibration Lab": "CLB",
+                                        "Engineering": "ENG",
+                                        "Facilities": "FAC",
+                                        "LAB": "LAB",
+                                        "Labeling": "LABL",
+                                        "Manufacturing": "MANU",
+                                        "Quality Assurance": "QA",
+                                        "Quality Control": "QC",
+                                        "Ragulatory Affairs": "RA",
+                                        "Security": "SCR",
+                                        "Training": "TR",
+                                        "IT": "IT",
+                                        "Application Engineering": "AE",
+                                        "Trading": "TRD",
+                                        "Research": "RSCH",
+                                        "Sales": "SAL",
+                                        "Finance": "FIN",
+                                        "Systems": "SYS",
+                                        "Administrative": "ADM",
+                                        "M&A": "M&A",
+                                        "R&D": "R&D",
+                                        "Human Resource": "HR",
+                                        "Banking": "BNK",
+                                        "Marketing": "MRKT",
+                                        
+                                    };
+
+                                    // Get the Initiator Department input
+                                    let initiatorGroupInput = document.getElementById("initiator_group");
+                                    let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                    // Get the department name from the input field
+                                    let departmentName = initiatorGroupInput.value.trim();
+
+                                    // Auto-generate the department code based on the mapping
+                                    if (departmentName in departmentMapping) {
+                                        initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                    } else {
+                                        initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                    }
+                                });
+                            </script>
+
+<div class="col-lg-6">
+    <div class="group-input">
+        <label for="Initiator Group Code">Initiation Department Code</label>
+        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+            value="" readonly>
+    </div>
+</div>
+
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Initiation Department
                                 </b> <span
@@ -891,20 +955,18 @@ dd($pre);
 
                                 </select>
                             </div>
-                            {{--@error('Initiator_Group')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror--}}
-                        </div>
+
+                        </div> --}}
 
 
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiation Department Code</label>
                                 <input readonly type="text" name="initiator_group_code"
                                     id="initiator_group_code"
                                     value="{{ $data->initiator_group_code ?? '' }}">
                             </div>
-                        </div>
+                        </div> --}}
 
                                 {{--<div class="col-lg-6">
                                     <div class="group-input">
@@ -1394,17 +1456,17 @@ dd($pre);
                                     <label for="audit-agenda-grid">
                                         Facility/ Equipment/ Instrument/ System Details
                                         <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        {{-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
-                                        </span>
+                                        </span> --}}
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="onservation-field-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 4%">Row#</th>
+                                                    <th style="width: 4%">Sr. No.</th>
                                                     <th style="width: 12%">Name</th>
                                                     <th style="width: 16%"> ID Number</th>
                                                     <th style="width: 15%">Remarks</th>
@@ -1478,18 +1540,18 @@ dd($pre);
                                         Document Details
                                         <button type="button" name="audit-agenda-grid" id="ReferenceDocument">+</button>
                                         {{--document-details-field-instruction-modal--}}
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        {{-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal1"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
-                                        </span>
+                                        </span> --}}
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="ReferenceDocument_details"
                                             style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 4%">Row#</th>
+                                                    <th style="width: 4%">Sr. No.</th>
                                                     <th style="width: 12%">Document Number</th>
                                                     {{--<th style="width: 16%"> Reference Document Name</th>--}}
                                                     <th style="width: 16%">Document Name</th>
@@ -1576,18 +1638,18 @@ dd($pre);
                                                     {{--Batch--}}
                                             <button type="button" name="audit-agenda-grid"
                                                 id="Product_Details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
+                                            {{-- <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal2"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span>
+                                            </span> --}}
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="Product_Details_Details"
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 4%">Row#</th>
+                                                        <th style="width: 4%">Sr. No.</th>
                                                         <th style="width: 12%">Product / Material</th>
                                                         <th style="width: 16%"> Stage</th>
                                                         <th style="width: 16%">A.R.No. / Batch No</th>
@@ -1721,7 +1783,7 @@ dd($pre);
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_incident" id="summernote-1" required> </textarea>
+                                        <textarea class="summernote" name="Description_incident" id="summernote-1" required> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1732,7 +1794,7 @@ dd($pre);
                                         <label for="Description Incident">Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="investigation"  > </textarea>
+                                        <textarea class="summernote" name="investigation"  > </textarea>
                                     </div>
                                     @error('investigation[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -4128,30 +4190,30 @@ dd($pre);
 
 
         <script>
-            document.getElementById('Initiator_Group').addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex];
-            var selectedCode = selectedOption.getAttribute('data-code');
-            document.getElementById('initiator_group_code').value = selectedCode;
-            });
+            // document.getElementById('Initiator_Group').addEventListener('change', function() {
+            // var selectedOption = this.options[this.selectedIndex];
+            // var selectedCode = selectedOption.getAttribute('data-code');
+            // document.getElementById('initiator_group_code').value = selectedCode;
+            // });
 
-            // Set the group code on page load if a value is already selected
-            document.addEventListener('DOMContentLoaded', function() {
-            var initiatorGroupElement = document.getElementById('initiator_group');
-            if (initiatorGroupElement.value) {
-                var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
-                var selectedCode = selectedOption.getAttribute('data-code');
-                document.getElementById('initiator_group_code').value = selectedCode;
-            }
-            });
+            // // Set the group code on page load if a value is already selected
+            // document.addEventListener('DOMContentLoaded', function() {
+            // var initiatorGroupElement = document.getElementById('initiator_group');
+            // if (initiatorGroupElement.value) {
+            //     var selectedOption = initiatorGroupElement.options[initiatorGroupElement.selectedIndex];
+            //     var selectedCode = selectedOption.getAttribute('data-code');
+            //     document.getElementById('initiator_group_code').value = selectedCode;
+            // }
+            // });
         </script>
 
 
 
         <script>
-            document.getElementById('initiator_group').addEventListener('change', function() {
-                var selectedValue = this.value;
-                document.getElementById('initiator_group_code').value = selectedValue;
-            });
+            // document.getElementById('initiator_group').addEventListener('change', function() {
+            //     var selectedValue = this.value;
+            //     document.getElementById('initiator_group_code').value = selectedValue;
+            // });
         </script>
         <script>
             document.getElementById('department_capa').addEventListener('change', function() {

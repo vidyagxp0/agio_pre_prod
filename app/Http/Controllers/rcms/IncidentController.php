@@ -8576,7 +8576,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Extensionchild->save();
-            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords', 'extension_record','countData'));
+            return view('frontend.extension.extension_new', compact('parent_id','parent_record', 'parent_name', 'record_number', 'parent_due_date', 'due_date','old_records', 'parent_type','parent_created_at','relatedRecords', 'extension_record','countData','parent_division_id'));
 
         }
         $old_record = Incident::select('id', 'division_id', 'record')->get();

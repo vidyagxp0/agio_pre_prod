@@ -260,7 +260,7 @@
     <style>
         /*Main Table Styling */
         #isPasted {
-            width: 650px !important;
+            width: 690px !important;
         border-collapse: collapse;
         table-layout: fixed;
         }
@@ -317,7 +317,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 650px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
@@ -443,11 +443,23 @@
                                     ->where('name', $document->document_type_name)
                                     ->value('typecode');
                             @endphp
-                            @if ($document->revised === 'Yes')
+                            {{-- @if ($document->revised === 'Yes')
                              {{ $document->department_id }}/00{{ $document->revised_doc }}-0{{ $document->major }}
                             @else
                               Nil
+                            @endif --}}
+
+                            @if($document->revised == 'Yes')
+                                @php
+                                    $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
+                                @endphp
+                                MFPS/A/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            @else                        
+                                Nil
                             @endif
+
+
+
                         </span>
                     </td>
                     <td class="w-50"

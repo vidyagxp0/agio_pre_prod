@@ -112,7 +112,7 @@
             });
         });
     </script>
-    
+
 <script>
     $(document).ready(function() {
         $('.formSubmit').on('submit', function(e) {
@@ -184,7 +184,7 @@
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" placeholder="Record Number" readonly>
                                     </div> -->
-                                   
+
                                     <div class="group-input">
                                         <label for="Record Number">Record Number</label>
                                         <input disabled type="text" name="record"
@@ -318,7 +318,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group"
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -351,7 +351,7 @@
                                                 "Human Resource": "HR",
                                                 "Banking": "BNK",
                                                 "Marketing": "MRKT",
-                                                
+
                                             };
 
                                             // Get the Initiator Department input
@@ -722,7 +722,7 @@
                                 </div>
 
 
-                             
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button ">Save</button>
@@ -4125,7 +4125,7 @@
 
         <div id="CCForm11" class="inner-block cctabcontent">
         <div class="inner-block-content">
-                   
+
                    <div class="row">
                        <div class="sub-head">Submit</div>
                        <div class="col-lg-3">
@@ -4168,7 +4168,7 @@
                        </div>
 
                        <div class="sub-head">Cancel</div>
-                      
+
                        <div class="col-lg-3">
                            <div class="group-input">
                                <label for="HOD Review Complete By">Cancel By :-</label>
@@ -4333,7 +4333,7 @@
                            </div>
                        </div>
 
-                  
+
 
                        <div class="sub-head"> QA/CQA Final Review Complete</div>
                        <div class="col-lg-3">
@@ -4378,7 +4378,7 @@
                        </div>
 
                        <div class="sub-head">Rejected</div>
-                      
+
                       <div class="col-lg-3">
                           <div class="group-input">
                               <label for="HOD Review Complete By">Rejected By :-</label>
@@ -4397,36 +4397,36 @@
                               <div class="">Not Applicable</div>
                           </div>
                       </div>
-                     
+
                    <div class="sub-head">Initiator Updated Completed</div>
-                   
+
                    <div class="col-lg-3">
                        <div class="group-input">
                            <label for="QA Final Review Complete By">Initiator Updated Completed By :-</label>
                            <div class="">Not Applicable
-                            
+
                            </div>
                        </div>
                    </div>
-                   
+
                    <div class="col-lg-3">
                        <div class="group-input">
                            <label for="QA Final Review Complete On">Initiator Updated Completed On :-</label>
                            <div class="">Not Applicable
-                        
+
                            </div>
                        </div>
                    </div>
-                   
+
                    <div class="col-lg-6">
                        <div class="group-input" style="width:1620px; height:100px; padding:5px;">
                            <label for="QA Final Review Comments">Initiator Updated Completed Comment :-</label>
                            <div class="">Not Applicable
-                              
+
                            </div>
                        </div>
                    </div>
-                   
+
 
 
                        <div class="sub-head">HOD Final Review Complete
@@ -4480,7 +4480,7 @@
                        <div class="group-input">
                            <label for="QA Final Review Complete By">Closure Approved By :-</label>
                            <div class="">Not Applicable
-                            
+
                            </div>
                        </div>
                    </div>
@@ -4497,7 +4497,7 @@
                        </div>
                    </div>
 
-                       
+
                    </div>
                    <div class="button-block">
                        <button type="submit" class="saveButton on-submit-disable-button">Save</button>

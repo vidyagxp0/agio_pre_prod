@@ -293,7 +293,7 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr class="table_bg">
-                                    <th>Row #</th>
+                                    <th>Sr.No.</th>
                                     <th>Auditor Name</th>
                                     <th>Department</th>
                                     <th>Designation</th>
@@ -338,7 +338,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if($data->inv_attachment)
@@ -381,7 +381,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if($data->file_attachment)
@@ -610,7 +610,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if($data->file_attachment)
@@ -743,7 +743,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No.</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -847,7 +847,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -974,7 +974,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -1103,7 +1103,7 @@
                 <table class="table table-bordered " border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -1238,7 +1238,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -1368,7 +1368,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>checklist6
                             <th>Remarks</th>
@@ -1504,7 +1504,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -1622,7 +1622,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -1744,7 +1744,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -1918,7 +1918,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2018,7 +2018,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2124,7 +2124,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2281,7 +2281,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2417,7 +2417,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2556,7 +2556,7 @@
     <table class="table table-bordered" border="1">
         <thead>
             <tr>
-                <th style="width: 5%;">Sr. No.</th>
+                <th style="width: 5%;">Sr.No..</th>
                 <th style="width: 40%;">Question</th>
                 <th style="width: 20%;">Response</th>
                 <th>Remarks</th>
@@ -2633,7 +2633,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2733,7 +2733,7 @@
                 <table class="table table-bordered" border="1">
                     <thead>
                         <tr>
-                            <th style="width: 5%;">Sr. No.</th>
+                            <th style="width: 5%;">Sr.No..</th>
                             <th style="width: 40%;">Question</th>
                             <th style="width: 20%;">Response</th>
                             <th>Remarks</th>
@@ -2830,7 +2830,7 @@
             <table class="table table-bordered" border="1">
                 <thead>
                     <tr>
-                        <th style="width: 5%;">Sr. No.</th>
+                        <th style="width: 5%;">Sr.No..</th>
                         <th style="width: 40%;">Question</th>
                         <th style="width: 20%;">Response</th>
                         <th>Remarks</th>
@@ -2915,7 +2915,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                             @if($data->Audit_file)
@@ -3064,7 +3064,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if($data->report_file)
@@ -3090,7 +3090,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if($data->myfile)
@@ -3146,7 +3146,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if($data->attach_file_rv)

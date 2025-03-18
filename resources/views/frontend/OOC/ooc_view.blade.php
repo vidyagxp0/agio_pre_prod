@@ -1666,7 +1666,7 @@
                                         <table class="table table-bordered" id="onservation-incident-table">
                                             <thead>
                                                 <tr>
-                                                    <th>Row #</th>
+                                                    <th>Sr.No.</th>
                                                     <th>Instrument Name</th>
                                                     <th>Instrument ID</th>
                                                     <th>Remarks</th>

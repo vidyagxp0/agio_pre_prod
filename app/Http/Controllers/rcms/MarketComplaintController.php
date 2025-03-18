@@ -60,10 +60,10 @@ class MarketComplaintController extends Controller
         // Manually assigning each field from the request
         $marketComplaint->initiator_id = Auth::user()->id;
         $marketComplaint->division_id = $request->division_id;
-        $marketComplaint->initiator_group = $request->initiator_group;
+        $marketComplaint->initiator_group = $request->Initiator_Group;
         $marketComplaint->intiation_date = $request->intiation_date;
         $marketComplaint->due_date_gi = $request->due_date_gi;
-        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
+        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code;
         $marketComplaint->record = ((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->if_other_gi = $request->if_other_gi;
@@ -100,6 +100,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->review_of_Batch_Packing_record_bpr_gi = $request->review_of_Batch_Packing_record_bpr_gi;
         $marketComplaint->review_of_packing_materials_used_in_batch_packing_gi = $request->review_of_packing_materials_used_in_batch_packing_gi;
         $marketComplaint->review_of_analytical_data_gi = $request->review_of_analytical_data_gi;
+        $marketComplaint->Expecteddate_of_investigation_completion = $request->Expecteddate_of_investigation_completion;
+        $marketComplaint->review_of_complaint_sample_if = $request->review_of_complaint_sample_if;
         $marketComplaint->review_of_training_record_of_concern_persons_gi = $request->review_of_training_record_of_concern_persons_gi;
         $marketComplaint->rev_eq_inst_qual_calib_record_gi = $request->rev_eq_inst_qual_calib_record_gi;
         $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi = $request->review_of_equipment_break_down_and_maintainance_record_gi;
@@ -1348,6 +1350,38 @@ class MarketComplaintController extends Controller
             $history->action_name = "Create";
             $history->save();
         }
+        if (!empty($marketComplaint->Expecteddate_of_investigation_completion)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Expected Date of Investigation Completion';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->Expecteddate_of_investigation_completion;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+        if (!empty($marketComplaint->review_of_complaint_sample_if)) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of Complaint Sample (if applicable)';
+            $history->previous = "Null";
+            $history->current = $marketComplaint->review_of_complaint_sample_if;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
 
         if (!empty($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
             $history = new MarketComplaintAuditTrial();
@@ -2430,6 +2464,8 @@ class MarketComplaintController extends Controller
         $marketComplaint->review_of_Batch_Packing_record_bpr_gi = $request->review_of_Batch_Packing_record_bpr_gi;
         $marketComplaint->review_of_packing_materials_used_in_batch_packing_gi = $request->review_of_packing_materials_used_in_batch_packing_gi;
         $marketComplaint->review_of_analytical_data_gi = $request->review_of_analytical_data_gi;
+        $marketComplaint->Expecteddate_of_investigation_completion = $request->Expecteddate_of_investigation_completion;
+        $marketComplaint->review_of_complaint_sample_if = $request->review_of_complaint_sample_if;
         $marketComplaint->review_of_training_record_of_concern_persons_gi = $request->review_of_training_record_of_concern_persons_gi;
         $marketComplaint->rev_eq_inst_qual_calib_record_gi = $request->rev_eq_inst_qual_calib_record_gi;
         $marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi = $request->review_of_equipment_break_down_and_maintainance_record_gi;
@@ -3554,6 +3590,46 @@ class MarketComplaintController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
             if (is_null($lastmarketComplaint->review_of_analytical_data_gi)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastmarketComplaint->Expecteddate_of_investigation_completion != $marketComplaint->Expecteddate_of_investigation_completion) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Expected Date of Investigation Completion';
+            $history->previous = $lastmarketComplaint->Expecteddate_of_investigation_completion;
+            $history->current = $marketComplaint->Expecteddate_of_investigation_completion;
+            $history->comment = $request->Expecteddate_of_investigation_completion_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+            if (is_null($lastmarketComplaint->Expecteddate_of_investigation_completion)) {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+        if ($lastmarketComplaint->review_of_complaint_sample_if != $marketComplaint->review_of_complaint_sample_if) {
+            $history = new MarketComplaintAuditTrial();
+            $history->market_id = $marketComplaint->id;
+            $history->activity_type = 'Review of Complaint Sample (if applicable)';
+            $history->previous = $lastmarketComplaint->review_of_complaint_sample_if;
+            $history->current = $marketComplaint->review_of_complaint_sample_if;
+            $history->comment = $request->review_of_complaint_sample_if_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastmarketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastmarketComplaint->status;
+            if (is_null($lastmarketComplaint->review_of_complaint_sample_if)) {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -9719,8 +9795,9 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $data_record = Helpers::getDivisionName($p_record->division_id) . '/' . 'MC' . '/' . date('Y') . '/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = MarketComplaint::where('id', $id)->value('record');
             $data = MarketComplaint::find($id);
+            $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.action-item.action-item', compact('record', 'data', 'parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
+            return view('frontend.action-item.action-item', compact('parent_division_id','record', 'data', 'parentRecord', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'data_record'));
         } elseif ($request->revision == "rca") {
             //  return "test";
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -9893,6 +9970,53 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
         return view('frontend.market_complaint.singleReport', compact('data', 'prductgigrid'));
     }
+
+
+    public function General_Complaint_report(Request $request, $id)
+    {
+
+        $data = MarketComplaint::find($id);
+        $data1 = MarketComplaintCft::where('mc_id', $id)->first();
+        // dd($data1)
+        $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
+        $gitracebilty = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Traceability'])->first();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Product_MaterialDetails'])->first();
+        $giinvesting = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Investing_team'])->first();
+        $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
+        $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
+        $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Report_Approval'])->first();
+        $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+        $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
+
+
+
+        // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
+
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.market_complaint.GeneralComplaintTabReport', compact('data', 'proposalData', 'proposal_to_accomplish_investigation', 'data1', 'prductgigrid', 'gitracebilty', 'marketrproducts', 'giinvesting', 'brain', 'hodteammembers', 'hodreportapproval'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('MarketComplainta' . $id . '.pdf');
+        }
+
+
+        return view('frontend.market_complaint.singleReport', compact('data', 'prductgigrid'));
+    }
+
 
     public function MarketAuditTrial($id)
     {

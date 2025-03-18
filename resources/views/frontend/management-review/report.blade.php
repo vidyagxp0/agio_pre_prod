@@ -403,7 +403,7 @@ use Carbon\Carbon;
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($managementReview->inv_attachment)
@@ -579,7 +579,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Batch No</th>
                         </tr>
                         @if ($managementReview->file_attachment)
@@ -607,7 +607,7 @@ use Carbon\Carbon;
         <table>
 
             <tr class="table_bg">
-                <th class="w-20">S.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Batch No</th>
             </tr>
             @if ($managementReview->file_attachment)
@@ -632,7 +632,7 @@ use Carbon\Carbon;
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($managementReview->file_attchment_if_any)
@@ -722,7 +722,7 @@ use Carbon\Carbon;
             <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                 <thead>
                     <tr class="table_bg">
-                        <th style="width: 8%">#Row</th>
+                        <th style="width: 8%">Sr.No.</th>
                         <th>Invited Person</th>
                         <th>Designation</th>
                         <th>Department</th>
@@ -755,7 +755,7 @@ use Carbon\Carbon;
             <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                 <thead>
                     <tr class="table_bg">
-                        <th style="width: 8%">#Row</th>
+                        <th style="width: 8%">Sr.No.</th>
 
                         <th>Designee Name</th>
                         <th>Designee Department/Designation</th>
@@ -788,7 +788,7 @@ use Carbon\Carbon;
                 <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                     <thead>
                         <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
+                            <th style="width: 6%">Sr.No.</th>
                             <th>Monitoring</th>
                             <th>Measurement</th>
                             <th>Analysis</th>
@@ -828,7 +828,7 @@ use Carbon\Carbon;
         <table>
 
             <tr class="table_bg">
-                <th class="w-20">S.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Attachment</th>
             </tr>
             @if ($managementReview->meeting_and_summary_attachment)
@@ -956,7 +956,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Production_Table_Attachment)
@@ -1081,7 +1081,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Production_Injection_Attachment)
@@ -1203,7 +1203,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->ResearchDevelopment_attachment)
@@ -1325,7 +1325,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Human_Resource_attachment)
@@ -1446,7 +1446,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->CorporateQualityAssurance_attachment)
@@ -1569,7 +1569,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Store_attachment)
@@ -1691,7 +1691,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Engineering_attachment)
@@ -1813,7 +1813,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->RegulatoryAffair_attachment)
@@ -1935,7 +1935,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Quality_Assurance_attachment)
@@ -2059,7 +2059,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->ProductionLiquid_attachment)
@@ -2180,7 +2180,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Quality_Control_attachment)
@@ -2305,7 +2305,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Microbiology_attachment)
@@ -2428,7 +2428,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data1->Environment_Health_Safety_attachment)
@@ -2551,7 +2551,7 @@ use Carbon\Carbon;
         <table>
 
             <tr class="table_bg">
-                <th class="w-20">S.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Attachment</th>
             </tr>
             @if ($data1->ContractGiver_attachment)
@@ -2686,7 +2686,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data1->Other1_attachment)
@@ -2818,7 +2818,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data1->Other2_attachment)
@@ -2927,7 +2927,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data1->Other3_attachment)
@@ -3060,7 +3060,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data1->Other4_attachment)
@@ -3192,7 +3192,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data1->Other5_attachment)
@@ -3272,7 +3272,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Production_Table_Attachment)
@@ -3350,7 +3350,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Production_Injection_Attachment)
@@ -3424,7 +3424,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_ResearchDevelopment_attachment)
@@ -3498,7 +3498,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Human_Resource_attachment)
@@ -3575,7 +3575,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_CorporateQualityAssurance_attachment)
@@ -3651,7 +3651,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Store_attachment)
@@ -3730,7 +3730,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Engineering_attachment)
@@ -3804,7 +3804,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_RegulatoryAffair_attachment)
@@ -3879,7 +3879,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Quality_Assurance_attachment)
@@ -3952,7 +3952,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_ProductionLiquid_attachment)
@@ -4026,7 +4026,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Quality_Control_attachment)
@@ -4104,7 +4104,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Microbiology_attachment)
@@ -4181,7 +4181,7 @@ use Carbon\Carbon;
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data5->hod_Environment_Health_Safety_attachment)
@@ -4257,7 +4257,7 @@ use Carbon\Carbon;
         <table>
 
             <tr class="table_bg">
-                <th class="w-20">S.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Attachment</th>
             </tr>
             @if ($data5->hod_ContractGiver_attachment)
@@ -4337,7 +4337,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data5->hod_Other1_attachment)
@@ -4414,7 +4414,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data5->hod_Other2_attachment)
@@ -4488,7 +4488,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data5->hod_Other3_attachment)
@@ -4563,7 +4563,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data5->hod_Other4_attachment)
@@ -4639,7 +4639,7 @@ use Carbon\Carbon;
             <table>
 
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment</th>
                 </tr>
                 @if ($data5->hod_Other5_attachment)
@@ -4696,7 +4696,7 @@ use Carbon\Carbon;
         <table>
 
             <tr class="table_bg">
-                <th class="w-20">S.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Attachment</th>
             </tr>
             @if ($managementReview->qa_verification_file)
@@ -4766,7 +4766,7 @@ use Carbon\Carbon;
         <table>
 
             <tr class="table_bg">
-                <th class="w-20">S.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Attachment</th>
             </tr>
             @if ($managementReview->closure_attachments)
@@ -4875,7 +4875,7 @@ use Carbon\Carbon;
                 <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                     <thead>
                         <tr class="table_bg">
-                            <th>Row #</th>
+                            <th>Sr.No.</th>
                             <th>Date</th>
                             <th>Topic</th>
                             <th>Responsible</th>
@@ -4972,7 +4972,7 @@ use Carbon\Carbon;
             <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                 <thead>
                     <tr class="table_bg">
-                        <th style="width: 6%">Row #</th>
+                        <th style="width: 6%">Sr.No.</th>
                         <th>Short Description</th>
                         <th>Due Date</th>
                         <th style="width: 10%">Site / Division</th>
@@ -4999,7 +4999,7 @@ use Carbon\Carbon;
                 <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                     <thead>
                         <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
+                            <th style="width: 6%">Sr.No.</th>
                             <th>Person Responsible</th>
                             <th>Current Status</th>
                             <th>Date Closed</th>
@@ -5039,7 +5039,7 @@ use Carbon\Carbon;
                 <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                     <thead>
                         <tr class="table_bg">
-                            <th style="width: 6%">Row #</th>
+                            <th style="width: 6%">Sr.No.</th>
 
                             <th>Current Status</th>
                             <th>Date Closed</th>

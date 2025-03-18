@@ -217,10 +217,16 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    
+                </table>
+
+
+                <table>
+
+                <tr>
 
                         <th class="w-20">Short Description</th>
-                        <td class="w-30">
+                        <td class="w-80">
                             @if($data->short_desc){{ $data->short_desc }}@else Not Applicable @endif
                         </td>
                     </tr>
@@ -233,7 +239,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
+                                <th class="w-10">Sr.No.</th>
                                 <th class="w-30">Name of Product</th>
                                 <th class="w-30">B No./A.R. No.</th>
                                 <th class="w-30">Remarks</th>
@@ -335,7 +341,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->attachments_gi)
@@ -385,7 +391,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->QA_Head_Attachment)
@@ -427,7 +433,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->QA_Initial_Attachment)
@@ -479,7 +485,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Inv_Attachment)
@@ -563,7 +569,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->attachments_ia)
@@ -610,7 +616,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->QC_headhod_secondery_Attachment)
@@ -652,7 +658,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->QA_secondery_Attachment)
@@ -693,7 +699,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($labtab->closure_attachment_c)

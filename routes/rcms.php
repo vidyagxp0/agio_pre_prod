@@ -440,6 +440,7 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+            Route::get('GeneralInformationComplaint_report/{id}', [MarketComplaintController::class, 'General_Complaint_report']);
 
 
             /********************* Incident Routes Starts *******************/

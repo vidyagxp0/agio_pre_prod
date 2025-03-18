@@ -305,7 +305,7 @@
         }
 
         #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
+            max-width: 600px !important; /* Ensure image doesn't overflow the cell */
             height: 100%; /* Maintain image aspect ratio */
             display: block; /* Remove extra space below the image */
             margin: 5px auto; /* Add spacing and center align */
@@ -319,7 +319,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 650px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
@@ -445,11 +445,20 @@
                            ->where('name', $document->document_type_name)
                            ->value('typecode');
                    @endphp
-                   @if ($document->revised === 'Yes')
+                   {{-- @if ($document->revised === 'Yes')
                    CVS/00{{ $document->revised_doc }}-0{{ $document->major }}
                    @else
                    Nil
-                   @endif
+                   @endif --}}
+
+                        @if($document->revised == 'Yes')
+                            @php
+                                $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
+                            @endphp
+                            CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                        @else                        
+                            Nil
+                        @endif
                    </span>
                 </td>
                     <td class="w-50"

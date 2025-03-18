@@ -259,8 +259,34 @@ document.addEventListener("DOMContentLoaded", function () {
                                 html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                             }
                             html += '</select></td>'+
-                        '<td><input type="text" name="AuditorNew[' + investdetails +
-                        '][regulatoryagency]" value=""></td>' +
+                        // '<td><input type="text" name="AuditorNew[' + investdetails +
+                        // '][regulatoryagency]" value=""></td>' +
+                        '<td>' +
+                '<select name="AuditorNew[' + investdetails + '][regulatoryagency]" class="form-select">' +
+                '<option value="">Select a value</option>' +
+                '<option value="Corporate Quality Assurance">Corporate Quality Assurance</option>' +
+                '<option value="Quality Assurance">Quality Assurance</option>' +
+                '<option value="Quality Control">Quality Control</option>' +
+                '<option value="Quality Control (Microbiology department)">Quality Control (Microbiology department)</option>' +
+                '<option value="Production General">Production General</option>' +
+                '<option value="Production Liquid Orals">Production Liquid Orals</option>' +
+                '<option value="Production Tablet and Powder">Production Tablet and Powder</option>' +
+                '<option value="Production External (Ointment, Gels, Creams and Liquid)">Production External (Ointment, Gels, Creams and Liquid)</option>' +
+                '<option value="Production Capsules">Production Capsules</option>' +
+                '<option value="Production Injectable">Production Injectable</option>' +
+                '<option value="Engineering">Engineering</option>' +
+                '<option value="Human Resource">Human Resource</option>' +
+                '<option value="Store">Store</option>' +
+                '<option value="Electronic Data Processing">Electronic Data Processing</option>' +
+                '<option value="Formulation Development">Formulation Development</option>' +
+                '<option value="Analytical Research and Development Laboratory">Analytical Research and Development Laboratory</option>' +
+                '<option value="Packaging Development">Packaging Development</option>' +
+                '<option value="Purchase Department">Purchase Department</option>' +
+                '<option value="Document Cell">Document Cell</option>' +
+                '<option value="Regulatory Affairs">Regulatory Affairs</option>' +
+                '<option value="Pharmacovigilance">Pharmacovigilance</option>' +
+                '</select>' +
+                '</td>' +
                         '<td>' +
                         '<select name="AuditorNew[' + investdetails +
                         '][designation]" class="form-select">' +
@@ -930,12 +956,30 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiation Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                                {{-- <div class="default-name"> <span
+                                                id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-6">
+                                            <div class="group-input">
                                                 <label for="Initiator Department  Code">Initiator Department Code</label>
                                                 <input type="text"
                                                     name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                   readonly  value="{{ $data->initiator_group_code }}" id="initiator_group_code">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
@@ -1146,10 +1190,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 <label for="Audit Start Date">Scheduled audit date <span class="text-danger">*</span> </label>
                                                 {{-- <input type="date" name="audit_start_date"> --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MM-YYYY"  {{ $data->stage == 3 ? 'required' : 'disabled' }}/>
+                                                    <input type="text" id="sch_audit_start_date"value="{{ Helpers::getdateFormat($data->sch_audit_start_date) }}" placeholder="DD-MM-YYYY"  {{ $data->stage == 1 ? 'required' : 'disabled' }}/>
                                                     <input type="date" name="sch_audit_start_date" id="sch_audit_start_date" value="{{ $data->sch_audit_start_date }}"
                                                         class="hide-input" {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                        oninput="handleDateInput(this, 'sch_audit_start_date')" {{ $data->stage == 3 ? 'required' : 'disabled' }}  />
+                                                        oninput="handleDateInput(this, 'sch_audit_start_date')"   />
                                                 </div>
                                             </div>
                                         </div>
@@ -1173,7 +1217,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         id="onservation-incident-tableAuditors">
                                                         <thead>
                                                             <tr>
-                                                                <th>Row #</th>
+                                                                <th>Sr.No.</th>
                                                                 <th>Auditor Name</th>
                                                                 <th>Department</th>
                                                                 <th>Designation</th>
@@ -1207,8 +1251,43 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         @endif
                                                                         </td>
 
-                                                                        <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td>
+                                                                        {{-- <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td> --}}
 
+                                                                       <td>
+                                                                         <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][regulatoryagency]" @if ($data->stage != 1) disabled @endif>
+                                                                            <option value="">-Select a value-</option>
+                                                                            @php
+                                                                                $options = [
+                                                                                    "Corporate Quality Assurance",
+                                                                                    "Quality Assurance",
+                                                                                    "Quality Control",
+                                                                                    "Quality Control (Microbiology department)",
+                                                                                    "Production General",
+                                                                                    "Production Liquid Orals",
+                                                                                    "Production Tablet and Powder",
+                                                                                    "Production External (Ointment, Gels, Creams and Liquid)",
+                                                                                    "Production Capsules",
+                                                                                    "Production Injectable",
+                                                                                    "Engineering",
+                                                                                    "Human Resource",
+                                                                                    "Store",
+                                                                                    "Electronic Data Processing",
+                                                                                    "Formulation Development",
+                                                                                    "Analytical Research and Development Laboratory",
+                                                                                    "Packaging Development",
+                                                                                    "Purchase Department",
+                                                                                    "Document Cell",
+                                                                                    "Regulatory Affairs",
+                                                                                    "Pharmacovigilance"
+                                                                                ];
+                                                                            @endphp
+                                                                            @foreach ($options as $option)
+                                                                                <option value="{{ $option }}" {{ isset($audditor['regulatoryagency']) && $audditor['regulatoryagency'] == $option ? 'selected' : '' }}>
+                                                                                    {{ $option }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                       </td>
                                                                         <td>
                                                                             <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select"@if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">--Select--</option>
@@ -1379,8 +1458,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div> --}}
                                         <div class="col-md-12">
                                             <div class="group-input">
-                                                <label for="Production Tablet feedback">Auditor Comment
-                                                    @if ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew'])
+                                                <label for="Production Tablet feedback">Lead Auditor Comment
+                                                    @if ($data->stage == 2)
                                                         <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
@@ -2145,7 +2224,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                          />
                                                     <input type="date" id="audit_start_date_checkdate"
-                                                        name="audit_start_date" required
+                                                        name="audit_start_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_start_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
@@ -2161,7 +2240,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                          />
                                                     <input type="date" id="audit_end_date_checkdate"
-                                                        name="audit_end_date" required
+                                                        name="audit_end_date"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                                         value="{{ $data->audit_end_date }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
@@ -2988,7 +3067,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 </td>
                                                                 <td>
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
-                                                                     <textarea name="observations[{{ $loop->index }}][observation]" {{ $data->stage == 3 ? "required" : 'disabled' }}>{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
+                                                                     <textarea name="observations[{{ $loop->index }}][observation]" {{ $data->stage == 3 ? "required" : 'readonly' }}>{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
                                                                 </td>
                                                                 {{-- <td> --}}
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}"> --}}
@@ -2996,7 +3075,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                                                 {{-- </td> --}}
                                                                 <td>
-                                                                    <select name="observations[{{ $loop->index }}][category]" {{ $data->stage == 3 ? "" : 'disabled' }} class="form-select">
+                                                                    <select name="observations[{{ $loop->index }}][category]" {{ $data->stage == 3 ? "" : 'readonly' }} class="form-select">
                                                                         <option value="">-- Select Category --</option>
                                                                         <option value="Major" {{ isset($item['category']) && $item['category'] == 'Major' ? 'selected' : '' }}>Major</option>
                                                                         <option value="Minor" {{ isset($item['category']) && $item['category'] == 'Minor' ? 'selected' : '' }}>Minor</option>
@@ -3211,12 +3290,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         name="Initial[0][serial_number]" value="1">
                                                                 </td>
                                                                 <td>
-                                                                    {{-- <input type="text" name="Initial[{{ $loop->index }}][observation]"value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
-                                                                    <textarea name="Initial[{{ $loop->index }}][observation]" {{ $data->stage == 4 ? 'required' : 'disabled' }}>{{ isset($item['observation']) ? $item['observation'] : '' }} </textarea>
+                                                                    <textarea name="Initial[{{ $loop->index }}][observation]" {{ $data->stage == 4 ? 'required' : 'readonly' }}>{{ isset($item['observation']) ? $item['observation'] : '' }} </textarea>
                                                                 </td>
                                                                 <td>
                                                                     {{-- <input type="text" name="Initial[{{ $loop->index }}][impact_assesment]" value="{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}"> --}}
-                                                                    <textarea name="Initial[{{ $loop->index }}][impact_assesment]" {{ $data->stage == 4 ? 'required' : 'disabled' }}>{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}</textarea>
+                                                                    <textarea name="Initial[{{ $loop->index }}][impact_assesment]" {{ $data->stage == 4 ? 'required' : 'readonly' }}>{{ isset($item['impact_assesment']) ? $item['impact_assesment'] : '' }}</textarea>
 
                                                                 </td>
                                                                 <td>

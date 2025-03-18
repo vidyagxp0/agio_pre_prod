@@ -1259,7 +1259,7 @@
                                                     <table class="table table-bordered" id="audit-agenda-grid">
                                                         <thead>
                                                             <tr>
-                                                                <th>Row #</th>
+                                                                <th>Sr.No.</th>
                                                                 <th>Area of Audit</th>
                                                                 <th>Scheduled Start Date</th>
                                                                 <th>Scheduled Start Time</th>
