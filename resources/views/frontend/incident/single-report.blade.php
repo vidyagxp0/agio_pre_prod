@@ -400,37 +400,35 @@
                     </tr>
                 </table>
                 <table>
-
                     <tr>
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
-                                {{ Ucfirst($data->Facility_Equipment) }}
+                                {{ ucfirst($data->Facility_Equipment) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-
                     </tr>
                 </table>
-                <div class="block">
-                    <div class="block-head">
-                        Facility/Equipment/Instrument/System Details
-                    </div>
-                    <div class="border-table">
-                        <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                            <thead>
-                                <tr class="table_bg">
-                                    <th style="width: 5%">Row#</th>
-                                    <th style="width: 12%">Name</th>
-                                    <th style="width: 16%">ID Number</th>
-                                    <th style="width: 15%">Remarks</th>
-                                    {{-- <th style="width: 8%">Action</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach (unserialize($grid_data->Remarks) as $key => $temps)
+                
+                @if ($data->Facility_Equipment == 'yes') 
+                    <div class="block">
+                        <div class="block-head">
+                            Facility/Equipment/Instrument/System Details
+                        </div>
+                        <div class="border-table">
+                            <table style="margin-top: 20px; width:100%;table-layout:fixed;">
+                                <thead>
+                                    <tr class="table_bg">
+                                        <th style="width: 5%">SR No.</th>
+                                        <th style="width: 12%">Name</th>
+                                        <th style="width: 16%">ID Number</th>
+                                        <th style="width: 15%">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (unserialize($grid_data->Remarks) as $key => $temps)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ isset(unserialize($grid_data->facility_name)[$key]) ? unserialize($grid_data->facility_name)[$key] : '' }}
@@ -445,52 +443,55 @@
 
                                     </tr>
                                 @endforeach
-
-
-                            </tbody>
-                        </table>
+                
+                                    {{-- @if (!empty($remarks))
+                                        @foreach ($remarks as $key => $remark)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $facility_names[$key] ?? '' }}</td>
+                                                <td>{{ $id_numbers[$key] ?? '' }}</td>
+                                                <td>{{ $remark ?? '' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr><td colspan="4">No Data Available</td></tr>
+                                    @endif --}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    {{-- <div class="main-danger-block">
-                        @error('facility_name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                        @error('IDnumber')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
-                </div>
-
+                @endif
+                
                 <table>
                     <tr>
                         <th class="w-20">Document Details Required?</th>
                         <td class="w-30">
                             @if ($data->Document_Details_Required)
-                                {{ Ucfirst($data->Document_Details_Required) }}
+                                {{ ucfirst($data->Document_Details_Required) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
                 </table>
-                <div class="block">
-                    <div class="block-head">
-                        Document Details
-                    </div>
-                    <div class="border-table">
-                        <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                            <thead>
-                                <tr class="table_bg">
-                                    <th style="width: 4%">Row#</th>
-                                    <th style="width: 16%">Document Name</th>
-                                    <th style="width: 12%">Document Number</th>
-                                    <th style="width: 16%">Remarks</th>
-
-                                    {{-- <th style="width: 8%">Action</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
+                
+                @if ($data->Document_Details_Required == 'yes')
+                    <div class="block">
+                        <div class="block-head">
+                            Document Details
+                        </div>
+                        <div class="border-table">
+                            <table style="margin-top: 20px; width:100%; table-layout:fixed;">
+                                <thead>
+                                    <tr class="table_bg">
+                                        <th style="width: 4%">SR No.</th>
+                                        <th style="width: 16%">Document Name</th>
+                                        <th style="width: 12%">Document Number</th>
+                                        <th style="width: 16%">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}
@@ -506,50 +507,56 @@
                                     </tr>
                                 @endforeach
 
-
-                            </tbody>
-                        </table>
+                
+                                    {{-- @if (!empty($document_names))
+                                        @foreach ($document_names as $key => $doc_name)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $doc_name ?? '' }}</td>
+                                                <td>{{ $document_numbers[$key] ?? '' }}</td>
+                                                <td>{{ $document_remarks[$key] ?? '' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr><td colspan="4">No Data Available</td></tr>
+                                    @endif --}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    {{-- <div class="main-danger-block">
-                        @error('facility_name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                        @error('IDnumber')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
-                </div>
+                @endif
+                
+
                 <table>
                     <tr>
-                        <th class="w-20">Products / Material  Details Required?</th>
+                        <th class="w-20">Products / Material Details Required?</th>
                         <td class="w-80">
                             @if ($data->Product_Details_Required)
-                                {{ Ucfirst($data->Product_Details_Required) }}
+                                {{ ucfirst($data->Product_Details_Required) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
                     </tr>
                 </table>
-                <div class="block">
-                    <div class="block-head">
-                        Product / Material Details
-                    </div>
-                    <div class="border-table">
-                        <table style="margin-top: 20px; width:100%;table-layout:fixed;">
-                            <thead>
-                                <tr class="table_bg">
-                                    <th style="width: 4%">Row#</th>
-                                    <th style="width: 12%">Product Material</th>
-                                    <th style="width: 16%">Stage</th>
-                                    <th style="width: 16%">A.R.No. / Batch No</th>
-
-                                    {{-- <th style="width: 8%">Action</th> --}}
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                @foreach (unserialize($grid_data2->product_name) as $key => $temps)
+                
+                @if ($data->Product_Details_Required == 'yes')
+                    <div class="block">
+                        <div class="block-head">
+                            Product / Material Details
+                        </div>
+                        <div class="border-table">
+                            <table style="margin-top: 20px; width:100%; table-layout:fixed;">
+                                <thead>
+                                    <tr class="table_bg">
+                                        <th style="width: 4%">SR No.</th>
+                                        <th style="width: 12%">Product Material</th>
+                                        <th style="width: 16%">Stage</th>
+                                        <th style="width: 16%">A.R.No. / Batch No</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (unserialize($grid_data2->product_name) as $key => $temps)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}
@@ -565,19 +572,25 @@
                                     </tr>
                                 @endforeach
 
-
-                            </tbody>
-                        </table>
+                                    {{-- @if (!empty($product_names))
+                                        @foreach ($product_names as $key => $product)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $product ?? '' }}</td>
+                                                <td>{{ $product_stages[$key] ?? '' }}</td>
+                                                <td>{{ $batch_numbers[$key] ?? '' }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr><td colspan="4">No Data Available</td></tr>
+                                    @endif --}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    {{-- <div class="main-danger-block">
-                        @error('facility_name')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                        @error('IDnumber')
-                            <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div> --}}
-                </div>
+                @endif
+                
+
                 <table>
                     <tr>
                         <th class="w-20">Description of Incident</th>
@@ -625,7 +638,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Audit_file)
@@ -703,7 +716,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Audit_file)
@@ -839,7 +852,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Initial_attachment)
@@ -889,7 +902,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_head_deginee_attachments)
@@ -992,7 +1005,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->QA_attachments)
@@ -1040,7 +1053,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_head_attachments)
@@ -1090,7 +1103,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_final_ra_attachments)
@@ -1155,7 +1168,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->closure_attachment)

@@ -1267,13 +1267,11 @@
         <select name="short_description_required"
                 id="short_description_required" 
                 onchange="checkRecurring(this)"
-                value="{{ $data->short_description_required }}" 
+                {{-- value="{{ $data->short_description_required }}"  --}}
                 {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
             <option value="">-- Select --</option>
-            <option value="Yes" 
-                @if ($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes') selected @endif>Yes</option>
-            <option value="No" 
-                @if ($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
+            <option value="Yes" @if($data->short_description_required == 'Yes' || old('short_description_required') == 'Yes')selected @endif>Yes</option>
+            <option value="No" @if($data->short_description_required == 'No' || old('short_description_required') == 'No') selected @endif>No</option>
         </select>
     </div>
     @error('short_description_required')
@@ -1720,7 +1718,7 @@
                                                         style="width: 100%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 5%">Row#</th>
+                                                                <th style="width: 5%">SR NO.</th>
                                                                 <th style="width: 12%">Name</th>
                                                                 <th style="width: 16%">ID Number</th>
                                                                 <th style="width: 15%">Remarks</th>
@@ -1855,7 +1853,7 @@
                                                         style="width: 100%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 4%">Row#</th>
+                                                                <th style="width: 4%">SR NO.</th>
                                                                 <th style="width: 12%">Document Number</th>
                                                                 {{--<th style="width: 16%"> Reference Document Name</th>--}}
                                                                 <th style="width: 16%">Document Name</th>
@@ -1977,7 +1975,7 @@
                                                                 style="width: 100%;">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th style="width: 4%">Row#</th>
+                                                                        <th style="width: 4%">SR NO.</th>
                                                                         <th style="width: 12%">Product / Material</th>
                                                                         <th style="width: 16%">Stage</th>
                                                                         <th style="width: 16%">A.R.No. / Batch No</th>
@@ -2684,9 +2682,9 @@
                                                     <div>
                                                         <label>Product Quality Impact:</label>
                                                     </div><div class="checkbox-group">
-                                                    <input type="checkbox" name="product_quality_imapct" value="yes" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'no' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'na' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="product_quality_imapct" value="YES" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="product_quality_imapct" value="NO" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="product_quality_imapct" value="NA" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2696,9 +2694,9 @@
                                                     <div>
                                                      <label>Process Performance Impact:</label>
                                                     </div>                                                <div class="checkbox-group">
-                                                    <input type="checkbox" name="process_performance_impact" value="yes" onclick="selectOne(this)" {{ $data->process_performance_impact == 'yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="process_performance_impact" value="no" onclick="selectOne(this)"{{ $data->process_performance_impact == 'no' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="process_performance_impact" value="na" onclick="selectOne(this)" {{ $data->process_performance_impact == 'na' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="process_performance_impact" value="YES" onclick="selectOne(this)" {{ $data->process_performance_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="process_performance_impact" value="NO" onclick="selectOne(this)"{{ $data->process_performance_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="process_performance_impact" value="NA" onclick="selectOne(this)" {{ $data->process_performance_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2709,9 +2707,9 @@
                                                         <label>Yield Impact:</label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="yield_impact" value="yes" onclick="selectOne(this)" {{ $data->yield_impact == 'yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="yield_impact" value="no" onclick="selectOne(this)" {{ $data->yield_impact == 'no' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="yield_impact" value="na" onclick="selectOne(this)" {{ $data->yield_impact == 'na' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="yield_impact" value="YES" onclick="selectOne(this)" {{ $data->yield_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="yield_impact" value="NO" onclick="selectOne(this)" {{ $data->yield_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)" {{ $data->yield_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2721,9 +2719,9 @@
                                                     <div>
                                                         <label>GMP Impact:</label>
                                                     </div>                                                <div class="checkbox-group">
-                                                    <input type="checkbox" name="gmp_impact" value="yes" onclick="selectOne(this)" {{ $data->gmp_impact == 'yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="gmp_impact" value="no" onclick="selectOne(this)" {{ $data->gmp_impact == 'no' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="gmp_impact" value="na" onclick="selectOne(this)" {{ $data->gmp_impact == 'na' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="gmp_impact" value="YES" onclick="selectOne(this)" {{ $data->gmp_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="gmp_impact" value="NO" onclick="selectOne(this)" {{ $data->gmp_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" {{ $data->gmp_impact == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                   </div>
                                                 </div>
                                                 <br>
@@ -2734,9 +2732,9 @@
                                                         <label>Additional Testing Required:</label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="additionl_testing_required" value="yes" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="additionl_testing_required" value="no" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'no' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="additionl_testing_required" value="na" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'na' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="additionl_testing_required" value="YES" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="additionl_testing_required" value="NO" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2765,9 +2763,9 @@
                                                         <label>Any Similar Incident in Past:</label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="capa_require" value="yes" onclick="selectOne(this)" {{ $data->capa_require == 'yes' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
-                                                    <input type="checkbox" name="capa_require" value="no" onclick="selectOne(this)" {{ $data->capa_require == 'no' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
-                                                    <input type="checkbox" name="capa_require" value="na" onclick="selectOne(this)" {{ $data->capa_require == 'na' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
+                                                    <input type="checkbox" name="capa_require" value="YES" onclick="selectOne(this)" {{ $data->capa_require == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
+                                                    <input type="checkbox" name="capa_require" value="NO" onclick="selectOne(this)" {{ $data->capa_require == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
+                                                    <input type="checkbox" name="capa_require" value="NA" onclick="selectOne(this)" {{ $data->capa_require == 'NA' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> N/A
                                                 </div>
                                                 </div>
                                                 <br>
@@ -2778,8 +2776,8 @@
                                                         <label>Classification by QA:</label>
                                                     </div>
                                                     <div class="checkbox-group">
-                                                    <input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Critical
-                                                    <input type="checkbox" name="classification_by_qa" value="non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'non-critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Non-Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Critical
+                                                    <input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Non-critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Non-Critical
                                                 </div>
                                                 </div>
 
@@ -3374,9 +3372,9 @@
                                                 <label>CAPA Implementation:</label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="capa_implementation" value="yes" onclick="selectOne(this)" {{ $data->capa_implementation == 'yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="capa_implementation" value="no" onclick="selectOne(this)" {{ $data->capa_implementation == 'no' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="capa_implementation" value="na" onclick="selectOne(this)" {{ $data->capa_implementation == 'na' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="capa_implementation" value="YES" onclick="selectOne(this)" {{ $data->capa_implementation == 'YES' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="capa_implementation" value="NO" onclick="selectOne(this)" {{ $data->capa_implementation == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="capa_implementation" value="NA" onclick="selectOne(this)" {{ $data->capa_implementation == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
                                         <br>
@@ -3387,9 +3385,9 @@
                                              <label>All check points compiled with (Documentary evidence shall be attached or referred to):</label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)" {{ $data->check_points == 'yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="check_points" value="no" onclick="selectOne(this)" {{ $data->check_points == 'no' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="check_points" value="na" onclick="selectOne(this)" {{ $data->check_points == 'na' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="check_points" value="YES" onclick="selectOne(this)" {{ $data->check_points == 'YES' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="check_points" value="NO" onclick="selectOne(this)" {{ $data->check_points == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="check_points" value="NA" onclick="selectOne(this)" {{ $data->check_points == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
                                         <br>
@@ -3398,9 +3396,9 @@
                                              <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:</label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)" {{ $data->corrective_actions == 'yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)" {{ $data->corrective_actions == 'no' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)" {{ $data->corrective_actions == 'na' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="corrective_actions" value="YES" onclick="selectOne(this)" {{ $data->corrective_actions == 'YES' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="corrective_actions" value="NO" onclick="selectOne(this)" {{ $data->corrective_actions == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="corrective_actions" value="NA" onclick="selectOne(this)" {{ $data->corrective_actions == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
                                         <br>
@@ -3411,9 +3409,9 @@
                                                 <label>Batch release satisfactory:</label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="batch_release" value="yes" onclick="selectOne(this)" {{ $data->batch_release == 'yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="batch_release" value="no" onclick="selectOne(this)" {{ $data->batch_release == 'no' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="batch_release" value="na" onclick="selectOne(this)" {{ $data->batch_release == 'na' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="batch_release" value="YES" onclick="selectOne(this)" {{ $data->batch_release == 'YES' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="batch_release" value="NO" onclick="selectOne(this)" {{ $data->batch_release == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="batch_release" value="NA" onclick="selectOne(this)" {{ $data->batch_release == 'NA' ? 'checked' : '' }}> N/A
                                         </div>
                                         </div>
                                         <br>
@@ -3431,9 +3429,9 @@
                                                 <label>Affected documents closed:</label>
                                             </div>
                                             <div class="checkbox-group">
-                                            <input type="checkbox" name="affected_documents" value="yes" onclick="selectOne(this)" {{ $data->affected_documents == 'yes' ? 'checked' : '' }}> Yes
-                                            <input type="checkbox" name="affected_documents" value="no" onclick="selectOne(this)" {{ $data->affected_documents == 'no' ? 'checked' : '' }}> No
-                                            <input type="checkbox" name="affected_documents" value="na" onclick="selectOne(this)" {{ $data->affected_documents == 'na' ? 'checked' : '' }}> N/A
+                                            <input type="checkbox" name="affected_documents" value="YES" onclick="selectOne(this)" {{ $data->affected_documents == 'YES' ? 'checked' : '' }}> Yes
+                                            <input type="checkbox" name="affected_documents" value="NO" onclick="selectOne(this)" {{ $data->affected_documents == 'NO' ? 'checked' : '' }}> No
+                                            <input type="checkbox" name="affected_documents" value="NA" onclick="selectOne(this)" {{ $data->affected_documents == 'NA' ? 'checked' : '' }}> N/A
                                           </div>
                                         </div>
 
@@ -4852,7 +4850,7 @@
                                             style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 4%">Row#</th>
+                                                    <th style="width: 4%">SR NO.</th>
                                                     <th style="width: 12%">Investigation Team</th>
                                                     <th style="width: 16%">Responsibility</th>
                                                     <th style="width: 16%">Remarks</th>
@@ -5701,7 +5699,7 @@
                                     <table class="table table-bordered" id="rootCauseAddTable" style="width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th style="width: 4%">Row#</th>
+                                                <th style="width: 4%">SR NO.</th>
                                                 <th style="width: 12%"> Root Cause Category</th>
                                                 <th style="width: 16%">Root Cause Sub-Category</th>
                                                 <th style="width: 16%">If Others</th>

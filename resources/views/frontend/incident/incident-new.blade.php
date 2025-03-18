@@ -1013,10 +1013,10 @@ dd($pre);
                                         <select name="short_description_required" id="short_description_required"
                                             required>
                                             <option value="0">-- Select --</option>
-                                            <option value="Recurring" @if (old('short_description_required') == 'Recurring') selected @endif>
+                                            <option value="Yes" @if (old('short_description_required') == 'Yes') selected @endif>
                                                 Yes</option>
-                                            <option value="Non-Recurring"
-                                                @if (old('short_description_required') == 'Non-Recurring') selected @endif>
+                                            <option value="No"
+                                                @if (old('short_description_required') == 'No') selected @endif>
                                                 No</option>
                                         </select>
                                     </div>
@@ -1042,11 +1042,11 @@ dd($pre);
                                         var facilityNameInputs = document.getElementsByClassName('nature_of_repeat');
 
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
-                                            inputsToToggle.push(facilityNameInputs[i]);
+                                            inputsToToggle.push(facility--NameInputs[i]);
                                         }
 
                                         selectField.addEventListener('change', function() {
-                                            var isRequired = this.value === 'Recurring';
+                                            var isRequired = this.value === 'Yes';
 
                                             inputsToToggle.forEach(function(input) {
                                                 if (!isRequired) {
@@ -1404,7 +1404,7 @@ dd($pre);
                                         <table class="table table-bordered" id="onservation-field-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 4%">Row#</th>
+                                                    <th style="width: 4%">SR No.</th>
                                                     <th style="width: 12%">Name</th>
                                                     <th style="width: 16%"> ID Number</th>
                                                     <th style="width: 15%">Remarks</th>
@@ -1489,7 +1489,7 @@ dd($pre);
                                             style="width: 100%;">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 4%">Row#</th>
+                                                    <th style="width: 4%">SR No.</th>
                                                     <th style="width: 12%">Document Number</th>
                                                     {{--<th style="width: 16%"> Reference Document Name</th>--}}
                                                     <th style="width: 16%">Document Name</th>
@@ -1587,7 +1587,7 @@ dd($pre);
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 4%">Row#</th>
+                                                        <th style="width: 4%">SR No.</th>
                                                         <th style="width: 12%">Product / Material</th>
                                                         <th style="width: 16%"> Stage</th>
                                                         <th style="width: 16%">A.R.No. / Batch No</th>
@@ -1939,9 +1939,9 @@ dd($pre);
                                                 <label>Product Quality Impact:</label>
                                             </div>
                                             <div class="checkbox-group">
-                                                <label><input type="checkbox" name="product_quality_imapct" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                                <label><input type="checkbox" name="product_quality_imapct" value="no" onclick="selectOne(this)" disabled> No</label>
-                                                <label><input type="checkbox" name="product_quality_imapct" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                                <label><input type="checkbox" name="product_quality_imapct" value="NO" onclick="selectOne(this)" disabled> N/A</label>
                                             </div>
                                         </div>
                                         <br>
@@ -1952,9 +1952,9 @@ dd($pre);
                                             <label>Process Performance Impact:</label>
                                            </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="process_performance_impact" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="process_performance_impact" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="process_performance_impact" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="process_performance_impact" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="process_performance_impact" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="process_performance_impact" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -1965,9 +1965,9 @@ dd($pre);
                                                 <label>Yield Impact:</label>
                                             </div>
                                            <div class="checkbox-group">
-                                            <label><input type="checkbox" name="yield_impact" value="yes" onclick="selectOne(this)"> Yes</label>
-                                            <label><input type="checkbox" name="yield_impact" value="no" onclick="selectOne(this)"> No</label>
-                                            <label><input type="checkbox" name="yield_impact" value="na" onclick="selectOne(this)"> N/A</label>
+                                            <label><input type="checkbox" name="yield_impact" value="YES" onclick="selectOne(this)"> Yes</label>
+                                            <label><input type="checkbox" name="yield_impact" value="NO" onclick="selectOne(this)"> No</label>
+                                            <label><input type="checkbox" name="yield_impact" value="NA" onclick="selectOne(this)"> N/A</label>
                                         </div>
 
                                         </div>
@@ -1980,9 +1980,9 @@ dd($pre);
                                                 <label>GMP Impact:</label>
                                             </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="gmp_impact" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="gmp_impact" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="gmp_impact" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="gmp_impact" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="gmp_impact" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="gmp_impact" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
 
                                         </div>
@@ -1993,9 +1993,9 @@ dd($pre);
                                             </div>
                                         <!-- Additional Testing Required -->
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="additionl_testing_required" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="additionl_testing_required" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="additionl_testing_required" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="additionl_testing_required" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2022,9 +2022,9 @@ dd($pre);
                                             </div>
                                         <!-- Similar Incident in Past -->
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="capa_require" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="capa_require" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="capa_require" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="capa_require" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="capa_require" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="capa_require" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2035,8 +2035,8 @@ dd($pre);
                                                 <label>Classification by QA:</label>
                                             </div>
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="classification_by_qa" value="critical" onclick="selectOne(this)" disabled> Critical</label>
-                                            <label><input type="checkbox" name="classification_by_qa" value="non-critical" onclick="selectOne(this)" disabled> Non-Critical</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" disabled> Critical</label>
+                                            <label><input type="checkbox" name="classification_by_qa" value="Non-critical" onclick="selectOne(this)" disabled> Non-Critical</label>
                                         </div>
                                         </div>
                                     </div>
@@ -2198,9 +2198,9 @@ dd($pre);
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="capa_implementation" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="capa_implementation" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="capa_implementation" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="capa_implementation" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2212,9 +2212,9 @@ dd($pre);
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="check_points" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="check_points" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="check_points" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="check_points" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="check_points" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="check_points" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
@@ -2226,9 +2226,9 @@ dd($pre);
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="corrective_actions" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="corrective_actions" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="corrective_actions" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="corrective_actions" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                        </div>
                                         <br>
@@ -2240,9 +2240,9 @@ dd($pre);
                                             </div>
 
                                           <div class="checkbox-group">
-                                            <label><input type="checkbox" name="batch_release" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="batch_release" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="batch_release" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="batch_release" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="batch_release" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="batch_release" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                           </div>
                                         </div>
                                         <br>
@@ -2261,9 +2261,9 @@ dd($pre);
                                             </div>
 
                                         <div class="checkbox-group">
-                                            <label><input type="checkbox" name="affected_documents" value="yes" onclick="selectOne(this)" disabled> Yes</label>
-                                            <label><input type="checkbox" name="affected_documents" value="no" onclick="selectOne(this)" disabled> No</label>
-                                            <label><input type="checkbox" name="affected_documents" value="na" onclick="selectOne(this)" disabled> N/A</label>
+                                            <label><input type="checkbox" name="affected_documents" value="YES" onclick="selectOne(this)" disabled> Yes</label>
+                                            <label><input type="checkbox" name="affected_documents" value="NO" onclick="selectOne(this)" disabled> No</label>
+                                            <label><input type="checkbox" name="affected_documents" value="NA" onclick="selectOne(this)" disabled> N/A</label>
                                         </div>
                                         </div>
                                         <br>
