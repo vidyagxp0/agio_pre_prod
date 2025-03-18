@@ -358,14 +358,7 @@
                     }
                 </style>
 
-                <label class="head-number" for="Parent Record Number">Parent Record Number</label>
-                <div class="div-data">
-                    @if ($data->reference)
-                        {{ str_replace(',', ', ', $data->reference) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </div>
+                
 
 
                 {{-- <label for="">Reference Documents</label>
@@ -376,6 +369,16 @@
                             @endif</div> --}}
                 <table>
                     <tr>
+
+                    <th class="w-20">Parent Record Number</th>
+                <td class="w-30">
+                    @if ($data->reference)
+                        {{ str_replace(',', ', ', $data->reference) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+                 
                         <th class="w-20">Error Observed on Page No.</th>
                         <td class="w-80">
                             @if ($data->Observation_on_Page_No)
@@ -394,6 +397,17 @@
                                 Not Applicable
                             @endif
                         </td>
+
+                    
+                            <th class="w-20">Document title</th>
+                            <td class="w-80">
+                                @if ($data->document_title)
+                                    {{ $data->document_title }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                   
                     </tr>
 
                 </table>
@@ -437,16 +451,7 @@
                     </tr> --}}
 
                 <table>
-                    <tr>
-                        <th class="w-20">Document title</th>
-                        <td class="w-80">
-                            @if ($data->document_title)
-                                {{ $data->document_title }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+                   
                     <tr>
                         <th class="w-20">Type Of Error</th>
                         <td class="w-80">
@@ -556,7 +561,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">SR no.</th>
+                                <th class="w-20">SR No.</th>
                                 <th class="w-20">List Of Impacting Document</th>
                                 <!-- <th class="w-20">Prepared By</th>
                                 <th class="w-20">Checked By</th>
@@ -632,7 +637,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">SR No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->HOD_Attachments)
@@ -703,7 +708,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">SR No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->QA_Attachments)
@@ -749,7 +754,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">SR No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Approval_Attachments)
@@ -820,7 +825,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">SR No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Initiator_Attachments)
@@ -868,7 +873,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">SR No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->HOD_Attachments1)
@@ -961,7 +966,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">SR No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Closure_Attachments)
