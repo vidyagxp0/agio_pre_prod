@@ -170,7 +170,7 @@
 
 
 
-                                <div class="col-md-12">
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Document Type<span class="text-danger"></span>
@@ -178,7 +178,58 @@
                                         <input type="text" id="select-state" placeholder="Select..."
                                             name="document_type">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+                                        <select name="document_type" id="select-state" required onchange="handleDocumentSelection(this)">
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                <option value="{{ $code }}">
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
+                                            <option value="others">Others</option> <!-- 'others' value updated -->
+                                        </select>
+                                    </div>
                                 </div>
+                                
+                                <div class="col-6" id="others-input" style="display: none;"> <!-- hidden by default -->
+                                    <div class="group-input">
+                                        <label for="others">
+                                            Others<span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="document_type_others" placeholder="Please specify">
+                                    </div>
+                                </div>
+<script>
+    
+    function handleDocumentSelection(select) {
+    const othersInput = document.getElementById('others-input');
+    if (select.value === 'others') {
+        othersInput.style.display = 'block';
+    } else {
+        othersInput.style.display = 'none';
+    }
+}
+
+    </script>                                
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+                                        <select name="document_type_id" id="doc-type" required onchange="handleDocumentSelection(this)">
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                <option value="{{ $code }}">
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <p id="doc-typeError" style="color:red">** Department is required</p>
+                                </div> --}}
+
 
                                 <div class="col-12">
                                     <div class="group-input">

@@ -467,7 +467,7 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Document Type">
                                             Document Type<span class="text-danger"></span>
@@ -476,7 +476,97 @@
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_type }}">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Document Type</label>
+                                        <select name="document_type" id="doc-type"
+                                            onchange="handleDocumentSelection(this)"
+                                            {{ Helpers::isRevised($showdata->stage) }}>
+                                            
+                                            <option value="">Enter your Selection</option>
+                                
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                <option data-id="{{ $code }}" value="{{ $code }}"
+                                                    {{ $code == $showdata->document_type ? 'selected' : '' }}>
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
+                                
+                                            <!-- Others option outside loop -->
+                                            <option value="others"
+                                                {{ $showdata->document_type == 'others' ? 'selected' : '' }}>
+                                                Others
+                                            </option>
+                                        </select>
+                                    </div>
                                 </div>
+                                
+                                <div class="col-6" id="others-input" style="display: none;">
+                                    <div class="group-input">
+                                        <label for="others">
+                                            Others<span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="document_type_others" placeholder="Please specify"
+                                            value="{{ $showdata->document_type_others }}">
+                                    </div>
+                                </div>
+                                
+                                <script>
+                                    function handleDocumentSelection(select) {
+                                        const othersInput = document.getElementById('others-input');
+                                        if (select.value === 'others') {
+                                            othersInput.style.display = 'block';
+                                        } else {
+                                            othersInput.style.display = 'none';
+                                        }
+                                    }
+                                
+                                    // Trigger the function on page load if 'others' is already selected
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const select = document.getElementById('doc-type');
+                                        handleDocumentSelection(select);
+                                    });
+                                </script>
+                                
+
+                                {{-- <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+                                        <select name="document_type" id="select-state" required onchange="handleDocumentSelection(this)">
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach (Helpers::getDocumentTypes() as $code => $type)
+                                                <option value="{{ $code }}">
+                                                    {{ $type }}
+                                                </option>
+                                            @endforeach
+                                            <option value="others">Others</option> <!-- 'others' value updated -->
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-6" id="others-input" style="display: none;"> <!-- hidden by default -->
+                                    <div class="group-input">
+                                        <label for="others">
+                                            Others<span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" name="others" placeholder="Please specify">
+                                    </div>
+                                </div>
+<script>
+    
+    function handleDocumentSelection(select) {
+    const othersInput = document.getElementById('others-input');
+    if (select.value === 'others') {
+        othersInput.style.display = 'block';
+    } else {
+        othersInput.style.display = 'none';
+    }
+}
+
+    </script>         --}}
+
 
                                 <div class="col-12">
                                     <div class="group-input">
