@@ -488,27 +488,26 @@
                                 @endphp
 
                                 <!-- <div class="">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <label for="reference_record">Reference Documents</label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <select multiple id="reference_record" name="reference_document[]"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @foreach ($old_record as $new)
-    <option value="{{ $new->id }}"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
-    @endforeach
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <option value="{{ $referenceValue }}"
+                                                <div class="group-input">
+                                        <label for="reference_record">Reference Documents</label>
+                                        <select multiple id="reference_record" name="reference_document[]"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            @foreach ($old_record as $new)
+                                            <option value="{{ $new->id }}"
+                                                {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ str_pad($new->id, 4, '0', STR_PAD_LEFT) }}
+                                                {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                            </option>
+                                            @endforeach
+                                                {{-- <option value="{{ $referenceValue }}"
                                                 @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
                                                 {{ $referenceValue }}
                                             </option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- Uncomment and add more options as needed --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div> -->
+                                                            {{-- Uncomment and add more options as needed --}}
+                                                            {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
+                                                        </select>
+                                                    </div>
+                                </div> -->
 
                                 {{-- <div class="">
                                     <div class="group-input">
@@ -522,9 +521,6 @@
                                 <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="reference">Parent Record Number</label>
-
-
-
                                         <select multiple name="reference[]" data-silent-initial-value-set="true"
                                             id="reference" data-search="false"
                                             data-placeholder="Select Parent Record Number"
@@ -567,34 +563,32 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Observation on Page No.">Parent Record Number</label>
-
-
+                                        <label class="mt-4" for="Observation on Page No.">Parent Record Number<span class="text-danger">*</span></label>
                                         <input type="text" name="reference" maxlength="255"
                                             value="{{ $showdata->reference }}"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>
                                     </div>
-                                </div>
 
+                                </div>
 
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Observation on Page No.">Error Observed on Page
-                                            No.</label>
+                                        <label class="mt-4" for="Observation on Page No.">Error Observed on Page  No. <span class="text-danger">*</span></label>
                                         <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Observation_on_Page_No }}</textarea>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>{{ $showdata->Observation_on_Page_No }}</textarea>
                                     </div>
+
                                 </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Brief Description">Brief Description of error </label>
+                                        <label class="mt-4" for="Brief Description">Brief Description of error <span class="text-danger">*</span></label>
                                         <textarea class="summernote" name="brief_description" id="summernote-16"
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->brief_description }}</textarea>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>{{ $showdata->brief_description }}</textarea>
                                     </div>
                                 </div>
 
@@ -850,7 +844,7 @@
                     <!-- -----------Tab-2------------ -->
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                      
+
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
@@ -861,7 +855,7 @@
                                             <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label>
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label> --}}
-                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
+                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-16" required
                                             {{ $showdata->stage == 1 || $showdata->stage == 3 ||$showdata->stage == 1 ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 || $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             >{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
@@ -894,7 +888,7 @@
                                                     @endforeach
                                                 @endif
                                             </div>
-                                         
+
 
                                             <div class="add-btn">
                                                 <div>Add</div>
@@ -993,7 +987,7 @@
                                         </a> </button>
                                 </div>
                             </div>
-                     
+
                         </div>
                     </div>
 
@@ -2229,7 +2223,7 @@
                                             <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label>
                                         @endif
                                         {{-- <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label> --}}
-                                        <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"
+                                        <textarea class="summernote" name="QA_Feedbacks" id="summernote-16" required
                                             {{$showdata->stage == 1 || $showdata->stage == 2  ||$showdata->stage == 4 || $showdata->stage == 5 ||$showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
@@ -2409,7 +2403,7 @@
                                             <label class="mt-4" for="Approval Comment">Approval Comment</label>
                                         @endif
                                         {{-- <label class="mt-4" for="Approval Comment">Approval Comment</label> --}}
-                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16"
+                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16" required
                                             {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 5 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'readonly' : '' }}>{{ $showdata->Approval_Comment }}</textarea>
                                     </div>
                                 </div>
@@ -2731,13 +2725,10 @@
                                                 value="{{ Helpers::getdateFormat($showdata->Date_and_time_of_correction) }}" />
                                             <input type="date" name="Date_and_time_of_correction" class="hide-input"
                                                {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8  ? 'disabled' : '' }}
-                                                oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
+                                                oninput="handleDateInput(this, 'Date_and_time_of_correction')"  required/>
                                         </div>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -2754,7 +2745,7 @@
                                         <select id="select-state" placeholder="Select..."
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             name="All_Impacting_Documents_Corrected"
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} required>
                                             <option value="">--Select--</option>
                                             <option value="Yes" @if ($showdata->All_Impacting_Documents_Corrected == 'Yes') selected @endif>Yes
                                             </option>
@@ -2766,10 +2757,16 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
+                                        @if ($showdata->stage == 5)
+                                        <label class="mt-4" for="Remarks">Remarks <span class="text-danger">*</span></label>
+
+                                        @else
                                         <label class="mt-4" for="Remarks"> Remarks</label>
+
+                                        @endif
                                         <textarea class="summernote" name="Remarks" id="summernote-16"
                                         {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 6 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
-                                         >{{ $showdata->Remarks }}</textarea>
+                                         required>{{ $showdata->Remarks }}</textarea>
                                     </div>
                                 </div>
 
@@ -2953,7 +2950,7 @@
                                             <label class="mt-4" for="HOD Comment">HOD final Review Comment</label>
                                         @endif
                                         {{-- <label class="mt-4" for="HOD Comment">HOD Comment</label> --}}
-                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16"
+                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16" required
                                         {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 7 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->HOD_Comment1 }}</textarea>
                                     </div>
                                 </div>
@@ -3101,11 +3098,6 @@
                                     }
                                 </script>
 
-
-
-
-
-
                                 <div class="button-block">
                                     @if ($showdata->stage >= 8)
                                         <button type="submit" class="saveButton" disabled>Save</button>
@@ -3216,7 +3208,7 @@
                                             <label class="mt-4" for="Closure Comments">Closure Comments</label>
                                         @endif
                                         {{-- <label class="mt-4" for="Closure Comments">Closure Comments</label> --}}
-                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"
+                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16" required
                                         {{ $showdata->stage == 1 || $showdata->stage == 2  || $showdata->stage == 3 || $showdata->stage == 4 || $showdata->stage == 5 || $showdata->stage == 6 ||$showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}>{{ $showdata->Closure_Comments }}</textarea>
                                     </div>
                                 </div>
@@ -3365,12 +3357,6 @@
                                     }
                                 </script>
 
-
-
-
-
-
-
                                 <div class="button-block">
                                     @if ($showdata->stage >= 8)
                                         <button type="submit" class="saveButton" disabled>Save</button>
@@ -3379,7 +3365,6 @@
                                     @endif
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
 
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit
@@ -3555,8 +3540,6 @@
                                     </div>
                                 </div>
 
-
-
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Sent to Opened State BY">Sent To Opened State By</label>
@@ -3577,9 +3560,6 @@
                                         <div class="">{{ $showdata->sent_to_open_state_comment ?? 'Not Applicable' }}</div>
                                     </div>
                                 </div>
-
-
-
 
                                 <div class="button-block">
                                     @if ($showdata->stage >= 8)
