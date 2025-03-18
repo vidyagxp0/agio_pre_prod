@@ -794,7 +794,7 @@ class ErrataController extends Controller
             $history->save();
         }
         //==================GRID=======================
-        
+
 //         $errata_id = $data->id;
 
 // if (!empty($request->details)) {
@@ -834,7 +834,7 @@ class ErrataController extends Controller
 //                     $auditTrail->change_from = $data->status;
 //                     $auditTrail->action_name = 'Create';
 //                     $auditTrail->save();
-                    
+
 //                     $counter++; // Increment for each field entry
 //                 }
 //             }
@@ -907,13 +907,13 @@ class ErrataController extends Controller
             }
 
 
-        
+
 
         // if (is_array($request->details)) {
         //     foreach ($request->details as $index => $detailsAction) {
         //         $lastdetailsAction = $data->details[$index] ?? null;
         //         $currentdetailsAction = $detailsAction['ListOfImpactingDocument'];
-        
+
         //         // Check if there is a change or an action comment
         //         if ($lastdetailsAction != $currentdetailsAction || !empty($request->action_taken_comment)) {
         //             // Check if an existing audit trail entry already exists for this action
@@ -923,7 +923,7 @@ class ErrataController extends Controller
         //                 'previous' => $lastdetailsAction,
         //                 'current' => $currentdetailsAction
         //             ])->first();
-        
+
         //             // If no existing history, create a new entry
         //             if (!$existingHistory) {
         //                 $history = new ErrataAuditTrail();
@@ -939,14 +939,14 @@ class ErrataController extends Controller
         //                 $history->change_to = "Not Applicable";
         //                 $history->change_from = "Not Applicable";
         //                 $history->action_name = "Create";
-        
+
         //                 // Save the audit trail entry
         //                 $history->save();
         //             }
         //         }
         //     }
         // }
-        
+
         //================================================================
 
 
@@ -2196,8 +2196,8 @@ class ErrataController extends Controller
         $data->qa_reviewer = $request->qa_reviewer;
      //   $data->reference = implode(',', $request->reference);
         $data->reference = $request->reference;
-        $data->Department = $request->Department;
-        $data->department_code = $request->department_code;
+        // $data->Department = $request->Department;
+        // $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
         $data->short_description = $request->short_description;
 
@@ -3106,13 +3106,13 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
 //         $newDataGridErrata->data = $request->details;
 //         $newDataGridErrata->save();
 
-//  
+//
 
             $data1 = ErrataGrid::where('ert_id', $id)->where('type', "erata_type")->first();
 
             // Safely unserialize and use fallback to empty array if null
             $previousDetails = [
-                'ListOfImpactingDocument' => !is_null($data1->ListOfImpactingDocument) ? unserialize($data1->ListOfImpactingDocument) : null 
+                'ListOfImpactingDocument' => !is_null($data1->ListOfImpactingDocument) ? unserialize($data1->ListOfImpactingDocument) : null
             ];
 
                 // Serialize fields if they are not empty
@@ -3133,7 +3133,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
                     $previousValues = [
                         'ListOfImpactingDocument' => isset($previousDetails['ListOfImpactingDocument'][$index]) ? $previousDetails['ListOfImpactingDocument'][$index] : null,
                     ];
-                    
+
 
 
                     // Current field values

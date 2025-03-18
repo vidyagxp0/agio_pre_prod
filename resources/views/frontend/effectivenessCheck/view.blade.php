@@ -239,7 +239,7 @@
                                 <div class="" style="display: none">QA/CQA Approval Not-Effective</div>
                             @endif --}}
 
-                            
+
 
                             @if ($data->stage == 9)
                                 <div class="active bg-danger">Closed Not-Effective</div>
@@ -370,7 +370,7 @@
                                                 placeholder="DD-MM-YYYY"
                                                 value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                 {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                onclick="document.getElementById('unique_due_date').click();" />
+                                                />
 
                                             <!-- Hidden Actual Date Picker -->
                                             <input type="date" id="unique_due_date" name="due_date"
@@ -378,7 +378,7 @@
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 class="hide-unique-input" value="{{ $data->due_date }}"
                                                 oninput="handleUniqueDateInput(this, 'unique_due_date_display')"
-                                                onclick="this.click();" />
+                                               />
                                         </div>
                                     </div>
                                 </div>
@@ -993,28 +993,28 @@
                     <div class="group-input">
                         <label for="Submit On"><b>Submit Comment</b></label>
                         @if( $data->submit_comment ) {{ $data->submit_comment }}  @else Not Applicable @endif
-                        
+
                     </div>
                 </div>
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete By"><b>Cancel By</b></label>
                         @if( $data->closed_cancelled_by ) {{ $data->closed_cancelled_by }}  @else Not Applicable @endif
-                       
+
                     </div>
                 </div>
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete On"><b>Cancel On</b></label>
                         @if( $data->closed_cancelled_on ) {{ $data->closed_cancelled_on }}  @else Not Applicable @endif
-                        
+
                     </div>
                 </div>
                 <div class="col-lg-3 new-head">
                     <div class="group-input">
                         <label for="Effective Approval Complete On"><b>Cancel Comment</b></label>
                         @if( $data->closed_cancelled_comment ) {{ $data->closed_cancelled_comment }}  @else Not Applicable @endif
-                        
+
                     </div>
                 </div>
                 <div class="col-lg-4 new-head">
@@ -1186,7 +1186,7 @@
     </div>
     {{-- <style>
 
-     
+
         .group-input {
             /* background-color: #ffffff;
             border: 1px solid #dee2e6;
@@ -1194,7 +1194,7 @@
             padding: 15px;
             margin-bottom: 15px;
         }
-       
+
         .button-block {
             display: flex;
             justify-content: space-between;

@@ -105,146 +105,70 @@
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                            <label for="Initiated Through">
-                                                                                                                                                                                                                                                                                                                                Initiated Through <span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                            </label>
-                                                                                                                                                                                                                                                                                                                            <select id="select-state" placeholder="Select..." name="initiated_by">
-                                                                                                                                                                                                                                                                                                                                <option value="">Select a value</option>
-                                                                                                                                                                                                                                                                                                                                {{-- <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option> --}}
-                                                                                                                                                                                                                                                                                                                                <option value="Recall ">Recall </option>
-                                                                                                                                                                                                                                                                                                                                <option value="Return ">Return </option>
-                                                                                                                                                                                                                                                                                                                                <option value="Deviation">Deviation</option>
-                                                                                                                                                                                                                                                                                                                                <option value="Complaint">Complaint</option>
-                                                                                                                                                                                                                                                                                                                                <option value="Regulatory">Regulatory</option>
-                                                                                                                                                                                                                                                                                                                                <option value="Lab Incident">Lab Incident</option>
-                                                                                                                                                                                                                                                                                                                                <option value="Improvement">Improvement</option>
-                                                                                                                                                                                                                                                                                                                                <option value="Others">Others</option>
-                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                    </div> -->
-
-                                <!-- <div class="col-md-6">
-                                                                                                                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                                                                                                                            <label for="search">
-                                                                                                                                                                                                                                                                                                                                Department<span class="text-danger"></span>
-                                                                                                                                                                                                                                                                                                                            </label>
-                                                                                                                                                                                                                                                                                                                            <select id="selectedOptions" placeholder="Select..." name="Department">
-                                                                                                                                                                                                                                                                                                                                <option value="">-- Select --</option>
-                                                                                                                                                                                                                                                                                                                                <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Corporate Quality Assurance</option>
-                                                                                                                                                                                                                                                                                                                                <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Quality
-                                                                                                                                                                                                                                                                                                                                    Assurance Biopharma</option>
-                                                                                                                                                                                                                                                                                                                                <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Central
-                                                                                                                                                                                                                                                                                                                                    Quality Control</option>
-                                                                                                                                                                                                                                                                                                                                <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Manufacturing</option>
-                                                                                                                                                                                                                                                                                                                                <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
-                                                                                                                                                                                                                                                                                                                                    Sourcing Group</option>
-                                                                                                                                                                                                                                                                                                                                <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Central
-                                                                                                                                                                                                                                                                                                                                    Stores</option>
-                                                                                                                                                                                                                                                                                                                                <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Information Technology Group</option>
-                                                                                                                                                                                                                                                                                                                                <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Molecular Medicine</option>
-                                                                                                                                                                                                                                                                                                                                <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Central
-                                                                                                                                                                                                                                                                                                                                    Laboratory</option>
-                                                                                                                                                                                                                                                                                                                                <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
-                                                                                                                                                                                                                                                                                                                                    Team</option>
-                                                                                                                                                                                                                                                                                                                                <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Quality Assurance</option>
-                                                                                                                                                                                                                                                                                                                                <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Quality Management</option>
-                                                                                                                                                                                                                                                                                                                                <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
-                                                                                                                                                                                                                                                                                                                                    Administration</option>
-                                                                                                                                                                                                                                                                                                                                <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Accounting</option>
-                                                                                                                                                                                                                                                                                                                                <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Logistics</option>
-                                                                                                                                                                                                                                                                                                                                <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Senior Management</option>
-                                                                                                                                                                                                                                                                                                                                <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
-                                                                                                                                                                                                                                                                                                                                    Business Administration</option>
-
-                                                                                                                                                                                                                                                                                                                            </select>
-                                                                                                                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                                                                                                                    </div> -->
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Department<span class="text-danger"></span>
-                                        </label>
-                                        <select id="selectedOptions" placeholder="Select..." name="Department">
-                                            <option value="">Select Department</option>
-                                            <option value="CQA">Corporate Quality Assurance</option>
-                                            <option value="QA">Quality Assurance</option>
-                                            <option value="QC">Quality Control</option>
-                                            <option value="QM">Quality Control (Microbiology department)</option>
-                                            <option value="PG">Production General</option>
-                                            <option value="PL">Production Liquid Orals</option>
-                                            <option value="PT">Production Tablet and Powder</option>
-                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
-                                            </option>
-                                            <option value="PC">Production Capsules</option>
-                                            <option value="PI">Production Injectable</option>
-                                            <option value="EN">Engineering</option>
-                                            <option value="HR">Human Resource</option>
-                                            <option value="ST">Store</option>
-                                            <option value="IT">Electronic Data Processing</option>
-                                            <option value="FD">Formulation Development</option>
-                                            <option value="AL">Analytical research and Development Laboratory</option>
-                                            <option value="PD">Packaging Development</option>
-                                            <option value="PU">Purchase Department</option>
-                                            <option value="DC">Document Cell</option>
-                                            <option value="RA">Regulatory Affairs</option>
-                                            <option value="PV">Pharmacovigilance</option>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Department Code</label>
-                                        <input readonly type="text" name="department_code" id="initiator_group_code"
-                                            value="">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input disabled type="text" name="Department" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
-                                <script>
-                                    document.getElementById('selectedOptions').addEventListener('change', function() {
-                                        var selectedValue = this.value;
-                                        document.getElementById('initiator_group_code').value = selectedValue;
-                                    });
 
-                                    function setCurrentDate(item) {
-                                        if (item == 'yes') {
-                                            $('#effect_check_date').val('{{ date('d-M-Y') }}');
-                                        } else {
-                                            $('#effect_check_date').val('');
-                                        }
-                                    }
-                                </script>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
 
-                                {{--
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Department Code<span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="department_code">
-                                            <option value="">Select a value</option>
-                                            <option value="DC01">DC01</option>
-                                            <option value="DC02">DC02</option>
-                                            <option value="DC03">DC03</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Initiator Group Code"> Department Code</label>
+                                                    <input type="text" name="department_code" id="initiator_group_code" placeholder="Department Code"
+                                                        value="" readonly>
+                                                </div>
+                                            </div>
+
+
 
                                 <div class="col-md-12">
                                     <div class="group-input">
@@ -328,8 +252,8 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Parent Record Number
                                            </label>
-                                        <input  type="text" name="reference" maxlength="255">  
-                                      
+                                        <input  type="text" name="reference" maxlength="255">
+
                                     </div>
                                 </div>
 
@@ -2208,7 +2132,7 @@
                     <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                
+
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted by">Submit By</label>
@@ -2392,7 +2316,7 @@
                                     </div>
                                 </div>
 
-                               
+
 
 
 
