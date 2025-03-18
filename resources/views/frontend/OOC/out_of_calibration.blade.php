@@ -1418,7 +1418,7 @@
                                                 <textarea name="initiated_through_capa_prevent_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
-
+                                    {{--
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
                                                 <label for="Corrective & Preventive Action">Corrective and Preventive
@@ -1428,7 +1428,7 @@
                                                 <textarea name="initiated_through_capa_corrective_ooc" disabled id="summernote-1"></textarea>
                                             </div>
                                         </div>
-
+                                     --}}
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
                                                 <label for="Cause for failure">Phase IA Summary</label>
