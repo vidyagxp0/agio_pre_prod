@@ -367,6 +367,17 @@
                     </tr>
 
                     <tr>
+                        <th class="w-20">Details of OOC</th>
+                        <td class="w-30" colspan="3">
+                            @if ($data->details_of_ooc)
+                                {!! $data->details_of_ooc !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Initial Attachment</th>
                         <td class="w-80" colspan="3">
                             @if ($data->initial_attachment_ooc)
@@ -1022,8 +1033,8 @@
                     <tr>
                         <th class="w-20">Compiled by</th>
                         <td class="w-80" colspan="3">
-                            @if ($data->is_repeat_compiled_stageii_ooc)
-                                {!! $data->is_repeat_compiled_stageii_ooc !!}
+                            @if ($data->compiled_by)
+                                {!! $data->compiled_by !!}
                             @else
                                 Not Applicable
                             @endif

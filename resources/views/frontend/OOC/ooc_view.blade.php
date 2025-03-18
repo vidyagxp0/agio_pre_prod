@@ -1184,13 +1184,13 @@
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY"
                                                 value="{{ Helpers::getdateFormat($ooc->due_date) }}"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }}  />
                                             <input type="date" id="due_date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 value="{{ $ooc->due_date }}"
                                                 oninput="handleDateInput(this, 'due_date_display')"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }}  />
                                         </div>
                                     </div>
                                 </div>
@@ -1326,7 +1326,7 @@
                                                 placeholder="DD-MMM-YYYY"
                                                 value="{{ $ooc->last_calibration_date ? \Carbon\Carbon::parse($ooc->last_calibration_date)->format('d-M-Y') : '' }}"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}{{ $ooc->stage == 1 ? '' : 'readonly' }} />
 
                                             <!-- This is the actual date picker field -->
                                             <input type="date" name="last_calibration_date" id="last_calibration_date"
@@ -1334,7 +1334,7 @@
                                                 value="{{ $ooc->last_calibration_date ? \Carbon\Carbon::parse($ooc->last_calibration_date)->format('Y-m-d') : '' }}"
                                                 onchange="updateDateDisplay(this)"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }} />
                                         </div>
                                     </div>
                                 </div>
@@ -1365,73 +1365,52 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <input type="text" name="description_ooc"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                        {{ $ooc->stage == 1 ? '' : 'readonly' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                             {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
                                             value="{{ $ooc->description_ooc }}" required>
 
                                     </div>
                                 </div>
 
+                                
+
+
                                 <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Initiated Through</label>
-                                        <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through"
-                                            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} onchange="toggleOtherField()">
-                                            <option value="">-- select --</option>
-                                            <option value="deviation" {{ isset($ooc) && $ooc->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
-                                            <option value="complaint" {{ isset($ooc) && $ooc->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
-                                            <option value="lab-incident" {{ isset($ooc) && $ooc->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
-                                            <option value="improvement" {{ isset($ooc) && $ooc->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
-                                            <option value="others" {{ isset($ooc) && $ooc->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
-                                        </select>
-                                    </div>
-                                </div>
+    <div class="group-input">
+        <label for="Initiator Group">Initiated Through</label>
+        <div><small class="text-primary">Please select related information</small></div>
+        <select name="initiated_through" id="initiated_through"
+            class="stage-control" data-stage="{{ $ooc->stage }}" onchange="toggleOtherField()">
+            <option value="">-- select --</option>
+            <option value="deviation" {{ isset($ooc) && $ooc->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
+            <option value="complaint" {{ isset($ooc) && $ooc->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+            <option value="lab-incident" {{ isset($ooc) && $ooc->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+            <option value="improvement" {{ isset($ooc) && $ooc->initiated_through == 'improvement' ? 'selected' : '' }}>Improvement</option>
+            <option value="others" {{ isset($ooc) && $ooc->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
+        </select>
+        <input type="hidden" name="initiated_through_hidden" id="initiated_through_hidden" value="{{ $ooc->initiated_through }}">
+    </div>
+</div>
 
-                                <div class="col-md-12 mb-3" id="if_other_field" style="display: none;">
-                                    <div class="group-input">
-                                        <label for="If Other">If Other <span id="required-star" class="text-danger" style="display: none;">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_if_other" id="summernote-1"
-                                            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->initiated_if_other }}</textarea>
-                                    </div>
-                                </div>
-
-                                <script>
-                                    function toggleOtherField() {
-                                        var select = document.querySelector("select[name='initiated_through']");
-                                        var otherField = document.getElementById("if_other_field");
-                                        var requiredStar = document.getElementById("required-star");
-                                        var textarea = document.getElementById("summernote-1");
-
-                                        if (select.value === "others") {
-                                            otherField.style.display = "block";
-                                            requiredStar.style.display = "inline";
-                                            textarea.setAttribute("required", "required");
-                                        } else {
-                                            otherField.style.display = "none";
-                                            requiredStar.style.display = "none";
-                                            textarea.removeAttribute("required");
-                                        }
-                                    }
-                                    
-                                    document.addEventListener("DOMContentLoaded", function() {
-                                        toggleOtherField(); // Ensure correct visibility on page load
-                                    });
-                                </script>
-
-
-
+<div class="col-md-12 mb-3" id="if_other_field" style="display: none;">
+    <div class="group-input">
+        <label for="If Other">If Other <span id="required-star" class="text-danger" style="display: none;">*</span></label>
+        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+        <textarea class="summernote stage-control" name="initiated_if_other" id="summernote-1" data-stage="{{ $ooc->stage }}">{{ $ooc->initiated_if_other }}</textarea>
+        <input type="hidden" name="initiated_if_other_hidden" id="initiated_if_other_hidden" value="{{ $ooc->initiated_if_other }}">
+    </div>
+</div>
 
 <div class="col-lg-12">
     <div class="group-input">
         <label for="Is Repeat"><b>Is Repeat</b></label>
-        <select id="is_repeat_ooc" name="is_repeat_ooc" 
-            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} onchange="toggleRepeatNature()">
+        <select id="is_repeat_ooc" name="is_repeat_ooc"
+            class="stage-control" data-stage="{{ $ooc->stage }}" onchange="toggleRepeatNature()">
             <option value="0" {{ $ooc->is_repeat_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
             <option value="Yes" {{ $ooc->is_repeat_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
             <option value="No" {{ $ooc->is_repeat_ooc == 'No' ? 'selected' : '' }}>No</option>
         </select>
+        <input type="hidden" name="is_repeat_ooc_hidden" id="is_repeat_ooc_hidden" value="{{ $ooc->is_repeat_ooc }}">
     </div>
 </div>
 
@@ -1439,36 +1418,86 @@
     <div class="group-input">
         <label for="Repeat Nature">Repeat Nature <span id="repeat-required-star" class="text-danger" style="display: none;">*</span></label>
         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-        <textarea class="summernote" name="Repeat_Nature" id="repeat_nature_textarea" 
-            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->Repeat_Nature }}</textarea>
+        <textarea class="summernote stage-control" name="Repeat_Nature" id="repeat_nature_textarea" data-stage="{{ $ooc->stage }}">{{ $ooc->Repeat_Nature }}</textarea>
+        <input type="hidden" name="Repeat_Nature_hidden" id="Repeat_Nature_hidden" value="{{ $ooc->Repeat_Nature }}">
     </div>
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let stageControls = document.querySelectorAll(".stage-control");
+
+        stageControls.forEach(field => {
+            let stage = parseInt(field.getAttribute("data-stage"));
+
+            // If stage is NOT 1, make the field readonly using pointer-events
+            if (stage !== 1) {
+                field.style.pointerEvents = "none"; // Prevent interaction
+                field.style.backgroundColor = "#e9ecef"; // Grey out the field
+            }
+        });
+
+        toggleOtherField();
+        toggleRepeatNature();
+    });
+
+    function syncHiddenInput(selectId) {
+        let selectField = document.getElementById(selectId);
+        let hiddenField = document.getElementById(selectId + "_hidden");
+        hiddenField.value = selectField.value;
+    }
+
+    function toggleOtherField() {
+        var select = document.getElementById("initiated_through");
+        var otherField = document.getElementById("if_other_field");
+        var requiredStar = document.getElementById("required-star");
+        var textarea = document.getElementById("summernote-1");
+        var hiddenField = document.getElementById("initiated_if_other_hidden");
+
+        if (select.value === "others") {
+            otherField.style.display = "block";
+            requiredStar.style.display = "inline";
+            textarea.setAttribute("required", "required");
+        } else {
+            otherField.style.display = "none";
+            requiredStar.style.display = "none";
+            textarea.removeAttribute("required");
+        }
+
+        hiddenField.value = textarea.value;
+    }
+
     function toggleRepeatNature() {
         var select = document.getElementById("is_repeat_ooc");
         var repeatField = document.getElementById("repeat_nature_field");
         var requiredStar = document.getElementById("repeat-required-star");
         var textarea = document.getElementById("repeat_nature_textarea");
+        var hiddenField = document.getElementById("Repeat_Nature_hidden");
 
         if (select.value === "Yes") {
             repeatField.style.display = "block";
             requiredStar.style.display = "inline";
             textarea.setAttribute("required", "required");
-            textarea.removeAttribute("disabled");
         } else {
             repeatField.style.display = "none";
             requiredStar.style.display = "none";
             textarea.removeAttribute("required");
-            textarea.setAttribute("disabled", "disabled");
         }
+
+        hiddenField.value = textarea.value;
     }
-    
-    document.addEventListener("DOMContentLoaded", function() {
-        toggleRepeatNature(); // Ensure correct visibility on page load
-    });
 </script>
 
+
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Details of OOC">Details of OOC</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea class="summernote" name="details_of_ooc" id="repeat_nature_textarea" 
+                                        {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->details_of_ooc }}</textarea>
+                                </div>
+                            </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -1507,75 +1536,84 @@
                                     </div>
                                 </div>
 
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             HOD Person <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                                        <select id="hod_person" name="assign_to"
+                                            class="stage-control"
+                                            data-stage="{{ $ooc->stage }}">
                                             <option value="">-- Select a value --</option>
                                             @foreach ($users as $key => $value)
-                                                <option @if ($ooc->assign_to == $value->id) selected @endif
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ $ooc->assign_to == $value->id ? 'selected' : '' }}>
+                                                    {{ $value->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
-
                                     </div>
                                 </div>
-
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             QA Person <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="qa_assign_person"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                                        <select id="qa_person" name="qa_assign_person"
+                                            class="stage-control"
+                                            data-stage="{{ $ooc->stage }}">
                                             <option value="">-- Select a value --</option>
                                             @foreach ($users as $key => $value)
-                                                <option @if ($ooc->qa_assign_person == $value->id) selected @endif
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ $ooc->qa_assign_person == $value->id ? 'selected' : '' }}>
+                                                    {{ $value->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('qa_assign_person')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
-
                                     </div>
                                 </div>
-
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             OOC Logged by <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="ooc_logged_by"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                                        <select id="ooc_logged_by" name="ooc_logged_by"
+                                            class="stage-control"
+                                            data-stage="{{ $ooc->stage }}">
                                             <option value="">-- Select a value --</option>
                                             @foreach ($users as $key => $value)
-                                                <option @if ($ooc->ooc_logged_by == $value->id) selected @endif
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ $ooc->ooc_logged_by == $value->id ? 'selected' : '' }}>
+                                                    {{ $value->name }}
+                                                </option>
                                             @endforeach
                                         </select>
                                         @error('ooc_logged_by')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
-
-                                        <!-- <input type="text" name ="ooc_logged_by" placeholder="Enter Your Text"
-                                            value = "{{ $ooc->ooc_logged_by }}"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} /> -->
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        let stageControls = document.querySelectorAll(".stage-control");
+
+                                        stageControls.forEach(field => {
+                                            let stage = parseInt(field.getAttribute("data-stage"));
+
+                                            // Make fields readonly if stage is NOT 1
+                                            if (stage !== 1) {
+                                                field.style.pointerEvents = "none"; // Prevents interaction
+                                                field.style.backgroundColor = "#e9ecef"; // Grey background
+                                            }
+                                        });
+                                    });
+                                </script>
 
 
 
@@ -1619,11 +1657,11 @@
                                                 placeholder="DD-MM-YYYY"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
-                                                value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" />
+                                                value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" / {{ $ooc->stage == 1 ? '' : 'readonly' }} >
                                             <input type="date" id="ooc_due_date" name="ooc_due_date"
                                                 class="hide-input"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }} 
                                                 value="{{ $ooc->ooc_due_date }}"
                                                 oninput="handleDateInput(this, 'ooc_due_date_display')" />
                                         </div>
@@ -1655,7 +1693,7 @@
                                     <div class="group-input" id="IncidentRow">
                                         <label for="root_cause">
                                             Instrument Details
-                                            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+                                            <button type="button" name="audit-incident-grid" id="IncidentAdd"  {{ $ooc->stage == 1 ? '' : 'disabled' }}>+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1684,39 +1722,29 @@
                                                     <tr>
                                                         <td disabled>{{ $serialNumber++ }}</td>
                                                         <td><input type="text"
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
+                                                                  {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 ||
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                                {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 name="instrumentdetails[{{ $loop->index }}][instrument_name]"
                                                                 value="{{ $oogrid['instrument_name'] }}"></td>
                                                         <td><input type="text"
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                                                ||
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                        {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 name="instrumentdetails[{{ $loop->index }}][instrument_id]"
                                                                 value="{{ $oogrid['instrument_id'] }}"></td>
                                                         <td><input type="text"
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                                                ||
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                        {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 name="instrumentdetails[{{ $loop->index }}][remarks]"
                                                                 value="{{ $oogrid['remarks'] }}"></td>
                                                         <td><input type="text"
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                                                ||
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                        {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 name="instrumentdetails[{{ $loop->index }}][calibration]"
                                                                 value="{{ $oogrid['calibration'] }}"></td>
                                                         <td><input type="text"
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                                                ||
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                        {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 name="instrumentdetails[{{ $loop->index }}][acceptancecriteria]"
                                                                 value="{{ $oogrid['acceptancecriteria'] }}"></td>
                                                         <td><input type="text"
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                                                ||
-                                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                        {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                                 name="instrumentdetails[{{ $loop->index }}][results]"
                                                                 value="{{ $oogrid['results'] }}"></td>
                                                         <td><button class="removeRowBtn">Remove</button>
@@ -1874,7 +1902,7 @@
                                                 require completion</small>
                                         </div>
                                         <textarea name="HOD_Remarks" class="form-control {{ $errors->has('HOD_Remarks') ? 'is-invalid' : '' }}"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                        {{ $ooc->stage == 2 ? '' : 'readonly' }}
                                             {{ $ooc->stage == 2 ? 'required' : '' }}>{{ $ooc->HOD_Remarks }}</textarea>
                                         @if ($errors->has('HOD_Remarks'))
                                             <div class="invalid-feedback">
@@ -1911,7 +1939,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 3 || $ooc->stage == 4|| $ooc->stage == 5 || $ooc->stage == 6   || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                                     {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
                                                     type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
                                                     oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
@@ -2000,8 +2028,7 @@
                                         </label>
                                         <textarea name="qaheadremarks" placeholder="Enter review"
                                             class="form-control {{ $errors->has('qaheadremarks') ? 'is-invalid' : '' }}"
-                                            {{ $ooc->stage == 3 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->qaheadremarks }}</textarea>
+                                            {{ $ooc->stage == 3 ? '' : 'readonly' }}>{{ $ooc->qaheadremarks }}</textarea>
 
                                         @if ($errors->has('qaheadremarks'))
                                             <div class="invalid-feedback">
@@ -2039,7 +2066,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 1  || $ooc->stage == 2|| $ooc->stage == 4 || $ooc->stage == 5 || $ooc->stage == 6  || $ooc->stage == 7 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                                     {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
                                                     type="file" id="initial_attachment_capa_ooc"
                                                     name="initial_attachment_capa_ooc[]"
@@ -2103,13 +2130,11 @@
                                                                 <td>{{ $index + 1 }}</td>
                                                                 <td style="background: #DCD8D8">{{ $item }}</td>
                                                                 <td>
-                                                                    <textarea {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                                    <textarea {{ $ooc->stage == 4 ? '' : 'readonly' }}
                                                                         name="oocevoluation[{{ $index }}][response]">{{ $oocEvolution->data[$index]['response'] }}</textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                                    <textarea {{ $ooc->stage == 4 ? '' : 'readonly' }}
                                                                         name="oocevoluation[{{ $index }}][remarks]">{{ $oocEvolution->data[$index]['remarks'] }}</textarea>
                                                                 </td>
                                                             </tr>
@@ -2127,8 +2152,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if
                                                 it does not require completion</small></div>
                                         <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->analysis_remarks_stage_ooc }}  </textarea>
+                                        {{ $ooc->stage == 4 ? '' : 'readonly' }}>{{ $ooc->analysis_remarks_stage_ooc }}  </textarea>
                                     </div>
                                 </div>
 
@@ -2140,7 +2164,7 @@
                                         </label>
                                         <textarea name="qa_comments_ooc" class="form-control {{ $errors->has('qa_comments_ooc') ? 'is-invalid' : '' }}"
                                             {{ $ooc->stage == 4 ? 'required' : '' }} {{-- Required for stage 4 --}}
-                                            {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }} {{-- Disable for stages 0, 9, and 14 --}}>{{ $ooc->qa_comments_ooc }}</textarea>
+                                            {{ $ooc->stage == 4 ? '' : 'readonly' }} {{-- Disable for stages 0, 9, and 14 --}}>{{ $ooc->qa_comments_ooc }}</textarea>
 
                                         @if ($errors->has('qa_comments_ooc'))
                                             <div class="invalid-feedback">
@@ -2154,8 +2178,8 @@
                                     <div class="group-input">
                                         <label for="qa_comments">Description of Cause for OOC Results (If
                                             Identified)</label>
-                                        <textarea name="qa_comments_description_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->qa_comments_description_ooc }}</textarea>
+                                        <textarea name="qa_comments_description_ooc"  {{ $ooc->stage == 0 || $ooc->stage == 3 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} >{{ $ooc->qa_comments_description_ooc }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -2163,8 +2187,7 @@
                                         <label for="Initiator Group">Root Cause identified</label>
                                         <select id="assignableSelect" name="is_repeat_assingable_ooc"
                                             onchange="toggleRootCauseInput()"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                                            {{ $ooc->stage == 4 ? '' : 'readonly' }}>
                                             <option value=" ">-- Select--</option>
                                             <option value="YES"
                                                 {{ $ooc->is_repeat_assingable_ooc == 'YES' ? 'selected' : '' }}>Yes
@@ -2179,7 +2202,7 @@
                                     <div class="group-input">
                                         <label for="RootCause">Phase IA Investigation Comment</label>
                                         <textarea name="rootcausenewfield" id="rootCauseTextarea" rows="4"
-                                            placeholder="Describe the root cause here" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                            placeholder="Describe the root cause here"  {{ $ooc->stage == 0 || $ooc->stage == 3 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                             {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->rootcausenewfield }}</textarea>
                                     </div>
                                 </div>
@@ -2219,7 +2242,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1"
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                            {{ $ooc->stage == 0 || $ooc->stage == 3 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                             {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
                                     {{ $ooc->protocol_based_study_hypthesis_study_ooc }}</textarea>
                                     </div>
@@ -2281,7 +2304,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 ? 'disabled' : '' }} ||
                                                     {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
                                                     type="file" id="attachments_hypothesis_ooc"
                                                     name="attachments_hypothesis_ooc[]"
@@ -2396,9 +2419,8 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
-                                                            ||
-                                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                            {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 
+                                                                ? 'disabled' : '' }}
                                                             type="file" id="attachments_stage_ooc"
                                                             name="attachments_stage_ooc[]"
                                                             oninput="addMultipleFiles(this, 'attachments_stage_ooc')"
@@ -2478,7 +2500,8 @@
                                                     id="summernote-1">{{ $ooc->initiated_through_capa_prevent_ooc }}</textarea>
                                             </div>
                                         </div>
-
+                                     
+                                       {{-- 
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
                                                 <label for="Corrective & Preventive Action">Corrective and Preventive
@@ -2491,7 +2514,7 @@
                                                     id="summernote-1">{{ $ooc->initiated_through_capa_corrective_ooc }}</textarea>
                                             </div>
                                         </div>
-
+                                        --}}
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
                                                 <label for="Cause for failure"> Phase IA Summary</label>
@@ -2544,9 +2567,7 @@
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea name="phase_IA_HODREMARKS" {{ $ooc->stage == 5 ? 'required' : '' }}
-                                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->phase_IA_HODREMARKS }}</textarea>
+                                        <textarea name="phase_IA_HODREMARKS"  {{ $ooc->stage == 5 ? '' : 'readonly' }}>{{ $ooc->phase_IA_HODREMARKS }}</textarea>
                                     </div>
                                 </div>
 
@@ -2578,8 +2599,8 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                    {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 4 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 
+                                                    || $ooc->stage == 14 ? 'disabled' : '' }}
                                                     type="file" id="attachments_hodIAHODPRIMARYREVIEW_ooc"
                                                     name="attachments_hodIAHODPRIMARYREVIEW_ooc[]"
                                                     oninput="addMultipleFiles(this, 'attachments_hodIAHODPRIMARYREVIEW_ooc')"
@@ -2629,7 +2650,7 @@
                                         </label>
                                         <textarea name="qaremarksnewfield" placeholder="Enter review"
                                             class="form-control {{ $errors->has('qaremarksnewfield') ? 'is-invalid' : '' }}"
-                                            {{ $ooc->stage == 7 ? 'required' : '' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                            {{ $ooc->stage == 7 ? '' : 'readonly' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                             {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->qaremarksnewfield }}</textarea>
 
                                         @if ($errors->has('qaremarksnewfield'))
@@ -2668,7 +2689,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 1|| $ooc->stage == 2|| $ooc->stage == 3|| $ooc->stage == 4|| $ooc->stage == 5|| $ooc->stage == 6 || $ooc->stage == 8|| $ooc->stage == 9 ? 'disabled' : '' }} ||
                                                     {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
                                                     type="file" id="initial_attachment_capa_post_ooc"
                                                     name="initial_attachment_capa_post_ooc[]"
@@ -2723,7 +2744,7 @@
                                         <textarea name="qaHremarksnewfield" placeholder="Enter review"
                                             class="form-control {{ $errors->has('qaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 8 ? 'required' : '' }}
                                             {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->qaHremarksnewfield }}</textarea>
+                                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}  {{ $ooc->stage == 8 ? '' : 'readonly' }}>{{ $ooc->qaHremarksnewfield }}</textarea>
 
                                         @if ($errors->has('qaHremarksnewfield'))
                                             <div class="invalid-feedback">
@@ -2762,7 +2783,7 @@
                                         </div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                            <input {{ $ooc->stage == 0 || $ooc->stage == 1|| $ooc->stage == 2|| $ooc->stage == 3|| $ooc->stage == 4|| $ooc->stage == 5|| $ooc->stage == 6 || $ooc->stage == 7  || $ooc->stage == 9|| $ooc->stage == 10 ? 'disabled' : '' }} ||
                                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}
                                                 type="file" id="initial_attachment_qah_post_ooc"
                                                 name="initial_attachment_qah_post_ooc[]"
@@ -2985,7 +3006,7 @@
                             <label for="Initiator Group">Details of instrument out of order</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea name="details_of_instrument_out_of_order" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                            <textarea name="details_of_instrument_out_of_order"  {{ $ooc->stage == 10 ? '' : 'readonly' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->details_of_instrument_out_of_order }}</textarea>
                         </div>
                     </div>
@@ -2996,17 +3017,18 @@
                                     <span class="text-danger">*</span>
                                 @endif
                             </label>
-                            <input type="text" name="is_repeat_proposed_stage_ooc"
-                                id="is_repeat_proposed_stage_ooc" value="{{ $ooc->is_repeat_proposed_stage_ooc }}"
-                                class="form-control {{ $errors->has('is_repeat_proposed_stage_ooc') ? 'is-invalid' : '' }}"{{ $ooc->stage == 10 ? 'required' : '' }}
-                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
-
-                            @if ($errors->has('is_repeat_proposed_stage_ooc'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('is_repeat_proposed_stage_ooc') }}
-                                </div>
-                            @endif
+                           <select id="select-state" placeholder="Select..." name="is_repeat_compiled_stageii_ooc"
+                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                            <option value="">-- Select a value --</option>
+                            @foreach ($users as $key => $value)
+                                <option @if ($ooc->is_repeat_compiled_stageii_ooc == $value->id) selected @endif
+                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                            </select>
+                            @error('is_repeat_compiled_stageii_ooc')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
 
@@ -3037,7 +3059,8 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                    <input {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 || $ooc->stage == 11 || $ooc->stage == 13
+                                        ? 'disabled' : '' }} ||
                                         {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file"
                                         id="initial_attachment_stageii_ooc" name="initial_attachment_stageii_ooc[]"
                                         oninput="addMultipleFiles(this, 'initial_attachment_stageii_ooc')" multiple>
@@ -3048,22 +3071,24 @@
 
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Initiator Group">Compiled by</label>
-                            <!-- <select name="is_repeat_compiled_stageii_ooc" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} onchange="">
-                                                                                        <option value="0" {{ $ooc->is_repeat_compiled_stageii_ooc == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                                                        <option value="Yes" {{ $ooc->is_repeat_compiled_stageii_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
-                                                                                        <option value="No" {{ $ooc->is_repeat_compiled_stageii_ooc == 'No' ? 'selected' : '' }}>No</option>
-
-                                                                                    </select> -->
-                            <input type = "text" name = "is_repeat_compiled_stageii_ooc"
-                                id = "is_repeat_compiled_stageii_ooc"
-                                value = "{{ $ooc->is_repeat_compiled_stageii_ooc }}"
-                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} />
-
+                            <label for="Initiator Group">Complied By @if ($ooc->stage == 10)
+                                    <span class="text-danger">*</span>
+                                @endif
+                            </label>
+                           <select id="select-state" placeholder="Select..." name="compiled_by"
+                            {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                            {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>
+                            <option value="">-- Select a value --</option>
+                            @foreach ($users as $key => $value)
+                                <option @if ($ooc->compiled_by == $value->id) selected @endif
+                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                            </select>
+                            @error('compiled_by')
+                                <p class="text-danger">{{ $message }}</p>
+                            @enderror
                         </div>
                     </div>
-
 
                     <!-- <div class="col-lg-6">
                                                                                 <div class="group-input">
@@ -3141,7 +3166,7 @@
                             <label for="Corrective Action">Corrective action IB Investigation</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea name="initiated_through_capas_ooc_IB" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                            <textarea name="initiated_through_capas_ooc_IB"  {{ $ooc->stage == 10 ? '' : 'readonly' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->initiated_through_capas_ooc_IB }}</textarea>
                         </div>
                     </div>
@@ -3151,11 +3176,13 @@
                             <label for="Preventive Action">Preventive action IB Investigation</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea name="initiated_through_capa_prevent_ooc_IB" {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
+                            <textarea name="initiated_through_capa_prevent_ooc_IB" {{ $ooc->stage == 10 ? '' : 'readonly' }} {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
                                 || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->initiated_through_capa_prevent_ooc_IB }}</textarea>
                         </div>
                     </div>
 
+
+                {{--
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
                             <label for="Corrective & Preventive Action">Corrective and preventive action IB Investigation</label>
@@ -3166,7 +3193,7 @@
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} id="summernote-1">{{ $ooc->initiated_through_capa_corrective_ooc_IB }}</textarea>
                         </div>
                     </div>
-
+                --}}
 
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
@@ -3205,7 +3232,7 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                    <input {{ $ooc->stage == 0|| $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 || $ooc->stage == 11 || $ooc->stage == 13 ? 'disabled' : '' }} ||
                                         {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file"
                                         id="initial_attachment_reanalysisi_ooc"
                                         name="initial_attachment_reanalysisi_ooc[]"
@@ -3247,7 +3274,7 @@
                                     completion</small></div>
                             <textarea name="phase_IB_HODREMARKS"
                                 class="form-control {{ $errors->has('phase_IB_HODREMARKS') ? 'is-invalid' : '' }}"
-                                {{ $ooc->stage == 11 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                {{ $ooc->stage == 11 ? 'required' : '' }} {{ $ooc->stage == 11 ? '' : 'readonly' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->phase_IB_HODREMARKS }}</textarea>
 
                             @if ($errors->has('phase_IB_HODREMARKS'))
@@ -3286,9 +3313,8 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file"
-                                        id="attachments_hodIBBBHODPRIMARYREVIEW_ooc"
+                                    <input {{ $ooc->stage == 0|| $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 || $ooc->stage == 12 || $ooc->stage == 13  ? 'disabled' : '' }} type="file"
+                                    id="attachments_hodIBBBHODPRIMARYREVIEW_ooc"
                                         name="attachments_hodIBBBHODPRIMARYREVIEW_ooc[]"
                                         oninput="addMultipleFiles(this, 'attachments_hodIBBBHODPRIMARYREVIEW_ooc')"
                                         multiple>
@@ -3323,7 +3349,7 @@
                                     completion</small></div>
                             <textarea name="phase_IB_qareviewREMARKS"
                                 class="form-control {{ $errors->has('phase_IB_qareviewREMARKS') ? 'is-invalid' : '' }}"
-                                {{ $ooc->stage == 12 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                {{ $ooc->stage == 12 ? 'required' : '' }} {{ $ooc->stage == 12 ? '' : 'readonly' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->phase_IB_qareviewREMARKS }}</textarea>
 
                             @if ($errors->has('phase_IB_qareviewREMARKS'))
@@ -3363,7 +3389,7 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                    <input {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 || $ooc->stage == 11 || $ooc->stage == 13 ? 'disabled' : '' }} ||
                                         {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file"
                                         id="attachments_QAIBBBREVIEW_ooc" name="attachments_QAIBBBREVIEW_ooc[]"
                                         oninput="addMultipleFiles(this, 'attachments_QAIBBBREVIEW_ooc')" multiple>
@@ -3420,13 +3446,13 @@
                             </label>
                             {{-- <input type="text" name="qPIBaHremarksnewfield" placeholder="Enter review"
                                 value="{{ $ooc->qPIBaHremarksnewfield }}"
-                                class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"{{ $ooc->stage == 13 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
+                                class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}" {{ $ooc->stage == 13 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }}
                                 || {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} /> --}}
 
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
                             <textarea name="qPIBaHremarksnewfield"
-                                class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"
+                                class="form-control {{ $errors->has('qPIBaHremarksnewfield') ? 'is-invalid' : '' }}"  {{ $ooc->stage == 13 ? '' : 'readonly' }}
                                 {{ $ooc->stage == 13 ? 'required' : '' }}{{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>{{ $ooc->qPIBaHremarksnewfield }}</textarea>
 
@@ -3467,8 +3493,8 @@
                                 </div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file"
+                                    <input {{ $ooc->stage == 0  || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 || $ooc->stage == 11 || $ooc->stage == 12 ? 'disabled' : '' }} ||
+                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file" 
                                         id="Pib_attachements" name="Pib_attachements[]"
                                         oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
                                 </div>
