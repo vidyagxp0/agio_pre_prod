@@ -318,9 +318,9 @@
         
         /*Main Table Styling */
         #isPasted {
-            width: 650px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         /* First column adjusts to its content */
@@ -375,7 +375,7 @@
         }
 
         .table-containers {
-            width: 550px;
+            width: 650px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
