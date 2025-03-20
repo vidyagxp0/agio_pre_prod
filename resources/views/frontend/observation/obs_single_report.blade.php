@@ -238,7 +238,7 @@
                     </tr>
 
                     <tr>
-                        
+
                     </tr>
                     <tr>
 
@@ -274,7 +274,7 @@
                     <th class="w-20">Observation Report Due Date</th>
                     <td class="w-80">
                         @if ($data->due_date)
-                            {{ Helpers::getdateFormat($data->due_date) }} 
+                            {{ Helpers::getdateFormat($data->due_date) }}
                         @else
                             Not Applicable
                         @endif
@@ -283,7 +283,7 @@
                     <th class="w-20">Short Description</th>
                     <td class="w-80">
                         @if ($data->short_description)
-                            {{ $data->short_description }} 
+                            {{ $data->short_description }}
                         @else
                             Not Applicable
                         @endif
@@ -303,7 +303,7 @@
                 </tr>
             </table>
 
-               
+
                     <style>
                     .head-number {
                         font-weight: bold;
@@ -341,7 +341,7 @@
                         @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -369,14 +369,14 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
-    
+
 
         </div>
 
-        
+
            <div class="block">
             <div class="block-head">
                 Response and CAPA Plan Details
@@ -407,7 +407,7 @@
                             @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -435,7 +435,7 @@
                         @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -443,7 +443,7 @@
 
                 <div class="block">
                     <div class="block-head">
-                    Preventive Action 
+                    Preventive Action
                     </div>
                     <div class="border-table">
                     <table class="table table-bordered" id="Details-table">
@@ -465,7 +465,7 @@
                         @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -491,7 +491,7 @@
                                     @if ($griddata && unserialize($griddata->responsible)[$key] == $value->id)
                                             {{ $value->name }}
                                     @endif
-            
+
                                 @endforeach
                                 </td>
                                 <td>{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}</td>
@@ -511,8 +511,8 @@
                     @endif
                 </div>
                 <br>
-                
-           
+
+
             <div class="block-head">
                 Response And CAPA Attachments
              </div>
@@ -535,7 +535,7 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
            </div>
@@ -579,7 +579,7 @@
                     @endif
                 </div>
                 <br>
- 
+
             <div class="block-head">
                 Response Summary
             </div>
@@ -593,18 +593,7 @@
                     @endif
                 </div>
             <table>
-                    <tr>
 
-                    <th class="w-20">Related URL</th>
-                    <td class="w-80">
-                        @if ($data->related_url)
-                            {{ $data->related_url }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                </tr>
 
             </table>
 
@@ -630,13 +619,13 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
 
                <br>
 
-       
+
             <div class="block-head">
                 Response Verification
              </div>
@@ -676,10 +665,10 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
-          
+
 
      <br>
 
@@ -689,7 +678,7 @@
              <div class="block-head">
                 Report Issued
              </div>
-            <table>               
+            <table>
                 <tr>
                     <th class="w-20">Report Issued By</th>
                     <td class="w-80">
@@ -699,7 +688,7 @@
                             Not Applicable
                         @endif
                     </td>
-    
+
                     <th class="w-20">Report Issued On</th>
                     <td class="w-80">
                         @if ($data->report_issued_on)
@@ -708,7 +697,7 @@
                             Not Applicable
                         @endif
                     </td>
-             
+
                     <th class="w-20">Report Issued Comment</th>
                     <td class="w-80">
                         @if ($data->report_issued_comment)
@@ -740,7 +729,7 @@
                             Not Applicable
                         @endif
                     </td>
-               
+
                     <th class="w-20">Cancel Comment</th>
                     <td class="w-80">
                         @if ($data->cancel_comment)
@@ -752,8 +741,8 @@
                 </tr>
 
             </table>
-           
- 
+
+
         <div class="block-head">
            More Info Required
         </div>
@@ -768,7 +757,7 @@
                             Not Applicable
                         @endif
                     </td>
-    
+
                     <th class="w-20">More Info Required On</th>
                     <td class="w-80">
                         @if ($data->more_info_required_on)
@@ -777,7 +766,7 @@
                             Not Applicable
                         @endif
                     </td>
-              
+
                     <th class="w-20">More Info Required Comment</th>
                     <td class="w-80">
                         @if ($data->more_info_required_comment)
@@ -811,7 +800,7 @@
                     Not Applicable
                 @endif
             </td>
-      
+
             <th class="w-20">CAPA Plan Proposed Comment</th>
             <td class="w-80">
                 @if ($data->complete_comment)
@@ -845,7 +834,7 @@
                     Not Applicable
                 @endif
             </td>
-      
+
             <th class="w-20">No CAPAs Required Comment</th>
             <td class="w-80">
                 @if ($data->qa_approval_without_capa_comment)
@@ -871,7 +860,7 @@
                         Not Applicable
                     @endif
                 </td>
-    
+
                 <th class="w-20">Response Reviewed On</th>
                 <td class="w-80">
                     @if ($data->Final_Approval_on)
@@ -880,7 +869,7 @@
                         Not Applicable
                     @endif
                 </td>
-          
+
                 <th class="w-20">Response Reviewed Comment</th>
                 <td class="w-80">
                     @if ($data->Final_Approval_comment)
@@ -895,15 +884,15 @@
 
            </div>
 
-        
-
-
-    
 
 
 
-    
-      
+
+
+
+
+
+
 
 
 
