@@ -203,7 +203,8 @@
             margin: 5px auto;
         }
     </style> --}}
-        <style>
+
+    <style>
         
         /*Main Table Styling */
         #isPasted {
@@ -307,7 +308,7 @@
                 <button class="tablinks hidden-tabs" data-id="FPS" onclick="openData(event, 'doc_FPS')">Finished Product Specification</button>
                 <button class="tablinks hidden-tabs" data-id="INPS" onclick="openData(event, 'doc_INPS')">Inprocess Specification</button>
                 <button class="tablinks hidden-tabs" data-id="CVS" onclick="openData(event, 'doc_CVS')">Cleaning Validation Specification</button>
-
+                
                 <button class="tablinks hidden-tabs" data-id="FPSTP" onclick="openData(event, 'doc-fpstp')">Finished Product Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="INPSTP" onclick="openData(event, 'doc-istp')">Inprocess Standard Testing Procedure</button>
                 <button class="tablinks hidden-tabs" data-id="CVSTP" onclick="openData(event, 'doc-cvstp')">Cleaning Validation Standard Testing Procedure</button>
@@ -6968,23 +6969,19 @@
                                 </div>
 
                             <div class="group-input">
-                                <label for="action-plan-grid">
-                                    Revision History<button type="button" name="action-plan-grid"
-                                            id="add_revision">+</button>
-                                </label>
+                                <label for="revision-history">Revision History</label>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-revision">
+                                    <table class="table table-bordered" id="Details-table-revision">
                                         <thead>
                                             <tr>
-                                                <th style="width: 2%">Sr. No.</th>
-                                                <th style="width: 12%">Revision No.</th>
-                                                <th style="width: 12%">Change Control No.</th>
-                                                <th style="width: 12%">Effective Date</th>
-                                                <th style="width: 30%">Reason of revision</th>
-                                                <th style="width: 3%">Action</th>
+                                                <th>Sr. No.</th>
+                                                <th>Revision No.</th>
+                                                <th>Change Control No.</th>
+                                                <th>Effective Date</th>
+                                                <th>Reason of Revision</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="revision-history-fps">
                                             @php
                                                 $serialNumber = 1;
                                                 $GtpData = [];
@@ -6994,143 +6991,75 @@
                                                         : (is_array($RevisionGridData->data) ? $RevisionGridData->data : []);
                                                 }
 
-                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
-
                                             @endphp
 
-                                            @if(!empty($GtpData))
-                                                @foreach($GtpData as $key => $gtp_data)
-                                                    <tr>
-                                                        <td>{{ $serialNumber++ }}</td>
-                                                        <td>
-                                                           <select name="revision_data[{{ $key }}][rev_no]" onchange="getFPSEffectiveDate(this, {{ $document->id }}, {{ $key }})">
-                                                             <option value="">Select Revision Number</option>
-                                                                @php
-                                                                    $revisions = ['00'];
-                                                                    if ($document->revised === 'Yes') {
-                                                                        for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                            $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                                        }
-                                                                    }
-                                                                @endphp
-
-                                                                @foreach ($revisions as $rev)
-                                                                    <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                                        {{ $rev }}
-                                                                    </option>
-                                                                @endforeach
-                                                           </select>
-                                                        </td>
-
-                                                        {{-- <td><input type="text" name="revision_data[{{ $key }}][rev_no]" value="{{ $gtp_data['rev_no'] ?? '' }}"></td> --}}
-
-                                                        <td><input type="text" name="revision_data[{{ $key }}][change_ctrl_no]" value="{{ $gtp_data['change_ctrl_no'] ?? '' }}"></td>
-                                                        <td><input type="date" readonly name="revision_data[{{ $key }}][eff_date]" value="{{ $effectiveDate ?? '' }}"></td>
-                                                        <td><input type="text" name="revision_data[{{ $key }}][rev_reason]" value="{{ $gtp_data['rev_reason'] ?? '' }}"></td>
-                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                            @foreach ($GtpData as $index => $gtp_data)
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
-                                                
                                                     <td>
-                                                        <select name="revision_data[0][rev_no]">
-                                                            <option value="">Select Revision</option>
-                                                                <option value="" >
-                                                                
-                                                                </option>
-                                                        </select>
+                                                        <input type="text" name="revision_data[{{ $index }}][rev_no]" 
+                                                            value="{{ $gtp_data['rev_no'] ?? '' }}" readonly>
                                                     </td>
-
-                                                    {{-- <td><input type="text" name="revision_data[0][rev_no]"></td> --}}
-
-                                                    <td><input type="text" name="revision_data[0][change_ctrl_no]"></td>
-                                                    <td><input type="date" readonly name="revision_data[0][eff_date]"></td>
-                                                    <td><input type="text" name="revision_data[0][rev_reason]"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    <td>
+                                                        <input type="text" name="revision_data[{{ $index }}][change_ctrl_no]" 
+                                                            value="{{ $gtp_data['change_ctrl_no'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="revision_data[{{ $index }}][eff_date]" 
+                                                            value="{{ $gtp_data['eff_date'] ?? '' }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="revision_data[{{ $index }}][rev_reason]" 
+                                                            value="{{ $gtp_data['rev_reason'] ?? '' }}">
+                                                    </td>
                                                 </tr>
-                                            @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
                             <script>
-                                $(document).ready(function() {
-                                    function updateSerialNumbers() {
-                                        $('#table-revision tbody tr').each(function(index) {
-                                            $(this).find('td:first-child input').val(index + 1); // Update Sr. No
-                                            $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
-                                        });
-                                    }
+                                $(document).ready(function () {
+                                    fetchFpsRevisionHistory();
 
-                                    $('#add_revision').click(function() {
-                                        var serialNumber = $('#table-revision tbody tr').length + 1; // Get the next serial number
-                                        var newRow = `
-                                            <tr>
-                                                <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
-                                                <td>
-                                                    <select name="revision_data[${serialNumber - 1}][rev_no]" onchange="getFPSEffectiveDate(this, {{ $document->id }}, ${serialNumber - 1})">
-                                                        <option value="">Select Revision Number</option>
-                                                        @php
-                                                            $revisions = ['00'];
-                                                            if ($document->revised === 'Yes') {
-                                                                for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                    $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                                }
-                                                            }
-                                                        @endphp
-                                                        @foreach ($revisions as $rev)
-                                                            <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                                {{ $rev }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
+                                    function fetchFpsRevisionHistory() {
+                                        var documentId = {{ $document->id }};
 
-                                                <td><input type="text" name="revision_data[${serialNumber - 1}][change_ctrl_no]" value=""></td>
-                                                <td><input type="date" readonly name="revision_data[${serialNumber - 1}][eff_date]" value=""></td>
-                                                <td><input type="text" name="revision_data[${serialNumber - 1}][rev_reason]" value=""></td>
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>`;
-
-                                        $('#table-revision tbody').append(newRow);
-                                    });
-
-                                    // Remove row functionality
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                        updateSerialNumbers(); // Update serial numbers after removal
-                                    });
-                                });
-                            </script>
-
-                            <script>
-                                function getFPSEffectiveDate(selectElement, documentId, key) {
-                                    var revisionNumber = selectElement.value;
-
-                                    if (revisionNumber) {
                                         $.ajax({
-                                            url: '/get-effective-date',
+                                            url: '/get-revision-history-fps',
                                             method: 'GET',
-                                            data: {
-                                                document_id: documentId,
-                                                revision_number: revisionNumber
-                                            },
-                                            success: function(response) {
-                                                if (response.effective_date) {
-                                                    $('input[name="revision_data[' + key + '][eff_date]"]').val(response.effective_date);
+                                            data: { document_id: documentId },
+                                            success: function (response) {
+                                                if (response.revision_data) {
+                                                    var tbody = $('#revision-history-fps');
+                                                    tbody.empty(); // Clear existing rows
+                                                    
+                                                    response.revision_data.forEach(function (fpshistory, index) {
+                                                                            
+                                                        var row = `
+                                                            <tr>
+                                                                <td>${index + 1}</td>
+                                                                <td><input type="text" name="revision_data[${index}][rev_no]" 
+                                                                        value="${fpshistory.rev_no || ''}" readonly></td>
+                                                                <td><input type="text" name="revision_data[${index}][change_ctrl_no]" value="${fpshistory.change_ctrl_no}"></td>
+                                                                <td><input type="date" name="revision_data[${index}][eff_date]" 
+                                                                        value="${fpshistory.eff_date || ''}" readonly></td>
+                                                                <td><input type="text" name="revision_data[${index}][rev_reason]" value="${fpshistory.rev_reason}"></td>
+                                                            </tr>`;
+                                                        
+                                                        tbody.append(row);
+                                                    });
                                                 }
                                             }
                                         });
                                     }
-                                }
-
+                                });
                             </script>
-
+                            
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" id="DocsaveButton"
                             class="saveButton">Save</button>
@@ -7251,7 +7180,7 @@
                                                 </p>
                                                 <input class="input-field"
                                                     style="background: #ffff0061;
-                                        color: black;"
+                                                color: black;"
                                                     type="text" value="{{ $tempHistory->comment }}" disabled>
                                             @endif
                                         @endforeach
@@ -7390,175 +7319,97 @@
                         </script>
 
                             <div class="group-input">
-                                <label for="action-plan-grid">
-                                    Revision History<button type="button" name="action-plan-grid"
-                                            id="CVS_revision">+</button>
-                                </label>
+                                <label for="revision-history">Revision History</label>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-cvs_revision">
+                                    <table class="table table-bordered" id="Details-table-revision">
                                         <thead>
                                             <tr>
-                                                <th style="width: 2%">Sr. No.</th>
-                                                <th style="width: 12%">Revision No.</th>
-                                                <th style="width: 12%">Change Control No.</th>
-                                                <th style="width: 12%">Effective Date</th>
-                                                <th style="width: 30%">Reason of revision</th>
-                                                <th style="width: 3%">Action</th>
+                                                <th>Sr. No.</th>
+                                                <th>Revision No.</th>
+                                                <th>Change Control No.</th>
+                                                <th>Effective Date</th>
+                                                <th>Reason of Revision</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="revision-history-cvs">
                                             @php
                                                 $serialNumber = 1;
+                                                $GtpData = [];
+                                                if (!empty($RevisionGridCvsData) && isset($RevisionGridCvsData->data)) {
+                                                    $GtpData = is_string($RevisionGridCvsData->data) 
+                                                        ? json_decode($RevisionGridCvsData->data, true) 
+                                                        : (is_array($RevisionGridCvsData->data) ? $RevisionGridCvsData->data : []);
+                                                }
 
-                                            $GtpData = [];
-                                            if (!empty($RevisionGridCvsData) && isset($RevisionGridCvsData->data)) {
-                                                $GtpData = is_string($RevisionGridCvsData->data) 
-                                                    ? json_decode($RevisionGridCvsData->data, true) 
-                                                    : (is_array($RevisionGridCvsData->data) ? $RevisionGridCvsData->data : []);
-                                            }
-                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                             @endphp
 
-                                            @if(!empty($GtpData))
-                                                @foreach($GtpData as $key => $gtp_data)
-                                                    <tr>
-                                                        <td>{{ $serialNumber++ }}</td>
-                                                        <td>
-                                                            <select name="revision_cvs_data[{{ $key }}][rev_cvs_no]" onchange="getCVSEffectiveDate(this, {{ $document->id }}, {{ $key }})">
-                                                            <option value="">Select Revision Number</option>
-                                                            @php
-                                                                $revisions = ['00'];
-                                                                if ($document->revised === 'Yes') {
-                                                                    for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                        $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                                    }
-                                                                }
-                                                            @endphp
-
-                                                            @foreach ($revisions as $rev)
-                                                                <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                                    {{ $rev }}
-                                                                </option>
-                                                            @endforeach
-                                                           </select>
-
-                                                        </td>
-
-                                                        {{-- <td><input type="text" name="revision_cvs_data[{{ $key }}][rev_cvs_no]" value="{{ $gtp_data['rev_cvs_no'] ?? '' }}"></td> --}}
-
-                                                        <td><input type="text" name="revision_cvs_data[{{ $key }}][change_ctrl_cvs_no]" value="{{ $gtp_data['change_ctrl_cvs_no'] ?? '' }}"></td>
-                                                        <td><input type="date" readonly name="revision_cvs_data[{{ $key }}][eff_date_cvs]" value="{{ $effectiveDate ?? '' }}"></td>
-                                                        <td><input type="text" name="revision_cvs_data[{{ $key }}][rev_reason_cvs]" value="{{ $gtp_data['rev_reason_cvs'] ?? '' }}"></td>
-                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                            @foreach ($GtpData as $index => $gtp_data)
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td>
-                                                        <select name="revision_cvs_data[0][rev_cvs_no]">
-                                                            <option value="">Select Revision</option>
-                                                                <option value="" >
-                                                                
-                                                                </option>
-                                                        </select>
+                                                        <input type="text" name="revision_cvs_data[{{ $index }}][rev_cvs_no]" 
+                                                            value="{{ $gtp_data['rev_cvs_no'] ?? '' }}" readonly>
                                                     </td>
-
-                                                    {{-- <td><input type="text" name="revision_cvs_data[0][rev_cvs_no]"></td> --}}
-
-                                                    <td><input type="text" name="revision_cvs_data[0][change_ctrl_cvs_no]"></td>
-                                                    <td><input type="date" readonly name="revision_cvs_data[0][eff_date_cvs]"></td>
-                                                    <td><input type="text" name="revision_cvs_data[0][rev_reason_cvs]"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    <td>
+                                                        <input type="text" name="revision_cvs_data[{{ $index }}][change_ctrl_cvs_no]" 
+                                                            value="{{ $gtp_data['change_ctrl_cvs_no'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="revision_cvs_data[{{ $index }}][eff_date_cvs]" 
+                                                            value="{{ $gtp_data['eff_date_cvs'] ?? '' }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="revision_cvs_data[{{ $index }}][rev_reason_cvs]" 
+                                                            value="{{ $gtp_data['rev_reason_cvs'] ?? '' }}">
+                                                    </td>
                                                 </tr>
-                                            @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
                             <script>
-                                $(document).ready(function() {
-                                    function updateSerialNumbers() {
-                                        $('#table-cvs_revision tbody tr').each(function(index) {
-                                            $(this).find('td:first-child input').val(index + 1); // Update Sr. No
-                                            $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
-                                        });
-                                    }
+                                $(document).ready(function () {
+                                    fetchCvsRevisionHistory();
 
-                                    $('#CVS_revision').click(function() {
-                                        var serialNumber = $('#table-cvs_revision tbody tr').length + 1; // Get the next serial number
-                                        var newRow = `
-                                            <tr>
-                                                <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
-                                                <td>
-                                            
-                                                    <select name="revision_cvs_data[${serialNumber - 1}][rev_cvs_no]" onchange="getCVSEffectiveDate(this, {{ $document->id }}, ${serialNumber - 1})">
-                                                        <option value="">Select Revision Number</option>
-                                                        @php
-                                                            $revisions = ['00'];
-                                                            if ($document->revised === 'Yes') {
-                                                                for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                    $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                                }
-                                                            }
-                                                        @endphp
-                                                        @foreach ($revisions as $rev)
-                                                            <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                                {{ $rev }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                            
-                                                </td>
+                                    function fetchCvsRevisionHistory() {
+                                        var documentId = {{ $document->id }};
 
-
-                                                
-                                                <td><input type="text" name="revision_cvs_data[${serialNumber - 1}][change_ctrl_cvs_no]" value=""></td>
-                                                <td><input type="date" readonly name="revision_cvs_data[${serialNumber - 1}][eff_date_cvs]" value=""></td>
-                                                <td><input type="text" name="revision_cvs_data[${serialNumber - 1}][rev_reason_cvs]" value=""></td>
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>`;
-
-                                        $('#table-cvs_revision tbody').append(newRow);
-                                    });
-
-                                    // Remove row functionality
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                        updateSerialNumbers(); // Update serial numbers after removal
-                                    });
-                                });
-                            </script>
-
-                            <script>
-                                function getCVSEffectiveDate(selectElement, documentId, key) {
-                                    var revisionNumber = selectElement.value;
-
-                                    if (revisionNumber) {
                                         $.ajax({
-                                            url: '/get-effective-date',
+                                            url: '/get-revision-history-cvs',
                                             method: 'GET',
-                                            data: {
-                                                document_id: documentId,
-                                                revision_number: revisionNumber
-                                            },
-                                            success: function(response) {
-                                                if (response.effective_date) {
-                                                    $('input[name="revision_cvs_data[' + key + '][eff_date_cvs]"]').val(response.effective_date);
+                                            data: { document_id: documentId },
+                                            success: function (response) {
+                                                
+                                                if (response.revision_cvs_data) {
+                                                    var tbody = $('#revision-history-cvs');
+                                                    tbody.empty(); // Clear existing rows
+                                                    
+                                                    response.revision_cvs_data.forEach(function (cvshistory, index) {
+                                                                            
+                                                        var row = `
+                                                            <tr>
+                                                                <td>${index + 1}</td>
+                                                                <td><input type="text" name="revision_cvs_data[${index}][rev_cvs_no]" 
+                                                                        value="${cvshistory.rev_cvs_no || ''}" readonly></td>
+                                                                <td><input type="text" name="revision_cvs_data[${index}][change_ctrl_cvs_no]" value="${cvshistory.change_ctrl_cvs_no}"></td>
+                                                                <td><input type="date" name="revision_cvs_data[${index}][eff_date_cvs]" 
+                                                                        value="${cvshistory.eff_date_cvs || ''}" readonly></td>
+                                                                <td><input type="text" name="revision_cvs_data[${index}][rev_reason_cvs]" value="${cvshistory.rev_reason_cvs}"></td>
+                                                            </tr>`;
+                                                        
+                                                        tbody.append(row);
+                                                    });
                                                 }
                                             }
                                         });
                                     }
-                                }
-
+                                });
                             </script>
-
-
-
-
+                        </div>
                     </div>
-                    </div>
+                    
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" id="DocsaveButton"
                             class="saveButton">Save</button>
@@ -7719,178 +7570,98 @@
                             </div>
                         </div>
 
-
-                 
-
                             <div class="group-input">
-                                <label for="action-plan-grid">
-                                    Revision History<button type="button" name="action-plan-grid"
-                                            id="inps_revision">+</button>
-                                </label>
+                                <label for="revision-history">Revision History</label>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="table-inps_revision">
+                                    <table class="table table-bordered" id="Details-table-revision">
                                         <thead>
                                             <tr>
-                                                <th style="width: 2%">Sr. No.</th>
-                                                <th style="width: 12%">Revision No.</th>
-                                                <th style="width: 12%">Change Control No.</th>
-                                                <th style="width: 12%">Effective Date</th>
-                                                <th style="width: 30%">Reason of revision</th>
-                                                <th style="width: 3%">Action</th>
+                                                <th>Sr. No.</th>
+                                                <th>Revision No.</th>
+                                                <th>Change Control No.</th>
+                                                <th>Effective Date</th>
+                                                <th>Reason of Revision</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="revision-history-inps">
                                             @php
                                                 $serialNumber = 1;
-                                                    $GtpData = [];
-                                                    if (!empty($RevisionGridInpsData) && isset($RevisionGridInpsData->data)) {
-                                                        $GtpData = is_string($RevisionGridInpsData->data) 
-                                                            ? json_decode($RevisionGridInpsData->data, true) 
-                                                            : (is_array($RevisionGridInpsData->data) ? $RevisionGridInpsData->data : []);
-                                                    }
+                                                $GtpData = [];
+                                                if (!empty($RevisionGridInpsData) && isset($RevisionGridInpsData->data)) {
+                                                    $GtpData = is_string($RevisionGridInpsData->data) 
+                                                        ? json_decode($RevisionGridInpsData->data, true) 
+                                                        : (is_array($RevisionGridInpsData->data) ? $RevisionGridInpsData->data : []);
+                                                }
 
-                                                $effectiveDate = DB::table('documents')->where('id', $document->record)->where('status', 'Effective')->value('effective_date');
                                             @endphp
 
-                                            @if(!empty($GtpData))
-                                                @foreach($GtpData as $key => $gtp_data)
-                                                    <tr>
-                                                        <td>{{ $serialNumber++ }}</td>
-                                                        <td>
-
-                                                            <select name="revision_inps_data[{{ $key }}][rev_inps_no]" onchange="getINPSEffectiveDate(this, {{ $document->id }}, {{ $key }})">
-                                                                <option value="">Select Revision Number</option>
-                                                                @php
-                                                                    $revisions = ['00'];
-                                                                    if ($document->revised === 'Yes') {
-                                                                        for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                            $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                                        }
-                                                                    }
-                                                                @endphp
-
-                                                                @foreach ($revisions as $rev)
-                                                                    <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                                        {{ $rev }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
-                                                        </td>
-
-
-                                                        {{-- <td><input type="text" name="revision_inps_data[{{ $key }}][rev_inps_no]" value="{{ $gtp_data['rev_inps_no'] ?? '' }}"></td> --}}
-
-                                                        <td><input type="text" name="revision_inps_data[{{ $key }}][change_ctrl_inps_no]" value="{{ $gtp_data['change_ctrl_inps_no'] ?? '' }}"></td>
-                                                        <td><input type="date" readonly name="revision_inps_data[{{ $key }}][eff_date_inps]" value="{{ $effectiveDate ?? '' }}"></td>
-                                                        <td><input type="text" name="revision_inps_data[{{ $key }}][rev_reason_inps]" value="{{ $gtp_data['rev_reason_inps'] ?? '' }}"></td>
-                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
+                                            @foreach ($GtpData as $index => $gtp_data)
                                                 <tr>
                                                     <td>{{ $serialNumber++ }}</td>
-
                                                     <td>
-                                                        <select name="revision_inps_data[0][rev_inps_no]">
-                                                            <option value="">Select Revision</option>
-                                                                <option value="" >
-                                                                
-                                                                </option>
-                                                        </select>
+                                                        <input type="text" name="revision_inps_data[{{ $index }}][rev_inps_no]" 
+                                                            value="{{ $gtp_data['rev_inps_no'] ?? '' }}" readonly>
                                                     </td>
-
-
-                                                    {{-- <td><input type="text" name="revision_inps_data[0][rev_inps_no]"></td> --}}
-
-                                                    <td><input type="text" name="revision_inps_data[0][change_ctrl_inps_no]"></td>
-                                                    <td><input type="date" readonly name="revision_inps_data[0][eff_date_inps]"></td>
-                                                    <td><input type="text" name="revision_inps_data[0][rev_reason_inps]"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    <td>
+                                                        <input type="text" name="revision_inps_data[{{ $index }}][change_ctrl_inps_no]" 
+                                                            value="{{ $gtp_data['change_ctrl_inps_no'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="revision_inps_data[{{ $index }}][eff_date_inps]" 
+                                                            value="{{ $gtp_data['eff_date_inps'] ?? '' }}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="revision_inps_data[{{ $index }}][rev_reason_inps]" 
+                                                            value="{{ $gtp_data['rev_reason_inps'] ?? '' }}">
+                                                    </td>
                                                 </tr>
-                                            @endif
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
                             <script>
-                                $(document).ready(function() {
-                                    function updateSerialNumbers() {
-                                        $('#table-inps_revision tbody tr').each(function(index) {
-                                            $(this).find('td:first-child input').val(index + 1); // Update Sr. No
-                                            $(this).find('td:nth-child(2) input').attr('name', `gtp[${index}][test_gtp]`);
+                                $(document).ready(function () {
+                                    fetchInpsRevisionHistory();
+
+                                    function fetchInpsRevisionHistory() {
+                                        var documentId = {{ $document->id }};
+
+                                        $.ajax({
+                                            url: '/get-revision-history-inps',
+                                            method: 'GET',
+                                            data: { document_id: documentId },
+                                            success: function (response) {
+                                                
+                                                if (response.revision_inps_data) {
+                                                    var tbody = $('#revision-history-inps');
+                                                    tbody.empty(); // Clear existing rows
+                                                    
+                                                    response.revision_inps_data.forEach(function (inpshistory, index) {
+                                                                            
+                                                        var row = `
+                                                            <tr>
+                                                                <td>${index + 1}</td>
+                                                                <td><input type="text" name="revision_inps_data[${index}][rev_inps_no]" 
+                                                                        value="${inpshistory.rev_inps_no || ''}" readonly></td>
+                                                                <td><input type="text" name="revision_inps_data[${index}][change_ctrl_inps_no]" value="${inpshistory.change_ctrl_inps_no}"></td>
+                                                                <td><input type="date" name="revision_inps_data[${index}][eff_date_inps]" 
+                                                                        value="${inpshistory.eff_date_inps || ''}" readonly></td>
+                                                                <td><input type="text" name="revision_inps_data[${index}][rev_reason_inps]" value="${inpshistory.rev_reason_inps}"></td>
+                                                            </tr>`;
+                                                        
+                                                        tbody.append(row);
+                                                    });
+                                                }
+                                            }
                                         });
                                     }
-
-                                    $('#inps_revision').click(function() {
-                                        var serialNumber = $('#table-inps_revision tbody tr').length + 1; // Get the next serial number
-                                        var newRow = `
-                                            <tr>
-                                                <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
-                                                 
-                                                <td>
-                                                   <select name="revision_inps_data[${serialNumber - 1}][rev_inps_no]" onchange="getEffectiveDate(this, {{ $document->id }}, ${serialNumber - 1})">
-                                                    <option value="">Select Revision Number</option>
-                                                    @php
-                                                        $revisions = ['00'];
-                                                        if ($document->revised === 'Yes') {
-                                                            for ($i = 1; $i <= $document->revised_doc; $i++) {
-                                                                $revisions[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-                                                            }
-                                                        }
-                                                    @endphp
-                                                    @foreach ($revisions as $rev)
-                                                        <option value="{{ $rev }}" {{ ($rev == $revisionNumber) ? 'selected' : '' }}>
-                                                            {{ $rev }}
-                                                        </option>
-                                                    @endforeach
-                                                  </select>
-                                                </td>
-
-                                                <td><input type="text" name="revision_inps_data[${serialNumber - 1}][change_ctrl_inps_no]" value=""></td>
-                                                <td><input type="date" readonly name="revision_inps_data[${serialNumber - 1}][eff_date_inps]" value=""></td>
-                                                <td><input type="text" name="revision_inps_data[${serialNumber - 1}][rev_reason_inps]" value=""></td>
-                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                            </tr>`;
-
-                                        $('#table-inps_revision tbody').append(newRow);
-                                    });
-
-                                    // Remove row functionality
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                        updateSerialNumbers(); // Update serial numbers after removal
-                                    });
                                 });
                             </script>
-
-                         <script>
-                            function getINPSEffectiveDate(selectElement, documentId, key) {
-                                var revisionNumber = selectElement.value;
-
-                                if (revisionNumber) {
-                                    $.ajax({
-                                        url: '/get-effective-date',
-                                        method: 'GET',
-                                        data: {
-                                            document_id: documentId,
-                                            revision_number: revisionNumber
-                                        },
-                                        success: function(response) {
-                                            if (response.effective_date) {
-                                                $('input[name="revision_inps_data[' + key + '][eff_date_inps]"]').val(response.effective_date);
-                                            }
-                                        }
-                                    });
-                                }
-                            }
-
-                        </script>
-
-
-
+                        </div>
                     </div>
-                    </div>
+
                     <div class="button-block">
                         <button type="submit" value="save" name="submit" id="DocsaveButton"
                             class="saveButton">Save</button>
@@ -10801,6 +10572,10 @@
                                         </div>
                                     </div>
 
+
+
+
+
                                     <div class="group-input">
                                         <label for="action-plan-grid">
                                             Revision History<button type="button" name="action-plan-grid"
@@ -11133,7 +10908,7 @@
                                                     <tr>
                                                         <td><input disabled type="text" style="width:40px; text-align:center;" value="${serialNumber}"></td>
                                                         <td>
-                                                            <select name="revision_inpstp_data[${serialNumber - 1}][rev_inpstp_no]" onchange="getINPSTPffectiveDate(this, {{ $document->id }}, ${serialNumber - 1})">
+                                                            <select name="revision_inpstp_data[${serialNumber - 1}][rev_inpstp_no]" onchange="getINPSTPEffectiveDate(this, {{ $document->id }}, ${serialNumber - 1})">
                                                                 <option value="">Select Revision Number</option>
                                                                 @php
                                                                     $revisions = ['00'];

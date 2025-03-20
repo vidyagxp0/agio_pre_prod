@@ -97,7 +97,8 @@ class ErrataController extends Controller
         //$data->reference  = implode(',', $request->reference);
         $data->reference = $request->reference;
         $data->type = "ERRATA";
-        $data->Department = $request->Department;
+        $data->Initiator_Group = $request->Initiator_Group;
+    //  dd($data->Initiator_Group);
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
         $data->document_type_others = $request->document_type_others;
@@ -217,15 +218,6 @@ class ErrataController extends Controller
         $data->stage = 1;
 
         $data->save();
-
-
-
-
-
-
-
-
-
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -2190,12 +2182,11 @@ class ErrataController extends Controller
        // $data->initiator_id = Auth::user()->id;
         $data->intiation_date = $request->intiation_date;
         $data->initiated_by = $request->initiated_by;
-
         // new added lines
         $data->department_head_to = $request->department_head_to;
         $data->document_title = $request->document_title;
         $data->qa_reviewer = $request->qa_reviewer;
-     //   $data->reference = implode(',', $request->reference);
+     // $data->reference = implode(',', $request->reference);
         $data->reference = $request->reference;
         // $data->Department = $request->Department;
         // $data->department_code = $request->department_code;

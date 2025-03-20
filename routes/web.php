@@ -133,8 +133,10 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('/get-tdsrevision-history', [DocumentController::class, 'getTDSRevisionHistory']);
     Route::get('/get-gtprevision-history', [DocumentController::class, 'getGTPRevisionHistory']);
 
-
-
+    Route::get('/get-revision-history-fps', [DocumentController::class, 'getFPSRevisionHistory']);
+    Route::get('/get-revision-history-inps', [DocumentController::class, 'getINPSRevisionHistory']);
+    Route::get('/get-revision-history-cvs', [DocumentController::class, 'getCVSRevisionHistory']);
+    
     Route::get('/get-effective-date', [DocumentController::class, 'getEffectiveDate']);
     Route::get('/get-records', [DocumentController::class, 'getRecordsByType'])->name('getRecordsByType');
 
