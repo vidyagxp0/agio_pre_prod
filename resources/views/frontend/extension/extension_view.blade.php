@@ -293,7 +293,7 @@
                             @else
                                 <div class="" style="display: none;">In CQA Approval</div>
                             @endif
-                            
+
                             @if ($extensionNew->stage >= 6)
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @else
@@ -328,7 +328,7 @@
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Reject</div>
                                 <div style="display: none" class="">Closed - Done</div>
                                 <div style="display: none" class=""> In CQA Approval</div>
-                            
+
                             @elseif(($extensionNew->stage == 1 && $extensionNew->count == 'number' && $extensionNew->parent_type == 'number') || ($extensionNew->stage == 2 && $extensionNew->count == 'number' && $extensionNew->parent_type == 'number'))
                                 <div class="" style="display: none"> Closed - Reject</div>
                             @elseif($extensionNew->count == 3 && $extensionNew->parent_type != null)
@@ -336,7 +336,7 @@
                             @elseif($extensionNew->stage >= 6 || $extensionNew->count_data == 'number' || $extensionNew->data_number == 3)
                                 <div class="" style="display: none; border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
                             @else
-                                <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>    
+                                <div class="" style="border-radius: 0px 20px 20px 0px;"> Closed - Reject</div>
                             @endif -->
                             <!-- @if ( $extensionNew->stage_hide == "stage-6")
                             <div class="active"> In CQA Approval</div>
@@ -348,7 +348,7 @@
                             @elseif(($extensionNew->stage_hide == 'stage-6' && $extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->stage_hide == "stage-6")
                             <div class="" style="display: none;"> In CQA Approval</div>
                             <div class="" style="display: none; border-radius: 0px 20px 20px 0px;">Closed - Done</div>
-                            @elseif($extensionNew->count_data == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)    
+                            @elseif($extensionNew->count_data == 'number' || ($extensionNew->count == 3 && $extensionNew->parent_type != null) || $extensionNew->data_number == 3)
                                 <div class=""> In CQA Approval</div>
                                 <div class="" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
                             @endif -->
@@ -514,23 +514,23 @@
                                 </div>
 
                                 <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <label for="Assigned To">QA approval </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        name="approvers" placeholder="Select Approvers" >
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <option value="">-- Select --</option>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        @if (!empty($approvers))
-    @foreach ($approvers as $lan)
-    @if (Helpers::checkUserRolesApprovers($lan))
-    <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $lan->name }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </option>
-    @endif
-    @endforeach
-    @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </select>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                            </div> -->
+                                    <div class="group-input">
+                                        <label for="Assigned To">QA approval </label>
+                                        <select id="choices-multiple-remove-but" class="choices-multiple-reviewer"
+                                            name="approvers" placeholder="Select Approvers" >
+                                            <option value="">-- Select --</option>
+                                            @if (!empty($approvers))
+                                            @foreach ($approvers as $lan)
+                                            @if (Helpers::checkUserRolesApprovers($lan))
+                                            <option value="{{ $lan->id }}" @if ($lan->id == $extensionNew->approvers) selected @endif>
+                                                                            {{ $lan->name }}
+                                                                        </option>
+                                            @endif
+                                            @endforeach
+                                            @endif
+                                    </select>
+                                </div>
+                            </div> -->
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
@@ -602,11 +602,6 @@
                                     </div>
                                 </div>
 
-
-
-
-
-
                                 <!-- Add the Virtual Select CSS and JS -->
                                 <script>
                                     < link href = "https://cdn.jsdelivr.net/npm/virtual-select@2.0.0/dist/virtual-select.min.css"
@@ -624,10 +619,6 @@
                                         silentInitialValueSet: true // Silent initial value set
                                     });
                                 </script>
-
-
-
-
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -670,7 +661,7 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Actual Start Date">Proposed Due Date</label>
+                                        <label for="Actual Start Date">Proposed Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <input type="text" id="proposed_due_date"
                                                 {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
@@ -680,7 +671,7 @@
                                                 {{ $extensionNew->stage == 1 ? '' : 'readonly' }}
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 value="{{ $extensionNew->proposed_due_date }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'proposed_due_date')" />
+                                                oninput="handleDateInput(this, 'proposed_due_date')" required />
                                         </div>
                                     </div>
                                 </div>
@@ -708,9 +699,9 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description"> Description</label>
+                                        <label for="Short Description">Description <span class="text-danger">*</span></label>
                                         <textarea id="docname" type="text" name="description" value=""
-                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->description }}</textarea>
+                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }} required>{{ $extensionNew->description }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
@@ -718,47 +709,46 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description"> Justification / Reason </label>
-
+                                        <label for="Short Description">Justification / Reason  <span class="text-danger">*</span></label>
                                         <textarea id="docname" type="text" name="justification_reason" value=""
-                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }}>{{ $extensionNew->justification_reason }}</textarea>
+                                            {{ $extensionNew->stage == 1 ? '' : 'readonly' }} required>{{ $extensionNew->justification_reason }}</textarea>
                                     </div>
                                     {{-- @error('short_description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror --}}
                                 </div>
                                 <!-- <div class="col-12">
-                                                                                                                            <div class="group-input">
-                                                                                                                                <label for="Inv Attachments"> Extension Attachment</label>
-                                                                                                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                                                                                                        documents</small></div>
-                                                                                                                                <div class="file-attachment-field">
-                                                                                                                                    <div disabled class="file-attachment-list" id="file_attachment_extension">
-                                                                                                                                        @if ($extensionNew->file_attachment_extension)
-    @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
-    <h6 class="file-container text-dark"
-                                                                                                                                                        style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                        <b>{{ $file }}</b>
-                                                                                                                                                        <a href="{{ asset('upload/' . $file) }}"
-                                                                                                                                                            target="_blank"><i class="fa fa-eye text-primary"
-                                                                                                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                        <a class="remove-file"
-                                                                                                                                                            data-file-name="{{ $file }}"><i
-                                                                                                                                                                class="fa-solid fa-circle-xmark"
-                                                                                                                                                                style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                    </h6>
-    @endforeach
-    @endif
-                                                                                                                                                </div>
-                                                                                                                                                <div class="add-btn">
-                                                                                                                                                    <div>Add</div>
-                                                                                                                                                    <input type="file" id="Extension_Attachments"
-                                                                                                                                                        name="file_attachment_extension[]" {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
-                                                                                                                                                        oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
-                                                                                                                                                </div>
-                                                                                                                                            </div>
-                                                                                                                                        </div>
-                                                                                                                                    </div> -->
+                                        <div class="group-input">
+                                            <label for="Inv Attachments"> Extension Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="file_attachment_extension">
+                                                    @if ($extensionNew->file_attachment_extension)
+                                                @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
+                                                <h6 class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                                @endforeach
+                                                @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="Extension_Attachments"
+                                                        name="file_attachment_extension[]" {{ $extensionNew->stage == 1 ? '' : 'disabled' }}
+                                                        oninput="addMultipleFiles(this, 'file_attachment_extension')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
 
                                 @if ($extensionNew->file_attachment_extension)
                                     @foreach (json_decode($extensionNew->file_attachment_extension) as $file)
@@ -823,7 +813,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">HOD Remarks @if($extensionNew->stage == 2)<span class="text-danger">*</span>@endif</label>
                                     <textarea name="reviewer_remarks" id="reviewer_remarks" cols="30"
-                                        {{ $extensionNew->stage == 2 ? '' : 'readonly' }}>{{ $extensionNew->reviewer_remarks }}</textarea>
+                                        {{ $extensionNew->stage == 2 ? '' : 'readonly' }} required>{{ $extensionNew->reviewer_remarks }}</textarea>
                                 </div>
                             </div>
                             {{-- <div class="col-12">
@@ -842,37 +832,37 @@
                             </div>
                         </div> --}}
                             <!-- <div class="col-12">
-                                                                                                                                                                                                                                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <label for="Inv Attachments">HOD Attachment </label>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <div><small class="text-primary">Please Attach all relevant or supporting
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        documents</small></div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                <div class="file-attachment-field">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div disabled class="file-attachment-list" id="file_attachment_reviewer">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        @if ($extensionNew->file_attachment_reviewer)
-    @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
-    <h6 class="file-container text-dark"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <b>{{ $file }}</b>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <a class="remove-file"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        data-file-name="{{ $file }}"><i
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            class="fa-solid fa-circle-xmark"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                </h6>
-    @endforeach
-    @endif
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="add-btn">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div>Add</div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                        <input type="file" id="HOD_Attachments"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            name="file_attachment_reviewer[]"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                          </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                        </div> -->
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">HOD Attachment </label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="file_attachment_reviewer">
+                                                @if ($extensionNew->file_attachment_reviewer)
+                                        @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
+                                        <h6 class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="HOD_Attachments"
+                                                name="file_attachment_reviewer[]"
+                                                oninput="addMultipleFiles(this, 'file_attachment_reviewer')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
                             @if ($extensionNew->file_attachment_reviewer)
                                 @foreach (json_decode($extensionNew->file_attachment_reviewer) as $file)
                                     <input id="EFREFEFile-{{ $loop->index }}" type="hidden"
@@ -935,7 +925,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments @if($extensionNew->stage == 3)<span class="text-danger">*</span>@endif </label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"
-                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
+                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }} required>{{ $extensionNew->approver_remarks }}</textarea>
                                 </div>
                             </div>
 
@@ -1163,7 +1153,7 @@
                                     <div class="static">{{ $extensionNew->send_cqa_comment }}</div>
                                 </div>
                             </div>
-                        @endif    
+                        @endif
 
                             <div class="col-lg-4">
                                 <div class="group-input">

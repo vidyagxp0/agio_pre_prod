@@ -508,7 +508,7 @@
                                         <label for="others">
                                             Others<span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" name="document_type_others" placeholder="Please specify"
+                                        <input type="text" name="document_type_others" placeholder="" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             value="{{ $showdata->document_type_others }}">
                                     </div>
                                 </div>
@@ -554,18 +554,18 @@
                                         <input type="text" name="others" placeholder="Please specify">
                                     </div>
                                 </div>
-<script>
+                                    <script>
 
-    function handleDocumentSelection(select) {
-    const othersInput = document.getElementById('others-input');
-    if (select.value === 'others') {
-        othersInput.style.display = 'block';
-    } else {
-        othersInput.style.display = 'none';
-    }
-}
+                                        function handleDocumentSelection(select) {
+                                        const othersInput = document.getElementById('others-input');
+                                        if (select.value === 'others') {
+                                            othersInput.style.display = 'block';
+                                        } else {
+                                            othersInput.style.display = 'none';
+                                        }
+                                    }
 
-    </script>         --}}
+                                        </script>         --}}
 
 
                                 <div class="col-12">
@@ -863,11 +863,10 @@
                                                     @foreach (unserialize($griddata->ListOfImpactingDocument) as $key => $temps)
                                                         <tr>
 
-
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}">
                                                                 </td>
-                                                                <td><input type="text" name="ListOfImpactingDocument[]" required
+                                                                <td><input type="text" name="ListOfImpactingDocument[]" required {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                                                         {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($griddata->ListOfImpactingDocument)[$key] ? unserialize($griddata->ListOfImpactingDocument)[$key] : '' }}">
                                                                 </td>
