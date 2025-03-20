@@ -925,7 +925,7 @@
                                 <div class="group-input">
                                     <label for="Assigned To">QA/CQA Approval Comments @if($extensionNew->stage == 3)<span class="text-danger">*</span>@endif </label>
                                     <textarea name="approver_remarks" id="approver_remarks" cols="30"
-                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->approver_remarks }}</textarea>
+                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }} required>{{ $extensionNew->approver_remarks }}</textarea>
                                 </div>
                             </div>
 
