@@ -128,6 +128,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::get('documents/annexureviewpdf/{id}', [DocumentController::class, 'annexureviewPdf']);
     Route::get('documents/printAnnexurePDF/{id}', [DocumentController::class, 'printAnnexurePDF']);
+    Route::get('/get-revision-history', [DocumentController::class, 'getRevisionHistory']);
     
     Route::get('/get-effective-date', [DocumentController::class, 'getEffectiveDate']);
     Route::get('/get-records', [DocumentController::class, 'getRecordsByType'])->name('getRecordsByType');

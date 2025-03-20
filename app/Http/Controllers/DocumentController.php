@@ -6667,21 +6667,59 @@ class DocumentController extends Controller
     }
     
 
-    public function getEffectiveDate(Request $request)
+    public function getRevisionHistory(Request $request)
     {
-        $revisionNumber = $request->query('revision_number');
+        $documentId = $request->query('document_id');
     
-        $document = Document::where('revised_doc', $revisionNumber)
-            ->where('status', 'Effective')
+        // Get the current document
+        $currentDocument = Document::find($documentId);
+        if (!$currentDocument) {
+            return response()->json(['error' => 'Document not found'], 404);
+        }
+    
+        // Get past revisions from Document table
+        $revisionHistory = Document::where('record', $currentDocument->record)
+            ->where('revised_doc', '<=', $currentDocument->revised_doc)
+            ->orderBy('revised_doc', 'asc')
+            ->get();
+    
+        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+        $RevisionHistoryData = DocumentGrid::where('document_type_id', $documentId)
+            ->where('identifier', "revision_history")
             ->first();
     
-        return response()->json([
-            'effective_date' => $document ? $document->effective_date : null
-        ]);
+        // Convert JSON data if exists
+        $GtpData = [];
+        if (!empty($RevisionHistoryData) && isset($RevisionHistoryData->data)) {
+            $GtpData = is_string($RevisionHistoryData->data) 
+                ? json_decode($RevisionHistoryData->data, true) 
+                : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
+        }
+    
+        $historyData = [];
+        foreach ($revisionHistory as $index => $doc) {
+            // Stage-based effective date logic
+            $shouldShowEffectiveDate = ($doc->stage >= 11);
+            
+            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+            $cc_no = $GtpData[$index]['cc_no'] ?? 'No Data';
+            $reason_of_revision = $GtpData[$index]['reason_of_revision'] ?? 'No Data';
+    
+            $historyData[] = [
+                'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'cc_no' => $cc_no,
+                'reason_of_revision' => $reason_of_revision
+            ];
+        }
+    
+        return response()->json(['revision_history' => $historyData]);
     }
+    
+    
 
-
-
+    
+    
 
     public function getRecordsByType(Request $request)
     {
