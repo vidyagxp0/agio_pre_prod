@@ -530,7 +530,9 @@
 
                         </div>
                     </div>
-                    @if(in_array($document->document_type_id, ['SOP','BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP']))
+                    {{-- @if(in_array($document->document_type_id, ['SOP','BOM', 'FPS', 'INPS','CVS','RAWMS','PAMS','PIAS','MFPS','MFPSTP','FPSTP','INPSTP','CVSTP','RMSTP','BMR','BPR','SPEC','STP','TDS','GTP'])) --}}
+
+                @if(in_array($document->document_type_id, ['SOP']))
                     <div class="col-12" style="display:none;">
                         <div class="inner-block doc-overview">
 
@@ -556,7 +558,7 @@
                                     
                                     @if ($reviewerUser)
                                         <div class="comment-box">
-                                            <label><b>{{ $reviewerUser->name }} Reviewer Comments</b></label>
+                                            <label><b>{{ $reviewerUser->name }}  Comments</b></label>
                                             <textarea class="form-control reviewer-comment" 
                                                 name="reviewer_comments[{{ $reviewerUser->id }}]" 
                                                 placeholder="Enter your comment..." 
@@ -585,7 +587,7 @@
                                     
                                     @if ($approverUser)
                                         <div class="comment-box">
-                                            <label><b>{{ $approverUser->name }} Approver Comments</b></label>
+                                            <label><b>{{ $approverUser->name }}  Comments</b></label>
                                             <textarea class="form-control approver-comment" 
                                                 name="approver_comments[{{ $approverUser->id }}]" 
                                                 placeholder="Enter your comment..." 
@@ -630,7 +632,7 @@
                                     
                                     @if ($reviewerUser)
                                         <div class="comment-box">
-                                            <label><b>{{ $reviewerUser->name }} Reviewer Comments</b></label>
+                                            <label><b>{{ $reviewerUser->name }} Comments</b></label>
                                             <textarea class="form-control reviewer-comment" 
                                                 name="reviewer_comments[{{ $reviewerUser->id }}]" 
                                                 placeholder="Enter your comment..." 
@@ -659,7 +661,7 @@
                                     
                                     @if ($approverUser)
                                         <div class="comment-box">
-                                            <label><b>{{ $approverUser->name }} Approver Comments</b></label>
+                                            <label><b>{{ $approverUser->name }}  Comments</b></label>
                                             <textarea class="form-control approver-comment" 
                                                 name="approver_comments[{{ $approverUser->id }}]" 
                                                 placeholder="Enter your comment..." 

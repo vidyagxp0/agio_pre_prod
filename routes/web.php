@@ -129,6 +129,9 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('documents/annexureviewpdf/{id}', [DocumentController::class, 'annexureviewPdf']);
     Route::get('documents/printAnnexurePDF/{id}', [DocumentController::class, 'printAnnexurePDF']);
     Route::get('/get-revision-history', [DocumentController::class, 'getRevisionHistory']);
+    Route::get('/get-revision-history-fps', [DocumentController::class, 'getFPSRevisionHistory']);
+    Route::get('/get-revision-history-inps', [DocumentController::class, 'getINPSRevisionHistory']);
+    Route::get('/get-revision-history-cvs', [DocumentController::class, 'getCVSRevisionHistory']);
     
     Route::get('/get-effective-date', [DocumentController::class, 'getEffectiveDate']);
     Route::get('/get-records', [DocumentController::class, 'getRecordsByType'])->name('getRecordsByType');
