@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Internal Audit Report
+                    Audit Observation Report
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
