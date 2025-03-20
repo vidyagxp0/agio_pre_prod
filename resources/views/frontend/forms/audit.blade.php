@@ -697,7 +697,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                        <input disabled type="text" name="Initiator_Group" id="initiator_group"
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -730,7 +730,7 @@
                                                 "Human Resource": "HR",
                                                 "Banking": "BNK",
                                                 "Marketing": "MRKT",
-                                                
+
                                             };
 
                                             // Get the Initiator Department input
@@ -982,7 +982,7 @@
                                                             <option value="Pharmacovigilance">Pharmacovigilance</option>
                                                         </select>
                                                     </td>
-                                                    
+
                                                     <td>
                                                         <select name="AuditorNew[0][designation]" class="form-select">
                                                             <option value="">--Select--</option>

@@ -107,8 +107,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input disabled type="text" name="Department" id="initiator_group"
+                                        <label for="Initiator"><b>Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-6" id="others-input" style="display: none;"> <!-- hidden by default -->
                                     <div class="group-input">
                                         <label for="others">
@@ -204,7 +204,7 @@
                                     </div>
                                 </div>
 <script>
-    
+
     function handleDocumentSelection(select) {
     const othersInput = document.getElementById('others-input');
     if (select.value === 'others') {
@@ -214,7 +214,7 @@
     }
 }
 
-    </script>                                
+    </script>
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Type<span class="text-danger">*</span></label>

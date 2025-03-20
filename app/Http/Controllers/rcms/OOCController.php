@@ -67,6 +67,9 @@ class OOCController extends Controller
         $data->initiated_if_other= $request->initiated_if_other;
         $data->is_repeat_ooc= $request->is_repeat_ooc;
         $data->Repeat_Nature= $request->Repeat_Nature;
+      
+        $data->details_of_ooc= $request->details_of_ooc;
+      
         $data->ooc_due_date= $request->ooc_due_date;
         $data->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $data->HOD_Remarks = $request->HOD_Remarks;
@@ -110,7 +113,7 @@ class OOCController extends Controller
         $data->qa_assign_person = $request->qa_assign_person;
         // dd($data->qa_assign_person);
         $data->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
-        $data->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
+        $data->compiled_by = $request->compiled_by;
         $data->initiated_throug_stageii_ooc = $request->initiated_throug_stageii_ooc;
         $data->initiated_through_stageii_ooc = $request->initiated_through_stageii_ooc;
         $data->justification_for_recalibration = $request->justification_for_recalibration;
@@ -594,6 +597,25 @@ class OOCController extends Controller
             $history->activity_type = 'Repeat Nature';
             $history->previous = "Null";
             $history->current = $data->Repeat_Nature;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+            $history->save();
+        }
+
+
+
+        if(!empty($data->details_of_ooc)) {
+            $history = new OOCAuditTrail();
+            $history->ooc_id = $data->id;
+            $history->activity_type = 'Details of OOC';
+            $history->previous = "Null";
+            $history->current = $data->details_of_ooc;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2097,6 +2119,9 @@ class OOCController extends Controller
         $ooc->initiated_through_capa_corrective_ooc_IB = $request->initiated_through_capa_corrective_ooc_IB;
         $ooc->is_repeat_ooc= $request->is_repeat_ooc;
         $ooc->Repeat_Nature= $request->Repeat_Nature;
+        $ooc->details_of_ooc= $request->details_of_ooc;
+
+
         $ooc->ooc_due_date= $request->ooc_due_date;
         $ooc->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $ooc->HOD_Remarks = $request->HOD_Remarks;
@@ -2123,7 +2148,7 @@ class OOCController extends Controller
         $ooc->is_repeat_stage_instrument_ooc = $request->is_repeat_stage_instrument_ooc;
         $ooc->is_repeat_proposed_stage_ooc = $request->is_repeat_proposed_stage_ooc;
         $ooc->is_repeat_compiled_stageii_ooc = $request->is_repeat_compiled_stageii_ooc;
-        $ooc->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
+        $ooc->compiled_by = $request->compiled_by;
         $ooc->details_of_instrument_out_of_order = $request->details_of_instrument_out_of_order;
 
         $ooc->assignable_cause_identified = $request->assignable_cause_identified;
@@ -2622,6 +2647,28 @@ class OOCController extends Controller
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
             if (is_null($lastDocumentOoc->Repeat_Nature) || $lastDocumentOoc->Repeat_Nature === '') {
+                $history->action_name = "New";
+            } else {
+                $history->action_name = "Update";
+            }
+            $history->save();
+        }
+
+
+        if ($lastDocumentOoc->details_of_ooc != $ooc->details_of_ooc) {
+            $history = new OOCAuditTrail();
+            $history->ooc_id = $id;
+            $history->activity_type = 'Details of OOC';
+            $history->previous = $lastDocumentOoc->details_of_ooc;
+            $history->current = $ooc->details_of_ooc;
+            $history->comment = $request->details_of_ooc_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocumentOoc->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $lastDocumentOoc->status;
+            if (is_null($lastDocumentOoc->details_of_ooc) || $lastDocumentOoc->details_of_ooc === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3508,20 +3555,20 @@ class OOCController extends Controller
             $history->save();
         }
 
-        if ($lastDocumentOoc->is_repeat_proposed_stage_ooc != $ooc->is_repeat_proposed_stage_ooc) {
+        if ($lastDocumentOoc->is_repeat_compiled_stageii_ooc != $ooc->is_repeat_compiled_stageii_ooc) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
             $history->activity_type = 'Proposed By';
-            $history->previous = $lastDocumentOoc->is_repeat_proposed_stage_ooc;
-            $history->current = $ooc->is_repeat_proposed_stage_ooc;
-            $history->comment = $request->is_repeat_proposed_stage_ooc_comment;
+            $history->previous = Helpers::getInitiatorName($lastDocumentOoc->is_repeat_compiled_stageii_ooc);
+            $history->current = Helpers::getInitiatorName($ooc->is_repeat_compiled_stageii_ooc);
+            $history->comment = $request->is_repeat_compiled_stageii_ooc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
-            if (is_null($lastDocumentOoc->is_repeat_proposed_stage_ooc) || $lastDocumentOoc->is_repeat_proposed_stage_ooc === '') {
+            if (is_null($lastDocumentOoc->is_repeat_compiled_stageii_ooc) || $lastDocumentOoc->is_repeat_compiled_stageii_ooc === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -3552,20 +3599,20 @@ class OOCController extends Controller
             $history->save();
         }
 
-        if ($lastDocumentOoc->is_repeat_compiled_stageii_ooc != $ooc->is_repeat_compiled_stageii_ooc) {
+        if ($lastDocumentOoc->compiled_by != $ooc->compiled_by) {
             $history = new OOCAuditTrail();
             $history->ooc_id = $id;
             $history->activity_type = 'Compiled by';
-            $history->previous = $lastDocumentOoc->is_repeat_compiled_stageii_ooc;
-            $history->current = $ooc->is_repeat_compiled_stageii_ooc;
-            $history->comment = $request->is_repeat_compiled_stageii_ooc_comment;
+            $history->previous = Helpers::getInitiatorName($lastDocumentOoc->compiled_by);
+            $history->current = Helpers::getInitiatorName($ooc->compiled_by);
+            $history->comment = $request->compiled_by_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocumentOoc->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastDocumentOoc->status;
-            if (is_null($lastDocumentOoc->is_repeat_compiled_stageii_ooc) || $lastDocumentOoc->is_repeat_compiled_stageii_ooc === '') {
+            if (is_null($lastDocumentOoc->compiled_by) || $lastDocumentOoc->compiled_by === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";

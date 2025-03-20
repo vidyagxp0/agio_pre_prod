@@ -349,7 +349,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Department</b></label>
-                                    <input disabled type="text" name="Department" id="Department"
+                                    <input disabled type="text" name="Initiator_Group" id="Department"
                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                 </div>
                             </div>
@@ -484,16 +484,16 @@
                                         <select name="document_type" id="doc-type"
                                             onchange="handleDocumentSelection(this)"
                                             {{ Helpers::isRevised($showdata->stage) }}>
-                                            
+
                                             <option value="">Enter your Selection</option>
-                                
+
                                             @foreach (Helpers::getDocumentTypes() as $code => $type)
                                                 <option data-id="{{ $code }}" value="{{ $code }}"
                                                     {{ $code == $showdata->document_type ? 'selected' : '' }}>
                                                     {{ $type }}
                                                 </option>
                                             @endforeach
-                                
+
                                             <!-- Others option outside loop -->
                                             <option value="others"
                                                 {{ $showdata->document_type == 'others' ? 'selected' : '' }}>
@@ -502,7 +502,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-6" id="others-input" style="display: none;">
                                     <div class="group-input">
                                         <label for="others">
@@ -512,7 +512,7 @@
                                             value="{{ $showdata->document_type_others }}">
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     function handleDocumentSelection(select) {
                                         const othersInput = document.getElementById('others-input');
@@ -522,14 +522,14 @@
                                             othersInput.style.display = 'none';
                                         }
                                     }
-                                
+
                                     // Trigger the function on page load if 'others' is already selected
                                     document.addEventListener('DOMContentLoaded', function () {
                                         const select = document.getElementById('doc-type');
                                         handleDocumentSelection(select);
                                     });
                                 </script>
-                                
+
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
@@ -545,7 +545,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-6" id="others-input" style="display: none;"> <!-- hidden by default -->
                                     <div class="group-input">
                                         <label for="others">
@@ -555,7 +555,7 @@
                                     </div>
                                 </div>
 <script>
-    
+
     function handleDocumentSelection(select) {
     const othersInput = document.getElementById('others-input');
     if (select.value === 'others') {
@@ -837,7 +837,7 @@
                                 <div class="group-input">
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid" {{ $showdata->stage != 1 ? 'disabled' : '' }}
-                                                id="Details_add" {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} required>+</button>
+                                                id="Details_add" {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} >+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -862,45 +862,17 @@
                                             <tbody>
                                                     @foreach (unserialize($griddata->ListOfImpactingDocument) as $key => $temps)
                                                         <tr>
-                                                            <!-- <td><input disabled type="text"
-                                                                    name="details[{{ $loop->index }}][serial]"
-                                                                    value="{{ $loop->index + 1 }}"
-                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="details[{{ $loop->index }}][ListOfImpactingDocument]"
-                                                                    {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                    value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}"
-                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                            </td> -->
+
 
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}">
                                                                 </td>
-                                                                <td><input type="text" name="ListOfImpactingDocument[]"
+                                                                <td><input type="text" name="ListOfImpactingDocument[]" required
                                                                         {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                                                         value="{{ unserialize($griddata->ListOfImpactingDocument)[$key] ? unserialize($griddata->ListOfImpactingDocument)[$key] : '' }}">
                                                                 </td>
 
-                                                            <!-- <td><input type="text"
-                                                                                name="details[{{ $loop->index }}][PreparedBy]"
-                                                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                                value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
-                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                        </td>
-                                                                        <td><input type="text"
-                                                                                name="details[{{ $loop->index }}][CheckedBy]"
-                                                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                                value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}"
-                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                        </td>
-                                                                        <td><input type="text"
-                                                                                name="details[{{ $loop->index }}][ApprovedBy]"
-                                                                                {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
-                                                                                value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
-                                                                                {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                                                        </td> -->
+
                                                             <td><button type="text"
                                                                     class="removeRowBtn">Remove</button></td>
                                                         </tr>
@@ -910,10 +882,8 @@
                                         </table>
                                     </div>
                                 </div>
-
-
-
                             </div>
+
                             <div class="button-block">
                                 @if ($showdata->stage >= 8)
                                     <button type="submit" class="saveButton" disabled>Save</button>
