@@ -6695,6 +6695,19 @@ class DocumentController extends Controller
                 ? json_decode($RevisionHistoryData->data, true) 
                 : (is_array($RevisionHistoryData->data) ? $RevisionHistoryData->data : []);
         }
+
+                // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+                $TDSRevisionHistoryData = TDSDocumentGrid::where('tds_id', $documentId)
+                ->where('identifier', "summaryResult")
+                ->first();
+        
+                // Convert JSON data if exists
+                $TDSData = [];
+                if (!empty($TDSRevisionHistoryData) && isset($TDSRevisionHistoryData->data)) {
+                    $GtpData = is_string($TDSRevisionHistoryData->data) 
+                        ? json_decode($TDSRevisionHistoryData->data, true) 
+                        : (is_array($TDSRevisionHistoryData->data) ? $TDSRevisionHistoryData->data : []);
+                }
     
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
@@ -6712,10 +6725,126 @@ class DocumentController extends Controller
                 'reason_of_revision' => $reason_of_revision
             ];
         }
+
+        $tdshistoryData = [];
+        foreach ($revisiontdsHistory as $index => $doc) {
+            // Stage-based effective date logic
+            $shouldShowEffectiveDate = ($doc->stage >= 11);
+            
+            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+            $cc_no = $TDSData[$index]['cc_no'] ?? 'No Data';
+            $reason_of_revision = $TDSData[$index]['reason_of_revision'] ?? 'No Data';
     
-        return response()->json(['revision_history' => $historyData]);
+            $tdshistoryData[] = [
+                'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'cc_no' => $cc_no,
+                'reason_of_revision' => $reason_of_revision
+            ];
+        }
+    
+        return response()->json(['revision_history' => $historyData,'summaryResult' => $tdshistoryData ]);
     }
+
+    public function getTDSRevisionHistory(Request $request)
+    {
+        $documentId = $request->query('document_id');
     
+        // Get the current document
+        $currentDocument = Document::find($documentId);
+        if (!$currentDocument) {
+            return response()->json(['error' => 'Document not found'], 404);
+        }
+    
+        // Get past revisions from Document table
+        $tdsrevisionHistory = Document::where('record', $currentDocument->record)
+            ->where('revised_doc', '<=', $currentDocument->revised_doc)
+            ->orderBy('revised_doc', 'asc')
+            ->get();
+
+        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+        $TDSRevisionHistoryData = TDSDocumentGrid::where('tds_id', $documentId)
+        ->where('identifier', "summaryResult")
+        ->first();
+
+        // Convert JSON data if exists
+        $TDSData = [];
+        if (!empty($TDSRevisionHistoryData) && isset($TDSRevisionHistoryData->data)) {
+            $GtpData = is_string($TDSRevisionHistoryData->data) 
+                ? json_decode($TDSRevisionHistoryData->data, true) 
+                : (is_array($TDSRevisionHistoryData->data) ? $TDSRevisionHistoryData->data : []);
+        }
+    
+
+        $tdshistoryData = [];
+        foreach ($tdsrevisionHistory as $index => $doc) {
+            // Stage-based effective date logic
+            $shouldShowEffectiveDate = ($doc->stage >= 11);
+            
+            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+            $cc_no = $TDSData[$index]['changContNo_tds'] ?? ' ';
+            $reason_of_revision = $TDSData[$index]['reasonRevi_tds'] ?? ' ';
+    
+            $tdshistoryData[] = [
+                'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'changContNo_tds' => $cc_no,
+                'reasonRevi_tds' => $reason_of_revision
+            ];
+        }
+    
+        return response()->json(['summaryResult' => $tdshistoryData ]);
+    }
+
+    public function getGTPRevisionHistory(Request $request)
+    {
+        $documentId = $request->query('document_id');
+    
+        // Get the current document
+        $currentDocument = Document::find($documentId);
+        if (!$currentDocument) {
+            return response()->json(['error' => 'Document not found'], 404);
+        }
+    
+        // Get past revisions from Document table
+        $gtprevisionHistory = Document::where('record', $currentDocument->record)
+            ->where('revised_doc', '<=', $currentDocument->revised_doc)
+            ->orderBy('revised_doc', 'asc')
+            ->get();
+
+        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+        $GTPRevisionHistoryData = DocumentGrid::where('document_type_id', $documentId)
+        ->where('identifier', "gtp")
+        ->first();
+
+        // Convert JSON data if exists
+        $GTPData = [];
+        if (!empty($GTPRevisionHistoryData) && isset($GTPRevisionHistoryData->data)) {
+            $GtpData = is_string($GTPRevisionHistoryData->data) 
+                ? json_decode($GTPRevisionHistoryData->data, true) 
+                : (is_array($GTPRevisionHistoryData->data) ? $GTPRevisionHistoryData->data : []);
+        }
+    
+
+        $gtphistoryData = [];
+        foreach ($gtprevisionHistory as $index => $doc) {
+            // Stage-based effective date logic
+            $shouldShowEffectiveDate = ($doc->stage >= 11);
+            
+            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+            $cc_no = $GTPData[$index]['changContNo_tds'] ?? ' ';
+            $reason_of_revision = $GTPData[$index]['reasonRevi_tds'] ?? ' ';
+    
+            $gtphistoryData[] = [
+                'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'changContNo_tds' => $cc_no,
+                'reasonRevi_tds' => $reason_of_revision
+            ];
+        }
+    
+        return response()->json(['gtp' => $gtphistoryData ]);
+    }
     
 
     
