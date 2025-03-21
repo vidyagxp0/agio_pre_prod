@@ -562,9 +562,8 @@
                                 {{-- ===changes according client requerement ======= --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Complainant</label>
-                                        <input type="text" name="complainant_gi">
-
+                                        <label for="complainant_gi">Complainant</label>
+                                        <textarea name="complainant_gi" class="form-control"></textarea>
                                     </div>
                                 </div>
 
