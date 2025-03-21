@@ -222,7 +222,7 @@ DATA FIELDS
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Initiator Department</b></label>
                                 <select name="Initiator_Group" id="Initiator_Group">
@@ -292,15 +292,78 @@ DATA FIELDS
                                     </option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="initiator_group_code">Department Code</label>
                                 <input type="text" name="initiator_group_code" id="initiator_group_code"
                                     value="{{ old('initiator_group_code') }}" readonly>
                             </div>
+                        </div> --}}
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator"><b> Initiator Department</b></label>
+                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                            </div>
                         </div>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    // Define department name to code mapping
+                                    const departmentMapping = {
+                                        "Calibration Lab": "CLB",
+                                        "Engineering": "ENG",
+                                        "Facilities": "FAC",
+                                        "LAB": "LAB",
+                                        "Labeling": "LABL",
+                                        "Manufacturing": "MANU",
+                                        "Quality Assurance": "QA",
+                                        "Quality Control": "QC",
+                                        "Ragulatory Affairs": "RA",
+                                        "Security": "SCR",
+                                        "Training": "TR",
+                                        "IT": "IT",
+                                        "Application Engineering": "AE",
+                                        "Trading": "TRD",
+                                        "Research": "RSCH",
+                                        "Sales": "SAL",
+                                        "Finance": "FIN",
+                                        "Systems": "SYS",
+                                        "Administrative": "ADM",
+                                        "M&A": "M&A",
+                                        "R&D": "R&D",
+                                        "Human Resource": "HR",
+                                        "Banking": "BNK",
+                                        "Marketing": "MRKT",
+
+                                    };
+
+                                    // Get the Initiator Department input
+                                    let initiatorGroupInput = document.getElementById("initiator_group");
+                                    let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                    // Get the department name from the input field
+                                    let departmentName = initiatorGroupInput.value.trim();
+
+                                    // Auto-generate the department code based on the mapping
+                                    if (departmentName in departmentMapping) {
+                                        initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                    } else {
+                                        initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                    }
+                                });
+                            </script>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">Initiator Department Code</label>
+                                    <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Department Code"
+                                        value="" readonly>
+                                </div>
+                            </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -325,7 +388,15 @@ DATA FIELDS
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator"><b>Assign To Department</b></label>
+                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                            </div>
+                        </div>
+                        {{-- <div class="col-md-6">
                             <div class="group-input">
                                 <label for="search">
                                     Assigned To Department<span class="text-danger"></span>
@@ -400,7 +471,7 @@ DATA FIELDS
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Date Due">Date Due</label>
@@ -645,11 +716,11 @@ DATA FIELDS
                                 <table class="table table-bordered" id="audit_program-field-instruction-modal">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5%">Row#</th>
+                                            <th style="width: 5%">Sr. No.</th>
                                             <th style="width: 12%">Auditees</th>
                                             <th style="width: 15%">Date Start</th>
                                             <th style="width: 15%"> Date End</th>
-                                            <th style="width: 15%"> Lead Investigator</th>
+                                            <th style="width: 15%"> Lead Auditor</th>
                                             <th style="width: 15%">Comment</th>
                                             <th style="width: 5%">Action</th>
                                         </tr>
@@ -743,7 +814,7 @@ DATA FIELDS
                                 <table class="table table-bordered" id="Self_Inspection-field-instruction-modal">
                                     <thead>
                                         <tr>
-                                            <th style="width: 1%">Row#</th>
+                                            <th style="width: 1%">Sr.No.</th>
                                             <th style="width: 15%">Department</th>
                                             <th style="width: 15%">Months</th>
                                             <th style="width: 16%">Remarks</th>
@@ -975,7 +1046,7 @@ DATA FIELDS
                                         id="Self_Inspection_circular-field-instruction-modal">
                                         <thead>
                                             <tr>
-                                                <th style="width: 1%">Row#</th>
+                                                <th style="width: 1%">Sr. No.</th>
                                                 <th style="width: 15%">Department</th>
                                                 <th style="width: 15%">Audit Date</th>
                                                 <th style="width: 16%">Name of Auditors</th>

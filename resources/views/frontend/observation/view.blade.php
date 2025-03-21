@@ -316,9 +316,9 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="assign_to">Auditee Department Head</label>
+                                                <label for="assign_to">Auditee Department Head <span class="text-danger">*</span></label>
                                                 <select name="assign_to"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} required>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
@@ -375,7 +375,7 @@
 
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Due Date"> Observation Report Due Date</label>
+                                                <label for="Due Date"> Observation Report Due Date <span class="text-danger">*</span></label>
                                                 <div><small class="text-primary">
                                                     </small></div>
                                                 <div class="calenderauditee">
@@ -386,7 +386,7 @@
                                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage !=1? 'disabled' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                          value="{{ $data->due_date}}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" required/>
                                                 </div>
 
                                             </div>
@@ -748,7 +748,7 @@
 
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                <div class="sub-head">Observation
+                                                <div class="sub-head">Observation <span class="text-danger">*</span>
                                                     <button type="button" name="details" id="Details-add" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
@@ -774,7 +774,7 @@
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="observation[{{ $loop->index }}][non_compliance]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                            value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}">
+                                                                            value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}" required>
                                                                     </td>
                                                                     <td>
                                                                      <select name="observation[{{ $loop->index }}][category]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
@@ -956,7 +956,7 @@
                                                                     <td><input disabled type="text" name="response[{{ $loop->index }}][serial]"  value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td>
-                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
+                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} required> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
                                                                     </td>
 
                                                                     <td><button type="text"
@@ -981,7 +981,7 @@
                                                       '<input disabled type="text" name="serial[]" value="' + serialNumber + '" style="width: 100%;">' +
                                                       '</td>' +
                                                       '<td style="width: 70%;">' +
-                                                      '<textarea name="response[' + serialNumber + '][response_detail]" style="width: 100%; min-height: 50px;"></textarea>' +
+                                                      '<textarea name="response[' + serialNumber + '][response_detail]" style="width: 100%; min-height: 50px;" required></textarea>' +
                                                       '</td>' +
                                                    '<td style="width: 12%; text-align: left; padding-left: 10px;">' +
                                                    '<button type="button" class="removeRowBtn" style="width: auto; padding: 3px 8px; font-size: 14px;">Remove</button>' +
@@ -1017,7 +1017,7 @@
 
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                <div class="sub-head">Corrective Actions
+                                                <div class="sub-head">Corrective Actions <span class="text-danger">*</span>
                                                     <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
@@ -1040,7 +1040,7 @@
                                                                             name="corrective[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><textarea  name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</textarea>
+                                                                    <td><textarea  name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} required>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</textarea>
 
                                                                     </td>
                                                                     <td><button type="text"
@@ -1064,7 +1064,7 @@
                                                                 html += '<tr>' +
                                                                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                                     '"></td>' +
-                                                                    '<td>'+'<textarea name="corrective[' + serialNumber + '][corrective_action]" style="width: 100%; min-height: 50px;"></textarea>' + '</td>' +
+                                                                    '<td>'+'<textarea name="corrective[' + serialNumber + '][corrective_action]" style="width: 100%; min-height: 50px;" required></textarea>' + '</td>' +
                                                                     '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                                                                     '</tr>';
 
@@ -1096,6 +1096,7 @@
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 <div class="sub-head">Preventive Action
+                                                    <span class="text-danger">*</span>
                                                     <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
@@ -1118,7 +1119,7 @@
                                                                             name="preventive[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><textarea name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} >{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
+                                                                    <td><textarea name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} required >{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
                                                                     </td>
                                                                     <td><button type="text"
                                                                             class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
@@ -1302,8 +1303,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="comments">Comments</label>
-                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                                                <label for="comments">Comments<span class="text-danger">*</span></label>
+                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} required>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
 
@@ -1386,7 +1387,7 @@
                                  --}}
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="actual_start_date">Actual Action Start Date</label>
+                                                <label for="actual_start_date">Actual Action Start Date <span class="text-danger">*</span></label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="actual_start_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
@@ -1395,13 +1396,13 @@
                                                         id="actual_start_date_checkdate"
                                                          {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                         name="actual_start_date" class="hide-input"
-                                                        oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
+                                                        oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" required />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6  new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="actual_end_date">Actual Action End Date</lable>
+                                                <label for="actual_end_date">Actual Action End Date <span class="text-danger">*</span></lable>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="actual_end_date"
                                                             placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_end_date) }}" />
@@ -1410,7 +1411,7 @@
                                                             id="actual_end_date_checkdate"
                                                              {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                             name="actual_end_date" class="hide-input"
-                                                            oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
+                                                            oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" required />
                                                     </div>
 
 
@@ -1418,8 +1419,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="action_taken">Action Taken</label>
-                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
+                                                <label for="action_taken">Action Taken <span class="text-danger">*</span></label>
+                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote" required>{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1427,8 +1428,8 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="response_summary">Response Summary</label>
-                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->response_summary }}</textarea>
+                                                <label for="response_summary">Response Summary <span class="text-danger">*</span></label>
+                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote" required>{{ $data->response_summary }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 new-date-data-field">
@@ -1479,7 +1480,7 @@
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                    <input type="hidden" name="existing_impact_analysis[]" value="{{ $file }}">
+                                                                    <input type="hidden" name="existing_impact_analysis[]" value="{{ $file }}" {{$data->stage == 3 ? 'required' : 'readonly'}}>
                                                                 </h6>
                                                             @endforeach
                                                         @endif

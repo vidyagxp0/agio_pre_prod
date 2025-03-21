@@ -180,7 +180,7 @@
                                 </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator"><b> Initiator Department</b></label>
+                                <label for="Initiator"><b> Auditee Department Name</b></label>
                                 <input readonly type="text" name="auditee_department" id="initiator_group"
                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                             </div>

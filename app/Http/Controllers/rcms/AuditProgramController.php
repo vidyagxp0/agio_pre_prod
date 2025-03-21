@@ -119,8 +119,8 @@ class AuditProgramController extends Controller
             $data->cqa_qa_Attached_File = json_encode($files);
         }
         $data->comment = $request->comment;
-        
-        
+
+
 
         $data->status = 'Opened';
         $data->stage = 1;
@@ -399,7 +399,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->related_url)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -540,7 +540,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->assign_to_department)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -556,7 +556,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->year)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -572,7 +572,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->yearly_other)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -588,7 +588,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -604,7 +604,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->hod_attached_File)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -635,7 +635,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->cqa_qa_comment)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -651,7 +651,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
         if (!empty($data->cqa_qa_Attached_File)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -667,7 +667,7 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
-        
+
           if (!empty($data->due_date_extension)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -712,7 +712,7 @@ class AuditProgramController extends Controller
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-          
+
         }
         if (!empty($data->Months)) {
             $history = new AuditProgramAuditTrial();
@@ -727,7 +727,7 @@ class AuditProgramController extends Controller
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-          
+
         }
         if (!empty($data->through_req)) {
             $history = new AuditProgramAuditTrial();
@@ -742,7 +742,7 @@ class AuditProgramController extends Controller
             $history->change_from= "Initiation";
             $history->action_name="Create";
             $history->save();
-          
+
         }
 
 
@@ -913,7 +913,7 @@ class AuditProgramController extends Controller
         //                     $auditTrail = new AuditProgramAuditTrial;
         //                     $auditTrail->AuditProgram_id = $data->id;
         //                     $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . $index . ' )';
-        //                     $auditTrail->previous = 'Null'; 
+        //                     $auditTrail->previous = 'Null';
         //                     $auditTrail->current = $newValue;
         //                     $auditTrail->comment = "";
         //                     $auditTrail->user_id = Auth::user()->id;
@@ -922,11 +922,11 @@ class AuditProgramController extends Controller
         //                     $auditTrail->origin_state = $data->status;
         //                     $auditTrail->change_to = "Not Applicable";
         //                     $auditTrail->change_from = $data->status;
-        //                     $auditTrail->action_name = 'Create'; 
+        //                     $auditTrail->action_name = 'Create';
         //                     $auditTrail->save();
         //                 }
         //             }
-        //             $index++; 
+        //             $index++;
         //         }
         //     }
         // }
@@ -967,7 +967,7 @@ class AuditProgramController extends Controller
         $data->through_req = $request->through_req;
         $data->Months = $request->Months;
         $data->Quarter = $request->Quarter;
-        $data->description = $request->description; 
+        $data->description = $request->description;
         $data->comments = $request->comments;
         $data->related_url = $request->related_url;
         $data->url_description = $request->url_description;
@@ -979,7 +979,7 @@ class AuditProgramController extends Controller
         $data->severity1_level = $request->severity1_level;
         $data->comment = $request->comment;
         $data->hod_comment = $request->hod_comment;
-        // $data->hod_attached_File = $request->hod_attached_File;        
+        // $data->hod_attached_File = $request->hod_attached_File;
         $data->assign_to_department = $request->assign_to_department;
         $data->yearly_other = $request->yearly_other;
         if (!empty($request->hod_attached_File)) {
@@ -1006,7 +1006,7 @@ class AuditProgramController extends Controller
             }
             $data->cqa_qa_Attached_File = json_encode($files);
         }
-        
+
             if (!empty($request->Attached_File)) {
             $files = [];
             if ($request->hasfile('Attached_File')) {
@@ -1052,7 +1052,7 @@ class AuditProgramController extends Controller
         // if (!empty($request->lead_investigator)) {
         //     $data1->lead_investigator = serialize($request->lead_investigator);
         // }
-       
+
         // if (!empty($request->comment)) {
         //     $data1->comment = serialize($request->comment);
         // }
@@ -1076,7 +1076,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
           if($lastDocument->severity1_level !=$data->severity1_level || !empty($request->severity1_level_comment)) {
@@ -1095,7 +1095,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
           if($lastDocument->initiated_through !=$data->initiated_through || !empty($request->initiated_through_comment)) {
@@ -1114,7 +1114,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastDocument->initiated_through_req !=$data->initiated_through_req || !empty($request->initiated_through_req_comment)) {
@@ -1133,7 +1133,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->assign_to !=$data->assign_to || !empty($request->assign_to_comment)) {
@@ -1152,7 +1152,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
           if($lastDocument->due_date !=$data->due_date || !empty($request->due_date_comment)) {
@@ -1171,7 +1171,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
           if($lastDocument->type !=$data->type || !empty($request->type_comment)) {
@@ -1190,7 +1190,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
       if($lastDocument->year !=$data->year || !empty($request->year_comment)) {
@@ -1209,7 +1209,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->Quarter !=$data->Quarter || !empty($request->Quarter_comment)) {
@@ -1228,7 +1228,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->description !=$data->description || !empty($request->description_comment)) {
@@ -1247,7 +1247,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->comments !=$data->comments || !empty($request->comments_comment)) {
@@ -1266,7 +1266,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastDocument->hod_comment !=$data->hod_comment || !empty($request->comments_comment)) {
@@ -1285,7 +1285,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastDocument->year !=$data->year || !empty($request->comments_comment)) {
@@ -1304,7 +1304,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         // if($lastDocument->through_req !=$data->through_req || !empty($request->comments_comment)) {
@@ -1323,10 +1323,10 @@ class AuditProgramController extends Controller
         //     $history->origin_state= $lastDocument->status;
         //     $history->change_to= "Not Applicable";
         //     $history->change_from= $lastDocument->status;
-        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
         //     $history->save();
-        // }        
-        
+        // }
+
         if($lastDocument->yearly_other !=$data->yearly_other || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'Initiated Through(Others)')
@@ -1343,10 +1343,10 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-                
+
         if($lastDocument->Attached_File !=$data->Attached_File || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'Attached Files')
@@ -1363,10 +1363,10 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-                
+
         if($lastDocument->hod_attached_File !=$data->hod_attached_File || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'HOD/Designee Review Attached Files')
@@ -1383,7 +1383,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastDocument->cqa_qa_comment !=$data->cqa_qa_comment || !empty($request->comments_comment)) {
@@ -1402,7 +1402,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastDocument->cqa_qa_Attached_File !=$data->cqa_qa_Attached_File || !empty($request->comments_comment)) {
@@ -1421,7 +1421,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         if($lastDocument->assign_to_department !=$data->assign_to_department || !empty($request->comments_comment)) {
@@ -1440,7 +1440,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         // if($lastDocument->yearly_other !=$data->yearly_other || !empty($request->comments_comment)) {
@@ -1459,7 +1459,7 @@ class AuditProgramController extends Controller
         //     $history->origin_state= $lastDocument->status;
         //     $history->change_to= "Not Applicable";
         //     $history->change_from= $lastDocument->status;
-        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
         //     $history->save();
         // }
          if($lastDocument->related_url !=$data->related_url || !empty($request->related_url_comment)) {
@@ -1478,10 +1478,10 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-    
+
       if($lastDocument->url_description !=$data->url_description || !empty($request->url_description_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'Url Description')
@@ -1498,7 +1498,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
        if($lastDocument->Initiator_Group !=$data->Initiator_Group || !empty($request->Initiator_Group_comment)) {
@@ -1517,7 +1517,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
            if($lastDocument->initiator_group_code !=$data->initiator_group_code || !empty($request->initiator_group_code_comment)) {
@@ -1536,7 +1536,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
       if($lastDocument->zone !=$data->zone || !empty($request->zone_comment)) {
@@ -1555,7 +1555,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->country !=$data->country || !empty($request->country_comment)) {
@@ -1574,7 +1574,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->City !=$data->City || !empty($request->City_comment)) {
@@ -1593,7 +1593,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
        if($lastDocument->state !=$data->state || !empty($request->state_comment)) {
@@ -1612,7 +1612,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->attachments !=$data->attachments || !empty($request->attachments_comment)) {
@@ -1631,7 +1631,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
           if($lastDocument->due_date_extension !=$data->due_date_extension || !empty($request->due_date_extension_comment)) {
@@ -1650,7 +1650,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
         //   if($lastDocument->Attached_File !=$data->Attached_File || !empty($request->Attached_File_comment)) {
@@ -1669,7 +1669,7 @@ class AuditProgramController extends Controller
         //     $history->origin_state= $lastDocument->status;
         //     $history->change_to= "Not Applicable";
         //     $history->change_from= $lastDocument->status;
-        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+        //     $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
         //     $history->save();
         // }
          if($lastDocument->comment !=$data->comment || !empty($request->comment_comment)) {
@@ -1688,7 +1688,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->Months !=$data->Months || !empty($request->Months_comment)) {
@@ -1707,7 +1707,7 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
          if($lastDocument->through_req !=$data->through_req || !empty($request->through_req_comment)) {
@@ -1726,10 +1726,10 @@ class AuditProgramController extends Controller
             $history->origin_state= $lastDocument->status;
             $history->change_to= "Not Applicable";
             $history->change_from= $lastDocument->status;
-            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New";
             $history->save();
         }
-        
+
         $audit_program_id = $data->id;
         $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->firstOrCreate();
         $newDataMeetingManagement->ci_id = $audit_program_id;
@@ -1818,9 +1818,9 @@ class AuditProgramController extends Controller
 
 
         //---------------------------------------------------------------------------------
-    
+
         $audit_program_id = $data->id;
-        $newDataMeetingManagement->save();   
+        $newDataMeetingManagement->save();
         $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->firstOrCreate();
         $newDataMeetingManagement->ci_id = $audit_program_id;
         $newDataMeetingManagement->identifier = 'Self_Inspection';
@@ -1911,7 +1911,7 @@ class AuditProgramController extends Controller
         // // $history->change_to= "Opened";
         // // $history->change_from= "Initiator";
         // // $history->action_name="Create";
-    
+
         // $newDataMeetingManagement->save();
 
         $audit_program_id = $data->id;
@@ -1922,7 +1922,7 @@ class AuditProgramController extends Controller
         // $history->change_to= "Opened";
         // $history->change_from= "Initiator";
         // $history->action_name="Create";
-    
+
         $newDataMeetingManagement->save();
 
         //-------------------------------------------------------------------------------------------------------------------------------
@@ -2026,7 +2026,7 @@ class AuditProgramController extends Controller
         $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
         $data->stateArr = json_decode($stateList->getBody(), true);
         $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
-        $data->cityArr = json_decode($cityList->getBody(), true); 
+        $data->cityArr = json_decode($cityList->getBody(), true);
         $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
         $data->countryArr = json_decode($countryList->getBody(), true);
             $currentDate = Carbon::now();
@@ -2048,7 +2048,7 @@ class AuditProgramController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
             $lastDocument = AuditProgram::find($id);
-            
+
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending Approval";
@@ -2081,7 +2081,7 @@ class AuditProgramController extends Controller
                 }
                     $history->save();
 
-                
+
                 // $list = Helpers::getQAHeadUserList($changeControl->division_id);
                 // foreach ($list as $u) {
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -2214,7 +2214,7 @@ class AuditProgramController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-        } 
+        }
         else {
             toastr()->error('E-signature Not match');
             return back();
@@ -2257,7 +2257,7 @@ class AuditProgramController extends Controller
                     $history->action_name = 'Update';
                 }
                 $history->save();
-                  
+
                 // $list = Helpers::getCftUserList($changeControl->division_id);
                 // foreach ($list as $u) {
                 //         $email = Helpers::getUserEmail($u->user_id);
@@ -2272,7 +2272,7 @@ class AuditProgramController extends Controller
                 //             );
                 //         }
                 // }
-               
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2449,7 +2449,7 @@ class AuditProgramController extends Controller
 
     //     return view('frontend.audit-program.audit-trial', compact('audit', 'document', 'today'));
     // }
-    
+
         public function AuditProgramTrialShow($id)
     {
         $data= AuditProgram::find($id);
@@ -2516,9 +2516,9 @@ class AuditProgramController extends Controller
         // $enddate = [];
         // if($AuditProgramGrid->end_date){
         //     $enddate = unserialize($AuditProgramGrid->end_date);
-           
 
-              
+
+
         // }
             $pdf = PDF::loadview('frontend.audit-program.singleReport', compact('data','AuditProgramGrid','grid_Data4','grid_Data2','grid_Data3'))
                 ->setOptions([
@@ -2569,7 +2569,7 @@ class AuditProgramController extends Controller
         // Start query for DeviationAuditTrail
         $query = AuditProgramAuditTrial::query();
         $query->where('AuditProgram_id', $id);
-    
+
         // Check if typedata is provided
         if ($request->filled('typedata')) {
             switch ($request->typedata) {
@@ -2578,7 +2578,7 @@ class AuditProgramController extends Controller
                     $cft_field = ['CFT Review Complete','CFT Review Not Required',];
                     $query->whereIn('action', $cft_field);
                     break;
-    
+
                 case 'stage':
                     // Filter by activity log stage changes
                     $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
@@ -2587,7 +2587,7 @@ class AuditProgramController extends Controller
                         'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                     $query->whereIn('action', $stage); // Ensure correct activity_type value
                     break;
-    
+
                 case 'user_action':
                     // Filter by various user actions
                     $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
@@ -2606,36 +2606,36 @@ class AuditProgramController extends Controller
                     $business = [];
                     $query->whereIn('action', $business);
                     break;
-    
+
                 default:
                     break;
             }
         }
-    
+
         // Apply additional filters
         if ($request->filled('user')) {
             $query->where('user_id', $request->user);
         }
-    
+
         if ($request->filled('from_date')) {
             $query->whereDate('created_at', '>=', $request->from_date);
         }
-    
+
         if ($request->filled('to_date')) {
             $query->whereDate('created_at', '<=', $request->to_date);
         }
-    
+
         // Get the filtered results
         $audit = $query->orderByDesc('id')->get();
-    
+
         // Flag for filter request
         $filter_request = true;
         // return $audit;
-    
+
         // Render the filtered view and return as JSON
         $responseHtml = view('frontend.audit-program.audit_trail_filter', compact('audit', 'filter_request'))->render();
-    
+
         return response()->json(['html' => $responseHtml]);
     }
-    
+
 }

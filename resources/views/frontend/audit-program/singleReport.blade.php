@@ -255,8 +255,6 @@
                     </tr>
                     <tr>
 
-
-
                          <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
@@ -345,16 +343,7 @@
                         </td>
                         @endif
                     </tr>
-                    <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-30">
-                            @if ($data->comments)
-                                {{ $data->comments }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+
                 </table>
 
                 <div class="block">
@@ -364,12 +353,12 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 25px;">Row#</th>
+                                <th class="w-20" style="width: 25px;">Sr. No.</th>
                                 <th class="w-20">Auditees</th>
                                 <th class="w-20">Date Start</th>
                                 <th class="w-20">Date End</th>
                                 <th class="w-20"> Lead Investigator</th>
-                                <th class="w-20"> Comment</th>
+                                <th class="w-20">Comment</th>
 
                             </tr>
                             @if ($grid_Data3 && is_array($grid_Data3->data))
@@ -405,7 +394,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 25px;">Row#</th>
+                                <th class="w-20" style="width: 25px;">Sr. No.</th>
                                 <th class="w-20">Department</th>
                                 <th class="w-20">Months</th>
                                 <th class="w-20">Remarks</th>
@@ -431,12 +420,18 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
+                <table>
+                    <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-30">
+                            @if ($data->comments)
+                                {{ $data->comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
 
                     {{-- <div class="inner-block">
                     <label class="Summer" style="font-weight: bold; font-size: 13px;">Comments
@@ -451,13 +446,12 @@
                 </div> --}}
                 <div class="border-table">
                     <div class="block-head">
-                        Attached Files
+                        Attachment
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->attachments)
                             @foreach (json_decode($data->attachments) as $key => $file)
@@ -521,7 +515,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20" style="width: 25px;">Row#</th>
+                            <th class="w-20" style="width: 25px;">Sr. No.</th>
                             <th class="w-20">Department</th>
                             <th class="w-20">Audit Date</th>
                             <th class="w-20">Name of Auditors</th>
@@ -564,13 +558,13 @@
 
                       <div class="border-table">
                             <div class="block-head">
-                                Attached Files
+                                Attachment
                             </div>
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Batch No</th>
+                                    <th class="w-20">Sr.No.</th>
+                                    <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->Attached_File)
                                     @foreach (json_decode($data->Attached_File) as $key => $file)
@@ -591,10 +585,10 @@
 
                         </div>
                     </div>
-{{--
-            <div class="block">
-                <div class="block-head">
-                    HOD/Designee Review
+            {{--
+                 <div class="block">
+                      <div class="block-head">
+                         HOD/Designee Review
                         </div>
                         <table>
                             <tr>
@@ -651,34 +645,34 @@
                         </table>
             </div>
 
-            <div class="border-table">
-                            <div class="block-head">
-                                CQA/QA Attached Files
-                            </div>
-                            <table>
+                <div class="border-table">
+                                <div class="block-head">
+                                    CQA/QA Attachment
+                                </div>
+                                <table>
 
-                                <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Batch No</th>
-                                </tr>
-                                @if ($data->cqa_qa_Attached_File)
-                                    @foreach (json_decode($data->cqa_qa_Attached_File) as $key => $file)
-                                        <tr>
-                                            <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                                    target="_blank"><b>{{ $file }}</b></a> </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
+                                    <tr class="table_bg">
+                                        <th class="w-20">Sr.No.</th>
+                                        <th class="w-60">Attachment</th>
                                     </tr>
-                                @endif
+                                    @if ($data->cqa_qa_Attached_File)
+                                        @foreach (json_decode($data->cqa_qa_Attached_File) as $key => $file)
+                                            <tr>
+                                                <td class="w-20">{{ $key + 1 }}</td>
+                                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                        target="_blank"><b>{{ $file }}</b></a> </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td class="w-20">1</td>
+                                            <td class="w-20">Not Applicable</td>
+                                        </tr>
+                                    @endif
 
-                            </table>
+                                </table>
 
-                        </div>
+                            </div>
 
         </div>
     </div>
