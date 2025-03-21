@@ -747,7 +747,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 <div class="calenderauditee">
                                                     <input disabled type="text" id="due_date" readonly
                                                         placeholder="DD-MM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                        {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }} required
+                                                        />
                                                     <input type="date" name="due_date"
                                                         {{ $data->stage !=1? 'readonly' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
@@ -1136,7 +1138,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 </div>
                                                 <select @if ($data->stage != 1) disabled @endif required
                                                     name="initiated_through"
-                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')"
+                                                      
+                                                    >
                                                     <option value="">-- select --</option>
 
                                                     <option @if ($data->initiated_through == 'Audit program') selected @endif
@@ -1422,6 +1426,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     {{--@if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
                                                         readonly
                                                     @endif--}}
+                                                    
                                                 >{{ $data->Auditee_comment }}</textarea>
                                             </div>
                                         </div>
@@ -3195,7 +3200,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <div class="row">
                                     <div class="sub-head">
                                         Audit Response
-                                    </div>
+                                    </div>  
                                     {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Remarks">Remarks</label>

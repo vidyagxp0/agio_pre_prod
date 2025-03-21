@@ -272,10 +272,10 @@
                                 <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">
-                                                Assigned To <span class="text-danger"></span>
+                                                Assigned To <span class="text-danger">*</span>
                                             </label>
                                             <select {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
-                                                id="select-state" placeholder="Select..." name="assign_to">
+                                                id="select-state" placeholder="Select..." name="assign_to" required>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $value)
                                                     <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
@@ -313,7 +313,6 @@
                                     </div> --}}
 
 
-                                   
                                         <div class="col-md-6 new-date-data-field">
                                                     <div class="group-input input-date ">
                                                         <label for="capa_date_due">Due Date</label>
@@ -332,7 +331,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                 
+
                                     <!-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Due Date"> Due Date</label>
@@ -485,8 +484,8 @@
 
                                 <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="HOD Persons">Action Item Related Records</label>
-                                           <input type="text" name="related_records" value="{{ $data->related_records }}">
+                                            <label for="HOD Persons">Action Item Related Records <span class="text-danger">*</span></label>
+                                           <input type="text" name="related_records" required value="{{ $data->related_records }}">
                                         </div>
                                     @error('hod_preson')
                                         <div class="text-danger">{{ $message }}</div>
@@ -495,8 +494,8 @@
 
                                 <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="HOD Persons">HOD Persons</label>
-                                            <select name="hod_preson[]" placeholder="Select HOD Persons"
+                                            <label for="HOD Persons">HOD Persons <span class="text-danger">*</span></label>
+                                            <select name="hod_preson[]" placeholder="Select HOD Persons" required
                                                 data-search="false" data-silent-initial-value-set="true"
                                                 {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}>
                                                 <option value="">Select Person</option>
@@ -540,8 +539,8 @@
                                 @if ($data->stage == 1)
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="description">Description</label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description">{{ $data->description }}</textarea>
+                                            <label for="description">Description <span class="text-danger">*</span></label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" required>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                 @else
@@ -1011,21 +1010,21 @@
                                 @if ($data->stage == 3)
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Audit Schedule Start Date">Actual Start Date</label>
+                                            <label for="Audit Schedule Start Date">Actual Start Date <span class="text-danger">*</span></label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="start_date" placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->start_date) }}" />
                                                 <input class="hide-input" type="date"
                                                     name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
-                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" required/>
                                             </div>
                                         </div>
                                     </div>
                                 @else
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Audit Schedule Start Date">Actual Start Date</label>
+                                            <label for="Audit Schedule Start Date">Actual Start Date <span class="text-danger">*</span></label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="start_date" class="tiny" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -1033,7 +1032,7 @@
                                                 <input class="hide-input" type="date" readonly
                                                     name="start_date"{{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="start_date_checkdate" value="{{ $data->start_date }}"
-                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" required/>
                                             </div>
                                         </div>
 
@@ -1046,7 +1045,7 @@
                                 @if ($data->stage == 3)
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Audit Schedule End Date">Actual End Date</label>
+                                            <label for="Audit Schedule End Date">Actual End Date <span class="text-danger">*</span></label>
                                             {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
                                             <div class="calenderauditee">
                                                 <input type="text" id="end_date" placeholder="DD-MMM-YYYY"
@@ -1054,7 +1053,7 @@
                                                 <input class="hide-input" type="date"
                                                     name="end_date" {{ $data->stage == 3 ? '' : 'readonly' }}
                                                     id="end_date_checkdate" value="{{ $data->end_date }}"
-                                                    oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                    oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" required />
                                             </div>
                                         </div>
                                     @else
@@ -1080,13 +1079,11 @@
                                 @enderror
                             </div>
 
-
-
                             @if ($data->stage == 3)
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments">Comments</label>
-                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments">{{ $data->comments }}</textarea>
+                                        <label for="Comments">Comments <span class="text-danger">*</span></label>
+                                        <textarea {{ $data->stage == 3 ? '' : 'readonly' }} name="comments" required>{{ $data->comments }}</textarea>
                                     </div>
                                 </div>
                             @else
@@ -1260,7 +1257,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <textarea {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments">{{ $data->qa_comments }}</textarea>
+                                        <textarea {{ $data->stage == 4 ? '' : 'readonly' }} name="qa_comments" required>{{ $data->qa_comments }}</textarea>
                                     </div>
                                 </div>
                             @else

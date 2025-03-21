@@ -8,7 +8,7 @@
         header {
             display: none;
         }
-        
+
     </style>
 
     <script>
@@ -70,7 +70,7 @@
                                         <input disabled type="text"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                             <input type="hidden" name="record_number" id="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">                                            
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -107,84 +107,138 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Auditee Department Name</b></label>
+                                        <select name="auditee_department" id="auditee_department">
+                                            <option value="" data-code="">-- Select --</option>
+                                            <option value="Corporate Quality Assurance" data-code="CQA" @if (old('auditee_department') == 'Corporate Quality Assurance') selected @endif>
+                                                Corporate Quality Assurance
+                                            </option>
+                                            <option value="Quality Assurance" data-code="QA" @if (old('auditee_department') == 'Quality Assurance') selected @endif>
+                                                Quality Assurance
+                                            </option>
+                                            <option value="Quality Control" data-code="QC" @if (old('auditee_department') == 'Quality Control') selected @endif>
+                                                Quality Control
+                                            </option>
+                                            <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('auditee_department') == 'Quality Control (Microbiology department') selected @endif>
+                                                Quality Control (Microbiology department)
+                                            </option>
+                                            <option value="Production General" data-code="PG" @if (old('auditee_department') == 'Production General') selected @endif>
+                                                Production General
+                                            </option>
+                                            <option value="Production Liquid Orals" data-code="PLO" @if (old('auditee_department') == 'Production Liquid Orals') selected @endif>
+                                                Production Liquid Orals
+                                            </option>
+                                            <option value="Production Tablet and Powder" data-code="PTP" @if (old('auditee_department') == 'Production Tablet and Powder') selected @endif>
+                                                Production Tablet and Powder
+                                            </option>
+                                            <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('auditee_department') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
+                                                Production External (Ointment, Gels, Creams and Liquid)
+                                            </option>
+                                            <option value="Production Capsules" data-code="PC" @if (old('auditee_department') == 'Production Capsules') selected @endif>
+                                                Production Capsules
+                                            </option>
+                                            <option value="Production Injectable" data-code="PI" @if (old('auditee_department') == 'Production Injectable') selected @endif>
+                                                Production Injectable
+                                            </option>
+                                            <option value="Engineering" data-code="ENG" @if (old('auditee_department') == 'Engineering') selected @endif>
+                                                Engineering
+                                            </option>
+                                            <option value="Human Resource" data-code="HR" @if (old('auditee_department') == 'Human Resource') selected @endif>
+                                                Human Resource
+                                            </option>
+                                            <option value="Store" data-code="ST" @if (old('auditee_department') == 'Store') selected @endif>
+                                                Store
+                                            </option>
+                                            <option value="Electronic Data Processing" data-code="EDP" @if (old('auditee_department') == 'Electronic Data Processing') selected @endif>
+                                                Electronic Data Processing
+                                            </option>
+                                            <option value="Formulation Development" data-code="FD" @if (old('auditee_department') == 'Formulation Development') selected @endif>
+                                                Formulation Development
+                                            </option>
+                                            <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('auditee_department') == 'Analytical research and Development Laboratory') selected @endif>
+                                                Analytical research and Development Laboratory
+                                            </option>
+                                            <option value="Packaging Development" data-code="PD" @if (old('auditee_department') == 'Packaging Development') selected @endif>
+                                                Packaging Development
+                                            </option>
+                                            <option value="Purchase Department" data-code="PD" @if (old('auditee_department') == 'Purchase Department') selected @endif>
+                                                Purchase Department
+                                            </option>
+                                            <option value="Document Cell" data-code="DC" @if (old('auditee_department') == 'Document Cell') selected @endif>
+                                                Document Cell
+                                            </option>
+                                            <option value="Regulatory Affairs" data-code="RA" @if (old('auditee_department') == 'Regulatory Affairs') selected @endif>
+                                                Regulatory Affairs
+                                            </option>
+                                            <option value="Pharmacovigilance" data-code="PV" @if (old('auditee_department') == 'Pharmacovigilance') selected @endif>
+                                                Pharmacovigilance
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div> --}}
+                        <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"><b>Auditee Department Name</b></label>
-                                <select name="auditee_department" id="auditee_department">
-                                    <option value="" data-code="">-- Select --</option>
-                                    <option value="Corporate Quality Assurance" data-code="CQA" @if (old('auditee_department') == 'Corporate Quality Assurance') selected @endif>
-                                        Corporate Quality Assurance
-                                    </option>
-                                    <option value="Quality Assurance" data-code="QA" @if (old('auditee_department') == 'Quality Assurance') selected @endif>
-                                        Quality Assurance
-                                    </option>
-                                    <option value="Quality Control" data-code="QC" @if (old('auditee_department') == 'Quality Control') selected @endif>
-                                        Quality Control
-                                    </option>
-                                    <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('auditee_department') == 'Quality Control (Microbiology department') selected @endif>
-                                        Quality Control (Microbiology department)
-                                    </option>
-                                    <option value="Production General" data-code="PG" @if (old('auditee_department') == 'Production General') selected @endif>
-                                        Production General
-                                    </option>
-                                    <option value="Production Liquid Orals" data-code="PLO" @if (old('auditee_department') == 'Production Liquid Orals') selected @endif>
-                                        Production Liquid Orals
-                                    </option>
-                                    <option value="Production Tablet and Powder" data-code="PTP" @if (old('auditee_department') == 'Production Tablet and Powder') selected @endif>
-                                        Production Tablet and Powder
-                                    </option>
-                                    <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('auditee_department') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
-                                        Production External (Ointment, Gels, Creams and Liquid)
-                                    </option>
-                                    <option value="Production Capsules" data-code="PC" @if (old('auditee_department') == 'Production Capsules') selected @endif>
-                                        Production Capsules
-                                    </option>
-                                    <option value="Production Injectable" data-code="PI" @if (old('auditee_department') == 'Production Injectable') selected @endif>
-                                        Production Injectable
-                                    </option>
-                                    <option value="Engineering" data-code="ENG" @if (old('auditee_department') == 'Engineering') selected @endif>
-                                        Engineering
-                                    </option>
-                                    <option value="Human Resource" data-code="HR" @if (old('auditee_department') == 'Human Resource') selected @endif>
-                                        Human Resource
-                                    </option>
-                                    <option value="Store" data-code="ST" @if (old('auditee_department') == 'Store') selected @endif>
-                                        Store
-                                    </option>
-                                    <option value="Electronic Data Processing" data-code="EDP" @if (old('auditee_department') == 'Electronic Data Processing') selected @endif>
-                                        Electronic Data Processing
-                                    </option>
-                                    <option value="Formulation Development" data-code="FD" @if (old('auditee_department') == 'Formulation Development') selected @endif>
-                                        Formulation Development
-                                    </option>
-                                    <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('auditee_department') == 'Analytical research and Development Laboratory') selected @endif>
-                                        Analytical research and Development Laboratory
-                                    </option>
-                                    <option value="Packaging Development" data-code="PD" @if (old('auditee_department') == 'Packaging Development') selected @endif>
-                                        Packaging Development
-                                    </option>
-                                    <option value="Purchase Department" data-code="PD" @if (old('auditee_department') == 'Purchase Department') selected @endif>
-                                        Purchase Department
-                                    </option>
-                                    <option value="Document Cell" data-code="DC" @if (old('auditee_department') == 'Document Cell') selected @endif>
-                                        Document Cell
-                                    </option>
-                                    <option value="Regulatory Affairs" data-code="RA" @if (old('auditee_department') == 'Regulatory Affairs') selected @endif>
-                                        Regulatory Affairs
-                                    </option>
-                                    <option value="Pharmacovigilance" data-code="PV" @if (old('auditee_department') == 'Pharmacovigilance') selected @endif>
-                                        Pharmacovigilance
-                                    </option>
-                                </select>
+                                <label for="Initiator"><b> Initiator Department</b></label>
+                                <input readonly type="text" name="auditee_department" id="initiator_group"
+                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                             </div>
                         </div>
+
+                            <script>
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    // Define department name to code mapping
+                                    const departmentMapping = {
+                                        "Calibration Lab": "CLB",
+                                        "Engineering": "ENG",
+                                        "Facilities": "FAC",
+                                        "LAB": "LAB",
+                                        "Labeling": "LABL",
+                                        "Manufacturing": "MANU",
+                                        "Quality Assurance": "QA",
+                                        "Quality Control": "QC",
+                                        "Ragulatory Affairs": "RA",
+                                        "Security": "SCR",
+                                        "Training": "TR",
+                                        "IT": "IT",
+                                        "Application Engineering": "AE",
+                                        "Trading": "TRD",
+                                        "Research": "RSCH",
+                                        "Sales": "SAL",
+                                        "Finance": "FIN",
+                                        "Systems": "SYS",
+                                        "Administrative": "ADM",
+                                        "M&A": "M&A",
+                                        "R&D": "R&D",
+                                        "Human Resource": "HR",
+                                        "Banking": "BNK",
+                                        "Marketing": "MRKT",
+
+                                    };
+
+                                    // Get the Initiator Department input
+                                    let initiatorGroupInput = document.getElementById("initiator_group");
+                                    let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                    // Get the department name from the input field
+                                    let departmentName = initiatorGroupInput.value.trim();
+
+                                    // Auto-generate the department code based on the mapping
+                                    if (departmentName in departmentMapping) {
+                                        initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                    } else {
+                                        initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                    }
+                                });
+                            </script>
                         {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Observation Report Due Date</label>
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
@@ -197,18 +251,18 @@
                                         <div class="calenderauditee">
                                             <!-- Display the manually selectable date input -->
                                             <input type="text" id="due_date_display" name="due_date" value="{{ date('d-M-Y') }}" placeholder="DD-MMM-YYYY" />
-                                
+
                                             <!-- Editable date input (hidden) -->
                                             <input type="date" value="{{ date('Y-m-d') }}" name="due_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date_display')" />
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
-                                        
+
                                         // If date is valid, format it to 'DD-MMM-YYYY'
                                         if (!isNaN(date.getTime())) {
                                             const day = ("0" + date.getDate()).slice(-2); // Add leading 0 if needed
@@ -222,11 +276,11 @@
                                             document.getElementById(displayId).value = ""; // Clear value to avoid NaN issue
                                         }
                                     }
-                                
+
                                     // Initialize the display field to show placeholder on load
                                     document.addEventListener('DOMContentLoaded', function() {
                                         const dateInput = document.querySelector('input[name="due_date"]');
-                                        
+
                                         // If there's an initial date, handle it; otherwise, show placeholder
                                         if (dateInput.value) {
                                             handleDateInput(dateInput, 'due_date_display');
@@ -235,15 +289,15 @@
                                         }
                                     });
                                 </script>
-                                
-                                
+
+
                                 <style>
                                     .hide-input {
                                         display: none;
                                     }
                                 </style>
-                                
-                                     
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -456,7 +510,7 @@
                                                     <th style="width: 40%">Observation</th>
                                                     <th style="width: 40%">Category</th>
                                                     <th style="width: 12%">Action</th>
-                                                         
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -470,7 +524,7 @@
                                                     <option value="minor">Minor</option>
                                                      <option value="critical">Critical</option>
                                                 </select>
-                                               </td>  
+                                               </td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
@@ -510,7 +564,7 @@
                                         });
                                     </script>
 
-                    
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton on-submit-disable-button">Save</button>
@@ -539,7 +593,7 @@
                                             </div>
                                         </div> -->
 
-                                        <div class="group-input">
+                                    <div class="group-input">
                                     <label for="audit-agenda-grid">
                                     Response Details
                                         <button type="button" name="details" id="Details-add1">+</button>
@@ -551,13 +605,10 @@
                                                     <th style="width: 8%">Sr.No</th>
                                                     <th style="width: 80%">Response</th>
                                                     <th style="width: 12%">Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="response[0][serial]"
-                                                        value="1" style="flex-grow: 1; width: 100%;"></td>
-                                                        
+                                                <td><input disabled type="text" name="response[0][serial]" value="1" style="flex-grow: 1; width: 100%;"></td>
                                                 <td><textarea name="response[0][response_detail]" style="flex-grow: 1; width: 100%;"></textarea></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
@@ -594,7 +645,7 @@
                                                 <label for="date_due">Corrective Actions (+)</label>
                                                 <textarea name="corrective_action" id=""></textarea>
                                             </div>
-                                        
+
                                         </div>
                                          -->
 
@@ -614,9 +665,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="corrective[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="corrective[0][corrective_action]"></td>
+                                                <td><input disabled type="text" name="corrective[0][serial]" value="1" style="flex-grow: 1; width: 100%;"></td>
+                                                <td><textarea type="text" name="corrective[0][corrective_action]" style="flex-grow: 1; width: 100%;"></textarea> </td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
@@ -629,10 +679,8 @@
                                                 function generateTableRow(serialNumber) {
                                                     var html = '';
                                                     html += '<tr>' +
-                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                                                        '"></td>' +
-                                                        '<td><input type="text" name="corrective[' + serialNumber +
-                                                        '][corrective_action]"></td>' +
+                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                                                        '<td><textarea type="text" name="corrective[' + serialNumber +'][corrective_action]"></textarea></td>' +
                                                         '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                                                         '</tr>';
 
@@ -667,16 +715,13 @@
                                                     <th style="width: 8%">Sr.No</th>
                                                     <th style="width: 80%">Preventive Action</th>
                                                     <th style="width: 12%">Action</th>
-
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="preventive[0][serial]"
-                                                        value="1"></td>
-                                                <td><input type="text" name="preventive[0][preventive_action]"></td>
+                                                <td><input disabled type="text" name="preventive[0][serial]"  value="1" style="flex-grow: 1; width: 100%;"></td>
+                                                <td><textarea type="text" name="preventive[0][preventive_action]" style="flex-grow: 1; width: 100%;"> </textarea></td>
                                                 <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
-
                                         </table>
                                     </div>
                                 </div>
@@ -686,10 +731,8 @@
                                                 function generateTableRow(serialNumber) {
                                                     var html = '';
                                                     html += '<tr>' +
-                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                                                        '"></td>' +
-                                                        '<td><input type="text" name="preventive[' + serialNumber +
-                                                        '][preventive_action]"></td>' +
+                                                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
+                                                        '<td><textarea type="text" name="preventive[' + serialNumber +'][preventive_action]"></textarea></td>' +
                                                         '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                                                         '</tr>';
 
@@ -792,7 +835,7 @@
                         </div>
                     </div>
 
-                
+
 
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -836,7 +879,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken"></textarea>
+                                        <textarea name="action_taken" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -845,7 +888,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="response_summary">Response Summary</label>
-                                        <textarea name="response_summary"></textarea>
+                                        <textarea name="response_summary" class="summernote"></textarea>
                                     </div>
                                 </div>
 
@@ -864,13 +907,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="related_url">Related URL</label>
                                         <input type="text" name="related_url">
                                     </div>
-                                </div>
-                               
+                                </div> --}}
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button">Save</button>
@@ -922,7 +965,7 @@
                                             <div class="sub-head">Report Issued</div>
                                         </div>
 
-                                        
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Cancel By">Report Issued By</label>
@@ -1039,7 +1082,7 @@
                                             <div class="sub-head">Response Reviewed</div>
                                         </div>
 
-                             
+
 
                                         <div class="col-lg-4">
                                             <div class="group-input">
@@ -1178,6 +1221,36 @@
             }
         }
     </script>
+
+        <script>
+
+            $('#summernote').summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear', 'italic']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+            $('.summernote').summernote({
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear', 'italic']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+
+
+        </script>
+
     <script>
         $(document).ready(function() {
             $('#observation_table').click(function(e) {

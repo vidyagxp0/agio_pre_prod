@@ -420,11 +420,11 @@
                         Effective Date:
                         <span>
                             @if ($data->training_required == 'yes')
-                                @if ($data->stage >= 10)
+                                @if ($data->stage >= 11)
                                     {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                 @endif
                             @else
-                                @if ($data->stage > 7)
+                                @if ($data->stage > 10)
                                     {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                 @endif
                             @endif

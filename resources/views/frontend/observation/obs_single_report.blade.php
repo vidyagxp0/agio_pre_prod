@@ -238,7 +238,7 @@
                     </tr>
 
                     <tr>
-                        
+
                     </tr>
                     <tr>
 
@@ -274,7 +274,7 @@
                     <th class="w-20">Observation Report Due Date</th>
                     <td class="w-80">
                         @if ($data->due_date)
-                            {{ Helpers::getdateFormat($data->due_date) }} 
+                            {{ Helpers::getdateFormat($data->due_date) }}
                         @else
                             Not Applicable
                         @endif
@@ -283,7 +283,7 @@
                     <th class="w-20">Short Description</th>
                     <td class="w-80">
                         @if ($data->short_description)
-                            {{ $data->short_description }} 
+                            {{ $data->short_description }}
                         @else
                             Not Applicable
                         @endif
@@ -303,7 +303,7 @@
                 </tr>
             </table>
 
-               
+
                     <style>
                     .head-number {
                         font-weight: bold;
@@ -341,7 +341,7 @@
                         @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -369,14 +369,14 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
-    
+
 
         </div>
 
-        
+
            <div class="block">
             <div class="block-head">
                 Response and CAPA Plan Details
@@ -407,7 +407,7 @@
                             @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -435,7 +435,7 @@
                         @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -443,7 +443,7 @@
 
                 <div class="block">
                     <div class="block-head">
-                    Preventive Action 
+                    Preventive Action
                     </div>
                     <div class="border-table">
                     <table class="table table-bordered" id="Details-table">
@@ -465,7 +465,7 @@
                         @endif
                         </tbody>
 
-                    </table>                        
+                    </table>
                     </div>
                 </div>
 
@@ -491,7 +491,7 @@
                                     @if ($griddata && unserialize($griddata->responsible)[$key] == $value->id)
                                             {{ $value->name }}
                                     @endif
-            
+
                                 @endforeach
                                 </td>
                                 <td>{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}</td>
@@ -511,8 +511,8 @@
                     @endif
                 </div>
                 <br>
-                
-           
+
+
             <div class="block-head">
                 Response And CAPA Attachments
              </div>
@@ -535,7 +535,7 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
            </div>
@@ -579,7 +579,7 @@
                     @endif
                 </div>
                 <br>
- 
+
             <div class="block-head">
                 Response Summary
             </div>
@@ -593,18 +593,7 @@
                     @endif
                 </div>
             <table>
-                    <tr>
 
-                    <th class="w-20">Related URL</th>
-                    <td class="w-80">
-                        @if ($data->related_url)
-                            {{ $data->related_url }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-
-                </tr>
 
             </table>
 
@@ -630,13 +619,13 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
 
                <br>
 
-       
+
             <div class="block-head">
                 Response Verification
              </div>
@@ -676,234 +665,232 @@
                              <td class="w-20">Not Applicable</td>
                          </tr>
                      @endif
-    
+
                  </table>
                </div>
-          
+
 
      <br>
 
-               <div class="block-head">
-                Activity Log
-             </div>
-             <div class="block-head">
-                Report Issued
-             </div>
-            <table>               
-                <tr>
-                    <th class="w-20">Report Issued By</th>
-                    <td class="w-80">
-                        @if ($data->report_issued_by)
-                            {{ $data->report_issued_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">Report Issued On</th>
-                    <td class="w-80">
-                        @if ($data->report_issued_on)
-                            {{ $data->report_issued_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-             
-                    <th class="w-20">Report Issued Comment</th>
-                    <td class="w-80">
-                        @if ($data->report_issued_comment)
-                            {!! $data->report_issued_comment !!}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-            </table>
-            <div class="block-head">
-                Cancel
-             </div>
-            <table>
-                <tr>
-                    <th class="w-20">Cancel By</th>
-                    <td class="w-80">
-                        @if ($data->cancel_by)
-                            {{ $data->cancel_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                    <th class="w-20">Cancel On</th>
-                    <td class="w-80">
-                        @if ($data->cancel_on)
-                            {{ $data->cancel_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-               
-                    <th class="w-20">Cancel Comment</th>
-                    <td class="w-80">
-                        @if ($data->cancel_comment)
-                            {{ $data->cancel_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
+                            <div class="block-head">
+                                Activity Log
+                            </div>
+                            <div class="block-head">
+                                Report Issued
+                            </div>
+                            <table>
+                                <tr>
+                                    <th class="w-20">Report Issued By</th>
+                                    <td class="w-80">
+                                        @if ($data->report_issued_by)
+                                            {{ $data->report_issued_by }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
 
-            </table>
-           
- 
-        <div class="block-head">
-           More Info Required
-        </div>
+                                    <th class="w-20">Report Issued On</th>
+                                    <td class="w-80">
+                                        @if ($data->report_issued_on)
+                                            {{ $data->report_issued_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
 
-       <table>
-                <tr>
-                    <th class="w-20">More Info Required By</th>
-                    <td class="w-80">
-                        @if ($data->more_info_required_by)
-                            {{ $data->more_info_required_by }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-    
-                    <th class="w-20">More Info Required On</th>
-                    <td class="w-80">
-                        @if ($data->more_info_required_on)
-                            {{ $data->more_info_required_on }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-              
-                    <th class="w-20">More Info Required Comment</th>
-                    <td class="w-80">
-                        @if ($data->more_info_required_comment)
-                            {{ $data->more_info_required_comment }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
+                                    <th class="w-20">Report Issued Comment</th>
+                                    <td class="w-80">
+                                        @if ($data->report_issued_comment)
+                                            {!! $data->report_issued_comment !!}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="block-head">
+                                Cancel
+                            </div>
+                            <table>
+                                <tr>
+                                    <th class="w-20">Cancel By</th>
+                                    <td class="w-80">
+                                        @if ($data->cancel_by)
+                                            {{ $data->cancel_by }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                    <th class="w-20">Cancel On</th>
+                                    <td class="w-80">
+                                        @if ($data->cancel_on)
+                                            {{ $data->cancel_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
 
-       </table>
-       <div class="block-head">
-        CAPA Plan Proposed
-     </div>
-       <table>
-        <tr>
-            <th class="w-20">CAPA Plan Proposed By</th>
-            <td class="w-80">
-                @if ($data->complete_By)
-                    {{ $data->complete_By }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
+                                    <th class="w-20">Cancel Comment</th>
+                                    <td class="w-80">
+                                        @if ($data->cancel_comment)
+                                            {{ $data->cancel_comment }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
 
-            <th class="w-20">CAPA Plan Proposed On</th>
-            <td class="w-80">
-                @if ($data->complete_on)
-                    {{ $data->complete_on }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-      
-            <th class="w-20">CAPA Plan Proposed Comment</th>
-            <td class="w-80">
-                @if ($data->complete_comment)
-                    {{ $data->complete_comment }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-        </tr>
+                            </table>
+                        {{-- <div class="block-head">
+                        More Info Required
+                        </div> --}}
 
-       </table>
-       <div class="block-head">
-        No CAPAs Required
-     </div>
-       <table>
-        <tr>
-            <th class="w-20">No CAPAs Required By</th>
-            <td class="w-80">
-                @if ($data->qa_approval_without_capa_by)
-                    {{ $data->qa_approval_without_capa_by }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
+                        {{-- <table>
+                                <tr>
+                                    <th class="w-20">More Info Required By</th>
+                                    <td class="w-80">
+                                        @if ($data->more_info_required_by)
+                                            {{ $data->more_info_required_by }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
 
-            <th class="w-20">No CAPAs Required On</th>
-            <td class="w-80">
-                @if ($data->qa_approval_without_capa_on)
-                    {{ $data->qa_approval_without_capa_on }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-      
-            <th class="w-20">No CAPAs Required Comment</th>
-            <td class="w-80">
-                @if ($data->qa_approval_without_capa_comment)
-                    {{ $data->qa_approval_without_capa_comment }}
-                @else
-                    Not Applicable
-                @endif
-            </td>
-        </tr>
-       </table>
+                                    <th class="w-20">More Info Required On</th>
+                                    <td class="w-80">
+                                        @if ($data->more_info_required_on)
+                                            {{ $data->more_info_required_on }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
 
-       <table>
-        <div class="block-head">
-            Response Reviewed
-         </div>
-           <table>
-            <tr>
-                <th class="w-20">Response Reviewed By</th>
-                <td class="w-80">
-                    @if ($data->Final_Approval_by)
-                        {{ $data->Final_Approval_by }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-    
-                <th class="w-20">Response Reviewed On</th>
-                <td class="w-80">
-                    @if ($data->Final_Approval_on)
-                        {{ $data->Final_Approval_on }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-          
-                <th class="w-20">Response Reviewed Comment</th>
-                <td class="w-80">
-                    @if ($data->Final_Approval_comment)
-                        {{ $data->Final_Approval_comment }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            </tr>
-       </table>
+                                    <th class="w-20">More Info Required Comment</th>
+                                    <td class="w-80">
+                                        @if ($data->more_info_required_comment)
+                                            {{ $data->more_info_required_comment }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </td>
+                                </tr>
+
+                        </table> --}}
+                    <div class="block-head">
+                        CAPA Plan Proposed
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">CAPA Plan Proposed By</th>
+                            <td class="w-80">
+                                @if ($data->complete_By)
+                                    {{ $data->complete_By }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                            <th class="w-20">CAPA Plan Proposed On</th>
+                            <td class="w-80">
+                                @if ($data->complete_on)
+                                    {{ $data->complete_on }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                            <th class="w-20">CAPA Plan Proposed Comment</th>
+                            <td class="w-80">
+                                @if ($data->complete_comment)
+                                    {{ $data->complete_comment }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div class="block-head">
+                        No CAPAs Required
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">No CAPAs Required By</th>
+                            <td class="w-80">
+                                @if ($data->qa_approval_without_capa_by)
+                                    {{ $data->qa_approval_without_capa_by }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                            <th class="w-20">No CAPAs Required On</th>
+                            <td class="w-80">
+                                @if ($data->qa_approval_without_capa_on)
+                                    {{ $data->qa_approval_without_capa_on }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+
+                            <th class="w-20">No CAPAs Required Comment</th>
+                            <td class="w-80">
+                                @if ($data->qa_approval_without_capa_comment)
+                                    {{ $data->qa_approval_without_capa_comment }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <div class="block-head">
+                            Response Reviewed
+                        </div>
+                        <table>
+                            <tr>
+                                <th class="w-20">Response Reviewed By</th>
+                                <td class="w-80">
+                                    @if ($data->Final_Approval_by)
+                                        {{ $data->Final_Approval_by }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Response Reviewed On</th>
+                                <td class="w-80">
+                                    @if ($data->Final_Approval_on)
+                                        {{ $data->Final_Approval_on }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+
+                                <th class="w-20">Response Reviewed Comment</th>
+                                <td class="w-80">
+                                    @if ($data->Final_Approval_comment)
+                                        {{ $data->Final_Approval_comment }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                    </table>
 
 
-           </div>
-
-        
-
-
-    
+                        </div>
 
 
 
-    
-      
+
+
+
+
+
+
+
 
 
 

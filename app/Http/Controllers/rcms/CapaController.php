@@ -141,6 +141,7 @@ class CapaController extends Controller
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
         $capa->initiator_Group = $request->initiator_Group;
+        $capa->initiator_group_code = $request->initiator_group_code;
         // dd($capa->initiator_Group);
 
         //  dd($capa->initiator_Group);
@@ -3408,13 +3409,14 @@ class CapaController extends Controller
                 // Current field values
                 $fields = [
                     'material_name' => $material_name,
-                    'material_batch_no' => $request->material_batch_no[$index],
-                    'material_mfg_date' => Helpers::getdateFormat($request->material_mfg_date[$index]),
-                    'material_expiry_date' => Helpers::getdateFormat($request->material_expiry_date[$index]),
-                    'material_batch_desposition' => $request->material_batch_desposition[$index],
-                    'material_remark' => $request->material_remark[$index],
-                    'material_batch_status' => $request->material_batch_status[$index],
+                    'material_batch_no' => isset($request->material_batch_no[$index]) ? $request->material_batch_no[$index] : null,
+                    'material_mfg_date' => isset($request->material_mfg_date[$index]) ? Helpers::getdateFormat($request->material_mfg_date[$index]) : null,
+                    'material_expiry_date' => isset($request->material_expiry_date[$index]) ? Helpers::getdateFormat($request->material_expiry_date[$index]) : null,
+                    'material_batch_desposition' => isset($request->material_batch_desposition[$index]) ? $request->material_batch_desposition[$index] : null,
+                    'material_remark' => isset($request->material_remark[$index]) ? $request->material_remark[$index] : null,
+                    'material_batch_status' => isset($request->material_batch_status[$index]) ? $request->material_batch_status[$index] : null,
                 ];
+                
 
                 foreach ($fields as $key => $currentValue) {
                     $previousValue = $previousValues[$key] ?? null;

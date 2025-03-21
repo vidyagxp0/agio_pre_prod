@@ -77,7 +77,7 @@ class ObservationController extends Controller
             }
             $data->attach_files_gi = json_encode($files);
         }
-        
+
         if(!empty($request->response_capa_attach)){
             $files = [];
             if ($request->hasFile('response_capa_attach')) {
@@ -171,7 +171,7 @@ class ObservationController extends Controller
 
         $data->response_date = $request->response_date;
         // $data->attach_files2 = $request->attach_files2;
-        $data->related_url = $request->related_url;
+        // $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
         // if ($request->hasfile('related_observations')) {
@@ -346,11 +346,11 @@ if(!empty($request->attach_files2)){
             'obs_id' => $observation_id,
             'identifier' => 'observation',
         ]);
-        
+
         // Save the data from the request
         $observationSingleCorrect->data = $request->observation;
         $observationSingleCorrect->save();
-        
+
         // Initialize a manual counter for observation actions
         $actionCounter = 0;
 
@@ -363,7 +363,7 @@ if(!empty($request->attach_files2)){
                 if (!empty($currentObservationAction)) {
                     // Increment the manual counter only for non-empty preventive actions
                     $actionCounter++;
-        
+
                     // Create a new audit trail entry for each preventive action
                     $history = new AuditTrialObservation();
                     $history->Observation_id = $observation_id;
@@ -378,7 +378,7 @@ if(!empty($request->attach_files2)){
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-        
+
                     // Save the audit trail entry
                     $history->save();
                 }
@@ -400,24 +400,24 @@ if(!empty($request->attach_files2)){
             'obs_id' => $observation_id,
             'identifier' => 'response',
         ]);
-        
+
         // Save the data from the request
         $observationSingleCorrect->data = $request->response;
         $observationSingleCorrect->save();
-        
+
         // Initialize a manual counter for response actions
         $actionCounter = 0;
-        
+
         // Loop through the response data and create audit trail entries for new actions
         if (is_array($request->response)) {
             foreach ($request->response as $responseAction) {
                 $currentResponseAction = $responseAction['response_detail'] ?? null;
-                
+
                 // Check if the preventive action is not empty
                 if (!empty($currentResponseAction)) {
                     // Increment the manual counter only for non-empty preventive actions
                     $actionCounter++;
-        
+
                     // Create a new audit trail entry for each preventive action
                     $history = new AuditTrialObservation();
                     $history->Observation_id = $observation_id;
@@ -432,7 +432,7 @@ if(!empty($request->attach_files2)){
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-        
+
                     // Save the audit trail entry
                     $history->save();
                 }
@@ -440,7 +440,7 @@ if(!empty($request->attach_files2)){
         }
 
 
-        
+
         $observationSingleCorrect = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
         $observationSingleCorrect->obs_id = $observation_id;
         $observationSingleCorrect->identifier = 'corrective';
@@ -455,24 +455,24 @@ if(!empty($request->attach_files2)){
             'obs_id' => $observation_id,
             'identifier' => 'corrective',
         ]);
-        
+
         // Save the data from the request
         $observationSingleCorrect->data = $request->corrective;
         $observationSingleCorrect->save();
-        
+
         // Initialize a manual counter for corrective actions
         $actionCounter = 0;
-        
+
         // Loop through the corrective data and create audit trail entries for new actions
         if (is_array($request->corrective)) {
             foreach ($request->corrective as $correctiveAction) {
                 $currentCorrectiveAction = $correctiveAction['corrective_action'] ?? null;
-        
+
                 // Check if the preventive action is not empty
                 if (!empty($currentCorrectiveAction)) {
                     // Increment the manual counter only for non-empty preventive actions
                     $actionCounter++;
-        
+
                     // Create a new audit trail entry for each preventive action
                     $history = new AuditTrialObservation();
                     $history->Observation_id = $observation_id;
@@ -487,7 +487,7 @@ if(!empty($request->attach_files2)){
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-        
+
                     // Save the audit trail entry
                     $history->save();
                 }
@@ -509,24 +509,24 @@ if(!empty($request->attach_files2)){
             'obs_id' => $observation_id,
             'identifier' => 'preventive',
         ]);
-        
+
         // Save the data from the request
         $observationSingleCorrect->data = $request->preventive;
         $observationSingleCorrect->save();
-        
+
         // Initialize a manual counter for preventive actions
         $actionCounter = 0;
-        
+
         // Loop through the preventive data and create audit trail entries for new actions
         if (is_array($request->preventive)) {
             foreach ($request->preventive as $preventiveAction) {
                 $currentPreventiveAction = $preventiveAction['preventive_action'] ?? null;
-        
+
                 // Check if the preventive action is not empty
                 if (!empty($currentPreventiveAction)) {
                     // Increment the manual counter only for non-empty preventive actions
                     $actionCounter++;
-        
+
                     // Create a new audit trail entry for each preventive action
                     $history = new AuditTrialObservation();
                     $history->Observation_id = $observation_id;
@@ -541,13 +541,13 @@ if(!empty($request->attach_files2)){
                     $history->change_to = "Opened";
                     $history->change_from = "Initiation";
                     $history->action_name = "Create";
-        
+
                     // Save the audit trail entry
                     $history->save();
                 }
             }
         }
-        
+
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -684,7 +684,7 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-    
+
     if (!empty($data->auditee_department)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -718,7 +718,7 @@ if(!empty($request->attach_files2)){
         $history->save();
     }
 
-  
+
     if (!empty($data->attach_files_gi)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -838,7 +838,7 @@ if(!empty($request->attach_files2)){
         $history->save();
     }
 
-    
+
     if (!empty($data->response_capa_attach)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -855,7 +855,7 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-        
+
     if (!empty($data->actual_start_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -872,7 +872,7 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-        
+
     if (!empty($data->actual_end_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -889,7 +889,7 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-        
+
     if (!empty($data->action_taken)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -906,7 +906,7 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-        
+
     if (!empty($data->response_summary)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -923,7 +923,7 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-       
+
     if (!empty($data->attach_files2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -940,24 +940,24 @@ if(!empty($request->attach_files2)){
         $history->action_name = 'Create';
         $history->save();
     }
-       
-    if (!empty($data->related_url)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Related URL';
-        $history->previous = "Null";
-        $history->current = $data->related_url;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->change_to =   "Opened";
-        $history->change_from = "Initiation";
-        $history->action_name = 'Create';
-        $history->save();
-    }
-       
+
+    // if (!empty($data->related_url)) {
+    //     $history = new AuditTrialObservation();
+    //     $history->Observation_id = $data->id;
+    //     $history->activity_type = 'Related URL';
+    //     $history->previous = "Null";
+    //     $history->current = $data->related_url;
+    //     $history->comment = "NA";
+    //     $history->user_id = Auth::user()->id;
+    //     $history->user_name = Auth::user()->name;
+    //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    //     $history->origin_state = $data->status;
+    //     $history->change_to =   "Opened";
+    //     $history->change_from = "Initiation";
+    //     $history->action_name = 'Create';
+    //     $history->save();
+    // }
+
     if (!empty($data->impact)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -1032,7 +1032,7 @@ if(!empty($request->attach_files2)){
             }
             $data->attach_files_gi = json_encode($files);
         }
-        
+
         if(!empty($request->response_capa_attach)){
             $files = [];
             if ($request->hasFile('response_capa_attach')) {
@@ -1089,7 +1089,7 @@ if(!empty($request->attach_files2)){
         $data->comments = $request->comments;
         $data->impact = $request->impact;
         // $data->impact_analysis = $request->impact_analysis;
-        
+
         if(!empty($request->impact_analysis)){
             $files = [];
             if ($request->hasFile('impact_analysis')) {
@@ -1159,7 +1159,7 @@ if(!empty($request->attach_files2)){
         // $data->date_response_due1 = $request->date_response_due1;
         $data->response_date = $request->response_date;
         // $data->attach_files2 = $request->attach_files2;
-        $data->related_url = $request->related_url;
+        // $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
         // if ($request->hasfile('related_observations')) {
@@ -1226,15 +1226,15 @@ if(!empty($request->attach_files2)){
 
         // $data->status = 'Opened';
         // $data->stage = 1;
-        
+
 
         // $data1 = ObservationGrid::find($id);
         // $data1->observation_id = $data->id;
         // $data1->type = "Action_Plan";
 
-//  ------------------------------------------------------------------------------------------------------------------   
+//  ------------------------------------------------------------------------------------------------------------------
 // Update the $data model instance
-$data->update();    
+$data->update();
 
 
 $data1 = ObservationGrid::where('observation_id', $id)->where('type', "Action_Plan")->first();
@@ -1283,11 +1283,11 @@ if (is_array($request->action) && !empty($request->action)) {
 
         $previousValues = [
             'action' => isset($previousDetails['action'][$index]) ? $previousDetails['action'][$index] : null,
-            
+
             'responsible' => isset($previousDetails['responsible'][$index]) ? Helpers::getInitiatorName($previousDetails['responsible'][$index]) : null,
-            
+
             'deadline' => isset($previousDetails['deadline'][$index]) ? Helpers::getdateFormat($previousDetails['deadline'][$index]) : null,
-            
+
             'item_status' => isset($previousDetails['item_status'][$index]) ? $previousDetails['item_status'][$index] : null,
 
             // 'action' => $previousDetails['action'][$index] ?? null,
@@ -1295,7 +1295,7 @@ if (is_array($request->action) && !empty($request->action)) {
             // 'deadline' => Helpers::getdateFormat($previousDetails['deadline'][$index]) ?? null,
             // 'item_status' => $previousDetails['item_status'][$index] ?? null,
         ];
-        
+
 
 
         // Current field values
@@ -1355,13 +1355,13 @@ if (is_array($request->action) && !empty($request->action)) {
             'obs_id' => $observation_id,
             'identifier' => 'observation'
         ]);
-        
+
         // Update the data from the request
         $observationSingleCorrect->data = $request->observation;
         $observationSingleCorrect->save();
 
         $actionCounter = 0;
-        
+
         // Loop through the observation data and check for updates or comments
         if (is_array($request->observation)) {
             foreach ($request->observation as $index => $observationAction) {
@@ -1369,7 +1369,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $currentObservationAction = $observationAction['non_compliance'];
 
                 $actionCounter++;
-        
+
                 // Check if there is a change or an action comment
                 if ($lastObservationAction != $currentObservationAction || !empty($request->action_taken_comment)) {
                     // Check if an existing audit trail entry already exists for this action
@@ -1379,7 +1379,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         'previous' => $lastObservationAction,
                         'current' => $currentObservationAction
                     ])->first();
-        
+
                     // If no existing history, create a new entry
                     if (!$existingHistory) {
                         $history = new AuditTrialObservation();
@@ -1401,7 +1401,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         // } else {
                         //     $history->action_name = "Update";
                         // }
-        
+
                         // Save the audit trail entry
                         $history->save();
                     }
@@ -1417,30 +1417,30 @@ if (is_array($request->action) && !empty($request->action)) {
         //     // Fetch existing data for the observation
         //     $existingAuditorShow = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->first();
         //     $existingAuditorData = $existingAuditorShow ? $existingAuditorShow->data : [];
-        
+
         //     // Update or create a new observation entry
         //     $observationSingleGrid = ObseravtionSingleGrid::firstOrNew(['obs_id' => $observation_id, 'identifier' => 'observation']);
         //     $observationSingleGrid->obs_id = $observation_id;
         //     $observationSingleGrid->identifier = 'observation';
         //     $observationSingleGrid->data = $request->observation;
         //     $observationSingleGrid->save();
-        
+
         //     $fieldNames = [
         //         'non_compliance' => 'Observation',
         //     ];
-        
+
         //     if (is_array($request->observation)) {
         //         foreach ($request->observation as $index => $newAuditor) {
         //             // Ensure that previousAuditor is fetched for each row
         //             $previousAuditor = isset($existingAuditorData[$index]) ? $existingAuditorData[$index] : [];
-        
+
         //             // Fields to track changes
         //             $fieldsToTrack = ['non_compliance'];
-                    
+
         //             foreach ($fieldsToTrack as $field) {
         //                 $oldValue = isset($previousAuditor[$field]) ? $previousAuditor[$field] : 'Null';
         //                 $newValue = isset($newAuditor[$field]) ? $newAuditor[$field] : 'Null';
-        
+
         //                 // Only create audit trail if there is a change
         //                 if ($oldValue !== $newValue) {
         //                     $existingAuditTrail = AuditTrialObservation::where([
@@ -1449,15 +1449,15 @@ if (is_array($request->action) && !empty($request->action)) {
         //                         ['previous', '=', $oldValue],
         //                         ['current', '=', $newValue]
         //                     ])->first();
-        
+
         //                     $actionName = empty($oldValue) || $oldValue === 'Null' ? 'New' : 'Update';
-        
+
         //                     if (!$existingAuditTrail) {
         //                         $auditTrail = new AuditTrialObservation;
         //                         $auditTrail->Observation_id = $observation_id;
         //                         $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . ($index + 1) . ')';
-        //                         $auditTrail->previous = $oldValue;  
-        //                         $auditTrail->current = $newValue;   
+        //                         $auditTrail->previous = $oldValue;
+        //                         $auditTrail->current = $newValue;
         //                         $auditTrail->comment = "";
         //                         $auditTrail->user_id = Auth::user()->id;
         //                         $auditTrail->user_name = Auth::user()->name;
@@ -1465,7 +1465,7 @@ if (is_array($request->action) && !empty($request->action)) {
         //                         $auditTrail->origin_state = $data->status;
         //                         $auditTrail->change_to = "Not Applicable";
         //                         $auditTrail->change_from = $data->status;
-        //                         $auditTrail->action_name = $actionName; 
+        //                         $auditTrail->action_name = $actionName;
         //                         $auditTrail->save();
         //                     }
         //                 }
@@ -1473,14 +1473,14 @@ if (is_array($request->action) && !empty($request->action)) {
         //         }
         //     }
         // }
-        
+
 
 
 
         // -------------------------------------------------------------------------
 
 
-        $observation_id = $data->id; 
+        $observation_id = $data->id;
         $observationSingleResponse = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
         $observationSingleResponse->obs_id = $observation_id;
         $observationSingleResponse->identifier = 'response';
@@ -1493,13 +1493,13 @@ if (is_array($request->action) && !empty($request->action)) {
             'obs_id' => $observation_id,
             'identifier' => 'response'
         ]);
-        
+
         // Update the data from the request
         $observationSingleCorrect->data = $request->response;
         $observationSingleCorrect->save();
 
         $actionCounter = 0;
-        
+
         // Loop through the response data and check for updates or comments
         if (is_array($request->response)) {
             foreach ($request->response as $index => $responseAction) {
@@ -1507,7 +1507,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $currentResponseAction = $responseAction['response_detail'];
 
                 $actionCounter++;
-        
+
                 // Check if there is a change or an action comment
                 if ($lastResponseAction != $currentResponseAction || !empty($request->action_taken_comment)) {
                     // Check if an existing audit trail entry already exists for this action
@@ -1517,7 +1517,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         'previous' => $lastResponseAction,
                         'current' => $currentResponseAction
                     ])->first();
-        
+
                     // If no existing history, create a new entry
                     if (!$existingHistory) {
                         $history = new AuditTrialObservation();
@@ -1539,7 +1539,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         // } else {
                         //     $history->action_name = "Update";
                         // }
-        
+
                         // Save the audit trail entry
                         $history->save();
                     }
@@ -1560,13 +1560,13 @@ if (is_array($request->action) && !empty($request->action)) {
             'obs_id' => $observation_id,
             'identifier' => 'corrective'
         ]);
-        
+
         // Update the data from the request
         $observationSingleCorrect->data = $request->corrective;
         $observationSingleCorrect->save();
 
         $actionCounter = 0;
-        
+
         // Loop through the corrective data and check for updates or comments
         if (is_array($request->corrective)) {
             foreach ($request->corrective as $index => $correctiveAction) {
@@ -1574,7 +1574,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $currentCorrectiveAction = $correctiveAction['corrective_action'];
 
                 $actionCounter++;
-        
+
                 // Check if there is a change or an action comment
                 if ($lastCorrectiveAction != $currentCorrectiveAction || !empty($request->action_taken_comment)) {
                     // Check if an existing audit trail entry already exists for this action
@@ -1584,7 +1584,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         'previous' => $lastCorrectiveAction,
                         'current' => $currentCorrectiveAction
                     ])->first();
-        
+
                     // If no existing history, create a new entry
                     if (!$existingHistory) {
                         $history = new AuditTrialObservation();
@@ -1606,7 +1606,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         // } else {
                         //     $history->action_name = "Update";
                         // }
-        
+
                         // Save the audit trail entry
                         $history->save();
                     }
@@ -1625,13 +1625,13 @@ if (is_array($request->action) && !empty($request->action)) {
             'obs_id' => $observation_id,
             'identifier' => 'preventive'
         ]);
-        
+
         // Update the data from the request
         $observationSingleCorrect->data = $request->preventive;
         $observationSingleCorrect->save();
 
         $actionCounter = 0;
-        
+
         // Loop through the preventive data and check for updates or comments
         if (is_array($request->preventive)) {
             foreach ($request->preventive as $index => $preventiveAction) {
@@ -1639,7 +1639,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $currentPreventiveAction = $preventiveAction['preventive_action'];
 
                 $actionCounter++;
-        
+
                 // Check if there is a change or an action comment
                 if ($lastPreventiveAction != $currentPreventiveAction || !empty($request->action_taken_comment)) {
                     // Check if an existing audit trail entry already exists for this action
@@ -1649,7 +1649,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         'previous' => $lastPreventiveAction,
                         'current' => $currentPreventiveAction
                     ])->first();
-        
+
                     // If no existing history, create a new entry
                     if (!$existingHistory) {
                         $history = new AuditTrialObservation();
@@ -1671,7 +1671,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         // } else {
                         //     $history->action_name = "Update";
                         // }
-        
+
                         // Save the audit trail entry
                         $history->save();
                     }
@@ -1810,9 +1810,9 @@ if (is_array($request->action) && !empty($request->action)) {
             }
             $history->save();
         }
-     
 
-        
+
+
         if ($lastDocument->non_compliance != $data->non_compliance || !empty($request->actual_start_date_comment)) {
 
             $history = new AuditTrialObservation();
@@ -2008,7 +2008,7 @@ if (is_array($request->action) && !empty($request->action)) {
             }
             $history->save();
         }
-      
+
         if ($lastDocument->response_summary != $data->response_summary || !empty($request->action_taken_comment)) {
 
             $history = new AuditTrialObservation();
@@ -2030,7 +2030,7 @@ if (is_array($request->action) && !empty($request->action)) {
             }
             $history->save();
         }
-      
+
         if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->action_taken_comment)) {
 
             $history = new AuditTrialObservation();
@@ -2053,27 +2053,27 @@ if (is_array($request->action) && !empty($request->action)) {
             $history->save();
         }
 
-        if ($lastDocument->related_url != $data->related_url || !empty($request->action_taken_comment)) {
+        // if ($lastDocument->related_url != $data->related_url || !empty($request->action_taken_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Related URL ';
-            $history->previous = $lastDocument->related_url;
-            $history->current = $data->related_url;
-            $history->comment = $request->action_taken_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->related_url) || $lastDocument->related_url === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Related URL ';
+        //     $history->previous = $lastDocument->related_url;
+        //     $history->current = $data->related_url;
+        //     $history->comment = $request->action_taken_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->related_url) || $lastDocument->related_url === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastDocument->impact != $data->impact || !empty($request->action_taken_comment)) {
 
@@ -2254,7 +2254,7 @@ if (is_array($request->action) && !empty($request->action)) {
                             'title' => 'Mandatory Fields!',
                             'message' => 'Response and CAPA Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     }
                      else {
@@ -2453,7 +2453,7 @@ if (is_array($request->action) && !empty($request->action)) {
                             'title' => 'Mandatory Fields!',
                             'message' => 'Response and CAPA Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     }
                      else {
@@ -2468,7 +2468,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $changestage->qa_approval_without_capa_by = Auth::user()->name;
                     $changestage->qa_approval_without_capa_on = Carbon::now()->format('d-M-Y');
                     $changestage->qa_approval_without_capa_comment = $request->comment;
-    
+
                      $history = new AuditTrialObservation();
                     $history->Observation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -2495,7 +2495,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     } else {
                         $history->action_name = 'Update';
                     }
-                
+
                 //     $list = Helpers::getAuditManagerUsersList($changestage->division_code); // Notify CFT Person
 
                 //     $userIds = collect($list)->pluck('user_id')->toArray();
@@ -2641,9 +2641,9 @@ if (is_array($request->action) && !empty($request->action)) {
                     toastr()->success('Document Sent');
                     return back();
                 }
-            }           
-            
-            
+            }
+
+
             if ($changestage->stage == 3) {
                 if (empty($changestage->impact))
                 {
@@ -3191,7 +3191,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
                 $changeControl->reject_capa_plan_comment = $request->comment;
 
-                
+
                 $changeControl->update();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
@@ -3214,7 +3214,7 @@ if (is_array($request->action) && !empty($request->action)) {
                 return back();
             }
 
-          
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3359,9 +3359,9 @@ if (is_array($request->action) && !empty($request->action)) {
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-    
+
         }
-        
+
         // return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 
@@ -3378,7 +3378,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
 
     public function ObservationAuditTrailPdf($id){
-      
+
         $doc = Observation::find($id);
         $audit = AuditTrialObservation::where('observation_id', $id)->paginate(500);
         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
@@ -3463,7 +3463,7 @@ if (is_array($request->action) && !empty($request->action)) {
         // Start query for DeviationAuditTrail
         $query = AuditTrialObservation::query();
         $query->where('Observation_id', $id);
-    
+
         // Check if typedata is provided
         if ($request->filled('typedata')) {
             switch ($request->typedata) {
@@ -3472,7 +3472,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     $cft_field = ['CFT Review Complete','CFT Review Not Required',];
                     $query->whereIn('action', $cft_field);
                     break;
-    
+
                 case 'stage':
                     // Filter by activity log stage changes
                     $stage=[  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
@@ -3481,7 +3481,7 @@ if (is_array($request->action) && !empty($request->action)) {
                         'HOD Final Review Complete', 'More Info Required', 'Cancel','Implementation verification Complete','Closure Approved'];
                     $query->whereIn('action', $stage); // Ensure correct activity_type value
                     break;
-    
+
                 case 'user_action':
                     // Filter by various user actions
                     $user_action = [  'Submit', 'HOD Review Complete', 'QA/CQA Initial Review Complete','Request For Cancellation',
@@ -3500,34 +3500,34 @@ if (is_array($request->action) && !empty($request->action)) {
                     $business = [];
                     $query->whereIn('action', $business);
                     break;
-    
+
                 default:
                     break;
             }
         }
-    
+
         // Apply additional filters
         if ($request->filled('user')) {
             $query->where('user_id', $request->user);
         }
-    
+
         if ($request->filled('from_date')) {
             $query->whereDate('created_at', '>=', $request->from_date);
         }
-    
+
         if ($request->filled('to_date')) {
             $query->whereDate('created_at', '<=', $request->to_date);
         }
-    
+
         // Get the filtered results
         $audit = $query->orderByDesc('id')->get();
-    
+
         // Flag for filter request
         $filter_request = true;
-    
+
         // Render the filtered view and return as JSON
         $responseHtml = view('frontend.observation.observation_filter', compact('audit', 'filter_request'))->render();
-    
+
         return response()->json(['html' => $responseHtml]);
     }
 
