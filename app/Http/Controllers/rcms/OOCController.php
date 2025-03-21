@@ -2188,6 +2188,8 @@ class OOCController extends Controller
         $ooc->phase_IB_qareviewREMARKS = $request->phase_IB_qareviewREMARKS;
         $ooc->qPIBaHremarksnewfield = $request->qPIBaHremarksnewfield;
 
+        $ooc->is_repeat_realease_stageii_ooc = $request->is_repeat_realease_stageii_ooc;
+        
         // Update Attachments Fields
         if (!empty($request->initial_attachment_qahead_ooc)) {
             $files = [];
@@ -4374,12 +4376,13 @@ class OOCController extends Controller
 
             if ($oocchange->stage == 1) {
 
-                if (!$oocchange->description_ooc) {
+
+                if (empty($oocchange->description_ooc) || empty($oocchange->ooc_due_date) || empty($oocchange->ooc_logged_by || empty($oocchange->qa_assign_person) || empty($oocchange->is_repeat_ooc) || empty($oocchange->assign_to) || empty($oocchange->initiated_through) || empty($oocchange->details_of_ooc) || empty($oocchange->due_date) || empty($oocchange->last_calibration_date))) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Short Description is yet to be filled!',
-                        'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                        'message' => 'Pls Fill General Information Tab is yet to be filled!',
+                        'type' => 'warning',  
                     ]);
 
                     return redirect()->back();
@@ -4600,11 +4603,11 @@ class OOCController extends Controller
 
             if ($oocchange->stage == 4) {
 
-                if (!$oocchange->qa_comments_ooc) {
+                if (empty($oocchange->qa_comments_ooc)|| empty($oocchange->is_repeat_stae_ooc) || empty($oocchange->phase_ia_investigation_summary) || empty($oocchange->analysis_remarks_stage_ooc) || empty($oocchange->qa_comments_ooc) || empty($oocchange->qa_comments_description_ooc) || empty($oocchange->is_repeat_assingable_ooc) ) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required! Phase IA Investigation',
-                        'message' => 'Evaluation Remarks is yet to be filled!',
+                        'message' => 'Phase IA Investigation Tab is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -4897,11 +4900,11 @@ class OOCController extends Controller
 
             if ($oocchange->stage == 10) {
 
-                if (!$oocchange->is_repeat_stageii_ooc && !$oocchange->is_repeat_proposed_stage_ooc) {
+                if (empty($oocchange->is_repeat_stageii_ooc)  || empty($oocchange->compiled_by) || empty($oocchange->justification_for_recalibration) || empty($oocchange->initiated_throug_stageii_ooc) || empty($oocchange->initiated_through_stageii_ooc)|| empty($oocchange->is_repeat_reanalysis_stageii_ooc)|| empty($oocchange->initiated_through_stageii_cause_failure_ooc)|| empty($oocchange->initiated_through_capas_ooc_IB)|| empty($oocchange->initiated_through_capa_prevent_ooc_IB)|| empty($oocchange->phase_ib_investigation_summary) ) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required! Phase IB Investigation',
-                        'message' => 'Rectification by Service Engineer required and Proposed By is yet to be filled!',
+                        'message' => 'Phase IB Investigation Tab is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -5130,11 +5133,11 @@ class OOCController extends Controller
             }
             if ($oocchange->stage == 13) {
 
-                if (!$oocchange->qPIBaHremarksnewfield) {
+                if (empty($oocchange->qPIBaHremarksnewfield) || empty($oocchange->is_repeat_realease_stageii_ooc)) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required! P-IB QAH Review',
-                        'message' => 'P-IB QAH Remarks is yet to be filled!',
+                        'message' => 'P-IB QAH Review Tab is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -6020,8 +6023,7 @@ class OOCController extends Controller
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
                $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
-
-
+              
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
                $oocOpen = OpenStage::find(1);
@@ -6048,7 +6050,7 @@ class OOCController extends Controller
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    $parentRecord = OutOfCalibration::where('id', $id)->value('record');
 
-                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data'));
+                   return view('frontend.action-item.action-item', compact('record_number','parentRecord', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','record','old_record', 'data_record','data','parent_division_id'));
                }
                if ($request->revision == "Root-Cause-Analysis") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -6068,7 +6070,14 @@ class OOCController extends Controller
             $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1;
-            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData','parent_division_id',));
+
+          
+           
+            $parent_due_date =  OutOfCalibration::where('id',$id)->value('due_date');
+            if ($request->due_date) {
+               $parent_due_date = $request->due_date;
+             }
+            return view('frontend.extension.extension_new', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords', 'extension_record','countData','parent_division_id','parent_due_date'));
 
         }
 
@@ -6092,6 +6101,8 @@ class OOCController extends Controller
                $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+               $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
+          
                $parent_initiator_id = $id;
 
 
@@ -6155,7 +6166,12 @@ class OOCController extends Controller
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
                 $countData = $count + 1;
-                return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
+                $parent_due_date =  OutOfCalibration::where('id',$id)->value('due_date');
+                if ($request->due_date) {
+                   $parent_due_date = $request->due_date;
+                 }
+                
+                return view('frontend.extension.extension_new', compact('record_number','extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 
             }
     }
@@ -6177,7 +6193,8 @@ class OOCController extends Controller
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
                $parent_initiator_id = $id;
-
+               $parent_division_id = OutOfCalibration::where('id', $id)->value('division_id');
+              
 
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
@@ -6191,7 +6208,11 @@ class OOCController extends Controller
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                 $count = Helpers::getChildData($id, $parent_type);
                 $countData = $count + 1;
-                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData'));
+                $parent_due_date =  OutOfCalibration::where('id',$id)->value('due_date');
+                if ($request->due_date) {
+                   $parent_due_date = $request->due_date;
+                 }
+                return view('frontend.extension.extension_new', compact('record_number', 'extension_record', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','relatedRecords','countData','parent_division_id','parent_due_date'));
 
             }
     }
