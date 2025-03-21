@@ -420,11 +420,11 @@
                         Effective Date:
                         <span>
                         @if ($data->training_required == 'yes')
-                            @if ($data->stage >= 10)
+                            @if ($data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @else
-                            @if ($data->stage > 7)
+                            @if ($data->stage > 10)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @endif
@@ -677,7 +677,7 @@
                     <thead>
                         <tr>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No./ DCRF No</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
                             <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
                         </tr>
