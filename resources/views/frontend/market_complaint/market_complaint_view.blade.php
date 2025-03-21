@@ -1089,13 +1089,14 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Complainant</label>
-                                    <input type="text"
-                                        name="complainant_gi"{{ $data->stage == 1 ? '' : 'readonly' }}
-                                        value="{{ $data->complainant_gi }}">
-
+                                    <label for="complainant_gi">Complainant</label>
+                                    <textarea name="complainant_gi" class="form-control" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complainant_gi }}</textarea>
                                 </div>
                             </div>
+
+
+
+
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Due Date">Complaint Reported On</label>
@@ -1110,6 +1111,7 @@
                                                 ? ''
                                                 : $data->complaint_reported_on_gi;
                                         @endphp
+
                                         <input
                                             type="text" {{ $data->stage == 1 ? '' : 'readonly' }}
                                             id="complaint_dat" name="complaint_reported_on_gi"

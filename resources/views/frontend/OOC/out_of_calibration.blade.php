@@ -486,6 +486,19 @@
                                     });
                                 </script>
 
+
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Details of OOC">
+                                    Details of OOC
+                                    </label>
+                                    <div>
+                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                    </div>
+                                    <textarea class="summernote" name="details_of_ooc" id="details_of_ooc"></textarea>
+                                </div>
+                            </div>
+
                                 {{-- 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -624,17 +637,7 @@
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Details of OOC">
-                                    Details of OOC
-                                    </label>
-                                    <div>
-                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
-                                    </div>
-                                    <textarea class="summernote" name="details_of_ooc" id="details_of_ooc"></textarea>
-                                </div>
-                            </div>
+                          
 
 
                                 <div class="col-lg-12">
