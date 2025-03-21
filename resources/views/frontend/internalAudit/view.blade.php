@@ -956,13 +956,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Initiator Department</b></label>
                                                 <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
-                                        </div> --}}
+                                        </div>
 
                                         <div class="col-lg-6">
                                             <div class="group-input">

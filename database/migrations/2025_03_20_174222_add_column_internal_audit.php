@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('user_id')->nullable();
             $table->string('person_role')->nullable();
             $table->string('status')->nullable();
-            $table->timestamp();
+            $table->timestamps();
         });
     }
 

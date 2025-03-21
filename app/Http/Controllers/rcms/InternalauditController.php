@@ -4892,7 +4892,13 @@ if ($areIniAttachmentsSame2 != true) {
              if($changeControl->stage == 2){
                 $responseData = InternalAuditResponse::where('ia_id', $id)->latest()->first();
 
-                if($changeControl->Auditee_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditee"){
+                // if($changeControl->Auditee_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditee"){
+                    if(
+                        $changeControl->Auditee_comment &&
+                        Auth::user()->id == $changeControl->assign_to &&
+                        (!isset($responseData) || $responseData->person_role != "Auditee")
+                    ){
+                    
                     $stageCheck = new InternalAuditResponse();
                     $stageCheck->ia_id = $id;
                     $stageCheck->user_id = Auth::user()->id;
@@ -4906,7 +4912,13 @@ if ($areIniAttachmentsSame2 != true) {
                     $stageCheck->save();
 
                 }
-                if($changeControl->Auditor_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditor"){
+                // if($changeControl->Auditor_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditor"){
+                    if(
+                        $changeControl->Auditor_comment &&
+                        Auth::user()->id == $changeControl->assign_to &&
+                        (!isset($responseData) || $responseData->person_role != "Auditor")
+                    ){
+                    
                     $stageCheck = new InternalAuditResponse();
                     $stageCheck->ia_id = $id;
                     $stageCheck->user_id = Auth::user()->id;
