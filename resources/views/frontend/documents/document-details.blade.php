@@ -66,7 +66,7 @@
                                     {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif --}}
-                                    @if ($document->stage >= 8 && $document->status !== 'Obsolete')
+                                    @if ($document->stage >= 11 && $document->status !== 'Obsolete')
                                         {{-- <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button> --}}
                                         <button class="btn btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#signature-modal">
