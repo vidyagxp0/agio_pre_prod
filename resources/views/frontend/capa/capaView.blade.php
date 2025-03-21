@@ -1510,7 +1510,7 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Interim Containnment">Effectiveness check required</label>
-                                                <select name="effectivness_check">
+                                                <select name="effectivness_check" required>
                                                     <option value="">-----Select---</option>
                                                     <option
                                                         {{ $data->effectivness_check == 'Yes' ? 'selected' : '' }}
