@@ -17,7 +17,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            @if(!empty($parent_division_id)) 
+            @if(!empty($parent_division_id))
                 {{ Helpers::getDivisionName($parent_division_id) }} /
             @else
                 {{ Helpers::getDivisionName(session()->get('division')) }} /
@@ -115,7 +115,7 @@
                                 </div>
 
                             @endif
-                               
+
 
                                 <div class="col-lg-6">
                                     @if (!empty($cc->id))
@@ -222,11 +222,11 @@
                                         display: none;
                                     }
                                 </style> --}}
-                   
 
 
 
-                   
+
+
             @if (!empty($parent_type))
             <div class="col-lg-6 new-date-data-field">
             <label for="Audit Schedule Start Date">Due Date</label>
@@ -238,7 +238,7 @@
                 <label for="Audit Schedule Start Date">Due Date</label>
                 <div class="calenderauditee">
                     <input type="text" id="due_dateq" placeholder="DD-MM-YYYY" />
-                    <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                    <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                         value="{{ $due_date }}" class="hide-input"
                         oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
                 </div>
@@ -382,7 +382,7 @@
                                     <div class="group-input">
                                         <label for="Short Description"> Description<span
                                                 class="text-danger"></span></label>
-                                        <textarea name="description"></textarea>
+                                        <textarea name="description" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -840,5 +840,33 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
+    </script>
+    <script>
+
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+
     </script>
 @endsection

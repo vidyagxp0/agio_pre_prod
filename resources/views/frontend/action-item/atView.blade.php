@@ -536,18 +536,25 @@
                                             </select>
                                         </div>
                                     </div> --}}
+
+                                    {{-- <div class="col-lg-12">
+                                        <div>
+                                            <label for="Short Description"> Description<span  class="text-danger"></span></label>
+                                            <textarea name="description" class="summernote">{{ $data->description }}</textarea>
+                                        </div>
+                                    </div> --}}
                                 @if ($data->stage == 1)
-                                    <div class="col-12">
-                                        <div class="group-input">
+                                    <div class="col-lg-12">
+                                        <div>
                                             <label for="description">Description <span class="text-danger">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" required>{{ $data->description }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}   name="description"  class="summernote" required>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                 @else
-                                    <div class="col-12">
-                                        <div class="group-input">
+                                    <div class="col-lg-12">
+                                        <div>
                                             <label for="description">Description</label>
-                                            <textarea readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description">{{ $data->description }}</textarea>
+                                            <textarea readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}  name="description" class="summernote" required>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                 @endif
@@ -556,7 +563,7 @@
                                 @enderror
 
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department</label>
                                             <select {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : "" }}
@@ -620,6 +627,14 @@
                                     @error('departments')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Responsible Department</b></label>
+                                        <input disabled type="text" name="auditee_department" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
                                 </div>
 
                                 <div class="col-lg-12">
@@ -2049,6 +2064,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+        VirtualSelect.init({
+            ele: '#reference_record, #notify_to'
+        });
+
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+
+    </script>
     <!-- Example Blade View -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
@@ -2112,5 +2159,7 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+
 
 @endsection

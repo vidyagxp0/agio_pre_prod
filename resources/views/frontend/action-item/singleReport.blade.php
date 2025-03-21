@@ -336,8 +336,8 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">File</th>
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->file_attach)
                             @php $files = json_decode($data->file_attach); @endphp
@@ -409,8 +409,8 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->acknowledge_attach)
                         @php $files = json_decode($data->acknowledge_attach); @endphp
@@ -499,8 +499,8 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Support_doc)
                         @php $files = json_decode($data->Support_doc); @endphp
@@ -553,8 +553,8 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->final_attach)
                         @php $files = json_decode($data->final_attach); @endphp
