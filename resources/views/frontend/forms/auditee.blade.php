@@ -672,7 +672,7 @@
                                         <table class="table table-bordered" id="onservation-incident-tableAuditor">
                                             <thead>
                                                 <tr>
-                                                    <th>Row</th>
+                                                    <th>Sr.No.</th>
                                                     <th>Auditor Name</th>
                                                     <th>External Agency Name</th>
                                                     <th>Designation</th>
@@ -1368,7 +1368,7 @@
         <table class="table table-bordered" id="onservation-incident-table">
             <thead>
                 <tr>
-                    <th>Row</th>
+                    <th>Sr.No.</th>
                     <th>Observation</th>
                     <th>Response</th>
                     <th>CAPA / Child action Reference If Any</th>
