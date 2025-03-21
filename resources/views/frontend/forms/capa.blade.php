@@ -136,9 +136,10 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger"></span>
+                                            Assigned To <span
+                                            class="text-danger">*</span> 
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->name }}">{{ $value->name }}</option>
@@ -149,55 +150,24 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-6 new-date-data-field">
-                                            <div class="group-input input-date ">
-                                                <label for="due-date">Due Date<span class="text-danger">*</span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
-                                                </div>
-                                                <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly
-                                                        placeholder="DD-MM-YYYY" />
-                                                    <input type="date" name="due_date" class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" />
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Date Due"> Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                                reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
-                                    </div>
-                                </div> --}}
+                             
+                       
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <label for="Audit Schedule Start Date">Due Date
+                                        <span
+                                        class="text-danger">*</span>
+                                        </label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_dateq" readonly
                                                 placeholder="DD-MM-YYYY" />
                                             <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"  required/>
                                         </div>
 
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
-                                        <div class="calenderauditee">
-                                            <!-- Display the formatted date in a readonly input -->
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
-                                        </div>
-                                    </div>
-                                </div> --}}
+                          
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const date = new Date(dateInput.value);
@@ -218,7 +188,7 @@
                                     }
                                     </style>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Department<span
                                             class="text-danger">*</span></label>
@@ -254,15 +224,72 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             value="" readonly >
                                     </div>
-                                </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description"></textarea>
-                                    </div>
                                 </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator Department</b></label>
+                                        <input readonly type="text" name="initiator_Group" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    </div>
+                                </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            // Define department name to code mapping
+                                            const departmentMapping = {
+                                                "Calibration Lab": "CLB",
+                                                "Engineering": "ENG",
+                                                "Facilities": "FAC",
+                                                "LAB": "LAB",
+                                                "Labeling": "LABL",
+                                                "Manufacturing": "MANU",
+                                                "Quality Assurance": "QA",
+                                                "Quality Control": "QC",
+                                                "Ragulatory Affairs": "RA",
+                                                "Security": "SCR",
+                                                "Training": "TR",
+                                                "IT": "IT",
+                                                "Application Engineering": "AE",
+                                                "Trading": "TRD",
+                                                "Research": "RSCH",
+                                                "Sales": "SAL",
+                                                "Finance": "FIN",
+                                                "Systems": "SYS",
+                                                "Administrative": "ADM",
+                                                "M&A": "M&A",
+                                                "R&D": "R&D",
+                                                "Human Resource": "HR",
+                                                "Banking": "BNK",
+                                                "Marketing": "MRKT",
+
+                                            };
+
+                                            // Get the Initiator Department input
+                                            let initiatorGroupInput = document.getElementById("initiator_group");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                            // Get the department name from the input field
+                                            let departmentName = initiatorGroupInput.value.trim();
+
+                                            // Auto-generate the department code based on the mapping
+                                            if (departmentName in departmentMapping) {
+                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                            } else {
+                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                            }
+                                        });
+                                    </script>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                            value="" readonly>
+                                    </div>
+                                </div>
+
+                             
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -516,7 +543,7 @@
                                         <table class="table table-bordered" id="productmaterial">
                                             <thead>
                                                 <tr>
-                                                    <th>Row #</th>
+                                                    <th>Sr. No.</th>
                                                     <th>Product / Material Name</th>
                                                     <th>Product /Material Batch No./Lot No./AR No.</th>
                                                     <th>Product / Material Manufacturing Date</th>
@@ -686,7 +713,7 @@ $(document).ready(function() {
                                         <table class="table table-bordered" id="equipment_de">
                                             <thead>
                                                 <tr>
-                                                    <th>Row #</th>
+                                                    <th>Sr. No.</th>
                                                     <th>Equipment/Instruments Name</th>
                                                     <th>Equipment/Instrument ID</th>
                                                     <th>Equipment/Instruments Comments</th>

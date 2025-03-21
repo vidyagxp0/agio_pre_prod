@@ -692,7 +692,7 @@
                         <tr>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date']) ?? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') ?? '' }}</td>
+                            <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}</td>
                             <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason'] ?? '' }}</td>
                         </tr>
                     @endforeach
