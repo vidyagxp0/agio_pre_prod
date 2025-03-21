@@ -54,7 +54,7 @@
         }
     </script>
 
-    <script>
+    {{-- <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
             let blockTextarea = block.getElementsByTagName('textarea')[0];
@@ -67,6 +67,31 @@
                 blockTextarea.removeAttribute('required');
             }
         }
+    </script> --}}
+
+    <script>
+        function otherController(value, checkValue, blockID) {
+            let block = document.getElementById(blockID);
+            let blockTextarea = block.getElementsByTagName('textarea')[0];
+            let blockLabel = block.querySelector('label span.text-danger');
+
+            if (value === checkValue) {
+                block.style.display = "block"; // Show field
+                blockLabel.classList.remove('d-none');
+                blockTextarea.setAttribute('required', 'required');
+            } else {
+                block.style.display = "none"; // Hide field
+                blockLabel.classList.add('d-none');
+                blockTextarea.removeAttribute('required');
+            }
+        }
+
+        // Page load par check kare ki agar "Yes" ya "Others" selected ho to field dikhaye
+        document.addEventListener("DOMContentLoaded", function () {
+            otherController(document.querySelector("select[name='initiated_through']").value, "others", "initiated_through_req");
+            otherController(document.querySelector("select[name='repeat']").value, "Yes", "repeat_nature");
+            otherController(document.querySelector("select[name='interim_containnment']").value, "required", "containment_comments");
+        });
     </script>
 
     <div class="form-field-head">
@@ -395,54 +420,31 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    Assigned To <span class="text-danger"></span>
+                                                    Assigned To <span
+                                                    class="text-danger">*</span>
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : ''}} >
+                                                <select id="select-state" placeholder="Select..." name="assign_to"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : ''}} required>
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->name ? 'selected' : '' }}
                                                             value="{{ $value->name }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
-
                                             </div>
                                         </div>
-                                        <!-- <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger">*</span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                @if (!empty($revised_date))
-                                                <input readonly type="text"
-                                                value="{{ Helpers::getdateFormat($revised_date) }}">
-                                                @else
-                                                <input disabled type="text"
-                                                value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                                @endif
-
-                                            </div>
-                                        </div> -->
-                                        {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                        <input readonly type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
-                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-
-                                    {{-- </div>
-                                </div> --}}
+                                      
+                                    
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <label for="Audit Schedule Start Date">Due Date<span
+                                        class="text-danger">*</span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision
                                             reason in "Due Date Extension Justification" data field.</small></div>
                                          <div class="calenderauditee">
                                             <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                 {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}/>
                                             <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1 ? 'readonly' : '' }} value="{{ $data->due_date }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
+                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -482,7 +484,7 @@
                                     }
                                     </style>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"> 	Initiator Department @if($data->stage == 1)<span class="text-danger">*</span>@endif  </label>
                                                 <select name="initiator_Group" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
@@ -521,17 +523,26 @@
                                                 <input readonly type="text" name="initiator_group_code"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}
                                                     value="{{ $data->initiator_Group}}" id="initiator_group_code"
                                                     readonly>
-                                                {{-- <div class="static"></div> --}}
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Short Description">Short Description <span
-                                                        class="text-danger">*</span></label>
-                                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                                <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
                                         </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiation Department Code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description<span
@@ -548,10 +559,11 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Initiated Through</label>
+                                                <label for="Initiator Group">Initiated Through<span
+                                                class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please select related information</small></div>
                                                 <select name="initiated_through"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
-                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')" required>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->initiated_through == 'internal_audit') selected @endif
                                                         value="internal_audit">Internal Audit</option>
@@ -601,12 +613,14 @@
                                                 <textarea name="initiated_through_req"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}> {{ $data->initiated_through_req }}</textarea>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="repeat">Repeat</label>
+                                                <label for="repeat">Repeat<span
+                                                class="text-danger d-none">*</span></label>
                                                 <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
                                                 <select name="repeat"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
-                                                    onchange="otherController(this.value, 'Yes', 'repeat_nature')">
+                                                    onchange="otherController(this.value, 'Yes', 'repeat_nature')" required>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->repeat == 'Yes') selected @endif
                                                         value="Yes">Yes</option>
@@ -624,6 +638,7 @@
                                                 <textarea name="repeat_nature"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->repeat_nature }}</textarea>
                                             </div>
                                         </div>
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Problem Description">Problem Description</label>
@@ -814,15 +829,13 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Details">Investigation Summary</label>
+                                                <label for="Details">Investigation Summary<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
                                                 {{-- <input type="text" name="investigation" value="{{ $data->investigation }}"> --}}
-                                                <textarea name="investigation" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->investigation }}</textarea>
+                                                <textarea name="investigation" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }} required>{{ $data->investigation }}</textarea>
                                             </div>
                                             <div class="group-input">
-                                                <label for="Details">Root Cause</label>
-                                                {{-- <input type="text" name="rcadetails" value="{{ $data->rcadetails }}"> --}}
-                                                <textarea name="rcadetails" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>{{ $data->rcadetails }}</textarea>
-
+                                                <label for="Details">Root Cause<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>
+                                                <textarea name="rcadetails" {{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }} required>{{ $data->rcadetails }}</textarea>
                                             </div>
                                         </div>
 
@@ -835,7 +848,7 @@
                                                 <table class="table table-bordered" id="productmaterial">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 40px">Row #</th>
+                                                            <th style="width: 40px">Sr. No</th>
                                                             <th>Product / Material Name</th>
                                                             <th>Product /Material Batch No./Lot No./AR No.</th>
                                                             <th>Product / Material Manufacturing Date</th>
@@ -956,43 +969,43 @@
 
                                                 // Function to initialize the jQuery datepicker on input fields
                                                 function initializeDatepicker() {
-    $('.material_mfg_date, .material_expiry_date').datepicker({
-        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        onClose: function(dateText, inst) {
-            if (dateText) {
-                // Format the date correctly when closed
-                const dateObj = $(this).datepicker('getDate');
-                $(this).val($.datepicker.formatDate('dd-M-yy', dateObj));
-            } else {
-                $(this).val(''); // Clear the input if no date is selected
-                $(this).attr('placeholder', 'DD-MMM-YYYY'); // Reset the placeholder
-            }
-        },
-        beforeShow: function() {
-            $(this).attr('readonly', 'readonly'); // Prevent text input while opening the datepicker
-        }
-    });
+                                                    $('.material_mfg_date, .material_expiry_date').datepicker({
+                                                        dateFormat: 'dd-M-yy', // Desired format like '10 Oct 2024'
+                                                        changeMonth: true,
+                                                        changeYear: true,
+                                                        showButtonPanel: true,
+                                                        onClose: function(dateText, inst) {
+                                                            if (dateText) {
+                                                                // Format the date correctly when closed
+                                                                const dateObj = $(this).datepicker('getDate');
+                                                                $(this).val($.datepicker.formatDate('dd-M-yy', dateObj));
+                                                            } else {
+                                                                $(this).val(''); // Clear the input if no date is selected
+                                                                $(this).attr('placeholder', 'DD-MMM-YYYY'); // Reset the placeholder
+                                                            }
+                                                        },
+                                                        beforeShow: function() {
+                                                            $(this).attr('readonly', 'readonly'); // Prevent text input while opening the datepicker
+                                                        }
+                                                    });
 
-    // Prevent manual text entry
-    $('.material_mfg_date, .material_expiry_date').on('keypress', function(e) {
-        e.preventDefault(); // Disable text input
-    });
+                                                    // Prevent manual text entry
+                                                    $('.material_mfg_date, .material_expiry_date').on('keypress', function(e) {
+                                                        e.preventDefault(); // Disable text input
+                                                    });
 
-    // Optional: To clear the field when clicking outside
-    $(document).on('click', function(event) {
-        if (!$(event.target).closest('.material_mfg_date, .material_expiry_date').length) {
-            $(this).val(''); // Clear input if not clicked
-        }
-    });
-}
+                                                    // Optional: To clear the field when clicking outside
+                                                    $(document).on('click', function(event) {
+                                                        if (!$(event.target).closest('.material_mfg_date, .material_expiry_date').length) {
+                                                            $(this).val(''); // Clear input if not clicked
+                                                        }
+                                                    });
+                                                }
 
-// Call the function to initialize the datepicker
-$(document).ready(function() {
-    initializeDatepicker();
-});
+                                                // Call the function to initialize the datepicker
+                                                $(document).ready(function() {
+                                                    initializeDatepicker();
+                                                });
 
 
                                                 // Add a new row when the + button is clicked
@@ -1047,23 +1060,6 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                                         <div class="col-12 sub-head">
                                             Equipment/Instruments Details
                                         </div>
@@ -1077,7 +1073,7 @@ $(document).ready(function() {
                                                 <table class="table table-bordered" id="equi_details">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 40px">Row #</th>
+                                                            <th style="width: 40px">Sr. No.</th>
                                                             <th>Equipment/Instruments Name</th>
                                                             <th>Equipment/Instrument ID</th>
                                                             <th>Equipment/Instruments Comments</th>
@@ -1161,11 +1157,8 @@ $(document).ready(function() {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Details">Details</label>
-                                                {{-- <input type="text" name="details_new"
-                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
-                                                    value="{{ $data->details_new }}"> --}}
-                                                    <textarea name="details_new" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->details_new }}</textarea>
+                                                <label for="Details">Details<span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 || $data->stage == 9 ? 'd-none' : ''}}">*</span></label>    
+                                                    <textarea name="details_new" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }} required>{{ $data->details_new }}</textarea>
 
                                             </div>
                                         </div>
@@ -1191,9 +1184,9 @@ $(document).ready(function() {
                                         <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    CAPA Type<span class="text-danger"></span>
+                                                    CAPA Type<span class="text-danger">*</span>
                                                 </label>
-                                                <select id="capa_type" placeholder="Select..." name="capa_type"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}>
+                                                <select id="capa_type" placeholder="Select..." name="capa_type"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }} required>
                                                     <option value="">Select a value</option>
                                                     <option {{ $data->capa_type == "Corrective Action" ? 'selected' : '' }} value="Corrective Action">Corrective Action</option>
                                                     <option {{ $data->capa_type == "Preventive Action" ? 'selected' : '' }} value="Preventive Action">Preventive Action</option>
@@ -1517,7 +1510,7 @@ $(document).ready(function() {
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Interim Containnment">Effectiveness check required</label>
-                                                <select name="effectivness_check">
+                                                <select name="effectivness_check" required>
                                                     <option value="">-----Select---</option>
                                                     <option
                                                         {{ $data->effectivness_check == 'Yes' ? 'selected' : '' }}
