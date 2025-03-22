@@ -39,8 +39,6 @@ class RootCauseController extends Controller
     public function root_store(Request $request)
     {
 
-        //  dd($request->all());
-
         $lastDocument = 'Null';
         if (!$request->short_description) {
             toastr()->error("Short description is required");
@@ -194,6 +192,7 @@ class RootCauseController extends Controller
         $root->division_code = $request->division_code;
         $root->intiation_date = $request->intiation_date;
         $root->initiator_Group = $request->initiator_Group;
+        
         $root->initiator_group_code = $request->initiator_group_code;
         $root->short_description = $request->short_description;
         $root->due_date = $request->due_date;
@@ -285,7 +284,7 @@ class RootCauseController extends Controller
             $root->mitigation_proposal = serialize($request->mitigation_proposal);
         }
 
-    //    dd($request->risk_factor);
+    
         //observation changes
         $root->objective = $request->objective;
         $root->scope = $request->scope;
@@ -1562,11 +1561,7 @@ class RootCauseController extends Controller
 
 
     public function root_update(Request $request, $id)
-
-    //  dd(root_update);
-
     {
-        //       dd($request->all());
 
 
         if (!$request->short_description) {
@@ -1603,9 +1598,11 @@ class RootCauseController extends Controller
         $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
-        $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
-
-        // dd($root->root_cause_methodology);
+        // $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
+        $root->root_cause_methodology = is_array($request->root_cause_methodology) 
+        ? implode(',', $request->root_cause_methodology) 
+        : $request->root_cause_methodology;
+    
         // $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
@@ -1683,7 +1680,11 @@ class RootCauseController extends Controller
         $root->problem_statement_rca = $request->problem_statement_rca;
         $root->requirement = $request->requirement;
         $root->immediate_action = $request->immediate_action;
-        $root->investigation_team = implode(',', $request->investigation_team);
+        $root->investigation_team = is_array($request->investigation_team) 
+            ? implode(',', $request->investigation_team) 
+            : $request->investigation_team;
+
+        // $root->investigation_team = implode(',', $request->investigation_team);
         $investigation_teamIdsArray = explode(',', $root->investigation_team);
         $investigation_teamNames = User::whereIn('id', $investigation_teamIdsArray)->pluck('name')->toArray();
         $investigation_teamNamesString = implode(', ', $investigation_teamNames);
@@ -3257,6 +3258,7 @@ class RootCauseController extends Controller
         toastr()->success("Record is update Successfully");
         return back();
     }
+
     public function root_show($id)
     {
         $data = RootCauseAnalysis::find($id);
@@ -3296,7 +3298,7 @@ class RootCauseController extends Controller
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for QA initial review state'
+                        'message' => 'Send for HOD review'
                     ]);
                 }
                 $root->stage = "2";

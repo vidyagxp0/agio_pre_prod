@@ -166,7 +166,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    ERRATA Single Report
+                    ERRATA Report
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -272,7 +272,7 @@
                         @endphp --}}
                         {{-- <td class="w-80">
                             @if ($data->Department)
-                                {{ Helpers::getFullDepartmentName($data->Department) }}
+                                {{ $data->Department }}
                             @else
                                 Not Applicable
                             @endif
@@ -280,8 +280,8 @@
 
                         <th class="w-20">Department</th>
                         <td class="w-30">
-                            @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                        @if ($data->Department)
+                                {{ $data->Department }}
                             @else
                                 Not Applicable
                             @endif
@@ -523,7 +523,7 @@
                 {{-- <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">SR no.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-20">List Of Impacting Document</th>
                             <!-- <th class="w-20">Prepared By</th>
                             <th class="w-20">Checked By</th>
@@ -564,8 +564,8 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">SR No.</th>
-                                <th class="w-20">List Of Impacting Document</th>
+                                <th class="w-20">Sr. No.</th>
+                                <th class="w-20">List Of Impacting Document (If Any)</th>
                                 <!-- <th class="w-20">Prepared By</th>
                                 <th class="w-20">Checked By</th>
                                 <th class="w-20">Approved By</th> -->
@@ -640,7 +640,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">SR No.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->HOD_Attachments)
@@ -711,7 +711,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">SR No.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->QA_Attachments)
@@ -757,7 +757,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">SR No.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Approval_Attachments)
@@ -828,7 +828,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">SR No.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Initiator_Attachments)
@@ -876,7 +876,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">SR No.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->HOD_Attachments1)
@@ -969,7 +969,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">SR No.</th>
+                            <th class="w-20">Sr. No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->Closure_Attachments)

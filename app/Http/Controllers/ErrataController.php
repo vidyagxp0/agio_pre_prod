@@ -97,7 +97,7 @@ class ErrataController extends Controller
         //$data->reference  = implode(',', $request->reference);
         $data->reference = $request->reference;
         $data->type = "ERRATA";
-        $data->Initiator_Group = $request->Initiator_Group;
+        $data->Department = $request->Department;
     //  dd($data->Initiator_Group);
         $data->department_code = $request->department_code;
         $data->document_type = $request->document_type;
@@ -3249,6 +3249,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
     public function singleReports(Request $request, $id)
     {
         $data = errata::find($id);
+       // dd($data);
         if (!empty($data)) {
             $grid_Data = ErrataGrid::where('ert_id', $id)->where('type', "erata_type")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
@@ -3381,7 +3382,7 @@ if (!empty($request->HOD_Attachments) || !empty($request->deleted_HOD_Attachment
     {
 
         $detail = ErrataAuditTrail::find($id);
-
+        
         $detail_data = ErrataAuditTrail::where('activity_type', $detail->activity_type)->where('errata_id', $detail->errata_id)->latest()->get();
 
         $doc = errata::where('id', $detail->errata_id)->first();
