@@ -164,73 +164,158 @@
     padding: 10px;
     background: #fff;
     border-radius: 5px;
-}
+    }
 
-.block-head {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
+    .block-head {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.table th, .table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
+    .table th, .table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
 
-.problem-statement th {
-    background: #f4bb22;
-    width: 150px;
-}
+    .problem-statement th {
+        background: #f4bb22;
+        width: 150px;
+    }
 
-.why-label {
-    color: #393cd4;
-    width: 150px;
-}
+    .why-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-.answer-label {
-    color: #393cd4;
-    width: 150px;
-}
+    .answer-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-.root-cause th {
-    background: #0080006b;
-    width: 150px;
-}
+    .root-cause th {
+        background: #0080006b;
+        width: 150px;
+    }
 
-.text-muted {
-    color: gray;
-}
+    .text-muted {
+        color: gray;
+    }
 
 
-.full-width-table {
-    width: 100%;
-    table-layout: auto; 
-    border-collapse: collapse;
-    border: 1px solid #ddd; 
-}
+    .full-width-table {
+        width: 100%;
+        table-layout: auto; 
+        border-collapse: collapse;
+        border: 1px solid #ddd; 
+    }
 
-.full-width-table th, 
-.full-width-table td {
-    padding: 6px;
-    text-align: center;
-    font-size: 10px;
-    border: 1px solid #ddd;
-    word-wrap: break-word; 
-}
+    .full-width-table th, 
+    .full-width-table td {
+        padding: 6px;
+        text-align: center;
+        font-size: 10px;
+        border: 1px solid #ddd;
+        word-wrap: break-word; 
+    }
 
-.full-width-table thead {
-    background-color: #f4f4f4; 
-    font-weight: bold;
-}
+    .full-width-table thead {
+        background-color: #f4f4f4; 
+        font-weight: bold;
+    }
 
-.full-width-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+    .full-width-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+</style>
+
+<style>
+        
+    #isPasted {
+        width: 690px !important;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    #isPasted td:first-child,
+    #isPasted th:first-child {
+        white-space: nowrap; 
+        width: 1%;
+        vertical-align: top;
+    }
+
+    #isPasted td:last-child,
+    #isPasted th:last-child {
+        width: auto;
+        vertical-align: top;
+
+    }
+
+    #isPasted th,
+    #isPasted td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted td > p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin: 0;
+        max-width: 700px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted img {
+        max-width: 500px !important;
+        height: 100%;
+        display: block;
+        margin: 5px auto;
+    }
+
+    #isPasted td img {
+        max-width: 400px !important;
+        height: 300px;
+        margin: 5px auto;
+    }
+
+    .table-containers {
+        width: 690px;
+        overflow-x: fixed;
+    }
+
+
+    #isPasted table {
+        width: 100% !important;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+
+    #isPasted table th,
+    #isPasted table td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted table img {
+        max-width: 100% !important;
+        height: auto;
+        display: block;
+        margin: 5px auto;
+    }
 </style>
 
 <body>
@@ -327,7 +412,7 @@
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->initiator_Group) }}
+                                {{ $data->initiator_Group }}
                             @else
                                 Not Applicable
                             @endif
@@ -506,7 +591,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->root_cause_initial_attachment)
                             @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
@@ -638,7 +723,7 @@
                 
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->investigation_attachment)
                             @foreach (json_decode($data->investigation_attachment) as $key => $file)
@@ -687,7 +772,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->hod_attachments)
                         @foreach (json_decode($data->hod_attachments) as $key => $file)
@@ -733,7 +818,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->cft_attchament_new)
                         @foreach (json_decode($data->cft_attchament_new) as $key => $file)
@@ -897,7 +982,7 @@
 
         <tr class="table_bg">
             <th class="w-20">Sr.No.</th>
-            <th class="w-60">Batch No</th>
+            <th class="w-60">Attachment</th>
         </tr>
         @if ($data->investigation_attachment)
             @foreach (json_decode($data->investigation_attachment) as $key => $file)
@@ -925,7 +1010,7 @@
 
         <tr class="table_bg">
             <th class="w-20">Sr.No.</th>
-            <th class="w-60">Batch No</th>
+            <th class="w-60">Attachment</th>
         </tr>
         @if ($data->root_cause_initial_attachment_rca)
             @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
@@ -950,7 +1035,7 @@
 
 
 
-<style>
+                <style>
                     .table {
                         width: 100%;
                         font-size: 7px;
@@ -981,6 +1066,92 @@
                     }
                 </style>
 
+<style>
+        
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block;
+            margin: 5px auto;
+        }
+
+        #isPasted td img {
+            max-width: 400px !important;
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed;
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
+    </style>
+
 
             <div class="border-table  tbl-bottum">
                     <div class="block-head">
@@ -989,7 +1160,7 @@
                     <table class="table full-width-table"  >
                         <thead>
                             <tr class="table_bg tr">
-                                <th class="th" style="font-size: 7px" rowspan="2">Row #</th>
+                                <th class="th" style="font-size: 7px" rowspan="2">Sr.No.</th>
                                 <th class="th" style="font-size: 7px" colspan="2">Risk Identification</th>
                                 <th class="th"  style="font-size: 7px" colspan="1">Risk Analysis</th>
                                 <th class="th" style="font-size: 7px" colspan="4">Risk Evaluation</th>
@@ -1005,7 +1176,7 @@
                                 <th style="font-size: 7px" class="rotate th">Severity (S)</th>
                                 <th style="font-size: 7px" class="rotate  th">Probability (P)</th>
                                 <th style="font-size: 7px" class="rotate th">Detection (D)</th>
-                                <th style="font-size: 7px" class="rotate th">RPN</th>
+                                <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
                                 <th style="font-size: 7px" class="th">Control Measures recommended/ Risk mitigation proposed</th>
                                 <th style="font-size: 7px" class="rotate th">Severity (S)</th>
                                 <th style="font-size: 7px" class="rotate th">Probability (P)</th>
@@ -1184,7 +1355,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-10">Row #</th>
+                            <th class="w-10">Sr.No.</th>
                             <th class="w-30">Type</th>
                             <th class="w-30">Remarks</th>
                         </tr>
@@ -1454,7 +1625,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->hod_final_attachments)
                         @foreach (json_decode($data->hod_final_attachments) as $key => $file)
@@ -1504,7 +1675,7 @@
 
             <tr class="table_bg">
                 <th class="w-20">Sr.No.</th>
-                <th class="w-60">Batch No</th>
+                <th class="w-60">Attachment</th>
             </tr>
             @if ($data->qa_final_attachments)
                 @foreach (json_decode($data->qa_final_attachments) as $key => $file)
@@ -1555,7 +1726,7 @@
 
             <tr class="table_bg">
                 <th class="w-20">Sr.No.</th>
-                <th class="w-60">Batch No</th>
+                <th class="w-60">Attachment</th>
             </tr>
             @if ($data->qah_final_attachments)
                 @foreach (json_decode($data->qah_final_attachments) as $key => $file)
@@ -1639,7 +1810,7 @@ Not Applicable
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-10">Row #</th>
+                            <th class="w-10">Sr.No.</th>
                             <th class="w-30">Root Cause Category</th>
                             <th class="w-30">Root Cause Sub-Category</th>
                             <th class="w-30">Probability</th>
@@ -1980,16 +2151,30 @@ Not Applicable
             <table>
 
 
-                <tr>
-                    <th class="w-20">Objective</th>
-                    <td class="w-80">
-                        @if ($data->objective)
-                            {{ $data->objective }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Objective</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->objective, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <tr>
                     <th class="w-20">Scope</th>
                     <td class="w-80">
@@ -2124,7 +2309,7 @@ Not Applicable
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_final_attachments)
                         @foreach (json_decode($data->qa_final_attachments) as $key => $file)

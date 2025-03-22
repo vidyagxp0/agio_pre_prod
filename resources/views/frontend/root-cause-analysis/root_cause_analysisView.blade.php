@@ -560,7 +560,7 @@
 
                                             <input name="short_description" id="docname" type="text"
                                                 maxlength="255" required
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                 value="{{ $data->short_description }}">
                                         </div>
                                         <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -571,19 +571,21 @@
                                             <label for="select-state">Name of Responsible department Head <span
                                                     class="text-danger">*</span></label>
                                             <select id="select-state" placeholder="Select..." name="assign_to"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
                                                 required>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key => $value)
                                                     <option value="{{ $value->id }}"
-                                                        @if ($data->assign_to == $value->id) selected @endif>
+                                                        {{old('assign_to', $data->assign_to) == $value->id ? 'selected' : '' }}>
                                                         {{ $value->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
+
+                                            @if(in_array($data->stage, [0,2,3,4,5,6,7,8]))
+                                              <input type="hidden" name="assign_to" value="{{old('assign_to', $data->assign_to)}}">
+                                            @endif  
+
                                         </div>
                                     </div>
 
@@ -592,19 +594,20 @@
                                             <label for="select-state">QA Reviewer <span
                                                     class="text-danger">*</span></label>
                                             <select id="select-state" placeholder="Select..." name="qa_reviewer"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
                                                 required>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key => $value)
                                                     <option value="{{ $value->id }}"
-                                                        @if ($data->qa_reviewer == $value->id) selected @endif>
+                                                        {{old('qa_reviewer', $data->qa_reviewer) == $value->id ? 'selected' : '' }}>
                                                         {{ $value->name }}
                                                     </option>
                                                 @endforeach
                                             </select>
-                                            @error('qa_reviewer')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
+                                
+                                            @if(in_array($data->stage, [0,2,3,4,5,6,7,8]))
+                                              <input type="hidden" name="qa_reviewer" value="{{old('qa_reviewer', $data->qa_reviewer)}}">
+                                            @endif  
                                         </div>
                                     </div>
 
@@ -614,7 +617,7 @@
                                             <label for="Audit Schedule Start Date">Due Date <span class="text-danger">*</span></label>
                                              <div class="calenderauditee">
                                                 <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }} required/>
+                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }} required/>
                                                 <input type="date" id="due_dateq" name="due_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1? 'disabled' : '' }} value="{{ $data->due_date }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"/>
                                             </div>
@@ -625,43 +628,7 @@
                                     </div>
 
 
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group">Initiated Through <span class="text-danger">*</span></label>
-                                            <div><small class="text-primary">Please select related information</small>
-                                            </div>
-                                            <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                name="initiated_through"
-                                                onchange="otherController(this.value, 'others', 'initiated_through_req')" required>
-                                                <option value="">-- select --</option>
-                                                <option @if ($data->initiated_through == 'recall') selected @endif
-                                                    value="recall">
-                                                    Recall</option>
-                                                <option @if ($data->initiated_through == 'return') selected @endif
-                                                    value="return">
-                                                    Return</option>
-                                                <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                    value="deviation">Deviation</option>
-                                                <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                    value="complaint">Complaint</option>
-                                                <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                    value="regulatory">Regulatory</option>
-                                                <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                    value="lab-incident">Lab Incident</option>
-                                                <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                    value="improvement">Improvement</option>
-                                                <option @if ($data->initiated_through == 'others') selected @endif
-                                                    value="others">
-                                                    Others</option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input" id="initiated_through_req">
-                                            <label for="If Other">Others<span class="text-danger">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
-                                        </div>
-                                    </div> --}}
+                                   
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -669,27 +636,31 @@
                                             <div>
                                                 <small class="text-primary">Please select related information</small>
                                             </div>
-                                            <select {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                name="initiated_through"
-                                                id="initiated_through"
-                                                onchange="toggleOtherField()" required>
+                                            <select name="initiated_through"
+                                            id="initiated_through" {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
+                                                onchange="toggleOtherField()" 
+                                                {{$data->stage==1 ? 'required':''}} >
                                                 <option value="">-- select --</option>
-                                                <option @if ($data->initiated_through == 'recall') selected @endif value="recall">Recall</option>
-                                                <option @if ($data->initiated_through == 'return') selected @endif value="return">Return</option>
-                                                <option @if ($data->initiated_through == 'deviation') selected @endif value="deviation">Deviation</option>
-                                                <option @if ($data->initiated_through == 'complaint') selected @endif value="complaint">Complaint</option>
-                                                <option @if ($data->initiated_through == 'regulatory') selected @endif value="regulatory">Regulatory</option>
-                                                <option @if ($data->initiated_through == 'lab-incident') selected @endif value="lab-incident">Lab Incident</option>
-                                                <option @if ($data->initiated_through == 'improvement') selected @endif value="improvement">Improvement</option>
-                                                <option @if ($data->initiated_through == 'others') selected @endif value="others">Others</option>
+                                                <option value="recall" {{old('initiated_through', $data->initiated_through) == 'recall' ? 'selected' : '' }}>Recall</option>
+                                                <option value="return" {{old('initiated_through', $data->initiated_through) == 'return' ? 'selected' : '' }}>Return</option>
+                                                <option value="deviation" {{old('initiated_through', $data->initiated_through) == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                                <option value="complaint" {{old('initiated_through', $data->initiated_through) == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                                <option value="regulatory" {{old('initiated_through', $data->initiated_through) == 'regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                <option value="lab-incident" {{old('initiated_through', $data->initiated_through) == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                <option value="improvement" {{old('initiated_through', $data->initiated_through) == 'improvement' ? 'selected' : '' }}>Improvement</option>
+                                                <option value="others" {{old('initiated_through', $data->initiated_through) == 'others' ? 'selected' : '' }}>Others</option>
                                             </select>
+
+                                            @if(in_array($data->stage, [0,2,3,4,5,6,7,8]))
+                                              <input type="hidden" name="initiated_through" value="{{old('initiated_through', $data->initiated_through)}}">
+                                            @endif  
                                         </div>
                                     </div>
 
                                     <div class="col-lg-6">
                                         <div class="group-input" id="initiated_through_req" style="display: none;">
                                             <label for="If Other">Others <span class="text-danger">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                            <textarea {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                         </div>
                                     </div>
 
@@ -771,7 +742,7 @@
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department <span class="text-danger">*</span></label>
                                             <select name="department"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                            {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
                                                 id="department" required>
                                                 <option value="">-- Select --</option>
                                                 <option value="Corporate Quality Assurance"
@@ -850,13 +821,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description <span class="text-danger">*</span></label>
-                                            <textarea name="description"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>{{ $data->description }}</textarea>
+                                            <textarea name="description"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} required>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="comments">Comments <span class="text-danger" >*</span></label>
-                                            <textarea name="comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                                            <textarea name="comments" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} required>{{ $data->comments }}</textarea>
                                         </div>
                                         @error('comments')
                                             <span class="text-danger">{{$message}}</span>
@@ -893,7 +864,7 @@
                                                     <div>Add</div>
 
                                                     <input type="file" id="myfile"
-                                                        name="root_cause_initial_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        name="root_cause_initial_attachment[]" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
                                                         oninput="addMultipleFiles(this, 'root_cause_initial_attachment')"
                                                         multiple>
                                                 </div>
@@ -913,728 +884,7 @@
                         </div>
 
 
-                    {{-- <div id="CCForm5" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="objective">Objective</label>
-                                        <textarea name="objective"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->objective }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="scope">Scope</label>
-                                        <textarea name="scope"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="problem_statement">Problem Statement</label>
-                                        <textarea name="problem_statement_rca"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->problem_statement_rca }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="requirement">Background</label>
-                                        <textarea name="requirement"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->requirement }}</textarea>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="investigation_team">Investigation Team</label>
-                                        <select id="investigation_team" name="investigation_team[]" multiple
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                            <option value="">Select members of the Investigation Team</option>
-                                            @foreach ($users as $user)
-                                                    {{ in_array($user->id, explode(',', $data->investigation_team ?? '')) ? 'selected' : '' }}>
-                                                    {{ $user->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('investigation_team')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root-cause-methodology">Root Cause Methodology</label>
-                                        @php
-                                            $selectedMethodologies = explode(',', $data->root_cause_methodology);
-                                        @endphp
-                                        <select name="root_cause_methodology[]" multiple
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                            id="root-cause-methodology">
-                                            <option value="Why-Why Chart"
-                                                @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
-                                            </option>
-                                            <option value="Failure Mode and Effect Analysis"
-                                                @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
-                                                Effect
-                                                Analysis</option>
-                                            <option value="Fishbone or Ishikawa Diagram"
-                                                @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or
-                                                Ishikawa
-                                                Diagram</option>
-                                            <option value="Is/Is Not Analysis"
-                                                @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
-                                            </option>
-                                            <option value="Rootcauseothers"
-
-                                                @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Others
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-12" id="root-cause-others"style="display:none;">
-                                    <div class="group-input">
-                                        <label for="root_cause_Others">Others</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if
-                                                it does not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_Others" id="summernote">{{ $data->root_cause_Others}} </textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments"> Attachment</label>
-                                        <div>
-                                            <small class="text-primary">
-                                                Please Attach all relevant or supporting documents
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list"
-                                                id="investigation_attachment">
-                                                @if ($data->investigation_attachment)
-                                                    @foreach (json_decode($data->investigation_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-
-                                                <input type="file" id="myfile"
-                                                    name="investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'investigation_attachment')"
-                                                    multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-12 mb-4" id="fmea-section" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="agenda">
-                                            Failure Mode and Effect Analysis
-                                            <button type="button" name="agenda"
-                                                onclick="addRootCauseAnalysisRiskAssessment1('risk-assessment-risk-management')"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>+</button>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" style="width: 200%"
-                                                id="risk-assessment-risk-management">
-                                                <thead>
-                                                    <tr>
-                                                        <th colspan="1"style="text-align:center;"></th>
-                                                        <th colspan="2"style="text-align:center;">Risk Identification</th>
-                                                        <th colspan="1"style="text-align:center;">Risk Analysis</th>
-                                                        <th colspan="4"style="text-align:center;">Risk Evaluation</th>
-                                                        <th colspan="1"style="text-align:center;">Risk Control</th>
-                                                        <th colspan="6"style="text-align:center;">Risk Evaluation</th>
-                                                        <th colspan="2"style="text-align:center;"></th>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>Row #</th>
-                                                        <th>Activity</th>
-                                                        <th>Possible Risk/Failure (Identified Risk)</th>
-                                                        <th>Consequences of Risk/Potential Causes</th>
-                                                        <th>Severity (S)</th>
-                                                        <th>Probability (P)</th>
-                                                        <th>Detection (D)</th>
-                                                        <th>RPN</th>
-                                                        <th>Control Measures recommended/ Risk mitigation proposed</th>
-                                                        <th>Severity (S)</th>
-                                                        <th>Probability (P)</th>
-                                                        <th>Detection (D)</th>
-                                                        <th>Risk Level (RPN)</th>
-                                                        <th>Category of Risk Level (Low, Medium and High)</th>
-                                                        <th>Risk Acceptance (Y/N)</th>
-                                                        <th>Traceability document</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (!empty($data->risk_factor))
-                                                        @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
-                                                            <tr>
-                                                                <td>{{ $key + 1 }}</td>
-                                                                <td><input name="risk_factor[]" type="text"
-                                                                        value="{{ $riskFactor }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td><input name="problem_cause[]" type="text"
-                                                                        value="{{ unserialize($data->problem_cause)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td><input name="existing_risk_control[]"
-                                                                        type="text"
-                                                                        value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateInitialResult(this)"
-                                                                        class="fieldR" name="initial_severity[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="1"
-                                                                            {{ (unserialize($data->initial_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                            1-Insignificant</option>
-                                                                        <option value="2"
-                                                                            {{ (unserialize($data->initial_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                            2-Minor</option>
-                                                                        <option value="3"
-                                                                            {{ (unserialize($data->initial_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                            3-Major</option>
-                                                                        <option value="4"
-                                                                            {{ (unserialize($data->initial_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                            4-Critical</option>
-                                                                        <option value="5"
-                                                                            {{ (unserialize($data->initial_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                            5-Catastrophic</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateInitialResult(this)"
-                                                                        class="fieldP" name="initial_detectability[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="1"
-                                                                            {{ (unserialize($data->initial_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                            1-Very rare</option>
-                                                                        <option value="2"
-                                                                            {{ (unserialize($data->initial_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                            2-Unlikely</option>
-                                                                        <option value="3"
-                                                                            {{ (unserialize($data->initial_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                            3-Possibly</option>
-                                                                        <option value="4"
-                                                                            {{ (unserialize($data->initial_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                            4-Likely</option>
-                                                                        <option value="5"
-                                                                            {{ (unserialize($data->initial_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                            5-Almost certain (every time)</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateInitialResult(this)"
-                                                                        class="fieldN" name="initial_probability[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="1"
-                                                                            {{ (unserialize($data->initial_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                            1-Always detected</option>
-                                                                        <option value="2"
-                                                                            {{ (unserialize($data->initial_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                            2-Likely to detect</option>
-                                                                        <option value="3"
-                                                                            {{ (unserialize($data->initial_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                            3-Possible to detect</option>
-                                                                        <option value="4"
-                                                                            {{ (unserialize($data->initial_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                            4-Unlikely to detect</option>
-                                                                        <option value="5"
-                                                                            {{ (unserialize($data->initial_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                            5-Not detectable</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input name="initial_rpn[]" type="text"
-                                                                        class='initial-rpn'
-                                                                        value="{{ unserialize($data->initial_rpn)[$key] ?? null }}"
-                                                                        readonly
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td><input name="risk_control_measure[]"
-                                                                        type="text"
-                                                                        value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateResidualResult(this)"
-                                                                        class="residual-fieldR"
-                                                                        name="residual_severity[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="1"
-                                                                            {{ (unserialize($data->residual_severity)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                            1-Insignificant</option>
-                                                                        <option value="2"
-                                                                            {{ (unserialize($data->residual_severity)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                            2-Minor</option>
-                                                                        <option value="3"
-                                                                            {{ (unserialize($data->residual_severity)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                            3-Major</option>
-                                                                        <option value="4"
-                                                                            {{ (unserialize($data->residual_severity)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                            4-Critical</option>
-                                                                        <option value="5"
-                                                                            {{ (unserialize($data->residual_severity)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                            5-Catastrophic</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateResidualResult(this)"
-                                                                        class="residual-fieldP"
-                                                                        name="residual_probability[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="1"
-                                                                            {{ (unserialize($data->residual_probability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                            1-Very rare</option>
-                                                                        <option value="2"
-                                                                            {{ (unserialize($data->residual_probability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                            2-Unlikely</option>
-                                                                        <option value="3"
-                                                                            {{ (unserialize($data->residual_probability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                            3-Possibly</option>
-                                                                        <option value="4"
-                                                                            {{ (unserialize($data->residual_probability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                            4-Likely</option>
-                                                                        <option value="5"
-                                                                            {{ (unserialize($data->residual_probability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                            5-Almost certain (every time)</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateResidualResult(this)"
-                                                                        class="residual-fieldN"
-                                                                        name="residual_detectability[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="1"
-                                                                            {{ (unserialize($data->residual_detectability)[$key] ?? null) == 1 ? 'selected' : '' }}>
-                                                                            1-Always detected</option>
-                                                                        <option value="2"
-                                                                            {{ (unserialize($data->residual_detectability)[$key] ?? null) == 2 ? 'selected' : '' }}>
-                                                                            2-Likely to detect</option>
-                                                                        <option value="3"
-                                                                            {{ (unserialize($data->residual_detectability)[$key] ?? null) == 3 ? 'selected' : '' }}>
-                                                                            3-Possible to detect</option>
-                                                                        <option value="4"
-                                                                            {{ (unserialize($data->residual_detectability)[$key] ?? null) == 4 ? 'selected' : '' }}>
-                                                                            4-Unlikely to detect</option>
-                                                                        <option value="5"
-                                                                            {{ (unserialize($data->residual_detectability)[$key] ?? null) == 5 ? 'selected' : '' }}>
-                                                                            5-Not detectable</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input name="residual_rpn[]" type="text"
-                                                                        class='residual-rpn'
-                                                                        value="{{ unserialize($data->residual_rpn)[$key] ?? null }}"
-                                                                        readonly></td>
-                                                                <td>
-                                                                    <input name="risk_acceptance[]" readonly
-                                                                        class="risk-acceptance"
-                                                                        value="{{ unserialize($data->risk_acceptance)[$key] ?? '' }}"
-                                                                        readonly
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    <select name="risk_acceptance2[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="N"
-                                                                            {{ (unserialize($data->risk_acceptance2)[$key] ?? null) == 'N' ? 'selected' : '' }}>
-                                                                            N</option>
-                                                                        <option value="Y"
-                                                                            {{ (unserialize($data->risk_acceptance2)[$key] ?? null) == 'Y' ? 'selected' : '' }}>
-                                                                            Y</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td><input name="mitigation_proposal[]" type="text"
-                                                                        value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td> <button class="btn btn-dark removeBtn"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12" id="fishbone-section" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="fishbone">
-                                            Fishbone or Ishikawa Diagram
-                                            <button type="button" name="agenda"
-                                                onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
-                                            <button type="button" name="agenda" class="fishbone-del-btn"
-                                                onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
-                                                <i class="fa-solid fa-trash-can"></i>
-                                            </button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#fishbone-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="fishbone-ishikawa-diagram">
-                                            <div class="left-group">
-                                                <div class="grid-field field-name">
-                                                    <div>Measurement</div>
-                                                    <div>Materials</div>
-                                                    <div>Methods</div>
-                                                </div>
-                                                <div class="top-field-group">
-                                                    <div class="grid-field fields top-field">
-                                                        @if (!empty($data->measurement))
-                                                            @foreach (unserialize($data->measurement) as $key => $measure)
-                                                                <div><input type="text"
-                                                                        value="{{ $measure }}"
-                                                                        name="measurement[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}"
-                                                                        name="materials[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->methods)[$key] ?? null }}"
-                                                                        name="methods[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                <div class="mid"></div>
-                                                <div class="bottom-field-group">
-                                                    <div class="grid-field fields bottom-field">
-                                                        @if (!empty($data->environment))
-                                                            @foreach (unserialize($data->environment) as $key => $measure)
-                                                                <div><input type="text"
-                                                                        value="{{ $measure }}"
-                                                                        name="environment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}"
-                                                                        name="manpower[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}"
-                                                                        name="machine[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </div>
-                                                            @endforeach
-                                                        @endif
-
-                                                    </div>
-                                                </div>
-                                                <div class="grid-field field-name">
-                                                    <div>Mother Environment</div>
-                                                    <div>Man</div>
-                                                    <div>Machine</div>
-                                                </div>
-                                            </div>
-                                            <div class="right-group">
-                                                <div class="field-name">
-                                                    Problem Statement
-                                                </div>
-                                                <div class="field">
-                                                    <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->problem_statement }}</textarea>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12" id="HideInference" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="Inference">
-                                            Inference
-                                            <button type="button"
-                                                onclick="addInference('Inference')"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="Inference">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width:5%">Row #</th>
-                                                        <th>Type</th>
-                                                        <th>Remarks</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @if (!empty($data->inference_type) && !empty($data->inference_remarks))
-                                                        @php
-                                                            $inference_types = unserialize($data->inference_type);
-                                                            $inference_remarks = unserialize(
-                                                                $data->inference_remarks,
-                                                            );
-                                                        @endphp
-
-                                                        @foreach ($inference_types as $key => $inference_type)
-                                                            <tr>
-                                                                <td>
-                                                                    <input disabled type="text"
-                                                                        name="serial_number[]"
-                                                                        value="{{ $key + 1 }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    <select name="inference_type[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="Measurement"
-                                                                            {{ $inference_type == 'Measurement' ? 'selected' : '' }}>
-                                                                            Measurement</option>
-                                                                        <option value="Materials"
-                                                                            {{ $inference_type == 'Materials' ? 'selected' : '' }}>
-                                                                            Materials</option>
-                                                                        <option value="Methods"
-                                                                            {{ $inference_type == 'Methods' ? 'selected' : '' }}>
-                                                                            Methods</option>
-                                                                        <option value=" Mother Environment"
-                                                                            {{ $inference_type == ' Mother Environment' ? 'selected' : '' }}>
-                                                                             Mother Environment</option>
-                                                                        <option value="Man"
-                                                                            {{ $inference_type == 'Manp' ? 'selected' : '' }}>
-                                                                            Manp</option>
-                                                                        <option value="Machine"
-                                                                            {{ $inference_type == 'Machine' ? 'selected' : '' }}>
-                                                                            Machine</option>
-                                                                    </select>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="text" name="inference_remarks[]"
-                                                                        value="{{ $inference_remarks[$key] ?? '' }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button" class="removeRowBtn"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    @endif
-                                                </tbody>
-
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    function addWhyField(containerClass, fieldName) {
-                                        let container = document.querySelector('.' + containerClass);
-
-                                        // Create the textarea
-                                        let textarea = document.createElement('textarea');
-                                        textarea.name = fieldName;
-
-                                        // Create the remove button
-                                        let removeButton = document.createElement('span');
-                                        removeButton.innerText = 'Remove';
-                                        removeButton.style.cursor = 'pointer';
-                                        removeButton.style.color = 'red';
-                                        removeButton.onclick = function() {
-                                            removeWhyField(this);
-                                        };
-
-                                        let fieldWrapper = document.createElement('div');
-                                        fieldWrapper.classList.add('why-field-wrapper');
-                                        fieldWrapper.appendChild(textarea);
-                                        fieldWrapper.appendChild(removeButton);
-
-                                        container.appendChild(fieldWrapper);
-                                    }
-
-                                    function removeWhyField(button) {
-                                        let fieldWrapper = button.parentNode; // Get the wrapper div
-                                        fieldWrapper.remove(); // Remove the wrapper div, which removes the textarea and the remove button
-                                    }
-                                </script>
-                                <div class="col-12" id="why-why-chart-section" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="why-why-chart">
-                                            Why-Why Chart
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#why_chart-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <tbody>
-                                                    <tr style="background: #f4bb22">
-                                                        <th style="width:150px;">Problem Statement</th>
-                                                        <td>
-                                                            <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
-                                                        </td>
-                                                    </tr>
-
-                                                    @foreach (range(1, 5) as $why_number)
-                                                        <tr class="why-row">
-                                                            <th style="width:150px; color: #393cd4;">
-                                                                Why {{ $why_number }}
-                                                                <span
-                                                                    onclick="addWhyField('why_{{ $why_number }}_block', 'why_{{ $why_number }}[]')"
-                                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</span>
-                                                            </th>
-                                                            <td>
-                                                                <div class="why_{{ $why_number }}_block">
-                                                                    @if (!empty($data['why_' . $why_number]))
-                                                                        @foreach (unserialize($data['why_' . $why_number]) as $key => $measure)
-                                                                            <div class="why-field-wrapper">
-                                                                                <textarea name="why_{{ $why_number }}[]" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $measure }}</textarea>
-                                                                                <span class="remove-field"
-                                                                                    onclick="removeWhyField(this)"
-                                                                                    style="cursor:pointer; color:red;">Remove</span>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-
-                                                    <tr style="background: #0080006b;">
-                                                        <th style="width:150px;">Root Cause :</th>
-                                                        <td>
-                                                            <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12 sub-head"></div>
-
-                                <div class="col-12" id="is-is-not-section" style="display:none;">
-                                    <div class="group-input">
-                                        <label for="why-why-chart">
-                                            Is/Is Not Analysis
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#is_is_not-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="why-why-chart">
-                                            <table class="table table-bordered">
-                                                <thead>
-                                                    <tr>
-                                                        <th>&nbsp;</th>
-                                                        <th>Will Be</th>
-                                                        <th>Will Not Be</th>
-                                                        <th>Rationale</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th style="background: #0039bd85">What</th>
-                                                        <td>
-                                                            <textarea name="what_will_be" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->what_will_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="what_will_not_be" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->what_will_not_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->what_rationable }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background: #0039bd85">Where</th>
-                                                        <td>
-                                                            <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->where_will_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->where_will_not_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->where_rationable }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background: #0039bd85">When</th>
-                                                        <td>
-                                                            <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->when_will_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->when_will_not_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->when_rationable }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background: #0039bd85">Why</th>
-                                                        <td>
-                                                            <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_will_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_will_not_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_rationable }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th style="background: #0039bd85">Who</th>
-                                                        <td>
-                                                            <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->who_will_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->who_will_not_be }}</textarea>
-                                                        </td>
-                                                        <td>
-                                                            <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->who_rationable }}</textarea>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton"
-                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"
-                                        href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-                            </div>
-                        </div>
-                    </div> --}}
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1644,7 +894,7 @@
                                                 <div class="group-input">
                                                     <label for="comments">HOD Review Comment<span
                                                         class="text-danger">*</span> </label>
-                                                    <textarea name="hod_comments"  {{$data->stage ==2 ? 'required' : ''}}  {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
+                                                    <textarea name="hod_comments"  {{$data->stage ==2 ? 'required' : ''}}  {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_comments }}</textarea>
                                                 </div>
                                                 @error('hod_comments')
                                                     <span class="text-danger">{{$message}}</span>
@@ -1654,7 +904,7 @@
 
                                                 <div class="group-input">
                                                     <label for="comments">HOD Review Comment </label>
-                                                    <textarea name="hod_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_comments }}</textarea>
+                                                    <textarea name="hod_comments" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_comments }}</textarea>
                                                 </div>
                                         </div>
                                         @endif
@@ -1690,7 +940,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="hod_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="hod_attachments[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
                                             </div>
                                         </div>
@@ -1719,13 +969,13 @@
                                             <div class="group-input">
                                                 <label for="comments" >Initial QA/CQA Review Comments <span
                                                     class="text-danger">*</span></label>
-                                                <textarea name="cft_comments_new" {{$data->stage == 3 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                                <textarea name="cft_comments_new" {{$data->stage == 3 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->cft_comments_new }}</textarea>
                                             </div>
 
                                           @else
                                             <div class="group-input">
                                                 <label for="comments">Initial QA/CQA Review Comments</label>
-                                                <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                                <textarea name="cft_comments_new" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->cft_comments_new }}</textarea>
                                             </div>
                                         @endif
                                             @error('cft_comments_new')
@@ -1761,7 +1011,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="cft_attchament_new[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="cft_attchament_new[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
                                             </div>
                                         </div>
@@ -1789,18 +1039,13 @@
                                     <div class="sub-head">Investigation </div>
                                 </div>
 
-                                {{-- <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="objective">Objective</label>
-                                        <textarea name="objective"></textarea>
-                                    </div>
-                                </div> --}}
+
                                 <div class="col-lg-12">
 
                                         <div class="group-input">
 
                                             <label for="objective">Objective<span class="text-danger">*</span></label>
-                                            <textarea name="objective"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->objective }}</textarea>
+                                            <textarea name="objective" class="summernote" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->objective }}</textarea>
                                         </div>
 
                                         @error('objective')
@@ -1811,19 +1056,19 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="scope">Scope @if ($data->stage == 4)<span class="text-danger">*</span>@endif</label>
-                                        <textarea name="scope" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
+                                        <textarea name="scope" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->scope }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="problem_statement">Problem Statement @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="problem_statement_rca" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->problem_statement_rca }}</textarea>
+                                        <textarea name="problem_statement_rca" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->problem_statement_rca }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="requirement">Background @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="requirement" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->requirement }}</textarea>
+                                        <textarea name="requirement" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->requirement }}</textarea>
                                     </div>
                                     @error('requirement')
                                         <span>{{$message}} </span>
@@ -1832,15 +1077,14 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="immediate_action">Immediate Action @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="immediate_action" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->immediate_action }}</textarea>
+                                        <textarea name="immediate_action" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->immediate_action }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
-                                        <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]" {{$data->stage ==4 ? 'required' : ''}} >
-                                            {{-- <option value="">Select members of the Investigation Team</option> --}}
+                                        <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]" {{$data->stage ==4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }} >
                                             @foreach ($users as $user)
                                                 {{-- <option value="{{ $user->id }}">{{ $user->name }}</option> --}}
                                                 <option value="{{ $user->id }}"{{ in_array($user->id, explode(',', $data->investigation_team)) ? 'selected' : '' }}>
@@ -1860,7 +1104,7 @@
                                             $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                         @endphp
                                         <select name="root_cause_methodology[]" multiple
-                                            {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
                                             id="root-cause-methodology">
                                             <option value="Why-Why Chart"
                                                 @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
@@ -1888,7 +1132,7 @@
                                             Failure Mode and Effect Analysis
                                             <button type="button" name="agenda"
                                                 onclick="addRootCauseAnalysisRiskAssessment1('risk-assessment-risk-management')"
-                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}>+</button>
+                                                {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>+</button>
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" style="width: 200%"
@@ -1904,7 +1148,7 @@
                                                         <th colspan="2"style="text-align:center;"></th>
                                                     </tr>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th>Sr.No.</th>
                                                         <th>Activity</th>
                                                         <th>Possible Risk/Failure (Identified Risk)</th>
                                                         <th>Consequences of Risk/Potential Causes</th>
@@ -2130,7 +1374,7 @@
                                         <label for="fishbone">
                                             Fishbone or Ishikawa Diagram
                                             <button type="button" name="agenda"
-                                                onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                                onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}>+</button>
                                             <button type="button" name="agenda" class="fishbone-del-btn"
                                                 onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                                                 <i class="fa-solid fa-trash-can"></i>
@@ -2154,15 +1398,15 @@
                                                             @foreach (unserialize($data->measurement) as $key => $measure)
                                                                 <div><input type="text"
                                                                         value="{{ $measure }}"
-                                                                        name="measurement[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </div>
                                                                 <div><input type="text"
                                                                         value="{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}"
-                                                                        name="materials[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </div>
                                                                 <div><input type="text"
                                                                         value="{{ unserialize($data->methods)[$key] ?? null }}"
-                                                                        name="methods[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -2175,15 +1419,15 @@
                                                             @foreach (unserialize($data->environment) as $key => $measure)
                                                                 <div><input type="text"
                                                                         value="{{ $measure }}"
-                                                                        name="environment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </div>
                                                                 <div><input type="text"
                                                                         value="{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}"
-                                                                        name="manpower[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </div>
                                                                 <div><input type="text"
                                                                         value="{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}"
-                                                                        name="machine[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -2201,7 +1445,7 @@
                                                     Problem Statement
                                                 </div>
                                                 <div class="field">
-                                                    <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->problem_statement }}</textarea>
+                                                    <textarea name="problem_statement" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->problem_statement }}</textarea>
 
                                                 </div>
                                             </div>
@@ -2214,13 +1458,13 @@
                                         <label for="Inference">
                                             Inference
                                             <button type="button"
-                                                onclick="addInference('Inference')"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>+</button>
+                                                onclick="addInference('Inference')"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>+</button>
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="Inference">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width:5%">Row #</th>
+                                                        <th style="width:5%">Sr.No.</th>
                                                         <th>Type</th>
                                                         <th>Remarks</th>
                                                         <th>Action</th>
@@ -2241,11 +1485,11 @@
                                                                     <input disabled type="text"
                                                                         name="serial_number[]"
                                                                         value="{{ $key + 1 }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </td>
                                                                 <td>
                                                                     <select name="inference_type[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                         <option value="">-- Select --</option>
                                                                         <option value="Measurement"
                                                                             {{ $inference_type == 'Measurement' ? 'selected' : '' }}>
@@ -2270,11 +1514,11 @@
                                                                 <td>
                                                                     <input type="text" name="inference_remarks[]"
                                                                         value="{{ $inference_remarks[$key] ?? '' }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="removeRowBtn"
-                                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Remove</button>
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>Remove</button>
                                                                 </td>
                                                             </tr>
                                                         @endforeach
@@ -2421,61 +1665,61 @@
                                                     <tr>
                                                         <th style="background: #0039bd85">What</th>
                                                         <td>
-                                                            <textarea name="what_will_be" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->what_will_be }}</textarea>
+                                                            <textarea name="what_will_be" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->what_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="what_will_not_be" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->what_will_not_be }}</textarea>
+                                                            <textarea name="what_will_not_be" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->what_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->what_rationable }}</textarea>
+                                                            <textarea name="what_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->what_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">Where</th>
                                                         <td>
-                                                            <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->where_will_be }}</textarea>
+                                                            <textarea name="where_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->where_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->where_will_not_be }}</textarea>
+                                                            <textarea name="where_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->where_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->where_rationable }}</textarea>
+                                                            <textarea name="where_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->where_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">When</th>
                                                         <td>
-                                                            <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->when_will_be }}</textarea>
+                                                            <textarea name="when_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->when_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->when_will_not_be }}</textarea>
+                                                            <textarea name="when_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->when_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->when_rationable }}</textarea>
+                                                            <textarea name="when_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->when_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">Why</th>
                                                         <td>
-                                                            <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_will_be }}</textarea>
+                                                            <textarea name="coverage_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->coverage_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_will_not_be }}</textarea>
+                                                            <textarea name="coverage_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->coverage_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->coverage_rationable }}</textarea>
+                                                            <textarea name="coverage_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->coverage_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th style="background: #0039bd85">Who</th>
                                                         <td>
-                                                            <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->who_will_be }}</textarea>
+                                                            <textarea name="who_will_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->who_will_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->who_will_not_be }}</textarea>
+                                                            <textarea name="who_will_not_be"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->who_will_not_be }}</textarea>
                                                         </td>
                                                         <td>
-                                                            <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}> {{ $data->who_rationable }}</textarea>
+                                                            <textarea name="who_rationable"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}> {{ $data->who_rationable }}</textarea>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -2523,7 +1767,7 @@
                                                 <div>Add</div>
 
                                                 <input type="file" id="myfile"
-                                                    name="investigation_attachment[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{$data->stage == 4 ? 'required' : ''}}
+                                                    name="investigation_attachment[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{$data->stage == 4 ? 'required' : ''}}
                                                     oninput="addMultipleFiles(this, 'investigation_attachment')"
                                                     multiple>
                                             </div>
@@ -2535,13 +1779,13 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="root_cause">Root Cause @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="root_cause" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
+                                        <textarea name="root_cause"  class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->root_cause }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="impact_risk_assessment">Impact / Risk Assessment @if ($data->stage == 4) <span class="text-danger">*</span>@endif</label>
-                                        <textarea name="impact_risk_assessment" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->impact_risk_assessment }}</textarea>
+                                        <textarea name="impact_risk_assessment" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->impact_risk_assessment }}</textarea>
                                     </div>
                                     @error('impact_risk_assessment')
                                         <p class="text-danger">{{$message}}</p>
@@ -2550,7 +1794,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="capa">CAPA @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="capa" {{$data->stage == 4 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->capa }}</textarea>
+                                        <textarea name="capa" class="summernote" {{$data->stage == 4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->capa }}</textarea>
                                     </div>
                                     @error('capa')
                                     <p class="text-danger">{{$message}}</p>
@@ -2560,7 +1804,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="investigation_summary">Investigation Summary @if ($data->stage == 4 ? 'required' : '') <span class="text-danger">*</span> @endif</label>
-                                        <textarea name="investigation_summary_rca"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->investigation_summary_rca }}</textarea>
+                                        <textarea name="investigation_summary_rca" class="summernote" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->investigation_summary_rca }}</textarea>
                                     </div>
                                 </div>
 
@@ -2593,7 +1837,7 @@
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input type="file" id="myfile"
-                                                        name="root_cause_initial_attachment_rca[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                        name="root_cause_initial_attachment_rca[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                         oninput="addMultipleFiles(this, 'root_cause_initial_attachment_rca')"
                                                         multiple>
                                                 </div>
@@ -2627,12 +1871,12 @@
                                        <div class="group-input">
                                            <label for="comments" >HOD Final Review Comments <span
                                                class="text-danger">*</span></label>
-                                           <textarea name="hod_final_comments" {{$data->stage == 5 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                           <textarea name="hod_final_comments" {{$data->stage == 5 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_final_comments }}</textarea>
                                        </div>
                                      @else
                                        <div class="group-input">
                                            <label for="comments">HOD Final Review Comments</label>
-                                           <textarea name="hod_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->hod_final_comments }}</textarea>
+                                           <textarea name="hod_final_comments"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->hod_final_comments }}</textarea>
                                        </div>
                                    @endif
                                        @error('hod_final_comments')
@@ -2668,7 +1912,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="hod_final_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="hod_final_attachments[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'hod_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -2699,13 +1943,13 @@
                                        <div class="group-input">
                                            <label for="comments" >QA/CQA Final Review Comments <span
                                                class="text-danger">*</span></label>
-                                           <textarea name="qa_final_comments"  {{$data->stage == 6 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
+                                           <textarea name="qa_final_comments"  {{$data->stage == 6 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qa_final_comments }}</textarea>
                                        </div>
 
                                      @else
                                        <div class="group-input">
                                            <label for="comments">QA/CQA Final Review Comments</label>
-                                           <textarea name="qa_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qa_final_comments }}</textarea>
+                                           <textarea name="qa_final_comments"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qa_final_comments }}</textarea>
                                        </div>
                                    @endif
                                        @error('qa_final_comments')
@@ -2741,7 +1985,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="qa_final_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="qa_final_attachments[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -2771,13 +2015,13 @@
                                        <div class="group-input">
                                            <label for="comments" >QAH/CQAH/Designee Final Approval Comments <span
                                                class="text-danger">*</span></label>
-                                           <textarea name="qah_final_comments" {{$data->stage == 7 ? 'required' : ''}} {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
+                                           <textarea name="qah_final_comments" {{$data->stage == 7 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qah_final_comments }}</textarea>
                                        </div>
 
                                      @else
                                        <div class="group-input">
                                            <label for="comments">QAH/CQAH/Designee Final Approval Comments</label>
-                                           <textarea name="qah_final_comments"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->qah_final_comments }}</textarea>
+                                           <textarea name="qah_final_comments"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->qah_final_comments }}</textarea>
                                        </div>
                                    @endif
                                        @error('qah_final_comments')
@@ -2814,7 +2058,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile"
-                                                    name="qah_final_attachments[]"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    name="qah_final_attachments[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6|| $data->stage == 8 ? "readonly" : "" }}
                                                     oninput="addMultipleFiles(this, 'qah_final_attachments')" multiple>
                                             </div>
                                         </div>
@@ -3887,8 +3131,7 @@
             $('#root-cause-methodology').trigger('change');
         });
     </script>
-@endsection
-<script>
+    <script>
     $('#summernote').summernote({
       toolbar: [
           ['style', ['style']],
@@ -3913,3 +3156,6 @@
       ]
   });
   </script>
+  
+@endsection
+

@@ -1826,7 +1826,7 @@ $(document).ready(function() {
         }
     </style>
 
-    <script>
+    {{-- <script>
         function otherController(value, checkValue, blockID) {
             let block = document.getElementById(blockID)
             let blockTextarea = block.getElementsByTagName('textarea')[0];
@@ -1839,6 +1839,31 @@ $(document).ready(function() {
                 blockTextarea.removeAttribute('required');
             }
         }
+    </script> --}}
+
+    <script>
+        function otherController(value, checkValue, blockID) {
+            let block = document.getElementById(blockID);
+            let blockTextarea = block.getElementsByTagName('textarea')[0];
+            let blockLabel = block.querySelector('label span.text-danger');
+
+            if (value === checkValue) {
+                block.style.display = "block"; // Show field
+                blockLabel.classList.remove('d-none');
+                blockTextarea.setAttribute('required', 'required');
+            } else {
+                block.style.display = "none"; // Hide field
+                blockLabel.classList.add('d-none');
+                blockTextarea.removeAttribute('required');
+            }
+        }
+
+        // Page load par check kare ki agar "Yes" ya "Others" selected ho to field dikhaye
+        document.addEventListener("DOMContentLoaded", function () {
+            otherController(document.querySelector("select[name='initiated_through']").value, "others", "initiated_through_req");
+            otherController(document.querySelector("select[name='repeat']").value, "Yes", "repeat_nature");
+            otherController(document.querySelector("select[name='interim_containnment']").value, "required", "containment_comments");
+        });
     </script>
 
     <script>
