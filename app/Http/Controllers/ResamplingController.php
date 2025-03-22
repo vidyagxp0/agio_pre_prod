@@ -400,23 +400,24 @@ foreach ($pre as $processName => $modelClass) {
         $history->action_name = "Create";
         $history->save();
         }
-        if (!is_null($openState->related_records) && trim($openState->related_records) !== '') {
-    $history = new ResamplingAudittrail();
-    $history->resampling_id = $openState->id;
-    $history->activity_type = 'Related Records';
-    $history->previous = "Null";
-    $history->current = str_replace(',', ', ', $openState->related_records);
-    $history->comment = "Not Applicable";
-    $history->user_id = Auth::user()->id;
-    $history->user_name = Auth::user()->name;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $openState->status;
-    $history->change_to = "Opened";
-    $history->change_from = "Initiation";
-    $history->action_name = "Create";
 
-    $history->save();
-}
+        if (!is_null($openState->related_records) && trim($openState->related_records) !== '') {
+            $history = new ResamplingAudittrail();
+            $history->resampling_id = $openState->id;
+            $history->activity_type = 'Related Records';
+            $history->previous = "Null";
+            $history->current = str_replace(',', ', ', $openState->related_records);
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->change_to = "Opened";
+            $history->change_from = "Initiation";
+            $history->action_name = "Create";
+
+            $history->save();
+        }
 
 
 
@@ -1626,6 +1627,32 @@ foreach ($pre as $processName => $modelClass) {
 
 
             if ($changeControl->stage == 1) {
+
+                $mandatoryFields = [
+                    'assign_to', 'due_date', 'short_description', 
+                    'related_records', 'hod_preson', 'description', 'departments'
+                ];
+                
+                foreach ($mandatoryFields as $field) {
+                    if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill all required fields before proceeding. Missing: $field"
+                        ]);
+                        return redirect()->back();
+                    }
+                }
+                
+                // If all fields are filled, proceed
+                Session::flash('swal', [
+                    'type' => 'success',
+                    'title' => 'Success',
+                    'message' => 'Document Sent'
+                ]);
+                
+                
+
                 $changeControl->stage = '2';
                 $changeControl->status = 'Head QA/CQA Approval';
                 $changeControl->acknowledgement_by = Auth::user()->name;
@@ -1774,7 +1801,7 @@ foreach ($pre as $processName => $modelClass) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Pls fill QA Head Tab is yet to be filled'
+                        'message' => 'QA/CQA Head Remark field is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -1787,6 +1814,7 @@ foreach ($pre as $processName => $modelClass) {
                         'message' => 'Document Sent'
                     ]);
                 }
+
                 $changeControl->stage = '3';
                 $changeControl->status = 'Acknowledge';
                 $changeControl->work_completion_by = Auth::user()->name;
@@ -1889,12 +1917,12 @@ foreach ($pre as $processName => $modelClass) {
             if ($changeControl->stage == 3) {
 
 
-                if (empty($changeControl->action_taken))
+                if (empty($changeControl->action_taken) || empty($changeControl->sampled_by) || empty($changeControl->comments) || empty($changeControl->start_date) || empty($changeControl->end_date))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Pls fill Acknowledge Tab is yet to be filled'
+                        'message' => 'Acknowledge Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
@@ -2031,12 +2059,12 @@ foreach ($pre as $processName => $modelClass) {
             if ($changeControl->stage == 4) {
 
 
-                if (empty($changeControl->qa_comments))
+                if (empty($changeControl->qa_comments) || empty($changeControl->final_attach) )
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Pls fill QA/CQA Verification is yet to be filled'
+                        'message' => 'QA/CQA Verification Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
