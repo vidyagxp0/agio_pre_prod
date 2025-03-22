@@ -108,7 +108,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Department</b></label>
-                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                        <input readonly type="text" name="Department" id="initiator_group"
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -182,8 +182,8 @@
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
-                                        <select name="document_type" id="select-state" required onchange="handleDocumentSelection(this)">
+                                        <label for="doc-type">Document Type</label>
+                                        <select name="document_type" id="select-state"  onchange="handleDocumentSelection(this)">
                                             <option value="" selected>Enter your Selection</option>
                                             @foreach (Helpers::getDocumentTypes() as $code => $type)
                                                 <option value="{{ $code }}">
@@ -233,11 +233,9 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            required>
+                                        <label for="short_description">Short Description<span class="text-danger">*</span></label>
+                                       
+                                        <textarea id="docname" name="short_description"  required></textarea>
                                     </div>
                                 </div>
                                 @php
@@ -455,11 +453,11 @@
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid"
                                                 id="Details_add">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        <!-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             Launch Deviation
-                                        </span>
+                                        </span> -->
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table">
@@ -1973,8 +1971,7 @@
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Date Of Correction of document</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
-                                        </div>
+                                       
                                         <div class="calenderauditee">
                                             <input type="text" id="Date_and_time_of_correction" readonly
                                                 placeholder="DD-MMM-YYYY" value="" />

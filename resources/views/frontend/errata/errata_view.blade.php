@@ -349,7 +349,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Department</b></label>
-                                    <input disabled type="text" name="Initiator_Group" id="Department"
+                                    <input disabled type="text" name="Department" id="Department"
                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                 </div>
                             </div>
@@ -570,15 +570,15 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <input id="docname" type="text" name="short_description" maxlength="255"
-                                            value="{{ $showdata->short_description }}" {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                        <label for="short_description">Short Description<span class="text-danger">*</span></label>
+                                        
+                                        <textarea id="docname" name="short_description" 
+                                            {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'readonly' : '' }}
-                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->short_description }}</textarea>
                                     </div>
                                 </div>
+
                                 @php
                                     // Assume $showdata is the object containing reference_document array
                                     // $showdata->reference_document = is_array($showdata->reference_document)
@@ -838,11 +838,11 @@
                                     <label for="action-plan-grid">
                                         Details<button type="button" name="action-plan-grid" {{ $showdata->stage != 1 ? 'disabled' : '' }}
                                                 id="Details_add" {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }} >+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        <!-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             Launch Deviation
-                                        </span>
+                                        </span> -->
                                         <span class="text-danger">*</span>
                                     </label>
                                     <div class="table-responsive">
@@ -2770,8 +2770,7 @@
                                             <label for="Date Due">Date Of Correction of document</label>
                                         @endif
                                         {{-- <label for="Date Due">Date Of Correction</label> --}}
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
-                                        </div>
+                                        
                                         <div class="calenderauditee">
                                             <input type="text" id="Date_and_time_of_correction" readonly
                                                 placeholder="DD-MMM-YYYY"
