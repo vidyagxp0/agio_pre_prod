@@ -1,5 +1,9 @@
 @extends('frontend.layout.main')
 @section('container')
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
     <style>
         textarea.note-codable {
             display: none !important;
@@ -9,6 +13,112 @@
             display: none;
         }
     </style>
+
+    <style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+
+        .note-editable th,
+        .note-editable td {
+            border: 1px solid black !important;
+            padding: 8px;
+            text-align: left;
+        }
+        
+    </style>
+
     <script>
         function addFishBone(top, bottom) {
             let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
@@ -80,6 +190,7 @@
             }
         }
     </script>
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -175,6 +286,8 @@
             scale: 0.8 !important;
         }
     </style>
+
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -438,88 +551,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group">Initiator Department </label>
-                                            <select name="initiator_Group"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                id="initiator_group">
-                                                <option value="">-- Select --</option>
-                                                <option value="CQA"
-                                                    @if ($data->initiator_Group == 'CQA') selected @endif>Corporate Quality
-                                                    Assurance</option>
-                                                <option value="QA"
-                                                    @if ($data->initiator_Group == 'QA') selected @endif>Quality Assurance
-                                                </option>
-                                                <option value="QC"
-                                                    @if ($data->initiator_Group == 'QC') selected @endif>Quality Control
-                                                </option>
-                                                <option value="QM"
-                                                    @if ($data->initiator_Group == 'QM') selected @endif>Quality Control
-                                                    (Microbiology department)
-                                                </option>
-                                                <option value="PG"
-                                                    @if ($data->initiator_Group == 'PG') selected @endif>Production
-                                                    General</option>
-                                                <option value="PL"
-                                                    @if ($data->initiator_Group == 'PL') selected @endif>Production Liquid
-                                                    Orals</option>
-                                                <option value="PT"
-                                                    @if ($data->initiator_Group == 'PT') selected @endif>Production Tablet
-                                                    and Powder</option>
-                                                <option value="PE"
-                                                    @if ($data->initiator_Group == 'PE') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="PC"
-                                                    @if ($data->initiator_Group == 'PC') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="PI"
-                                                    @if ($data->initiator_Group == 'PI') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="EN"
-                                                    @if ($data->initiator_Group == 'EN') selected @endif>Engineering
-                                                </option>
-                                                <option value="HR"
-                                                    @if ($data->initiator_Group == 'HR') selected @endif>Human Resource
-                                                </option>
-                                                <option value="ST"
-                                                    @if ($data->initiator_Group == 'ST') selected @endif>Store</option>
-                                                <option value="IT"
-                                                    @if ($data->initiator_Group == 'IT') selected @endif>Electronic Data
-                                                    Processing
-                                                </option>
-                                                <option value="FD"
-                                                    @if ($data->initiator_Group == 'FD') selected @endif>Formulation
-                                                    Development
-                                                </option>
-                                                <option value="AL"
-                                                    @if ($data->initiator_Group == 'AL') selected @endif>Analytical
-                                                    research and Development Laboratory
-                                                </option>
-                                                <option value="PD"
-                                                    @if ($data->initiator_Group == 'PD') selected @endif>Packaging
-                                                    Development
-                                                </option>
 
-                                                <option value="PU"
-                                                    @if ($data->initiator_Group == 'PU') selected @endif>Purchase
-                                                    Department
-                                                </option>
-                                                <option value="DC"
-                                                    @if ($data->initiator_Group == 'DC') selected @endif>Document Cell
-                                                </option>
-                                                <option value="RA"
-                                                    @if ($data->initiator_Group == 'RA') selected @endif>Regulatory
-                                                    Affairs
-                                                </option>
-                                                <option value="PV"
-                                                    @if ($data->initiator_Group == 'PV') selected @endif>
-                                                    Pharmacovigilance
-                                                </option>
-
-                                            </select>
-                                        </div>
-                                    </div> --}}
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -529,15 +561,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Initiator Group Code">Initiator Department Code</label>
-                                            <input readonly type="text"
-                                                name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                                value="{{ $data->initiator_Group }}" id="initiator_group_code"
-                                                readonly>
-                                        </div>
-                                    </div> --}}
+  
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -545,8 +569,7 @@
                                             <input type="text" name="initiator_group_code"
                                                 value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                 readonly>
-                                            {{-- <div class="default-name"> <span
-                                            id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                            
                                         </div>
                                     </div>
 
@@ -682,136 +705,45 @@
                                         };
                                     </script>
 
-                                {{--
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Type">Type</label>
-                                            <select name="Type" id="Type"
-                                                {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
-                                                <option value="">-- Select --</option>
-
-                                                <option value="Process"
-                                                    @if ($data->Type == 'Process') selected @endif>Process</option>
-                                                <option value="Document"
-                                                    @if ($data->Type == 'Document') selected @endif>Document
-                                                </option>
-                                                <option value="Equipment"
-                                                    @if ($data->Type == 'Equipment') selected @endif>Equipment
-                                                </option>
-                                                <option value="Instrument"
-                                                    @if ($data->Type == 'Instrument') selected @endif>Instrument
-                                                </option>
-
-
-                                                <option value="Facilities"
-                                                    @if ($data->Type == 'Facilities') selected @endif>Facilities
-                                                </option>
-                                                <option value="Other"
-                                                    @if ($data->Type == 'Other') selected @endif>
-                                                    Other</option>
-                                                <option value="Stability"
-                                                    @if ($data->Type == 'Stability') selected @endif>Stability
-                                                </option>
-                                                <option value="Raw Material"
-                                                    @if ($data->Type == 'Raw Material') selected @endif>Raw Material
-                                                </option>
-                                                <option value="Clinical Production"
-                                                    @if ($data->Type == 'Clinical Production') selected @endif>Clinical
-                                                    Production
-                                                </option>
-                                                <option value="Commercial Production"
-                                                    @if ($data->Type == 'Commercial Production') selected @endif>Commercial
-                                                    Production</option>
-                                                <option value="Labeling"
-                                                    @if ($data->Type == 'Labeling') selected @endif>Labeling
-                                                </option>
-                                                <option value="Laboratory"
-                                                    @if ($data->Type == 'Laboratory') selected @endif>Laboratory
-                                                </option>
-                                                <option value="Utilities"
-                                                    @if ($data->Type == 'Utilities') selected @endif>Utilities
-                                                </option>
-                                                <option value="Validation"
-                                                    @if ($data->Type == 'Validation') selected @endif>Validation
-                                                </option>
-                                            </select>
-                                        </div>
-                                    </div> --}}
+                                
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Responsible Department">Responsible Department <span class="text-danger">*</span></label>
-                                            <select name="department"
-                                            {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
-                                                id="department" required>
+                                            <select name="department" id="department"
+                                              {{ in_array($data->stage,[0,2,3,4,5,6,7,8]) ? "disabled" : "" }}
+                                                 {{$data->stage==1 ? 'required':''}}>
                                                 <option value="">-- Select --</option>
-                                                <option value="Corporate Quality Assurance"
-                                                    @if ($data->department == 'Corporate Quality Assurance') selected @endif>Corporate
-                                                    Quality Assurance</option>
-                                                <option value="Quality Assurance"
-                                                    @if ($data->department == 'Quality Assurance') selected @endif>Quality
-                                                    Assurance</option>
-                                                <option value="Quality Control"
-                                                    @if ($data->department == 'Quality Control') selected @endif>Quality Control
-                                                </option>
-                                                <option value="Quality Control (Microbiology department)"
-                                                    @if ($data->department == 'Quality Control (Microbiology department)') selected @endif>Quality Control
-                                                    (Microbiology department)</option>
-                                                <option value="Production General"
-                                                    @if ($data->department == 'Production General') selected @endif>Production
-                                                    General</option>
-                                                <option value="Production Liquid Orals"
-                                                    @if ($data->department == 'Production Liquid Orals') selected @endif>Production
-                                                    Liquid Orals</option>
-                                                <option value="Production Tablet and Powder"
-                                                    @if ($data->department == 'Production Tablet and Powder') selected @endif>Production
-                                                    Tablet and Powder</option>
-                                                <option value="Production External (Ointment, Gels, Creams and Liquid)"
-                                                    @if ($data->department == 'Production External (Ointment, Gels, Creams and Liquid)') selected @endif>Production
-                                                    External (Ointment, Gels, Creams and Liquid)</option>
-                                                <option value="Production Capsules"
-                                                    @if ($data->department == 'Production Capsules') selected @endif>Production
-                                                    Capsules</option>
-                                                <option value="Production Injectable"
-                                                    @if ($data->department == 'Production Injectable') selected @endif>Production
-                                                    Injectable</option>
-                                                <option value="Engineering"
-                                                    @if ($data->department == 'Engineering') selected @endif>Engineering
-                                                </option>
-                                                <option value="Human Resource"
-                                                    @if ($data->department == 'Human Resource') selected @endif>Human Resource
-                                                </option>
-                                                <option value="Store"
-                                                    @if ($data->department == 'Store') selected @endif>Store</option>
-                                                <option value="Electronic Data Processing"
-                                                    @if ($data->department == 'Electronic Data Processing') selected @endif>Electronic Data
-                                                    Processing</option>
-                                                <option value="Formulation Development"
-                                                    @if ($data->department == 'Formulation Development') selected @endif>Formulation
-                                                    Development</option>
-                                                <option value="Analytical Research and Development Laboratory"
-                                                    @if ($data->department == 'Analytical Research and Development Laboratory') selected @endif>Analytical
-                                                    Research and Development Laboratory</option>
-                                                <option value="Packaging Development"
-                                                    @if ($data->department == 'Packaging Development') selected @endif>Packaging
-                                                    Development</option>
-                                                <option value="Purchase Department"
-                                                    @if ($data->department == 'Purchase Department') selected @endif>Purchase
-                                                    Department</option>
-                                                <option value="Document Cell"
-                                                    @if ($data->department == 'Document Cell') selected @endif>Document Cell
-                                                </option>
-                                                <option value="Regulatory Affairs"
-                                                    @if ($data->department == 'Regulatory Affairs') selected @endif>Regulatory
-                                                    Affairs</option>
-                                                <option value="Pharmacovigilance"
-                                                    @if ($data->department == 'Pharmacovigilance') selected @endif>
-                                                    Pharmacovigilance</option>
+                                                <option value="Corporate Quality Assurance" {{old('department', $data->department) == 'Corporate Quality Assurance' ? 'selected' : '' }}>Corporate Quality Assurance</option>
+                                                <option value="Quality Assurance" {{old('department', $data->department) == 'Quality Assurance' ? 'selected' : '' }}>Quality Assurance</option>
+                                                <option value="Quality Control" {{old('department', $data->department) == 'Quality Control' ? 'selected' : '' }}>Quality Control</option>
+                                                <option value="Quality Control (Microbiology department)" {{old('department', $data->department) == 'Quality Control (Microbiology department)' ? 'selected' : '' }}>Quality Control (Microbiology department)</option>
+                                                <option value="Production General" {{old('department', $data->department) == 'Production General' ? 'selected' : '' }}>Production General</option>
+                                                <option value="Production Liquid Orals" {{old('department', $data->department) == 'Production Liquid Orals' ? 'selected' : '' }}>Production Liquid Orals</option>
+                                                <option value="Production Tablet and Powder" {{old('department', $data->department) == 'Production Tablet and Powder' ? 'selected' : '' }}>Production Tablet and Powder</option>
+                                                <option value="Production External (Ointment, Gels, Creams and Liquid)" {{old('department', $data->department) == 'Production External (Ointment, Gels, Creams and Liquid)' ? 'selected' : '' }}>Production External (Ointment, Gels, Creams and Liquid)</option>
+                                                <option value="Production Capsules" {{old('department', $data->department) == 'Production Capsules' ? 'selected' : '' }}>Production Capsules</option>
+                                                <option value="Production Injectable" {{old('department', $data->department) == 'Production Injectable' ? 'selected' : '' }}>Production Injectable</option>
+                                                <option value="Engineering" {{old('department', $data->department) == 'Engineering' ? 'selected' : '' }}>Engineering</option>
+                                                <option value="Human Resource" {{old('department', $data->department) == 'Human Resource' ? 'selected' : '' }}>Human Resource</option>
+                                                <option value="Store" {{old('department', $data->department) == 'Store' ? 'selected' : '' }}>Store</option>
+                                                <option value="Electronic Data Processing" {{old('department', $data->department) == 'Electronic Data Processing' ? 'selected' : '' }}>Electronic Data Processing</option>
+                                                <option value="Formulation Development" {{old('department', $data->department) == 'Formulation Development' ? 'selected' : '' }}>Formulation Development</option>
+                                                <option value="Analytical Research and Development Laboratory" {{old('department', $data->department) == 'Analytical Research and Development Laboratory' ? 'selected' : '' }}>Analytical Research and Development Laboratory</option>
+                                                <option value="Packaging Development" {{old('department', $data->department) == 'Packaging Development' ? 'selected' : '' }}>Packaging Development</option>
+                                                <option value="Purchase Department" {{old('department', $data->department) == 'Purchase Department' ? 'selected' : '' }}>Purchase Department</option>
+                                                <option value="Document Cell" {{old('department', $data->department) == 'Document Cell' ? 'selected' : '' }}>Document Cell</option>
+                                                <option value="Regulatory Affairs" {{old('department', $data->department) == 'Regulatory Affairs' ? 'selected' : '' }}>Regulatory Affairs</option>
+                                                <option value="Pharmacovigilance" {{old('department', $data->department) == 'Pharmacovigilance' ? 'selected' : '' }}>Pharmacovigilance</option>
 
                                             </select>
                                             @error('department')
                                                 <span class="text-danger">{{$message}}</span>
                                             @enderror
+
+                                            @if(in_array($data->stage, [0,2,3,4,5,6,7,8]))
+                                              <input type="hidden" name="department" value="{{old('department', $data->department)}}">
+                                            @endif  
                                         </div>
                                     </div>
 
@@ -1084,17 +1016,20 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
-                                        <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]" {{$data->stage ==4 ? 'required' : ''}} {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }} >
-                                            @foreach ($users as $user)
-                                                {{-- <option value="{{ $user->id }}">{{ $user->name }}</option> --}}
-                                                <option value="{{ $user->id }}"{{ in_array($user->id, explode(',', $data->investigation_team)) ? 'selected' : '' }}>
-                                                    {{ $user->name }}
-                                         </option>
-                                            @endforeach
+                                        <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]"  {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} {{$data->stage ==4 ? 'required' : ''}}>
+                                          
+                                         @foreach ($users as $key => $value)
+                                            <option value="{{ $value->id }}"
+                                                {{old('investigation_team', $data->investigation_team) == $value->id ? 'selected' : '' }}>
+                                                {{ $value->name }}
+                                            </option>
+                                        @endforeach
                                         </select>
-                                        @error('investigation_team')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                    
+                                        @if(in_array($data->stage, [0,1,2,3,5,6,7,8]))
+                                            <input type="hidden" name="investigation_team" value="{{old('investigation_team', $data->investigation_team)}}">
+                                        @endif  
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -1103,28 +1038,42 @@
                                         @php
                                             $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                         @endphp
-                                        <select name="root_cause_methodology[]" multiple
+                                        {{-- <select name="root_cause_methodology[]" multiple
                                         {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
                                             id="root-cause-methodology">
                                             <option value="Why-Why Chart"
                                                 @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
                                             </option>
                                             <option value="Failure Mode and Effect Analysis"
-                                                @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
-                                                Effect
-                                                Analysis</option>
+                                                @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and Effect Analysis</option>
                                             <option value="Fishbone or Ishikawa Diagram"
-                                                @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or
-                                                Ishikawa
-                                                Diagram</option>
+                                                @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or Ishikawa Diagram</option>
                                             <option value="Is/Is Not Analysis"
                                                 @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
                                             </option>
                                             <option value="Rootcauseothers"
-
                                                 @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Others
                                             </option>
+                                        </select> --}}
+
+                                        <select name="root_cause_methodology[]" multiple id="root-cause-methodology"
+                                            {{ in_array($data->stage, [0,1,2,3,5,6,7,8]) ? "disabled" : "" }}>
+                                            <option value="Why-Why Chart" {{ in_array('Why-Why Chart', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Why-Why Chart</option>
+                                            <option value="Failure Mode and Effect Analysis" {{ in_array('Failure Mode and Effect Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Failure Mode and Effect Analysis</option>
+                                            <option value="Fishbone or Ishikawa Diagram" {{ in_array('Fishbone or Ishikawa Diagram', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Fishbone or Ishikawa Diagram</option>
+                                            <option value="Is/Is Not Analysis" {{ in_array('Is/Is Not Analysis', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Is/Is Not Analysis</option>
+                                            <option value="Rootcauseothers" {{ in_array('Rootcauseothers', old('root_cause_methodology', $selectedMethodologies) ?? []) ? 'selected' : '' }}>Others</option>
                                         </select>
+
+                                        @error('root_cause_methodology')
+                                            <span class="text-danger">{{$message}}</span>
+                                        @enderror
+
+                                        @if(in_array($data->stage, [0,1,2,3,5,6,7,8]))
+                                            @foreach(old('root_cause_methodology', $selectedMethodologies) ?? [] as $methodology)
+                                                <input type="hidden" name="root_cause_methodology[]" value="{{ $methodology }}">
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div><div class="col-12 mb-4" id="fmea-section" style="display:none;">
                                     <div class="group-input">
@@ -1767,7 +1716,7 @@
                                                 <div>Add</div>
 
                                                 <input type="file" id="myfile"
-                                                    name="investigation_attachment[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{$data->stage == 4 ? 'required' : ''}}
+                                                    name="investigation_attachment[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{!$data->stage == 4 ? 'required' : ''}}
                                                     oninput="addMultipleFiles(this, 'investigation_attachment')"
                                                     multiple>
                                             </div>
@@ -2115,29 +2064,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">More Info Req.
-                                            By</label>
-                                        <div class="">{{ $data->More_Info_ack_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_ack_on">More Info Req.
-                                            On</label>
-                                        <div class="">{{ $data->More_Info_ack_on }}</div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_ack_comment">Comments</label>
-                                        <div class="">{{ $data->More_Info_ack_comment }}</div>
-                                    </div>
-                                </div> --}}
-
+                               
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
@@ -2174,29 +2101,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hrc_by">More Info Req.
-                                            By</label>
-                                        <div class="">{{ $data->More_Info_hrc_by }}</div>
-                                    </div>
-                                </div>
-                                0
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hrc_on">More Info Req.
-                                            On</label>
-                                        <div class="">{{ $data->More_Info_hrc_on }}</div>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_hrc_comment">Comment</label>
-                                        <div class="">{{ $data->More_Info_hrc_comment }}</div>
-                                    </div>
-                                </div> --}}
+                              
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="QQQA_Review_Complete_By">QA/CQA Review Complete By</label>
@@ -2227,28 +2132,7 @@
                                             @endif</div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_qac_by">More Info Req.
-                                            By</label>
-                                        <div class="">{{ $data->More_Info_qac_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_qac_on">More Info Req.
-                                            On</label>
-                                        <div class="">{{ $data->More_Info_qac_on }}</div>
-                                    </div>
-                                </div>
 
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_qac_comment">Comment</label>
-                                        <div class="">{{ $data->More_Info_qac_comment }}</div>
-                                    </div>
-                                </div> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input" style="margin-bottom: 1rem">
                                         <label for="submitted_by">Submit By</label>
@@ -2277,28 +2161,7 @@
                                             @endif</div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_sub_by">More Info Req.
-                                            By</label>
-                                        <div class="">{{ $data->More_Info_sub_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_sub_on">More Info Req.
-                                            On</label>
-                                        <div class="">{{ $data->More_Info_sub_on }}</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-4">
-                                    <div class="group-input">
-                                        <label for="More_Info_sub_comment">Comments</label>
-                                        <div class="">{{ $data->More_Info_sub_comment }}</div>
-                                    </div>
-                                </div> --}}
-
+                                
                                 <div class="col-lg-4" style="margin-bottom: 1rem">
                                     <div class="group-input">
                                         <label for="HOD_Final_Review_Complete_By">HOD Final Review Complete By</label>
@@ -3132,30 +2995,60 @@
         });
     </script>
     <script>
-    $('#summernote').summernote({
-      toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear', 'italic']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-      ]
-  });
+//     $('#summernote').summernote({
+//       toolbar: [
+//           ['style', ['style']],
+//           ['font', ['bold', 'underline', 'clear', 'italic']],
+//           ['color', ['color']],
+//           ['para', ['ul', 'ol', 'paragraph']],
+//           ['table', ['table']],
+//           ['insert', ['link', 'picture', 'video']],
+//           ['view', ['fullscreen', 'codeview', 'help']]
+//       ]
+//   });
 
-  $('.summernote').summernote({
-      toolbar: [
-          ['style', ['style']],
-          ['font', ['bold', 'underline', 'clear', 'italic']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['table', ['table']],
-          ['insert', ['link', 'picture', 'video']],
-          ['view', ['fullscreen', 'codeview', 'help']]
-      ]
-  });
+//   $('.summernote').summernote({
+//     toolbar: [
+//         ['style', ['style']],
+//         ['font', ['bold', 'underline', 'clear', 'italic']],
+//         ['color', ['color']],
+//         ['para', ['ul', 'ol', 'paragraph']],
+//         ['table', ['table']],
+//         ['insert', ['link', 'picture', 'video']],
+//         ['view', ['fullscreen', 'codeview', 'help']]
+//     ],
+//         callbacks: {
+//             onPaste: function (e) {
+//                 let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('text/html');
+
+//                 bufferText = bufferText.replace(/<table/g, '<table border="1"');
+
+//                 setTimeout(function () {
+//                     $('.summernote').summernote('pasteHTML', bufferText);
+//                 }, 10);
+                
+//                 e.preventDefault();
+//             }
+//         }
+//     });
+
   </script>
+  <script>
+         var editor = new FroalaEditor('.summernote', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+        $(".summernote-disabled").FroalaEditor("edit.off");
+    </script>
   
 @endsection
 
