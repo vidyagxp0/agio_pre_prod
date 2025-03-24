@@ -164,9 +164,9 @@
                     Action-Item Report
                 </td>
                 <td class="w-30">
-                    <div class="logo">
-                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt=""
-                            class="w-100">
+                <div class="logo" style="text-align: center;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                        style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>
@@ -336,8 +336,8 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">File</th>
+                            <th class="w-20"> Sr.No.</th>
+                            <th class="w-60">attachment </th>
                         </tr>
                         @if ($data->file_attach)
                             @php $files = json_decode($data->file_attach); @endphp
@@ -409,8 +409,8 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-20"> Sr.No.</th>
+                        <th class="w-60">attachment </th>
                     </tr>
                     @if ($data->acknowledge_attach)
                         @php $files = json_decode($data->acknowledge_attach); @endphp
@@ -499,8 +499,8 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-20"> Sr.No.</th>
+                        <th class="w-60">attachment </th>
                     </tr>
                     @if ($data->Support_doc)
                         @php $files = json_decode($data->Support_doc); @endphp
@@ -553,8 +553,8 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
-                        <th class="w-60">File</th>
+                        <th class="w-20"> Sr.No.</th>
+                        <th class="w-60">attachment </th>
                     </tr>
                     @if ($data->final_attach)
                         @php $files = json_decode($data->final_attach); @endphp

@@ -1,5 +1,10 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
     <style>
         header {
             display: none;
@@ -269,6 +274,8 @@
                                     </div>
                                 </div>
 
+
+                               
                                 <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">
@@ -288,6 +295,12 @@
                                     @enderror
 
                                 </div>
+
+
+
+
+                              
+
                                 {{-- <div class="col-md-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -540,21 +553,21 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description <span class="text-danger">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" required>{{ $data->description }}</textarea>
+                                            <textarea class="summernote" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" id="" required>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                 @else
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description</label>
-                                            <textarea readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description">{{ $data->description }}</textarea>
+                                            <textarea class="summernote" readonly {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} name="description" id="" >{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                 @endif
                                 @error('description')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-
+                            {{--
 
                                 <div class="col-lg-12">
                                         <div class="group-input">
@@ -620,6 +633,15 @@
                                     @error('departments')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
+                                </div>
+                                --}}
+
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Responsible Department</b></label>
+                                        <input readonly type="text" name="departments" id="initiator_group" value="{{ $data->departments ?? '' }}">
+                                    </div>
                                 </div>
 
                                 <div class="col-lg-12">
@@ -1648,6 +1670,23 @@
             display: block;
         }
     </style>
+
+<script>
+         var editor = new FroalaEditor('.summernote', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+        $(".summernote-disabled").FroalaEditor("edit.off");
+    </script>
 
     <script>
         VirtualSelect.init({
