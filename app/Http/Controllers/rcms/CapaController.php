@@ -3683,11 +3683,11 @@ class CapaController extends Controller
             $lastDocument = Capa::find($id);
 
             if ($capa->stage == 1) {
-                if (!$capa->short_description) {
+                if (empty($capa->assign_to) || empty($capa->due_date) || empty($capa->short_description) || empty($capa->initiated_through) || empty($capa->repeat) || empty($capa->problem_description) || empty($capa->initial_observation) || empty($capa->interim_containnment) || empty($capa->investigation) || empty($capa->rcadetails) || empty($capa->details_new) || empty($capa->capa_type)) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Short Description is yet to be filled!',
+                        'message' => 'Mandatory Fields! to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -5286,13 +5286,14 @@ class CapaController extends Controller
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record, 4, '0', STR_PAD_LEFT);
             $record_number = $record;
+            $parent_division_id = Capa::where('id',$id)->value('division_id');
             $data = Capa::find($id);
             $extension_record = Helpers::getDivisionName($data->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1;
             $relatedRecords = Helpers::getAllRelatedRecords();
             // $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record', 'countData'));
+            return view('frontend.extension.extension_new', compact('parent_id', 'parent_name', 'relatedRecords', 'record_number', 'parent_due_date', 'parent_type', 'extension_record', 'countData','parent_division_id'));
         }
     }
 

@@ -6132,7 +6132,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $parent_initiator_id = $id;
                $changeControl = OpenStage::find(1);
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-
+               $parent_division_id = LabIncident::where('id', $id)->value('division_id');
+               $parent_due_date=LabIncident::where('id', $id)->value('due_date');
                // Debugging to check the revision value
 
 
@@ -6143,7 +6144,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                    $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                     $count = Helpers::getChildData($id, $parent_type);
                     $countData = $count + 1;
-                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record'));
+                   return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'countData', 'extension_record','parent_division_id','parent_due_date'));
 
                }
 

@@ -208,6 +208,7 @@
                                                         value="" readonly>
                                                 </div>
                                             </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -251,8 +252,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assign_to"> Name of Responsible department Head <span class="text-danger">*</span></label>
-                                        <select id="assign_to" name="assign_to" required class="form-control">
+                                        <label for="assign_to"> Name of Responsible department Head</label>
+                                        <select id="assign_to" name="assign_to" class="form-control">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -266,8 +267,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="qa_reviewer">QA Reviewer <span class="text-danger">*</span></label>
-                                        <select id="qa_reviewer" name="qa_reviewer" required class="form-control">
+                                        <label for="qa_reviewer">QA Reviewer</label>
+                                        <select id="qa_reviewer" name="qa_reviewer" class="form-control">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -282,12 +283,13 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <label for="Audit Schedule Start Date">Due Date<span
+                                        class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_dateq" readonly
                                                 placeholder="DD-MM-YYYY" />
                                             <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" required/>
                                         </div>
 
                                     </div>
@@ -1189,31 +1191,31 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="objective">Objective</label>
-                                        <textarea name="objective"></textarea>
+                                        <textarea name="objective" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="scope">Scope</label>
-                                        <textarea name="scope"></textarea>
+                                        <textarea name="scope" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="problem_statement">Problem Statement</label>
-                                        <textarea name="problem_statement_rca"></textarea>
+                                        <textarea name="problem_statement_rca" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="requirement">Background</label>
-                                        <textarea name="requirement"></textarea>
+                                        <textarea name="requirement" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action"></textarea>
+                                        <textarea name="immediate_action" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-12">
@@ -2271,6 +2273,28 @@
             display: block;
         }
     </style>
+        <script>
+        function otherController(value, checkValue, blockID) {
+            let block = document.getElementById(blockID);
+            let blockTextarea = block.getElementsByTagName('textarea')[0];
+            let blockLabel = block.querySelector('label span.text-danger');
+
+            if (value === checkValue) {
+                block.style.display = "block"; // Show field
+                blockLabel.classList.remove('d-none');
+                blockTextarea.setAttribute('required', 'required');
+            } else {
+                block.style.display = "none"; // Hide field
+                blockLabel.classList.add('d-none');
+                blockTextarea.removeAttribute('required');
+            }
+        }
+
+        // Page load par check kare ki agar "Yes" ya "Others" selected ho to field dikhaye
+        document.addEventListener("DOMContentLoaded", function () {
+            otherController(document.querySelector("select[name='initiated_through']").value, "others", "initiated_through_req");
+        });
+    </script>
 
     <script>
         VirtualSelect.init({

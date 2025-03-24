@@ -164,74 +164,206 @@
     padding: 10px;
     background: #fff;
     border-radius: 5px;
-}
+    }
 
-.block-head {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
+    .block-head {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.table th, .table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
+    .table th, .table td {
+        padding: 10px;
+        border: 1px solid #ddd;
+    }
 
-.problem-statement th {
-    background: #f4bb22;
-    width: 150px;
-}
+    .problem-statement th {
+        background: #f4bb22;
+        width: 150px;
+    }
 
-.why-label {
-    color: #393cd4;
-    width: 150px;
-}
+    .why-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-.answer-label {
-    color: #393cd4;
-    width: 150px;
-}
+    .answer-label {
+        color: #393cd4;
+        width: 150px;
+    }
 
-.root-cause th {
-    background: #0080006b;
-    width: 150px;
-}
+    .root-cause th {
+        background: #0080006b;
+        width: 150px;
+    }
 
-.text-muted {
-    color: gray;
-}
+    .text-muted {
+        color: gray;
+    }
 
 
-.full-width-table {
-    width: 100%;
-    table-layout: auto; 
-    border-collapse: collapse;
-    border: 1px solid #ddd; 
-}
+    .full-width-table {
+        width: 100%;
+        table-layout: auto; 
+        border-collapse: collapse;
+        border: 1px solid #ddd; 
+    }
 
-.full-width-table th, 
-.full-width-table td {
-    padding: 6px;
-    text-align: center;
-    font-size: 10px;
-    border: 1px solid #ddd;
-    word-wrap: break-word; 
-}
+    .full-width-table th, 
+    .full-width-table td {
+        padding: 6px;
+        text-align: center;
+        font-size: 10px;
+        border: 1px solid #ddd;
+        word-wrap: break-word; 
+    }
 
-.full-width-table thead {
-    background-color: #f4f4f4; 
-    font-weight: bold;
-}
+    .full-width-table thead {
+        background-color: #f4f4f4; 
+        font-weight: bold;
+    }
 
-.full-width-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
+    .full-width-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
 </style>
+
+<!-- <style>
+    .custom-procedure-block {
+        width: 100%;
+    }
+
+    .custom-container {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .custom-table-wrapper {
+        margin-right: 40px;
+    }
+
+    .custom-procedure-content {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .custom-content-wrapper {
+        height: auto;
+        overflow-x: auto;
+        width: 700px;
+        margin-left: 1rem;
+    }
+
+    .custom-table-wrapper table {
+        width: 100%; 
+        border-collapse: collapse;
+        overflow: auto;
+    }
+
+    .custom-table-wrapper table td, 
+    .custom-table-wrapper table th {
+        word-wrap: break-word;
+        text-align: center;
+        padding: 5px;
+    }
+
+    .custom-table-wrapper table img {
+        max-width: 100%;
+        height: auto;
+    }
+
+</style> -->
+
+<style>
+        
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block;
+            margin: 5px auto;
+        }
+
+        #isPasted td img {
+            max-width: 400px !important;
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed;
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
+    </style>
 
 <body>
 
@@ -286,9 +418,6 @@
                             @endif
                         </td>
 
-                      
-                    
-
                     </tr>
                     <tr>
                         <th class="w-20">Initiator</th>
@@ -299,35 +428,12 @@
 
                     </tr>
 
-                    
-                    {{-- <tr>
-
-                        <th class="w-20">Due Date</th>
-                        <td class="w-30">
-                            @if ($data->due_date)
-                                {{ Helpers::getdateFormat($data->due_date) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-80">
-                            @if ($data->assign_to)
-                                {{ Helpers::getInitiatorName($data->assign_to) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr> --}}
                     <tr>
-
-                       
 
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
-                            @if ($data->initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->initiator_Group) }}
+                            @if ( Helpers::getUsersDepartmentName(Auth::user()->departmentid))
+                                {{  Helpers::getUsersDepartmentName(Auth::user()->departmentid)}}
                             @else
                                 Not Applicable
                             @endif
@@ -506,7 +612,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->root_cause_initial_attachment)
                             @foreach (json_decode($data->root_cause_initial_attachment) as $key => $file)
@@ -615,7 +721,7 @@
                         </td>
                     </tr>
                   </table>
-<!-- Failure Mode and  Effec Analysis -->
+                <!-- Failure Mode and  Effec Analysis -->
 
 
 
@@ -638,7 +744,7 @@
                 
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->investigation_attachment)
                             @foreach (json_decode($data->investigation_attachment) as $key => $file)
@@ -687,7 +793,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->hod_attachments)
                         @foreach (json_decode($data->hod_attachments) as $key => $file)
@@ -733,7 +839,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->cft_attchament_new)
                         @foreach (json_decode($data->cft_attchament_new) as $key => $file)
@@ -764,59 +870,259 @@
                 <div class="block-head">
                     Investigation
                 </div>
+
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Objective</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->objective, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Scope</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->scope, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Problem Statement</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->problem_statement_rca, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Background</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->requirement, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Immediate Action</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->immediate_action, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Others</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->root_cause_Others, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Root Cause</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->root_cause, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Impact / Risk Assessment</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->impact_risk_assessment, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">CAPA</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->capa, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Investigation Summary</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->investigation_summary_rca, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
          <table>
             <tr>
-                <th class="w-20">Objective</th>
-                <td class="w-80">
-                    @if ($data->objective)
-                        {{ $data->objective }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            
-        
-                <th class="w-20">Scope</th>
-                <td class="w-80">
-                    @if ($data->scope)
-                        {{ $data->scope }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th class="w-20">Problem Statement</th>
-                <td class="w-80">
-                    @if ($data->problem_statement_rca)
-                        {{ $data->problem_statement_rca }}
-                    @else
-                        Not Applicable
-                    @endif
-                
-            
-                <th class="w-20">Background</th>
-                <td class="w-80">
-                    @if ($data->requirement)
-                        {{ $data->requirement }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            </tr>
-            <tr>
-                <th class="w-20">Immediate Action</th>
-                <td class="w-80">
-                    @if ($data->immediate_action)
-                        {{ $data->immediate_action }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            
-                 {{-- @php
-                     dd($data->investigation_teamNamesString);
-                 @endphp --}}
                 <th class="w-20">Investigation Team</th>
                 <td class="w-80">
                     @if ($data->investigation_team)
@@ -825,9 +1131,7 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
 
-            <tr>
                 <th class="w-20">Root Cause Methodology</th>
                 <td class="w-80">
                     @if ($data->root_cause_methodology)
@@ -836,121 +1140,71 @@
                         Not Applicable
                     @endif
                 </td>
-
-                <th class="w-20">Others</th>
-                <td class="w-80">
-                    @if ($data->root_cause_Others)
-                        {{ $data->root_cause_Others }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
             </tr>
-    <tr>
-        
-                      
-        <th class="w-20">Root Cause</th>
-        <td class="w-80">
-            @if ($data->root_cause)
-                {{ $data->root_cause }}
-            @else
-                Not Applicable
-            @endif
-        </td>
-    
-        <th class="w-20">Impact / Risk Assessment</th>
-        <td class="w-80">
-            @if ($data->impact_risk_assessment)
-                {{ $data->impact_risk_assessment }}
-            @else
-                Not Applicable
-            @endif
-        </td>
-    </tr>
-    <tr>
-        <th class="w-20">CAPA</th>
-        <td class="w-80">
-            @if ($data->capa)
-                {{ $data->capa }}
-            @else
-                Not Applicable
-            @endif
-        </td>
-   
-        <th class="w-20">Investigation Summary</th>
-        <td class="w-80">
-            @if ($data->investigation_summary_rca)
-                {{ $data->investigation_summary_rca }}
-            @else
-                Not Applicable
-            @endif
-        </td>
-    </tr>
+         </table>
+        <div class="border-table">
+            <div class="block-head">
+            Attachment
 
-</table>
-<div class="border-table">
-    <div class="block-head">
-     Attachment
+            </div>
+            <table>
 
-    </div>
-    <table>
-
-        <tr class="table_bg">
-            <th class="w-20">Sr.No.</th>
-            <th class="w-60">Batch No</th>
-        </tr>
-        @if ($data->investigation_attachment)
-            @foreach (json_decode($data->investigation_attachment) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
+                <tr class="table_bg">
+                    <th class="w-20">Sr.No.</th>
+                    <th class="w-60">Attachment</th>
                 </tr>
-            @endforeach
-        @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-        @endif
+                @if ($data->investigation_attachment)
+                    @foreach (json_decode($data->investigation_attachment) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                @endif
 
-    </table>
-</div>  
-<div class="border-table">
-    <div class="block-head">
-        Investigation Attachment
+            </table>
+        </div>  
+        <div class="border-table">
+            <div class="block-head">
+                Investigation Attachment
 
-    </div>
-    <table>
+            </div>
+            <table>
 
-        <tr class="table_bg">
-            <th class="w-20">Sr.No.</th>
-            <th class="w-60">Batch No</th>
-        </tr>
-        @if ($data->root_cause_initial_attachment_rca)
-            @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a> </td>
+                <tr class="table_bg">
+                    <th class="w-20">Sr.No.</th>
+                    <th class="w-60">Attachment</th>
                 </tr>
-            @endforeach
-        @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-20">Not Applicable</td>
-            </tr>
-        @endif
+                @if ($data->root_cause_initial_attachment_rca)
+                    @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                @endif
 
-    </table>
-</div>                
+            </table>
+        </div>                
 </div>
 
 
 
 
 
-<style>
+                <!-- <style>
                     .table {
                         width: 100%;
                         font-size: 7px;
@@ -979,7 +1233,8 @@
                         transform: rotate(90deg);
                         /* Rotate inner table content back to normal */
                     }
-                </style>
+                </style> -->
+
 
 
             <div class="border-table  tbl-bottum">
@@ -989,7 +1244,7 @@
                     <table class="table full-width-table"  >
                         <thead>
                             <tr class="table_bg tr">
-                                <th class="th" style="font-size: 7px" rowspan="2">Row #</th>
+                                <th class="th" style="font-size: 7px" rowspan="2">Sr.No.</th>
                                 <th class="th" style="font-size: 7px" colspan="2">Risk Identification</th>
                                 <th class="th"  style="font-size: 7px" colspan="1">Risk Analysis</th>
                                 <th class="th" style="font-size: 7px" colspan="4">Risk Evaluation</th>
@@ -1005,7 +1260,7 @@
                                 <th style="font-size: 7px" class="rotate th">Severity (S)</th>
                                 <th style="font-size: 7px" class="rotate  th">Probability (P)</th>
                                 <th style="font-size: 7px" class="rotate th">Detection (D)</th>
-                                <th style="font-size: 7px" class="rotate th">RPN</th>
+                                <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
                                 <th style="font-size: 7px" class="th">Control Measures recommended/ Risk mitigation proposed</th>
                                 <th style="font-size: 7px" class="rotate th">Severity (S)</th>
                                 <th style="font-size: 7px" class="rotate th">Probability (P)</th>
@@ -1184,7 +1439,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-10">Row #</th>
+                            <th class="w-10">Sr.No.</th>
                             <th class="w-30">Type</th>
                             <th class="w-30">Remarks</th>
                         </tr>
@@ -1454,7 +1709,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->hod_final_attachments)
                         @foreach (json_decode($data->hod_final_attachments) as $key => $file)
@@ -1504,7 +1759,7 @@
 
             <tr class="table_bg">
                 <th class="w-20">Sr.No.</th>
-                <th class="w-60">Batch No</th>
+                <th class="w-60">Attachment</th>
             </tr>
             @if ($data->qa_final_attachments)
                 @foreach (json_decode($data->qa_final_attachments) as $key => $file)
@@ -1555,7 +1810,7 @@
 
             <tr class="table_bg">
                 <th class="w-20">Sr.No.</th>
-                <th class="w-60">Batch No</th>
+                <th class="w-60">Attachment</th>
             </tr>
             @if ($data->qah_final_attachments)
                 @foreach (json_decode($data->qah_final_attachments) as $key => $file)
@@ -1639,7 +1894,7 @@ Not Applicable
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-10">Row #</th>
+                            <th class="w-10">Sr.No.</th>
                             <th class="w-30">Root Cause Category</th>
                             <th class="w-30">Root Cause Sub-Category</th>
                             <th class="w-30">Probability</th>
@@ -1722,47 +1977,7 @@ Not Applicable
                                             <td class="w-30">{{ $data->More_Info_hrc_comment }}</td>
                                         </tr> --}}
     
-                                    <tr>
-                                        <th class="w-20">QA/CQA Review Complete By</th>
-                                        <td class="w-30">
-                                            @if ($data->QQQA_Review_Complete_By)
-                                                {{ $data->QQQA_Review_Complete_By }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </td>
-                                        <th class="w-20">QA/CQA Review Complete On</th>
-                                        <td class="w-30">
-                                            @if ($data->QQQA_Review_Complete_On)
-                                                {{ Helpers::getdateFormat($data->QQQA_Review_Complete_On) }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </td>
-                                        <th class="w-20">QA/CQA Review Complete Comment</th>
-                                        <td class="w-80">
-                                            @if ($data->QAQQ_Review_Complete_comment)
-                                                {{ $data->QAQQ_Review_Complete_comment }}
-                                            @else
-                                                Not Applicable
-                                            @endif
-                                        </td>
-                                    </tr>
-                                    {{-- <tr>
-                                            <th class="w-20">More information Required By</th>
-                                            <td class="w-30"> @if ($data->More_Info_qac_by) {{ $data->More_Info_qac_by }} @else Not Applicable @endif</td>
-                                            <th class="w-20">More information Required On</th>
-                                            <td class="w-30"> @if ($data->More_Info_qac_on) {{ Helpers::getdateFormat($data->More_Info_qac_on) }} @else Not Applicable @endif</td>
-                                            <th class="w-20">More information Required Comment</th>
-                                        <td class="w-80"> @if ($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td>
-    
-                                        </tr> --}}
-                                    {{-- <tr>
-                                            <th class="w-20">Sumitted Comment</th>
-                                            <td class="w-80"> @if ($data->submitted_comment) {{ $data->submitted_comment }} @else Not Applicable @endif</td>
-                                        </tr> --}}
-                                    {{-- <th class="w-20">More information Required Comment</th>
-                                        <td class="w-80"> @if ($data->More_Info_qac_comment) {{ $data->More_Info_qac_comment }} @else Not Applicable @endif</td> --}}
+                                                                        
                                  <tr>
                                     <th class="w-20">HOD Review Complete By</th>
                                     <td class="w-30">
@@ -1790,20 +2005,37 @@ Not Applicable
                                     </td>
                                     {{-- <th class="w-20">QA Review Complete Comment</th>
                                             <td class="w-80"> @if ($data->qA_review_complete_comment) {{ $data->qA_review_complete_comment }} @else Not Applicable @endif</td> --}}
+                                </tr>
+
+                                <tr>
+                                        <th class="w-20">QA/CQA Review Complete By</th>
+                                        <td class="w-30">
+                                            @if ($data->QQQA_Review_Complete_By)
+                                                {{ $data->QQQA_Review_Complete_By }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20">QA/CQA Review Complete On</th>
+                                        <td class="w-30">
+                                            @if ($data->QQQA_Review_Complete_On)
+                                                {{ Helpers::getdateFormat($data->QQQA_Review_Complete_On) }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
+                                        <th class="w-20">QA/CQA Review Complete Comment</th>
+                                        <td class="w-80">
+                                            @if ($data->QAQQ_Review_Complete_comment)
+                                                {{ $data->QAQQ_Review_Complete_comment }}
+                                            @else
+                                                Not Applicable
+                                            @endif
+                                        </td>
                                     </tr>
+
     
-                                    {{-- <tr>
-                                            <th class="w-20"> More Info Required By
-                                            </th>
-                                            <td class="w-30">{{ $data->More_Info_hrc_by }}</td>
-                                            <th class="w-20">
-                                                More Info Required On</th>
-                                            <td class="w-30">{{ $data->More_Info_hrc_on }}</td>
-                                            <th class="w-20">
-                                                Comment</th>
-                                            <td class="w-30">{{ $data->More_Info_hrc_comment }}</td>
-                                        </tr>
-                                    --}}
+                           
                                     <tr>
                                         <th class="w-20">Submit By</th>
                                         <td class="w-30">
@@ -1972,74 +2204,7 @@ Not Applicable
                 </table>
             </div>
         </div>
-        {{-- <div class="block">
-            <div class="block-head">
-                Investigation
-            </div>
 
-            <table>
-
-
-                <tr>
-                    <th class="w-20">Objective</th>
-                    <td class="w-80">
-                        @if ($data->objective)
-                            {{ $data->objective }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Scope</th>
-                    <td class="w-80">
-                        @if ($data->scope)
-                            {{ $data->scope }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Problem Statement</th>
-                    <td class="w-80">
-                        @if ($data->problem_statement_rca)
-                            {{ $data->problem_statement_rca }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Background</th>
-                    <td class="w-80">
-                        @if ($data->requirement)
-                            {{ $data->requirement }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Immediate Action</th>
-                    <td class="w-80">
-                        @if ($data->immediate_action)
-                            {{ $data->immediate_action }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <th class="w-20">Investigation Team</th>
-                    <td class="w-80">
-                        @if ($data->investigation_team)
-                            {{ Helpers::getInitiatorName($data->investigation_team) }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr> --}}
                 {{-- <tr>
                     <th class="w-20">Investigation Tool</th>
                     <td class="w-80">
@@ -2124,7 +2289,7 @@ Not Applicable
 
                     <tr class="table_bg">
                         <th class="w-20">Sr.No.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_final_attachments)
                         @foreach (json_decode($data->qa_final_attachments) as $key => $file)
