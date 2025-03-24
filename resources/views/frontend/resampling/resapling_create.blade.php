@@ -186,9 +186,10 @@
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="related_records">Related Records</label>
+                                        <label for="related_records">Related Records<span
+                                                class="text-danger">*</span></label>
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
-                                            data-silent-initial-value-set="true" id="related_records" >
+                                            data-silent-initial-value-set="true" id="related_records" required>
 
                                             @foreach ($relatedRecords as $records)
                                                 <option
@@ -221,9 +222,10 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="HOD Persons">HOD Person</label>
-                                        <select   name="hod_preson" placeholder="Select HOD Persons" data-search="false"
-                                            data-silent-initial-value-set="true" id="hod" >
+                                        <label for="HOD Persons">HOD Person<span
+                                                class="text-danger">*</span></label>
+                                        <select  name="hod_preson" placeholder="Select HOD Persons" data-search="false"
+                                            data-silent-initial-value-set="true" id="hod" required>
                                             <option value="">select person</option>
                                             @foreach ($users as $value)
                                                 
@@ -242,8 +244,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Responsible Department">Responsible Department</label>
-                                        <select name="departments">
+                                        <label for="Responsible Department">Responsible Department<span
+                                            class="text-danger">*</span></label>
+                                        <select name="departments" required>
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA">Corporate Quality Assurance</option>
                                                 <option value="QA" >Quality Assurance</option>
@@ -354,7 +357,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">QA/CQA Head Remark</label>
-                                        <textarea name="qa_remark"></textarea>
+                                        <textarea disabled name="qa_remark"></textarea>
                                     </div>
                                 </div>
 
@@ -367,7 +370,7 @@
                                             <div class="file-attachment-list" id="qa_head"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="qa_head[]"
+                                                <input disabled type="file" id="myfile" name="qa_head[]"
                                                     oninput="addMultipleFiles(this, 'qa_head')" multiple>
                                             </div>
                                         </div>
@@ -396,16 +399,16 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken"></textarea>
+                                        <textarea disabled name="action_taken"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="start_date">Actual Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly
+                                            <input disabled type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date" class="hide-input"
+                                            <input disabled type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -414,9 +417,9 @@
                                     <div class="group-input input-date">
                                         <label for="end_date">Actual End Date</label>
                                         <div class="calenderauditee">
-                                        <input type="text" id="end_date"                             
+                                        <input disabled type="text" id="end_date"                             
                                                 placeholder="DD-MMM-YYYY" />
-                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
+                                             <input disabled type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                    
@@ -426,7 +429,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Comments</label>
-                                        <textarea name="comments"></textarea>
+                                        <textarea disabled name="comments"></textarea>
                                     </div>
                                 </div>
 
@@ -434,7 +437,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments">Sampled By</label>
-                                        <textarea  name="sampled_by"></textarea>
+                                        <textarea disabled  name="sampled_by"></textarea>
                                     </div>
                                 </div> 
 
@@ -445,7 +448,7 @@
                                             <div class="file-attachment-list" id="Support_doc"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Support_doc[]"
+                                                <input disabled type="file" id="myfile" name="Support_doc[]"
                                                     oninput="addMultipleFiles(this, 'Support_doc')" multiple>
                                             </div>
                                         </div>
@@ -471,7 +474,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="qa_comments">QA/CQA Review Comments</label>
-                                        <textarea name="qa_comments"></textarea>
+                                        <textarea disabled name="qa_comments"></textarea>
                                     </div>
                                 </div>
                                 
@@ -488,12 +491,12 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="file_attach">Attachment</label>
+                                        <label for="file_attach">QA/CQA Verification Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="final_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="final_attach[]"
+                                                <input disabled type="file" id="myfile" name="final_attach[]"
                                                     oninput="addMultipleFiles(this, 'final_attach')" multiple>
                                             </div>
                                         </div>

@@ -12924,6 +12924,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
         $parent_short_description = CC::where('id', $id)->value('short_description');
         $old_record = CC::select('id', 'division_id', 'record')->get();
         $relatedRecords = Helpers::getAllRelatedRecords();
+        $parent_due_date=CC::where('id', $id)->value('due_date');
 
 
      //   $data =$parent_data1;
@@ -12954,7 +12955,7 @@ $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Compl
 
          $count = Helpers::getChildData($id, $parent_type);
          $countData = $count + 1; 
-        return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData'));
+        return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
         }
         if ($request->revision == "New Document") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

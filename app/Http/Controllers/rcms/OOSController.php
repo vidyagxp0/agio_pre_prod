@@ -3389,6 +3389,7 @@ class OOSController extends Controller
         $parent_intiation_date = OOS::where('id', $id)->value('intiation_date');
         $parent_created_at = OOS::where('id', $id)->value('created_at');
         $parent_short_description = OOS::where('id', $id)->value('description_gi');
+        $parent_due_date=OOS::where('id', $id)->value('due_date');
         $hod = User::where('role', 4)->get();
         $record = $record_number;
         // dd($record_number);
@@ -3442,7 +3443,7 @@ class OOSController extends Controller
 
            $actionchild->save();
 
-           return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));
+           return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type','parent_due_date'));
        }
 
         else {
