@@ -96,7 +96,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to1">Auditee department Head</label>
                                         <select name="assign_to">
@@ -107,86 +107,66 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
+
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Auditee Department Name</b></label>
-                                        <select name="auditee_department" id="auditee_department">
-                                            <option value="" data-code="">-- Select --</option>
-                                            <option value="Corporate Quality Assurance" data-code="CQA" @if (old('auditee_department') == 'Corporate Quality Assurance') selected @endif>
-                                                Corporate Quality Assurance
-                                            </option>
-                                            <option value="Quality Assurance" data-code="QA" @if (old('auditee_department') == 'Quality Assurance') selected @endif>
-                                                Quality Assurance
-                                            </option>
-                                            <option value="Quality Control" data-code="QC" @if (old('auditee_department') == 'Quality Control') selected @endif>
-                                                Quality Control
-                                            </option>
-                                            <option value="Quality Control (Microbiology department)" data-code="QCMD" @if (old('auditee_department') == 'Quality Control (Microbiology department') selected @endif>
-                                                Quality Control (Microbiology department)
-                                            </option>
-                                            <option value="Production General" data-code="PG" @if (old('auditee_department') == 'Production General') selected @endif>
-                                                Production General
-                                            </option>
-                                            <option value="Production Liquid Orals" data-code="PLO" @if (old('auditee_department') == 'Production Liquid Orals') selected @endif>
-                                                Production Liquid Orals
-                                            </option>
-                                            <option value="Production Tablet and Powder" data-code="PTP" @if (old('auditee_department') == 'Production Tablet and Powder') selected @endif>
-                                                Production Tablet and Powder
-                                            </option>
-                                            <option value="Production External (Ointment, Gels, Creams and Liquid)" data-code="PE" @if (old('auditee_department') == 'Production External (Ointment, Gels, Creams and Liquid') selected @endif>
-                                                Production External (Ointment, Gels, Creams and Liquid)
-                                            </option>
-                                            <option value="Production Capsules" data-code="PC" @if (old('auditee_department') == 'Production Capsules') selected @endif>
-                                                Production Capsules
-                                            </option>
-                                            <option value="Production Injectable" data-code="PI" @if (old('auditee_department') == 'Production Injectable') selected @endif>
-                                                Production Injectable
-                                            </option>
-                                            <option value="Engineering" data-code="ENG" @if (old('auditee_department') == 'Engineering') selected @endif>
-                                                Engineering
-                                            </option>
-                                            <option value="Human Resource" data-code="HR" @if (old('auditee_department') == 'Human Resource') selected @endif>
-                                                Human Resource
-                                            </option>
-                                            <option value="Store" data-code="ST" @if (old('auditee_department') == 'Store') selected @endif>
-                                                Store
-                                            </option>
-                                            <option value="Electronic Data Processing" data-code="EDP" @if (old('auditee_department') == 'Electronic Data Processing') selected @endif>
-                                                Electronic Data Processing
-                                            </option>
-                                            <option value="Formulation Development" data-code="FD" @if (old('auditee_department') == 'Formulation Development') selected @endif>
-                                                Formulation Development
-                                            </option>
-                                            <option value="Analytical research and Development Laboratory" data-code="ARD" @if (old('auditee_department') == 'Analytical research and Development Laboratory') selected @endif>
-                                                Analytical research and Development Laboratory
-                                            </option>
-                                            <option value="Packaging Development" data-code="PD" @if (old('auditee_department') == 'Packaging Development') selected @endif>
-                                                Packaging Development
-                                            </option>
-                                            <option value="Purchase Department" data-code="PD" @if (old('auditee_department') == 'Purchase Department') selected @endif>
-                                                Purchase Department
-                                            </option>
-                                            <option value="Document Cell" data-code="DC" @if (old('auditee_department') == 'Document Cell') selected @endif>
-                                                Document Cell
-                                            </option>
-                                            <option value="Regulatory Affairs" data-code="RA" @if (old('auditee_department') == 'Regulatory Affairs') selected @endif>
-                                                Regulatory Affairs
-                                            </option>
-                                            <option value="Pharmacovigilance" data-code="PV" @if (old('auditee_department') == 'Pharmacovigilance') selected @endif>
-                                                Pharmacovigilance
-                                            </option>
-                                        </select>
+                                        <label for="Initiator"><b>Auditee department Name</b></label>
+                                        <input readonly type="text" name="auditee_department" id="initiator_group"
+                                            value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div> --}}
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator"><b> Initiator Department</b></label>
-                                <input readonly type="text" name="auditee_department" id="initiator_group"
-                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
-                            </div>
-                        </div>
 
-                            <script>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="assign_to1">Auditee Department Head</label>
+                                        <select name="assign_to" id="assign_to">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}" data-department-id="{{ $data->departmentid }}">
+                                                    {{ $data->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Auditee Department Name</b></label>
+                                        <input readonly type="text" name="auditee_department" id="initiator_group">
+                                    </div>
+                                </div>
+
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        let assignToSelect = document.getElementById("assign_to");
+                                        let departmentInput = document.getElementById("initiator_group");
+
+                                        assignToSelect.addEventListener("change", function () {
+                                            let selectedOption = assignToSelect.options[assignToSelect.selectedIndex];
+                                            let departmentId = selectedOption.getAttribute("data-department-id");
+
+                                            if (departmentId) {
+                                                // AJAX request to get department name
+                                                fetch(`/get-department-name/${departmentId}`)
+                                                    .then(response => response.json())
+                                                    .then(data => {
+                                                        departmentInput.value = data.department_name || "N/A";
+                                                    })
+                                                    .catch(error => {
+                                                        console.error("Error fetching department name:", error);
+                                                    });
+                                            } else {
+                                                departmentInput.value = "N/A";
+                                            }
+                                        });
+                                    });
+                                </script>
+
+
+
+                            {{-- <script>
                                 document.addEventListener("DOMContentLoaded", function () {
                                     // Define department name to code mapping
                                     const departmentMapping = {
@@ -231,7 +211,8 @@
                                         initiatorGroupCodeInput.value = "N/A"; // Default if not found
                                     }
                                 });
-                            </script>
+                            </script> --}}
+
                         {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Observation Report Due Date</label>

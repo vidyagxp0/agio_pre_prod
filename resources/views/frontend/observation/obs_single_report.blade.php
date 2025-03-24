@@ -155,6 +155,92 @@
     }
 </style>
 
+<style>
+        
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block;
+            margin: 5px auto;
+        }
+
+        #isPasted td img {
+            max-width: 400px !important;
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed;
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+        
+    </style>
+
 <body>
 
     <header>
@@ -327,6 +413,7 @@
                             <tr class="table_bg">
                                 <th style="width: 8%">Sr.No</th>
                                 <th style="width: 80%">Observation</th>
+                                <th style="width: 80%">Category</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -336,6 +423,8 @@
                             <tr>
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</td>
+                                <td>{{ isset($datas['category']) ? $datas['category'] : '' }}</td>
+
                             </tr>
                         @endforeach
                         @endif
@@ -570,13 +659,38 @@
                 </tr>
             </table>
 
-            <label class="head-number" for="Observation (+)">Action Taken</label>
+            <!-- <label class="head-number" for="Observation (+)">Action Taken</label>
                 <div class="div-data">
                     @if ($data->action_taken)
                         {{ $data->action_taken }}
                     @else
                         Not Applicable
                     @endif
+                </div> -->
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Action Taken</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->action_taken, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
 
@@ -584,13 +698,30 @@
                 Response Summary
             </div>
 
-            <label class="head-number" for="Observation (+)">Response Summary</label>
-                <div class="div-data">
-                    @if ($data->response_summary)
-                        {{ $data->response_summary }}
-                    @else
-                        Not Applicable
-                    @endif
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Response Summary</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->response_summary, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             <table>
 

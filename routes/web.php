@@ -5,6 +5,7 @@
 use App\Http\Controllers\ActionItemController;
 use App\Http\Controllers\Ajax\AjaxController;
 use App\Http\Controllers\OpenStageController;
+use App\Models\Department;
 use App\Http\Controllers\rcms\InternalauditController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\TMSController;
@@ -252,6 +253,14 @@ Route::post('incident_child_1/{id}', [IncidentController::class, 'incident_child
 /********************************************* Deviation Ends *******************************************/
 
 // ==============================end ==============================
+
+
+Route::get('/get-department-name/{id}', function ($id) {
+    $department = Department::find($id);
+    return response()->json([
+        'department_name' => $department ? $department->name : 'N/A'
+    ]);
+});
 //! ============================================
 //!                    Risk Management
 //! ============================================

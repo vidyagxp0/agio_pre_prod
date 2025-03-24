@@ -1,5 +1,9 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
     @php
         $users = DB::table('users')->select('id', 'name')->get();
 
@@ -43,6 +47,111 @@
         .calenderauditee input::-webkit-calendar-picker-indicator {
             width: 100%;
         }
+    </style>
+
+<style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+
+        .note-editable th,
+        .note-editable td {
+            border: 1px solid black !important;
+            padding: 8px;
+            text-align: left;
+        }
+        
     </style>
      <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
@@ -314,44 +423,95 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="assign_to">Auditee Department Head</label>
+                                                <label for="assign_to">Auditee Department Head<span
+                                                class="text-danger">*</span></label>
                                                 <select name="assign_to"
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                {{ in_array($data->stage,[0,2,3,4]) ? "disabled" : "" }}
+                                                required>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
                                                             value="{{ $value->id }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
+
+                                                @if(in_array($data->stage, [0,2,3,4]))
+                                                   <input type="hidden" name="assign_to" value="{{old('assign_to', $data->assign_to)}}">
+                                                @endif  
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Short Description">Auditee Department Name<span
-                                                        class="text-danger"></span></label>
-                                                <select name="auditee_department" id="auditee_department"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option selected disabled value="">---Select---</option>
-                                                    @foreach (Helpers::getInitiatorGroups() as $code => $auditee_department)
-                                                        <option value="{{ $auditee_department }}"
-                                                            data-code="{{ $code }}"
-                                                            @if ($data->auditee_department == $auditee_department) selected @endif>
-                                                            {{ $auditee_department }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> --}}
-
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Auditee Department Name</b></label>
                                                 <input disabled type="text" name="auditee_department" id="initiator_group"
-                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                    value="{{ $data->auditee_department }}">
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="assign_to">Auditee Department Head<span class="text-danger">*</span></label>
+                                            <select name="assign_to" id="assign_to"
+                                                {{ in_array($data->stage, [0,2,3,4]) ? "disabled" : "" }} required>
+                                                <option value="">-- Select --</option>
+                                                @foreach ($users as $value)
+                                                    <option 
+                                                        value="{{ $value->id }}" 
+                                                        data-department-id="{{ $value->departmentid }}"  
+                                                        {{ $data->assign_to == $value->id ? 'selected' : '' }}>
+                                                        {{ $value->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                            @if(in_array($data->stage, [0,2,3,4]))
+                                                <input type="hidden" name="assign_to" value="{{ old('assign_to', $data->assign_to) }}">
+                                            @endif  
                                         </div>
+                                    </div>
+
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            let assignToSelect = document.getElementById("assign_to");
+                                            let departmentInput = document.getElementById("initiator_group");
+
+                                            function updateDepartmentName() {
+                                                let selectedOption = assignToSelect.options[assignToSelect.selectedIndex];
+                                                let departmentId = selectedOption.getAttribute("data-department-id");
+
+                                                if (departmentId) {
+                                                    // AJAX request to get department name
+                                                    fetch(`/get-department-name/${departmentId}`)
+                                                        .then(response => response.json())
+                                                        .then(data => {
+                                                            departmentInput.value = data.department_name || "N/A";
+                                                        })
+                                                        .catch(error => {
+                                                            console.error("Error fetching department name:", error);
+                                                        });
+                                                } else {
+                                                    departmentInput.value = "N/A";
+                                                }
+                                            }
+
+                                            // Run function when the page loads (for edit mode)
+                                            updateDepartmentName();
+
+                                            // Run function when user selects a different Auditee Head
+                                            assignToSelect.addEventListener("change", updateDepartmentName);
+                                        });
+                                    </script>
+
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator"><b>Auditee Department Name</b></label>
+                                            <input disabled type="text" name="auditee_department" id="initiator_group"
+                                                value="{{ $data->auditee_department }}">
+                                        </div>
+                                    </div>
 
 
 
@@ -375,18 +535,20 @@
 
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Due Date"> Observation Report Due Date</label>
+                                                <label for="Due Date"> Observation Report Due Date<span
+                                                class="text-danger">*</span></label>
                                                 <div><small class="text-primary">
                                                     </small></div>
                                                 <div class="calenderauditee">
-                                                    <input disabled type="text" id="due_date" readonly
+                                                    <input  type="text" id="due_date" readonly
                                                         placeholder="DD-MMM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" name="due_date"
-                                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} {{ $data->stage !=1? 'disabled' : '' }}
+                                                    {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}
+                                                     {{ $data->stage !=1? 'readonly' : '' }}
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                          value="{{ $data->due_date}}"
-                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                                        class="hide-input" oninput="handleDateInput(this, 'due_date')" required/>
                                                 </div>
 
                                             </div>
@@ -644,112 +806,38 @@
 
 
 
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="attach_files1">Attached Files</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="attach_files1">
-                                                @if ($data->attach_files1)
-                                                    @foreach (json_decode($data->attach_files1) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}"
-                                                                target="_blank"><i class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input
-                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->attach_files1 }}" type="file"
-                                                    id="myfile" name="attach_files1[]"
-                                                    oninput="addMultipleFiles(this, 'attach_files1')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="capa_date_due">Recomendation Date Due for CAPA</label>
-                                         <div class="calenderauditee">
-                                        <input type="text"  id="recomendation_capa_date_due"  readonly placeholder="DD-MMM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}
-                                        value="{{ ($data->recomendation_capa_date_due) }}"/>
-                                         <input type="date" name="recomendation_capa_date_due" value="{{ $data->recomendation_capa_date_due }}"
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')"  />
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                        <!-- <div class="col-md-6 new-date-data-field">
-                                            <div class="group-input input-date ">
-                                                <label for="capa_date_due">Recomendation Due Date for CAPA</label>
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="recomendation_capa_date_due"
-                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        id="recomendation_capa_date_due" readonly
-                                                        placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
-                                                    <input type="date" class="hide-input"
-                                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"
-                                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
-                                                </div>
-                                            </div>
-                                        </div> -->
+                                      
+                                
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date ">
-                                                <label for="capa_date_due">Response Due Date</label>
+                                                <label for="capa_date_due">Response Due Date<span
+                                                class="text-danger">*</span></label>
                                                 <div class="calenderauditee">
                                                     <input type="text" name="recomendation_capa_date_due"
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                        id="recomendation_capa_date_due" readonly
+                                                        {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}
+                                                        id="recomendation_capa_date_due" 
                                                         placeholder="DD-MMM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
+                                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" required/>
                                                     <input type="date" class="hide-input"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                     {{ in_array($data->stage,[0,2,3,4]) ? "readonly" : "" }}
                                                         value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"
                                                         oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
+
+                                                        @if(in_array($data->stage, [0,2,3,4]))
+                                                          <input type="hidden" name="recomendation_capa_date_due" value="{{old('recomendation_capa_date_due', $data->recomendation_capa_date_due)}}">
+                                                        @endif  
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="non_compliance">Observation (+)</label>
-                                                <textarea name="non_compliance"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->non_compliance }}</textarea>
-                                            </div>
-                                        </div> -->
-                                        <!-- <div class="col-12">
-                                            <div class="group-input" id="input-grid">
-                                                <label for="non_compliance">Observation
-                                                    <button type="button" id="add-row">+</button>
-                                                </label>
-
-                                                @if ($grid_Data && is_array($grid_Data->data))
-                                                    @foreach ($grid_Data->data as $datas)
-                                                        <div class="grid-item" style="padding-bottom: 30px;">
-                                                            <textarea name="observation[{{ $loop->index }}][non_compliance]">{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
-                                                            <button type="button" class="remove-btn">Remove</button>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                        </div> -->
+                  
+                                        
 
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                <div class="sub-head">Observation
-                                                    <button type="button" name="details" id="Details-add" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                <div class="sub-head">Observation<span
+                                                class="text-danger">*</span>
+                                                    <button type="button" name="details" id="Details-add" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -773,11 +861,11 @@
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td><input type="text"
-                                                                            name="observation[{{ $loop->index }}][non_compliance]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                            name="observation[{{ $loop->index }}][non_compliance]" 
                                                                             value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}">
                                                                     </td>
                                                                     <td>
-                                                                     <select name="observation[{{ $loop->index }}][category]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                     <select name="observation[{{ $loop->index }}][category]" >
                                                                       <option value="">Select Category</option>
                                                                       <option value="major" {{ isset($datas['category']) && $datas['category'] == 'major' ? 'selected' : '' }}>major</option>
                                                                      <option value="minor" {{ isset($datas['category']) && $datas['category'] == 'minor' ? 'selected' : '' }}>minor</option>
@@ -786,7 +874,7 @@
                                                                     </td>
 
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                            class="removeRowBtn">Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -906,23 +994,7 @@
                                         <div class="col-12">
                                             <div class="sub-head">Response and CAPA Plan Details</div>
                                         </div>
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="date_Response_due1">Date Response Due1</label>
-                                        <!-- <input type="date" name="date_Response_due2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}"/> -->
-                                        <div class="calenderauditee">
-                                        <input type="text" name="date_Response_due2"  id="date_Response_due"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}
-                                        value="{{ Helpers::getdateFormat($data->date_Response_due2) }}" />
-                                        {{-- <input type="date" name="date_Response_due2" value="{{ $data->date_Response_due2 }}"
-                                        class="hide-input" --}}
-                                        {{-- oninput="handleDateInput(this, 'date_Response_due2')" /> --}}
-                                        {{-- <input type="text"  id="date_Response_due2"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}" />
-                                        <input type="date" name="date_Response_due2" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'date_Response_due2')" />
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                    
                                         <!-- <div class="col-md-12 new-date-data-field">
                                             <div class="group-input input-date ">
                                                 <label for="date_Response_due1">Response Details (+)  @if($data->stage == 2)<span class="text-danger">*</span>@endif</label>
@@ -935,14 +1007,14 @@
                                                 <div class="sub-head">Response Details @if ($data->stage == 2)
                                                 <span class="text-danger">*</span>
                                                 @endif
-                                                    <button type="button" name="details" id="Details-add8" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="details" id="Details-add8" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" id="Details-table8">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 8%">Sr.No</th>
+                                                            <th style="width: 8%">Sr.No.</th>
                                                             <th style="width: 80%">Response Details</th>
                                                             <th style="width: 12%">Action</th>
 
@@ -956,11 +1028,11 @@
                                                                     <td><input disabled type="text" name="response[{{ $loop->index }}][serial]"  value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td>
-                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
+                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]"> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
                                                                     </td>
 
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                            class="removeRowBtn" >Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1355,35 +1427,6 @@
                                             <div class="sub-head">Action Summary</div>
                                         </div>
 
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="actual_start_date">Actual Start Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text"  id="actual_start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->actual_start_date) }}"
-                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}/>
-                                            <input type="date"  class="hide-input" style="display: none;"
-                                                oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                        {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="actual_end_date">Actual End Date</label>
-                                        <div class="calenderauditee">
-                                        <input type="date" name="actual_end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->actual_end_date) }}"
-                                         {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->actual_end_date }}">
-                                    </div>
-                                </div>  --}}
-
-                                        {{-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="actual_end_date">Actual End Date11</label>
-                                        <div class="calenderauditee">
-                                            <input type="text"  id="actual_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->actual_end_date) }}"
-                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}/>
-                                        </div>
-                                    </div>
-                                 --}}
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="actual_start_date">Actual Action Start Date</label>
@@ -1419,7 +1462,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action_taken">Action Taken</label>
-                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
+                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -2260,19 +2303,7 @@
                     $('#rchars').text(textlen);
                 });
             </script>
-            <script>
-
-                $('#summernote').summernote({
-                    toolbar: [
-                        ['style', ['style']],
-                        ['font', ['bold', 'underline', 'clear', 'italic']],
-                        ['color', ['color']],
-                        ['para', ['ul', 'ol', 'paragraph']],
-                        ['table', ['table']],
-                        ['insert', ['link', 'picture', 'video']],
-                        ['view', ['fullscreen', 'codeview', 'help']]
-                    ]
-                });
+            {{-- <script>
 
                 $('.summernote').summernote({
                     toolbar: [
@@ -2287,5 +2318,23 @@
                 });
 
 
-            </script>
+            </script> --}}
+
+    <script>
+         var editor = new FroalaEditor('.summernote', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+        $(".summernote-disabled").FroalaEditor("edit.off");
+    </script>
+
         @endsection

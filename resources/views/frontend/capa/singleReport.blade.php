@@ -588,11 +588,41 @@
                                 <th class="20">CAPA Type</th>
                                 <td class="80">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
                             </tr>
-                            <tr>
-                                <th class="20">Corrective Action</th>
-                                <td class="80">@if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
-
-                             </tr>
+                            @if($data->capa_type == "Corrective Action")
+                                <tr>
+                                    <th class="20">Corrective Action</th>
+                                    <td class="80">
+                                        @if($data->corrective_action) 
+                                            {{ $data->corrective_action }}
+                                        @else 
+                                            Not Applicable 
+                                        @endif
+                                    </td>
+                                </tr>
+                            @elseif($data->capa_type == "Preventive Action")
+                                <tr>
+                                    <th class="20">Preventive Action</th>
+                                    <td class="80">
+                                        @if($data->preventive_action) 
+                                            {{ $data->preventive_action }}
+                                        @else 
+                                            Not Applicable 
+                                        @endif
+                                    </td>
+                                </tr>
+                            @elseif($data->capa_type == "Corrective & Preventive Action")
+                                <tr>
+                                    <th class="20">Corrective Action</th>
+                                    <td class="80">
+                                        @if($data->corrective_action) 
+                                            {{ $data->corrective_action }}
+                                        @else 
+                                            Not Applicable 
+                                        @endif
+                                    </td>
+                                </tr>
+                                
+                            @endif
                              <!-- <tr>
 
                                 <th class="20">Preventive Action</th>
