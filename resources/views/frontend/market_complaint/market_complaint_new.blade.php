@@ -283,7 +283,10 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Scheduled Start Date">Due Date</label>
+                                        <label for="Scheduled Start Date">Due Date 
+                                        <span
+                                        class="text-danger">*</span>
+                                        </label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date_gi" readonly placeholder="DD-MMM-YYYY"
                                                 value="" />
@@ -409,7 +412,7 @@
 
                                             // Get the Initiator Department input
                                             let initiatorGroupInput = document.getElementById("initiator_group");
-                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code_gi");
 
                                             // Get the department name from the input field
                                             let departmentName = initiatorGroupInput.value.trim();
@@ -432,7 +435,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiation Department Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                        <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" placeholder="Initiator Group Code"
                                             value="" readonly>
                                     </div>
                                 </div>
