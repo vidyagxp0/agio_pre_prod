@@ -63,7 +63,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->initiator_group = $request->Initiator_Group;
         $marketComplaint->intiation_date = $request->intiation_date;
         $marketComplaint->due_date_gi = $request->due_date_gi;
-        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code;
+        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
         $marketComplaint->record = ((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->if_other_gi = $request->if_other_gi;
@@ -2426,8 +2426,8 @@ class MarketComplaintController extends Controller
             return redirect()->back()->with('error', 'Market Complaint not found.');
         }
         $marketComplaint->if_other_gi = $request->input('if_other_gi');
-        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
-        $marketComplaint->initiator_group = $request->initiator_group;
+      //  $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
+       // $marketComplaint->initiator_group = $request->initiator_group;
 
         // $marketComplaint->record =((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
@@ -8197,6 +8197,23 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                     $cftDetails = MarketComplaintcftResponce::withoutTrashed()->where(['status' => 'In-progress', 'mc_id' => $id])->distinct('cft_user_id')->count();
 
                     if ($marketstat->stage == 1) {
+
+
+                        if (empty($marketstat->complainant_gi) || empty($marketstat->complaint_reported_on_gi) || empty($marketstat->details_of_nature_market_complaint_gi) || empty($marketstat->categorization_of_complaint_gi) || empty($marketstat->is_repeat_gi)|| empty($marketstat->review_of_complaint_sample_gi)|| empty($marketstat->review_of_control_sample_gi) || empty($marketstat->review_of_stability_study_gi) || empty($marketstat->review_of_product_manu_gi) || empty($marketstat->additional_inform)|| empty($marketstat->probable_root_causes_complaint_hodsr)|| empty($marketstat->in_case_Invalide_com)|| empty($marketstat->manufacturer_name_address_ca)|| empty($marketstat->complaint_sample_required_ca)|| empty($marketstat->complaint_sample_status_ca)|| empty($marketstat->brief_description_of_complaint_ca) || empty($marketstat->batch_record_review_observation_ca)|| empty($marketstat->analytical_data_review_observation_ca)|| empty($marketstat->retention_sample_review_observation_ca)|| empty($marketstat->qms_events_ifany_review_observation_ca)|| empty($marketstat->repeated_complaints_queries_for_product_ca)|| empty($marketstat->interpretation_on_complaint_sample_ifrecieved_ca)|| empty($marketstat->comments_ifany_ca)) {
+                            Session::flash('swal', [
+                                'title' => 'Mandatory Fields Required!',
+                                'message' => 'Pls fill Both  General Information Tab And Complaint Acknowledgement  Tab is yet to be filled!',
+                                'type' => 'warning',
+                            ]);
+
+                            return redirect()->back();
+                        } else {
+                            Session::flash('swal', [
+                                'type' => 'success',
+                                'title' => 'Success',
+                                'message' => 'Sent to QA/CQA Head Review'
+                            ]);
+                        }
 
                         $marketstat->stage = "2";
                         $marketstat->status = "QA/CQA Head Review";

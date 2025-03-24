@@ -905,7 +905,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiation Group Code">Initiation Department Code</label>
-                                    <input type="text" name="initiator_group_code"
+                                    <input type="text" name="initiator_group_code_gi"
                                         value="{{ $data->initiator_group_code_gi }}" id="initiator_group_code"
                                         readonly>
                                     {{-- <div class="default-name"> <span
@@ -1089,7 +1089,8 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="complainant_gi">Complainant</label>
+                                    <label for="complainant_gi">Complainant<span
+                                    class="text-danger">*</span></label>
                                     <textarea name="complainant_gi" class="form-control" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complainant_gi }}</textarea>
                                 </div>
                             </div>
@@ -1099,7 +1100,10 @@
 
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="Due Date">Complaint Reported On</label>
+                                    <label for="Due Date">Complaint Reported On 
+                                    <span
+                                    class="text-danger">*</span>
+                                    </label>
 
                                     <div class="calenderauditee">
                                         @php
@@ -1143,7 +1147,10 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint</label>
+                                    <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint 
+                                    <span
+                                    class="text-danger">*</span>
+                                    </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote"
@@ -1157,7 +1164,8 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product Details
+                                        Product Details <span
+                                        class="text-danger">*</span>
                                         <button type="button" id="Details"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -1383,7 +1391,8 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Traceability
+                                        Traceability<span
+                                        class="text-danger">*</span>
                                         <button type="button" id="traceblity_add"
                                             {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -1489,7 +1498,10 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Initiator Group">Categorization of complaint</label>
+                                    <label for="Initiator Group">Categorization of complaint
+                                    <span
+                                    class="text-danger">*</span>
+                                    </label>
                                     <select name="categorization_of_complaint_gi" onchange=""
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>
                                         <option value="">-- select --</option>
@@ -1508,7 +1520,10 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="is_repeat_gi">Is Repeat</label>
+                                    <label for="is_repeat_gi">Is Repeat
+                                    <span
+                                    class="text-danger">*</span>
+                                    </label>
                                     <select name="is_repeat_gi" id="is_repeat_gi"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>
                                         <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
@@ -1528,7 +1543,7 @@
                                         <small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small>
                                     </div>
-                                    <textarea name="repeat_nature_gi" id="repeat_nature_gi"
+                                    <textarea  name="repeat_nature_gi" id="repeat_nature_gi"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->repeat_nature_gi }}</textarea>
                                 </div>
                             </div>
@@ -1595,20 +1610,22 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Review of Control Sample">Review of Complaint Sample</label>
+                                    <label for="Review of Control Sample">Review of Complaint Sample<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="" name="review_of_complaint_sample_gi" id=""
+                                    <textarea class="summernote" name="review_of_complaint_sample_gi"  id="summernote-1"
                                     {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->review_of_complaint_sample_gi }} </textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Review of Control Sample">Review of Control Sample</label>
+                                    <label for="Review of Control Sample">Review of Control Sample<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="review_of_control_sample_gi" id=""
+                                    <textarea class="summernote" name="review_of_control_sample_gi"  id="summernote-1"
                                     {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->review_of_control_sample_gi }}</textarea>
                                 </div>
                             </div>
@@ -1616,7 +1633,8 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of stability study program and samples">Review of stability study
-                                        program and samples</label>
+                                        program and samples<span
+                                        class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1"
@@ -1627,7 +1645,8 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of product manufacturing and analytical process">Review of product
-                                        manufacturing and analytical process </label>
+                                        manufacturing and analytical process<span
+                                        class="text-danger">*</span> </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1"
@@ -1638,7 +1657,8 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="In case of Invalide complain then">Additional information if require
+                                    <label for="In case of Invalide complain then">Additional information if require<span
+                                    class="text-danger">*</span>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
@@ -1649,7 +1669,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Additional information if require">Type of Market Complaints </label>
+                                    <label for="Additional information if require">Type of Market Complaints<span
+                                    class="text-danger">*</span> </label>
                                     <select
                                         name="probable_root_causes_complaint_hodsr" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
                                         id="probable_root_causes_complaint_hodsr">
@@ -1670,7 +1691,8 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="In case of Invalide complain then">Comments</label>
+                                    <label for="In case of Invalide complain then">Comments<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1"
@@ -2073,7 +2095,10 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Manufacturer name & Address">Manufacturer Name & Address</label>
+                                    <label for="Manufacturer name & Address">Manufacturer Name & Address
+                                    <span
+                                    class="text-danger">*</span>
+                                    </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1"
@@ -2085,7 +2110,8 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product Details
+                                        Product Details<span
+                                        class="text-danger">*</span>
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -2475,7 +2501,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Complaint Sample Required">Complaint Sample Required</label>
+                                    <label for="Complaint Sample Required">Complaint Sample Required<span
+                                    class="text-danger">*</span></label>
                                     <select name="complaint_sample_required_ca"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                         <option value="">-- select --</option>
@@ -2502,47 +2529,52 @@
                             </div> --}}
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Analytical Data review observation">Complaint Sample Status</label>
+                                    <label for="Analytical Data review observation">Complaint Sample Status<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="complaint_sample_status_ca" id=""
+                                    <textarea class="summernote" name="complaint_sample_status_ca"  id="summernote-1"
                                     {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complaint_sample_status_ca }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Brief Description of complaint">Brief Description Of Complaint</label>
+                                    <label for="Brief Description of complaint">Brief Description Of Complaint<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="brief_description_of_complaint_ca" id=""
+                                    <textarea class="summernote" name="brief_description_of_complaint_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->brief_description_of_complaint_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Batch Record review observation">Batch Record Review
-                                        Observation</label>
+                                        Observation<span
+                                        class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="batch_record_review_observation_ca" id=""
+                                    <textarea class="summernote" name="batch_record_review_observation_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->batch_record_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Analytical Data review observation">Analytical Data Review
-                                        Observation</label>
+                                        Observation<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="analytical_data_review_observation_ca" id=""
+                                    <textarea class="summernote" name="analytical_data_review_observation_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->analytical_data_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Retention sample review observation">Retention Sample Review
-                                        Observation</label>
+                                        Observation<span
+                                        class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1"
@@ -2552,7 +2584,8 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Stablity study data review">Stablity Study Data Review</label>
+                                    <label for="Stablity study data review">Stablity Study Data Review<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1"
@@ -2563,39 +2596,43 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="QMS Events(if any) review Observation">QMS Events(if Any) Review
-                                        Observation</label>
+                                        Observation<span
+                                        class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="qms_events_ifany_review_observation_ca" id=""
+                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->qms_events_ifany_review_observation_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Repeated complaints/queries for product">Repeated Complaints/Queries
-                                        For Product:</label>
+                                        For Product:<span
+                                        class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="repeated_complaints_queries_for_product_ca" id=""
+                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->repeated_complaints_queries_for_product_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Interpretation on compalint sample">Interpretation on Complaint sample(if
-                                        recieved)</label>
+                                        recieved)<span
+                                        class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="interpretation_on_complaint_sample_ifrecieved_ca" id=""
+                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->interpretation_on_complaint_sample_ifrecieved_ca }}</textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Comments">Comments(if Any)</label>
+                                    <label for="Comments">Comments(if Any)<span
+                                    class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="" name="comments_ifany_ca" id=""
+                                    <textarea class="summernote" name="comments_ifany_ca"  id="summernote-1"
                                         {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->comments_ifany_ca }}</textarea>
                                 </div>
                             </div>
@@ -2603,7 +2640,8 @@
 
 
                             <div class="sub-head">
-                                Proposal To Accomplish Investigation:
+                                Proposal To Accomplish Investigation:<span
+                                class="text-danger">*</span>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
@@ -3265,7 +3303,7 @@
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="Investing_team" style="width: 100%;">
+                                    <table class="table table-bordered" id="Investing_team" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Sr. No.</th>
@@ -3375,7 +3413,7 @@
                                     Record (BMR) </label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                         not require completion</small></div>
-                                <textarea class="" name="review_of_batch_manufacturing_record_BMR_gi" id=""
+                                <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
                                     {{ $data->stage == 3 ? '' : 'disabled' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                             </div>
                         </div> --}}
@@ -3386,7 +3424,7 @@
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea class="tiny" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-4" required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3394,7 +3432,7 @@
                                             Manufacturing Record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
-                                        <textarea readonly class="tiny" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-4" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                        <textarea readonly class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                                     </div>
                                 @endif
                                 @error('review_of_batch_manufacturing_record_BMR_gi')
@@ -3411,7 +3449,7 @@
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea name="review_of_raw_materials_used_in_batch_manufacturing_gi"
+                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
                                         {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }} </textarea>
                                     </div>
                                 @else
@@ -3422,7 +3460,7 @@
                                             Manufacturing </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi"
+                                        <textarea class="summernote" readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
                                         {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
                                     </div>
                                 @endif
@@ -3460,7 +3498,7 @@
                                             Packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
+                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
                                             {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
                                     </div>
                                 @else
@@ -3470,7 +3508,7 @@
                                             Packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea readonly class="" name="review_of_packing_materials_used_in_batch_packing_gi" id=""
+                                        <textarea readonly class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
                                             {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }} </textarea>
                                     </div>
                                 @endif
@@ -3486,7 +3524,7 @@
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
                                             {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
-                    </textarea>
+                                       </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3495,7 +3533,7 @@
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
                                             {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
-                    </textarea>
+                                        </textarea>
                                     </div>
                                 @endif
                             </div>
@@ -3522,7 +3560,7 @@
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
                                             {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
-                    </textarea>
+                                        </textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3533,7 +3571,7 @@
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
                                             {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
-                    </textarea>
+                                         </textarea>
                                     </div>
                                 @endif
 
@@ -10203,7 +10241,7 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="closure_comment_c" id="summernote-1"
+                                    <textarea  name="closure_comment_c" 
                                     {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
                                     </textarea>
                                 </div>
@@ -10215,7 +10253,7 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="closure_comment_c" id="summernote-1"
+                                    <textarea  name="closure_comment_c" 
                                     {{ $data->stage == 7 ? '' : 'readonly' }}>{{ $data->closure_comment_c }}
                                     </textarea>
                                 </div>
