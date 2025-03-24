@@ -3683,11 +3683,11 @@ class CapaController extends Controller
             $lastDocument = Capa::find($id);
 
             if ($capa->stage == 1) {
-                if (!$capa->short_description) {
+                if (empty($capa->assign_to) || empty($capa->due_date) || empty($capa->short_description) || empty($capa->initiated_through) || empty($capa->repeat) || empty($capa->problem_description) || empty($capa->initial_observation) || empty($capa->interim_containnment) || empty($capa->investigation) || empty($capa->rcadetails) || empty($capa->details_new) || empty($capa->capa_type)) {
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Short Description is yet to be filled!',
+                        'message' => 'Mandatory Fields! to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
