@@ -374,105 +374,125 @@
     </script>
 
     <script>
-        $(document).ready(function() {
-            // Function to generate options for the Person Responsible dropdown
-            function generateOptions(users) {
-                var options = '<option value="">Select a value</option>';
-                users.forEach(function(user) {
-                    options += '<option value="' + user.id + '">' + user.name + '</option>';
-                });
-                return options;
-            }
 
-            // Function to generate a new row in the CAPA Details table
-            function generateTableRow(serialNumber, users) {
-                var options = generateOptions(users);
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="Self_Inspection_circular[' + serialNumber +
-                    '][serial_number]" value="' + serialNumber + '"></td>' +
-                    '<td>' +
-                    '<select name="Self_Inspection_circular[' + serialNumber + '][departments]" id="departments_' +
-                    serialNumber + '" ' +
-                    '{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>' +
-                    '<option selected disabled value="">--- select ---</option>' +
-                    '@foreach (Helpers::getDepartments() as $code => $departments)' +
-                    '<option value="{{ $departments }}" data-code="{{ $code }}" ' +
-                    '@if ($data->departments == $departments) selected @endif>' +
-                    '{{ $departments }}</option>' +
-                    '@endforeach' +
-                    '</select>' +
-                    '</td>' +
-                    '<td>' +
-                    '<div class="new-date-data-field">' +
-                    '<div class="group-input input-date">' +
-                    '<div class="calenderauditee">' +
-                    '<input class="click_date" id="date_display_' + serialNumber +
-                    '" type="text" name="Self_Inspection_circular[' + serialNumber +
-                    '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly />' +
-                    '<input type="date" name="Self_Inspection_circular[' + serialNumber +
-                    '][info_mfg_date]" id="date_input_' + serialNumber +
-                    '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'date_display_' +
-                    serialNumber + '\')">' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</td>' +
-                    '<td><input type="text" name="Self_Inspection_circular[' + serialNumber +
-                    '][Auditor]"></td>' +
-                    '<td><button type="button" class="removeBtn">Remove</button></td>' +
-                    '</tr>';
-                return html;
-            }
+$(document).ready(function () {
+    // Function to generate options for Person Responsible dropdown
+    function generateOptions(users) {
+        let options = '';
+        users.forEach(user => {
+            options += `<option value="${user.id}">${user.name}</option>`;
+        });
+        return options;
+    }
 
-            // Initial users data - Replace with your actual data
-            var users = @json($users);
+    // Function to generate a new row in the CAPA Details table
+    function generateTableRow(serialNumber, users) {
+        var options = generateOptions(users); // Generate user options
 
-            // Event listener for adding new rows
-            $('#Self_Inspection_circular').click(function(e) {
-                e.preventDefault();
+        var html =
+            '<tr>' +
+            '<td><input disabled type="text" name="Self_Inspection_circular[' + serialNumber +
+            '][serial_number]" value="' + serialNumber + '"></td>' +
 
-                var tableBody = $('#Self_Inspection_circular-field-instruction-modal tbody');
-                var rowCount = tableBody.children('tr').length;
-                var newRow = generateTableRow(rowCount + 1, users);
-                tableBody.append(newRow);
+            '<td>' +
+            '<select name="Self_Inspection_circular[' + serialNumber + '][departments]" id="departments_' +
+            serialNumber + '" ' +
+            '{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>' +
+            '<option selected disabled value="">--- select ---</option>' +
+            '@foreach (Helpers::getDepartments() as $code => $departments)' +
+            '<option value="{{ $departments }}" data-code="{{ $code }}" ' +
+            '@if ($data->departments == $departments) selected @endif>' +
+            '{{ $departments }}</option>' +
+            '@endforeach' +
+            '</select>' +
+            '</td>' +
 
-                // Initialize VirtualSelect after adding the new row
+            '<td>' +
+            '<div class="new-date-data-field">' +
+            '<div class="group-input input-date">' +
+            '<div class="calenderauditee">' +
+            '<input class="click_date" id="date_display_' + serialNumber +
+            '" type="text" name="Self_Inspection_circular[' + serialNumber +
+            '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly />' +
+            '<input type="date" name="Self_Inspection_circular[' + serialNumber +
+            '][info_mfg_date]" id="date_input_' + serialNumber +
+            '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'date_display_' +
+            serialNumber + '\')">' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</td>' +
+
+            '<td>' +
+            '<select name="Self_Inspection_circular[' + serialNumber + '][Auditor][]" ' +
+            'id="auditor_' + serialNumber + '" ' +
+            'class="auditor-select" ' +
+            'multiple>' +
+            options +
+            '</select>' +
+            '</td>' +
+
+            '<td><button type="button" class="removeBtn">Remove</button></td>' +
+            '</tr>';
+
+        return html;
+    }
+
+    // Initial users data (Replace with actual data from Blade)
+    var users = @json($users);
+
+    // Function to initialize VirtualSelect
+    function initializeVirtualSelect() {
+        document.querySelectorAll('.auditor-select').forEach(function (el) {
+            if (!el.classList.contains('vs-initialized')) {
                 VirtualSelect.init({
-                    ele: '[id^=Months], #team_members, #training-require, #impacted_objects'
+                    ele: el,
+                    multiple: true,
+                    search: true,
+                    placeholder: 'Select Auditees',
                 });
-
-                // Reattach date picker event listeners for newly added rows
-                reattachDatePickers();
-            });
-
-            // Event delegation for remove button
-            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtn', function() {
-                $(this).closest('tr').remove();
-            });
-
-            // Function to handle date input change
-            window.handleDateInput = function(dateInput, displayInputId) {
-                var date = new Date(dateInput.value);
-                var options = {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                };
-                var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                $('#' + displayInputId).val(formattedDate);
-            };
-
-            // Attach date picker event listeners for the initial row
-            reattachDatePickers();
-
-            function reattachDatePickers() {
-                $('.click_date').off('click').on('click', function() {
-                    $(this).siblings('.show_date').click();
-                });
+                el.classList.add('vs-initialized'); // Prevent re-initialization
             }
         });
+    }
+
+    // Event listener for adding new rows
+    $('#Self_Inspection_circular').click(function (e) { // Ensure this targets a valid button
+        e.preventDefault();
+
+        var tableBody = $('#Self_Inspection_circular-field-instruction-modal tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1, users);
+        tableBody.append(newRow);
+
+        // Initialize VirtualSelect for newly added elements
+        initializeVirtualSelect();
+
+        // Reattach date picker event listeners for newly added rows
+        reattachDatePickers();
+    });
+
+    // Event delegation for remove button
+    $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtn', function () {
+        $(this).closest('tr').remove();
+    });
+
+    // Attach date picker event listeners
+    function reattachDatePickers() {
+        $('.click_date').off('click').on('click', function () {
+            $(this).siblings('.show_date').click();
+        });
+    }
+
+    // Initialize VirtualSelect for existing rows on page load
+    initializeVirtualSelect();
+});
+
+
     </script>
+
+
+
 
 
 
@@ -697,6 +717,7 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
                         <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CQA/QA Review</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
                     </div>
@@ -771,7 +792,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group Code">Department Code</label>
+                                                <label for="Initiator Group Code">Initiator Department code</label>
                                                 <input readonly type="text" name="initiator_group_code"
                                                     id="initiator_group_code"
                                                     value="{{ $data->initiator_group_code ?? '' }}"
@@ -792,15 +813,21 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
-                                                    Assigned To <span class="text-danger"></span>
+                                                    Assigned To <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                <select id="assign_to" placeholder="Select..." name="assign_to"
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 1 ? 'required' : '' }}>
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $key => $value)
-                                                        <option value="{{ $value->name }}"
+                                                        @php
+                                                            $departmentName = Helpers::getUsersDepartmentName($value->departmentid);
+                                                        @endphp
+
+                                                        <option value="{{ $value->name }}" data-department="{{ $departmentName }}"
                                                             @if ($data->assign_to == $value->name) selected @endif>
-                                                            {{ $value->name }}</option>
+                                                            {{ $value->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -811,22 +838,26 @@
                                                 <label for="search">
                                                     Assigned To Department<span class="text-danger"></span>
                                                 </label>
-                                                <select name="assign_to_department" id="assign_to_department"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option selected disabled value="">---select---</option>
-                                                    @foreach (Helpers::getInitiatorGroups() as $code => $assign_to_department)
-                                                        <option value="{{ $assign_to_department }}"
-                                                            data-code="{{ $code }}"
-                                                            @if ($data->assign_to_department == $assign_to_department) selected @endif>
-                                                            {{ $assign_to_department }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+
+                                                <input type="text" id="assign_to_department" name="assign_to_department" class="form-control" 
+                                                    value="{{ old('assign_to_department', $data->assign_to_department ?? '') }}" readonly>
+
                                                 @error('assign_to_department')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                         </div>
+
+                                        <script>
+                                            document.getElementById('assign_to').addEventListener('change', function () {
+                                                let selectedOption = this.options[this.selectedIndex];
+                                                let department = selectedOption.getAttribute('data-department') || '';
+
+                                                // Populate the input field
+                                                document.getElementById('assign_to_department').value = department;
+                                            });
+                                        </script>
+
                                         {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -842,7 +873,7 @@
                                                         class="text-danger">*</span></label>
                                                 <span id="rchars">255</span> characters remaining
                                                 <input type="text" name="short_description" id="short_description"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                     value="{{ $data->short_description }}" maxlength="255" required>
                                             </div>
                                         </div>
@@ -945,9 +976,12 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Type">Type</label>
+                                                <label for="Type">
+                                                    Type <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                </label>
                                                 <select name="type"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 1 ? 'required' : '' }}
                                                     onchange="toggleOtherField(this)">
                                                     <option value="">-- Select --</option>
                                                     <option value="Vendor/Supplier"
@@ -968,10 +1002,10 @@
 
                                         <div class="col-lg-6" id="through_req_container" style="display: none;">
                                             <div class="group-input">
-                                                <label for="through_req">Type(Others)<span
-                                                        class="text-danger">*</span></label>
+                                                <label for="through_req">Type(Others)<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span></label>
                                                 <textarea name="through_req" id="through_req_textarea"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->through_req }}</textarea>
+                                                {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 1 ? 'required' : '' }} > {{ $data->through_req }}</textarea>
                                             </div>
                                         </div>
 
@@ -999,9 +1033,11 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Year">Initiated Through</label>
+                                                <label for="Year">
+                                                    Initiated Through<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                 </label>
                                                 <select name="year"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} onchange="toggleTabField(this)">
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 1 ? 'required' : '' }} onchange="toggleTabField(this)">
                                                     <option value="">-- Select --</option>
                                                     <option value="Yearly Planner"
                                                         @if ($data->year == 'Yearly Planner') selected @endif>Yearly Planner</option>
@@ -1018,7 +1054,9 @@
                                                 <label for="yearly_other">Initiated Through(Others)<span
                                                         class="text-danger">*</span></label>
                                                 <textarea name="yearly_other" id="yearly_container_data"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->yearly_other }}</textarea>
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 1 ? 'required' : '' }}
+                                                    >{{ $data->yearly_other }}</textarea>
                                             </div>
                                         </div>
 
@@ -1228,11 +1266,13 @@
                                                 </table>
                                             </div>
                                         </div> --}}
+
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                Audit Program
+                                                Audit Program<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                 <button type="button" name="audit-agenda-grid" id="audit_program"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 1 ? 'required' : '' }} >+</button>
                                                 <span class="text-primary" data-bs-toggle="modal"
                                                     data-bs-target="#observation-field-instruction-modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1244,11 +1284,11 @@
                                                     id="audit_program-field-instruction-modal">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 5%">Row#</th>
+                                                            <th style="width: 5%">Sr. No.</th>
                                                             <th style="width: 12%">Auditees</th>
                                                             <th style="width: 15%">Date Start</th>
                                                             <th style="width: 15%">Date End</th>
-                                                            <th style="width: 15%">Lead Investigator</th>
+                                                            <th style="width: 15%">Lead Auditor</th>
                                                             <th style="width: 15%">Comment</th>
                                                             <th style="width: 5%">Action</th>
                                                         </tr>
@@ -1377,136 +1417,102 @@
                                         </div>
 
 
-                                        <div class="group-input">
-                                            <label for="audit-agenda-grid">
-                                                Self Inspection Planner
-                                                <button type="button" name="audit-agenda-grid" id="Self_Inspection"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
-                                                <span class="text-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#observation-field-instruction-modal"
-                                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                    (Launch Instruction)
-                                                </span>
-                                            </label>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered"
-                                                    id="Self_Inspection-field-instruction-modal">
-                                                    <thead>
-                                                        <tr>
-                                                            <th style="width: 1%">Row#</th>
-                                                            <th style="width: 12%">Department</th>
-                                                            <th style="width: 15%">Months</th>
-                                                            <th style="width: 16%">Remarks</th>
-                                                            <th style="width: 3%">Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if ($grid_Data4 && is_array($grid_Data4->data))
-                                                            @foreach ($grid_Data4->data as $grid4)
+                                        {{-- 
+                                                <div class="group-input">
+                                                    <label for="audit-agenda-grid">
+                                                        Self Inspection Planner
+                                                        <button type="button" name="audit-agenda-grid" id="Self_Inspection"
+                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                        <span class="text-primary" data-bs-toggle="modal"
+                                                            data-bs-target="#observation-field-instruction-modal"
+                                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                            (Launch Instruction)
+                                                        </span>
+                                                    </label>
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered"
+                                                            id="Self_Inspection-field-instruction-modal">
+                                                            <thead>
                                                                 <tr>
-                                                                    <td><input disabled type="text"
-                                                                            name="Self_Inspection[{{ $loop->index }}][serial_number]"
-                                                                            value="{{ $loop->index + 1 }}"></td>
-                                                                    <td>
-                                                                        <div class="col-lg-6">
-                                                                            <div class="group-input">
-                                                                                @php
-                                                                                    $selectedDepartment = isset(
-                                                                                        $grid4['department'],
-                                                                                    )
-                                                                                        ? $grid4['department']
-                                                                                        : '';
-                                                                                @endphp
-                                                                                <select
-                                                                                    name="Self_Inspection[{{ $loop->index }}][department]"
-                                                                                    id="department_{{ $loop->index }}"
-                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                                                    <option selected disabled
-                                                                                        value="">---select---
-                                                                                    </option>
-                                                                                    @foreach (Helpers::getDepartments() as $code => $department)
-                                                                                        <option
-                                                                                            value="{{ $department }}"
-                                                                                            data-code="{{ $code }}"
-                                                                                            @if ($selectedDepartment == $department) selected @endif>
-                                                                                            {{ $department }}
-                                                                                        </option>
-                                                                                    @endforeach
-                                                                                </select>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <select
-                                                                            name="Self_Inspection[{{ $loop->index }}][Months]"
-                                                                            placeholder="Select" data-search="false"
-                                                                            data-silent-initial-value-set="true"
-                                                                            id="Months" multiple
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                                            {{-- <option value="" disabled>Select a month
-                                                                            </option> --}}
-                                                                            @php
-                                                                                $selectedMonths = isset(
-                                                                                    $grid4['Months'],
-                                                                                )
-                                                                                    ? explode(',', $grid4['Months'])
-                                                                                    : [];
-                                                                            @endphp
-                                                                            <option value="Jan"
-                                                                                {{ in_array('Jan', $selectedMonths) ? 'selected' : '' }}>
-                                                                                January</option>
-                                                                            <option value="Feb"
-                                                                                {{ in_array('Feb', $selectedMonths) ? 'selected' : '' }}>
-                                                                                February</option>
-                                                                            <option value="March"
-                                                                                {{ in_array('March', $selectedMonths) ? 'selected' : '' }}>
-                                                                                March</option>
-                                                                            <option value="April"
-                                                                                {{ in_array('April', $selectedMonths) ? 'selected' : '' }}>
-                                                                                April</option>
-                                                                            <option value="May"
-                                                                                {{ in_array('May', $selectedMonths) ? 'selected' : '' }}>
-                                                                                May</option>
-                                                                            <option value="June"
-                                                                                {{ in_array('June', $selectedMonths) ? 'selected' : '' }}>
-                                                                                June</option>
-                                                                            <option value="July"
-                                                                                {{ in_array('July', $selectedMonths) ? 'selected' : '' }}>
-                                                                                July</option>
-                                                                            <option value="Aug"
-                                                                                {{ in_array('Aug', $selectedMonths) ? 'selected' : '' }}>
-                                                                                August</option>
-                                                                            <option value="Sept"
-                                                                                {{ in_array('Sept', $selectedMonths) ? 'selected' : '' }}>
-                                                                                September</option>
-                                                                            <option value="Oct"
-                                                                                {{ in_array('Oct', $selectedMonths) ? 'selected' : '' }}>
-                                                                                October</option>
-                                                                            <option value="Nov"
-                                                                                {{ in_array('Nov', $selectedMonths) ? 'selected' : '' }}>
-                                                                                November</option>
-                                                                            <option value="Dec"
-                                                                                {{ in_array('Dec', $selectedMonths) ? 'selected' : '' }}>
-                                                                                December</option>
-                                                                        </select>
-                                                                    </td>
-                                                                    <td><input type="text"
-                                                                            name="Self_Inspection[{{ $loop->index }}][Remarked]"
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                            value="{{ $grid4['Remarked'] ?? '' }}">
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button" class="removeBtn"
-                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>remove</button>
-                                                                    </td>
+                                                                    <th style="width: 1%">Sr. No.</th>
+                                                                    <th style="width: 12%">Department</th>
+                                                                    <th style="width: 15%">Months</th>
+                                                                    <th style="width: 16%">Remarks</th>
+                                                                    <th style="width: 3%">Action</th>
                                                                 </tr>
-                                                            @endforeach
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <script>
+                                                            </thead>
+                                                            <tbody>
+                                                                @if ($grid_Data4 && is_array($grid_Data4->data))
+                                                                    @foreach ($grid_Data4->data as $grid4)
+                                                                        <tr>
+                                                                            <td><input disabled type="text"
+                                                                                    name="Self_Inspection[{{ $loop->index }}][serial_number]"
+                                                                                    value="{{ $loop->index + 1 }}"></td>
+                                                                            <td>
+                                                                                <div class="col-lg-6">
+                                                                                    <div class="group-input">
+                                                                                        @php
+                                                                                            $selectedDepartment = isset($grid4['department']) ? $grid4['department'] : '';
+                                                                                        @endphp
+                                                                                        <select name="Self_Inspection[{{ $loop->index }}][department]"
+                                                                                            id="department_{{ $loop->index }}"
+                                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                                            <option selected disabled value="">---select---</option>
+                                                                                            @foreach (Helpers::getDepartments() as $code => $department)
+                                                                                                <option value="{{ $department }}"
+                                                                                                    data-code="{{ $code }}"
+                                                                                                    @if ($selectedDepartment == $department) selected @endif>
+                                                                                                    {{ $department }}
+                                                                                                </option>
+                                                                                            @endforeach
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <select name="Self_Inspection[{{ $loop->index }}][Months]"
+                                                                                    placeholder="Select" data-search="false"
+                                                                                    data-silent-initial-value-set="true"
+                                                                                    id="Months" multiple
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                                    @php
+                                                                                        $selectedMonths = isset($grid4['Months']) ? explode(',', $grid4['Months']) : [];
+                                                                                    @endphp
+                                                                                    <option value="Jan" {{ in_array('Jan', $selectedMonths) ? 'selected' : '' }}>January</option>
+                                                                                    <option value="Feb" {{ in_array('Feb', $selectedMonths) ? 'selected' : '' }}>February</option>
+                                                                                    <option value="March" {{ in_array('March', $selectedMonths) ? 'selected' : '' }}>March</option>
+                                                                                    <option value="April" {{ in_array('April', $selectedMonths) ? 'selected' : '' }}>April</option>
+                                                                                    <option value="May" {{ in_array('May', $selectedMonths) ? 'selected' : '' }}>May</option>
+                                                                                    <option value="June" {{ in_array('June', $selectedMonths) ? 'selected' : '' }}>June</option>
+                                                                                    <option value="July" {{ in_array('July', $selectedMonths) ? 'selected' : '' }}>July</option>
+                                                                                    <option value="Aug" {{ in_array('Aug', $selectedMonths) ? 'selected' : '' }}>August</option>
+                                                                                    <option value="Sept" {{ in_array('Sept', $selectedMonths) ? 'selected' : '' }}>September</option>
+                                                                                    <option value="Oct" {{ in_array('Oct', $selectedMonths) ? 'selected' : '' }}>October</option>
+                                                                                    <option value="Nov" {{ in_array('Nov', $selectedMonths) ? 'selected' : '' }}>November</option>
+                                                                                    <option value="Dec" {{ in_array('Dec', $selectedMonths) ? 'selected' : '' }}>December</option>
+                                                                                </select>
+                                                                            </td>
+                                                                            <td><input type="text"
+                                                                                    name="Self_Inspection[{{ $loop->index }}][Remarked]"
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                    value="{{ $grid4['Remarked'] ?? '' }}">
+                                                                            </td>
+                                                                            <td>
+                                                                                <button type="button" class="removeBtn"
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>remove</button>
+                                                                            </td>
+                                                                        </tr>
+                                                                    @endforeach
+                                                                @endif
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div> 
+                                            --}}
+
+
+
+                                        {{-- <script>
                                             $(document).ready(function() {
                                                 $('#Months').change(function() {
                                                     var selectedOptions = $(this).val();
@@ -1514,7 +1520,7 @@
                                                     document.querySelector('#Months2').setValue(selectedOptions);
                                                 });
                                             });
-                                        </script>
+                                        </script> --}}
                                         {{--
                                         <div class="col-12">
                                             <div class="group-input">
@@ -1556,8 +1562,10 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="comments">Comments</label>
-                                                <textarea name="comments" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                                                <label for="comments">
+                                                    Comments<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                </label>
+                                                <textarea name="comments" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -1588,7 +1596,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                             type="file" id="myfile" name="attachments[]"
                                                             oninput="addMultipleFiles(this, 'attachments')" multiple>
                                                     </div>
@@ -1602,7 +1610,7 @@
                                             <div class="group-input">
                                                 <label for="related_url">Related URL</label>
                                                 <input name="related_url"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                     value="{{ $data->related_url }}">
                                             </div>
                                         </div>
@@ -1610,7 +1618,7 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="related_url">URl's description</label>
-                                                <input {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                <input {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                     type="text" value="{{ $data->url_description }}"
                                                     name="url_description" id="url_description" />
                                             </div>
@@ -1620,7 +1628,7 @@
                                                 <label for="suggested_audit">Suggested Audits</label>
                                                 <input type="text" name="suggested_audits"
                                                     value="{{ $data->suggested_audits }}"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>
                                             </div>
                                         </div> --}}
 
@@ -1661,7 +1669,7 @@
                                                     Self Inspection Circular
                                                     <button type="button" name="audit-agenda-grid"
                                                         id="Self_Inspection_circular"
-                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                        {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1673,7 +1681,7 @@
                                                         id="Self_Inspection_circular-field-instruction-modal">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 1%">Row#</th>
+                                                                <th style="width: 1%">Sr. No.</th>
                                                                 <th style="width: 12%">Department</th>
                                                                 <th style="width: 15%">Audit Date</th>
                                                                 <th style="width: 16%">Name of Auditors</th>
@@ -1748,11 +1756,38 @@
                                                                         </td>
 
 
-                                                                        <td><input type="text"
-                                                                                name="Self_Inspection_circular[{{ $loop->index }}][Auditor]"
-                                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                                value="{{ $grid2['Auditor'] ?? '' }}">
-                                                                        </td>
+                                                                        <td>
+    <select name="Self_Inspection_circular[{{ $loop->index }}][Auditor][]" 
+            id="auditor_{{ $loop->index }}" 
+            class="auditor-select" 
+            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+            multiple>
+            
+        @php
+            // Ensure $grid2['Auditor'] is properly formatted as an array
+            $selectedAuditors = [];
+            if (!empty($grid2['Auditor'])) {
+                if (is_array($grid2['Auditor'])) {
+                    $selectedAuditors = $grid2['Auditor'];
+                } elseif (is_string($grid2['Auditor'])) {
+                    $selectedAuditors = explode(',', $grid2['Auditor']);
+                }
+            }
+        @endphp
+
+        @foreach ($users as $user)
+            <option value="{{ $user->id }}" 
+                @if (in_array($user->id, $selectedAuditors)) selected @endif>
+                {{ $user->name }}
+            </option>
+        @endforeach
+    </select>
+</td>
+
+
+
+
+
                                                                         <td>
                                                                             <button type="button" class="removeBtn"
                                                                                 {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>remove</button>
@@ -1792,8 +1827,10 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="comment">Comments</label>
-                                                    <textarea name="comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comment }}</textarea>
+                                                    <label for="comment">
+                                                        Comments<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <textarea name="comment" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>{{ $data->comment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -1826,7 +1863,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                                 type="file" id="myfile" name="Attached_File[]"
                                                                 oninput="addMultipleFiles(this, 'Attached_File')" multiple>
                                                         </div>
@@ -1930,8 +1967,10 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="comment">CQA/QA Approval Comments</label>
-                                                    <textarea name="cqa_qa_comment" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->cqa_qa_comment }}</textarea>
+                                                    <label for="comment">
+                                                        CQA/QA Approval Comments<span class="text-danger">{{ $data->stage == 2 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <textarea name="cqa_qa_comment" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }}>{{ $data->cqa_qa_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -1964,9 +2003,81 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input
-                                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                                 type="file" id="myfile" name="cqa_qa_Attached_File[]"
                                                                 oninput="addMultipleFiles(this, 'cqa_qa_Attached_File')" multiple>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="button-block">
+                                                @if ($data->stage != 0)
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                                    <button type="button" class="backButton"
+                                                        onclick="previousStep()">Back</button>
+                                                @endif
+                                                <button type="button" id="ChangeNextButton"
+                                                    class="nextButton" onclick="nextStep()">Next</button>
+                                                <button type="button"> <a class="text-white"
+                                                        href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="CCForm6" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="sub-head">CQA/QA Review
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="comment">
+                                                        CQA/QA Review Comment<span class="text-danger">{{ $data->stage == 3 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <textarea name="cqa_qa_review_comment" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'readonly' : '' }}{{ $data->stage == 3 ? 'required' : '' }}>{{ $data->cqa_qa_review_comment }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="group-input">
+                                                    <label for="cqa_qa_review_Attached_File">CQA/QA Review Attachment</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or
+                                                            supporting
+                                                            documents</small></div>
+                                                    <div class="file-attachment-field">
+                                                        <div disabled class="file-attachment-list" id="cqa_qa_review_Attached_File">
+                                                            @if ($data->cqa_qa_review_Attached_File)
+                                                                @foreach (json_decode($data->cqa_qa_review_Attached_File) as $file)
+                                                                    <h6 type="button" class="file-container text-dark"
+                                                                        style="background-color: rgb(243, 242, 240);">
+                                                                        <b>{{ $file }}</b>
+                                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                                            target="_blank"><i
+                                                                                class="fa fa-eye text-primary"
+                                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                        <a type="button" class="remove-file"
+                                                                            data-file-name="{{ $file }}"><i
+                                                                                class="fa-solid fa-circle-xmark"
+                                                                                style="color:red; font-size:20px;"></i></a>
+
+                                                                    </h6>
+                                                                @endforeach
+                                                            @endif
+
+                                                        </div>
+                                                        <div class="add-btn">
+                                                            <div>Add</div>
+                                                            <input
+                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'readonly' : '' }}
+                                                                type="file" id="myfile" name="cqa_qa_review_Attached_File[]"
+                                                                oninput="addMultipleFiles(this, 'cqa_qa_review_Attached_File')" multiple>
                                                         </div>
                                                     </div>
 
@@ -2044,7 +2155,7 @@
                                             <div class="sub-head">More Info Required</div>
                                         </div> -->
 
-                                        <div class="col-lg-4">
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Rejected_By">More Info Required By</label>
                                                 <div class="static">{{ $data->rejected_by }}</div>
@@ -2061,7 +2172,7 @@
                                                 <label for="Submitted_On">More Info Required Comment</label>
                                                 <div class="static">{{ $data->reject_comment }}</div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <!-- <div class="col-12">
                                             <div class="sub-head">Audit Completed</div>
