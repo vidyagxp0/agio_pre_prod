@@ -176,7 +176,7 @@
                     <strong>External Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -200,10 +200,11 @@
             <tr class="table_bg">
                 <th class="w-20">Obs.N.</th>
                 <th class="w-60">Observation</th>
+                <th class="w-60">Category</th>
                 <th class="w-60">Response</th>
                 <th class="w-60">CAPA / ACTION Child Reference If Any</th>
                 <th class="w-60">Status</th>
-                <th class="w-60">Category</th>
+               
                 <th class="w-60">Remarks</th>
             </tr>
 
@@ -215,10 +216,11 @@
                 <tr>
                     <td>{{ $serialNumber++ }}</td>
                     <td>{{ $oogrid['observation'] ?? 'Not Applicable' }}</td>
+                    <td>{{ $oogrid['category'] ?? 'Not Applicable' }}</td>
                     <td>{{ $oogrid['response'] ?? 'Not Applicable'}}</td>
                     <td>{{ $oogrid['reference_id']?? 'Not Applicable' }}</td>
                     <td>{{ $oogrid['status'] ?? 'Not Applicable' }}</td>
-                    <td>{{ $oogrid['category'] ?? 'Not Applicable' }}</td>
+                    
                     <td>{{ $oogrid['remarks'] ?? 'Not Applicable' }}</td>
                 </tr>
             @endforeach
@@ -266,8 +268,8 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">attachment</th>
                         </tr>
                             @if($data->myfile)
                             @foreach(json_decode($data->myfile) as $key => $file)

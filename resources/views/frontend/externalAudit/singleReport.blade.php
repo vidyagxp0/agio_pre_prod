@@ -481,10 +481,11 @@
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th>Observation</th>
+                            <th>category</th>
                             <th>Response</th>
                             <th>CAPA / Child action Reference If Any </th>
                             <th>Status</th>
-                            <th>category</th>
+                           
                             <th>Remarks</th>
 
                         </tr>
@@ -495,6 +496,11 @@
                                     <td class="w-20">
                                         {{ isset($grid_Data_2['observation']) ? $grid_Data_2['observation'] : '' }}
                                     </td>
+                                   
+                                    
+                                    <td class="w-20">
+                                        {{ isset($grid_Data_2['category']) ? $grid_Data_2['category'] : '' }}</td>
+                                 
                                     <td class="w-20">
                                         {{ isset($grid_Data_2['response']) ? $grid_Data_2['response'] : '' }}</td>
                                     <td class="w-20">
@@ -503,10 +509,7 @@
 
                                     <td class="w-20">
                                         {{ isset($grid_Data_2['status']) ? $grid_Data_2['status'] : '' }}</td>
-                                   
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['category']) ? $grid_Data_2['category'] : '' }}</td>
-                                   
+                                    
                                     <td class="w-20">
                                         {{ isset($grid_Data_2['remarks']) ? $grid_Data_2['remarks'] : '' }}</td>
                                 </tr>
@@ -2303,7 +2306,7 @@ Not Applicable
                                 @endforeach
                             @else
                                 <tr>
-                                    <td class="w-20">4</td>
+                                    <td class="w-20">1</td>
                                     <td class="w-20">Not Applicable</td>
                                 </tr>
                             @endif

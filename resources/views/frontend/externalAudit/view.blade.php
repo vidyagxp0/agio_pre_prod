@@ -701,9 +701,14 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Initiated Through</label>
+                                                <label for="Initiator Group">Initiated Through
+                                                @if ($data->stage == 1)
+                                                    <span
+                                                    class="text-danger">*</span>
+                                                    @endif
+                                                </label>
                                                 <select name="initiated_through" id="initiated_through" 
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
                                                     <option value="">-- select --</option>
                                                     <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
                                                     <option value="return" {{ $data->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
@@ -767,10 +772,15 @@
                                         </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="audit_type">Type of Audit</label>
+                                                <label for="audit_type">Type of Audit
+                                                @if ($data->stage == 1)
+                                                    <span
+                                                    class="text-danger">*</span>
+                                                    @endif
+                                                </label>
                                                 <select name="audit_type" id="audit_type" 
                                                     onchange="toggleField(this.value, 'if_other_field', 'if_other_textarea', 'if_other_asterisk')"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="R&D" {{ $data->audit_type == 'R&D' ? 'selected' : '' }}>R&D</option>
                                                     <option value="GLP" {{ $data->audit_type == 'GLP' ? 'selected' : '' }}>GLP</option>
@@ -798,10 +808,15 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="external_agencies">External Agencies</label>
+                                                <label for="external_agencies">External Agencies
+                                                @if ($data->stage == 1)
+                                                    <span
+                                                    class="text-danger">*</span>
+                                                    @endif
+                                                </label>
                                                 <select name="external_agencies" id="external_agencies"
                                                     onchange="toggleField(this.value, 'others_field', 'others_textarea', 'others_asterisk')"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
                                                     <option value="">-- Select --</option>
                                                     <option value="Jordan FDA" {{ $data->external_agencies == 'Jordan FDA' ? 'selected' : '' }}>Jordan FDA</option>
                                                     <option value="USFDA" {{ $data->external_agencies == 'USFDA' ? 'selected' : '' }}>USFDA</option>
@@ -849,8 +864,13 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Initial Comments">Description</label>
-                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
+                                                <label for="Initial Comments">Description
+                                                @if ($data->stage == 1)
+                                                    <span
+                                                    class="text-danger">*</span>
+                                                    @endif
+                                                </label>
+                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
 
@@ -858,14 +878,14 @@
                                             <div class="group-input" id="IncidentRow">
                                                 <label for="root_cause">
                                                     Auditors
+                                                    @if ($data->stage == 1)
+                                                    <span
+                                                    class="text-danger">*</span>
+                                                    @endif
                                                     <button type="button"
                                                         {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                         name="audit-incident-grid" id="IncidentAddAuditor">+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span>
+                                                   
                                                 </label>
 
                                                 <table class="table table-bordered"
@@ -891,17 +911,17 @@
                                                                     <td><input type="text"
                                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                                             name="AuditorNew[{{ $loop->index }}][auditornew]"
-                                                                            value="{{ $audditor['auditornew'] }}"></td>
+                                                                            value="{{ $audditor['auditornew'] }}" required></td>
                                                                     <td><input type="text"
                                                                             name="AuditorNew[{{ $loop->index }}][regulatoryagency]"
                                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                            value="{{ $audditor['regulatoryagency'] }}">
+                                                                            value="{{ $audditor['regulatoryagency'] }}" required>
                                                                     </td>
                                                                     <td>
                                                                         <select
                                                                             name="AuditorNew[{{ $loop->index }}][designation]"
                                                                             class="form-select"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
                                                                             <option value="">--Select--</option>
                                                                             <option value="Lead Auditor"
                                                                                 {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>
@@ -914,7 +934,7 @@
                                                                     <td><input type="text"
                                                                             name="AuditorNew[{{ $loop->index }}][remarks]"
                                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
-                                                                            value="{{ $audditor['remarks'] }}"></td>
+                                                                            value="{{ $audditor['remarks'] }}" required></td>
                                                                     <td><button class="removeRowBtn"
                                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
                                                                     </td>
@@ -1839,16 +1859,15 @@
                                         <div class="col-12">
                                             <div class="group-input" id="IncidentRow">
                                                 <label for="root_cause">
-                                                    Summary Response <span class="text-danger">*</span>
+                                                    Summary Response  
+                                                    @if ($data->stage == 2)
+                                                    <span
+                                                    class="text-danger">*</span>
+                                                    @endif
                                                     <button type="button"
                                                         {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                         name="audit-incident-grid" id="IncidentAdd">+</button>
-                                                    <span class="text-primary"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#observation-field-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                        (Launch Instruction)
-                                                    </span>
+                                                  
                                                 </label>
 
                                                 <table class="table table-bordered" id="onservation-incident-table">
@@ -1856,10 +1875,11 @@
                                                         <tr>
                                                             <th>Sr.No.</th>
                                                             <th>Observation</th>
+                                                            <th>Category</th>
                                                             <th>Response</th>
                                                             <th>CAPA / Child action Reference If Any</th>
                                                             <th>Status</th>
-                                                            <th>Category</th>
+                                                            
                                                             <th>Remarks</th>
                                                             <th>Action</th>
                                                         </tr>
@@ -1877,6 +1897,18 @@
                                                                     {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][observation]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['observation'] ?? '' }}</textarea>
+                                                            </td>
+
+                                                            <td style="width: 91px;">
+                                                                <select
+                                                                    name="SummaryResponse[{{ $loop->index }}][category]"
+                                                                    class="form-select"
+                                                                    {{ in_array($data->stage, [0,1, 5]) ? 'disabled' : '' }}>
+                                                                    <option value="">--Select--</option>
+                                                                    <option value="Major" {{ ($oogrid['category'] ?? '') == 'Major' ? 'selected' : '' }}>Major</option>
+                                                                    <option value="Minor" {{ ($oogrid['category'] ?? '') == 'Minor' ? 'selected' : '' }}>Minor</option>
+                                                                    <option value="Critical" {{ ($oogrid['category'] ?? '') == 'Critical' ? 'selected' : '' }}>Critical</option>
+                                                                </select>
                                                             </td>
                                                             <td>
                                                                 <textarea 
@@ -1896,17 +1928,7 @@
                                                                     name="SummaryResponse[{{ $loop->index }}][status]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] ?? '' }}</textarea>
                                                             </td>
-                                                            <td style="width: 91px;">
-                                                                <select
-                                                                    name="SummaryResponse[{{ $loop->index }}][category]"
-                                                                    class="form-select"
-                                                                    {{ in_array($data->stage, [0,1, 5]) ? 'disabled' : '' }}>
-                                                                    <option value="">--Select--</option>
-                                                                    <option value="Major" {{ ($oogrid['category'] ?? '') == 'Major' ? 'selected' : '' }}>Major</option>
-                                                                    <option value="Minor" {{ ($oogrid['category'] ?? '') == 'Minor' ? 'selected' : '' }}>Minor</option>
-                                                                    <option value="Critical" {{ ($oogrid['category'] ?? '') == 'Critical' ? 'selected' : '' }}>Critical</option>
-                                                                </select>
-                                                            </td>
+                                                           
                                                             <td>
                                                                 <textarea 
                                                                     {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
@@ -1981,10 +2003,7 @@
                                                             <tr>
                                                                 <td><input disabled type="text" style="width:40px" value="${serialNumber}"></td>
                                                                 <td><textarea name="SummaryResponse[${investdetails}][observation]" ${isDisabled ? 'disabled' : ''}></textarea></td>
-                                                                <td><textarea name="SummaryResponse[${investdetails}][response]" ${isDisabled ? 'disabled' : ''}></textarea></td>
-                                                                <td><textarea name="SummaryResponse[${investdetails}][reference_id]" ${isDisabled ? 'disabled' : ''}></textarea></td>
-                                                                <td><textarea name="SummaryResponse[${investdetails}][status]" ${isDisabled ? 'disabled' : ''}></textarea></td>
-                                                                <td>
+                                                                 <td>
                                                                     <select name="SummaryResponse[${investdetails}][category]" class="form-select" ${isDisabled ? 'disabled' : ''}>
                                                                         <option value="">--Select--</option>
                                                                         <option value="Major">Major</option>
@@ -1992,6 +2011,10 @@
                                                                         <option value="Critical">Critical</option>
                                                                     </select>
                                                                 </td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][response]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][reference_id]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                                <td><textarea name="SummaryResponse[${investdetails}][status]" ${isDisabled ? 'disabled' : ''}></textarea></td>
+                                                               
                                                                 <td><textarea name="SummaryResponse[${investdetails}][remarks]" ${isDisabled ? 'disabled' : ''}></textarea></td>
                                                                 <td><button type="button" class="removeRowBtn" ${isDisabled ? 'disabled' : ''}>Remove</button></td>
                                                             </tr>
