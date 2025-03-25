@@ -620,9 +620,19 @@
                                             Not Applicable 
                                         @endif
                                     </td>
+
+                                    <th class="20">Preventive Action</th>
+                                    <td class="80">
+                                        @if($data->preventive_action) 
+                                            {{ $data->preventive_action }}
+                                        @else 
+                                            Not Applicable 
+                                        @endif
+                                    </td>
                                 </tr>
                                 
                             @endif
+                                </table>
                              <!-- <tr>
 
                                 <th class="20">Preventive Action</th>

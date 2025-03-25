@@ -544,7 +544,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" required
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" 
                                             @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Period</option>
                                             <option @if ($data->review_period_six_monthly == 'January to June') selected @endif value="January to June">
@@ -1035,7 +1035,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton"
-                                     {{ $data->stage != 1 ? 'readonly' : '' }}>Save</button>
+                                     >Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -1536,7 +1536,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%">Sr.No.</th>
-                                                <th>Invited Person</th>
+                                                <th>Name of  Person</th>
                                                 <th>Designation</th>
                                                 <th>Department</th>
                                                 <th>Remarks</th>
