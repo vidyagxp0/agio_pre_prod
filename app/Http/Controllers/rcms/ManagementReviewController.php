@@ -639,7 +639,7 @@ class ManagementReviewController extends Controller
 
         $Cft->save();
 
-    //-------------------HODCFT------------------------------//
+        //-------------------HODCFT------------------------------//
 
 
 
@@ -1801,7 +1801,7 @@ class ManagementReviewController extends Controller
         //     $management->inv_attachment = json_encode($files);
         // }
 
-    //    $attachments = json_decode($management->inv_attachment, true) ?? [];
+        //    $attachments = json_decode($management->inv_attachment, true) ?? [];
         // Handle file removals
 
 
@@ -8693,7 +8693,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                 return back();
             }
             if ($changeControl->stage == 3) {
-                 if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance) {
+                 if (!$changeControl->customer_satisfaction_level || !$changeControl->external_supplier_performance || !$changeControl->budget_estimates || !$changeControl->completion_of_previous_tasks) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',

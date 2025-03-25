@@ -6776,6 +6776,23 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
 
             if ($changeControl->stage == 1) {
+
+                if (empty($changeControl->initiated_through)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'Summary and Response/CFT Tab is yet to be filled'
+                        ]);
+    
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for CFT review state'
+                        ]);
+                    }
                 $changeControl->stage = "2";
                 $changeControl->status = "Summary and Response";
                 $changeControl->audit_details_summary_by = Auth::user()->name;

@@ -17,16 +17,16 @@ function addMultipleFiles(input, block_id) {
         viewLink.textContent = "<View>";
 
         let fileClone = files[i].slice();
-        viewLink.addEventListener('click',function(e){
+        viewLink.addEventListener('click', function (e) {
             e.preventDefault();
-            window.open(viewLink.href,'_blank');
+            window.open(viewLink.href, '_blank');
 
         });
 
         let removeLink = document.createElement("a");
         removeLink.className = 'remove-file';
         removeLink.textContent = "<Remove>";
-        removeLink.addEventListener('click', function() {
+        removeLink.addEventListener('click', function () {
             div.remove(); // Remove the parent div when remove link is clicked
         });
         div.appendChild(viewLink);
@@ -664,27 +664,27 @@ function addManagementReviewParticipants(tableId) {
     cell1.innerHTML = currentRowCount;
 
     let cell2 = newRow.insertCell(1)
-   // cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    // cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
     cell2.innerHTML = "<input type='text' name='invited_Person[]'>";
     let cell3 = newRow.insertCell(2)
-   // cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    // cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
     cell3.innerHTML = "<input type='text' name='designee[]'>";
     let cell4 = newRow.insertCell(3)
-   // cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+    // cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
     cell4.innerHTML = "<input type='text' name='department[]'>";
     let cell5 = newRow.insertCell(4)
-   // cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
-    cell5.innerHTML = "<input type='text' name='meeting_Attended[]'>";
-    let cell6 = newRow.insertCell(5)
-  //  cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
-    cell6.innerHTML = "<input type='text' name='designee_Name[]'>";
-    let cell7 = newRow.insertCell(6)
-   // cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
-    cell7.innerHTML = "<input type='text' name='designee_Department[]'>";
-    let cell8 = newRow.insertCell(7);
-    cell8.innerHTML = "<input type='text' name='remarks[]'>";
-    let cell9 = newRow.insertCell(8);
-    cell9.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+    // cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
+    //     cell5.innerHTML = "<input type='text' name='meeting_Attended[]'>";
+    //     let cell6 = newRow.insertCell(5)
+    //   //  cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    //     cell6.innerHTML = "<input type='text' name='designee_Name[]'>";
+    //     let cell7 = newRow.insertCell(6)
+    //    // cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+    //     cell7.innerHTML = "<input type='text' name='designee_Department[]'>";
+    //     let cell8 = newRow.insertCell(7);
+    cell5.innerHTML = "<input type='text' name='remarks[]'>";
+    let cell6 = newRow.insertCell(5);
+    cell6.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
 
 
     for (let i = 1; i < currentRowCount; i++) {
@@ -1088,24 +1088,24 @@ function openDivision(evt, cityName) {
 function handleDateInput(element, textInputID) {
     let textInput = document.getElementById(textInputID);
     const date = new Date(element.value);
-    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const month = months[date.getMonth()];
     const day = String(date.getDate()).padStart(2, '0');  // Ensures two digits for the day
     const year = date.getFullYear();
     textInput.setAttribute('value', `${day}-${month}-${year}`);
 }
 
-  function isStartDateLessThanEndDate(startDate, endDate) {
+function isStartDateLessThanEndDate(startDate, endDate) {
     // Convert date strings to Date objects
     const startDateObj = new Date(startDate);
     const endDateObj = new Date(endDate);
     // Compare the dates
     return startDateObj <= endDateObj;
-  }
+}
 
-  function checkDate(textInputID,textInputID2){
-    const startDate = $('#'+textInputID).val();  // Replace with your start date
-    const endDate = $('#'+textInputID2).val();    // Replace with your end date
+function checkDate(textInputID, textInputID2) {
+    const startDate = $('#' + textInputID).val();  // Replace with your start date
+    const endDate = $('#' + textInputID2).val();    // Replace with your end date
     if ((startDate.trim() !== '') && (endDate.trim() !== '')) {
         let endDataStr = textInputID2.replace(/_checkdate/g, "");
         if (isStartDateLessThanEndDate(startDate, endDate)) {
@@ -1118,15 +1118,15 @@ function handleDateInput(element, textInputID) {
             // const year = date.getFullYear();
             // textInput.setAttribute('value', `${day}-${month}-${year}`)
         } else {
-        alert("Start date is not less than end date.");
-        let textInput = document.getElementById(endDataStr)
-        textInput.setAttribute('value', ``)
-        console.log("Start date is not less than end date.");
-      }
-    }
-  }
+            alert("Start date is not less than end date.");
+            let textInput = document.getElementById(endDataStr)
+            textInput.setAttribute('value', ``)
+            console.log("Start date is not less than end date.");
+        }
+    }
+}
 
-  function calculateResidualResult(element) {
+function calculateResidualResult(element) {
     var row = element.closest('tr');
     var severity = parseInt(row.querySelector('.residual-fieldR').value) || 0;
     var probability = parseInt(row.querySelector('.residual-fieldP').value) || 0;
@@ -1162,7 +1162,7 @@ function updateRiskAcceptance(row) {
 // Function to ensure risk acceptance is properly initialized
 function initializeRiskAcceptance() {
     var riskAcceptanceElements = document.querySelectorAll('.risk-acceptance');
-    riskAcceptanceElements.forEach(function(element) {
+    riskAcceptanceElements.forEach(function (element) {
         var row = element.closest('tr');
         updateRiskAcceptance(row);
     });
@@ -1171,11 +1171,11 @@ function initializeRiskAcceptance() {
 function handleMonthInput(element, textInputID) {
     let textInput = document.getElementById(textInputID)
     const date = new Date(element.value);
-    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
     const month = months[date.getMonth()];
     const year = date.getFullYear();
     textInput.setAttribute('value', `${month}-${year}`)
-  }
+}
 
 function addRiskAssessmentdata(tableId) {
     var table = document.getElementById(tableId);
@@ -1305,9 +1305,9 @@ function addRiskAssessmentdata(tableId) {
     var cell19 = newRow.insertCell(16);
     cell19.innerHTML = "<button class='btn btn-dark removeBtn' onclick='removeRow(this)'>Remove</button>";
 
-    
+
     // Add event listener to the remove button using event delegation
-    document.querySelector('table').addEventListener('click', function(event) {
+    document.querySelector('table').addEventListener('click', function (event) {
         if (event.target && event.target.classList.contains('removeBtn')) {
             removeRow(event.target);  // Calls the removeRow function
         }
@@ -1319,10 +1319,10 @@ function addRiskAssessmentdata(tableId) {
 
 // Function to remove a row when the Remove button is clicked
 function removeRow(button) {
-   
+
     var row = button.closest('tr');
 
-    row.remove();  
+    row.remove();
 }
 
 // Function to update the row numbers
@@ -1351,14 +1351,14 @@ function calculateInitialResult(element) {
 }
 
 // Initialize the risk acceptance values for existing rows (when page loads)
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initializeRiskAcceptance();
 });
 
 // Function to initialize risk acceptance based on the RPN values
 function initializeRiskAcceptance() {
     var riskAcceptanceElements = document.querySelectorAll('.risk-acceptance');
-    riskAcceptanceElements.forEach(function(element) {
+    riskAcceptanceElements.forEach(function (element) {
         var row = element.closest('tr');
         updateRiskAcceptance(row);
     });

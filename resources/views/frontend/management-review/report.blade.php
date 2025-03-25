@@ -251,7 +251,7 @@ use Carbon\Carbon;
                         ];
                         @endphp
                         <td class="w-30">
-                            {{ $departments[$managementReview->initiator_Group] ?? 'Unknown Department' }}
+                        {{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}
                         </td>
                         {{-- @if ($managementReview->initiator_Group)
                                         {{ $managementReview->initiator_Group }}
