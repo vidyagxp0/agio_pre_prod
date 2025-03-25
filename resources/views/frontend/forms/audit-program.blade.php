@@ -64,6 +64,99 @@
     });
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+<script>
+        $(document).ready(function () {
+            // Function to initialize VirtualSelect
+            function initializeVirtualSelect() {
+                VirtualSelect.init({
+                    ele: ".analyst-dropdown",
+                    multiple: true,
+                    search: true,
+                    placeholder: "Select Analysts"
+                });
+            }
+
+            // Function to generate a new row in the table
+            function generateTableRow(serialNumber) {
+                var analystOptions = `@foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach`;
+
+                var html =
+                    `<tr>
+                        <td>
+                            <input disabled type="text" name="Self_Inspection_circular[${serialNumber}][serial_number]" value="${serialNumber}">
+                        </td>
+
+                        <td>
+                            <select name="Self_Inspection_circular[${serialNumber}][departments]" id="departments_${serialNumber}">
+                                <option selected disabled value="">--- select ---</option>
+                                @foreach (Helpers::getDepartments() as $code => $departments)
+                                    <option value="{{ $departments }}" data-code="{{ $code }}">
+                                        {{ $departments }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </td>
+                        
+
+                        <td>
+                            <div class="new-date-data-field">
+                                <div class="group-input input-date">
+                                    <div class="calenderauditee">
+                                        <input class="click_date" id="date_display_${serialNumber}" type="text" name="Self_Inspection_circular[${serialNumber}][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly />
+                                        <input type="date" name="Self_Inspection_circular[${serialNumber}][info_mfg_date]" id="date_input_${serialNumber}" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_display_${serialNumber}')">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="analyst-dropdown-container">
+                                <select class="analyst-dropdown" name="Self_Inspection_circular[${serialNumber}][Auditor]" multiple>
+                                    ${analystOptions}
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <button type="button" class="removeBtn">Remove</button>
+                        </td>
+                    </tr>`;
+
+                return html;
+            }
+
+            // Add new row event
+            $('#Self_Inspection_circular').on('click', function (e) {
+                e.preventDefault();
+                var tableBody = $('#Self_Inspection_circular-field-instruction-modal tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+
+                // Initialize VirtualSelect for new rows
+                initializeVirtualSelect();
+            });
+
+            // Remove row event (Event Delegation)
+            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtn', function () {
+                $(this).closest('tr').remove();
+            });
+
+            // Attach date picker event listeners using Event Delegation
+            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.click_date', function () {
+                $(this).siblings('.show_date').click();
+            });
+
+            // Initialize VirtualSelect for existing rows on page load
+            initializeVirtualSelect();
+        });
+    </script>
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         let country_arr = new Array("-- Select --", "AUSTRALIA", "INDIA", "NEW ZEALAND", "USA", "UAE",
@@ -223,7 +316,7 @@ DATA FIELDS
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Initiator Department</b></label>
                                 <select name="Initiator_Group" id="Initiator_Group">
@@ -293,15 +386,84 @@ DATA FIELDS
                                     </option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
+
+
+
+
 
                         <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator"><b>Initiator Department</b></label>
+                                <input readonly type="text" name="Initiator_Group" id="Initiator_Group"
+                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                            </div>
+                        </div>
+
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                // Define department name to code mapping
+                                const departmentMapping = {
+                                    "Calibration Lab": "CLB",
+                                    "Engineering": "ENG",
+                                    "Facilities": "FAC",
+                                    "LAB": "LAB",
+                                    "Labeling": "LABL",
+                                    "Manufacturing": "MANU",
+                                    "Quality Assurance": "QA",
+                                    "Quality Control": "QC",
+                                    "Ragulatory Affairs": "RA",
+                                    "Security": "SCR",
+                                    "Training": "TR",
+                                    "IT": "IT",
+                                    "Application Engineering": "AE",
+                                    "Trading": "TRD",
+                                    "Research": "RSCH",
+                                    "Sales": "SAL",
+                                    "Finance": "FIN",
+                                    "Systems": "SYS",
+                                    "Administrative": "ADM",
+                                    "M&A": "M&A",
+                                    "R&D": "R&D",
+                                    "Human Resource": "HR",
+                                    "Banking": "BNK",
+                                    "Marketing": "MRKT",
+
+                                };
+
+                                // Get the Initiator Department input
+                                let initiatorGroupInput = document.getElementById("Initiator_Group");
+                                let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+
+                                // Get the department name from the input field
+                                let departmentName = initiatorGroupInput.value.trim();
+
+                                // Auto-generate the department code based on the mapping
+                                if (departmentName in departmentMapping) {
+                                    initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                } else {
+                                    initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                }
+                            });
+                        </script>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group Code">Initiator Department code</label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
+                                    value="" readonly>
+                            </div>
+                        </div>
+
+
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="initiator_group_code">Initiator Department code</label>
                                 <input type="text" name="initiator_group_code" id="initiator_group_code"
                                     value="{{ old('initiator_group_code') }}" readonly>
                             </div>
-                        </div>
+                        </div> --}}
+
 
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -982,6 +1144,7 @@ DATA FIELDS
                     </div>
                 </div>
             </div>
+
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -992,7 +1155,7 @@ DATA FIELDS
                                 <label for="audit-agenda-grid">
                                     Self Inspection Circular
                                     <button type="button" name="audit-agenda-grid"
-                                        id="Self_Inspection_circular">+</button>
+                                        id="Self_Inspection_circular" disabled>+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1015,8 +1178,7 @@ DATA FIELDS
                                             <td><input disabled type="text" name="serial[]" value="1">
                                             </td>
                                             <td>
-                                                <select name="Self_Inspection_circular[0][departments]" id="departments"
-                                                    {{ isset($data->stage) && ($data->stage == 0 || $data->stage == 8) ? 'disabled' : '' }}>
+                                                <select name="Self_Inspection_circular[0][departments]" id="departments" disabled>
                                                     <option selected disabled value="">---select---
                                                     </option>
                                                     @foreach (Helpers::getDepartments() as $departments)
@@ -1032,36 +1194,56 @@ DATA FIELDS
                                                         <div class="calenderauditee">
                                                             <input class="click_date" id="date_0_mfg_date" type="text"
                                                                 name="Self_Inspection_circular[0][info_mfg_date]"
-                                                                placeholder="DD-MMM-YYYY" />
+                                                                placeholder="DD-MMM-YYYY" disabled/>
                                                             <input type="date"
                                                                 name="Self_Inspection_circular[0][info_mfg_date]" min=""
                                                                 id="date_0_mfg_date" class="hide-input show_date"
                                                                 style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                                oninput="handleDateInput(this, 'date_0_mfg_date')" disabled />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <select name="Self_Inspection_circular[0][Auditor][]" multiple class="form-control">
-                                                    @foreach(\App\Models\User::all() as $user)
+                                            <!-- <td>
+                                                <select name="Self_Inspection_circular[0][Auditor][]" 
+                                                        id="auditor_0" 
+                                                        class="auditor-select" 
+                                                        multiple>
+                                                    @foreach ($users as $user)
                                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
+                                            </td> -->
+                                            <td>
+                                                <div class="analyst-dropdown-container">
+                                                    <select class="analyst-dropdown" name="Self_Inspection_circular[0][Auditor]" multiple disabled>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                </div>
                                             </td>
                                             <td>
-                                                <button type="button" class="removeBtns">remove</button>
+                                                <button type="button" class="removeBtns" disabled>remove</button>
                                             </td>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+
+
+
+
+
+
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="comment">Comments</label>
-                                    <textarea name="comment"></textarea>
+                                    <textarea name="comment" disabled></textarea>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">File Attachment</label>
@@ -1071,7 +1253,7 @@ DATA FIELDS
                                         <div class="file-attachment-list" id="Attached_File"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attached_File[]"
+                                            <input type="file" id="myfile" name="Attached_File[]" disabled 
                                                 oninput="addMultipleFiles(this, 'Attached_File')" multiple>
                                         </div>
                                     </div>
@@ -1138,7 +1320,7 @@ DATA FIELDS
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="comment">CQA/QA Approval Comments</label>
-                                    <textarea name="cqa_qa_comment"></textarea>
+                                    <textarea name="cqa_qa_comment" disabled></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1150,7 +1332,7 @@ DATA FIELDS
                                         <div class="file-attachment-list" id="cqa_qa_Attached_File"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="cqa_qa_Attached_File[]"
+                                            <input type="file" id="myfile" name="cqa_qa_Attached_File[]" disabled
                                                 oninput="addMultipleFiles(this, 'cqa_qa_Attached_File')" multiple>
                                         </div>
                                     </div>
@@ -1178,7 +1360,7 @@ DATA FIELDS
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="comment">CQA/QA Review Comment</label>
-                                    <textarea name="cqa_qa_review_comment"></textarea>
+                                    <textarea name="cqa_qa_review_comment" disabled></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -1190,7 +1372,7 @@ DATA FIELDS
                                         <div class="file-attachment-list" id="cqa_qa_review_Attached_File"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="cqa_qa_review_Attached_File[]"
+                                            <input type="file" id="myfile" name="cqa_qa_review_Attached_File[]" disabled
                                                 oninput="addMultipleFiles(this, 'cqa_qa_review_Attached_File')" multiple>
                                         </div>
                                     </div>
