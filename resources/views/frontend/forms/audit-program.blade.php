@@ -181,6 +181,7 @@ DATA FIELDS
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Self Inspection Circular</button>
             <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">HOD/Designee Review</button> -->
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA/QA Head Approval</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">CQA/QA Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
         </div>
         <form action="{{ route('createAuditProgram') }}" method="post" enctype="multipart/form-data">
@@ -296,7 +297,7 @@ DATA FIELDS
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="initiator_group_code">Department Code</label>
+                                <label for="initiator_group_code">Initiator Department code</label>
                                 <input type="text" name="initiator_group_code" id="initiator_group_code"
                                     value="{{ old('initiator_group_code') }}" readonly>
                             </div>
@@ -309,15 +310,21 @@ DATA FIELDS
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                             </div>
                         </div>
+
                         <div class="col-md-6">
                             <div class="group-input">
-                                <label for="search">
+                                <label for="assign_to">
                                     Assigned To <span class="text-danger"></span>
                                 </label>
-                                <select id="select-state" placeholder="Select..." name="assign_to">
+                                <select id="assign_to" name="assign_to">
                                     <option value="">Select a value</option>
                                     @foreach ($users as $data)
-                                        <option value="{{ $data->name }}">{{ $data->name }}</option>
+                                        @php
+                                            $departmentName = Helpers::getUsersDepartmentName($data->departmentid);
+                                        @endphp
+                                        <option value="{{ $data->name }}" data-department="{{ $departmentName }}">
+                                            {{ $data->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('assign_to')
@@ -325,7 +332,8 @@ DATA FIELDS
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
+
+                        {{-- <div class="col-md-6">
                             <div class="group-input">
                                 <label for="search">
                                     Assigned To Department<span class="text-danger"></span>
@@ -400,7 +408,27 @@ DATA FIELDS
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
+                        </div> --}}
+
+                        <div class="col-md-6">
+                            <div class="group-input">
+                                <label for="assign_to_department">
+                                    Assigned To Department <span class="text-danger"></span>
+                                </label>
+                                <input type="text" id="assign_to_department" name="assign_to_department" class="form-control" readonly>
+                            </div>
                         </div>
+
+                        <script>
+                            document.getElementById('assign_to').addEventListener('change', function () {
+                                let selectedOption = this.options[this.selectedIndex];
+                                let department = selectedOption.getAttribute('data-department') || '';
+                                document.getElementById('assign_to_department').value = department;
+                            });
+                        </script>
+
+
+
                         {{-- <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="Date Due">Date Due</label>
@@ -645,11 +673,11 @@ DATA FIELDS
                                 <table class="table table-bordered" id="audit_program-field-instruction-modal">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5%">Row#</th>
+                                            <th style="width: 5%">Sr. No.</th>
                                             <th style="width: 12%">Auditees</th>
                                             <th style="width: 15%">Date Start</th>
-                                            <th style="width: 15%"> Date End</th>
-                                            <th style="width: 15%"> Lead Investigator</th>
+                                            <th style="width: 15%">Date End</th>
+                                            <th style="width: 15%">Lead Auditor</th>
                                             <th style="width: 15%">Comment</th>
                                             <th style="width: 5%">Action</th>
                                         </tr>
@@ -730,7 +758,7 @@ DATA FIELDS
 
 
 
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Self Inspection Planner
                                 <button type="button" name="audit-agenda-grid" id="Self_Inspection">+</button>
@@ -743,7 +771,7 @@ DATA FIELDS
                                 <table class="table table-bordered" id="Self_Inspection-field-instruction-modal">
                                     <thead>
                                         <tr>
-                                            <th style="width: 1%">Row#</th>
+                                            <th style="width: 1%">Sr. No.</th>
                                             <th style="width: 15%">Department</th>
                                             <th style="width: 15%">Months</th>
                                             <th style="width: 16%">Remarks</th>
@@ -785,7 +813,8 @@ DATA FIELDS
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> --}}
+
                         <script>
                             $(document).ready(function () {
                                 // Function to generate a new row in the Self Inspection Planner table
@@ -975,7 +1004,7 @@ DATA FIELDS
                                         id="Self_Inspection_circular-field-instruction-modal">
                                         <thead>
                                             <tr>
-                                                <th style="width: 1%">Row#</th>
+                                                <th style="width: 1%">Sr. No.</th>
                                                 <th style="width: 15%">Department</th>
                                                 <th style="width: 15%">Audit Date</th>
                                                 <th style="width: 16%">Name of Auditors</th>
@@ -1013,7 +1042,12 @@ DATA FIELDS
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td><input type="text" name="Self_Inspection_circular[0][Auditor]">
+                                            <td>
+                                                <select name="Self_Inspection_circular[0][Auditor][]" multiple class="form-control">
+                                                    @foreach(\App\Models\User::all() as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                             <td>
                                                 <button type="button" class="removeBtns">remove</button>
@@ -1135,6 +1169,46 @@ DATA FIELDS
                 </div>
             </div>
 
+            <div id="CCForm6" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sub-head">CQA/QA Review
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="comment">CQA/QA Review Comment</label>
+                                    <textarea name="cqa_qa_review_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">CQA/QA Review Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="cqa_qa_review_Attached_File"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="cqa_qa_review_Attached_File[]"
+                                                oninput="addMultipleFiles(this, 'cqa_qa_review_Attached_File')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" onclick="nextStep()"
+                                class="nextButton">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -1185,7 +1259,7 @@ DATA FIELDS
                                             <div class="sub-head">More Info Required</div>
                                         </div> -->
 
-                                        <div class="col-lg-4">
+                                        <!-- <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Rejected_By">More Info Required By</label>
                                                 <div class="static"></div>
@@ -1202,7 +1276,7 @@ DATA FIELDS
                                                 <label for="Submitted_On">More Info Required Comment</label>
                                                 <div class="static"></div>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <!-- <div class="col-12">
                                             <div class="sub-head">Audit Completed</div>
