@@ -210,7 +210,7 @@
                     General Information
                 </div>
                 <table>
-                    <tr>
+                <tr>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
@@ -221,7 +221,7 @@
                         </td>
 
                         {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Division Code</th>
+                        <th class="w-20">Site / Location</th>
                         {{-- <td class="w-30"> {{ Helpers::getDivisionName(id()->get('division')) }}</td> --}}
                         <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
 
@@ -233,11 +233,24 @@
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
 
+
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Due Date</th>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
+                        {{-- <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td> --}}
+                    </tr>
+
                     <tr>
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->initiator_group)
-                                {{ Helpers::getFullDepartmentName($data->initiator_group) }}
+                                {{ $data->initiator_group }}
                             @else
                                 Not Applicable
                             @endif
@@ -268,94 +281,6 @@
                     </tr>
                 </table> --}}
 
-                <table>
-                    <tr>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->due_date_gi) ?? 'Not Applicable' }}</td>
-                        {{-- <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td> --}}
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">{{ $data->description_gi ?? 'Not Applicable' }}</td>
-                    </tr>
-
-                    <tr>
-
-                        <th class="w-20">Is Repeat</th>
-                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
-
-                        <th class="w-20">Complaint</th>
-                        <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Complaint Reported On</th>
-                        <td class="w-80">
-                            {{ Helpers::getdateFormat($data->complaint_reported_on_gi) ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Categorization Of Complaint</th>
-                        <td class="w-80">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
-
-                    </tr>
-
-
-                </table>
-
-
-
-                <table>
-                    <tr>
-                        <th class="w-20">Details Of Nature Market Complaint</th>
-                        <td class="w-80">{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-
-
-
-                <table>
-                    <tr>
-                        <th class="w-20">Review Of Complaint Sample</th>
-                        <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Review Of Control Sample</th>
-                        <td class="w-80">{!! $data->review_of_control_sample_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Review of Stability Study Program and Samples</th>
-                        <td class="w-80">{!! $data->review_of_stability_study_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Review of Product Manufacturing and Analytical Process</th>
-                        <td class="w-80">{!! $data->review_of_product_manu_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Additional Information if Require</th>
-                        <td class="w-80">{!! $data->additional_inform ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Type of Market Complaints</th>
-                        <td class="w-80">{!! $data->probable_root_causes_complaint_hodsr ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80">{!! $data->in_case_Invalide_com ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
 
                 <table>
                     <div class="border-table">
@@ -364,8 +289,8 @@
                         </div>
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">attachment</th>
                             </tr>
                             @if ($data->initial_attachment_gi)
                                 @foreach (json_decode($data->initial_attachment_gi) as $key => $file)
@@ -385,14 +310,35 @@
                     </div>
                 </table>
 
-            </div>
+                <table>
+                   
 
+                  
+
+                    <tr>
+
+                        <th class="w-20">Complaint</th>
+                        <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
+                       
+                        <th class="w-20">Complaint Reported On</th>
+                        <td class="w-80">
+                            {{ Helpers::getdateFormat($data->complaint_reported_on_gi) ?? 'Not Applicable' }}</td>
+                       
+                    </tr>
+                    <tr>
+                        <th class="w-20">Details Of Nature Market Complaint</th>
+                        <td class="w-80" colspan='5'>{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    </table>
 
             <div class="border-table">
                 <div class="block-head">
                     Product Details Part 1
                 </div>
 
+
+               
                 <table>
                     <tr class="table_bg">
                         <th class="w-10">Row #</th>
@@ -449,58 +395,6 @@
 
             </div>
 
-<br>
-            <div class="border-table">
-                <div class="block-head">
-                    Product Details Part 2
-                </div>
-
-                <table>
-                    <tr class="table_bg">
-                        <th>Row #</th>
-                        <th class="w-10">Batch Size</th>
-                        <th class="w-20">Pack Size</th>
-                        <th class="10">Dispatch Quantity</th>
-                        <th class="w-5">Remarks</th>
-                        {{-- <th class="w-5">Action</th> --}}
-                    </tr>
-
-                    <tbody>
-                        @php $productsdetails = 1; @endphp
-                        @if (!empty($prductgigrid) && is_array($prductgigrid->data))
-
-                            @foreach ($prductgigrid->data as $index => $detail)
-                                <tr>
-                                    <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }} </td>
-                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
-
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>1</td>
-
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                {{-- <td>Not Applicable</td> --}}
-
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-
-            </div>
             <br>
 
             <div class="border-table">
@@ -554,128 +448,155 @@
                 </table>
 
             </div>
-            <br>
 
-            <div class="border-table">
-                <div class="block-head">
-                    Report Review (Final Review shall be done after QA Verification)
-                </div>
+             <table>
 
-                <table>
-                    <tr class="table_bg">
-                        <th>Row #</th>
-                        <th class="w-10">Name</th>
-                        <th class="w-10">Designation</th>
-                        <th class="w-20">Department</th>
-                        <th class="w-20">Sign</th>
-                        <th class="w-5">Date</th>
-                        {{-- <th class="w-5">Action</th> --}}
+
+
+
+                    <tr>
+                    <th class="w-20">Categorization Of Complaint</th>
+                        <td class="w-80">{{ $data->categorization_of_complaint_gi ?? 'Not Applicable' }}</td>
+
+                    
+                        
+                    <th class="w-20">Is Repeat</th>
+                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
+
                     </tr>
+                    <tr>
+                        <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
+                    </tr>
+                   
 
-                    <tbody>
-                        @php $productsdetails = 1; @endphp
-                        @if (!empty($hodteammembers) && is_array($hodteammembers->data))
 
-                            @foreach ($hodteammembers->data as $index => $detail)
-                                <tr>
-                                    <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20"> {{ isset($detail['names_tm']) ? $detail['names_tm'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['designation']) ? $detail['designation'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['department_tm']) ? $detail['department_tm'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['sign_tm']) ? $detail['sign_tm'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['date_tm']) ? \Carbon\Carbon::parse($detail['date_tm'])->format('j M Y') : '' }}
-                                    </td>
-
-                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
-
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>1</td>
-
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-
-                            </tr>
-                        @endif
-                    </tbody>
                 </table>
 
-            </div>
 
-            <br>
-            <div class="border-table">
-                <div class="block-head">
-                    Report Approval by Head QA/CQA (Final Approvalshall be done after QA Verification)
-                </div>
 
                 <table>
-                    <tr class="table_bg">
-                        <th>Row #</th>
-                        <th class="w-10">Name</th>
-                        <th class="w-10">Designation</th>
-                        <th class="w-20">Department</th>
-                        <th class="w-20">Sign</th>
-                        <th class="w-5">Date</th>
-                        {{-- <th class="w-5">Action</th> --}}
-                    </tr>
-
-                    <tbody>
-                        @php $productsdetails = 1; @endphp
-                        @if (!empty($hodreportapproval) && is_array($hodreportapproval->data))
-
-                            @foreach ($hodreportapproval->data as $index => $detail)
-                                <tr>
-                                    <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20"> {{ isset($detail['names_rrv']) ? $detail['names_rrv'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['designation']) ? $detail['designation'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['department_rrv']) ? $detail['department_rrv'] : '' }} </td>
-                                    <td class="w-20"> {{ isset($detail['sign_rrv']) ? $detail['sign_rrv'] : '' }}
-                                    </td>
-                                    <td class="w-20"> {{ isset($detail['date_rrv']) ? $detail['date_rrv'] : '' }}
-                                    </td>
-                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
-
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>1</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-
-                            </tr>
-                        @endif
-                    </tbody>
+                   
                 </table>
 
-            </div>
-            <br>
-            <div class="block">
-                <div class="block-head">
-                    Complaint Acknowledgement
-                </div>
+
+
                 <table>
+                    <tr>
+                        <th class="w-20">Review Of Complaint Sample</th>
+                        <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Review Of Control Sample</th>
+                        <td class="w-80">{!! $data->review_of_control_sample_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+
+                    
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Review of Stability Study Program and Samples</th>
+                        <td class="w-80">{!! $data->review_of_stability_study_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Review of Product Manufacturing and Analytical Process</th>
+                        <td class="w-80">{!! $data->review_of_product_manu_gi ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Additional Information if Require</th>
+                        <td class="w-80">{!! $data->additional_inform ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Type of Market Complaints</th>
+                        <td class="w-80">{!! $data->probable_root_causes_complaint_hodsr ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-80">{!! $data->in_case_Invalide_com ?? 'Not Applicable' !!}</td>
+                    </tr>
+                </table>
+            </div>
+            
+            
+
+           
+            <br>
+
+            <div class="block-head">
+            Complaint Acknowledgement
+            </div>
+              
+            <table>
                     <tr>
                         <th class="w-20">Manufacturer Name & Address</th>
                         <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
                     </tr>
+            </table>
+            
+            <div class="border-table">
+                <div class="block-head">
+                    Product Details Part 2
+                </div>
+
+                <table>
+                    <tr class="table_bg">
+                        <th>Row #</th>
+                        <th class="w-10">Batch Size</th>
+                        <th class="w-20">Pack Size</th>
+                        <th class="10">Dispatch Quantity</th>
+                        <th class="w-5">Remarks</th>
+                        {{-- <th class="w-5">Action</th> --}}
+                    </tr>
+
+                    <tbody>
+                        @php $productsdetails = 1; @endphp
+                        @if (!empty($prductgigrid) && is_array($prductgigrid->data))
+
+                            @foreach ($prductgigrid->data as $index => $detail)
+                                <tr>
+                                    <td>{{ $productsdetails++ }}</td>
+                                    <td class="w-20">
+                                        {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }} </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }} </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }} </td>
+                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td>1</td>
+
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                {{-- <td>Not Applicable</td> --}}
+
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+
+            </div>
+            <br>
+
+
+
+            <table>
+                    
                     <tr>
                         <th class="w-20">Complaint Sample Required</th>
                         <td class="w-80">{!! $data->complaint_sample_required_ca ?? 'Not Applicable' !!}</td>
@@ -721,58 +642,12 @@
                         <td class="w-80">{!! $data->comments_ifany_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                 </table>
-                {{-- <div class="report-section">
-                    <h3>Proposal to Accomplish Investigation Report</h3>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr class="table_bg">
-                                <th style="width: 5%;">Sr. No.</th>
-                                <th style="width: 40%;">Requirements</th>
-                                <th style="width: 10%;">Yes/No</th>
-                                <th style="width: 20%;">Expected Date of Investigation Completion</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td>Complaint Sample Required</td>
-                                <td>{{ $proposalData['Complaint sample Required']['csr3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Complaint sample Required']['csr2'] ?? 'N/A' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">2</td>
-                                <td>Additional Info. From Complaint</td>
-                                <td>{{ $proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? 'N/A' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">3</td>
-                                <td>Analysis of Complaint Sample</td>
-                                <td>{{ $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? 'N/A' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">4</td>
-                                <td>QRM Approach</td>
-                                <td>{{ $proposalData['QRM Approach']['qrm3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['QRM Approach']['qrm2'] ?? 'N/A' }}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">5</td>
-                                <td>Others</td>
-                                <td>{{ $proposalData['Others']['oth3'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td>
-                                <td>{{ $proposalData['Others']['oth2'] ?? 'N/A' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> --}}
-                <div class="border-table">
+           
+           
+
+
+
+            <div class="border-table">
                     <div class="block-head">
                         Proposal To Accomplish Investigation
                     </div>
@@ -832,8 +707,18 @@
 
 
 
+                <table>
+                    <tr>
+                        <th class="w-20">Expected Date of Investigation Completion</th>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->Expecteddate_of_investigation_completion) ?? 'Not Applicable' }}</td>
+                        {{-- <th class="w-20">Repeat Nature</th>
+                        <td class="w-80">{!! $data->repeat_nature_gi ?? 'Not Applicable' !!}</td> --}}
+                    </tr>
+                </table>
 
-<br>
+
+
+             <br>
                 <table>
                     <div class="border-table">
                         <div class="block-head">
@@ -861,6 +746,7 @@
                         </table>
                     </div>
                 </table>
+
                 <br>
 
               

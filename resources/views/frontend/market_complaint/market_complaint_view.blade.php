@@ -10268,7 +10268,8 @@
                             {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/alltabmarketComplain',$data->id) }}">Report
+                        </a> </button>
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
                     </div>
