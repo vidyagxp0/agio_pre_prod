@@ -6782,7 +6782,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'Summary and Response/CFT Tab is yet to be filled'
+                            'message' => 'Pls Fill General Information Tab is yet to be filled'
                         ]);
     
                         return redirect()->back();
