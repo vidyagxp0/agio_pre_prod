@@ -1060,7 +1060,7 @@
                                 @if ($data->stage == 2)
                                     <div class="group-input">
                                         <label for="HOD Remarks">QA Head Review Comment <span
-                                                class="text-danger">*</span></label>
+                                                class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea class="tiny" name="Operations" id="summernote-4" required>{{ $data->Operations }}</textarea>
@@ -1083,7 +1083,7 @@
                       <div class="col-lg-12">
                         <div class="group-input">
                             <label for="assign_to">Invite Person Notify
-                                    <span class="text-danger">*</span>
+                            <span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span>
                             </label>
 
                             <!-- Disabled select for stages not equal to 1 -->

@@ -251,7 +251,11 @@ use Carbon\Carbon;
                         ];
                         @endphp
                         <td class="w-30">
-                        {{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}
+                        @if ($managementReview->initiator_Group)
+                                        {{ $managementReview->initiator_Group }}
+                        @else
+                        Not Applicable
+                        @endif
                         </td>
                         {{-- @if ($managementReview->initiator_Group)
                                         {{ $managementReview->initiator_Group }}
@@ -726,7 +730,7 @@ use Carbon\Carbon;
                         <th>Invited Person</th>
                         <th>Designation</th>
                         <th>Department</th>
-                        <th>Meeting Attended</th>
+                        <th>Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -739,7 +743,7 @@ use Carbon\Carbon;
                         </td>
                         <td>{{ unserialize($management_review_participants->department)[$key] ?? 'N/A' }}
                         </td>
-                        <td>{{ unserialize($management_review_participants->meeting_Attended)[$key] ?? 'N/A' }}
+                        <td>{{ unserialize($management_review_participants->remarks)[$key] ?? 'N/A' }}
                         </td>
                     </tr>
                     @endforeach
@@ -747,7 +751,7 @@ use Carbon\Carbon;
             </table>
         </div>
     </div>
-    <div class="block">
+    {{-- <div class="block">
         <div class="block-head">
             Management Review Participants Part-2
         </div>
@@ -771,14 +775,14 @@ use Carbon\Carbon;
                         </td>
                         <td>{{ unserialize($management_review_participants->designee_Department)[$key] ?? 'N/A' }}
                         </td>
-                        <td>{{ unserialize($management_review_participants->remarks)[$key] ?? 'N/A' }}
+                        <td>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> --}}
     {{-- <div class="block">
             <div class="block-head">
                 Performance Evaluation
@@ -2872,18 +2876,30 @@ use Carbon\Carbon;
 
                 </tr>
 
-                <tr>
-
-                    <th class="w-20">Description of Action Item (By Other's 3)</th>
+                <tr>  <th class="w-20">Other's 3 HOD Person</th>
                     <td class="w-30">
                         <div>
-                            @if ($data1->Other3_assessment)
-                            {{ $data1->Other3_assessment }}
+                            @if ($data5->hod_Other3_person)
+                            {{ $data5->hod_Other3_person}}
                             @else
                             Not Applicable
                             @endif
                         </div>
                     </td>
+                </tr>
+
+                <tr>
+                    <th class="w-20">Description of Action Item (By Other's 3)</th>
+                    <td class="w-30">
+                        <div>
+                            @if ($data1->Other3_Assessment)
+                            {{ $data1->Other3_Assessment }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </div>
+                    </td>
+
                     <th class="w-20">Other's 3 Status of Action Item</th>
                     <td class="w-30">
                         <div>
@@ -3982,8 +3998,7 @@ use Carbon\Carbon;
 
 
                         <tr>
-
-                            <th class="w-20">HOD Quality Control Review Comments</th>
+                          <th class="w-20">HOD Quality Control Review Comments</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Quality_Control_feedback)

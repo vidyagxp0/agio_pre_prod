@@ -1766,7 +1766,7 @@ class ManagementReviewController extends Controller
         // $management->assign_to = $request->assign_to;
         $management->initiator_group_code= $request->initiator_group_code;
         $management->Operations= $request->Operations;
-        $management->initiator_Group= $request->initiator_Group;
+        // $management->initiator_Group= $request->initiator_Group;
         $management->requirement_products_services = $request->requirement_products_services;
         $management->design_development_product_services = $request->design_development_product_services;
         $management->control_externally_provide_services = $request->control_externally_provide_services;
@@ -10965,11 +10965,12 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
     {
         $parent_id = $id;
         $parent_initiator_id = ManagementReview::where('id', $id)->value('initiator_id');
+        $parent_division_id = ManagementReview::where('id', $id)->value('division_id');
         $parent_type = "Management Review";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record = $record_number;
-        $data = ManagementReview::find($id);
+        $data1 = ManagementReview::find($id);
         $currentDate = Carbon::now();
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
@@ -10980,7 +10981,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
         $p_record = ManagementReview::find($id);
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'MR' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
 
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'data','parent_initiator_id','parent_record', 'record', 'due_date', 'parent_id', 'parent_type','old_record', 'data_record'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parentRecord', 'data1','parent_initiator_id','parent_record', 'record', 'due_date','parent_division_id', 'parent_id', 'parent_type','old_record', 'data_record'));
     }
 
     public static function managementReviewReport($id)
