@@ -237,7 +237,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Initiation Department</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{-- {{ Helpers::getFullDepartmentName($data->Initiator_Group) }} --}}
@@ -461,7 +461,7 @@
                             </table>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
                 
                 <table>
                     <tr>
@@ -526,7 +526,7 @@
                             </table>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
                 
 
                 <table>
@@ -591,7 +591,7 @@
                             </table>
                         </div>
                     </div>
-                @endif
+                {{-- @endif --}}
                 
 
                 <table>
@@ -722,8 +722,8 @@
                         <th class="w-20">SR No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
-                    @if ($data->Audit_file)
-                        @foreach (json_decode($data->Audit_file) as $key => $file)
+                    @if ($data->hod_attachments)
+                        @foreach (json_decode($data->hod_attachments) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
