@@ -1656,9 +1656,9 @@ class CapaController extends Controller
         if ($capa->stage == 1) {
             $capa->repeat = implode(',', (array) $request->repeat); // Cast to array and implode
         }
-        if ($capa->stage == 1) {
-            $capa->initiator_Group =  implode(',', (array) $request->initiator_Group);
-        }
+        // if ($capa->stage == 1) {
+        //     $capa->initiator_Group =  implode(',', (array) $request->initiator_Group);
+        // }
         // $capa->initiator_Group= $request->initiator_Group;
 
         $capa->parent_record_number_edit = $request->parent_record_number_edit;
@@ -5260,11 +5260,13 @@ class CapaController extends Controller
         if ($request->child_type == "Action_Item") {
             $parentRecord = Capa::where('id', $id)->value('record');
             $parent_name = "CAPA";
-            $data = Capa::find($id);
+            // $data = Capa::find($id);
+            $data1 = Capa::select('id', 'division_id', 'record', 'due_date')->where('id', $id)->first();
+            
             // $p_record = OutOfCalibration::find($id);
-            $data_record = Helpers::getDivisionName($data->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-            $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" . $data->record . "";
-            return view('frontend.action-item.action-item', compact('expectedParenRecord', 'old_record', 'parentRecord', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record', 'data'));
+            $data_record = Helpers::getDivisionName($data1->division_id) . '/' . 'CAPA' . '/' . date('Y') . '/' . str_pad($data1->record, 4, '0', STR_PAD_LEFT);
+            $expectedParenRecord = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . date('Y') . "/" . $data1->record . "";
+            return view('frontend.action-item.action-item', compact('expectedParenRecord', 'old_record', 'parentRecord', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data_record', 'data1'));
         }
         // else {
         //     return view('frontend.forms.effectiveness-checkkjkjk', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type'));

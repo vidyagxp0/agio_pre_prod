@@ -374,121 +374,94 @@
     </script>
 
     <script>
-
-$(document).ready(function () {
-    // Function to generate options for Person Responsible dropdown
-    function generateOptions(users) {
-        let options = '';
-        users.forEach(user => {
-            options += `<option value="${user.id}">${user.name}</option>`;
-        });
-        return options;
-    }
-
-    // Function to generate a new row in the CAPA Details table
-    function generateTableRow(serialNumber, users) {
-        var options = generateOptions(users); // Generate user options
-
-        var html =
-            '<tr>' +
-            '<td><input disabled type="text" name="Self_Inspection_circular[' + serialNumber +
-            '][serial_number]" value="' + serialNumber + '"></td>' +
-
-            '<td>' +
-            '<select name="Self_Inspection_circular[' + serialNumber + '][departments]" id="departments_' +
-            serialNumber + '" ' +
-            '{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>' +
-            '<option selected disabled value="">--- select ---</option>' +
-            '@foreach (Helpers::getDepartments() as $code => $departments)' +
-            '<option value="{{ $departments }}" data-code="{{ $code }}" ' +
-            '@if ($data->departments == $departments) selected @endif>' +
-            '{{ $departments }}</option>' +
-            '@endforeach' +
-            '</select>' +
-            '</td>' +
-
-            '<td>' +
-            '<div class="new-date-data-field">' +
-            '<div class="group-input input-date">' +
-            '<div class="calenderauditee">' +
-            '<input class="click_date" id="date_display_' + serialNumber +
-            '" type="text" name="Self_Inspection_circular[' + serialNumber +
-            '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly />' +
-            '<input type="date" name="Self_Inspection_circular[' + serialNumber +
-            '][info_mfg_date]" id="date_input_' + serialNumber +
-            '" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, \'date_display_' +
-            serialNumber + '\')">' +
-            '</div>' +
-            '</div>' +
-            '</div>' +
-            '</td>' +
-
-            '<td>' +
-            '<select name="Self_Inspection_circular[' + serialNumber + '][Auditor][]" ' +
-            'id="auditor_' + serialNumber + '" ' +
-            'class="auditor-select" ' +
-            'multiple>' +
-            options +
-            '</select>' +
-            '</td>' +
-
-            '<td><button type="button" class="removeBtn">Remove</button></td>' +
-            '</tr>';
-
-        return html;
-    }
-
-    // Initial users data (Replace with actual data from Blade)
-    var users = @json($users);
-
-    // Function to initialize VirtualSelect
-    function initializeVirtualSelect() {
-        document.querySelectorAll('.auditor-select').forEach(function (el) {
-            if (!el.classList.contains('vs-initialized')) {
+        $(document).ready(function () {
+            // Function to initialize VirtualSelect
+            function initializeVirtualSelect() {
                 VirtualSelect.init({
-                    ele: el,
+                    ele: ".analyst-dropdown",
                     multiple: true,
                     search: true,
-                    placeholder: 'Select Auditees',
+                    placeholder: "Select Analysts"
                 });
-                el.classList.add('vs-initialized'); // Prevent re-initialization
             }
+
+            // Function to generate a new row in the table
+            function generateTableRow(serialNumber) {
+                var analystOptions = `@foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach`;
+
+                var html =
+                    `<tr>
+                        <td>
+                            <input disabled type="text" name="Self_Inspection_circular[${serialNumber}][serial_number]" value="${serialNumber}">
+                        </td>
+
+                        <td>
+                            <select name="Self_Inspection_circular[${serialNumber}][departments]" id="departments_${serialNumber}" 
+                            {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                <option selected disabled value="">--- select ---</option>
+                                @foreach (Helpers::getDepartments() as $code => $departments)
+                                <option value="{{ $departments }}" data-code="{{ $code }}" 
+                                @if ($data->departments == $departments) selected @endif>
+                                    {{ $departments }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </td>
+
+                        <td>
+                            <div class="new-date-data-field">
+                                <div class="group-input input-date">
+                                    <div class="calenderauditee">
+                                        <input class="click_date" id="date_display_${serialNumber}" type="text" name="Self_Inspection_circular[${serialNumber}][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly />
+                                        <input type="date" name="Self_Inspection_circular[${serialNumber}][info_mfg_date]" id="date_input_${serialNumber}" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" onchange="handleDateInput(this, 'date_display_${serialNumber}')">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="analyst-dropdown-container">
+                                <select class="analyst-dropdown" name="Self_Inspection_circular[${serialNumber}][Auditor]" multiple>
+                                    ${analystOptions}
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <button type="button" class="removeBtn">Remove</button>
+                        </td>
+                    </tr>`;
+
+                return html;
+            }
+
+            // Add new row event
+            $('#Self_Inspection_circular').on('click', function (e) {
+                e.preventDefault();
+                var tableBody = $('#Self_Inspection_circular-field-instruction-modal tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+
+                // Initialize VirtualSelect for new rows
+                initializeVirtualSelect();
+            });
+
+            // Remove row event (Event Delegation)
+            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtn', function () {
+                $(this).closest('tr').remove();
+            });
+
+            // Attach date picker event listeners using Event Delegation
+            $('#Self_Inspection_circular-field-instruction-modal').on('click', '.click_date', function () {
+                $(this).siblings('.show_date').click();
+            });
+
+            // Initialize VirtualSelect for existing rows on page load
+            initializeVirtualSelect();
         });
-    }
-
-    // Event listener for adding new rows
-    $('#Self_Inspection_circular').click(function (e) { // Ensure this targets a valid button
-        e.preventDefault();
-
-        var tableBody = $('#Self_Inspection_circular-field-instruction-modal tbody');
-        var rowCount = tableBody.children('tr').length;
-        var newRow = generateTableRow(rowCount + 1, users);
-        tableBody.append(newRow);
-
-        // Initialize VirtualSelect for newly added elements
-        initializeVirtualSelect();
-
-        // Reattach date picker event listeners for newly added rows
-        reattachDatePickers();
-    });
-
-    // Event delegation for remove button
-    $('#Self_Inspection_circular-field-instruction-modal').on('click', '.removeBtn', function () {
-        $(this).closest('tr').remove();
-    });
-
-    // Attach date picker event listeners
-    function reattachDatePickers() {
-        $('.click_date').off('click').on('click', function () {
-            $(this).siblings('.show_date').click();
-        });
-    }
-
-    // Initialize VirtualSelect for existing rows on page load
-    initializeVirtualSelect();
-});
-
-
     </script>
 
 
@@ -772,7 +745,7 @@ $(document).ready(function () {
                                             </div>
                                         </div> -->
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Short Description">Initiator Department <span
                                                         class="text-danger"></span></label>
@@ -788,9 +761,31 @@ $(document).ready(function () {
                                                     @endforeach
                                                 </select>
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator"><b>Initiator Department</b></label>
+                                                <input readonly type="text" name="Initiator_Group" id="Initiator_Group" 
+                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                            </div>
                                         </div>
 
                                         <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiation Group Code">Initiator Department code</label>
+                                                <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_group_code }}" id="initiator_group_code"
+                                                    readonly>
+                                                {{-- <div class="default-name"> <span
+                                                id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
+                                            </div>
+                                        </div>
+
+
+
+
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Department code</label>
                                                 <input readonly type="text" name="initiator_group_code"
@@ -798,7 +793,8 @@ $(document).ready(function () {
                                                     value="{{ $data->initiator_group_code ?? '' }}"
                                                     {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
                                             </div>
-                                        </div>
+                                        </div> --}}
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due"><b>Date of Initiation</b></label>
@@ -1756,33 +1752,47 @@ $(document).ready(function () {
                                                                         </td>
 
 
-                                                                        <td>
-    <select name="Self_Inspection_circular[{{ $loop->index }}][Auditor][]" 
-            id="auditor_{{ $loop->index }}" 
-            class="auditor-select" 
-            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-            multiple>
-            
-        @php
-            // Ensure $grid2['Auditor'] is properly formatted as an array
-            $selectedAuditors = [];
-            if (!empty($grid2['Auditor'])) {
-                if (is_array($grid2['Auditor'])) {
-                    $selectedAuditors = $grid2['Auditor'];
-                } elseif (is_string($grid2['Auditor'])) {
-                    $selectedAuditors = explode(',', $grid2['Auditor']);
-                }
-            }
-        @endphp
+                                                                        <!-- <td>
+                                                                            <select name="Self_Inspection_circular[{{ $loop->index }}][Auditor][]" 
+                                                                                    id="auditor_{{ $loop->index }}" 
+                                                                                    class="auditor-select" 
+                                                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                                    multiple>
+                                                                                    
+                                                                                @php
+                                                                                    // Ensure $grid2['Auditor'] is properly formatted as an array
+                                                                                    $selectedAuditors = [];
+                                                                                    if (!empty($grid2['Auditor'])) {
+                                                                                        if (is_array($grid2['Auditor'])) {
+                                                                                            $selectedAuditors = $grid2['Auditor'];
+                                                                                        } elseif (is_string($grid2['Auditor'])) {
+                                                                                            $selectedAuditors = explode(',', $grid2['Auditor']);
+                                                                                        }
+                                                                                    }
+                                                                                @endphp
 
-        @foreach ($users as $user)
-            <option value="{{ $user->id }}" 
-                @if (in_array($user->id, $selectedAuditors)) selected @endif>
-                {{ $user->name }}
-            </option>
-        @endforeach
-    </select>
-</td>
+                                                                                @foreach ($users as $user)
+                                                                                    <option value="{{ $user->id }}" 
+                                                                                        @if (in_array($user->id, $selectedAuditors)) selected @endif>
+                                                                                        {{ $user->name }}
+                                                                                    </option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </td> -->
+
+                                                                        <td>
+                                                                            <div class="analyst-dropdown-container">
+                                                                                <select class="analyst-dropdown" name="Self_Inspection_circular[{{ $loop->index }}][Auditor]" multiple>
+                                                                                    @foreach ($users as $user)
+                                                                                        <option value="{{ $user->id }}"
+                                                                                            {{ in_array($user->id, explode(',', $grid2['Auditor'] ?? '')) ? 'selected' : '' }}>
+                                                                                            {{ $user->name }}
+                                                                                        </option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </td>
+
 
 
 

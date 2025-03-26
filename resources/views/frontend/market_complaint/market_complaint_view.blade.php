@@ -713,8 +713,9 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label>
+                                    <label for="Short Description">Short Description @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <span id="rchars">255</span> Characters remaining
                                     <input name="description_gi"
                                     {{ $data->stage == 1 ? '' : 'readonly' }} id="docname"
@@ -722,52 +723,59 @@
 
                                 </div>
                             </div>
+                            
 
+                       
 
-                            <div class="col-lg-6 new-date-data-field">
-                                <div class="group-input input-date">
-                                    <label for="due_date">Due Date</label>
-                                    <div class="calenderauditee">
-                                        @php
-                                            $Date = isset($data->due_date_gi)
-                                                ? new \DateTime($data->due_date_gi)
-                                                : null;
-                                        @endphp
-                                        {{-- Format the date as desired --}}
-                                        <input type="text" id="due_date_display" placeholder="DD-MMM-YYYY"{{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8? 'readonly' : '' }}
-                                            value="{{ $Date ? $Date->format('d-M-Y') : '' }}" readonly />
+                            <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Due Date
+                                            
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
+                                        </label>
+                                      
 
-                                        <input type="date" name="due_date_gi" id="due_date_gi" class="hide-input"
-                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="{{ $data->due_date_gi ?? '' }}"
-                                            oninput="handleDateInput(this, 'due_date_display')"
-                                            {{ $data->stage == 1 ? '' : 'readonly' }} />
-
-
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY"
+                                                value="{{ Helpers::getdateFormat($data->due_date_gi) }}"
+                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} ||
+                                                {{ $data->stage == 0 || $data->stage == 14 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}  />
+                                            <input type="date" id="due_date" name="due_date_gi"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                value="{{ $data->due_date_gi }}"
+                                                oninput="handleDateInput(this, 'due_date_display')"
+                                                {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} ||
+                                                {{ $data->stage == 0 || $data->stage == 14 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}  />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <script>
-                                function handleDateInput(input, displayId) {
-                                    var display = document.getElementById(displayId);
-                                    var date = new Date(input.value);
-                                    var options = {
-                                        day: '2-digit',
-                                        month: 'short', // Change 'short' instead of 'Short'
-                                        year: 'numeric'
-                                    };
-                                    var formattedDate = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
-                                    display.value = formattedDate;
-                                }
-                            </script>
+                                {{-- javascript for due date --}}
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const displayElement = document.getElementById(displayId);
+                                        if (displayElement) {
+                                            const dateValue = new Date(dateInput.value);
+                                            const options = {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: '2-digit'
+                                            };
+                                            displayElement.value = dateValue.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                        }
+                                    }
+                                </script>
 
 
-                            <style>
-                                .hide-input {
-                                    display: none;
-                                }
-                            </style>
+
+
+
+
+
+
+
 
 
 
@@ -1089,9 +1097,10 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="complainant_gi">Complainant<span
-                                    class="text-danger">*</span></label>
-                                    <textarea name="complainant_gi" class="form-control" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->complainant_gi }}</textarea>
+                                    <label for="complainant_gi">Complainant @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
+                                    <textarea name="complainant_gi" class="form-control" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $data->complainant_gi }}</textarea>
                                 </div>
                             </div>
 
@@ -1101,8 +1110,9 @@
                             <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Due Date">Complaint Reported On 
-                                    <span
-                                    class="text-danger">*</span>
+                                     @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                     </label>
 
                                     <div class="calenderauditee">
@@ -1148,13 +1158,14 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Details Of Nature Market Complaint">Details of Nature of Market Complaint 
-                                    <span
-                                    class="text-danger">*</span>
+                                     @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote"
-                                        name="details_of_nature_market_complaint_gi" id="summernote-1" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>{{ $data->details_of_nature_market_complaint_gi }}
+                                        name="details_of_nature_market_complaint_gi" id="summernote-1" required>{{ $data->details_of_nature_market_complaint_gi }}
                                     </textarea>
                                 </div>
                             </div>
@@ -1164,8 +1175,10 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product Details <span
-                                        class="text-danger">*</span>
+                                        Product Details 
+                                         @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                         <button type="button" id="Details"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -1198,12 +1211,12 @@
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_product_name]"
                                                                 value="{{ array_key_exists('info_product_name', $detail) ? $detail['info_product_name'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                         </td>
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_batch_no]"
                                                                 value="{{ array_key_exists('info_batch_no', $detail) ? $detail['info_batch_no'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                         </td>
 
 
@@ -1265,22 +1278,22 @@
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_batch_size]"
                                                                 value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                         </td>
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_pack_size]"
                                                                 value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                         </td>
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_dispatch_quantity]"
                                                                 value="{{ array_key_exists('info_dispatch_quantity', $detail) ? $detail['info_dispatch_quantity'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                         </td>
                                                         <td><input type="text"
                                                                 name="serial_number_gi[{{ $index }}][info_remarks]"
                                                                 value="{{ array_key_exists('info_remarks', $detail) ? $detail['info_remarks'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                         </td>
                                                         <td><button type="button" class="removeRowBtn"
                                                                 {{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button>
@@ -1391,8 +1404,10 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Traceability<span
-                                        class="text-danger">*</span>
+                                        Traceability
+                                         @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                         <button type="button" id="traceblity_add"
                                             {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -1424,27 +1439,27 @@
                                                             <td><input disabled type="text"
                                                                     name="trace_ability[{{ $index }}][serial]"
                                                                     value="{{ $traceabilityIndex++ }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][product_name_tr]"
                                                                     value="{{ $tracebil['product_name_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][batch_no_tr]"
                                                                     value="{{ $tracebil['batch_no_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][manufacturing_location_tr]"
                                                                     value="{{ $tracebil['manufacturing_location_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="trace_ability[{{ $index }}][remarks_tr]"
                                                                     value="{{ $tracebil['remarks_tr'] }}"
-                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                             </td>
                                                             <td><button type="text"
                                                                     class="removeRowBtn"{{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button>
@@ -1499,11 +1514,12 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Categorization of complaint
-                                    <span
-                                    class="text-danger">*</span>
+                                     @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                     </label>
                                     <select name="categorization_of_complaint_gi" onchange=""
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                         <option value="">-- select --</option>
                                         <option value="Critical"
                                             {{ $data->categorization_of_complaint_gi == 'Critical' ? 'selected' : '' }}>
@@ -1521,11 +1537,12 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="is_repeat_gi">Is Repeat
-                                    <span
-                                    class="text-danger">*</span>
+                                     @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                     </label>
                                     <select name="is_repeat_gi" id="is_repeat_gi"
-                                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                        {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                         <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>--
                                             select --</option>
                                         <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes
@@ -1538,7 +1555,9 @@
 
                             <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
                                 <div class="group-input">
-                                    <label for="repeat_nature_gi">Repeat Nature</label>
+                                    <label for="repeat_nature_gi">Repeat Nature
+                                    <span class="text-danger">*</span>
+                                    </label>
                                     <div>
                                         <small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small>
@@ -1610,8 +1629,9 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Review of Control Sample">Review of Complaint Sample<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Review of Control Sample">Review of Complaint Sample @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
                                     <textarea class="summernote" name="review_of_complaint_sample_gi"  id="summernote-1"
@@ -1621,8 +1641,9 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Review of Control Sample">Review of Control Sample<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Review of Control Sample">Review of Control Sample @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_control_sample_gi"  id="summernote-1"
@@ -1633,8 +1654,10 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of stability study program and samples">Review of stability study
-                                        program and samples<span
-                                        class="text-danger">*</span></label>
+                                        program and samples
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_stability_study_gi" id="summernote-1"
@@ -1645,8 +1668,11 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Review of product manufacturing and analytical process">Review of product
-                                        manufacturing and analytical process<span
-                                        class="text-danger">*</span> </label>
+                                        manufacturing and analytical process
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
+                                    </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="review_of_product_manu_gi" id="summernote-1"
@@ -1657,8 +1683,10 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="In case of Invalide complain then">Additional information if require<span
-                                    class="text-danger">*</span>
+                                    <label for="In case of Invalide complain then">Additional information if require 
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
@@ -1669,11 +1697,12 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Additional information if require">Type of Market Complaints<span
-                                    class="text-danger">*</span> </label>
+                                    <label for="Additional information if require">Type of Market Complaints @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif </label>
                                     <select
                                         name="probable_root_causes_complaint_hodsr" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
-                                        id="probable_root_causes_complaint_hodsr">
+                                        id="probable_root_causes_complaint_hodsr" required>
                                         {{-- <option value="">-- select --</option> --}}
                                         <option value=""
                                             {{ $data->probable_root_causes_complaint_hodsr == '0' ? 'selected' : '' }}>--
@@ -1691,8 +1720,9 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="In case of Invalide complain then">Comments<span
-                                    class="text-danger">*</span></label>
+                                    <label for="In case of Invalide complain then">Comments @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="in_case_Invalide_com" id="summernote-1"
@@ -2096,8 +2126,9 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Manufacturer name & Address">Manufacturer Name & Address
-                                    <span
-                                    class="text-danger">*</span>
+                                     @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
@@ -2110,8 +2141,10 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product Details<span
-                                        class="text-danger">*</span>
+                                        Product Details 
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
@@ -2147,13 +2180,13 @@
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][product_name_ca]"
-                                                                    value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}">
+                                                                    value="{{ array_key_exists('product_name_ca', $Prodmateriyal) ? $Prodmateriyal['product_name_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]"
-                                                                    value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}">
+                                                                    value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td>
                                                                 <div class="new-date-data-field">
@@ -2279,25 +2312,25 @@
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][batch_size_pmd_ca]"
-                                                                    value="{{ array_key_exists('batch_size_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_size_pmd_ca'] : '' }}">
+                                                                    value="{{ array_key_exists('batch_size_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_size_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]"
-                                                                    value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}">
+                                                                    value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]"
-                                                                    value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}">
+                                                                    value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                     type="text"
                                                                     name="Product_MaterialDetails[{{ $index }}][remarks_ca]"
-                                                                    value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}">
+                                                                    value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}" required>
                                                             </td>
                                                             <td><button
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
@@ -2501,10 +2534,11 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Complaint Sample Required">Complaint Sample Required<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Complaint Sample Required">Complaint Sample Required @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <select name="complaint_sample_required_ca"
-                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+                                        {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} required>
                                         <option value="">-- select --</option>
                                         <option value="yes"
                                             {{ isset($data) && $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>
@@ -2529,8 +2563,9 @@
                             </div> --}}
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Analytical Data review observation">Complaint Sample Status<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Analytical Data review observation">Complaint Sample Status @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="complaint_sample_status_ca"  id="summernote-1"
@@ -2540,8 +2575,9 @@
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Brief Description of complaint">Brief Description Of Complaint<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Brief Description of complaint">Brief Description Of Complaint @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="brief_description_of_complaint_ca"  id="summernote-1"
@@ -2551,8 +2587,10 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Batch Record review observation">Batch Record Review
-                                        Observation<span
-                                        class="text-danger">*</span></label>
+                                        Observation
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="batch_record_review_observation_ca"  id="summernote-1"
@@ -2562,8 +2600,9 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Analytical Data review observation">Analytical Data Review
-                                        Observation<span
-                                    class="text-danger">*</span></label>
+                                        Observation @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="analytical_data_review_observation_ca"  id="summernote-1"
@@ -2573,8 +2612,10 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Retention sample review observation">Retention Sample Review
-                                        Observation<span
-                                        class="text-danger">*</span></label>
+                                        Observation
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1"
@@ -2584,8 +2625,10 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Stablity study data review">Stablity Study Data Review<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Stablity study data review">Stablity Study Data Review 
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1"
@@ -2596,8 +2639,10 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="QMS Events(if any) review Observation">QMS Events(if Any) Review
-                                        Observation<span
-                                        class="text-danger">*</span></label>
+                                        Observation
+                                        @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="qms_events_ifany_review_observation_ca"  id="summernote-1"
@@ -2607,8 +2652,9 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Repeated complaints/queries for product">Repeated Complaints/Queries
-                                        For Product:<span
-                                        class="text-danger">*</span></label>
+                                        For Product: @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="repeated_complaints_queries_for_product_ca"  id="summernote-1"
@@ -2628,8 +2674,9 @@
                             </div>
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Comments">Comments(if Any)<span
-                                    class="text-danger">*</span></label>
+                                    <label for="Comments">Comments(if Any) @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
                                     <textarea class="summernote" name="comments_ifany_ca"  id="summernote-1"
@@ -2640,8 +2687,9 @@
 
 
                             <div class="sub-head">
-                                Proposal To Accomplish Investigation:<span
-                                class="text-danger">*</span>
+                                Proposal To Accomplish Investigation: @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
@@ -2705,7 +2753,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2731,13 +2779,13 @@
                                                     {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" >{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
                                                         </div>
                                                     </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2769,7 +2817,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required required>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2795,13 +2843,13 @@
                                                     {{-- <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm1"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" >{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
                                                         </div>
                                                     </td> --}}
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2833,7 +2881,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -10220,7 +10268,8 @@
                             {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-
+                        <button type="button"> <a class="text-white" href="{{ url('rcms/alltabmarketComplain',$data->id) }}">Report
+                        </a> </button>
                         <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
                     </div>

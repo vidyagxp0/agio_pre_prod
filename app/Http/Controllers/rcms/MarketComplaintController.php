@@ -10035,6 +10035,56 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     }
 
 
+
+    public function All_tabs_report(Request $request, $id)
+    {
+
+        $data = MarketComplaint::find($id);
+        $data1 = MarketComplaintCft::where('mc_id', $id)->first();
+        // dd($data1)
+        $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
+        $gitracebilty = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Traceability'])->first();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Product_MaterialDetails'])->first();
+        $giinvesting = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Investing_team'])->first();
+        $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
+        $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
+        $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Report_Approval'])->first();
+        $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifer', 'Proposal_to_accomplish_investigation')->first();
+        $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
+
+
+
+        // $martab_grid =MarketComplaintGrids::where(['mc_id' => $id,'identifer'=> 'Sutability'])->first();
+
+        
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.market_complaint.alltabs_report', compact('data', 'proposalData', 'proposal_to_accomplish_investigation', 'data1', 'prductgigrid', 'gitracebilty', 'marketrproducts', 'giinvesting', 'brain', 'hodteammembers', 'hodreportapproval'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('MarketComplainta' . $id . '.pdf');
+        }
+
+
+        return view('frontend.market_complaint.singleReport', compact('data', 'prductgigrid'));
+    }
+
+
+    
+
     public function MarketAuditTrial($id)
     {
         $audit = MarketComplaintAuditTrial::where('market_id', $id)->orderByDESC('id')->paginate();

@@ -1126,18 +1126,18 @@
                                         </div>
                                         <div class="col-12 corrective-action-field">
                                             <div class="group-input">
-                                                <label for="Corrective Action">Corrective Action</label>
+                                                <label for="Corrective Action">Corrective Action <span class="required-star">*</span></label>
                                                 <textarea name="corrective_action" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}>{{ $data->corrective_action }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12 preventive-action-field">
                                             <div class="group-input">
-                                                <label for="Preventive Action">Preventive Action</label>
+                                                <label for="Preventive Action">Preventive Action<span class="required-star">*</span></label>
                                                 <textarea name="preventive_action" {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9? 'readonly' : '' }}>{{ $data->preventive_action }}</textarea>
                                             </div>
                                         </div>
 
-                                        <script>
+                                        {{-- <script>
                                             document.addEventListener("DOMContentLoaded", function () {
                                                 let capaTypeSelect = document.getElementById("capa_type");
                                                 let correctiveActionField = document.querySelector(".corrective-action-field");
@@ -1167,7 +1167,47 @@
                                                     toggleFields(this.value);
                                                 });
                                             });
-                                        </script>
+                                        </script> --}}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let capaTypeSelect = document.getElementById("capa_type");
+        let correctiveActionField = document.querySelector(".corrective-action-field");
+        let preventiveActionField = document.querySelector(".preventive-action-field");
+
+        function toggleFields(selectedValue) {
+            // Hide all fields initially
+            correctiveActionField.style.display = "none";
+            preventiveActionField.style.display = "none";
+
+            // Remove text-danger from all asterisks
+            document.querySelectorAll(".required-star").forEach(star => {
+                star.classList.remove("text-danger");
+            });
+
+            // Show fields and add text-danger to * if they are selected
+            if (selectedValue === "Corrective Action") {
+                correctiveActionField.style.display = "block";
+                correctiveActionField.querySelector(".required-star").classList.add("text-danger");
+            } else if (selectedValue === "Preventive Action") {
+                preventiveActionField.style.display = "block";
+                preventiveActionField.querySelector(".required-star").classList.add("text-danger");
+            } else if (selectedValue === "Corrective & Preventive Action") {
+                correctiveActionField.style.display = "block";
+                preventiveActionField.style.display = "block";
+                correctiveActionField.querySelector(".required-star").classList.add("text-danger");
+                preventiveActionField.querySelector(".required-star").classList.add("text-danger");
+            }
+        }
+
+        // Initialize fields based on the selected option on page load
+        toggleFields(capaTypeSelect.value);
+
+        // Listen for changes to update visibility dynamically
+        capaTypeSelect.addEventListener("change", function () {
+            toggleFields(this.value);
+        });
+    });
+</script>
 
 
                                         <div class="col-12">

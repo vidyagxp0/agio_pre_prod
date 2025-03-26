@@ -544,7 +544,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" required
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" 
                                             @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Period</option>
                                             <option @if ($data->review_period_six_monthly == 'January to June') selected @endif value="January to June">
@@ -1035,7 +1035,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton"
-                                     {{ $data->stage != 1 ? 'readonly' : '' }}>Save</button>
+                                     >Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
@@ -1060,7 +1060,7 @@
                                 @if ($data->stage == 2)
                                     <div class="group-input">
                                         <label for="HOD Remarks">QA Head Review Comment <span
-                                                class="text-danger">*</span></label>
+                                                class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea class="tiny" name="Operations" id="summernote-4" required>{{ $data->Operations }}</textarea>
@@ -1083,7 +1083,7 @@
                       <div class="col-lg-12">
                         <div class="group-input">
                             <label for="assign_to">Invite Person Notify
-                                    <span class="text-danger">*</span>
+                            <span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span>
                             </label>
 
                             <!-- Disabled select for stages not equal to 1 -->
@@ -1536,7 +1536,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%">Sr.No.</th>
-                                                <th>Invited Person</th>
+                                                <th>Name of  Person</th>
                                                 <th>Designation</th>
                                                 <th>Department</th>
                                                 <th>Remarks</th>

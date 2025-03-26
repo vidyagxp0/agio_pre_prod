@@ -746,12 +746,13 @@ dd($pre);
                                 </div> --}}
                                 <div class="col-lg-12 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Due Date</label>
+                                        <label for="Audit Schedule Start Date">Due Date<span
+                                            class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_dateq" readonly
-                                                placeholder="DD-MM-YYYY" />
+                                                placeholder="DD-MM-YYYY" required />
                                             <input type="date" id="due_date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" />
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" required />
                                         </div>
 
                                     </div>
