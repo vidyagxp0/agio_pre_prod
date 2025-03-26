@@ -3026,8 +3026,8 @@ use Carbon\Carbon;
                     <th class="w-20">Description of Action Item (By Other's 4)</th>
                     <td class="w-30">
                         <div>
-                            @if ($data1->Other4_assessment)
-                            {{ $data1->Other4_assessment }}
+                            @if ($data1->Other4_Assessment)
+                            {{ $data1->Other4_Assessment }}
                             @else
                             Not Applicable
                             @endif
@@ -3158,8 +3158,8 @@ use Carbon\Carbon;
                     <th class="w-20">Description of Action Item (By Other's 5)</th>
                     <td class="w-30">
                         <div>
-                            @if ($data1->Other5_assessment)
-                            {{ $data1->Other5_assessment }}
+                            @if ($data1->Other5_Assessment)
+                            {{ $data1->Other5_Assessment }}
                             @else
                             Not Applicable
                             @endif
