@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use App\Models\AuditProgramAuditTrial;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -106,7 +107,23 @@ class AuditProgramController extends Controller
             $data->hod_attached_File = json_encode($files);
         }
         $data->cqa_qa_comment = $request->cqa_qa_comment;
+        $data->cqa_qa_review_comment = $request->cqa_qa_review_comment;
+
         // $data->cqa_qa_Attached_File = $request->cqa_qa_Attached_File;
+
+        if (!empty($request->cqa_qa_review_Attached_File)) {
+            $files = [];
+            if ($request->hasfile('cqa_qa_review_Attached_File')) {
+                foreach ($request->file('cqa_qa_review_Attached_File') as $file) {
+                    $name = $request->name . 'cqa_qa_review_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->cqa_qa_review_Attached_File = json_encode($files);
+        }
+
+
         if (!empty($request->cqa_qa_Attached_File)) {
             $files = [];
             if ($request->hasfile('cqa_qa_Attached_File')) {
@@ -651,6 +668,38 @@ class AuditProgramController extends Controller
             $history->action_name="Create";
             $history->save();
         }
+
+        if (!empty($data->cqa_qa_review_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Review Comments';
+            $history->previous = "Null";
+            $history->current = $data->cqa_qa_review_comment;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
+
+        if (!empty($data->cqa_qa_review_Attached_File)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Review Attachment';
+            $history->previous = "Null";
+            $history->current = $data->cqa_qa_review_Attached_File;
+            $history->comment ="Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+             $history->change_to= "Opened";
+            $history->change_from= "Initiation";
+            $history->action_name="Create";
+            $history->save();
+        }
         
         if (!empty($data->cqa_qa_Attached_File)) {
             $history = new AuditProgramAuditTrial();
@@ -994,6 +1043,8 @@ class AuditProgramController extends Controller
             $data->hod_attached_File = json_encode($files);
         }
         $data->cqa_qa_comment = $request->cqa_qa_comment;
+        $data->cqa_qa_review_comment = $request->cqa_qa_review_comment;
+
         // $data->cqa_qa_Attached_File = $request->cqa_qa_Attached_File;
         if (!empty($request->cqa_qa_Attached_File)) {
             $files = [];
@@ -1006,6 +1057,20 @@ class AuditProgramController extends Controller
             }
             $data->cqa_qa_Attached_File = json_encode($files);
         }
+
+        // $data->cqa_qa_Attached_File = $request->cqa_qa_Attached_File;
+        if (!empty($request->cqa_qa_review_Attached_File)) {
+            $files = [];
+            if ($request->hasfile('cqa_qa_review_Attached_File')) {
+                foreach ($request->file('cqa_qa_review_Attached_File') as $file) {
+                    $name = $request->name . 'cqa_qa_review_Attached_File' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->cqa_qa_review_Attached_File = json_encode($files);
+        }
+
         
             if (!empty($request->Attached_File)) {
             $files = [];
@@ -1405,6 +1470,27 @@ class AuditProgramController extends Controller
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
+
+        if($lastDocument->cqa_qa_review_comment !=$data->cqa_qa_review_comment || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'CQA/QA Review Comments')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Review Comments';
+            $history->previous =  $lastDocument->cqa_qa_review_comment;
+            $history->current = $data->cqa_qa_review_comment;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+
         if($lastDocument->cqa_qa_Attached_File !=$data->cqa_qa_Attached_File || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'CQA/QA Attached Files')
@@ -1424,6 +1510,28 @@ class AuditProgramController extends Controller
             $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
             $history->save();
         }
+
+        if($lastDocument->cqa_qa_review_Attached_File !=$data->cqa_qa_review_Attached_File || !empty($request->comments_comment)) {
+            $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
+                            ->where('activity_type', 'CQA/QA Attached Files')
+                            ->exists();
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'CQA/QA Attached Files';
+            $history->previous =  $lastDocument->cqa_qa_review_Attached_File;
+            $history->current = $data->cqa_qa_review_Attached_File;
+            $history->comment = $request->comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state= $lastDocument->status;
+            $history->change_to= "Not Applicable";
+            $history->change_from= $lastDocument->status;
+            $history->action_name=$lastDocumentAuditTrail ? "Update" : "New"; 
+            $history->save();
+        }
+
+
         if($lastDocument->assign_to_department !=$data->assign_to_department || !empty($request->comments_comment)) {
             $lastDocumentAuditTrail = AuditProgramAuditTrial::where('AuditProgram_id', $data->id)
                             ->where('activity_type', 'Assigned To Department')
@@ -2050,6 +2158,30 @@ class AuditProgramController extends Controller
             $lastDocument = AuditProgram::find($id);
             
             if ($changeControl->stage == 1) {
+
+                $mandatoryFields = [
+                     'assign_to','short_description', 'type', 'year', 'comments'
+                ];
+                
+                foreach ($mandatoryFields as $field) {
+                    if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => "Please fill all required fields before proceeding. Missing: $field"
+                        ]);
+                        return redirect()->back();
+                    }
+                }
+                
+                // If all fields are filled, proceed
+                Session::flash('swal', [
+                    'type' => 'success',
+                    'title' => 'Success',
+                    'message' => 'Document Sent'
+                ]);
+
+
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending Approval";
                 $changeControl->submitted_by = Auth::user()->name;
@@ -2117,6 +2249,31 @@ class AuditProgramController extends Controller
                 return back();
             }
             if ($changeControl->stage == 2) {
+
+                $mandatoryFields = [
+                    'cqa_qa_comment'
+               ];
+               
+               foreach ($mandatoryFields as $field) {
+                   if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+                       Session::flash('swal', [
+                           'type' => 'warning',
+                           'title' => 'Mandatory Fields!',
+                           'message' => "Please fill all required fields before proceeding. Missing: $field"
+                       ]);
+                       return redirect()->back();
+                   }
+               }
+               
+               // If all fields are filled, proceed
+               Session::flash('swal', [
+                   'type' => 'success',
+                   'title' => 'Success',
+                   'message' => 'Document Sent'
+               ]);
+
+
+
                 $changeControl->stage = "3";
                 $changeControl->status = "Pending Audit";
                 $changeControl->approved_by = Auth::user()->name;
@@ -2166,6 +2323,31 @@ class AuditProgramController extends Controller
                 return back();
             }
             if ($changeControl->stage == 3) {
+
+                $mandatoryFields = [
+                    'cqa_qa_review_comment'
+               ];
+               
+               foreach ($mandatoryFields as $field) {
+                   if (!isset($changeControl->$field) || trim($changeControl->$field) === '') {
+                       Session::flash('swal', [
+                           'type' => 'warning',
+                           'title' => 'Mandatory Fields!',
+                           'message' => "Please fill all required fields before proceeding. Missing: $field"
+                       ]);
+                       return redirect()->back();
+                   }
+               }
+               
+               // If all fields are filled, proceed
+               Session::flash('swal', [
+                   'type' => 'success',
+                   'title' => 'Success',
+                   'message' => 'Document Sent'
+               ]);
+
+
+
                 $changeControl->stage = "4";
                 $changeControl->status = "Closed - Done";
                 $changeControl->Audit_Completed_By = Auth::user()->name;

@@ -234,7 +234,7 @@
                     </tr>
                     <tr>
 
-                         <th class="w-20">Department Code</th>
+                         <th class="w-20">Initiator Department code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
@@ -257,7 +257,7 @@
 
 
 
-                         <th class="w-20">Assigned To</th>
+                        <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
                                 {{ $data->assign_to }}
@@ -364,11 +364,11 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20" style="width: 25px;">Row#</th>
+                                <th class="w-20" style="width: 25px;">Sr.No.</th>
                                 <th class="w-20">Auditees</th>
                                 <th class="w-20">Date Start</th>
                                 <th class="w-20">Date End</th>
-                                <th class="w-20"> Lead Investigator</th>
+                                <th class="w-20">Lead Auditor</th>
                                 <th class="w-20"> Comment</th>
 
                             </tr>
@@ -398,7 +398,7 @@
                     </div>
                 </div>
 
-                <div class="block">
+                {{-- <div class="block">
                     <div class="block-head">
                         Self Inspection Planner
                     </div>
@@ -429,7 +429,7 @@
                             @endif
                         </table>
                     </div>
-                </div>
+                </div> --}}
 
 
 
@@ -451,7 +451,7 @@
                 </div> --}}
                 <div class="border-table">
                     <div class="block-head">
-                        Attached Files
+                        Attachments
                     </div>
                     <table>
 
@@ -521,7 +521,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20" style="width: 25px;">Row#</th>
+                            <th class="w-20" style="width: 25px;">Sr.No.</th>
                             <th class="w-20">Department</th>
                             <th class="w-20">Audit Date</th>
                             <th class="w-20">Name of Auditors</th>
@@ -537,7 +537,13 @@
                                     {{ isset($grid_Data['info_mfg_date']) ? Helpers::getdateFormat( $grid_Data['info_mfg_date']) : 'Not Applicable' }}
                                 </td>
                                 <td>
-                                    {{ isset($grid_Data['Auditor']) ? $grid_Data['Auditor'] : 'Not Applicable' }}
+                                    @if(isset($grid_Data['Auditor']) && is_array($grid_Data['Auditor']))
+                                        {{ \App\Models\User::whereIn('id', $grid_Data['Auditor'])->pluck('name')->implode(', ') }}
+                                    @elseif(isset($grid_Data['Auditor']))
+                                        {{ \App\Models\User::find($grid_Data['Auditor'])->name ?? 'Not Applicable' }}
+                                    @else
+                                        Not Applicable
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -564,7 +570,7 @@
 
                       <div class="border-table">
                             <div class="block-head">
-                                Attached Files
+                                Attachments
                             </div>
                             <table>
 
@@ -633,10 +639,9 @@
 
                         </div> --}}
 
-            <div class="block">
-                <div class="block-head">
-                    CQA/QA Approval
-                        </div>
+
+                        <div class="block">
+                        <div class="block-head" style="">CQA/QA Approval</div>
                         <table>
                             <tr>
                                 <th class="w-20">CQA/QA Approval Comments</th>
@@ -649,11 +654,10 @@
                                 </td>
                             </tr>
                         </table>
-            </div>
 
-            <div class="border-table">
+                        <div class="border-table">
                             <div class="block-head">
-                                CQA/QA Attached Files
+                               CQA/QA Attachments
                             </div>
                             <table>
 
@@ -679,9 +683,64 @@
                             </table>
 
                         </div>
+                    </div>
+
+                    <div class="block">
+                        <div class="block-head" style="">CQA/QA Review</div>
+                        <table>
+                            <tr>
+                                <th class="w-20">CQA/QA Review Comments</th>
+                                <td class="w-30">
+                                    @if ($data->cqa_qa_review_comment)
+                                        {{ $data->cqa_qa_review_comment }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
+
+                    <div class="border-table">
+                            <div class="block-head">
+                               CQA/QA Review Attachment
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">S.N.</th>
+                                    <th class="w-60">Batch No</th>
+                                </tr>
+                                @if ($data->cqa_qa_review_Attached_File)
+                                    @foreach (json_decode($data->cqa_qa_review_Attached_File) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+
+                        </div>
+                    </div>
 
         </div>
-    </div>
+
+
+            
+                
+
+
+            
+        
+
+              
 
     <div class="inner-block">
         <div class="content-table">
@@ -714,7 +773,7 @@
                         <th class="w-20">Approve By</th>
                         <td class="w-30">@if($data->approved_by){{ $data->approved_by }}@else Not Applicable @endif</td>
                         <th class="w-20">Approve On</th>
-                        <td class="w-30">{{ $data->approved_on }}@if($data->submitted_by){{ $data->submitted_by }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->approved_on){{ $data->approved_on }}@else Not Applicable @endif</td>
                         <th class="w-20">
                             Approve Comment</th>
                         <td class="w-30">@if($data->approved_comment){{ $data->approved_comment }}@else Not Applicable @endif</td>
@@ -727,14 +786,14 @@
                         More Info Required
                     </div>
                     <table> -->
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">More Info Required By</th>
                         <td class="w-30">@if($data->rejected_by){{ $data->rejected_by }}@else Not Applicable @endif</td>
                         <th class="w-20">More Info Required On</th>
                         <td class="w-30">@if($data->rejected_on){{ $data->rejected_on }}@else Not Applicable @endif</td>
                         <th class="w-20">More Info Required Comment</th>
                         <td class="w-30">@if($data->reject_comment){{ $data->reject_comment }}@else Not Applicable @endif</td>
-                    </tr>
+                    </tr> -->
 
                     <!-- </table>
                     <div class="block-head">
