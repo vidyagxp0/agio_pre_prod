@@ -612,16 +612,16 @@
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                     @else
                         
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                             @else
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                             @endif
                     @endif
                     </span>
@@ -985,7 +985,16 @@
                                         <tr>
                                             <td>{{ $item['revision_no_tds'] ?? '' }}</td>
                                             <td>{{ $item['changContNo_tds'] ?? '' }}</td>
-                                            <td>{{ $item['effectiveDate_tds'] ?? '' }}</td>
+                                            <td>                                                    
+                                                @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                                @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                                @else
+                                                    {{ !empty($item['effectiveDate_tds']) ? \Carbon\Carbon::parse($item['effectiveDate_tds'])->format('d-M-Y') : '' }}
+                                                @endif
+                                            </td>
+                                            {{-- <td>{{ $item['effectiveDate_tds'] ?? '' }}</td> --}}
                                             <td>{{ $item['reasonRevi_tds'] ?? '' }}</td>
                                         </tr>
                                     @endforeach

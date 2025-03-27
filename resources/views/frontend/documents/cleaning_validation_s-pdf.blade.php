@@ -319,7 +319,7 @@
         }
 
         .table-containers {
-            width: 650px;
+            width: 660px;
             overflow-x: fixed; /* Enable horsizontal scrolling */
         }
 
@@ -403,15 +403,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    CVS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    CVS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   CVS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   CVS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -420,11 +420,11 @@
                         style="padding: 5px; border-left: 1px solid; text-align: left; font-weight: bold;">
                         Effective Date:
                         <span>@if ($data->training_required == 'yes')
-                            @if ($data->stage >= 10)
+                            @if ($data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @else
-                            @if ($data->stage > 7)
+                            @if ($data->stage > 10)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @endif
@@ -455,7 +455,7 @@
                             @php
                                 $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
                             @endphp
-                            CVS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            CVS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @else                        
                             Nil
                         @endif
@@ -479,15 +479,15 @@
                                 @endphp
 
                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                        CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                        CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @else
-                                        CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                        CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @endif
                             @else
                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                       CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                       CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @else
-                                       CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                       CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @endif
                             @endif
                         </span>
@@ -755,7 +755,16 @@
                         <tr>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_cvs_no'] ?? '' }}</td>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_cvs_no'] ?? '' }}</td>
-                            <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_cvs']) ? \Carbon\Carbon::parse($item['eff_date_cvs'])->format('d-M-Y') : '' }}</td>
+                            <td>
+                                @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                    {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                @else
+                                    {{ !empty($item['eff_date_cvs']) ? \Carbon\Carbon::parse($item['eff_date_cvs'])->format('d-M-Y') : '' }}
+                                @endif
+                            </td>
+                            {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_cvs']) ? \Carbon\Carbon::parse($item['eff_date_cvs'])->format('d-M-Y') : '' }}</td> --}}
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_cvs'] ?? '' }}</td>
                         </tr>
                     @endforeach
