@@ -1093,7 +1093,7 @@
                                             </div> --}}
                                             <div class="col-lg-12 new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Audit Schedule Start Date">Due Date</label>
+                                                    <label for="Audit Schedule Start Date">Due Date <span class="text-danger">{{$data->stage == 1 ? '*' : '' }}</span</label>
                                                     {{--<div><small class="text-primary">If revising Due Date, kindly mention revision
                                                         reason in "Due Date Extension Justification" data field.</small></div>--}}
                                                      <div class="calenderauditee">
@@ -2238,7 +2238,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                     <div class="group-input">
-                                                        <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Correction</label>
+                                                        <label for="HOD Remarks">Review Of Incident And Verification Of Effectiveness Of Correction <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                                 does not require completion</small></div>
                                                         <textarea class="tiny" name="review_of_verific" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->review_of_verific }}</textarea>
@@ -2250,7 +2250,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <div class="group-input">
-                                                    <label for="HOD Remarks">Recommendations </label>
+                                                    <label for="HOD Remarks">Recommendations  <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea class="tiny" name="Recommendations" id="summernote-4" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->Recommendations }}</textarea>
@@ -2262,7 +2262,7 @@
                                         </div>
                                         <div class="col-md-12">
                                             <div class="group-input">
-                                                <label for="HOD Remarks">Impact Assessment </label>
+                                                <label for="HOD Remarks">Impact Assessment  <span class="text-danger">{{$data->stage==2 ? '*' : ''}}</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
                                                 <textarea class="tiny" name="Impact_Assessmenta" {{ $data->stage == 2 ? '' : 'readonly' }}>{{ $data->Impact_Assessmenta }}</textarea>
@@ -2700,7 +2700,7 @@
                                                 <!-- Product Quality Impact -->
                                                 <div class="main-group">
                                                     <div>
-                                                        <label>Product Quality Impact:</label>
+                                                        <label>Product Quality Impact: <span class="text-danger">{{ $data->stage == 3 ? '*' : ''}}</span></label>
                                                     </div><div class="checkbox-group">
                                                     <input type="checkbox" name="product_quality_imapct" value="YES" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
                                                     <input type="checkbox" name="product_quality_imapct" value="NO" onclick="selectOne(this)" {{ $data->product_quality_imapct == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
@@ -2712,7 +2712,7 @@
                                                 <!-- Process Performance Impact -->
                                                 <div class="main-group">
                                                     <div>
-                                                     <label>Process Performance Impact:</label>
+                                                     <label>Process Performance Impact: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>                                                <div class="checkbox-group">
                                                     <input type="checkbox" name="process_performance_impact" value="YES" onclick="selectOne(this)" {{ $data->process_performance_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
                                                     <input type="checkbox" name="process_performance_impact" value="NO" onclick="selectOne(this)"{{ $data->process_performance_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
@@ -2724,7 +2724,7 @@
                                                 <!-- Yield Impact -->
                                                 <div class="main-group">
                                                     <div>
-                                                        <label>Yield Impact:</label>
+                                                        <label>Yield Impact:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
                                                     <input type="checkbox" name="yield_impact" value="YES" onclick="selectOne(this)" {{ $data->yield_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
@@ -2737,7 +2737,7 @@
                                                 <!-- GMP Impact -->
                                                 <div class="main-group">
                                                     <div>
-                                                        <label>GMP Impact:</label>
+                                                        <label>GMP Impact: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>                                                <div class="checkbox-group">
                                                     <input type="checkbox" name="gmp_impact" value="YES" onclick="selectOne(this)" {{ $data->gmp_impact == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
                                                     <input type="checkbox" name="gmp_impact" value="NO" onclick="selectOne(this)" {{ $data->gmp_impact == 'NO' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> No
@@ -2749,7 +2749,7 @@
                                                 <!-- Additional Testing Required -->
                                                 <div class="main-group">
                                                     <div>
-                                                        <label>Additional Testing Required:</label>
+                                                        <label>Additional Testing Required: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
                                                     <input type="checkbox" name="additionl_testing_required" value="YES" onclick="selectOne(this)" {{ $data->additionl_testing_required == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
@@ -2765,7 +2765,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="Comments"> If Yes, Then Mention: </label>
+                                                    <label for="Comments"> If Yes, Then Mention:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     <textarea name="any_similar_incident_in_past" {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->any_similar_incident_in_past}}</textarea>
                                                 </div>
                                             </div>
@@ -2780,7 +2780,7 @@
                                                 <!-- Similar Incident in Past -->
                                                 <div class="main-group">
                                                     <div>
-                                                        <label>Any Similar Incident in Past:</label>
+                                                        <label>Any Similar Incident in Past:<span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
                                                     <input type="checkbox" name="capa_require" value="YES" onclick="selectOne(this)" {{ $data->capa_require == 'YES' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Yes
@@ -2793,7 +2793,7 @@
                                                 <!-- Classification by QA -->
                                                 <div class="main-group">
                                                     <div>
-                                                        <label>Classification by QA:</label>
+                                                        <label>Classification by QA: <span class="text-danger">{{$data->stage==3 ? '*' : ''}}</span></label>
                                                     </div>
                                                     <div class="checkbox-group">
                                                     <input type="checkbox" name="classification_by_qa" value="Critical" onclick="selectOne(this)" {{ $data->classification_by_qa == 'Critical' ? 'checked' : '' }} {{ $data->stage == 3 ? '' : 'readonly' }}> Critical
@@ -3389,7 +3389,7 @@
                                         <!-- Product Quality Impact -->
                                         <div class="main-group">
                                             <div>
-                                                <label>CAPA Implementation:</label>
+                                                <label>CAPA Implementation:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
                                             <input type="checkbox" name="capa_implementation" value="YES" onclick="selectOne(this)" {{ $data->capa_implementation == 'YES' ? 'checked' : '' }}> Yes
@@ -3402,7 +3402,7 @@
                                         <!-- Process Performance Impact -->
                                         <div class="main-group">
                                             <div>
-                                             <label>All check points compiled with (Documentary evidence shall be attached or referred to):</label>
+                                             <label>All check points compiled with (Documentary evidence shall be attached or referred to):<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                            <div class="checkbox-group">
                                             <input type="checkbox" name="check_points" value="YES" onclick="selectOne(this)" {{ $data->check_points == 'YES' ? 'checked' : '' }}> Yes
@@ -3413,7 +3413,7 @@
                                         <br>
                                         <div class="main-group">
                                             <div>
-                                             <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:</label>
+                                             <label>Based upon the assessment of the corrective actions planned, whether unplanned deviation is required:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                            <div class="checkbox-group">
                                             <input type="checkbox" name="corrective_actions" value="YES" onclick="selectOne(this)" {{ $data->corrective_actions == 'YES' ? 'checked' : '' }}> Yes
@@ -3426,7 +3426,7 @@
                                         <!-- Yield Impact -->
                                         <div class="main-group">
                                             <div>
-                                                <label>Batch release satisfactory:</label>
+                                                <label>Batch release satisfactory:<span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
                                             <input type="checkbox" name="batch_release" value="YES" onclick="selectOne(this)" {{ $data->batch_release == 'YES' ? 'checked' : '' }}> Yes
@@ -3446,7 +3446,7 @@
                                         <!-- GMP Impact -->
                                         <div class="main-group">
                                             <div>
-                                                <label>Affected documents closed:</label>
+                                                <label>Affected documents closed: <span class="text-danger">{{$data->stage==5 ? '*' : ''}}</span></label>
                                             </div>
                                             <div class="checkbox-group">
                                             <input type="checkbox" name="affected_documents" value="YES" onclick="selectOne(this)" {{ $data->affected_documents == 'YES' ? 'checked' : '' }}> Yes
@@ -3928,7 +3928,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Disposition of Batch">Disposition of Batch <span class="text-danger">
-                                                @if ($data->stage == 6)
+                                                @if ($data->stage == 8)
                                                     *
                                                 @else
                                                 @endif

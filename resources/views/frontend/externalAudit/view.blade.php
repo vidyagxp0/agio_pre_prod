@@ -549,7 +549,7 @@
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         class="hide-input" value="{{ $data->due_date }}"
                                                         oninput="handleDateInput(this, 'due_date_display')"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} />
+                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -870,7 +870,7 @@
                                                     class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>{{ $data->initial_comments }}</textarea>
+                                                <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}  required>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
 
@@ -883,7 +883,7 @@
                                                     class="text-danger">*</span>
                                                     @endif
                                                     <button type="button"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 ||$data->stage == 2 || $data->stage == 3|| $data->stage == 5 ? 'disabled' : '' }}  
                                                         name="audit-incident-grid" id="IncidentAddAuditor">+</button>
                                                    
                                                 </label>
@@ -909,19 +909,19 @@
                                                                 <tr>
                                                                     <td disabled>{{ $serialNumber++ }}</td>
                                                                     <td><input type="text"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}{{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             name="AuditorNew[{{ $loop->index }}][auditornew]"
                                                                             value="{{ $audditor['auditornew'] }}" required></td>
                                                                     <td><input type="text"
                                                                             name="AuditorNew[{{ $loop->index }}][regulatoryagency]"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             value="{{ $audditor['regulatoryagency'] }}" required>
                                                                     </td>
                                                                     <td>
                                                                         <select
                                                                             name="AuditorNew[{{ $loop->index }}][designation]"
                                                                             class="form-select"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }} required>
                                                                             <option value="">--Select--</option>
                                                                             <option value="Lead Auditor"
                                                                                 {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>
@@ -933,7 +933,7 @@
                                                                     </td>
                                                                     <td><input type="text"
                                                                             name="AuditorNew[{{ $loop->index }}][remarks]"
-                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}
                                                                             value="{{ $audditor['remarks'] }}" required></td>
                                                                     <td><button class="removeRowBtn"
                                                                             {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>Remove</button>
@@ -1030,7 +1030,7 @@
                                                         value="{{ $data->start_date_gi ? \Carbon\Carbon::parse($data->start_date_gi)->format('Y-m-d') : '' }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'start_date_gi');updateEndDateMin();"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} />
+                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}{{ $data->stage == 1 ? '' : 'readonly' }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -1052,7 +1052,7 @@
                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                         value="{{ $data->end_date_gi ? \Carbon\Carbon::parse($data->end_date_gi)->format('Y-m-d') : '' }}"
                                                         class="hide-input" oninput="handleDateInput(this, 'end_date_gi');"
-                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} />
+                                                        {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -1146,7 +1146,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="inv_attachment[]"
-                                                            {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 ||$data->stage == 2 ||$data->stage == 3 || $data->stage == 5 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                                     </div>
                                                 </div>
@@ -1865,7 +1865,7 @@
                                                     class="text-danger">*</span>
                                                     @endif
                                                     <button type="button"
-                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{$data->stage == 1||$data->stage == 3||$data->stage == 4 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                         name="audit-incident-grid" id="IncidentAdd">+</button>
                                                   
                                                 </label>
@@ -1894,7 +1894,7 @@
                                                             <td disabled>{{ $serialNumber++ }}</td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][observation]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['observation'] ?? '' }}</textarea>
                                                             </td>
@@ -1903,7 +1903,7 @@
                                                                 <select
                                                                     name="SummaryResponse[{{ $loop->index }}][category]"
                                                                     class="form-select"
-                                                                    {{ in_array($data->stage, [0,1, 5]) ? 'disabled' : '' }}>
+                                                                    {{ in_array($data->stage, [0,3,4,1, 5]) ? 'disabled' : '' }}>
                                                                     <option value="">--Select--</option>
                                                                     <option value="Major" {{ ($oogrid['category'] ?? '') == 'Major' ? 'selected' : '' }}>Major</option>
                                                                     <option value="Minor" {{ ($oogrid['category'] ?? '') == 'Minor' ? 'selected' : '' }}>Minor</option>
@@ -1912,32 +1912,32 @@
                                                             </td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][response]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['response'] ?? '' }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][reference_id]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['reference_id'] ?? '' }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][status]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['status'] ?? '' }}</textarea>
                                                             </td>
                                                            
                                                             <td>
                                                                 <textarea 
-                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}
                                                                     name="SummaryResponse[{{ $loop->index }}][remarks]"
                                                                     {{ $data->stage == 2 ? 'required' : '' }}>{{ $oogrid['remarks'] ?? '' }}</textarea>
                                                             </td>
                                                             <td>
                                                                 <button class="removeRowBtn"
-                                                                    {{ in_array($data->stage, [0, 1, 5]) ? 'disabled' : '' }}>Remove</button>
+                                                                    {{ in_array($data->stage, [0,3,4, 1, 5]) ? 'disabled' : '' }}>Remove</button>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -2153,7 +2153,7 @@
                                                         <div>Add</div>
                                                         <!-- Keep the ID of the input file as 'myfile' -->
                                                         <input type="file" id="myfile" name="myfile[]"
-                                                        {{$data->stage == 1 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 1||$data->stage == 3||$data->stage == 4 || $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'myfile-list')" multiple>
                                                     </div>
                                                 </div>
@@ -2307,8 +2307,8 @@
                                                             value='no'>
                                                             No</option>
 
-                                                        <option @if ($data1->Production_Table_Review == 'na') selected @endif
-                                                            value='na'>
+                                                        <option @if ($data1->Production_Table_Review == 'NA') selected @endif
+                                                            value='NA'>
                                                             NA</option>
                                                     </select>
 
@@ -2506,8 +2506,8 @@
                                                         <option @if ($data1->Production_Table_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Production_Table_Review == 'na') selected @endif
-                                                            value='na'>
+                                                        <option @if ($data1->Production_Table_Review == 'NA') selected @endif
+                                                            value='NA'>
                                                             NA</option>
                                                     </select>
 
@@ -2706,7 +2706,7 @@
                                                         <option @if ($data1->Production_Injection_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>     
-                                                        <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>  
+                                                        <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>  
                                                                  
                                                       
                                                     </select>
@@ -2894,7 +2894,7 @@
                                                             <option @if ($data1->Production_Injection_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>     
-                                                        <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>                                                     </select>
+                                                        <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>                                                     </select>
 
                                                 </div>
                                             </div>
@@ -3098,7 +3098,7 @@
                                                         <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>      
+                                                            <option @if ($data1->ResearchDevelopment_Review == 'NA' || empty($data1->ResearchDevelopment_Review)) selected @endif value='NA'>NA</option>      
                                                     </select>
 
                                                 </div>
@@ -3278,7 +3278,7 @@
                                                             <option @if ($data1->ResearchDevelopment_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>  
+                                                            <option @if ($data1->ResearchDevelopment_Review == 'NA' || empty($data1->ResearchDevelopment_Review)) selected @endif value='NA'>NA</option>  
                                                     </select>
 
                                                 </div>
@@ -3466,7 +3466,7 @@
                                                         <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>    
+                                                            <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>    
                                                     </select>
 
                                                 </div>
@@ -3645,7 +3645,7 @@
                                                             <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>  
+                                                            <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>  
                                                     </select>
 
                                                 </div>
@@ -3839,7 +3839,7 @@
                                                         <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'NA' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4045,7 +4045,7 @@
                                                             <option @if ($data1->CorporateQualityAssurance_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->CorporateQualityAssurance_Review == 'NA' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4252,7 +4252,7 @@
                                                             <option @if ($data1->Store_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Store_Review == 'NA' || empty($data1->Store_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4432,7 +4432,7 @@
                                                             <option @if ($data1->Store_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Store_Review == 'NA' || empty($data1->Store_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4622,7 +4622,7 @@
                                                             <option @if ($data1->Engineering_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Engineering_review == 'NA' || empty($data1->Engineering_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4806,7 +4806,7 @@
                                                             <option @if ($data1->Engineering_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Engineering_review == 'NA' || empty($data1->Engineering_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -4991,7 +4991,7 @@
                                                             <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->RegulatoryAffair_Review == 'NA' || empty($data1->RegulatoryAffair_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5183,7 +5183,7 @@
                                                             <option @if ($data1->RegulatoryAffair_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->RegulatoryAffair_Review == 'NA' || empty($data1->RegulatoryAffair_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5378,7 +5378,7 @@
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                            <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
+                                                            <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>NA</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -5572,7 +5572,7 @@
                                                         <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5763,7 +5763,7 @@
                                                             <option @if ($data1->ProductionLiquid_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -5949,7 +5949,7 @@
                                                             <option @if ($data1->Quality_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Quality_review == 'NA' || empty($data1->Quality_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6139,7 +6139,7 @@
                                                             <option @if ($data1->Quality_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Quality_review == 'NA' || empty($data1->Quality_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6327,7 +6327,7 @@
                                                             <option @if ($data1->Microbiology_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6512,7 +6512,7 @@
                                                             <option @if ($data1->Microbiology_Review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6701,7 +6701,7 @@
                                                             <option @if ($data1->Environment_Health_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -6892,7 +6892,7 @@
                                                             <option @if ($data1->Environment_Health_review == 'no') selected @endif
                                                             value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                                        <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
                                                     </select>
 
                                                 </div>
@@ -7370,7 +7370,7 @@
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                            
-                                            <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif value='NA'>NA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -7547,7 +7547,7 @@
                                             <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                             <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                           
-                                            <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif value='NA'>NA</option>
                                         
                                         </select>
                                     </div>
@@ -7680,7 +7680,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
-                                        <option @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif value='na'>NA</option>
+                                        <option @if ($data1->Other2_review == 'NA' || empty($data1->Other2_review)) selected @endif value='NA'>NA</option>
                                       
                                     </select>
                                 </div>
@@ -7822,7 +7822,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
-                                        <option @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif value='na'>NA</option>
+                                        <option @if ($data1->Other3_review == 'NA' || empty($data1->Other3_review)) selected @endif value='NA'>NA</option>
                                       
                                     </select>
                                 </div>
@@ -7966,7 +7966,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
-                                        <option @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif value='na'>NA</option>
+                                        <option @if ($data1->Other4_review == 'NA' || empty($data1->Other4_review)) selected @endif value='NA'>NA</option>
 
                                     </select>
                                 </div>
@@ -8114,7 +8114,7 @@
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
-                                        <option @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif value='na'>NA</option>
+                                        <option @if ($data1->Other5_review == 'NA' || empty($data1->Other5_review)) selected @endif value='NA'>NA</option>
                                       
                                     </select>
                                 </div>

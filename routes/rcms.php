@@ -442,6 +442,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('GeneralInformationComplaint_report/{id}', [MarketComplaintController::class, 'General_Complaint_report']);
 
+            Route::get('alltabmarketComplain/{id}', [MarketComplaintController::class, 'All_tabs_report']);
 
             /********************* Incident Routes Starts *******************/
 
