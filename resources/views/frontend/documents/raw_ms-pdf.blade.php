@@ -402,15 +402,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    RMS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    RMS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   RMS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   RMS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                       </span>
@@ -444,17 +444,13 @@
                                     ->where('name', $document->document_type_name)
                                     ->value('typecode');
                             @endphp
-                            {{-- @if ($document->revised === 'Yes')
-                            RMS/00{{ $document->revised_doc }}-0{{ $document->major }}
-                            @else
-                             Nil
-                            @endif --}}
+
 
                             @if($document->revised == 'Yes')
                                 @php
                                     $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
                                 @endphp
-                                RMS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                RMS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else                        
                                 Nil
                             @endif
@@ -479,15 +475,15 @@
                                 @endphp
 
                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                        RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                        RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @else
-                                        RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                        RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @endif
                             @else
                                     @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @else
-                                    RMSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                                    RMSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                                     @endif
                             @endif
                         </span>
@@ -603,22 +599,13 @@
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->cas_no_row_material }}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula
-                                </td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->molecular_formula_row_material }}</td>
-                            </tr> --}}
+                  
                             <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Formula</td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">
                                     {!! strip_tags($data->molecular_formula_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                 </td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight
-                                </td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->molecular_weight_row_material }}</td>
-                            </tr> --}}
 
                             <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Molecular Weight</td>
@@ -671,11 +658,6 @@
                                 </td>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->retest_sample_quantity_row_material }}</td>
                             </tr>
-                            {{-- <tr>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions warning and precautions
-                                </td>
-                                <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black;">{{ $data->sampling_instructions_row_material }}</td>
-                            </tr> --}}
 
                             <tr> 
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">Sampling instructions,warning and precautions</td>
@@ -683,8 +665,6 @@
                                     {!! strip_tags($data->sampling_instructions_row_material, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                 </td>
                             </tr>
-
-
 
                         </tbody>
                     </table>
@@ -711,10 +691,6 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        {{-- @if ($document->rawmaterials_specifications)
-                                            {!! strip_tags($document->rawmaterials_specifications, 
-                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif --}}
 
                                         <div class="table-containers">
                                             {!! strip_tags($document->rawmaterials_specifications, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
@@ -726,42 +702,6 @@
                     </div>
                 </div>
 
-    {{-- <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
-        <thead>
-            <tr>
-                <th style="border: 1px solid black; width: 10%; font-weight: bold;">Sr. No</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Tests</th>
-                <th style="border: 1px solid black; width: 50%; font-weight: bold;">Specifications</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Reference</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">1</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">2</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">3</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="border: 1px solid black; text-align: center;">4</td>
-                <td style="border: 1px solid black; text-align: left;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-                <td style="border: 1px solid black; text-align: center;"></td>
-            </tr>
-        </tbody>
-    </table> --}}
 
     <table>
         <thead>
@@ -789,7 +729,16 @@
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawms_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawms_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}</td>
+                                    <td>                                                    
+                                        @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                        @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                        @else
+                                            {{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}
+                                        @endif
+                                    </td>
+                                    {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_rawms']) ? \Carbon\Carbon::parse($item['eff_date_rawms'])->format('d-M-Y') : '' }}</td> --}}
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_rawms'] ?? '' }}</td>
                                 </tr>
                             @endforeach

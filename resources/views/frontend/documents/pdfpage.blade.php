@@ -472,66 +472,6 @@
         
     </style>
 
-    {{-- <style>
-
-            /*Main Table Styling */
-            #isPasted {
-                width: 650px !important;
-                border-collapse: collapse;
-                table-layout: auto; /* Adjusts column width dynamically */
-            }
-
-            /* First column adjusts to its content */
-            #isPasted td:first-child,
-            #isPasted th:first-child {
-                white-space: nowrap; /* Prevent wrapping */
-                width: 1%; /* Shrink to fit content */
-                vertical-align: top;
-            }
-
-            /* Second column takes remaining space */
-            #isPasted td:last-child,
-            #isPasted th:last-child {
-                width: auto; /* Take remaining space */
-                vertical-align: top;
-                
-            }
-
-            /* Common Table Cell Styling */
-            #isPasted th,
-            #isPasted td {
-                border: 1px solid #000 !important;
-                padding: 8px;
-                text-align: left;
-                max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            }
-
-            /* Paragraph Styling Inside Table Cells */
-            #isPasted td > p {
-                text-align: justify;
-                text-justify: inter-word;
-                margin: 0;
-                max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            }
-
-            #isPasted img {
-                max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-                height: 100%; /* Maintain image aspect ratio */
-                display: block; /* Remove extra space below the image */
-                margin: 5px auto; /* Add spacing and center align */
-            }
-
-            /* If you want larger images */
-            #isPasted td img {
-                max-width: 400px !important; /* Adjust this to your preferred maximum width */
-                height: 300px;
-                margin: 5px auto;
-            }
-    </style> --}}
 
     <style>
         
@@ -569,7 +509,7 @@
             text-align: justify;
             text-justify: inter-word;
             margin: 0;
-            max-width: 700px;
+            max-width: 680px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -634,7 +574,6 @@
                     <td class="title w-60"
                         style="padding: 0; border-left: 1px solid #686868; border-right: 1px solid #686868;">
                         <p style="margin: 0; text-align: center; font-weight:bold" >{{ config('site.pdf_title') }}</p>
-                        {{-- <hr style="border: 0; border-top: 1px solid #686868; margin: 0;"> --}}
                         <p style="margin: 0; text-align: center;">T - 81,82, M.I.D.C., Bhosari, Pune - 411 026</p>
                     </td>
                 </tr>
@@ -682,15 +621,15 @@
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                     @else                        
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-00
                             @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-00
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-00
                             @endif
                     @endif
                     </td>
@@ -749,9 +688,9 @@
                                 $revisionNumber = str_pad(max(0, $document->revised_doc - 1), 2, '0', STR_PAD_LEFT);
                             @endphp
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{ $document->department_id }}/{{ $document->sop_type_short }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($currentId, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{ $document->sop_type_short }}/{{ $document->department_id }}/{{ str_pad($document->record, 3, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                         @else                        
                             Nil
@@ -1499,7 +1438,19 @@
                                         <tr>
                                             <td>{{ $item['revision_number'] ?? '' }}</td>
                                             <td>{{ $item['cc_no'] ?? '' }}</td>
-                                            <td>{{ !empty($item['revised_effective_date']) ? \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-F-Y') : '' }}</td>
+                                            <td>
+                                                    @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                                    @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                                        {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                                    @else
+                                                        {{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}
+                                                    @endif
+                                               
+                                            </td>
+
+                                            {{-- <td>{{ !empty($item['revised_effective_date']) ? 
+                                                \Carbon\Carbon::parse($item['revised_effective_date'])->format('d-F-Y') : '' }}</td> --}}
                                             <td>{{ $item['reason_of_revision'] ?? '' }}</td>
                                         </tr>
                                     @endforeach

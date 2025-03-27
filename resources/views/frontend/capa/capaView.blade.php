@@ -438,8 +438,8 @@
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date<span
                                         class="text-danger">*</span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
-                                            reason in "Due Date Extension Justification" data field.</small></div>
+                                        {{-- <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                            reason in "Due Date Extension Justification" data field.</small></div> --}}
                                          <div class="calenderauditee">
                                             <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                 {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}/>
@@ -551,7 +551,7 @@
 
                                                 <input name="short_description"   id="docname" type="text" value="{{ $data->short_description }}"    maxlength="255" required  {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? "readonly" : "" }} type="text">
                                             </div>
-                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+                                            {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
 
                                         </div>
 

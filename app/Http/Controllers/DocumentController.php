@@ -6736,13 +6736,20 @@ class DocumentController extends Controller
             ->where('identifier', "revision_data")
             ->first();
     
+        // Decode stored JSON data
+        $GtpData = [];
+        if (!empty($RevisionGridData) && isset($RevisionGridData->data)) {
+            $GtpData = is_string($RevisionGridData->data) 
+                ? json_decode($RevisionGridData->data, true) 
+                : (is_array($RevisionGridData->data) ? $RevisionGridData->data : []);
+        }
     
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
             // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
-            
-            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+    
+            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array (if exists)
             $cc_no = $GtpData[$index]['change_ctrl_no'] ?? 'No Data';
             $reason_of_revision = $GtpData[$index]['rev_reason'] ?? 'No Data';
     
@@ -6756,6 +6763,7 @@ class DocumentController extends Controller
     
         return response()->json(['revision_data' => $historyData]);
     }
+    
 
     public function getINPSRevisionHistory(Request $request)
     {
@@ -6777,6 +6785,14 @@ class DocumentController extends Controller
         $RevisionGridInpsData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_inps_data")
             ->first();
+
+        // Decode stored JSON data
+        $GtpData = [];
+        if (!empty($RevisionGridInpsData) && isset($RevisionGridInpsData->data)) {
+            $GtpData = is_string($RevisionGridInpsData->data) 
+                ? json_decode($RevisionGridInpsData->data, true) 
+                : (is_array($RevisionGridInpsData->data) ? $RevisionGridInpsData->data : []);
+        }
     
     
         $historyData = [];
@@ -6819,6 +6835,14 @@ class DocumentController extends Controller
         $RevisionGridCvsData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_cvs_data")
             ->first();
+
+        // Decode stored JSON data
+        $GtpData = [];
+        if (!empty($RevisionGridCvsData) && isset($RevisionGridCvsData->data)) {
+            $GtpData = is_string($RevisionGridCvsData->data) 
+                ? json_decode($RevisionGridCvsData->data, true) 
+                : (is_array($RevisionGridCvsData->data) ? $RevisionGridCvsData->data : []);
+        }
     
     
         $historyData = [];
@@ -6865,7 +6889,7 @@ class DocumentController extends Controller
         // Convert JSON data if exists
         $TDSData = [];
         if (!empty($TDSRevisionHistoryData) && isset($TDSRevisionHistoryData->data)) {
-            $GtpData = is_string($TDSRevisionHistoryData->data) 
+            $TDSData = is_string($TDSRevisionHistoryData->data) 
                 ? json_decode($TDSRevisionHistoryData->data, true) 
                 : (is_array($TDSRevisionHistoryData->data) ? $TDSRevisionHistoryData->data : []);
         }
@@ -6877,12 +6901,12 @@ class DocumentController extends Controller
             $shouldShowEffectiveDate = ($doc->stage >= 11);
             
             // Fetch cc_no & reason_of_revision from $GtpData array
-            $cc_no = $TDSData[$index]['changContNo_tds'] ?? ' ';
-            $reason_of_revision = $TDSData[$index]['reasonRevi_tds'] ?? ' ';
+            $cc_no = $TDSData[$index]['changContNo_tds'] ?? 'No Data';
+            $reason_of_revision = $TDSData[$index]['reasonRevi_tds'] ?? 'No Data';
     
             $tdshistoryData[] = [
-                'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
-                'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'revision_no_tds' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'effectiveDate_tds' => $shouldShowEffectiveDate ? $doc->effective_date : null,
                 'changContNo_tds' => $cc_no,
                 'reasonRevi_tds' => $reason_of_revision
             ];
@@ -6913,7 +6937,7 @@ class DocumentController extends Controller
         ->first();
 
         // Convert JSON data if exists
-        $GTPData = [];
+        $GtpData = [];
         if (!empty($GTPRevisionHistoryData) && isset($GTPRevisionHistoryData->data)) {
             $GtpData = is_string($GTPRevisionHistoryData->data) 
                 ? json_decode($GTPRevisionHistoryData->data, true) 
@@ -6927,14 +6951,14 @@ class DocumentController extends Controller
             $shouldShowEffectiveDate = ($doc->stage >= 11);
             
             // Fetch cc_no & reason_of_revision from $GtpData array
-            $cc_no = $GTPData[$index]['changContNo_tds'] ?? 'Enter';
-            $reason_of_revision = $GTPData[$index]['reasonRevi_tds'] ?? 'Enter';
+            $cc_no = $GtpData[$index]['changContNo_gtp'] ?? 'No Data';
+            $reason_of_revision = $GtpData[$index]['reasonRevi_gtp'] ?? 'No Data';
     
             $gtphistoryData[] = [
-                'revision_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
-                'effective_date' => $shouldShowEffectiveDate ? $doc->effective_date : null,
-                'changContNo_tds' => $cc_no,
-                'reasonRevi_tds' => $reason_of_revision
+                'revision_no_gtp' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'effectiveDate_gtp' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'changContNo_gtp' => $cc_no,
+                'reasonRevi_gtp' => $reason_of_revision
             ];
         }
     
@@ -8243,91 +8267,91 @@ class DocumentController extends Controller
                 $distribution->save();
             }
 
-            // $DocumentGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Rowmaterialtest'])->first();
-            // $DocumentGridData = $DocumentGridData->replicate();
-            // $DocumentGridData->document_type_id = $newdoc->id;
-            // $DocumentGridData->identifier = 'Rowmaterialtest';
-            // $DocumentGridData->save();
+      
+            $RevisionGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_data'])->first();
+            $RevisionGridData = $RevisionGridData->replicate();
+            $RevisionGridData->document_type_id = $newdoc->id;
+            $RevisionGridData->identifier = 'revision_data';
+            $RevisionGridData->save();
 
-            // $PackingGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Packingmaterialdata'])->first();
-            // $PackingGridData = $PackingGridData->replicate();
-            // $PackingGridData->document_type_id = $newdoc->id;
-            // $PackingGridData->identifier = 'Packingmaterialdata';
-            // $PackingGridData->save();
+            $RevisionGridpamsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_pams_data'])->first();
+            $RevisionGridpamsData = $RevisionGridpamsData->replicate();
+            $RevisionGridpamsData->document_type_id = $newdoc->id;
+            $RevisionGridpamsData->identifier = 'revision_pams_data';
+            $RevisionGridpamsData->save();
 
-            // $GtpGridData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
-            // $GtpGridData = $GtpGridData->replicate();
-            // $GtpGridData->document_type_id = $newdoc->id;
-            // $GtpGridData->identifier = 'gtp';
-            // $GtpGridData->save();
+            $RevisionGridcvstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvstp_data'])->first();
+            $RevisionGridcvstpData = $RevisionGridcvstpData->replicate();
+            $RevisionGridcvstpData->document_type_id = $newdoc->id;
+            $RevisionGridcvstpData->identifier = 'revision_cvstp_data';
+            $RevisionGridcvstpData->save();
 
-            // $ProductSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'ProductSpecification'])->first();
-            // $ProductSpecification = $ProductSpecification->replicate();
-            // $ProductSpecification->document_type_id = $newdoc->id;
-            // $ProductSpecification->identifier = 'ProductSpecification';
-            // $ProductSpecification->save();
+            $RevisionGridinpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_inpstp_data'])->first();
+            $RevisionGridinpstpData = $RevisionGridinpstpData->replicate();
+            $RevisionGridinpstpData->document_type_id = $newdoc->id;
+            $RevisionGridinpstpData->identifier = 'revision_inpstp_data';
+            $RevisionGridinpstpData->save();
 
-            // $MaterialSpecification = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'MaterialSpecification'])->first();
-            // $MaterialSpecification = $MaterialSpecification->replicate();
-            // $MaterialSpecification->document_type_id = $newdoc->id;
-            // $MaterialSpecification->identifier = 'MaterialSpecification';
-            // $MaterialSpecification->save();
+            $RevisionGridfpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_fpstp_data'])->first();
+            $RevisionGridfpstpData = $RevisionGridfpstpData->replicate();
+            $RevisionGridfpstpData->document_type_id = $newdoc->id;
+            $RevisionGridfpstpData->identifier = 'revision_fpstp_data';
+            $RevisionGridfpstpData->save();
 
-            // $Finished_Product = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Finished_Product'])->first();
-            // $Finished_Product = $Finished_Product->replicate();
-            // $Finished_Product->document_type_id = $newdoc->id;
-            // $Finished_Product->identifier = 'Finished_Product';
-            // $Finished_Product->save();
+            $RevisionGridrawmstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_rawmstp_data'])->first();
+            $RevisionGridrawmstpData = $RevisionGridrawmstpData->replicate();
+            $RevisionGridrawmstpData->document_type_id = $newdoc->id;
+            $RevisionGridrawmstpData->identifier = 'revision_rawmstp_data';
+            $RevisionGridrawmstpData->save();
 
-            // $Inprocess_standard = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'Inprocess_standard'])->first();
-            // $Inprocess_standard = $Inprocess_standard->replicate();
-            // $Inprocess_standard->document_type_id = $newdoc->id;
-            // $Inprocess_standard->identifier = 'Inprocess_standard';
-            // $Inprocess_standard->save();
+            $RevisionGridrawmsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_rawms_data'])->first();
+            $RevisionGridrawmsData = $RevisionGridrawmsData->replicate();
+            $RevisionGridrawmsData->document_type_id = $newdoc->id;
+            $RevisionGridrawmsData->identifier = 'revision_rawms_data';
+            $RevisionGridrawmsData->save();
 
-            // $CLEANING_VALIDATION = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'CLEANING_VALIDATION'])->first();
-            // $CLEANING_VALIDATION = $CLEANING_VALIDATION->replicate();
-            // $CLEANING_VALIDATION->document_type_id = $newdoc->id;
-            // $CLEANING_VALIDATION->identifier = 'CLEANING_VALIDATION';
-            // $CLEANING_VALIDATION->save();
+            $RevisionGridmfpstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_mfpstp_data'])->first();
+            $RevisionGridmfpstpData = $RevisionGridmfpstpData->replicate();
+            $RevisionGridmfpstpData->document_type_id = $newdoc->id;
+            $RevisionGridmfpstpData->identifier = 'revision_mfpstp_data';
+            $RevisionGridmfpstpData->save();
 
-            // $SpecificationData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION'])->first();
-            // $SpecificationData = $SpecificationData->replicate();
-            // $SpecificationData->document_type_id = $newdoc->id;
-            // $SpecificationData->identifier = 'SPECIFICATION';
-            // $SpecificationData->save();
+            $RevisionGridmfpsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_mfps_data'])->first();
+            $RevisionGridmfpsData = $RevisionGridmfpsData->replicate();
+            $RevisionGridmfpsData->document_type_id = $newdoc->id;
+            $RevisionGridmfpsData->identifier = 'revision_mfps_data';
+            $RevisionGridmfpsData->save();
 
-            // $Specification_Validation_Data = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION'])->first();
-            // $Specification_Validation_Data = $Specification_Validation_Data->replicate();
-            // $Specification_Validation_Data->document_type_id = $newdoc->id;
-            // $Specification_Validation_Data->identifier = 'SPECIFICATION_VALIDATION';
-            // $Specification_Validation_Data->save();
+            $RevisionHistoryData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_history'])->first();
+            $RevisionHistoryData = $RevisionHistoryData->replicate();
+            $RevisionHistoryData->document_type_id = $newdoc->id;
+            $RevisionHistoryData->identifier = 'revision_history';
+            $RevisionHistoryData->save();
 
-            //     // Cleaning Specification Validation
-            // $SpecificationData_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SpecificationCleaningValidationSpecification'])->first();
-            // $SpecificationData_cvs = $SpecificationData_cvs->replicate();
-            // $SpecificationData_cvs->document_type_id = $newdoc->id;
-            // $SpecificationData_cvs->identifier = 'SpecificationCleaningValidationSpecification';
-            // $SpecificationData_cvs->save();
+            $GTPRevisionHistoryData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'gtp'])->first();
+            $GTPRevisionHistoryData = $GTPRevisionHistoryData->replicate();
+            $GTPRevisionHistoryData->document_type_id = $newdoc->id;
+            $GTPRevisionHistoryData->identifier = 'gtp';
+            $GTPRevisionHistoryData->save();
 
-            // $Specification_Validation_Data_cvs = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_CleaningValidationSpecification'])->first();
-            // $Specification_Validation_Data_cvs = $Specification_Validation_Data_cvs->replicate();
-            // $Specification_Validation_Data_cvs->document_type_id = $newdoc->id;
-            // $Specification_Validation_Data_cvs->identifier = 'SPECIFICATION_VALIDATION_CleaningValidationSpecification';
-            // $Specification_Validation_Data_cvs->save();
+            $TDSRevisionHistoryData = TDSDocumentGrid::where(['tds_id' =>$document->id, 'identifier' => 'summaryResult'])->first();
+            $TDSRevisionHistoryData = $TDSRevisionHistoryData->replicate();
+            $TDSRevisionHistoryData->tds_id = $newdoc->id;
+            $TDSRevisionHistoryData->identifier = 'summaryResult';
+            $TDSRevisionHistoryData->save();
 
-            //         // Inprocess  Validation Specification
-            // $SpecificationData_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'specificationInprocessValidationSpecification'])->first();
-            // $SpecificationData_inps = $SpecificationData_inps->replicate();
-            // $SpecificationData_inps->document_type_id = $newdoc->id;
-            // $SpecificationData_inps->identifier = 'specificationInprocessValidationSpecification';
-            // $SpecificationData_inps->save();
+                    
+            $RevisionGridInpsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_inps_data'])->first();
+            $RevisionGridInpsData = $RevisionGridInpsData->replicate();
+            $RevisionGridInpsData->document_type_id = $newdoc->id;
+            $RevisionGridInpsData->identifier = 'revision_inps_data';
+            $RevisionGridInpsData->save();
 
-            // $Specification_Validation_Data_inps = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification'])->first();
-            // $Specification_Validation_Data_inps = $Specification_Validation_Data_inps->replicate();
-            // $Specification_Validation_Data_inps->document_type_id = $newdoc->id;
-            // $Specification_Validation_Data_inps->identifier = 'SPECIFICATION_VALIDATION_Inprocess_Validation_Specification';
-            // $Specification_Validation_Data_inps->save();
+            $RevisionGridCvsData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvs_data'])->first();
+            $RevisionGridCvsData = $RevisionGridCvsData->replicate();
+            $RevisionGridCvsData->document_type_id = $newdoc->id;
+            $RevisionGridCvsData->identifier = 'revision_cvs_data';
+            $RevisionGridCvsData->save();
 
             DocumentService::update_document_numbers();
 

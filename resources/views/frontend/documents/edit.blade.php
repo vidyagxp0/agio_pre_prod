@@ -3289,7 +3289,7 @@
                                         <label for="stp">Specification No</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $stpNumber = "MFPS/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $stpNumber = "MFPS/A/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfps_no" value="{{ $stpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -3441,7 +3441,7 @@
                                         <label for="stp">Specification No</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "MFP/STP/A/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "MFP/STP/A/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -6311,7 +6311,7 @@
                                     <label for="train-require">TDS No.</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "$document->tds_name_code TDS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "$document->tds_name_code TDS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="tds_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -6513,7 +6513,7 @@
                                                 $TDSData = [];
 
                                                 if (!empty($TDSRevisionHistoryData) && isset($TDSRevisionHistoryData->data)) {
-                                                    $GtpData = is_string($TDSRevisionHistoryData->data) 
+                                                    $TDSData = is_string($TDSRevisionHistoryData->data) 
                                                         ? json_decode($TDSRevisionHistoryData->data, true) 
                                                         : (is_array($TDSRevisionHistoryData->data) ? $TDSRevisionHistoryData->data : []);
                                                 }
@@ -6524,7 +6524,7 @@
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td>
                                                         <input type="text" name="summaryResult[{{ $index }}][revision_no_tds]" 
-                                                            value="{{ $tdshistory['revision_no'] ?? '' }}" readonly>
+                                                            value="{{ $tdshistory['revision_no_tds'] ?? '' }}" readonly>
                                                     </td>
                                                     <td>
                                                         <input type="text" name="summaryResult[{{ $index }}][changContNo_tds]" 
@@ -6569,10 +6569,10 @@
                                                             <tr>
                                                                 <td>${index + 1}</td>
                                                                 <td><input type="text" name="summaryResult[${index}][revision_no_tds]" 
-                                                                        value="${tdshistory.revision_no || ''}" readonly></td>
+                                                                        value="${tdshistory.revision_no_tds || ''}" readonly></td>
                                                                 <td><input type="text" name="summaryResult[${index}][changContNo_tds]" value="${tdshistory.changContNo_tds}"></td>
                                                                 <td><input type="date" name="summaryResult[${index}][effectiveDate_tds]" 
-                                                                        value="${tdshistory.effective_date || ''}" readonly></td>
+                                                                        value="${tdshistory.effectiveDate_tds || ''}" readonly></td>
                                                                 <td><input type="text" name="summaryResult[${index}][reasonRevi_tds]" value="${tdshistory.reasonRevi_tds}"></td>
                                                             </tr>`;
                                                         
@@ -6612,7 +6612,7 @@
                                         <label for="stp">Specification No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "FPS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "FPS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -6936,7 +6936,7 @@
                                         <label for="stp">Specification No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "CVS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "CVS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -7232,7 +7232,7 @@
                                         <label for="stp">Specification No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "IPS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "IPS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10331,7 +10331,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "FPSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "FPSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10489,7 +10489,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "IPSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "IPSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10646,7 +10646,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "CVSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "CVSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10803,7 +10803,7 @@
                                         <label for="stp">GTP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "GTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "GTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="gtp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10875,7 +10875,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td>
                                                                 <input type="text" name="gtp[{{ $index }}][revision_no_gtp]" 
-                                                                    value="{{ $gtphistory['revision_no'] ?? '' }}" readonly>
+                                                                    value="{{ $gtphistory['revision_no_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
                                                                 <input type="text" name="gtp[{{ $index }}][changContNo_gtp]" 
@@ -10883,7 +10883,7 @@
                                                             </td>
                                                             <td>
                                                                 <input type="date" name="gtp[{{ $index }}][effectiveDate_gtp]" 
-                                                                    value="{{ $gtphistory['effective_date'] ?? '' }}" readonly>
+                                                                    value="{{ $gtphistory['effectiveDate_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
                                                                 <input type="text" name="gtp[{{ $index }}][reasonRevi_gtp]" 
@@ -10919,10 +10919,10 @@
                                                                     <tr>
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="gtp[${index}][revision_no_gtp]" 
-                                                                                value="${gtphistory.revision_no || ''}" readonly></td>
+                                                                                value="${gtphistory.revision_no_gtp || ''}" readonly></td>
                                                                         <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td>
                                                                         <td><input type="date" name="gtp[${index}][effectiveDate_gtp]" 
-                                                                                value="${gtphistory.effective_date || ''}" readonly></td>
+                                                                                value="${gtphistory.effectiveDate_gtp || ''}" readonly></td>
                                                                         <td><input type="text" name="gtp[${index}][reasonRevi_gtp]" value="${gtphistory.reasonRevi_gtp}"></td>
                                                                     </tr>`;
                                                                 
@@ -10966,7 +10966,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "RMSTP/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "RMSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -12079,7 +12079,7 @@
                                     <label for="stp">Specification No<span class="text-danger">*</span></label>
                                     @php
                                         $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                        $mfpstpNumber = "PMS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                        $mfpstpNumber = "PMS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                     @endphp
                                     <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                 </div>
@@ -14013,7 +14013,7 @@
                                         <label for="stp">Specification No</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $stpNumber = "RMS/" . str_pad($document->id, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $stpNumber = "RMS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfps_no" value="{{ $stpNumber }}" maxlength="255" readonly>
                                     </div>

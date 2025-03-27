@@ -398,15 +398,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -417,11 +417,11 @@
                         Effective Date:
 
                         <span>@if ($data->training_required == 'yes')
-                            @if ($data->stage >= 10)
+                            @if ($data->stage >= 11)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @else
-                            @if ($data->stage > 7)
+                            @if ($data->stage > 10)
                                 {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                             @endif
                         @endif
@@ -440,17 +440,12 @@
                                 ->where('name', $document->document_type_name)
                                 ->value('typecode');
                         @endphp
-                        {{-- @if ($document->revised === 'Yes')
-                        CVSTP/00{{ $document->revised_doc }}-0{{ $document->major }}
-                        @else
-                         Nil
-                        @endif --}}
 
                         @if($document->revised == 'Yes')
                             @php
                                 $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
                             @endphp
-                            CVSTP/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            CVSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @else                        
                             Nil
                         @endif
@@ -550,31 +545,6 @@
     <div class="content">
     <section>
           <h4 style="font-size: 16px; font-weight: bold; text-align:center">STANDARD TESTING PROCEDURE</h4>
-            {{-- <div class="table-responsive retrieve-table">
-                <table class="table table-bordered" id="distribution-list">
-                    <thead style="width:20%">
-                        <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:10%">Sr. No.</th>
-
-                            <th style="font-size: 16px; font-weight: bold; width:90%">Test</th>
-                        </tr>
-                    </thead>
-                    <tbody style="">
-                    @if (!empty($FinishedData))
-                        @foreach ($FinishedData as $key => $item)
-                            <tr>
-                                <td style="font-size: 16px; font-weight: bold;">{{ $key + 1 }}</td>
-                                <td style="font-weight: bold;">{{ $item['testing'] ?? '' }}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="2" style="text-align: center; font-weight: bold;">No Data Available</td>
-                        </tr>
-                    @endif
-                    </tbody>
-                </table>
-            </div> --}}
 
                 <div class="other-container ">
                     <div class="custom-procedure-block">
@@ -582,14 +552,9 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        {{-- @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->cvstp_testfield, 
-                                            '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        @endif --}}
-
-                                                <div class="table-containers">
-                                                    {!! strip_tags($data->document_content->cvstp_testfield, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                                </div>
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->document_content->cvstp_testfield, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -616,7 +581,16 @@
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_cvstp_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_cvstp_no'] ?? '' }}</td>
-                                    <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_cvstp']) ? \Carbon\Carbon::parse($item['eff_date_cvstp'])->format('d-M-Y') : '' }}</td>
+                                    <td>                                                    
+                                        @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                        @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                        @else
+                                            {{ !empty($item['eff_date_cvstp']) ? \Carbon\Carbon::parse($item['eff_date_cvstp'])->format('d-M-Y') : '' }}
+                                        @endif
+                                    </td>
+                                    {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_cvstp']) ? \Carbon\Carbon::parse($item['eff_date_cvstp'])->format('d-M-Y') : '' }}</td> --}}
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_cvstp'] ?? '' }}</td>
                                 </tr>
                             @endforeach

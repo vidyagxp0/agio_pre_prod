@@ -6795,24 +6795,30 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
 
                 if ($incident->stage == 1) {
-                    if ($incident->form_progress !== 'general-open')
-                    {
-                        // dd('emnter');
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'General Information Tab is yet to be filled'
-                        ]);
 
+
+                    
+                if (empty($incident->short_description) || empty($incident->short_description_required) || empty($incident->incident_date) || empty($incident->incident_time) || empty($incident->Facility) || empty($incident->incident_reported_date) || 
+                    empty($incident->audit_type) || empty($incident->Facility_Equipment) || empty($incident->Document_Details_Required) || empty($incident->Product_Details_Required) || empty($incident->Description_incident) || empty($incident->investigation) || empty($incident->immediate_correction)) {
+                        // Flash message for warning (field not filled)
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Mandatory Fields! to be filled!',
+                            'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                        ]);
+    
                         return redirect()->back();
                     } else {
-
+                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for HOD Initial Review state',
                             'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for HOD Initial Review state'
                         ]);
                     }
+
+
+
                     $incident->stage = "2";
                     $incident->status = "HOD Initial Review";
                     $incident->submit_by = Auth::user()->name;
@@ -6897,23 +6903,26 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 }
                 if ($incident->stage == 2) {
 
-                    // Check HOD remark value
-                    if (!$incident->HOD_Remarks) {
-
+                  if(empty($incident->review_of_verific) || empty($incident->Recommendations) || empty($incident->Impact_Assessmenta) || empty($incident->HOD_Remarks)) {
+                        // Flash message for warning (field not filled)
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD Remarks is yet to be filled!',
-                            'type' => 'warning',
+                            'message' => 'Mandatory Fields! to be filled!',
+                            'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-
+    
                         return redirect()->back();
                     } else {
+                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for QA initial review state',
                             'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QA initial review state'
                         ]);
                     }
+                    
+
+
 
                     $incident->stage = "3";
                     $incident->status = "QA Initial Review";
@@ -7005,23 +7014,24 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
                 if ($incident->stage == 3) {
 
-                    // Check HOD remark value
-                    if (!$incident->QAInitialRemark) {
-
+                    if(empty($incident->QAInitialRemark) || empty($incident->classification_by_qa) || empty($incident->any_similar_incident_in_past) || empty($incident->additionl_testing_required) || empty($incident->gmp_impact) || empty($incident->yield_impact)|| empty($incident->process_performance_impact) || empty($incident->product_quality_imapct)) {
+                        // Flash message for warning (field not filled)
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'QA Initial Remarks is yet to be filled!',
-                            'type' => 'warning',
+                            'message' => 'Mandatory Fields! to be filled!',
+                            'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-
+    
                         return redirect()->back();
                     } else {
+                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent for QAH/Designee Approval state',
                             'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for QAH/Designee Approval state'
                         ]);
                     }
+
 
                     //dd($incident->stage);
                     $incident->stage = "4";
@@ -7232,22 +7242,29 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 if ($incident->stage == 5) {
                         //  dd(!$incident->QA_Feedbacks);
                     // CFT review state update form_progress
-                    if (!$incident->QA_Feedbacks)
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Initiator Update Comments field is yet to be filled'
-                        ]);
 
+                    if(empty($incident->capa_implementation) || empty($incident->check_points) || empty($incident->corrective_actions) || empty($incident->batch_release) || empty($incident->affected_documents) || empty($incident->QA_Feedbacks)) {
+                        // Flash message for warning (field not filled)
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Mandatory Fields! to be filled!',
+                            'type' => 'warning',  // Type can be success, error, warning, info, etc.
+                        ]);
+    
                         return redirect()->back();
                     } else {
-                        Session::flash('swal',[
+                        // Flash message for success (when the form is filled correctly)
+                        Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Sent For HOD Final Review state',
                             'type' => 'success',
-                            'title' => 'Success',
-                            'message' => ' Sent For HOD Final Review state'
                         ]);
                     }
+
+                    
+
+
+
 
                     $IsCFTRequired = IncidentCftResponse::withoutTrashed()->where(['is_required' => 1, 'incident_id' => $id])->latest()->first();
                     $cftUsers = DB::table('incident_cfts')->where(['incident_id' => $id])->first();
@@ -7559,7 +7576,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
-                            'message' => 'QAH/Designee Approval Tab is yet to be filled!',
+                            'message' => 'Mandatory Fields! to be filled!!',
                             'type' => 'warning',
                         ]);
 
@@ -7775,23 +7792,28 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
 
                 if ($incident->stage == 8) {
-                    if (!$incident->Closure_Comments)
-                    {
 
+                    if(empty($incident->Closure_Comments) || empty($incident->Disposition_Batch)) {
+                        // Flash message for warning (field not filled)
                         Session::flash('swal', [
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'Closure Comments field is yet to be filled!',
-                            'type' => 'warning',
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'Mandatory Fields! to be filled!',
+                            'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-
+    
                         return redirect()->back();
                     } else {
+                        // Flash message for success (when the form is filled correctly)
                         Session::flash('swal', [
+                            'title' => 'Success!',
+                            'message' => 'Incident sent to Closed/Done state',
                             'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Incident sent to Closed/Done state'
                         ]);
                     }
+
+
+                    
+
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
 
