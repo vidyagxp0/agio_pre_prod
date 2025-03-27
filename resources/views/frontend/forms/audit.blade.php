@@ -924,9 +924,7 @@
                                         <label for="root_cause">
                                             Auditors
                                             <button type="button" name="audit-incident-grid" id="IncidentAddAuditor">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
+                                            
                                         </label>
 
                                         <table class="table table-bordered" id="onservation-incident-tableAuditor">
@@ -1542,11 +1540,7 @@
                                             Observation Details
                                             <button type="button" name="audit-agenda-grid"
                                                 id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
+
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="onservation-field-table"
@@ -2176,11 +2170,7 @@
                                             Observation Details
                                             <button type="button" name="audit-agenda-grid"
                                                 id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
+                                         
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="onservation-field-table"
