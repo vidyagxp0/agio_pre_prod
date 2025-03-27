@@ -73,7 +73,7 @@
                     ele: ".analyst-dropdown",
                     multiple: true,
                     search: true,
-                    placeholder: "Select Analysts"
+                    placeholder: "Select Auditors"
                 });
             }
 
@@ -825,7 +825,7 @@ DATA FIELDS
                             <label for="audit-agenda-grid">
                                 Audit program
                                 <button type="button" name="audit-agenda-grid" id="audit_program">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
+                                <span class="text-primary" 
                                     data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
@@ -924,7 +924,7 @@ DATA FIELDS
                             <label for="audit-agenda-grid">
                                 Self Inspection Planner
                                 <button type="button" name="audit-agenda-grid" id="Self_Inspection">+</button>
-                                <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal"
+                                <span class="text-primary"  data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
                                 </span>
@@ -1156,7 +1156,7 @@ DATA FIELDS
                                     Self Inspection Circular
                                     <button type="button" name="audit-agenda-grid"
                                         id="Self_Inspection_circular" disabled>+</button>
-                                    <span class="text-primary" data-bs-toggle="modal"
+                                    <span class="text-primary" 
                                         data-bs-target="#observation-field-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                         (Launch Instruction)

@@ -381,7 +381,7 @@
                     ele: ".analyst-dropdown",
                     multiple: true,
                     search: true,
-                    placeholder: "Select Analysts"
+                    placeholder: "Select Auditors"
                 });
             }
 
@@ -1269,7 +1269,8 @@
                                                 <button type="button" name="audit-agenda-grid" id="audit_program"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     {{ $data->stage == 1 ? 'required' : '' }} >+</button>
-                                                <span class="text-primary" data-bs-toggle="modal"
+                                                <span class="text-primary" 
+                                                
                                                     data-bs-target="#observation-field-instruction-modal"
                                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                     (Launch Instruction)
@@ -1666,7 +1667,7 @@
                                                     <button type="button" name="audit-agenda-grid"
                                                         id="Self_Inspection_circular"
                                                         {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>+</button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
+                                                    <span class="text-primary" 
                                                         data-bs-target="#observation-field-instruction-modal"
                                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                         (Launch Instruction)
