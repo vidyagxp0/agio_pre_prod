@@ -570,7 +570,7 @@ class OOSController extends Controller
                     // Flash message for warning (field not filled)
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
-                        'message' => 'Outcome of Phase IA investigation is yet to be filled!',
+                        'message' => 'Pls fill Phase IB investigation Tab is yet to be filled!',
                         'type' => 'warning',  // Type can be success, error, warning, info, etc.
                     ]);
 
@@ -3415,7 +3415,7 @@ class OOSController extends Controller
             $actionchild->actionchild = $record_number;
             $parent_id = $id;
             $actionchild->save();
-
+// dd($data->due_date);
             return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'data_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
         }
         elseif ($request->child_type == "Resampling")

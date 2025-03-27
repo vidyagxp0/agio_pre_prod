@@ -7919,7 +7919,7 @@
                                                                 $remark = isset($dataItem) ? Helpers::getArrayKey($dataItem, 'remark') : '';
                                                             @endphp
 
-                                                            <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;" {{Helpers::isOOSChemical($data->stage)}}>{{ $remark }}</textarea>
+                                                            <textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 9 ? 'required' : 'readonly' }}>{{ $remark }}</textarea>
 
                                                                 {{--<textarea name="checklist_IB_inv[{{ $loop->index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"  {{Helpers::isOOSChemical($data->stage)}}>{{ Helpers::getArrayKey($checklist_IB_invs->data[$loop->index], 'remark') }}</textarea>--}}
                                                             </div>

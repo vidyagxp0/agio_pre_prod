@@ -265,7 +265,7 @@
                                 </div>
                                 @endif --}}
 
-                                @if (!empty($parent_type) && $parent_type == 'CAPA'||'Management Review')
+                                @if (!empty($parent_type) && ($parent_type == 'CAPA' || $parent_type == 'Management Review'))
                                     <div class="col-lg-6 new-date-data-field">
                                         <label for="Audit Schedule Start Date">Due Date</label>
                                         <input type="text" name="due_date" value="{{ Helpers::getdateFormat($data1->due_date) }}" style="font-size: 14px;" />
@@ -273,7 +273,7 @@
                                 @elseif (!empty($parent_type))
                                     <div class="col-lg-6 new-date-data-field">
                                         <label for="Audit Schedule Start Date">Due Date</label>
-                                        <input type="text" name="due_date" value="{{ Helpers::getdateFormat($data->due_date) }}" style="font-size: 14px;" />
+                                        <input type="text" name="due_date" value="{{ Helpers::getdateFormat($data->due_date ?? '') }}" style="font-size: 14px;" />
                                     </div>
                                 @else
                                     <div class="col-lg-6 new-date-data-field">

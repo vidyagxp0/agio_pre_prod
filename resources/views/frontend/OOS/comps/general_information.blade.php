@@ -539,7 +539,7 @@
                                 <tr>
                                     <td><input disabled type="text" name="info_product_material[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_product_code]" value="{{ $info_product_material['info_product_code'] ?? '' }}"{{ $data->stage == 1 ? 'required' : 'readonly' }} ></td>
-                                    <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_batch_no]" value="{{ $info_product_material['info_batch_no'] ?? '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                    <td><input  {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_batch_no]" value="{{ $info_product_material['info_batch_no'] ?? '' }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                     <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -572,13 +572,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_label_claim]" value="{{ $info_product_material['info_label_claim'] ?? '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_pack_size]" value="{{ $info_product_material['info_pack_size'] ?? '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_analyst_name]" value="{{ $info_product_material['info_analyst_name'] ?? '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_others_specify]" value="{{ $info_product_material['info_others_specify'] ?? '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_process_sample_stage]" value="{{ $info_product_material['info_process_sample_stage'] ?? '' }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_label_claim]" value="{{ $info_product_material['info_label_claim'] ?? '' }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_pack_size]" value="{{ $info_product_material['info_pack_size'] ?? '' }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_analyst_name]" value="{{ $info_product_material['info_analyst_name'] ?? '' }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_others_specify]" value="{{ $info_product_material['info_others_specify'] ?? '' }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="info_product_material[{{ $loop->index }}][info_process_sample_stage]" value="{{ $info_product_material['info_process_sample_stage'] ?? '' }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                     <td>
-                                    <select {{Helpers::isOOSChemical($data->stage)}} class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="info_product_material" {{ $data->stage == 1 ? '' : 'readonly' }}>
+                                    <select {{Helpers::isOOSChemical($data->stage)}} class="facility-name" name="info_product_material[{{ $loop->index }}][info_packing_material_type]" id="info_product_material" {{ $data->stage == 1 ? 'required' : 'readonly' }}>
                                         <option value="">--Select--</option>
                                         <option value="Primary" {{ $info_product_material['info_packing_material_type'] === 'Primary' ? 'selected' : '' }}>Primary</option>
                                         <option value="Secondary" {{ $info_product_material['info_packing_material_type'] === 'Secondary' ? 'selected' : '' }}>Secondary</option>
@@ -634,12 +634,12 @@
                                 <tr>
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} disabled type="text" name="details_stability[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_arnumber]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_arnumber') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_condition_temprature_rh]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_condition_temprature_rh') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_Interval]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_Interval') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_orientation]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_orientation') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_condition_temprature_rh]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_condition_temprature_rh') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_Interval]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_Interval') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_orientation]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_orientation') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_pack_details]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_pack_details') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
                                     <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_specification_no]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_specification_no') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_sample_description]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_sample_description') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                    <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="details_stability[{{ $loop->index }}][stability_study_sample_description]" value="{{ Helpers::getArrayKey($details_stabilitie, 'stability_study_sample_description') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                     <td><button type="text" class="removeRowBtn">Remove</button></td>
                                 </tr>
                             @endforeach
@@ -680,9 +680,9 @@
                                     <tr>
                                         <td><input disabled type="text" name="oos_detail[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_arnumber]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_arnumber') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="oos_detail[{{ $loop->index }}][oos_test_name]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_test_name') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}}  type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                         <td>
                                             <input {{Helpers::isOOSChemical($data->stage)}} type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]"
                                             onchange="showFileName(this, {{ $loop->index }})">
@@ -754,7 +754,7 @@
                                     <tr>
                                         <td><input disabled type="text" name="products_details[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="products_details[{{ $loop->index }}][product_name]" value="{{ Helpers::getArrayKey($products_detail, 'product_name') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="products_details[{{ $loop->index }}][product_AR_No]" value="{{ Helpers::getArrayKey($products_detail, 'product_AR_No') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="products_details[{{ $loop->index }}][product_AR_No]" value="{{ Helpers::getArrayKey($products_detail, 'product_AR_No') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                         <td>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
@@ -829,7 +829,7 @@
                                     <tr>
                                         <td><input disabled type="text" name="instrument_detail[{{ $loop->index }}][serial]" value="{{ $loop->index + 1 }}"></td>
                                         <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_name]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_name') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
-                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_id_number]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_id_number') }}" {{ $data->stage == 1 ? '' : 'readonly' }}></td>
+                                        <td><input {{Helpers::isOOSChemical($data->stage)}} type="text" name="instrument_detail[{{ $loop->index }}][instrument_id_number]" value="{{ Helpers::getArrayKey($instrument_detail, 'instrument_id_number') }}" {{ $data->stage == 1 ? 'required' : 'readonly' }}></td>
                                         <td>
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
