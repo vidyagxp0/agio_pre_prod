@@ -6513,7 +6513,7 @@
                                                 $TDSData = [];
 
                                                 if (!empty($TDSRevisionHistoryData) && isset($TDSRevisionHistoryData->data)) {
-                                                    $GtpData = is_string($TDSRevisionHistoryData->data) 
+                                                    $TDSData = is_string($TDSRevisionHistoryData->data) 
                                                         ? json_decode($TDSRevisionHistoryData->data, true) 
                                                         : (is_array($TDSRevisionHistoryData->data) ? $TDSRevisionHistoryData->data : []);
                                                 }
@@ -6524,7 +6524,7 @@
                                                     <td>{{ $serialNumber++ }}</td>
                                                     <td>
                                                         <input type="text" name="summaryResult[{{ $index }}][revision_no_tds]" 
-                                                            value="{{ $tdshistory['revision_no'] ?? '' }}" readonly>
+                                                            value="{{ $tdshistory['revision_no_tds'] ?? '' }}" readonly>
                                                     </td>
                                                     <td>
                                                         <input type="text" name="summaryResult[{{ $index }}][changContNo_tds]" 
@@ -6569,10 +6569,10 @@
                                                             <tr>
                                                                 <td>${index + 1}</td>
                                                                 <td><input type="text" name="summaryResult[${index}][revision_no_tds]" 
-                                                                        value="${tdshistory.revision_no || ''}" readonly></td>
+                                                                        value="${tdshistory.revision_no_tds || ''}" readonly></td>
                                                                 <td><input type="text" name="summaryResult[${index}][changContNo_tds]" value="${tdshistory.changContNo_tds}"></td>
                                                                 <td><input type="date" name="summaryResult[${index}][effectiveDate_tds]" 
-                                                                        value="${tdshistory.effective_date || ''}" readonly></td>
+                                                                        value="${tdshistory.effectiveDate_tds || ''}" readonly></td>
                                                                 <td><input type="text" name="summaryResult[${index}][reasonRevi_tds]" value="${tdshistory.reasonRevi_tds}"></td>
                                                             </tr>`;
                                                         
@@ -10875,7 +10875,7 @@
                                                             <td>{{ $serialNumber++ }}</td>
                                                             <td>
                                                                 <input type="text" name="gtp[{{ $index }}][revision_no_gtp]" 
-                                                                    value="{{ $gtphistory['revision_no'] ?? '' }}" readonly>
+                                                                    value="{{ $gtphistory['revision_no_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
                                                                 <input type="text" name="gtp[{{ $index }}][changContNo_gtp]" 
@@ -10883,7 +10883,7 @@
                                                             </td>
                                                             <td>
                                                                 <input type="date" name="gtp[{{ $index }}][effectiveDate_gtp]" 
-                                                                    value="{{ $gtphistory['effective_date'] ?? '' }}" readonly>
+                                                                    value="{{ $gtphistory['effectiveDate_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
                                                                 <input type="text" name="gtp[{{ $index }}][reasonRevi_gtp]" 
@@ -10919,10 +10919,10 @@
                                                                     <tr>
                                                                         <td>${index + 1}</td>
                                                                         <td><input type="text" name="gtp[${index}][revision_no_gtp]" 
-                                                                                value="${gtphistory.revision_no || ''}" readonly></td>
+                                                                                value="${gtphistory.revision_no_gtp || ''}" readonly></td>
                                                                         <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td>
                                                                         <td><input type="date" name="gtp[${index}][effectiveDate_gtp]" 
-                                                                                value="${gtphistory.effective_date || ''}" readonly></td>
+                                                                                value="${gtphistory.effectiveDate_gtp || ''}" readonly></td>
                                                                         <td><input type="text" name="gtp[${index}][reasonRevi_gtp]" value="${gtphistory.reasonRevi_gtp}"></td>
                                                                     </tr>`;
                                                                 
