@@ -614,63 +614,67 @@
                             @csrf
                             
                             <!-- Reviewer Comments Section -->
-                            <div class="col-12 mt-3">
-                                <div class="orig-head">
-                                    <label for="reviewer_comments"><b style="color:#4274da;">Reviewer Comments Given By</b></label>
-                                </div>
-                                
-                                @php
-                                    $assignedReviewers = explode(",", $document->reviewers);
-                                    $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
-                                    $currentUserId = auth()->id();
-                                @endphp
-                                
-                                @foreach ($assignedReviewers as $reviewerId)
-                                    @php
-                                        $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
-                                    @endphp
-                                    
-                                    @if ($reviewerUser)
-                                        <div class="comment-box">
-                                            <label><b>{{ $reviewerUser->name }} Comments</b></label>
-                                            <textarea class="form-control reviewer-comment" 
-                                                name="reviewer_comments[{{ $reviewerUser->id }}]" 
-                                                placeholder="Enter your comment..." 
-                                                rows="3" 
-                                                @if($currentUserId != $reviewerUser->id) disabled @endif>{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}</textarea>
+                            @if ($document->stage == 1 || $document->stage == 4 || $document->stage == 5)
+                                    <div class="col-12 mt-3">
+                                        <div class="orig-head">
+                                            <label for="reviewer_comments"><b style="color:#4274da;">Reviewer Comments Given By</b></label>
                                         </div>
-                                    @endif
-                                @endforeach
-                            </div>
+
+                                        @php
+                                            $assignedReviewers = explode(",", $document->reviewers);
+                                            $reviewerComments = $document->reviewer_comments ? json_decode($document->reviewer_comments, true) : [];
+                                            $currentUserId = auth()->id();
+                                        @endphp
+
+                                        @foreach ($assignedReviewers as $reviewerId)
+                                            @php
+                                                $reviewerUser = DB::table('users')->where('id', $reviewerId)->first();
+                                            @endphp
+
+                                            @if ($reviewerUser)
+                                                <div class="comment-box">
+                                                    <label><b>{{ $reviewerUser->name }} Comments</b></label>
+                                                    <textarea class="form-control reviewer-comment" 
+                                                        name="reviewer_comments[{{ $reviewerUser->id }}]" 
+                                                        placeholder="Enter your comment..." 
+                                                        rows="3" 
+                                                        @if($currentUserId != $reviewerUser->id) disabled @endif>{{ old('reviewer_comments.' . $reviewerUser->id, $reviewerComments[$reviewerUser->id] ?? '') }}</textarea>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                            @endif
                             
                             <!-- Approver Comments Section -->
-                            <div class="col-12 mt-3">
-                                <div class="orig-head">
-                                    <label for="approver_comments"><b style="color:#4274da;">Approver Comments Given By</b></label>
-                                </div>
-                                
-                                @php
-                                    $assignedApprovers = explode(",", $document->approvers);
-                                    $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
-                                @endphp
-                                
-                                @foreach ($assignedApprovers as $approverId)
+                            @if ($document->stage == 6 || $document->stage == 7)
+                                <div class="col-12 mt-3">
+                                    <div class="orig-head">
+                                        <label for="approver_comments"><b style="color:#4274da;">Approver Comments Given By</b></label>
+                                    </div>
+                                    
                                     @php
-                                        $approverUser = DB::table('users')->where('id', $approverId)->first();
+                                        $assignedApprovers = explode(",", $document->approvers);
+                                        $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
                                     @endphp
                                     
-                                    @if ($approverUser)
-                                        <div class="comment-box">
-                                            <label><b>{{ $approverUser->name }}  Comments</b></label>
-                                            <textarea class="form-control approver-comment" 
-                                                name="approver_comments[{{ $approverUser->id }}]" 
-                                                placeholder="Enter your comment..." 
-                                                rows="3" 
-                                                @if($currentUserId != $approverUser->id) disabled @endif>{{ old('approver_comments.' . $approverUser->id, $approverComments[$approverUser->id] ?? '') }}</textarea>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
+                                    @foreach ($assignedApprovers as $approverId)
+                                        @php
+                                            $approverUser = DB::table('users')->where('id', $approverId)->first();
+                                        @endphp
+                                        
+                                        @if ($approverUser)
+                                            <div class="comment-box">
+                                                <label><b>{{ $approverUser->name }}  Comments</b></label>
+                                                <textarea class="form-control approver-comment" 
+                                                    name="approver_comments[{{ $approverUser->id }}]" 
+                                                    placeholder="Enter your comment..." 
+                                                    rows="3" 
+                                                    @if($currentUserId != $approverUser->id) disabled @endif>{{ old('approver_comments.' . $approverUser->id, $approverComments[$approverUser->id] ?? '') }}</textarea>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            @endif
                             
                             <!-- Submit Button -->
                             <div class="col-12 mt-3">
