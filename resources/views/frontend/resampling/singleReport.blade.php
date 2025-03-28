@@ -290,14 +290,7 @@ Not Applicable
                         Not Applicable
                         @endif
                         </td> -->
-                        <th class="w-20">Responsible Department</th>
-                        <td class="w-80">
-                            @if ($data->departments)
-                                {{ Helpers::getFullDepartmentName($data->departments) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        
 
                     </tr>
 
@@ -360,6 +353,18 @@ Not Applicable
 
 
                         </tr>
+
+                        <tr>
+                            <th class="w-20">Responsible Department</th>
+                        <td class="w-80">
+                            @if ($data->departments)
+                                {{ Helpers::getFullDepartmentName($data->departments) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        </tr>
+
                         <tr>
 
 
@@ -432,7 +437,7 @@ Not Applicable
             </div> -->
 
             <div class="block-head">
-                QA Head
+                Head QA/CQA Approval
             </div>
             <table>
                 <tr>
@@ -587,7 +592,7 @@ Not Applicable
             </div>
             {{-- </table> --}}
             <div class="block-head">
-                Action Approval
+                QA/CQA Verification
             </div>
             <table>
                 <tr>
@@ -605,7 +610,7 @@ Not Applicable
             </table>
 
             <div class="block-head">
-                Action Approval Attachment
+                QA/CQA Verification Attachment
             </div>
             <div class="border-table">
                 <table>

@@ -296,11 +296,11 @@
                     <tr>
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
-                            @if ($data->Initiator_Group)
-                                {{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}
-                            @else
-                                Not Applicable
-                            @endif
+                            @if ( Helpers::getUsersDepartmentName(Auth::user()->departmentid))
+                            {{  Helpers::getUsersDepartmentName(Auth::user()->departmentid)}}
+                        @else
+                            Not Applicable
+                        @endif
                         </td>
                         <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">

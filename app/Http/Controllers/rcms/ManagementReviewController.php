@@ -1331,9 +1331,9 @@ class ManagementReviewController extends Controller
             if(!empty($management->initiator_group_code)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Initiator department Code';
+                $history->activity_type = 'Initiation Department Code';
                 $history->previous = "Null";
-                $history->current = $management->initiator_Group;
+                $history->current = $management->initiator_group_code;
                 $history->comment = "NA";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
