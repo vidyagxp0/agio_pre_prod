@@ -397,15 +397,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   FPS/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}-00
+                                   FPS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -687,7 +687,7 @@
                         <tr>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['rev_no'] ?? '' }}</td>
                             <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_no'] ?? '' }}</td>
-                            <td>                                                    
+                            <td style="border: 1px solid black; width: 20%;">                                                    
                                 @if ($data->training_required == 'yes' && $data->stage >= 11)
                                     {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                 @elseif ($data->training_required != 'yes' && $data->stage > 10)

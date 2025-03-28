@@ -581,7 +581,7 @@
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_cvstp_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_cvstp_no'] ?? '' }}</td>
-                                    <td>                                                    
+                                    <td style="border: 1px solid black; width: 20%;">                                                    
                                         @if ($data->training_required == 'yes' && $data->stage >= 11)
                                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                         @elseif ($data->training_required != 'yes' && $data->stage > 10)
