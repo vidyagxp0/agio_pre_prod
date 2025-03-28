@@ -8766,7 +8766,11 @@
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A HOD Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A HOD Remark
+                                @if($data->stage == 14)
+                                   <span class="text-danger">*</span>
+                                @endif 
+                                  </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -8839,7 +8843,11 @@
                          <!-- Others Field -->
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A CQA/QA Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A CQA/QA Remark
+                                @if($data->stage == 15)
+                                   <span class="text-danger">*</span>
+                                @endif
+                                </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -8912,7 +8920,11 @@
                          <!-- Others Field -->
                          <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Report Attachments">Phase II A Assignable cause found <span class="text-danger">*</span></label>
+                                <label for="Report Attachments">Phase II A Assignable cause found 
+                                @if($data->stage == 16)
+                                   <span class="text-danger">*</span>
+                                @endif   
+                                </label>
                                 <select name="phase_ii_a_assi_cause" {{Helpers::isOOSChemical($data->stage)}} {{ $data->stage == 16 ? '' : 'disabled' }}>
                                     <option value="">Enter Your Selection Here</option>
                                     <option value="Yes" {{ $data->phase_ii_a_assi_cause === 'Yes' ? 'selected' :
@@ -8924,7 +8936,11 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II A QAH/CQAH Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II A QAH/CQAH Remark
+                                @if($data->stage == 16)
+                                   <span class="text-danger">*</span>
+                                @endif
+                                </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -9184,7 +9200,12 @@
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II B HOD Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II B HOD Remark
+                                    
+                                @if($data->stage == 18)
+                                   <span class="text-danger">*</span>
+                                @endif 
+                               </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -9258,7 +9279,11 @@
 
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Initiator Group">Phase II B CQA/QA Remark<span class="text-danger">*</span></label>
+                                <label for="Initiator Group">Phase II B CQA/QA Remark
+                                @if($data->stage == 19)
+                                   <span class="text-danger">*</span>
+                                @endif     
+                                </label>
                                 <div>
                                     <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                 </div>
@@ -9323,6 +9348,7 @@
 
             </div>
 
+            <!-- Phase II B QAH/CQAH Review -->
             @include('frontend.OOS.comps.under_approval')
 
             @include('frontend.OOS.comps.additional_testing')
