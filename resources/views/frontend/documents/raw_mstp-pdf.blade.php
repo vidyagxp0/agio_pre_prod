@@ -545,11 +545,6 @@
             <span style="text-align:center">Format No.: QA/097/F6-00</span>                            
         </footer>
     
-
-       
-    
-
-
     <div class="other-container ">
         <table>
             <thead>
@@ -595,7 +590,7 @@
                                 <tr>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_rawmstp_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_rawmstp_no'] ?? '' }}</td>
-                                    <td>                                                    
+                                    <td style="border: 1px solid black; width: 20%;">                                                    
                                         @if ($data->training_required == 'yes' && $data->stage >= 11)
                                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                         @elseif ($data->training_required != 'yes' && $data->stage > 10)

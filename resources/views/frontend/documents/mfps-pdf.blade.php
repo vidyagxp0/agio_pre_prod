@@ -630,24 +630,7 @@
                 </tbody>
             </table>
 
-            {{-- <table class="border p-10" style="width: 100%; border-collapse: collapse; text-align: left;">
-            <tbody>
-                <tr style="border-bottom: 1px solid #ddd;">
-                    @php
-                        $inreviews = DB::table('stage_manages')
-                            ->join('users', 'stage_manages.user_id', '=', 'users.id')
-                            ->select('stage_manages.*', 'users.name as user_name')
-                            ->where('document_id', $document->id)
-                            ->where('stage', 'Review-Submit')
-                            ->where('deleted_at', null)
-                            ->get();
-                    @endphp
-                    <td style="padding: 10px; border: 1px solid #ddd;">Approved By: Head QA</td>
-                    <th style="padding: 10px; border: 1px solid #ddd; font-size: 14px;">Sign/Date :{{ \Carbon\Carbon::parse($document->created_at)->format('d-M-Y') }}</th>
-                    <td style="padding: 10px; border: 1px solid #ddd;">  </td>        
-                </tr>
-            </tbody> 
-        </table>--}}
+
         <span>Format No.: QA/095/F1-00</span>
     </footer>
 
@@ -675,11 +658,6 @@
             </div>
         </div>
     </div>
-
-    
-
-
-
 </table>
 
     
@@ -711,7 +689,7 @@
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_mfps_no'] ?? '' }}</td>
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_mfps_no'] ?? '' }}</td>
 
-                                    <td>                                                    
+                                    <td style="border: 1px solid black; width: 20%;">                                                    
                                         @if ($data->training_required == 'yes' && $data->stage >= 11)
                                             {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
                                         @elseif ($data->training_required != 'yes' && $data->stage > 10)
