@@ -131,9 +131,9 @@
 
         body {
             margin-top: 180px;
-            margin-bottom: 160px;
-            padding-top: 70px;
-            padding-bottom: 60px; 
+            margin-bottom: 140px;
+            padding-top: 95px;
+            padding-bottom: 40px; 
         }
 
         footer {
@@ -214,15 +214,7 @@
             margin: 0px 0 0;
         }
 
-        .scope-block,
-        .procedure-block {
-            margin: 0px 0 15px;
-            word-wrap: break-word;
-        }
 
-        .annexure-block {
-            margin: 40px 0 0;
-        }
 
         .page-break-before {
             page-break-before: always;
@@ -261,8 +253,8 @@
         
         #isPasted {
             width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         #isPasted td:first-child,
@@ -312,7 +304,7 @@
         }
 
         .table-containers {
-            width: 610px;
+            width: 680px;
             overflow-x: fixed;
         }
 
@@ -569,7 +561,7 @@
             </span>
     </footer>
 
- <div style="margin-top: 10px;">
+ <div style="margin-top: 25px;">
     <section class="main-section" id="pdf-page">
         <section style="page-break-after: never;">
             <div class="other-container">
@@ -582,6 +574,7 @@
                         </tr>
                     </thead>
                 </table>
+                <br>
 
                 <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
                     <tbody>
@@ -640,7 +633,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="text-left">
+                    <th class="text-center">
                         <div class="bold">SPECIFICATION</div>
                     </th>
                 </tr>
