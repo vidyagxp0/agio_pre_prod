@@ -9008,7 +9008,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             if ($changeControl->stage == 1) {
 
-                if (empty($changeControl->severity) || empty($changeControl->short_description)) {
+                if (empty($changeControl->severity) || empty($changeControl->short_description) || empty($changeControl->risk_assessment_required) || empty($changeControl->hod_person) || empty($changeControl->initiated_through) || empty($changeControl->others) || empty($changeControl->bd_domestic) || empty($changeControl->bd_domestic) || empty($changeControl->current_practice) || empty($changeControl->proposed_change) || empty($changeControl->reason_change) || empty($changeControl->other_comment)) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
@@ -9228,7 +9228,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($review->qa_comments))
+                if (empty($review->qa_comments) || empty($review->severity_level1)  )
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -9648,7 +9648,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                             $updateCFT->Other4_on = Carbon::now()->format('Y-m-d');
                             $history = new RcmDocHistory();
                             $history->cc_id = $id;
-$history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Completed On';
+                            $history->activity_type = 'Others 4 Review  Completed By, Others 4 Review  Completed On';
                     if(is_null($lastDocument->Other4_by) || $lastDocument->Other4_on == ''){
                         $history->previous = "";
                     }else{
