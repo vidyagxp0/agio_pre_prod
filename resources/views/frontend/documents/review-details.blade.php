@@ -575,6 +575,10 @@
                                         @endif
                                     @endforeach
                                 </div>
+
+                                <div class="col-12 mt-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             @endif
                             
                             <!-- Approver Comments Section -->
@@ -587,6 +591,7 @@
                                     @php
                                         $assignedApprovers = explode(",", $document->approvers);
                                         $approverComments = $document->approver_comments ? json_decode($document->approver_comments, true) : [];
+                                        $currentUserId = auth()->id();
                                     @endphp
                                     
                                     @foreach ($assignedApprovers as $approverId)
@@ -606,12 +611,17 @@
                                         @endif
                                     @endforeach
                                 </div>
+
+                                <div class="col-12 mt-3">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             @endif
                             
                             <!-- Submit Button -->
-                            <div class="col-12 mt-3">
+                            
+                            <!-- <div class="col-12 mt-3">
                                 <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
+                            </div> -->
                         </form>
 
                         </div>
