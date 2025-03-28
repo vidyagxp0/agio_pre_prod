@@ -281,18 +281,17 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date</label>
-                                        <div>
-                                            <small class="text-primary"></small>
-                                        </div>
+                                        <label for="Due Date">Due Date <span class="text-danger">*</span>
+                                        </label>
+
                                         <div class="calenderauditee">
                                             <!-- Display formatted date (Initial placeholder) -->
-                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" />
+                                            <input disabled type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" required />
 
                                             <!-- Hidden input field to allow the user to pick a date -->
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" />
+                                                class="hide-input" oninput="handleDateInput(this, 'due_date_display')" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -323,52 +322,52 @@
                                     </div>
                                 </div>
 
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function () {
-                                            // Define department name to code mapping
-                                            const departmentMapping = {
-                                                "Calibration Lab": "CLB",
-                                                "Engineering": "ENG",
-                                                "Facilities": "FAC",
-                                                "LAB": "LAB",
-                                                "Labeling": "LABL",
-                                                "Manufacturing": "MANU",
-                                                "Quality Assurance": "QA",
-                                                "Quality Control": "QC",
-                                                "Ragulatory Affairs": "RA",
-                                                "Security": "SCR",
-                                                "Training": "TR",
-                                                "IT": "IT",
-                                                "Application Engineering": "AE",
-                                                "Trading": "TRD",
-                                                "Research": "RSCH",
-                                                "Sales": "SAL",
-                                                "Finance": "FIN",
-                                                "Systems": "SYS",
-                                                "Administrative": "ADM",
-                                                "M&A": "M&A",
-                                                "R&D": "R&D",
-                                                "Human Resource": "HR",
-                                                "Banking": "BNK",
-                                                "Marketing": "MRKT",
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        // Define department name to code mapping
+                                        const departmentMapping = {
+                                            "Calibration Lab": "CLB",
+                                            "Engineering": "ENG",
+                                            "Facilities": "FAC",
+                                            "LAB": "LAB",
+                                            "Labeling": "LABL",
+                                            "Manufacturing": "MANU",
+                                            "Quality Assurance": "QA",
+                                            "Quality Control": "QC",
+                                            "Ragulatory Affairs": "RA",
+                                            "Security": "SCR",
+                                            "Training": "TR",
+                                            "IT": "IT",
+                                            "Application Engineering": "AE",
+                                            "Trading": "TRD",
+                                            "Research": "RSCH",
+                                            "Sales": "SAL",
+                                            "Finance": "FIN",
+                                            "Systems": "SYS",
+                                            "Administrative": "ADM",
+                                            "M&A": "M&A",
+                                            "R&D": "R&D",
+                                            "Human Resource": "HR",
+                                            "Banking": "BNK",
+                                            "Marketing": "MRKT",
 
-                                            };
+                                        };
 
-                                            // Get the Initiator Department input
-                                            let initiatorGroupInput = document.getElementById("initiator_group");
-                                            let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+                                        // Get the Initiator Department input
+                                        let initiatorGroupInput = document.getElementById("initiator_group");
+                                        let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
 
-                                            // Get the department name from the input field
-                                            let departmentName = initiatorGroupInput.value.trim();
+                                        // Get the department name from the input field
+                                        let departmentName = initiatorGroupInput.value.trim();
 
-                                            // Auto-generate the department code based on the mapping
-                                            if (departmentName in departmentMapping) {
-                                                initiatorGroupCodeInput.value = departmentMapping[departmentName];
-                                            } else {
-                                                initiatorGroupCodeInput.value = "N/A"; // Default if not found
-                                            }
-                                        });
-                                    </script>
+                                        // Auto-generate the department code based on the mapping
+                                        if (departmentName in departmentMapping) {
+                                            initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                        } else {
+                                            initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                        }
+                                    });
+                                </script>
 
 
                                 <!-- <div class="col-lg-6">
@@ -664,8 +663,9 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="nature-change">Nature Of Change</label>
-                                        <select name="doc_change">
+                                        <label for="nature-change">Nature Of Change<span class="text-danger">*</span>
+                                        </label>
+                                        <select name="doc_change" required>
                                             <option value="">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
                                             <option value="Permanent">Permanent</option>
