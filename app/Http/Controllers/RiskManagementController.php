@@ -1126,7 +1126,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = Helpers::getFullDepartmentName($data->Initiator_Group);
+            $history->current = Helpers::getUsersDepartmentName(Auth::user()->departmentid) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

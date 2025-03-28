@@ -1144,8 +1144,7 @@
          </table>
         <div class="border-table">
             <div class="block-head">
-            Attachment
-
+                Other Attachment
             </div>
             <table>
 
