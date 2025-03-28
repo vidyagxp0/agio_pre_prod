@@ -1,7 +1,7 @@
 
 
 <?php
-
+use App\Http\Controllers\checkcontroler;
 use App\Http\Controllers\ActionItemController;
 use App\Http\Controllers\Ajax\AjaxController;
 use App\Http\Controllers\OpenStageController;
@@ -64,6 +64,18 @@ use Maatwebsite\Excel\Facades\Excel;
 | contains the "web" middleware group. Now create something great!
 |
 */
+      //praveen chandel
+  Route::get('in',[checkcontroler::class,'copy'])->name('check.mywork');
+  Route::post('stored',[checkcontroler::class,'store'])->name('check.save');
+  Route::get('seen',[checkcontroler::class,'take'])->name('report');
+//    Route::get('report',[checkcontroler::class,'show'])->name('report');
+  
+
+  
+
+
+
+
 //!---------------- EMP login  ---------------------------//
 Route::group(['middleware' => ['auth:employee']], function () {
     // All employee authenticated routes here

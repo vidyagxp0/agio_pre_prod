@@ -15,13 +15,13 @@ use Illuminate\Support\Facades\Hash;
 class ExtensionController extends Controller
 {
     public function index(){
-        $document = Extension::all();
+        $document = Extension::all();       
 
-        foreach($document as $data){
+        foreach($document as $data){       
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id',$cc->initiator_id)->value('name');
         }
-        return view('frontend.extension.extension',compact('document'));
+        return view('frontend.extension.extension',compact('document')); 
     }
 
     public function create(){

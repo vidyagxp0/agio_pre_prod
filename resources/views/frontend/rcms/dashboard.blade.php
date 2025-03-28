@@ -213,6 +213,7 @@
                                             <th>Originator</th>
                                             <th> Due Date</th>
                                             <th>Status</th>
+                                            <th>view Process</th>
                                         </tr>
                                     </thead>
                                     <tbody id="searchTable">
@@ -265,6 +266,19 @@
                                                                 class="w-100 h-100"> --}}
                                                                 </div>
                                                             </a>
+                                                                         <!-- {{-----by praveen------------}}
+                                                                         @if ($datas->type == 'Change-Control')
+                                                            <a href="{{ route('report', $datas->id) }}"
+                                                                style="color: blue">
+                                                                {{ str_pad($total_count - $loop->index, 4, '0', STR_PAD_LEFT) }}
+                                                            </a>
+                                                            <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/CC">
+                                                                <div class="icon" onclick="showChild()"
+                                                                    data-bs-toggle="tooltip" title="Related Records">
+                                                                    {{-- <img src="{{ asset('user/images/single.png') }}" alt="..."
+                                                                class="w-100 h-100"> --}}
+                                                                </div>
+                                                            </a> -->
                                                             {{-- -----------------------by pankaj-------------------- --}}
                                                         @elseif ($datas->type == 'Internal-Audit')
                                                             <a href="{{ route('showInternalAudit', $datas->id) }}"

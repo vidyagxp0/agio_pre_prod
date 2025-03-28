@@ -399,7 +399,7 @@ class ExtensionNewController extends Controller
             $history->action_name = 'Create';
             $history->save();
         }
-
+     
         if (!empty($request->current_due_date)) {
             $history = new ExtensionNewAuditTrail();
             $history->extension_id = $extensionNew->id;

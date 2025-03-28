@@ -34,7 +34,10 @@ class FormDivisionController extends Controller
             return redirect('lab-incident');
         } elseif ($request->process_name == "Risk Assessment") {
             return redirect('risk-management');
-        } elseif ($request->process_name == "Extension") {
+        }
+        elseif ($request->process_name == "Praveen Agio") {
+            return redirect('check.mywork');}
+         elseif ($request->process_name == "Extension") {
             return redirect('extension-new');
         } elseif ($request->process_name == "Effectiveness Check") {
             return redirect('effectiveness-check');
@@ -71,6 +74,8 @@ class FormDivisionController extends Controller
         elseif ($request->process_name == 'Deviation') {
             return redirect()->route('deviation');
         }
+        elseif ($request->process_name == "Praveen Agio") {
+            return redirect('check.mywork');}
         elseif ($request->process_name == "New Document") {
 
             $new = new SetDivision;

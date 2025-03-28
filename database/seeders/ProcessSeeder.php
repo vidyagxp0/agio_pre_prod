@@ -30,6 +30,7 @@ class ProcessSeeder extends Seeder
 
         $processNames = [
             "Extension",
+            "Praveen Agio",
             "Action Item",
             "Resampling",
             "Observation",

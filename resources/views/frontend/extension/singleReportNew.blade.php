@@ -305,6 +305,14 @@
                         Not Applicable
                     @endif
                 </div>
+                <!-- <label class="Summer" for="Parent Record Number">Parent Records Number</label>
+                <div class="div-data">
+                    @if ($data->related_records)
+                        {{ str_replace(',', ', ', $data->related_records) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </div> -->
 
                 <table>
                     <tr>
@@ -346,7 +354,7 @@
                             @endif
                         </td>
                     </tr>
-                </table> --}}
+                </table> --}}    
                 <label class="Summer" for="Description">Description</label>
                 <div class="div-data">
                     @if ($data->description)
