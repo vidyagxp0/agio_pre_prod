@@ -666,7 +666,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator"><b>Initiator Department</b></label>
-                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                    <input aria-readonly="$_ENV" type="text" name="Initiator_Group" id="initiator_group" 
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
                                             </div>
@@ -676,7 +676,7 @@
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? '' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -1332,7 +1332,7 @@
                                                         <input type="file" id="myfile" name="risk_assessment_atch[]"
                                                             oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple>
                                                     </div>
-                                                </div>
+                                                 
 
                                             </div>
 
