@@ -764,59 +764,69 @@
                                                 });
                                             </script>  --}}
 
-                                            <script>
-                                                $(document).ready(function() {
-                                                    function toggleRiskAssessmentAndJustification() {
-                                                        var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        function toggleRiskAssessmentAndJustification() {
+                                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
 
-                                                        // Toggle Risk Assessment Button
-                                                        if (riskAssessmentRequired === 'yes') {
-                                                            $('#riskAssessmentButton').show();
-                                                            $('#justification_div').hide(); // Hide justification when "Yes" is selected
-                                                        } else if (riskAssessmentRequired === 'no') {
-                                                            $('#riskAssessmentButton').hide();
-                                                            $('#justification_div').show(); // Show justification when "No" is selected
-                                                        } else {
-                                                            $('#riskAssessmentButton').hide();
-                                                            $('#justification_div').hide(); // Hide everything if nothing is selected
+                                                            if (riskAssessmentRequired === 'yes') {
+                                                                $('#riskAssessmentButton').show();
+                                                                $('#justification_div').hide();
+                                                                $('#justification').val('').removeAttr('required'); // Clear value and remove required
+                                                                $('#justification_error').hide();
+                                                            } else if (riskAssessmentRequired === 'no') {
+                                                                $('#riskAssessmentButton').hide();
+                                                                $('#justification_div').show();
+                                                                $('#justification').attr('required', 'required'); // Make justification required
+                                                            } else {
+                                                                $('#riskAssessmentButton').hide();
+                                                                $('#justification_div').hide();
+                                                                $('#justification').removeAttr('required');
+                                                                $('#justification_error').hide();
+                                                            }
                                                         }
-                                                    }
 
-                                                    toggleRiskAssessmentAndJustification(); // Initial call to set the correct state
+                                                        toggleRiskAssessmentAndJustification(); // Initial call
 
-                                                    // Call the function on dropdown change
-                                                    $('#risk_assessment_required').change(function() {
-                                                        toggleRiskAssessmentAndJustification();
+                                                        $('#risk_assessment_required').change(function() {
+                                                            toggleRiskAssessmentAndJustification();
+                                                        });
+
+                                                        $('form').submit(function(event) {
+                                                            if ($('#risk_assessment_required').val() === 'no' && !$('#justification').val().trim()) {
+                                                                $('#justification_error').show();
+                                                                event.preventDefault(); // Prevent form submission
+                                                            }
+                                                        });
                                                     });
-                                                });
-                                            </script>
+                                                </script>
 
                                                 <script>
-                                                $(document).ready(function() {
-                                                    function toggleButtons() {
-                                                        var selectedValue = $('#RA_head_required').val();
+                                                    $(document).ready(function() {
+                                                        function toggleButtons() {
+                                                            var selectedValue = $('#RA_head_required').val();
 
-                                                        console.log("Selected value:", selectedValue); // Debugging output
+                                                            console.log("Selected value:", selectedValue); // Debugging output
 
-                                                        if (selectedValue === 'Yes') {
-                                                            $('#actionButton').show();
-                                                            $('#pendingRAApproval').show();
-                                                            console.log("show"); // Debugging output
-                                                        } else {
-                                                            $('#actionButton').hide();
-                                                            $('#pendingRAApproval').hide();
-                                                            console.log("hide"); // Debugging output
+                                                            if (selectedValue === 'Yes') {
+                                                                $('#actionButton').show();
+                                                                $('#pendingRAApproval').show();
+                                                                console.log("show"); // Debugging output
+                                                            } else {
+                                                                $('#actionButton').hide();
+                                                                $('#pendingRAApproval').hide();
+                                                                console.log("hide"); // Debugging output
+                                                            }
                                                         }
-                                                    }
 
-                                                    // Handle change event
-                                                    $('#RA_head_required').on('change', function() {
+                                                        // Handle change event
+                                                        $('#RA_head_required').on('change', function() {
+                                                            toggleButtons();
+                                                        });
+
+                                                        // Handle initial state
                                                         toggleButtons();
                                                     });
-
-                                                    // Handle initial state
-                                                    toggleButtons();
-                                                });
                                                 </script>
 
                                             <div class="col-lg-6">
@@ -843,12 +853,10 @@
 
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
-                                                    <label for="Justification">Justification <span class="text-danger">*</span>
-                                                    </label>
-                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
-                                                    <!-- @error('justification')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror -->
+                                                    <label for="Justification">Justification <span class="text-danger">*</span></label>
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." 
+                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
+                                                    <span id="justification_error" class="text-danger" style="display: none;">This field is required.</span>
                                                 </div>
                                             </div>
 
@@ -960,8 +968,7 @@
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
                                                     <div><small class="text-primary">Please select related information</small></div>
-                                                    <select name="initiated_through"
-                                                        onchange="otherController(this.value, 'others', 'initiated_through_req')" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
+                                                    <select name="initiated_through" id="initiated_through"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
                                                         <option value="">Enter Your Selection Here</option>
                                                         <option @if ($data->initiated_through == 'recall') selected @endif
                                                             value="recall">Recall</option>
@@ -984,12 +991,32 @@
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <div class="group-input" id="initiated_through_req" style="display: none;">
+                                                <div class="group-input" id="initiated_through_div" style="display: none;">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger">*</span></label>
-                                                    <textarea name="initiated_through_req"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
+                                                    <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                $(document).ready(function() {
+                                                    function toggleOtherSpecifyField() {
+                                                        var changeRelatedTo = $('#initiated_through').val();
+                                                        if (changeRelatedTo === 'others') {
+                                                            $('#initiated_through_div').show();
+                                                        } else {
+                                                            $('#initiated_through_div').hide();
+                                                        }
+                                                    }
+
+                                                    toggleOtherSpecifyField(); // Initial check
+
+                                                    // Update field visibility on dropdown change
+                                                    $('#initiated_through').change(function() {
+                                                        toggleOtherSpecifyField();
+                                                    });
+                                                });
+                                            </script>
 
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1394,7 +1421,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="change_details_attachments[]"
-                                                                {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                 oninput="addMultipleFiles(this, 'change_details_attachments')" multiple>
                                                         </div>
                                                     </div>
@@ -8020,7 +8047,7 @@
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
-                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
 
@@ -8048,7 +8075,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_final_attach[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
                                             </div>
                                         </div>
