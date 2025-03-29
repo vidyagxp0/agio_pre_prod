@@ -625,9 +625,12 @@
                                         </div>
 
                                         <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
-                                            <label for="otherFieldsUser">Other (Source of Risk/Opportunity)</label>
+                                            <label for="otherFieldsUser">Other (Source of Risk/Opportunity)
+                                                    <span class="text-danger">*</span>
+                                            </label>
                                          
                                             <textarea name="other_source_of_risk" class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_source_of_risk }}</textarea>
+                                            <span class="text-danger" id="error_other_source_of_risk" style="display: none;">This field is required.</span>
                                     
                                         </div>
 
@@ -642,15 +645,29 @@
                                                     const selectedVal = $(this).val();
                                                     if (selectedVal === 'Other') {
                                                         $('#typeOfErrorBlock').show();
+                                                        $('textarea[name=other_source_of_risk]').prop('required', true);
                                                     } else {
                                                         $('#typeOfErrorBlock').hide();
+                                                        $('textarea[name=other_source_of_risk]').prop('required', false);
+                                                        $('#error_other_source_of_risk').hide(); // Hide error messa
                                                     }
                                                 });
 
                                                 // Optionally, check the current value when the page loads in case of form errors
                                                 if ($('select[name=source_of_risk]').val() === 'Other') {
                                                     $('#typeOfErrorBlock').show();
+                                                    $('textarea[name=other_source_of_risk]').prop('required', true);
                                                 }
+
+                                                        // Validate on form submission
+                                                    $('form').submit(function(e) {
+                                                        if ($('select[name=source_of_risk]').val() === 'Other' &&
+                                                            $('textarea[name=other_source_of_risk]').val().trim() === '') {
+                                                            e.preventDefault();
+                                                            $('#error_other_source_of_risk').show();
+                                                        }
+                                                    });
+
                                             });
                                         </script>
 
@@ -674,10 +691,11 @@
                                     </div>
 
                                     <div id="typeOfError" class="group-input col-6" style="display:none;">
-                                        <label for="otherFieldsUser">Other(Type)</label>
-                                        
-
-                                       <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_type }}</textarea>
+                                        <label for="otherFieldsUser">Other(Type)
+                                              <span class="text-danger">*</span>
+                                        </label>
+                                         <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_type }}</textarea>
+                                         <span class="text-danger" id="error_other_type" style="display: none;">This field is required.</span>
                                        
                                     </div>
 
@@ -692,15 +710,29 @@
                                                 const selectedVal = $(this).val();
                                                 if (selectedVal === 'Other Data') { // Corrected value check
                                                     $('#typeOfError').show();
+                                                    $('textarea[name=other_type]').prop('required', true);
                                                 } else {
                                                     $('#typeOfError').hide();
+                                                    $('textarea[name=other_type]').prop('required', false);
+                                                    $('#error_other_type').hide(); // Hide error message
+
                                                 }
                                             });
 
                                             // Optionally, check the current value when the page loads in case of form errors
                                             if ($('select[name=type]').val() === 'Other Data') { // Corrected value check
                                                 $('#typeOfError').show();
+                                                $('textarea[name=other_type]').prop('required', true);
                                             }
+
+                                                    // Validate on form submission
+                                            $('form').submit(function(e) {
+                                                if ($('select[name=type]').val() === 'Other Data' &&
+                                                    $('textarea[name=other_type]').val().trim() === '') {
+                                                    e.preventDefault();
+                                                    $('#error_other_type').show();
+                                                }
+                                            });
                                         });
                                     </script>
 
@@ -1008,8 +1040,11 @@
 
                                                     <div class="col-6">
                                                         <div id="rootCause" class="group-input" style="display:none;">
-                                                            <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
+                                                            <label for="otherFieldsUser">Other (Root Cause Methodology)
+                                                                <span class="text-danger">*</span>
+                                                            </label>
                                                             <textarea name="other_root_cause_methodology" id="summernote" class="form-control">{{ $data->other_root_cause_methodology ?? '' }}</textarea>
+                                                            <span class="text-danger" id="error_other_root_cause_methodology" style="display: none;">This field is required.</span>
                                                         </div>
                                                     </div>
 
@@ -1022,9 +1057,14 @@
                                                                 const selectedVals = $('#root-cause-methodology').val();
                                                                 console.log("Selected Values:", selectedVals); // Debugging ke liye value check karo
                                                                 if (selectedVals && selectedVals.includes('Other Detail')) {
-                                                                    $('#rootCause').show(); // Agar 'Other Detail' select hai to input field dikhao
+                                                                    $('#rootCause').show();
+                                                                    $('textarea[name=other_root_cause_methodology]').prop('required', true);
+                                                                     
                                                                 } else {
                                                                     $('#rootCause').hide(); // Nahi to input field chhupa do
+                                                                    $('textarea[name=other_root_cause_methodology]').prop('required', false);
+                                                                    $('#error_other_root_cause_methodology').hide(); // Hide error message
+
                                                                 }
                                                             }
 
@@ -1035,6 +1075,16 @@
 
                                                             // Jab page load ho tab bhi current value check karke input field ko set karo
                                                             toggleOtherField();
+
+                                                            // Validate on form submission
+                                                            $('form').submit(function(e) {
+                                                                if ($('#root-cause-methodology').val().includes('Other Detail') &&
+                                                                    $('textarea[name=other_root_cause_methodology]').val().trim() === '') {
+                                                                    e.preventDefault();
+                                                                    $('#error_other_root_cause_methodology').show();
+                                                                }
+                                                            });
+
                                                         });
                                                     </script>
 
@@ -1435,14 +1485,16 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Summary <span
-                                                    class="text-danger"></span></label>
+                                            <label for="investigation_summary">Risk Assessment Summary<span
+                                                    class="text-danger">*</span></label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Conclusion</label>
+                                            <label for="investigation_summary">Risk Assessment Conclusion
+                                                  <span class="text-danger">*</span>
+                                            </label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="r_a_conclussion"> {{ $data->r_a_conclussion }}</textarea>
                                         </div>
                                     </div>

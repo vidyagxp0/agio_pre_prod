@@ -9343,7 +9343,7 @@ class RiskManagementController extends Controller
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
                 $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
                 if ($riskAssement->stage == 1) {
-                     if (empty($riskAssement->document_used_risk) || empty($riskAssement->Brief_description) ||empty($riskAssement->purpose) || empty($riskAssement->reason_for_revision)) {
+                     if (empty($riskAssement->document_used_risk) || empty($riskAssement->Brief_description) ||empty($riskAssement->purpose) || empty($riskAssement->reason_for_revision) || empty($riskAssement->scope) || empty($riskAssement->short_description)) {
                         Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
                                 'message' => 'Genral Information Tab is yet to be filled!',
@@ -9438,11 +9438,11 @@ class RiskManagementController extends Controller
                     // }
 
                     // Check HOD remark value
-                    if (empty($riskAssement->hod_des_rev_comm) || empty($riskAssement->root_cause_methodology)) {
+                    if (empty($riskAssement->hod_des_rev_comm) || empty($riskAssement->root_cause_methodology) || empty($riskAssement->investigation_summary) || empty($riskAssement->r_a_conclussion)) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD / Designee And Risk Assessment Mandatory Tab is yet to be filled!',
+                            'message' => 'HOD / Designee,Risk Assessment Mandatory And CFT Review Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
 
@@ -9455,21 +9455,21 @@ class RiskManagementController extends Controller
                         ]);
                     }
 
-                    if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'CFT Review Tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
+                    // if (!$Cft->Production_Table_Review || !$Cft->Production_Injection_Review || !$Cft->ProductionLiquid_Review || !$Cft->Store_Review || !$Cft->ResearchDevelopment_Review || !$Cft->Microbiology_Review || !$Cft->RegulatoryAffair_Review || !$Cft->CorporateQualityAssurance_Review  || !$Cft->Quality_review || !$Cft->Quality_Assurance_Review || !$Cft->Engineering_review || !$Cft->Environment_Health_review || !$Cft->Human_Resource_review) {
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'CFT Review Tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'CFT Reviews'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'CFT Reviews'
+                    //     ]);
+                    // }
 
                     $riskAssement->stage = "3";
                     $riskAssement->status = "CFT Review";

@@ -9233,7 +9233,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA/CQA Review And CFT Tab Tab is yet to be filled'
+                        'message' => 'QA/CQA Review And CFT Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();

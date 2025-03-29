@@ -774,6 +774,8 @@
                                                                 $('#justification_div').hide();
                                                                 $('#justification').val('').removeAttr('required'); // Clear value and remove required
                                                                 $('#justification_error').hide();
+                                                                $('#risk_assessment_related_record').attr('required', 'required');
+                                                                $('#migration_action').attr('required', 'required');
                                                             } else if (riskAssessmentRequired === 'no') {
                                                                 $('#riskAssessmentButton').hide();
                                                                 $('#justification_div').show();
@@ -942,24 +944,38 @@
                                             </div>
 
                                             <script>
-                                                $(document).ready(function() {
+                                                $(document).ready(function () {
                                                     function toggleOtherSpecifyField() {
                                                         var changeRelatedTo = $('#change_related_to').val();
                                                         if (changeRelatedTo === 'other') {
                                                             $('#other_specify_div').show();
+                                                            $('#other_specify').attr('required', 'required'); // Make field required
                                                         } else {
                                                             $('#other_specify_div').hide();
+                                                            $('#other_specify').removeAttr('required'); // Remove required if not Other
                                                         }
                                                     }
 
                                                     toggleOtherSpecifyField(); // Initial check
 
                                                     // Update field visibility on dropdown change
-                                                    $('#change_related_to').change(function() {
+                                                    $('#change_related_to').change(function () {
                                                         toggleOtherSpecifyField();
+                                                    });
+
+                                                    // Form validation
+                                                    $('form').submit(function (event) {
+                                                        var changeRelatedTo = $('#change_related_to').val();
+                                                        var otherSpecify = $('#other_specify').val().trim();
+
+                                                        if (changeRelatedTo === 'other' && !otherSpecify) {
+                                                            alert('Please specify a value for "Other".'); // Show error message
+                                                            event.preventDefault(); // Prevent form submission
+                                                        }
                                                     });
                                                 });
                                             </script>
+
 
 
                                             <div class="col-lg-6">
@@ -999,24 +1015,38 @@
                                             </div>
 
                                             <script>
-                                                $(document).ready(function() {
-                                                    function toggleOtherSpecifyField() {
-                                                        var changeRelatedTo = $('#initiated_through').val();
-                                                        if (changeRelatedTo === 'others') {
+                                                $(document).ready(function () {
+                                                    function toggleInitiatedThroughField() {
+                                                        var initiatedThrough = $('#initiated_through').val();
+                                                        if (initiatedThrough === 'others') {
                                                             $('#initiated_through_div').show();
+                                                            $('textarea[name="initiated_through_req"]').attr('required', 'required'); // Make field required
                                                         } else {
                                                             $('#initiated_through_div').hide();
+                                                            $('textarea[name="initiated_through_req"]').removeAttr('required'); // Remove required if not "Others"
                                                         }
                                                     }
 
-                                                    toggleOtherSpecifyField(); // Initial check
+                                                    toggleInitiatedThroughField(); // Initial check
 
                                                     // Update field visibility on dropdown change
-                                                    $('#initiated_through').change(function() {
-                                                        toggleOtherSpecifyField();
+                                                    $('#initiated_through').change(function () {
+                                                        toggleInitiatedThroughField();
+                                                    });
+
+                                                    // Form validation
+                                                    $('form').submit(function (event) {
+                                                        var initiatedThrough = $('#initiated_through').val();
+                                                        var initiatedThroughReq = $('textarea[name="initiated_through_req"]').val().trim();
+
+                                                        if (initiatedThrough === 'others' && !initiatedThroughReq) {
+                                                            alert('Please specify a value for "Others".'); // Show error message
+                                                            event.preventDefault(); // Prevent form submission
+                                                        }
                                                     });
                                                 });
                                             </script>
+
 
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1292,7 +1322,7 @@
                                                     <label for="migration-action">Comments
                                                     <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="migration_action"
+                                                    <textarea name="migration_action" id="migration_action"
                                                      {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                       
                                                      >{{ $data->migration_action }}</textarea>
