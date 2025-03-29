@@ -272,14 +272,6 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">QA/CQA Approval</th>
-                        <td class="w-80">
-                            @if ($data->approvers)
-                                {{ Helpers::getInitiatorName($data->approvers) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
                     </tr>
                 </table>
 
@@ -307,6 +299,16 @@
                 </div>
 
                 <table>
+                    <tr>
+                        <th class="w-20">QA/CQA Approval</th>
+                        <td class="w-80">
+                            @if ($data->approvers)
+                                {{ Helpers::getInitiatorName($data->approvers) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                     <tr>
                         <th class="w-20">Current Due Date (Parent)</th>
                         <td class="w-80">
