@@ -1524,7 +1524,7 @@ if (is_array($request->action) && !empty($request->action)) {
                     if (!$existingHistory) {
                         $history = new AuditTrialObservation();
                         $history->Observation_id = $id;
-                        $history->activity_type = "Response Action" . ' (' . ($actionCounter) . ')';
+                        $history->activity_type = "Response Details" . ' (' . ($actionCounter) . ')';
                         $history->previous = $lastResponseAction;
                         $history->current = $currentResponseAction;
                         $history->comment = $request->action_taken_comment;

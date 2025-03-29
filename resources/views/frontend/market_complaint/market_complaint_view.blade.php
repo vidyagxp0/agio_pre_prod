@@ -726,7 +726,7 @@
                             
 
                        
-
+                         
                             <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date
@@ -747,12 +747,12 @@
                                                 value="{{ $data->due_date_gi }}"
                                                 oninput="handleDateInput(this, 'due_date_display')"
                                                 {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $data->stage == 0 || $data->stage == 14 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}  />
+                                                {{ $data->stage == 0 || $data->stage == 14 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : 'readonly' }}  />
                                         </div>
                                     </div>
                                 </div>
 
-                                {{-- javascript for due date --}}
+                              
                                 <script>
                                     function handleDateInput(dateInput, displayId) {
                                         const displayElement = document.getElementById(displayId);
@@ -768,15 +768,7 @@
                                     }
                                 </script>
 
-
-
-
-
-
-
-
-
-
+                               
 
 
                             {{-- <div class="col-lg-6">
@@ -3339,121 +3331,140 @@
                         <div class="row">
                             <div class="sub-head col-12"> Investigation</div>
                             <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Investigation Team
-                                        <button type="button" id="investigation_team_add"
-                                        {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                    <table class="table table-bordered" id="Investing_team" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Sr. No.</th>
-                                                    <th>Name</th>
-                                                    <th>Department</th>
-                                                    <th>Remarks</th>
-                                                    <th>Action</th>
+    <div class="group-input">
+        <label for="root_cause">
+            Investigation Team
+            <button type="button" id="investigation_team_add" {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
+            <span class="text-primary" data-bs-toggle="modal"
+                data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
+                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="Investing_team" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th style="width: 100px;">Sr. No.</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $investingTeamIndex = 1;
+                    @endphp
+                    @if (!empty($investing_team) && is_array($investing_team->data))
+                        @foreach ($investing_team->data as $index => $inves)
+                            <tr>
+                                <td>
+                                    <input disabled type="text" name="Investing_team[{{ $index }}][serial]"
+                                        value="{{ $investingTeamIndex++ }}">
+                                </td>
+                                <td>
+                                    <select class="selectUserDropdown" name="Investing_team[{{ $index }}][name_inv_tem]">
+                                        <option value="">-Select-</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}" 
+                                                data-department-id="{{ $user->departmentid ?? '' }}"
+                                                {{ isset($inves['name_inv_tem']) && $inves['name_inv_tem'] == $user->id ? 'selected' : '' }}>
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </td>
 
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $investingTeamIndex = 1;
-                                                @endphp
-                                                {{-- @if (!empty($investing_team)) --}}
-                                                @if (!empty($investing_team) && is_array($investing_team->data))
-                                                    @foreach ($investing_team->data as $index => $inves)
-                                                        <tr>
-                                                            <td><input disabled type="text"
-                                                                    name="Investing_team[{{ $index }}][serial]"
-                                                                    value="{{ $investingTeamIndex++ }}"
-                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td>
-                                                                    <select id="select-state" placeholder="Select..." name="Investing_team[{{ $index }}][name_inv_tem]" @if ($data->stage != 3) readonly @endif required>
-                                                                                <option value="">-Select-</option>
-                                                                                @foreach ($users as $value)
-                                                                                    <option value="{{ $value->id }}"
-                                                                                        {{ isset($inves['name_inv_tem']) && $inves['name_inv_tem'] == $value->id ? 'selected' : '' }}>
-                                                                                        {{ $value->name }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                    </select>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Investing_team[{{ $index }}][department_inv_tem]"
-                                                                    value="{{ $inves['department_inv_tem'] }}"
-                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td><input type="text"
-                                                                    name="Investing_team[{{ $index }}][remarks_inv_tem]"
-                                                                    value="{{ $inves['remarks_inv_tem'] }}"
-                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>
-                                                            </td>
-                                                            <td><button type="text" class="removeRowBtn"
-                                                                    {{ $data->stage == 3 ? '' : 'readonly' }}>Remove</button>
-                                                            </td>
+                                 <td>
+                                    <input type="text" class="departmentInput"
+                                        name="Investing_team[{{ $index }}][department_inv_tem]"
+                                        value="{{ $inves['department_inv_tem'] ?? '' }}" readonly>
+                                </td>
+                                <td>
+                                    <input type="text" name="Investing_team[{{ $index }}][remarks_inv_tem]"
+                                        value="{{ $inves['remarks_inv_tem'] ?? '' }}">
+                                </td>
+                                <td>
+                                    <button type="button" class="removeRowBtn">Remove</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td colspan="5">No data found</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-                                                        </tr>
-                                                    @endforeach
-                                                @else
-                                                    <tr>
-                                                        <td colspan="4">No data found</td>
-                                                    </tr>
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+<script>
+$(document).ready(function() {
+    // Add new row to the table
+    $('#investigation_team_add').click(function(e) {
+        e.preventDefault();
 
-                            <script>
-                               $(document).ready(function() {
-                                $('#investigation_team_add').click(function(e) {
-                                    e.preventDefault();
+        function generateTableRow(serialNumber) {
+            var users = @json($users);
 
-                                    function generateTableRow(serialNumber) {
-                                        var users = @json($users); // Fetch users from Laravel Blade
-                                        
-                                        var selectOptions = '<option value="">-Select-</option>';
-                                        users.forEach(function(user) {
-                                            selectOptions += '<option value="' + user.id + '">' + user.name + '</option>';
-                                        });
-                                        
-                                        var html = '<tr>' +
-                                            '<td><input disabled type="text" name="Investing_team[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                            '<td>' +
-                                                '<select name="Investing_team[' + serialNumber + '][name_inv_tem]" required>' +
-                                                    selectOptions +
-                                                '</select>' +
-                                            '</td>' +
-                                            '<td><input type="text" name="Investing_team[' + serialNumber + '][department_inv_tem]"></td>' +
-                                            '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
-                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                            '</tr>';
-                                        return html;
-                                    }
+            var selectOptions = '<option value="">-Select-</option>';
+            users.forEach(function(user) {
+                selectOptions += '<option value="' + user.id + '" data-department-id="' + (user.departmentid || '') + '">' + user.name + '</option>';
+            });
 
-                                    var tableBody = $('#Investing_team tbody');
-                                    var rowCount = tableBody.children('tr').length;
-                                    var newRow = generateTableRow(rowCount);
-                                    tableBody.append(newRow);
-                                });
+            var html = '<tr>' +
+                '<td><input disabled type="text" name="Investing_team[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                '<td>' +
+                    '<select class="selectUserDropdown" name="Investing_team[' + serialNumber + '][name_inv_tem]" required>' +
+                        selectOptions +
+                    '</select>' +
+                '</td>' +
+                '<td><input type="text" class="departmentInput" name="Investing_team[' + serialNumber + '][department_inv_tem]" readonly></td>' +
+                '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
+                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                '</tr>';
+            return html;
+        }
 
-                                // Event delegation for dynamically added elements
-                                $(document).on('click', '.removeRowBtn', function() {
-                                    $(this).closest('tr').remove();
-                                });
-                            });
+        var tableBody = $('#Investing_team tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount);
+        tableBody.append(newRow);
+    });
 
-                            </script>
+    // Remove row from the table
+    $(document).on('click', '.removeRowBtn', function() {
+        $(this).closest('tr').remove();
+    });
 
+    // Fetch department name dynamically when a user is selected
+    $(document).on("change", ".selectUserDropdown", function () {
+        let selectedOption = $(this).find(":selected");
+        let departmentId = selectedOption.data("department-id");
+        let departmentInput = $(this).closest("tr").find(".departmentInput");
+
+        if (departmentId) {
+            fetch(`/get-department-name/${departmentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    departmentInput.val(data.department_name || "N/A");
+                })
+                .catch(error => {
+                    console.error("Error fetching department name:", error);
+                });
+        } else {
+            departmentInput.val("N/A");
+        }
+    });
+});
+</script>
+
+
+                            
+                                
                             {{-- <div class="col-md-12 mb-3">
                             <div class="group-input">
                                 <label for="Review of Batch manufacturing record (BMR)">Review

@@ -784,7 +784,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Initiatior Department';
             $history->previous = "Null";
-            $history->current =  Helpers::getFullDepartmentName($internalAudit->Initiator_Group);
+            $history->current =  Helpers::getUsersDepartmentName(Auth::user()->departmentid) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

@@ -9008,11 +9008,11 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
             if ($changeControl->stage == 1) {
 
-                if (empty($changeControl->severity) || empty($changeControl->short_description) || empty($changeControl->risk_assessment_required) || empty($changeControl->hod_person) || empty($changeControl->initiated_through) || empty($changeControl->others) || empty($changeControl->bd_domestic) || empty($changeControl->bd_domestic) || empty($changeControl->current_practice) || empty($changeControl->proposed_change) || empty($changeControl->reason_change) || empty($changeControl->other_comment)) {
+                if (empty($changeControl->risk_assessment_required) || empty($changeControl->hod_person) || empty($changeControl->short_description) || empty($changeControl->severity) || empty($changeControl->initiated_through) || empty($changeControl->bd_domestic) || empty($changeControl->current_practice) || empty($changeControl->proposed_change) || empty($changeControl->reason_change)) {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'Pls Fill General Information fields'
+                        'message' => 'Pls Fill required fields'
                     ]);
 
                     return redirect()->back();
@@ -9228,12 +9228,12 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
                     return back();
             }
             if ($changeControl->stage == 3) {
-                if (empty($review->qa_comments) || empty($review->severity_level1)  )
+                if (empty($review->qa_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
                         'title' => 'Mandatory Fields!',
-                        'message' => 'QA/CQA Review And CFT Tab Tab is yet to be filled'
+                        'message' => 'QA/CQA Review And CFT Tab is yet to be filled'
                     ]);
 
                     return redirect()->back();
