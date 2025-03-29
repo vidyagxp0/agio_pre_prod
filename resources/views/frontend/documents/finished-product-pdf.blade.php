@@ -276,7 +276,7 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
+            max-width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -285,7 +285,14 @@
             text-align: justify;
             text-justify: inter-word;
             margin: 0;
-            max-width: 500px;
+            max-width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -304,7 +311,7 @@
         }
 
         .table-containers {
-            width: 680px;
+            width: 690px;
             overflow-x: fixed;
         }
 
@@ -321,7 +328,7 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
+            max-width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -667,9 +674,9 @@
     <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
             <tr>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
+                <th style="border: 1px solid black; width: 18%; font-weight: bold;">Revision No.</th>
                 <th style="border: 1px solid black; font-weight: bold; width:30%">Change Control No.</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
+                <th style="border: 1px solid black; width: 18%; font-weight: bold;">Effective Date</th>
                 <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
             </tr>
         </thead>
@@ -689,7 +696,6 @@
                                     {{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}
                                 @endif
                             </td>
-                            {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}</td> --}}
                             <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason'] ?? '' }}</td>
                         </tr>
                     @endforeach

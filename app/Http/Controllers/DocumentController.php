@@ -555,7 +555,7 @@ class DocumentController extends Controller
             $document->custom_sample = $request->custom_sample;
             $document->reference = $request->reference;
             $document->sampling_instructions = $request->sampling_instructions;
-
+            $document->select_specification = $request->select_specification;
            //Cleaning Validation Specification
            $document->product_name_cvs = $request->product_name_cvs;
            $document->generic_name_cvs = $request->generic_name_cvs;
@@ -7327,9 +7327,6 @@ class DocumentController extends Controller
         return response()->json(['revision_pams_data' => $historyData]);
     }
     
-
-    
-  
     
 
     public function getRecordsByType(Request $request)
@@ -7345,10 +7342,8 @@ class DocumentController extends Controller
             $formattedRecord = $data->document_type_id . "/" . str_pad($data->id, 4, '0', STR_PAD_LEFT);
             $formattedRecords[] = $formattedRecord;
         }
-    
         return response()->json($formattedRecords);
-    }
-    
+    }    
     
 
     public function viewAttachments($id)

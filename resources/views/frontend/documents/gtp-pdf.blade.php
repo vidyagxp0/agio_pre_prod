@@ -127,11 +127,17 @@
             z-index: 1000;
         }
 
-        body {
+        /* body {
             margin-top: 260px;
             margin-bottom: 180px;
+        } */
+        body{
+            margin-top: 180px;
+            margin-bottom: 140px;
+            padding-top: 95px;
+            padding-bottom: 40px; 
         }
-
+        
         footer {
             position: fixed;
             bottom: 0;
@@ -299,6 +305,14 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
+
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
 
         #isPasted img {
             max-width: 500px !important; /* Ensure image doesn't overflow the cell */

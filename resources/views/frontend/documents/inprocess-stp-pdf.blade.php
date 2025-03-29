@@ -301,6 +301,13 @@
             overflow-wrap: break-word;
         }
 
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
         #isPasted img {
             max-width: 500px !important; /* Ensure image doesn't overflow the cell */
             height: 100%; /* Maintain image aspect ratio */

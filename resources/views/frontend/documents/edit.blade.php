@@ -190,6 +190,13 @@
             overflow-wrap: break-word;
         }
 
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
         #isPasted img {
             max-width: 500px !important;
             height: 100%;
@@ -10330,8 +10337,16 @@
                                     <div class="group-input">
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
-                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "FPSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+
+                                            $revisionNumber = $document->revised == 'Yes' 
+                                                ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) 
+                                                : '00';
+
+                                            // select_specification se last numeric part extract karna
+                                            preg_match('/\d+$/', $document->select_specification, $matches);
+                                            $recordNumber = isset($matches[0]) ? str_pad($matches[0], 4, '0', STR_PAD_LEFT) : '0000';
+
+                                            $mfpstpNumber = "FPSTP/" . $recordNumber . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10392,6 +10407,7 @@
                                                                 ? json_decode($RevisionGridfpstpData->data, true) 
                                                                 : (is_array($RevisionGridfpstpData->data) ? $RevisionGridfpstpData->data : []);
                                                         }
+                                                
 
                                                     @endphp
 

@@ -514,6 +514,13 @@
             overflow-wrap: break-word;
         }
 
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
         #isPasted img {
             max-width: 500px !important;
             height: 100%;

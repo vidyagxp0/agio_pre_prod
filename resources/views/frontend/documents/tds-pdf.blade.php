@@ -558,6 +558,13 @@
             display: block;
             margin: 5px auto;
         }
+
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
         
     </style>
 

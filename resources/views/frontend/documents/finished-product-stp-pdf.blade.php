@@ -360,6 +360,13 @@
             overflow-wrap: break-word;
         }
 
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
         #isPasted img {
             max-width: 500px !important; /* Ensure image doesn't overflow the cell */
             height: 100%; /* Maintain image aspect ratio */
@@ -452,21 +459,22 @@
                 <tr>
                     <td style="width: 50%; padding: 5px; text-align: left; font-weight: bold;" class="doc-num">STP No.:
                         <span>
+                        @php
+                            preg_match('/\d+$/', $document->select_specification, $matches);
+                            $recordNumber = isset($matches[0]) ? str_pad($matches[0], 4, '0', STR_PAD_LEFT) : '0000';
+                        @endphp
                         @if($document->revised == 'Yes')
-                            @php
-                                $revisionNumber = str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT);
-                            @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    FPSTP/{{ $recordNumber }}-{{ $revisionNumber }}
                                 @else
-                                    FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    FPSTP/{{$recordNumber }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                   FPSTP/{{ $recordNumber }}-00
                                 @else
-                                   FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                   FPSTP/{{ $recordNumber }}-00
                                 @endif
                         @endif
                         </span>
@@ -505,7 +513,7 @@
                                 @php
                                     $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
                                 @endphp
-                                FPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                FPSTP/{{ $recordNumber }}-{{ $revisionNumber }}
                             @else                        
                                 Nil
                             @endif
