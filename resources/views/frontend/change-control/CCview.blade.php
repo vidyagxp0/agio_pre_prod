@@ -666,7 +666,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator"><b>Initiator Department</b></label>
-                                                    <input disabled type="text" name="Initiator_Group" id="initiator_group" 
+                                                    <input aria-readonly="$_ENV" type="text" name="Initiator_Group" id="initiator_group" 
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
                                             </div>
@@ -676,7 +676,7 @@
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiation Department</label>
-                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="Initiator_Group" id="initiator_group" {{ $data->stage == 0 || $data->stage == 13 ? '' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate Quality Assurance</option>
@@ -764,65 +764,78 @@
                                                 });
                                             </script>  --}}
 
-                                            <script>
-                                                $(document).ready(function() {
-                                                    function toggleRiskAssessmentAndJustification() {
-                                                        var riskAssessmentRequired = $('#risk_assessment_required').val();
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        function toggleRiskAssessmentAndJustification() {
+                                                            var riskAssessmentRequired = $('#risk_assessment_required').val();
 
-                                                        // Toggle Risk Assessment Button
-                                                        if (riskAssessmentRequired === 'yes') {
-                                                            $('#riskAssessmentButton').show();
-                                                            $('#justification_div').hide(); // Hide justification when "Yes" is selected
-                                                        } else if (riskAssessmentRequired === 'no') {
-                                                            $('#riskAssessmentButton').hide();
-                                                            $('#justification_div').show(); // Show justification when "No" is selected
-                                                        } else {
-                                                            $('#riskAssessmentButton').hide();
-                                                            $('#justification_div').hide(); // Hide everything if nothing is selected
+                                                            if (riskAssessmentRequired === 'yes') {
+                                                                $('#riskAssessmentButton').show();
+                                                                $('#justification_div').hide();
+                                                                $('#justification').val('').removeAttr('required'); // Clear value and remove required
+                                                                $('#justification_error').hide();
+                                                                $('#risk_assessment_related_record').attr('required', 'required');
+                                                                $('#migration_action').attr('required', 'required');
+                                                            } else if (riskAssessmentRequired === 'no') {
+                                                                $('#riskAssessmentButton').hide();
+                                                                $('#justification_div').show();
+                                                                $('#justification').attr('required', 'required'); // Make justification required
+                                                            } else {
+                                                                $('#riskAssessmentButton').hide();
+                                                                $('#justification_div').hide();
+                                                                $('#justification').removeAttr('required');
+                                                                $('#justification_error').hide();
+                                                            }
                                                         }
-                                                    }
 
-                                                    toggleRiskAssessmentAndJustification(); // Initial call to set the correct state
+                                                        toggleRiskAssessmentAndJustification(); // Initial call
 
-                                                    // Call the function on dropdown change
-                                                    $('#risk_assessment_required').change(function() {
-                                                        toggleRiskAssessmentAndJustification();
+                                                        $('#risk_assessment_required').change(function() {
+                                                            toggleRiskAssessmentAndJustification();
+                                                        });
+
+                                                        $('form').submit(function(event) {
+                                                            if ($('#risk_assessment_required').val() === 'no' && !$('#justification').val().trim()) {
+                                                                $('#justification_error').show();
+                                                                event.preventDefault(); // Prevent form submission
+                                                            }
+                                                        });
                                                     });
-                                                });
-                                            </script>
+                                                </script>
 
                                                 <script>
-                                                $(document).ready(function() {
-                                                    function toggleButtons() {
-                                                        var selectedValue = $('#RA_head_required').val();
+                                                    $(document).ready(function() {
+                                                        function toggleButtons() {
+                                                            var selectedValue = $('#RA_head_required').val();
 
-                                                        console.log("Selected value:", selectedValue); // Debugging output
+                                                            console.log("Selected value:", selectedValue); // Debugging output
 
-                                                        if (selectedValue === 'Yes') {
-                                                            $('#actionButton').show();
-                                                            $('#pendingRAApproval').show();
-                                                            console.log("show"); // Debugging output
-                                                        } else {
-                                                            $('#actionButton').hide();
-                                                            $('#pendingRAApproval').hide();
-                                                            console.log("hide"); // Debugging output
+                                                            if (selectedValue === 'Yes') {
+                                                                $('#actionButton').show();
+                                                                $('#pendingRAApproval').show();
+                                                                console.log("show"); // Debugging output
+                                                            } else {
+                                                                $('#actionButton').hide();
+                                                                $('#pendingRAApproval').hide();
+                                                                console.log("hide"); // Debugging output
+                                                            }
                                                         }
-                                                    }
 
-                                                    // Handle change event
-                                                    $('#RA_head_required').on('change', function() {
+                                                        // Handle change event
+                                                        $('#RA_head_required').on('change', function() {
+                                                            toggleButtons();
+                                                        });
+
+                                                        // Handle initial state
                                                         toggleButtons();
                                                     });
-
-                                                    // Handle initial state
-                                                    toggleButtons();
-                                                });
                                                 </script>
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Risk Assessment Required">Risk Assessment Required? </label>
-                                                    <select name="risk_assessment_required" id="risk_assessment_required" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <label for="Risk Assessment Required">Risk Assessment Required?<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                </label>
+                                                    <select name="risk_assessment_required" id="risk_assessment_required" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
                                                         <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
@@ -842,11 +855,10 @@
 
                                             <div class="col-lg-6" id="justification_div" style="display:none;">
                                                 <div class="group-input">
-                                                    <label for="Justification">Justification</label>
-                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
-                                                    <!-- @error('justification')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror -->
+                                                    <label for="Justification">Justification <span class="text-danger">*</span></label>
+                                                    <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." 
+                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
+                                                    <span id="justification_error" class="text-danger" style="display: none;">This field is required.</span>
                                                 </div>
                                             </div>
 
@@ -863,8 +875,10 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="hod_person">HOD Person</label>
-                                                    <select name="hod_person" id="hod_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} >
+                                                    <label for="hod_person">HOD Person
+                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <select name="hod_person" id="hod_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
                                                         <option value="">Select HOD Persion</option>
                                                         @if($users)
                                                             @foreach($users as $user)
@@ -903,7 +917,7 @@
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To
                                                     @if($data->stage == 1) <span class="text-danger">*</span>@endif</label>
-                                                    <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>
                                                         <option value="">-- Select --</option>
                                                         <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
                                                         <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
@@ -921,7 +935,7 @@
                                             <!-- Textbox for 'Other' option -->
                                             <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                                 <div class="group-input">
-                                                    <label for="other_specify">Please specify</label>
+                                                    <label for="other_specify">Please specify<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span></label>
                                                     <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
                                                     <!-- @error('other_specify')
                                                         <div class="text-danger">{{ $message }}</div>
@@ -930,32 +944,47 @@
                                             </div>
 
                                             <script>
-                                                $(document).ready(function() {
+                                                $(document).ready(function () {
                                                     function toggleOtherSpecifyField() {
                                                         var changeRelatedTo = $('#change_related_to').val();
                                                         if (changeRelatedTo === 'other') {
                                                             $('#other_specify_div').show();
+                                                            $('#other_specify').attr('required', 'required'); // Make field required
                                                         } else {
                                                             $('#other_specify_div').hide();
+                                                            $('#other_specify').removeAttr('required'); // Remove required if not Other
                                                         }
                                                     }
 
                                                     toggleOtherSpecifyField(); // Initial check
 
                                                     // Update field visibility on dropdown change
-                                                    $('#change_related_to').change(function() {
+                                                    $('#change_related_to').change(function () {
                                                         toggleOtherSpecifyField();
+                                                    });
+
+                                                    // Form validation
+                                                    $('form').submit(function (event) {
+                                                        var changeRelatedTo = $('#change_related_to').val();
+                                                        var otherSpecify = $('#other_specify').val().trim();
+
+                                                        if (changeRelatedTo === 'other' && !otherSpecify) {
+                                                            alert('Please specify a value for "Other".'); // Show error message
+                                                            event.preventDefault(); // Prevent form submission
+                                                        }
                                                     });
                                                 });
                                             </script>
 
 
+
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Initiator Group">Initiated Through</label>
+                                                    <label for="Initiator Group">Initiated Through
+                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
                                                     <div><small class="text-primary">Please select related information</small></div>
-                                                    <select name="initiated_through"
-                                                        onchange="otherController(this.value, 'others', 'initiated_through_req')" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="initiated_through" id="initiated_through"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
                                                         <option value="">Enter Your Selection Here</option>
                                                         <option @if ($data->initiated_through == 'recall') selected @endif
                                                             value="recall">Recall</option>
@@ -978,12 +1007,46 @@
                                             </div>
 
                                             <div class="col-lg-6">
-                                                <div class="group-input" id="initiated_through_req" style="display: none;">
+                                                <div class="group-input" id="initiated_through_div" style="display: none;">
                                                     <label for="initiated_through">Others<span
-                                                            class="text-danger d-none">*</span></label>
-                                                    <textarea name="initiated_through_req"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
+                                                            class="text-danger">*</span></label>
+                                                    <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
                                                 </div>
                                             </div>
+
+                                            <script>
+                                                $(document).ready(function () {
+                                                    function toggleInitiatedThroughField() {
+                                                        var initiatedThrough = $('#initiated_through').val();
+                                                        if (initiatedThrough === 'others') {
+                                                            $('#initiated_through_div').show();
+                                                            $('textarea[name="initiated_through_req"]').attr('required', 'required'); // Make field required
+                                                        } else {
+                                                            $('#initiated_through_div').hide();
+                                                            $('textarea[name="initiated_through_req"]').removeAttr('required'); // Remove required if not "Others"
+                                                        }
+                                                    }
+
+                                                    toggleInitiatedThroughField(); // Initial check
+
+                                                    // Update field visibility on dropdown change
+                                                    $('#initiated_through').change(function () {
+                                                        toggleInitiatedThroughField();
+                                                    });
+
+                                                    // Form validation
+                                                    $('form').submit(function (event) {
+                                                        var initiatedThrough = $('#initiated_through').val();
+                                                        var initiatedThroughReq = $('textarea[name="initiated_through_req"]').val().trim();
+
+                                                        if (initiatedThrough === 'others' && !initiatedThroughReq) {
+                                                            alert('Please specify a value for "Others".'); // Show error message
+                                                            event.preventDefault(); // Prevent form submission
+                                                        }
+                                                    });
+                                                });
+                                            </script>
+
 
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1026,16 +1089,19 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="others">If Others</label>
-                                                    <textarea name="others">{{ $data->If_Others }}</textarea>
+                                                    <label for="others">If Others<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <textarea name="others" {{ $data->stage == 1 ? 'required' : '' }}>{{ $data->If_Others }}</textarea>
                                                 </div>
                                             </div>
 
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="others">Description of Change </label>
-                                                    <textarea name="bd_domestic">{{ $data->bd_domestic }}</textarea>
+                                                    <label for="others">Description of Change
+                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <textarea name="bd_domestic" {{ $data->stage == 1 ? 'required' : '' }}>{{ $data->bd_domestic }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1216,7 +1282,9 @@
 
                                         <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Related Records">Related Records</label>
+                                        <label for="Related Records">Related Records
+                                          <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span> 
+                                        </label>
                                         <select {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple
                                             id="risk_assessment_related_record" name="risk_assessment_related_record[]"
                                             placeholder="Select Reference Records">
@@ -1251,8 +1319,13 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="migration-action">Comments</label>
-                                                    <textarea name="migration_action"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->migration_action }}</textarea>
+                                                    <label for="migration-action">Comments
+                                                    <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
+                                                    <textarea name="migration_action" id="migration_action"
+                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                      
+                                                     >{{ $data->migration_action }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1289,7 +1362,7 @@
                                                         <input type="file" id="myfile" name="risk_assessment_atch[]"
                                                             oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple>
                                                     </div>
-                                                </div>
+                                                 
 
                                             </div>
 
@@ -1316,34 +1389,34 @@
 
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="current-practice">
-                                                        Current Practice
+                                                    <label for="current-practice">Current Practice
+                                                       <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->current_practice }}</textarea>
+                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="proposed_change">
-                                                        Proposed Change
+                                                    <label for="proposed_change">Proposed Change
+                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->proposed_change }}</textarea>
+                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->proposed_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="reason_change">
-                                                        Reason for Change
+                                                    <label for="reason_change">Reason for Change
+                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->reason_change }}</textarea>
+                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->reason_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="other_comment">
-                                                        Any Other Comments
+                                                    <label for="other_comment">Any Other Comments
+                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $docdetail->other_comment }}</textarea>
+                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->other_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-12">
@@ -1378,7 +1451,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="change_details_attachments[]"
-                                                                {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                 oninput="addMultipleFiles(this, 'change_details_attachments')" multiple>
                                                         </div>
                                                     </div>
@@ -1475,7 +1548,7 @@
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
                                     
-                                            <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                            <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} {{ $data->stage == 2 ? 'required' : '' }}>{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
 
@@ -1796,12 +1869,14 @@
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Classification of Change </label>
+                                                    <label for="severity-level">Classification of Change
+                                                        @if($data->stage == 3) <span class="text-danger">*</span>@endif
+                                                    </label>
                                                     <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
                                                         risks.</span> -->
-                                                    <select name="severity_level1" {{  $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="severity_level1" {{  $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 3  ? 'required' : '' }} >
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->severity_level1 == 'minor') selected @endif
                                                             value="minor">Minor</option>
@@ -8002,7 +8077,7 @@
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
                                                 @if($data->stage==5) <span class="text-danger">*</span>@endif
                                             </label>
-                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
+                                            <textarea name="qa_final_comments"{{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{ $cc_cfts->qa_final_comments }}</textarea>
                                         </div>
 
 
@@ -8030,7 +8105,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_final_attach[]"
-                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}
+                                                    {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_final_attach')" multiple>
                                             </div>
                                         </div>
@@ -8252,7 +8327,7 @@
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA/CQA Head / Designee Approval Comments
                                             @if($data->stage == 7) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
+                                            <textarea name="qa_cqa_comments"  {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->qa_cqa_comments}}</textarea>
                                         </div>
 
 
@@ -8280,7 +8355,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="qa_cqa_attach[]"
-                                                    {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                    {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'qa_cqa_attach')" multiple>
                                             </div>
                                         </div>
@@ -8432,7 +8507,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments"> Initiator Update Comments @if($data->stage == 9) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="intial_update_comments" {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
+                                            <textarea name="intial_update_comments" {{  $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{$cc_cfts->intial_update_comments}}</textarea>
                                         </div>
 
 
@@ -8553,7 +8628,7 @@
                                         </div>
                                         <div class="group-input">
                                             <label for="qa-eval-comments">HOD Final Review Comments @if($data->stage == 10) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="hod_final_review_comment" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_final_review_comment}}</textarea>
+                                            <textarea name="hod_final_review_comment" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} >{{$cc_cfts->hod_final_review_comment}}</textarea>
                                         </div>
 
 
@@ -8671,11 +8746,11 @@
                                     <div class="inner-block-content">
                                         <div class="group-input">
                                             <label for="qa-appro-comments">Implementation Verification by QA/CQA Comments @if($data->stage == 11) <span class="text-danger">*</span>@endif</label>
-                                            <textarea name="implementation_verification_comments" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
+                                            <textarea name="implementation_verification_comments" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $cc_cfts->implementation_verification_comments }}</textarea>
                                         </div>
                                         <div class="group-input">
                                             <label for="feedback">Training Feedback</label>
-                                            <textarea name="feedback" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $approcomments->feedback }}</textarea>
+                                            <textarea name="feedback" {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $approcomments->feedback }}</textarea>
                                         </div>
 
                                         <div class="col-12">
@@ -8872,16 +8947,16 @@
 
                                 <div class="group-input">
                                     <label for="qa-closure-comments">QA/CQA Closure Comments @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
-                                    <textarea name="qa_closure_comments" {{$data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
+                                    <textarea name="qa_closure_comments" {{$data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>{{ $closure->qa_closure_comments }}</textarea>
                                 </div>
 
 
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="effect_check">Effectiveness check required</label>
+                                        <label for="effect_check">Effectiveness check required @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
                                         <select name="effect_check" class="effect_check" id="effect_check"
-                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 4 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
+                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
                                             <option value="">--Select--</option>
                                             <option @if ($cc_cfts->effect_check == 'Yes') selected @endif value="Yes">Yes</option>
                                             <option @if ($cc_cfts->effect_check == 'No') selected @endif value="No">No</option>

@@ -9124,6 +9124,27 @@
                                     </div>
                                 </div>
 
+                                @php
+                                    $documents = DB::table('documents')->whereIn('document_type_id', ['FPS', 'INPS', 'CVS','RAWMS'])->get();
+                                @endphp
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown4" name="record_spec">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
@@ -12053,7 +12074,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -12079,6 +12100,21 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown" name="record_spec1">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12 sub-head">
                                     STANDARD TESTING PROCEDURE
                                     <div class="group-input">
@@ -12088,6 +12124,7 @@
                                         <textarea name="fpstp_testfield" class="summernote"></textarea>
                                     </div>
                                 </div>
+
                             {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Specification Details">
@@ -12114,6 +12151,7 @@
                                     </div>
                                 </div>
                             </div> --}}
+
                             {{-- <script>
                                 $(document).ready(function() {
                                     $('#Standard_Testing_add_1').click(function(e) {
@@ -12141,6 +12179,7 @@
                                     });
                                 });
                             </script> --}}
+
                             </div>
                         </div>
                         <div class="button-block">
@@ -12149,7 +12188,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12166,6 +12205,20 @@
                                     <div class="group-input">
                                         <label for="reference">Product Name</label>
                                         <input type="text" name="product_name_ipstp">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown2" name="record_spec2">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -12232,6 +12285,7 @@
                                     });
                                 });
                             </script> --}}
+
                             </div>
                         </div>
                         <div class="button-block">
@@ -12240,7 +12294,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12260,6 +12314,22 @@
                                     </div>
                                 </div>
 
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown3" name="record_spec3">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12 sub-head">
                                     STANDARD TESTING PROCEDURE
                                     <div class="group-input">
@@ -12269,58 +12339,7 @@
                                         <textarea name="cvstp_testfield" class="summernote"></textarea>
                                     </div>
                                 </div>
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Specification Details">
-                                        STANDARD TESTING PROCEDURE
-                                        <button type="button" id="Standard_Testing_add_3">+</button>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="Standard_Testing_details_3" style="width: 100%;">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 100px;">Sr. No.</th>
-                                                    <th>Test</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input disabled type="text" name="cleaning_validation[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="cleaning_validation[0][data_test]"></td>
-                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $('#Standard_Testing_add_3').click(function(e) {
-                                        e.preventDefault();
 
-                                        function generateSpecificationTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td><input disabled type="text" name="cleaning_validation[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                '<td><input type="text" name="cleaning_validation[' + serialNumber + '][data_test]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#Standard_Testing_details_3 tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateSpecificationTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
-                                });
-                            </script> --}}
                             </div>
                         </div>
                         <div class="button-block">
@@ -12329,7 +12348,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12379,12 +12398,6 @@
                                     }
                                     </script>
 
-
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12393,7 +12406,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12439,10 +12452,6 @@
                             }
                             </script>
 
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12451,7 +12460,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12464,9 +12473,6 @@
                         <div class="input-fields">
                             <div class="row">
 
-                            <!-- <div class="col-12 sub-head">
-                                STANDARD TESTING PROCEDURE
-                            </div> -->
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Closure Attachments"> Attachment</label>
@@ -12508,7 +12514,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12554,11 +12560,6 @@
                             }
                             </script>
 
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12567,7 +12568,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12613,10 +12614,6 @@
                             }
                             </script>
 
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12625,7 +12622,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12671,11 +12668,6 @@
                             }
                             </script>
 
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12684,7 +12676,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12730,11 +12722,6 @@
                             }
                             </script>
 
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12743,7 +12730,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12789,11 +12776,6 @@
                             }
                             </script>
 
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12802,7 +12784,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12847,12 +12829,6 @@
                                 }
                             }
                             </script>
-
-
-
-
-
-
                             </div>
                         </div>
                         <div class="button-block">
@@ -12861,7 +12837,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12921,7 +12897,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12980,7 +12956,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -13478,7 +13454,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -14759,6 +14735,47 @@
                         </div>
                     </div>
 
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown2').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>                                
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown3').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>                                
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown4').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>                         
+
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">
                             @for ($i = 1; $i <= 30; $i++)
@@ -15184,9 +15201,9 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a  href="{{ url('rcms/qms-dashboard') }}" class="text-white" > Exit </a>
-</button>
-</div>
-</div> --}}
+    </button>
+    </div>
+    </div> --}}
 
                     <div id="sign" class="tabcontent">
                         <div class="row">

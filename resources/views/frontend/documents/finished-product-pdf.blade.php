@@ -131,9 +131,9 @@
 
         body {
             margin-top: 180px;
-            margin-bottom: 160px;
-            padding-top: 70px;
-            padding-bottom: 60px; 
+            margin-bottom: 140px;
+            padding-top: 95px;
+            padding-bottom: 40px; 
         }
 
         footer {
@@ -214,15 +214,7 @@
             margin: 0px 0 0;
         }
 
-        .scope-block,
-        .procedure-block {
-            margin: 0px 0 15px;
-            word-wrap: break-word;
-        }
 
-        .annexure-block {
-            margin: 40px 0 0;
-        }
 
         .page-break-before {
             page-break-before: always;
@@ -261,8 +253,8 @@
         
         #isPasted {
             width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
+            border-collapse: collapse;
+            table-layout: fixed;
         }
 
         #isPasted td:first-child,
@@ -284,7 +276,7 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
+            max-width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -293,7 +285,14 @@
             text-align: justify;
             text-justify: inter-word;
             margin: 0;
-            max-width: 500px;
+            max-width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -312,7 +311,7 @@
         }
 
         .table-containers {
-            width: 610px;
+            width: 690px;
             overflow-x: fixed;
         }
 
@@ -329,7 +328,7 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
+            max-width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -569,7 +568,7 @@
             </span>
     </footer>
 
- <div style="margin-top: 10px;">
+ <div style="margin-top: 25px;">
     <section class="main-section" id="pdf-page">
         <section style="page-break-after: never;">
             <div class="other-container">
@@ -582,6 +581,7 @@
                         </tr>
                     </thead>
                 </table>
+                <br>
 
                 <table style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 12px; page-break-inside: avoid;">
                     <tbody>
@@ -640,7 +640,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="text-left">
+                    <th class="text-center">
                         <div class="bold">SPECIFICATION</div>
                     </th>
                 </tr>
@@ -674,9 +674,9 @@
     <table style="margin: 5px; width: 100%; border-collapse: collapse; border: 1px solid black;">
         <thead>
             <tr>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Revision No.</th>
+                <th style="border: 1px solid black; width: 18%; font-weight: bold;">Revision No.</th>
                 <th style="border: 1px solid black; font-weight: bold; width:30%">Change Control No.</th>
-                <th style="border: 1px solid black; width: 20%; font-weight: bold;">Effective Date</th>
+                <th style="border: 1px solid black; width: 18%; font-weight: bold;">Effective Date</th>
                 <th style="border: 1px solid black; width: 60%; font-weight: bold;">Reason of revision</th>
             </tr>
         </thead>
@@ -696,7 +696,6 @@
                                     {{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}
                                 @endif
                             </td>
-                            {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date']) ? \Carbon\Carbon::parse($item['eff_date'])->format('d-M-Y') : '' }}</td> --}}
                             <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason'] ?? '' }}</td>
                         </tr>
                     @endforeach

@@ -268,15 +268,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Action Item Related Records</th>
-                        <td class="w-80">
-                            @if ($data->related_records)
-                                {{ str_replace(',', ', ', $data->related_records) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
+                        
                     </tr>
 
                 </table>
@@ -296,16 +288,20 @@
 
 
                         </tr>
+
                         <tr>
-                            <th class="w-20">Description</th>
-                            <td class="w-80">
-                                @if ($data->description)
-                                    {{ $data->description }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
+                            <th class="w-20">Action Item Related Records</th>
+                        <td class="w-80">
+                            @if ($data->related_records)
+                                {{ str_replace(',', ', ', $data->related_records) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         </tr>
+                        
+                        
 
 
                         <tr>
@@ -317,6 +313,22 @@
                                     Not Applicable
                                 @endif
                             </td>
+                           
+
+                        </tr>
+
+                        <tr>
+                            <th class="w-20">Description</th>
+                            <td class="w-80">
+                                @if ($data->description)
+                                    {{ strip_tags($data->description) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+
+                        <tr>
                             <th class="w-20">Responsible Department</th>
                             <td class="w-80">
                                 @if ($data->departments)
@@ -325,7 +337,6 @@
                                     Not Applicable
                                 @endif
                             </td>
-
                         </tr>
 
                     </table>
@@ -443,7 +454,21 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">Action Start Date</th>
+                    <th class="w-20">Action Taken</th>
+                    <td class="w-80">
+                        @if ($data->action_taken)
+                            {{ $data->action_taken }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                </tr>
+
+            </table>
+            <table>
+                <tr>
+                    <th class="w-20">Actual Start Date</th>
                     <td class="w-80">
                         @if ($data->start_date)
                             {{ Helpers::getdateFormat($data->start_date) }}
@@ -463,20 +488,7 @@
             </table>
             <div class="block">
 
-                <table>
-                    <tr>
-                        <th class="w-20">Action Taken</th>
-                        <td class="w-80">
-                            @if ($data->action_taken)
-                                {{ $data->action_taken }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-
-                </table>
+               
                 <table>
 
                     <tr>

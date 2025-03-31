@@ -225,7 +225,7 @@ use Carbon\Carbon;
                     <tr>
                         <th class="w-20">Initiator department</th>
                         <!-- {{--  <td class="w-30"> --}} -->
-                        @php
+                        {{-- @php
                         $departments = [
                         'CQA' => 'Corporate Quality Assurance',
                         'QA' => 'Quality Assurance',
@@ -256,7 +256,17 @@ use Carbon\Carbon;
                         @else
                         Not Applicable
                         @endif
+                        </td> --}}
+
+
+                        <td class="w-30">
+                            @if ( Helpers::getUsersDepartmentName(Auth::user()->departmentid))
+                            {{  Helpers::getUsersDepartmentName(Auth::user()->departmentid)}}
+                        @else
+                            Not Applicable
+                        @endif
                         </td>
+
                         {{-- @if ($managementReview->initiator_Group)
                                         {{ $managementReview->initiator_Group }}
                         @else
@@ -304,6 +314,17 @@ use Carbon\Carbon;
                 <table>
 
                     <tr>
+                        <th class="w-20">Type</th>
+                        <td class="w-30">
+                            @if ($managementReview->summary_recommendation)
+                            {{ $managementReview->summary_recommendation }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
                         {{-- <th class="w-20">Due Date</th>
                         <td class="w-30">
                             @if ($managementReview->due_date)
@@ -321,14 +342,7 @@ use Carbon\Carbon;
                         Not Applicable
                         @endif
                         </td> --}}
-                        <th class="w-20">Type</th>
-                        <td class="w-30">
-                            @if ($managementReview->summary_recommendation)
-                            {{ $managementReview->summary_recommendation }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
+                       
                         <th class="w-20">Review Period</th>
                         <td class="w-30">
                             @if ($managementReview->review_period_monthly)

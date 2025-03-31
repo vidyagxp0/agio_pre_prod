@@ -464,7 +464,7 @@ class RootCauseController extends Controller
             $history->root_id = $root->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
+            $history->current =  Helpers::getUsersDepartmentName(Auth::user()->departmentid);
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1891,27 +1891,27 @@ class RootCauseController extends Controller
 
 
 
-        if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->comment)) {
+        // if ($lastDocument->initiator_Group != $root->initiator_Group || !empty($request->comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Initiator Department';
-            $history->previous = Helpers::getFullDepartmentName ($lastDocument->initiator_Group);
-            $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
-            $history->comment = $request->comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->change_to =   "Not Applicable";
-            $history->change_from = $lastDocument->status;
-            if (is_null($lastDocument->initiator_Group) || $lastDocument->initiator_Group === '') {
-                $history->action_name = "New";
-            } else {
-                $history->action_name = "Update";
-            }
-            $history->save();
-        }
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Initiator Department';
+        //     $history->previous = Helpers::getFullDepartmentName ($lastDocument->initiator_Group);
+        //     $history->current = Helpers::getFullDepartmentName($root->initiator_Group);
+        //     $history->comment = $request->comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->change_to =   "Not Applicable";
+        //     $history->change_from = $lastDocument->status;
+        //     if (is_null($lastDocument->initiator_Group) || $lastDocument->initiator_Group === '') {
+        //         $history->action_name = "New";
+        //     } else {
+        //         $history->action_name = "Update";
+        //     }
+        //     $history->save();
+        // }
 
         if ($lastDocument->initiator_group_code != $root->initiator_group_code || !empty($request->comment)) {
 
@@ -2224,7 +2224,7 @@ class RootCauseController extends Controller
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
-            $history->activity_type = 'Attachment';
+            $history->activity_type = 'Other Attachment';
             $history->previous = $lastDocument->investigation_attachment;
             $history->current = $root->investigation_attachment;
             $history->comment = $request->comment;
