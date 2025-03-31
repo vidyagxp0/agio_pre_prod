@@ -642,7 +642,7 @@
                                     <div class="group-input">
                                         <label for="comments">Brief Description / Procedure </label>
                                         <div class="relative-container">
-                                         <textarea name="Brief_description" class="tiny"></textarea>
+                                         <textarea name="Brief_description" class="summernote"></textarea>
                                            
                                         </div>
                                     </div>

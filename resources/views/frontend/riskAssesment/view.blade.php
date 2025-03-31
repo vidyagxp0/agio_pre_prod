@@ -73,6 +73,120 @@
         }
     </script>
 
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
+
+   <style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+        .note-editable p {
+            font-weight: normal !important;
+        }
+        
+        .note-editable th,
+        .note-editable td {
+            border: 1px solid black !important;
+            padding: 8px;
+            text-align: left;
+        }
+        
+    </style>
+
 
     <script>
         function addWhyField(con_class, name) {
@@ -161,6 +275,7 @@
             scale: 0.8 !important;
         }
     </style>
+
 
     @php
         $users = DB::table('users')->get();
@@ -812,13 +927,11 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Brief_description">Brief Description / Procedure 
-                                                 @if ($data->stage == 1)  
-                                                    <span class="text-danger">*</span>  
-                                                 @endif</label>
-                                                <div class="relative-container">
-                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="tiny">{{ $data->Brief_description }}</textarea>
-                                               
-                                                </div>
+                                                    @if ($data->stage == 1)  
+                                                        <span class="text-danger">*</span>  
+                                                    @endif
+                                                </label>
+                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="summernote-1">{{ $data->Brief_description }}</textarea>
                                             </div>
                                         </div>
 
@@ -9853,7 +9966,7 @@
             });
         </script>
 
-        <script>
+        <!-- <script>
             $(document).ready(function() {
                 $('.summernote').summernote({
                     toolbar: [
@@ -9867,7 +9980,23 @@
                     ]
                 });
             });
-        </script>
+        </script> -->
+    <script>
+         var editor = new FroalaEditor('.summernote-1', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+        $(".summernote-1-disabled").FroalaEditor("edit.off");
+    </script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
@@ -10062,9 +10191,7 @@
 
 
          <!-- Correct Order -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
 
 
     @endsection
