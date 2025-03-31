@@ -6318,7 +6318,7 @@
                                     <label for="train-require">TDS No.</label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "$document->tds_name_code TDS/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "$document->tds_name_code TDS/" . str_pad($document->record_spec, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="tds_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10338,15 +10338,8 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
 
-                                            $revisionNumber = $document->revised == 'Yes' 
-                                                ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) 
-                                                : '00';
-
-                                            // select_specification se last numeric part extract karna
-                                            preg_match('/\d+$/', $document->select_specification, $matches);
-                                            $recordNumber = isset($matches[0]) ? str_pad($matches[0], 4, '0', STR_PAD_LEFT) : '0000';
-
-                                            $mfpstpNumber = "FPSTP/" . $recordNumber . "-$revisionNumber";
+                                        $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                        $mfpstpNumber = "FPSTP/" . str_pad($document->record_spec1, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10408,7 +10401,6 @@
                                                                 : (is_array($RevisionGridfpstpData->data) ? $RevisionGridfpstpData->data : []);
                                                         }
                                                 
-
                                                     @endphp
 
                                                     @foreach ($GtpData as $index => $gtp_data)
@@ -10484,7 +10476,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -10505,7 +10497,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "IPSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "IPSTP/" . str_pad($document->record_spec2, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10642,7 +10634,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -10662,7 +10654,7 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "CVSTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "CVSTP/" . str_pad($document->record_spec3, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10800,7 +10792,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -10957,7 +10949,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -11115,7 +11107,7 @@
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -11318,7 +11310,7 @@
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -11423,7 +11415,7 @@
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -11530,7 +11522,7 @@
                         <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -11641,7 +11633,7 @@
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -11753,7 +11745,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -11857,7 +11849,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -11961,7 +11953,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -12075,7 +12067,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -12296,7 +12288,7 @@
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                                    <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                         </a>
                                     </button>
                                 </div>
@@ -12407,7 +12399,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -12516,7 +12508,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -12626,7 +12618,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -12735,7 +12727,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -12844,7 +12836,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -12951,7 +12943,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13059,7 +13051,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13166,7 +13158,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13275,7 +13267,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13382,7 +13374,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13491,7 +13483,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13598,7 +13590,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13705,7 +13697,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13808,7 +13800,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -13910,7 +13902,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -14012,7 +14004,7 @@
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" id="DocnextButton"
                             onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                        <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                             </a>
                         </button>
                     </div>
@@ -14282,7 +14274,7 @@
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" id="DocnextButton"
                                 onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
+                            <button type="button"> <a href="{{ url('documents') }}" class="text-white"> Exit
                                 </a>
                             </button>
                         </div>
@@ -14322,19 +14314,18 @@
                             </div>
 
                         
-                        <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                             <div class="group-input">
                                 <label for="piaNameCode">Specification No.</label>
                                 <select id="recordSelect" name="select_specification">
                                     <option value="">Select Specification</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <!-- Hidden input to store the saved value -->
-                        <input type="hidden" id="saved_specification" value="{{ old('select_specification', $document->select_specification ?? '') }}">
+                        <!-- <input type="hidden" id="saved_specification" value="{{ old('select_specification', $document->select_specification ?? '') }}"> -->
 
-                        <script>
+                        <!-- <script>
                             $(document).ready(function () {
                                 $.ajax({
                                     url: "{{ route('getRecordsByType') }}", 
@@ -14356,7 +14347,7 @@
                                     }
                                 });
                             });
-                        </script>
+                        </script> -->
 
 
 

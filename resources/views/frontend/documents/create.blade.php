@@ -9124,6 +9124,27 @@
                                     </div>
                                 </div>
 
+                                @php
+                                    $documents = DB::table('documents')->whereIn('document_type_id', ['FPS', 'INPS', 'CVS','RAWMS'])->get();
+                                @endphp
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown4" name="record_spec">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="train-require">Reference Standard/General Testing Procédure No</label>
@@ -12081,39 +12102,18 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="piaNameCode">Specification No.</label>
-                                        <select id="recordSelect" name="select_specification">
-                                            <option value="">Select Specification</option>
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown" name="record_spec1">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
 
-                                <!-- Hidden input to store the saved value -->
-                                <input type="hidden" id="saved_specification" value="">
-
-                                <script>
-                                    $(document).ready(function () {
-                                        $.ajax({
-                                            url: "{{ route('getRecordsByType') }}", 
-                                            type: "GET",
-                                            success: function (response) {
-                                                var select = $("#recordSelect");
-                                                var savedValue = $("#saved_specification").val(); // Get saved value
-
-                                                select.empty();
-                                                select.append('<option value="">Select Specification</option>');
-
-                                                $.each(response, function (index, value) {
-                                                    if (value == savedValue) {
-                                                        select.append('<option value="' + value + '" selected>' + value + '</option>');
-                                                    } else {
-                                                        select.append('<option value="' + value + '">' + value + '</option>');
-                                                    }
-                                                });
-                                            }
-                                        });
-                                    });
-                                </script>
 
                                 <div class="col-12 sub-head">
                                     STANDARD TESTING PROCEDURE
@@ -12205,6 +12205,20 @@
                                     <div class="group-input">
                                         <label for="reference">Product Name</label>
                                         <input type="text" name="product_name_ipstp">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown2" name="record_spec2">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
 
@@ -12300,6 +12314,20 @@
                                     </div>
                                 </div>
 
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown3" name="record_spec3">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-12 sub-head">
@@ -14706,6 +14734,47 @@
                             </button>
                         </div>
                     </div>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown2').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>                                
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown3').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>                                
+                                <script>
+                                    $(document).ready(function () {
+                                        $('#documentDropdown4').change(function () {
+                                            let selectedOption = $(this).find(':selected');
+                                            let formattedValue = selectedOption.data('type') + '-' + selectedOption.text();
+                                            console.log("Selected (Display):", formattedValue);
+                                            console.log("Stored in DB:", $(this).val());
+                                        });
+                                    });
+                                </script>                         
 
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">

@@ -569,6 +569,12 @@ class DocumentController extends Controller
            $document->reference_cvs = $request->reference_cvs;
            $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
+           $document->record_spec = $request->record_spec;
+           $document->record_spec1 = $request->record_spec1;
+           $document->record_spec2 = $request->record_spec2;
+           $document->record_spec3 = $request->record_spec3;
+
+
            //Inprocess Validation specification
            $document->product_name_inps = $request->product_name_inps;
            $document->generic_name_inps = $request->generic_name_inps;
