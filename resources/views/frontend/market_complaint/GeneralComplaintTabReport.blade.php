@@ -726,8 +726,8 @@
                         </div>
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Batch No</th>
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">attachment</th>
                             </tr>
                             @if ($data->initial_attachment_ca)
                                 @foreach (json_decode($data->initial_attachment_ca) as $key => $file)
@@ -745,6 +745,7 @@
                             @endif
                         </table>
                     </div>
+
                 </table>
 
                 <br>
