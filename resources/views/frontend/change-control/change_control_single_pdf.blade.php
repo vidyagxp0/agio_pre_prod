@@ -245,7 +245,7 @@
                         <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ Helpers::getFullDepartmentName($data->Initiator_Group) }}
+                                {{ ($data->Initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
@@ -408,7 +408,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->in_attachment)
@@ -518,11 +518,11 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
-                        @if ($data->risk_assessment_atch)
-                            @foreach (json_decode($data->risk_assessment_atch) as $key => $file)
+                        @if ($cc_cfts->change_details_attachments)
+                            @foreach (json_decode($cc_cfts->change_details_attachments) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -648,7 +648,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cc_cfts->hod_assessment_attachment)
@@ -749,7 +749,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data->qa_head)
@@ -870,7 +870,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->RA_attachment)
@@ -974,7 +974,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->Quality_Assurance_attachment)
@@ -1076,7 +1076,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->Production_Table_Attachment)
@@ -1178,7 +1178,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->ProductionLiquid_attachment)
@@ -1280,7 +1280,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->Production_Injection_Attachment)
@@ -1382,7 +1382,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->Store_attachment)
@@ -1463,8 +1463,8 @@ Not Applicable
                                     <th class="w-20">Quality Control Review Completed By</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->QualityAssurance__by)
-                                                {{ $cftData->QualityAssurance__by }}
+                                            @if ($cftData->Quality_Control_by)
+                                                {{ $cftData->Quality_Control_by }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1490,7 +1490,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Quality_Control_attachment)
@@ -1595,7 +1595,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->ResearchDevelopment_attachment)
@@ -1703,7 +1703,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Engineering_attachment)
@@ -1787,7 +1787,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Human_Resource_by)
-                                                {{ $cftData->production_by }}
+                                                {{ $cftData->Human_Resource_on }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1796,8 +1796,8 @@ Not Applicable
                                     <th class="w-20"> Human Resource Review Completed On</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->production_on)
-                                                {{Helpers::getDateFormat( $cftData->production_on )}}
+                                            @if ($cftData->Human_Resource_on)
+                                                {{Helpers::getDateFormat( $cftData->Human_Resource_on )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1813,11 +1813,11 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
-                                @if ($cftData->Initial_attachment)
-                                    @foreach (json_decode($cftData->Initial_attachment) as $key => $file)
+                                @if ($cftData->Human_Resource_attachment)
+                                    @foreach (json_decode($cftData->Human_Resource_attachment) as $key => $file)
                                         <tr>
                                             <td class="w-20">{{ $key + 1 }}</td>
                                             <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -1919,7 +1919,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->Microbiology_attachment)
@@ -2021,7 +2021,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->RegulatoryAffair_attachment)
@@ -2123,7 +2123,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->CorporateQualityAssurance_attachment)
@@ -2205,7 +2205,7 @@ Not Applicable
                                     <th class="w-20">Safety Review Completed By</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($cftData->production_by)
+                                            @if ($cftData->Human_Resource_by)
                                                 {{ $cftData->Human_Resource_by }}
                                             @else
                                                 Not Applicable
@@ -2232,7 +2232,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Human_Resource_attachment)
@@ -2344,7 +2344,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Information_Technology_attachment)
@@ -2450,7 +2450,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->ContractGiver_attachment)
@@ -2505,7 +2505,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other1_Department_person)
-                                                {{Helpers::getFullDepartmentName($cftData->Other1_Department_person) }}
+                                                {{ ($cftData->Other1_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2570,7 +2570,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Other1_attachment)
@@ -2625,7 +2625,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other2_Department_person)
-                                                {{ Helpers::getFullDepartmentName($cftData->Other2_Department_person) }}
+                                                {{ ($cftData->Other2_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2690,7 +2690,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Other2_attachment)
@@ -2745,7 +2745,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other3_Department_person)
-                                                {{Helpers::getFullDepartmentName($cftData->Other3_Department_person) }}
+                                                {{ ($cftData->Other3_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2812,7 +2812,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Other3_attachment)
@@ -2867,7 +2867,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other4_Department_person)
-                                                {{Helpers::getFullDepartmentName( $cftData->Other4_Department_person )}}
+                                                {{ ( $cftData->Other4_Department_person )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2932,7 +2932,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Other4_attachment)
@@ -2987,7 +2987,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Other5_Department_person)
-                                                {{Helpers::getFullDepartmentName( $cftData->Other5_Department_person) }}
+                                                {{ ( $cftData->Other5_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3052,7 +3052,7 @@ Not Applicable
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($cftData->Other5_attachment)
@@ -3132,7 +3132,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cftData->qa_final_attach)
@@ -3191,7 +3191,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cc_cfts->RA_attachment_second)
@@ -3252,7 +3252,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cc_cfts->qa_cqa_attach)
@@ -3302,7 +3302,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">QA Evaluation Attachments</th>
                             </tr>
                             @if ($evaluation->qa_eval_attach)
@@ -3353,7 +3353,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Initiator Update Attachments</th>
                             </tr>
                             @if ($cc_cfts->intial_update_attach)
@@ -3406,7 +3406,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">HOD Final Review Attachments</th>
                             </tr>
                             @if ($cc_cfts->hod_final_review_attach)
@@ -3469,7 +3469,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Implementation Verification Attachments</th>
                             </tr>
                             @if ($QaApprovalComments->tran_attach)
@@ -3538,7 +3538,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">List Of Attachments</th>
                             </tr>
                             @if ($closure->attach_list)
@@ -3649,7 +3649,7 @@ Not Applicable
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($comments->group_attachments)
@@ -3703,7 +3703,7 @@ Not Applicable
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($approcomments->tran_attach)
@@ -3736,7 +3736,7 @@ Not Applicable
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Affected Documents</th>
                             <th class="w-60">Document Name</th>
                             <th class="w-60">Document No.</th>
@@ -3798,7 +3798,7 @@ Not Applicable
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($approcomments->tran_attach)

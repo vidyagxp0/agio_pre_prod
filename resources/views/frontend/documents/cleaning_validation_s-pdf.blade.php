@@ -128,12 +128,11 @@
             height: 60px; /* Set a specific height for the header */
 
         }
-
         body {
             margin-top: 180px;
-            margin-bottom: 160px;
-            padding-top: 80px;
-            padding-bottom: 50px; 
+            margin-bottom: 140px;
+            padding-top: 95px;
+            padding-bottom: 40px; 
         }
 
         footer {
@@ -300,6 +299,13 @@
             text-justify: inter-word;
             margin: 0;
             max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -705,7 +711,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th class="text-left">
+                                    <th class="text-center">
                                         <div class="bold">SPECIFICATION</div>
                                     </th>
                                 </tr>

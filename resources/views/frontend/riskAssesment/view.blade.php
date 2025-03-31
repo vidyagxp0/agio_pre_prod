@@ -73,6 +73,120 @@
         }
     </script>
 
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
+
+   <style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+        .note-editable p {
+            font-weight: normal !important;
+        }
+        
+        .note-editable th,
+        .note-editable td {
+            border: 1px solid black !important;
+            padding: 8px;
+            text-align: left;
+        }
+        
+    </style>
+
 
     <script>
         function addWhyField(con_class, name) {
@@ -161,6 +275,7 @@
             scale: 0.8 !important;
         }
     </style>
+
 
     @php
         $users = DB::table('users')->get();
@@ -625,9 +740,12 @@
                                         </div>
 
                                         <div id="typeOfErrorBlock" class="group-input col-6" style="display: none;">
-                                            <label for="otherFieldsUser">Other (Source of Risk/Opportunity)</label>
+                                            <label for="otherFieldsUser">Other (Source of Risk/Opportunity)
+                                                    <span class="text-danger">*</span>
+                                            </label>
                                          
                                             <textarea name="other_source_of_risk" class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_source_of_risk }}</textarea>
+                                            <span class="text-danger" id="error_other_source_of_risk" style="display: none;">This field is required.</span>
                                     
                                         </div>
 
@@ -642,15 +760,29 @@
                                                     const selectedVal = $(this).val();
                                                     if (selectedVal === 'Other') {
                                                         $('#typeOfErrorBlock').show();
+                                                        $('textarea[name=other_source_of_risk]').prop('required', true);
                                                     } else {
                                                         $('#typeOfErrorBlock').hide();
+                                                        $('textarea[name=other_source_of_risk]').prop('required', false);
+                                                        $('#error_other_source_of_risk').hide(); // Hide error messa
                                                     }
                                                 });
 
                                                 // Optionally, check the current value when the page loads in case of form errors
                                                 if ($('select[name=source_of_risk]').val() === 'Other') {
                                                     $('#typeOfErrorBlock').show();
+                                                    $('textarea[name=other_source_of_risk]').prop('required', true);
                                                 }
+
+                                                        // Validate on form submission
+                                                    $('form').submit(function(e) {
+                                                        if ($('select[name=source_of_risk]').val() === 'Other' &&
+                                                            $('textarea[name=other_source_of_risk]').val().trim() === '') {
+                                                            e.preventDefault();
+                                                            $('#error_other_source_of_risk').show();
+                                                        }
+                                                    });
+
                                             });
                                         </script>
 
@@ -674,10 +806,11 @@
                                     </div>
 
                                     <div id="typeOfError" class="group-input col-6" style="display:none;">
-                                        <label for="otherFieldsUser">Other(Type)</label>
-                                        
-
-                                       <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_type }}</textarea>
+                                        <label for="otherFieldsUser">Other(Type)
+                                              <span class="text-danger">*</span>
+                                        </label>
+                                         <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_type }}</textarea>
+                                         <span class="text-danger" id="error_other_type" style="display: none;">This field is required.</span>
                                        
                                     </div>
 
@@ -692,15 +825,29 @@
                                                 const selectedVal = $(this).val();
                                                 if (selectedVal === 'Other Data') { // Corrected value check
                                                     $('#typeOfError').show();
+                                                    $('textarea[name=other_type]').prop('required', true);
                                                 } else {
                                                     $('#typeOfError').hide();
+                                                    $('textarea[name=other_type]').prop('required', false);
+                                                    $('#error_other_type').hide(); // Hide error message
+
                                                 }
                                             });
 
                                             // Optionally, check the current value when the page loads in case of form errors
                                             if ($('select[name=type]').val() === 'Other Data') { // Corrected value check
                                                 $('#typeOfError').show();
+                                                $('textarea[name=other_type]').prop('required', true);
                                             }
+
+                                                    // Validate on form submission
+                                            $('form').submit(function(e) {
+                                                if ($('select[name=type]').val() === 'Other Data' &&
+                                                    $('textarea[name=other_type]').val().trim() === '') {
+                                                    e.preventDefault();
+                                                    $('#error_other_type').show();
+                                                }
+                                            });
                                         });
                                     </script>
 
@@ -780,13 +927,11 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Brief_description">Brief Description / Procedure 
-                                                 @if ($data->stage == 1)  
-                                                    <span class="text-danger">*</span>  
-                                                 @endif</label>
-                                                <div class="relative-container">
-                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="tiny">{{ $data->Brief_description }}</textarea>
-                                               
-                                                </div>
+                                                    @if ($data->stage == 1)  
+                                                        <span class="text-danger">*</span>  
+                                                    @endif
+                                                </label>
+                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="summernote-1">{{ $data->Brief_description }}</textarea>
                                             </div>
                                         </div>
 
@@ -1008,8 +1153,11 @@
 
                                                     <div class="col-6">
                                                         <div id="rootCause" class="group-input" style="display:none;">
-                                                            <label for="otherFieldsUser">Other (Root Cause Methodology)</label>
+                                                            <label for="otherFieldsUser">Other (Root Cause Methodology)
+                                                                <span class="text-danger">*</span>
+                                                            </label>
                                                             <textarea name="other_root_cause_methodology" id="summernote" class="form-control">{{ $data->other_root_cause_methodology ?? '' }}</textarea>
+                                                            <span class="text-danger" id="error_other_root_cause_methodology" style="display: none;">This field is required.</span>
                                                         </div>
                                                     </div>
 
@@ -1022,9 +1170,14 @@
                                                                 const selectedVals = $('#root-cause-methodology').val();
                                                                 console.log("Selected Values:", selectedVals); // Debugging ke liye value check karo
                                                                 if (selectedVals && selectedVals.includes('Other Detail')) {
-                                                                    $('#rootCause').show(); // Agar 'Other Detail' select hai to input field dikhao
+                                                                    $('#rootCause').show();
+                                                                    $('textarea[name=other_root_cause_methodology]').prop('required', true);
+                                                                     
                                                                 } else {
                                                                     $('#rootCause').hide(); // Nahi to input field chhupa do
+                                                                    $('textarea[name=other_root_cause_methodology]').prop('required', false);
+                                                                    $('#error_other_root_cause_methodology').hide(); // Hide error message
+
                                                                 }
                                                             }
 
@@ -1035,6 +1188,16 @@
 
                                                             // Jab page load ho tab bhi current value check karke input field ko set karo
                                                             toggleOtherField();
+
+                                                            // Validate on form submission
+                                                            $('form').submit(function(e) {
+                                                                if ($('#root-cause-methodology').val().includes('Other Detail') &&
+                                                                    $('textarea[name=other_root_cause_methodology]').val().trim() === '') {
+                                                                    e.preventDefault();
+                                                                    $('#error_other_root_cause_methodology').show();
+                                                                }
+                                                            });
+
                                                         });
                                                     </script>
 
@@ -1435,14 +1598,16 @@
 
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Summary <span
-                                                    class="text-danger"></span></label>
+                                            <label for="investigation_summary">Risk Assessment Summary<span
+                                                    class="text-danger">*</span></label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="investigation_summary">Risk Assessment Conclusion</label>
+                                            <label for="investigation_summary">Risk Assessment Conclusion
+                                                  <span class="text-danger">*</span>
+                                            </label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="r_a_conclussion"> {{ $data->r_a_conclussion }}</textarea>
                                         </div>
                                     </div>
@@ -9801,7 +9966,7 @@
             });
         </script>
 
-        <script>
+        <!-- <script>
             $(document).ready(function() {
                 $('.summernote').summernote({
                     toolbar: [
@@ -9815,7 +9980,23 @@
                     ]
                 });
             });
-        </script>
+        </script> -->
+    <script>
+         var editor = new FroalaEditor('.summernote-1', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+        $(".summernote-1-disabled").FroalaEditor("edit.off");
+    </script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
@@ -10010,9 +10191,7 @@
 
 
          <!-- Correct Order -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
 
 
     @endsection

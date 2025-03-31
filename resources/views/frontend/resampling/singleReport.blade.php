@@ -494,6 +494,20 @@ Not Applicable
             </div>
             <table>
                 <tr>
+                    <th class="w-20">Action Taken</th>
+                    <td class="w-80">
+                        @if ($data->action_taken)
+                            {{ $data->action_taken }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                </tr>
+
+            </table>
+            <table>
+                <tr>
                     <th class="w-20">Actual Start Date</th>
                     <td class="w-80">
                         @if ($data->start_date)
@@ -514,20 +528,7 @@ Not Applicable
             </table>
             <div class="block">
 
-                <table>
-                    <tr>
-                        <th class="w-20">Action Taken</th>
-                        <td class="w-80">
-                            @if ($data->action_taken)
-                                {{ $data->action_taken }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                    </tr>
-
-                </table>
+               
                 <table>
 
                     <tr>
