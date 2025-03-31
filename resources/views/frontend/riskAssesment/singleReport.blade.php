@@ -302,7 +302,7 @@
                             Not Applicable
                         @endif
                         </td>
-                        <th class="w-20">Initiator Department Code</th>
+                        <th class="w-20">Initiation Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}

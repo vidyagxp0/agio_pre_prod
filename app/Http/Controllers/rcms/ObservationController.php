@@ -63,7 +63,10 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        $data->auditee_department = $request->auditee_department;
+        // $data->auditee_department = $request->auditee_department;
+        $user = User::find($request->assign_to);
+    $data->auditee_department = $user ? $user->department->name : null;
+    
         $data->response_detail = $request->response_detail;
         $data->corrective_action = $request->corrective_action;
         $data->preventive_action = $request->preventive_action;
@@ -1018,7 +1021,10 @@ if(!empty($request->attach_files2)){
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
 
-        $data->auditee_department = $request->auditee_department;
+        // $data->auditee_department = $request->auditee_department;
+        $user = User::find($request->assign_to);
+$data->auditee_department = $user ? $user->department->name : null;
+
         $data->response_detail = $request->response_detail;
         $data->corrective_action = $request->corrective_action;
         $data->preventive_action = $request->preventive_action;
