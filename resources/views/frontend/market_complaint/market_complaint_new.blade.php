@@ -280,7 +280,7 @@
                                     </div>
                                 </div> --}}
 
-
+                            {{--
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Due Date 
@@ -337,6 +337,76 @@
                                     document.getElementById('intiation_date').addEventListener('change', calculateDueDate);
                                     document.getElementById('Deviation_category').addEventListener('change', calculateDueDate);
                                 </script>
+                            --}}
+
+                            <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Due Date
+                                        <span
+                                        class="text-danger">*</span>
+                                        </label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_dateq" readonly
+                                                placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="due_date" name="due_date_gi" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')"  required/>
+                                        </div>
+
+                                    </div>
+                                </div>
+                          
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
+                             
+                             <!-- <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date">Complaint Reported On
+                                        <span
+                                        class="text-danger">*</span>
+                                        </label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date_gi" name="due_date_gi"
+                                                placeholder="Select Due Date" value="" required/>
+                                        </div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $("#due_date_gi").datepicker({
+                                                    dateFormat: "dd-M-yy",
+                                                    onClose: function(dateText, inst) {
+                                                        if (!dateText) {
+                                                            $(this).val(''); 
+                                                        }
+                                                    }
+                                                });
+
+                                                  $("#due_date_gi").on('keydown', function(e) {
+                                                    e.preventDefault();
+                                                });
+                                            });
+                                        </script>
+                                    </div>
+                                </div> -->
+
+
+
+
 
 
                                 {{-- <div class="col-lg-6">
