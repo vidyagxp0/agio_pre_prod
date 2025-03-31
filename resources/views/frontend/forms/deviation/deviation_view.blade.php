@@ -1351,7 +1351,7 @@
                                             <span id="rchars">255</span> characters remaining
                                             <input name="short_description" id="docname" type="text"
                                                 maxlength="255" required value="{{ $data->short_description }}"
-                                                {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                                {{ $data->stage == 1 ? '' : 'readonly' }}>
                                         </div>
                                         @error('short_description')
                                             <div class="text-danger">{{ $message }}</div>
@@ -1362,7 +1362,7 @@
     <div class="group-input input-date">
         <label for="short_description_required">Repeat Deviation? <span class="text-danger">*</span></label>
         <select name="short_description_required"
-        {{ $data->stage == 1 ? '' : 'disabled' }}
+        class="stage-control" data-stage="{{$data->stage}}"
                 id="short_description_required" onchange="checkRecurring(this)"
                 value="{{ $data->short_description_required }}">
             <option value="0">-- Select --</option>
@@ -1381,7 +1381,7 @@
                 style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
                 class="text-danger">*</span></label>
         <textarea class="nature_of_repeat"
-            name="nature_of_repeat"  {{ $data->stage == 1 ? '' : 'disabled' }} id="nature_of_repeat"
+            name="nature_of_repeat"  {{ $data->stage == 1 ? '' : 'readonly' }} id="nature_of_repeat"
             class="nature_of_repeat">{{ $data->nature_of_repeat }}</textarea>
     </div>
 </div>
@@ -1420,15 +1420,31 @@
     }
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let fields = document.querySelectorAll(".stage-control"); // Get all select fields with class "stage-control"
+
+        fields.forEach(field => {
+            let stage = parseInt(field.getAttribute("data-stage"));
+
+            if (stage !== 1) {
+                field.style.pointerEvents = "none";  // Prevent user interaction
+                field.style.backgroundColor = "#e9ecef"; // Grey out field
+                field.style.opacity = "0.7"; // Reduce visibility for disabled effect
+            }
+        });
+    });
+</script>
+
 
                                 <div class="col-6 new-date-data-field">
     <div class="group-input input-date">
         <label for="severity-level">Deviation Observed On <span class="text-danger">*</span></label>
         <div class="calenderauditee">
-            <input type="text"   {{ $data->stage == 1 ? '' : 'disabled' }} id="Deviation_date" readonly placeholder="DD-MMM-YYYY"
+            <input type="text"    id="Deviation_date"  placeholder="DD-MMM-YYYY"
                 value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
             <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                  {{ $data->stage == 1 ? '' : 'disabled' }} value="{{ $data->Deviation_date }}"
+                   value="{{ $data->Deviation_date }}"
                 class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
         </div>
         @error('Deviation_date')
@@ -1440,7 +1456,7 @@
 <div class="col-lg-6 new-time-data-field">
     <div class="group-input input-time">
         <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
-        <input type="text" name="deviation_time"   {{ $data->stage == 1 ? '' : 'disabled' }} id="deviation_time"
+        <input type="text" name="deviation_time"   {{ $data->stage == 1 ? '' : 'readonly' }} id="deviation_time"
             value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
         @error('deviation_time')
             <div class="text-danger">{{ $message }}</div>
@@ -1451,7 +1467,7 @@
 <div class="col-lg-6 new-time-data-field">
     <div class="group-input input-time delayJustificationBlock">
         <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-        <textarea id="Delay_Justification" name="Delay_Justification"  {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->Delay_Justification }}</textarea>
+        <textarea id="Delay_Justification" name="Delay_Justification"  {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
     </div>
     @error('Delay_Justification')
         <div class="text-danger">{{ $message }}</div>
@@ -1496,7 +1512,7 @@
 
                                             <input name="Facility" id="docname" type="text"
                                                 value="{{ $data->Facility }}"
-                                                {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                                >
                                         </div>
 
                                     </div>
@@ -1506,10 +1522,10 @@
     <div class="group-input input-date">
         <label for="Initiator Group">Deviation Reported On <span class="text-danger">*</span></label>
         <div class="calenderauditee">
-            <input type="text"   {{ $data->stage == 1 ? '' : 'disabled' }} id="Deviation_reported_date" readonly placeholder="DD-MMM-YYYY"
+            <input type="text"   id="Deviation_reported_date"  placeholder="DD-MMM-YYYY"
                 value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
             <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                  {{ $data->stage == 1 ? '' : 'disabled' }} value="{{ $data->Deviation_reported_date }}"
+                   value="{{ $data->Deviation_reported_date }}"
                 class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
         </div>
         @error('Deviation_reported_date')
@@ -1564,7 +1580,7 @@
     <div class="group-input">
         <label for="audit_type">Deviation Related To <span class="text-danger">*</span></label>
         <select multiple name="audit_type[]" id="audit_type" class="form-control"
-            {{ $data->stage == 1 ? '' : 'disabled' }}>
+            {{ $data->stage == 1 ? '' : 'readonly' }}>
             <option value="Facility" {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>Facility</option>
             <option value="Equipment/Instrument" {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>Equipment/Instrument</option>
             <option value="Documentationerror" {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>Documentation error</option>
@@ -1630,7 +1646,7 @@
                                             <label for="Facility/Equipment"> Facility/ Equipment/ Instrument/ System
                                                 Details Required? <span class="text-danger">*</span></label>
                                             <select name="Facility_Equipment"
-                                                  {{ $data->stage == 1 ? '' : 'disabled' }}
+                                                   class="stage-control" data-stage="{{$data->stage}}"
                                                 id="Facility_Equipment" value="{{ $data->Facility_Equipment }}">
                                                 <option value="">-- Select --</option>
                                                 <option @if ($data->Facility_Equipment == 'yes' || old('Facility_Equipment') == 'yes') selected @endif value="yes">
@@ -1779,7 +1795,7 @@
                                             <label for="Document Details Required">Document Details Required? <span
                                                     class="text-danger">*</span></label>
                                             <select
-                                                name="Document_Details_Required"  {{ $data->stage == 1 ? '' : 'disabled' }}
+                                                name="Document_Details_Required"   class="stage-control" data-stage="{{$data->stage}}"
                                                 id="Document_Details_Required"
                                                 value="{{ $data->Document_Details_Required }}">
                                                 <option value="">-- Select --</option>
@@ -1907,7 +1923,7 @@
                                             <label for="Document Details Required">Product / Material Batch Details Required<span
                                                     class="text-danger">*</span></label>
                                             <select
-                                                name="Product_Details_Required"  {{ $data->stage == 1 ? '' : 'disabled' }}
+                                                name="Product_Details_Required"  class="stage-control" data-stage="{{$data->stage}}"
                                                 id="Product_Details_Required"
                                                 value="{{ $data->Product_Details_Required }}">
                                                 <option value="">-- Select --</option>
@@ -2041,7 +2057,7 @@
                                             <div class="group-input">
                                                 <label for="Immediate Action">Description of Deviation <span class="text-danger">*</span></label>
 
-                                                <textarea class="tiny" name="discb_deviat[]"   {{ $data->stage == 1 ? '' : 'disabled' }}
+                                                <textarea class="tiny" name="discb_deviat[]"   {{ $data->stage == 1 ? '' : 'readonly' }}
                                                     id="summernote-2">{{ $data->discb_deviat }}</textarea>
                                             </div>
 
@@ -2133,7 +2149,7 @@
                                         <div class="group-input">
                                             <label for="If Others">HOD Person<span class="text-danger">*</span></label>
                                             <select name="Hod_person_to" onchange=""
-                                                  {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                            class="stage-control" data-stage="{{$data->stage}}">
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
@@ -2150,7 +2166,7 @@
                                         <div class="group-input">
                                             <label for="If Others">Reviewer Person<span class="text-danger">*</span></label>
                                             <select name="Reviewer_to" onchange=""
-                                                  {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                            class="stage-control" data-stage="{{$data->stage}}">
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
@@ -2166,7 +2182,7 @@
                                         <div class="group-input">
                                             <label for="If Others">Approver Person<span class="text-danger">*</span></label>
                                             <select name="Approver_to" onchange=""
-                                                  {{ $data->stage == 1 ? '' : 'disabled' }}>
+                                            class="stage-control" data-stage="{{$data->stage}}">
                                                 <option value="">Select a value</option>
                                                 @if ($users->isNotEmpty())
                                                     @foreach ($users as $value)
@@ -2184,7 +2200,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Immediate_Action[]"   {{ $data->stage == 1 ? '' : 'disabled' }}
+                                            <textarea class="tiny" name="Immediate_Action[]"   {{ $data->stage == 1 ? '' : 'readonly' }}
                                                 id="summernote-2">{{ $data->Immediate_Action }}</textarea>
                                         </div>
                                         @error('Immediate_Action')
@@ -2199,7 +2215,7 @@
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea class="tiny" name="Preliminary_Impact[]"  {{ $data->stage == 1 ? '' : 'disabled' }}
+                                            <textarea class="tiny" name="Preliminary_Impact[]"  {{ $data->stage == 1 ? '' : 'readonly' }}
                                                 id="summernote-3">{{ $data->Preliminary_Impact }}</textarea>
                                         </div>
                                         @error('Preliminary_Impact')
@@ -2677,7 +2693,7 @@
                                                     <label for="Deviation category">Initial Deviation category <span
                                                             class="text-danger">*</span></label>
                                                     <select id="Deviation_category123"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                        name="Deviation_category" class="stage-control3" data-stage="{{$data->stage}}"
                                                         value="{{ $data->Deviation_category }}"
                                                         onchange="handleDeviationCategoryChange123()" required>
                                                         <option value="0">-- Select --</option>
@@ -2691,7 +2707,7 @@
                                                 @else
                                                     <label for="Deviation category">Initial Deviation category</label>
                                                     <select id="Deviation_category123"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                                        name="Deviation_category"  class="stage-control3" data-stage="{{$data->stage}}"
                                                         onchange="handleDeviationCategoryChange123()"
                                                         value="{{ $data->Deviation_category }}">
                                                         <option value="0">-- Select --</option>
@@ -2747,7 +2763,7 @@
                                             <label for="Capa Required">CAPA Required? @if ($data->stage == 3)
                                                     <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
                                                    @endif</label>
-                                            <select name="capa_required" id="capa_required" {{ ($data->stage == 0 || $data->stage == 12) && $data->stage == 3  ? 'disabled' : '' }}>
+                                            <select name="capa_required" id="capa_required"  class="stage-control3" data-stage="{{$data->stage}}">
                                                 <option value="select">-- Select --</option>
                                                 <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
                                                 <option @if ($data->capa_required == 'no') selected @endif value='no'>No</option>
@@ -2755,6 +2771,21 @@
                                             <input type="hidden" name="hidden_capa" id="hidden_capa" value="{{ $data->capa_required }}">
                                         </div>
                                     </div>
+                                    <script>
+                                        document.addEventListener("DOMContentLoaded", function () {
+                                            let fields = document.querySelectorAll(".stage-control3"); // Get all select fields with class "stage-control"
+
+                                            fields.forEach(field => {
+                                                let stage = parseInt(field.getAttribute("data-stage"));
+
+                                                if (stage !== 3) {
+                                                    field.style.pointerEvents = "none";  // Prevent user interaction
+                                                    field.style.backgroundColor = "#e9ecef"; // Grey out field
+                                                    field.style.opacity = "0.7"; // Reduce visibility for disabled effect
+                                                }
+                                            });
+                                        });
+                                    </script>
 
                                     <!-- The CAPA button -->
 
@@ -2799,7 +2830,7 @@
                                                     <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
                                                    @endif</label>
                                         <select name="qrm_required" id="qrm_required"
-                                            {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
+                                        class="stage-control3" data-stage="{{$data->stage}}">
                                             <option value="">-- Select --</option>
                                             <option value="Yes" @if ($data->qrm_required == 'Yes') selected @endif>Yes</option>
                                             <option value="No" @if ($data->qrm_required == 'No') selected @endif>No</option>
@@ -2854,7 +2885,7 @@
                                                     <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
                                                    @endif</label>
                                         <select name="Investigation_required"
-                                        {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                         class="stage-control3" data-stage="{{$data->stage}}"
                                             id="Investigation_required">
                                             <option value="">-- Select --</option>
                                             <option value="Yes"
@@ -9720,7 +9751,7 @@
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                         require
                                         completion</small></div>
-                                <textarea class="tiny"  name="scope" id="summernote-10">{{ $data->scope }}</textarea>
+                                <textarea class="tiny" {{ $data->stage == 7 ?  '' : 'readonly'  }} name="scope" id="summernote-10">{{ $data->scope }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
@@ -9738,7 +9769,7 @@
                             <div class="group-input" id="documentsRowna">
                                 <label for="audit-agenda-grid">
                                     Investigation team and Responsibilities <span class="text-danger">*</span>
-                                    <button type="button" name="audit-agenda-grid"
+                                    <button type="button" name="audit-agenda-grid" {{ $data->stage == 7 ?  '' : 'disabled'  }}
                                         id="investigationTeamAdd">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modalITAR"
@@ -9837,7 +9868,7 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="audit type">Investigation Approach <span class="text-danger">*</span></label>
-                                <select multiple name="investigation_approach[]" id="investigation_approach">
+                                <select multiple name="investigation_approach[]" id="investigation_approach"   data-stage="{{$data->stage}}">
                                     <option value="Why-Why Chart"
                                         {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
                                         Why-Why Chart</option>
@@ -9859,11 +9890,25 @@
                                 </select>
                             </div>
                         </div>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                let fields = document.querySelectorAll(".stage-control7"); // Get all select fields with class "stage-control"
 
+                                fields.forEach(field => {
+                                    let stage = parseInt(field.getAttribute("data-stage"));
+
+                                    if (stage !== 7) {
+                                        field.style.pointerEvents = "none";  // Prevent user interaction
+                                        field.style.backgroundColor = "#e9ecef"; // Grey out field
+                                        field.style.opacity = "0.7"; // Reduce visibility for disabled effect
+                                    }
+                                });
+                            });
+                        </script>
                         <div class="col-lg-12 others-section" style="display: none;">
                         <div class="group-input">
                             <label for="other_specify">Others <span class="text-danger">*</span></label>
-                            <textarea name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
+                            <textarea {{ $data->stage == 7 ?  '' : 'readonly'  }} name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
                         </div>
                     </div>
 
@@ -9892,7 +9937,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="other_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                {{ $data->stage == 7 ?  '' : 'disabled'  }}
                                                     oninput="addMultipleFiles(this, 'other_attachment')" multiple>
                                             </div>
                                         </div>
@@ -9971,7 +10016,7 @@
                     <div class="group-input failure">
                         <label for="agenda">
                             Failure Mode and Effect Analysis
-                            <button type="button" name="agenda" onclick="addRiskAssessmentdata_1('risk-assessment-risk-management_2')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                            <button type="button" name="agenda" onclick="addRiskAssessmentdata_1('risk-assessment-risk-management_2')" {{ $data->stage == 7 ?  '' : 'disabled'  }}>+</button>
                             <span class="text-primary" data-bs-toggle="modal"
                             data-bs-target="#observation-field-instruction-modalInferenceFMEA"
                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -10271,7 +10316,7 @@
 
         newRow.innerHTML = `
             <td>${rowCount + 1}</td>
-            <td><textarea name='risk_factor_1[]' ></textarea></td>
+            <td><textarea  name='risk_factor_1[]' ></textarea></td>
             <td><textarea name='problem_cause_1[]' ></textarea></td>
             <td><textarea name='existing_risk_control_1[]'  ></textarea></td>
             <td>
@@ -10375,7 +10420,7 @@
                                         style="display: {{ $data->investigation_approach == 'Fishbone or Ishikawa Diagram' ? 'inline' : 'none' }}"
                                         class="text-danger">*</span>
                                     <button type="button" name="agenda"
-                                        onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+                                        onclick="addFishBone('.top-field-group', '.bottom-field-group')" {{ $data->stage == 7 ?  '' : 'disabled'  }}>+</button>
                                     <button type="button" name="agenda" class="fishbone-del-btn"
                                         onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                                         <i class="fa-solid fa-trash-can"></i>
@@ -10500,7 +10545,7 @@
                                 <label for="Inference">
                                     Inference
                                     <button type="button"
-                                        onclick="addInference('Inference')"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                                        onclick="addInference('Inference')"{{ $data->stage == 7 ?  '' : 'disabled'  }}>+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modalInference"
                                         style="font-size: 0.8rem; font-weight: 400;">
@@ -10595,10 +10640,10 @@
             // Toggle Fishbone section
             if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
                 $('.fishbone-section').show();
-                $('.fishbone-required').attr('required', true);
+                // $('.fishbone-required').attr('required', true);
             } else {
                 $('.fishbone-section').hide();
-                $('.fishbone-required').removeAttr('required');
+                // $('.fishbone-required').removeAttr('required');
             }
 
             // Toggle Why-Why Chart section
@@ -11946,7 +11991,7 @@
                         <div class="group-input">
                             <label for="Detail Of Root Cause">Investigation Summary <span class="text-danger">*</span></label>
 
-                            <textarea class="" {{ $data->stage == 7 ? '' : "disabled" }} name="Detail_Of_Root_Cause" id="summernote-18">{{ $data->Detail_Of_Root_Cause }}</textarea>
+                            <textarea class="" {{ $data->stage == 7 ? '' : "readonly" }} name="Detail_Of_Root_Cause" id="summernote-18">{{ $data->Detail_Of_Root_Cause }}</textarea>
                         </div>
                     </div>
                     <div class="col-12">
@@ -12093,8 +12138,8 @@
                     <div class="col-12 mb-4" id="fmea-section">
             <div class="group-input">
                 <label for="agenda">
-                    Failure Mode and Effect Analysis
-                    <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>+</button>
+                    Failure Mode and Effect Analysis <span class="text-danger">*</span>
+                    <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 7 ? '' : 'disabled' }}>+</button>
                     <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modalInferenceFMEA" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
                 </label>
                 <div class="table-responsive">
@@ -12376,7 +12421,7 @@
                                 cell1.innerHTML = currentRowCount;
 
                                 var cell2 = newRow.insertCell(1);
-                            cell2.innerHTML = "<textarea name='risk_factor[]'></textarea>";
+                            cell2.innerHTML = "<textarea {{ $data->stage == 7 ? 'required' : 'disabled' }} name='risk_factor[]'></textarea>";
 
                             var cell4 = newRow.insertCell(2);
                             cell4.innerHTML = "<textarea name='problem_cause[]'></textarea>";
@@ -12547,36 +12592,36 @@
                             <!-- Root Cause -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Root_Cause">Root Cause</label>
+                                    <label for="Root_Cause">Root Cause<span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="tiny" name="capa_root_cause" id="capa_root_cause">{{ old('capa_root_cause', $data->capa_root_cause) }}</textarea>
+                                    <textarea class="tiny" {{ $data->stage == 7 ? '' : 'readonly' }} name="capa_root_cause" id="capa_root_cause">{{ old('capa_root_cause', $data->capa_root_cause) }}</textarea>
                                 </div>
                             </div>
 
                             <!-- Immediate Action Taken -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)</label>
+                                    <label for="Immediate_Action_Take">Immediate Action Taken (If Applicable)<span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="tiny" name="Immediate_Action_Take" id="Immediate_Action_Take">{{ old('Immediate_Action_Take', $data->Immediate_Action_Take) }}</textarea>
+                                    <textarea class="tiny" {{ $data->stage == 7 ? '' : 'readonly' }} name="Immediate_Action_Take" id="Immediate_Action_Take">{{ old('Immediate_Action_Take', $data->Immediate_Action_Take) }}</textarea>
                                 </div>
                             </div>
 
                             <!-- Corrective Action Details -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Corrective_Action_Details">Corrective Action Details</label>
+                                    <label for="Corrective_Action_Details">Corrective Action Details<span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="tiny" name="Corrective_Action_Details" id="Corrective_Action_Details">{{ old('Corrective_Action_Details', $data->Corrective_Action_Details) }}</textarea>
+                                    <textarea class="tiny" {{ $data->stage == 7 ? '' : 'readonly' }} name="Corrective_Action_Details" id="Corrective_Action_Details">{{ old('Corrective_Action_Details', $data->Corrective_Action_Details) }}</textarea>
                                 </div>
                             </div>
 
                             <!-- Preventive Action Details -->
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
-                                    <label for="Preventive_Action_Details">Preventive Action Details</label>
+                                    <label for="Preventive_Action_Details">Preventive Action Details<span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="tiny" name="Preventive_Action_Details" id="Preventive_Action_Details">{{ old('Preventive_Action_Details', $data->Preventive_Action_Details) }}</textarea>
+                                    <textarea class="tiny" {{ $data->stage == 7 ? '' : 'readonly' }} name="Preventive_Action_Details" id="Preventive_Action_Details">{{ old('Preventive_Action_Details', $data->Preventive_Action_Details) }}</textarea>
                                 </div>
                             </div>
 
@@ -13528,7 +13573,7 @@
                                     <div><small class="text-primary">Please Refer Intial deviation category before
                                             updating.</small></div>
                                     <select
-                                        name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                        name="Post_Categorization"{{ $data->stage == 10 ? '' : 'disabled' }}
                                         id="Post_Categorization" value="Post_Categorization">
                                         <option value=""> -- Select --</option>
                                         <option @if ($data->Post_Categorization == 'major') selected @endif value="major">Major
@@ -13551,7 +13596,7 @@
                                             require
                                             completion</small></div>
                                     <textarea class="tiny"
-                                        name="Investigation_Of_Review"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                        name="Investigation_Of_Review"{{ $data->stage == 10 ? '' : 'disabled' }}
                                         id="summernote-13">{{ $data->Investigation_Of_Review }}</textarea>
                                 </div>
                             </div>
@@ -13564,7 +13609,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Closure_Comments"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                    <textarea class="tiny" name="Closure_Comments"{{ $data->stage == 10 ? '' : 'disabled' }}
                                         id="summernote-15">{{ $data->Closure_Comments }}</textarea>
                                 </div>
 
@@ -13573,11 +13618,11 @@
                                 <div class="group-input">
                                     <label for="Disposition of Batch">Disposition of Batch
 
-                                        </span></label>
+                                       <span class="text-danger">*</span></label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require
                                             completion</small></div>
-                                    <textarea class="tiny" name="Disposition_Batch"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
+                                    <textarea class="tiny" name="Disposition_Batch"{{ $data->stage == 10 ? '' : 'disabled' }}
                                         id="summernote-16">{{ $data->Disposition_Batch }}</textarea>
                                 </div>
 
@@ -13639,7 +13684,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="closure_attachment[]"
-                                                    {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}
+                                                    {{ $data->stage == 10 ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                             </div>
                                         </div>

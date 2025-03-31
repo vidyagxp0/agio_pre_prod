@@ -11603,6 +11603,60 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     // }
 
                     // return "PAUSE";
+                    if ((empty($deviation->Discription_Event) && empty($changeControl->objective)
+                    && empty($deviation->scope) &&  empty($deviation->imidiate_action) &&  empty($deviation->Detail_Of_Root_Cause)
+                    )){
+                       Session::flash('swal', [
+                           'title' => 'Mandatory Fields Required!',
+                           'message' => 'Investingation tab is yet to be filled!',
+                           'type' => 'warning',
+                       ]);
+
+                       return redirect()->back();
+                   } else {
+                       Session::flash('swal', [
+                           'type' => 'success',
+                           'title' => 'Success',
+                           'message' => 'Sent for HOD Final Review state'
+                       ]);
+                   }
+
+                   $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+                //  dd($riskEffectAnalysis->risk_factor);
+                   if (empty($riskEffectAnalysis->risk_factor)) {
+
+                      Session::flash('swal', [
+                          'title' => 'Mandatory Fields Required!',
+                          'message' => 'QRM tab is yet to be filled!',
+                          'type' => 'warning',
+                      ]);
+
+                      return redirect()->back();
+                  } else {
+                      Session::flash('swal', [
+                          'type' => 'success',
+                          'title' => 'Success',
+                          'message' => 'Sent for HOD Final Review state'
+                      ]);
+                  }
+                //   dd($deviation->capa_root_cause);
+                  if (empty($deviation->capa_root_cause) && empty($deviation->Immediate_Action_Take) ) {
+
+                     Session::flash('swal', [
+                         'title' => 'Mandatory Fields Required!',
+                         'message' => 'QRM and CAPA tab is yet to be filled!',
+                         'type' => 'warning',
+                     ]);
+
+                     return redirect()->back();
+                 } else {
+                     Session::flash('swal', [
+                         'type' => 'success',
+                         'title' => 'Success',
+                         'message' => 'Sent for HOD Final Review state'
+                     ]);
+                 }
+
                     if (!$deviation->Pending_initiator_update) {
 
                         Session::flash('swal', [
@@ -11620,23 +11674,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                         ]);
                     }
                     // if (!$deviation->Discription_Event) {
-                     if ((empty($deviation->Discription_Event) && empty($changeControl->objective)
-                     && empty($deviation->scope) &&  empty($deviation->imidiate_action) &&  empty($deviation->Detail_Of_Root_Cause)
-                     )){
-                        Session::flash('swal', [
-                            'title' => 'Mandatory Fields Required!',
-                            'message' => 'Investingation tab is yet to be filled!',
-                            'type' => 'warning',
-                        ]);
 
-                        return redirect()->back();
-                    } else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent for HOD Final Review state'
-                        ]);
-                    }
 
                     $deviation->stage = "8";
                     $deviation->status = "HOD Final Review";
