@@ -509,7 +509,7 @@
                                     <div class="group-input" id="description_incidence_gi">
                                         <label for="Description_incidence"> Description Of Incidence<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="description_incidence_gi" class="tiny"></textarea>
+                                        <textarea name="description_incidence_gi" id="summernote-1" class="summernote"></textarea>
                                     </div>
 
                                 </div>
@@ -1516,6 +1516,57 @@
             display: block;
         }
     </style>
+
+
+<script>
+        VirtualSelect.init({
+            ele: '#reference_record, #notify_to'
+        });
+
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        let referenceCount = 1;
+
+        function addReference() {
+            referenceCount++;
+            let newReference = document.createElement('div');
+            newReference.classList.add('row', 'reference-data-' + referenceCount);
+            newReference.innerHTML = `
+            <div class="col-lg-6">
+                <input type="text" name="reference-text">
+            </div>
+            <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div><div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div>
+        `;
+            let referenceContainer = document.querySelector('.reference-data');
+            referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
+        }
+    </script>
 
     <script>
         VirtualSelect.init({
