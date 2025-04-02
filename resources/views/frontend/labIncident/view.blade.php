@@ -964,7 +964,7 @@
 
                         <div class="col-lg-12 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due">Date of toggleOtherIncidence
+                                <label for="Date Due">Date of Incidence
                                 @if($data->stage == 1)    
                                     <span
                                             class="text-danger">*

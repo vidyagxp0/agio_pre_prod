@@ -776,20 +776,20 @@
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
-                        @if ($data->QC_headhod_secondery_Attachment)
-                            @foreach (json_decode($data->QC_headhod_secondery_Attachment) as $key => $file)
+                            @if ($data->QC_headhod_secondery_Attachment)
+                                @foreach (json_decode($data->QC_headhod_secondery_Attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
                                 <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
                                 </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
-                            </tr>
-                        @endif
+                            @endif
 
                     </table>
             </div>

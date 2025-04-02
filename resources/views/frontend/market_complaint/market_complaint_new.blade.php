@@ -280,7 +280,8 @@
                                     </div>
                                 </div> --}}
 
-                            {{--
+                           
+                                {{--
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Due Date 
@@ -339,6 +340,8 @@
                                 </script>
                             --}}
 
+                       
+
                             <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Due Date
@@ -374,37 +377,9 @@
                                         display: none;
                                     }
                                     </style>
-                             
-                             <!-- <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date">Complaint Reported On
-                                        <span
-                                        class="text-danger">*</span>
-                                        </label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date_gi" name="due_date_gi"
-                                                placeholder="Select Due Date" value="" required/>
-                                        </div>
-                                        <script>
-                                            $(document).ready(function() {
-                                                $("#due_date_gi").datepicker({
-                                                    dateFormat: "dd-M-yy",
-                                                    onClose: function(dateText, inst) {
-                                                        if (!dateText) {
-                                                            $(this).val(''); 
-                                                        }
-                                                    }
-                                                });
-
-                                                  $("#due_date_gi").on('keydown', function(e) {
-                                                    e.preventDefault();
-                                                });
-                                            });
-                                        </script>
-                                    </div>
-                                </div> -->
-
-
+                            
+                           
+                          
 
 
 

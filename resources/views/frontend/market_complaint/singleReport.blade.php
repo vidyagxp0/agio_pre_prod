@@ -822,7 +822,7 @@
                                     <tr>
                                         <td>{{ $investingTeamIndex++ }}</td>
                                         <td class="w-20">
-                                            {{ isset($inves['name_inv_tem']) ? $inves['name_inv_tem'] : '' }} </td>
+                                            {{  Helpers::getInitiatorName(isset($inves['name_inv_tem'])) ?   Helpers::getInitiatorName($inves['name_inv_tem']) : '' }} </td>
                                         <td class="w-20">
                                             {{ isset($inves['department_inv_tem']) ? $inves['department_inv_tem'] : '' }}
                                         </td>
