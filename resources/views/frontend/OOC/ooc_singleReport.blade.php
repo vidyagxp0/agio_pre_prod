@@ -281,7 +281,7 @@
                                 : $data->Initiator_Group;
                         @endphp
 
-                        <th class="w-20">Initiation Department</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ $currentInitiatorGroupFullForm }}

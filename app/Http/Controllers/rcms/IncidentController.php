@@ -1412,7 +1412,7 @@ class IncidentController extends Controller
         if (!empty ($request->short_description_required)){
             $history = new IncidentAuditTrail();
             $history->incident_id = $incident->id;
-            $history->activity_type = 'Repeat Incident';
+            $history->activity_type = 'Repeat Incident?';
             $history->previous = "Null";
             $history->current = $incident->short_description_required;
             $history->comment = "Not Applicable";
@@ -1515,7 +1515,8 @@ class IncidentController extends Controller
             $history->incident_id = $incident->id;
             $history->activity_type = 'Initiation Department';
             $history->previous = "Null";
-            $history->current = Helpers::getFullDepartmentName($incident->Initiator_Group);
+            // $history->current = Helpers::getFullDepartmentName($incident->Initiator_Group);
+            $history->current =  Helpers::getUsersDepartmentName(Auth::user()->departmentid) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -3982,7 +3983,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                                 ->exists();
                 $history = new IncidentAuditTrail();
                 $history->incident_id = $incident->id;
-                $history->activity_type = 'Repeat Incident';
+                $history->activity_type = 'Repeat Incident?';
                 $history->previous =  $lastIncident->short_description_required;
                 $history->current = $incident->short_description_required;
                 $history->comment = $request->comment;

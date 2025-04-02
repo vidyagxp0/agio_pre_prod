@@ -216,7 +216,14 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Department </th>
-                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td>
+                        {{-- <td class="w-30">@if($data->Initiator_Group){{ Helpers::getFullDepartmentName($data->Initiator_Group) }} @else Not Applicable @endif</td> --}}
+                        <td class="w-30">
+                            @if ( Helpers::getUsersDepartmentName(Auth::user()->departmentid))
+                            {{  Helpers::getUsersDepartmentName(Auth::user()->departmentid)}}
+                        @else
+                            Not Applicable
+                        @endif
+                        </td>
                         <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -370,7 +377,7 @@
                         <td class="w-80">@if($data->Auditee_comment){{ $data->Auditee_comment }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Auditor Comment</th>
+                        <th class="w-20">Lead Auditor Comment</th>
                         <td class="w-80">@if($data->Auditor_comment){{ $data->Auditor_comment }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
@@ -537,13 +544,13 @@
                             <tr class="table_bg">
                                 <th class="w-20">S No.</th>
                                 <th>Area of Audit</th>
-                                <th>Start Date</th>
-                                <th>Start Time</th>
-                                <th>End Date</th>
-                                <th>End Time</th>
+                                <th>Scheduled Start Date</th>
+                                <th>Scheduled Start Time</th>
+                                <th>Scheduled End Date</th>
+                                <th>Scheduled End Time</th>
                                 <th>Auditor</th>
                                 <th>Auditee</th>
-                                <th>Remark</th>
+                                <th>Remarks</th>
                             </tr>
 
                             @if (!empty($json) && is_array($json))
@@ -2944,6 +2951,9 @@
 
 
         <div class="block">
+            <div class="block-head">
+              Audit Observation
+            </div>
             <div class="block-head">
                 Internal Audit (Observations/Discrepancy)
             </div>

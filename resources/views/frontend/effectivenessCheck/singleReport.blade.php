@@ -412,7 +412,7 @@
         <table>
 
             <tr>
-                <th class="w-20">HOD Review Comments</th>
+                <th class="w-20">HOD Review Comment</th>
                 <td class="w-80">
                     @if ($data->Comments)
                         {{ $data->Comments }}
