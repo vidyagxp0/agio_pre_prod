@@ -279,7 +279,7 @@
 
 </style> -->
 
-<style>
+    <style>
         
         #isPasted {
             width: 690px !important;
@@ -335,6 +335,7 @@
 
         .table-containers {
             width: 690px;
+            font-size: 14px;
             overflow-x: fixed;
         }
 
@@ -633,140 +634,6 @@
                 </div>
             </div>
 
-            {{-- <div class="block">
-                <div class="block-head">
-                    Investigation
-                </div>
-    
-                <table>
-    
-    
-                    <tr>
-                        <th class="w-20">Objective</th>
-                        <td class="w-80">
-                            @if ($data->objective)
-                                {{ $data->objective }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    
-                
-                        <th class="w-20">Scope</th>
-                        <td class="w-80">
-                            @if ($data->scope)
-                                {{ $data->scope }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Problem Statement</th>
-                        <td class="w-80">
-                            @if ($data->problem_statement_rca)
-                                {{ $data->problem_statement_rca }}
-                            @else
-                                Not Applicable
-                            @endif
-                        
-                    
-                        <th class="w-20">Background</th>
-                        <td class="w-80">
-                            @if ($data->requirement)
-                                {{ $data->requirement }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Immediate Action</th>
-                        <td class="w-80">
-                            @if ($data->immediate_action)
-                                {{ $data->immediate_action }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    
-                        
-                        <th class="w-20">Investigation Team</th>
-                        <td class="w-80">
-                            @if ($data->investigation_team)
-                                {{($investigation_teamNamesString) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Root Cause Methodology</th>
-                        <td class="w-80">
-                            @if ($data->root_cause_methodology)
-                                {{ is_array($selectedMethodologies) ? implode(', ', $selectedMethodologies) : $selectedMethodologies }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">Others</th>
-                        <td class="w-80">
-                            @if ($data->root_cause_Others)
-                                {{ $data->root_cause_Others }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                  </table>
-                <!-- Failure Mode and  Effec Analysis -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  <div class="border-table">
-                    <div class="block-head">
-                     Attachment
-                
-                    </div>
-                    <table>
-                
-                        <tr class="table_bg">
-                            <th class="w-20">Sr.No.</th>
-                            <th class="w-60">Attachment</th>
-                        </tr>
-                        @if ($data->investigation_attachment)
-                            @foreach (json_decode($data->investigation_attachment) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                            target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td class="w-20">1</td>
-                                <td class="w-20">Not Applicable</td>
-                            </tr>
-                        @endif
-                
-                    </table>
-                </div>                
-
-
-            </div> --}}
-
 
          
                <div class="block">
@@ -867,11 +734,9 @@
                 <div class="block-head">
                     Investigation & Root Cause
                 </div>
-                <div class="block-head">
+                <!-- <div class="block-head">
                     Investigation
-                </div>
-
-
+                </div> -->
                 <div class="other-container ">
                     <table>
                         <thead>
@@ -887,7 +752,7 @@
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
-                                        <div class="table-containers">
+                                        <div class="table-containers" style="">
                                             {!! strip_tags($data->objective, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>

@@ -7575,8 +7575,6 @@
                                     }
                                 }
                             </script>
-
-
                          </div>
                     </div>
                     <div class="button-block">
@@ -10310,7 +10308,6 @@
                             </script>
 
 
-
                                 <div class="button-block">
                                     <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -10338,9 +10335,11 @@
                                         <label for="stp">STP No<span class="text-danger">*</span></label>
                                         @php
 
-                                        $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                        $mfpstpNumber = "FPSTP/" . str_pad($document->record_spec1, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
+                                            $mfpstpNumber = "FPSTP/" . str_pad($document->record_spec1, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+
                                         @endphp
+
                                         <input type="text" id="stp" name="stp_mfpstp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
                                 </div>
@@ -10351,6 +10350,7 @@
                                             <input type="text" name="product_name_fpstp" value="{{$document->document_content->product_name_fpstp}}">
                                         </div>
                                     </div>
+
 
                                     <div class="col-12 sub-head">
                                            STANDARD TESTING PROCEDURE
@@ -10370,8 +10370,7 @@
                                                         {{ $tempHistory->created_at }}
                                                     </p>
                                                     <input class="input-field"
-                                                        style="background: #ffff0061;
-                                            color: black;"
+                                                        style="background: #ffff0061; color: black;"
                                                         type="text" value="{{ $tempHistory->comment }}" disabled>
                                                 @endif
                                             @endforeach
@@ -14314,18 +14313,18 @@
                             </div>
 
                         
-                        <!-- <div class="col-md-6">
+                        <div class="col-md-6">
                             <div class="group-input">
                                 <label for="piaNameCode">Specification No.</label>
                                 <select id="recordSelect" name="select_specification">
                                     <option value="">Select Specification</option>
                                 </select>
                             </div>
-                        </div> -->
+                        </div>
 
-                        <!-- <input type="hidden" id="saved_specification" value="{{ old('select_specification', $document->select_specification ?? '') }}"> -->
+                        <input type="hidden" id="saved_specification" value="{{ old('select_specification', $document->select_specification ?? '') }}">
 
-                        <!-- <script>
+                        <script>
                             $(document).ready(function () {
                                 $.ajax({
                                     url: "{{ route('getRecordsByType') }}", 
@@ -14347,8 +14346,7 @@
                                     }
                                 });
                             });
-                        </script> -->
-
+                        </script>
 
 
                             

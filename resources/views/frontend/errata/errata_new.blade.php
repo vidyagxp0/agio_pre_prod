@@ -463,7 +463,7 @@
                                         <table class="table table-bordered" id="Details-table">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 2%">Row#</th>
+                                                    <th style="width: 2%">Sr.No.</th>
                                                     <th style="width: 12%">List Of Impacting Document (If Any)</th>
                                                     <!-- <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
