@@ -9343,10 +9343,10 @@ class RiskManagementController extends Controller
                 $cftDetails = RiskAssesmentCftResponce::withoutTrashed()->where(['status' => 'In-progress', 'risk_id' => $id])->distinct('cft_user_id')->count();
                 $Cft = RiskManagmentCft::withoutTrashed()->where('risk_id', $id)->first();
                 if ($riskAssement->stage == 1) {
-                     if (empty($riskAssement->document_used_risk) || empty($riskAssement->Brief_description) ||empty($riskAssement->purpose) || empty($riskAssement->reason_for_revision) || empty($riskAssement->scope) || empty($riskAssement->short_description)) {
+                     if (empty($riskAssement->document_used_risk) || empty($riskAssement->Brief_description) ||empty($riskAssement->purpose) || empty($riskAssement->reason_for_revision) || empty($riskAssement->scope) || empty($riskAssement->short_description) || empty($riskAssement->root_cause_methodology) || empty($riskAssement->investigation_summary) || empty($riskAssement->r_a_conclussion)) {
                         Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
-                                'message' => 'Genral Information Tab is yet to be filled!',
+                                'message' => 'Genral Information and Risk Assessment Tab is yet to be filled!',
                                 'type' => 'warning',
                             ]);
     
@@ -9438,11 +9438,11 @@ class RiskManagementController extends Controller
                     // }
 
                     // Check HOD remark value
-                    if (empty($riskAssement->hod_des_rev_comm) || empty($riskAssement->root_cause_methodology) || empty($riskAssement->investigation_summary) || empty($riskAssement->r_a_conclussion)) {
+                    if (empty($riskAssement->hod_des_rev_comm)) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => 'HOD / Designee,Risk Assessment Mandatory And CFT Review Tab is yet to be filled!',
+                            'message' => 'HOD / Designee,CFT Review Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
 

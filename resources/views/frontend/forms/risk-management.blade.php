@@ -71,6 +71,12 @@
                 }
             }
         </script>
+
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
+        
         <script>
             function addWhyField(con_class, name) {
                 let mainBlock = document.querySelector('.why-why-chart')
@@ -640,10 +646,9 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="comments">Brief Description / Procedure </label>
+                                        <label for="comments">Brief Description / Procedure</label>
                                         <div class="relative-container">
-                                         <textarea name="Brief_description" class="summernote"></textarea>
-                                           
+                                           <textarea name="Brief_description" class="summernote-1"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -1339,7 +1344,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not
                                                     require completion</small></div>
-                                            <textarea class="summernote" name="hod_des_rev_comm" id="hod_des_rev_comm"> </textarea>
+                                            <textarea readonly class="summernote" name="hod_des_rev_comm" id="hod_des_rev_comm"> </textarea>
                                         </div>
                                     </div>
 
@@ -1372,7 +1377,7 @@
                                                 <div class="file-attachment-list" id="hod_design_attach"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="hod_design_attach[]"
+                                                    <input disabled type="file" id="myfile" name="hod_design_attach[]"
                                                         oninput="addMultipleFiles(this, 'hod_design_attach')" multiple>
                                                 </div>
                                             </div>
@@ -3615,7 +3620,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not
                                                     require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_comments" id="qa_cqa_comments"> </textarea>
+                                            <textarea readonly class="summernote" name="qa_cqa_comments" id="qa_cqa_comments"> </textarea>
                                         </div>
                                     </div>
 
@@ -3632,7 +3637,7 @@
                                                 <div class="file-attachment-list" id="qa_cqa_attachments"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="qa_cqa_attachments"
+                                                    <input disabled type="file" id="qa_cqa_attachments"
                                                         name="qa_cqa_attachments[]"
                                                         oninput="addMultipleFiles(this,'qa_cqa_attachments')" multiple>
                                                 </div>
@@ -3667,7 +3672,7 @@
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not
                                                     require completion</small></div>
-                                            <textarea class="summernote" name="qa_cqa_head_comm" id="qa_cqa_head_comm">
+                                            <textarea readonly class="summernote" name="qa_cqa_head_comm" id="qa_cqa_head_comm">
                                                 </textarea>
                                         </div>
                                     </div>
@@ -3684,7 +3689,7 @@
                                                 <div class="file-attachment-list" id="qa_cqa_head_attach"></div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="qa_cqa_head_attach"
+                                                    <input disabled type="file" id="qa_cqa_head_attach"
                                                         name="qa_cqa_head_attach[]"
                                                         oninput="addMultipleFiles(this,'qa_cqa_head_attach')" multiple>
                                                 </div>
@@ -5013,6 +5018,23 @@
             }
         </script>
 
+       <script>
+         var editor = new FroalaEditor('.summernote-1', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+          $(".summernote-1-disabled").FroalaEditor("edit.off");
+       </script>
+
         <script>
             function addRiskAssessmentdata2(tableId) {
                 var table = document.getElementById(tableId);
@@ -5128,8 +5150,6 @@
 
             fieldWrapper.appendChild(textarea);
             fieldWrapper.appendChild(removeButton);
-
-
             block.appendChild(fieldWrapper);
         }
 
