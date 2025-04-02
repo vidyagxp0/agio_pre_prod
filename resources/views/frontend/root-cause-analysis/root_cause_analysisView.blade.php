@@ -60,6 +60,13 @@
             overflow-wrap: break-word;
         }
 
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
         #isPasted img {
             max-width: 500px !important;
             height: 100%;
@@ -569,7 +576,7 @@
                                             <input type="text" name="initiator_group_code"
                                                 value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                 readonly>
-                                            
+                                        
                                         </div>
                                     </div>
 
@@ -976,7 +983,7 @@
 
                                         <div class="group-input">
 
-                                            <label for="objective">Objective<span class="text-danger">*</span></label>
+                                            <label for="objective" style="">Objective<span class="text-danger">*</span></label>
                                             <textarea name="objective" class="summernote" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $data->objective }}</textarea>
                                         </div>
 

@@ -90,16 +90,6 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="date-opened">Date Opened </label>
-                                        <div><small class="text-primary">When was this Investigation record opened?</small>
-                                        </div>
-                                        <input type="text" name="date_opened" value="{{date('d-M-Y')}}" readonly>
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="date_opened">
-
-                                    </div>
-                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -108,36 +98,7 @@
                                     </div>
                                 </div>
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group">Initiator Department </label>
-                                        <select name="initiator_Group" id="initiator_group">
-                                            <option value="">Select Initiation Department</option>
-                                            <option value="CQA">Corporate Quality Assurance</option>
-                                            <option value="QA">Quality Assurance</option>
-                                            <option value="QC">Quality Control</option>
-                                            <option value="QM">Quality Control (Microbiology department)</option>
-                                            <option value="PG">Production General</option>
-                                            <option value="PL">Production Liquid Orals</option>
-                                            <option value="PT">Production Tablet and Powder</option>
-                                            <option value="PE">Production External (Ointment, Gels, Creams and Liquid)
-                                            </option>
-                                            <option value="PC">Production Capsules</option>
-                                            <option value="PI">Production Injectable</option>
-                                            <option value="EN">Engineering</option>
-                                            <option value="HR">Human Resource</option>
-                                            <option value="ST">Store</option>
-                                            <option value="IT">Electronic Data Processing</option>
-                                            <option value="FD">Formulation Development</option>
-                                            <option value="AL">Analytical research and Development Laboratory</option>
-                                            <option value="PD">Packaging Development</option>
-                                            <option value="PU">Purchase Department</option>
-                                            <option value="DC">Document Cell</option>
-                                            <option value="RA">Regulatory Affairs</option>
-                                            <option value="PV">Pharmacovigilance</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Department Code</label>
@@ -201,13 +162,13 @@
                                         });
                                     </script>
 
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Initiator Group Code">Initiator Department Code</label>
-                                                    <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Department Code"
-                                                        value="" readonly>
-                                                </div>
-                                            </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Department Code"
+                                            value="" readonly>
+                                    </div>
+                                </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -218,37 +179,6 @@
                                             required>
                                     </div>
                                 </div>
-{{--
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
-                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness,
-                                            guiding priority for corrective actions. Ranging from low to high, they ensure
-                                            quality standards and mitigate critical risks.</span>
-                                        <select name="severity_level">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
-                                {{--  <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned To
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to" required>
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                </div>  --}}
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -1232,7 +1162,7 @@
                                         @enderror
                                     </div>
                                 </div> --}}
-{{--
+                            {{--
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Investigation Team">Investigation Team</label>
