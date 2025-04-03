@@ -546,7 +546,8 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Initiator Department';
             $history->previous = "Null";
-            $history->current = Helpers::getFullDepartmentName($request->initiator_Group);
+            // $history->current = Helpers::getFullDepartmentName($request->initiator_Group);
+            $history->current = Helpers::getUsersDepartmentName(Auth::user()->departmentid) ;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -560,7 +561,7 @@ class CapaController extends Controller
         if (!empty($capa->initiator_group_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Initiator Department Code';
+            $history->activity_type = 'Initiation Department Code';
             $history->previous = "Null";
             $history->current = $capa->initiator_group_code;
             $history->comment = "Not Applicable";

@@ -420,7 +420,7 @@ class AuditProgramController extends Controller
         if (!empty($data->related_url)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Related URl,s';
+            $history->activity_type = 'Related URl';
             $history->previous = "Null";
             $history->current = $data->related_url;
             $history->comment ="Not Applicable";
@@ -466,7 +466,7 @@ class AuditProgramController extends Controller
          if (!empty($data->initiator_group_code)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Department code';
+            $history->activity_type = 'Initiator Department code';
             $history->previous = "Null";
             $history->current = $data->initiator_group_code;
             $history->comment ="Not Applicable";
@@ -804,57 +804,57 @@ class AuditProgramController extends Controller
 
 //-----------------------Audit Program Grid Data sgowing in audit trail --------------------------
 
-        // $audit_program_id = $data->id;
+        $audit_program_id = $data->id;
 
-        // if (!empty($request->audit_program)) {
-        //     // Save the new auditor data
-        //     $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program'])->firstOrNew();
-        //     $newDataMeetingManagement->ci_id = $audit_program_id;
-        //     $newDataMeetingManagement->identifier = 'audit_program';
-        //     $newDataMeetingManagement->data = $request->audit_program;
-        //     $newDataMeetingManagement->save();
+        if (!empty($request->audit_program)) {
+            // Save the new auditor data
+            $newDataMeetingManagement = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program'])->firstOrNew();
+            $newDataMeetingManagement->ci_id = $audit_program_id;
+            $newDataMeetingManagement->identifier = 'audit_program';
+            $newDataMeetingManagement->data = $request->audit_program;
+            $newDataMeetingManagement->save();
 
-        //     // Define the mapping of field keys to more descriptive names
-        //     $fieldNames = [
-        //         'Auditees' => 'Auditees',
-        //         'Due_Date' => 'Date Start',
-        //         'End_date' => 'Date End',
-        //         'Lead_Investigator' => 'Lead Investigator',
-        //         'Comment' => 'Comment',
-        //     ];
+            // Define the mapping of field keys to more descriptive names
+            $fieldNames = [
+                'Auditees' => 'Auditees',
+                'Due_Date' => 'Date Start',
+                'End_date' => 'Date End',
+                'Lead_Investigator' => 'Lead Auditor',
+                'Comment' => 'Comment',
+            ];
 
-        //     // Track audit trail changes (creation of new data)
-        //     if (is_array($request->audit_program)) {
-        //         $index = 1; // Initialize a counter to ensure correct sequence
-        //         foreach ($request->audit_program as $newAuditor) {
-        //             // Track changes for each field
-        //             $fieldsToTrack = ['Auditees', 'Due_Date', 'End_date', 'Lead_Investigator', 'Comment'];
-        //             foreach ($fieldsToTrack as $field) {
-        //                 $newValue = $newAuditor[$field] ?? 'Null';
+            // Track audit trail changes (creation of new data)
+            if (is_array($request->audit_program)) {
+                $index = 1; // Initialize a counter to ensure correct sequence
+                foreach ($request->audit_program as $newAuditor) {
+                    // Track changes for each field
+                    $fieldsToTrack = ['Auditees', 'Due_Date', 'End_date', 'Lead_Investigator', 'Comment'];
+                    foreach ($fieldsToTrack as $field) {
+                        $newValue = $newAuditor[$field] ?? 'Null';
 
-        //                 // Only proceed if there's new data
-        //                 if ($newValue !== 'Null') {
-        //                     // Log the creation of the new data in the audit trail
-        //                     $auditTrail = new AuditProgramAuditTrial;
-        //                     $auditTrail->AuditProgram_id = $data->id;
-        //                     $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . $index . ' )';
-        //                     $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
-        //                     $auditTrail->current = $newValue;
-        //                     $auditTrail->comment = "";
-        //                     $auditTrail->user_id = Auth::user()->id;
-        //                     $auditTrail->user_name = Auth::user()->name;
-        //                     $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //                     $auditTrail->origin_state = $data->status;
-        //                     $auditTrail->change_to = "Not Applicable";
-        //                     $auditTrail->change_from = $data->status;
-        //                     $auditTrail->action_name = 'Create'; // Since this is a create operation
-        //                     $auditTrail->save();
-        //                 }
-        //             }
-        //             $index++; // Increment the counter after each new auditor entry
-        //         }
-        //     }
-        // }
+                        // Only proceed if there's new data
+                        if ($newValue !== 'Null') {
+                            // Log the creation of the new data in the audit trail
+                            $auditTrail = new AuditProgramAuditTrial;
+                            $auditTrail->AuditProgram_id = $data->id;
+                            $auditTrail->activity_type = $fieldNames[$field] . ' ( ' . $index . ' )';
+                            $auditTrail->previous = 'Null'; // Since it's new data, there's no previous value
+                            $auditTrail->current = $newValue;
+                            $auditTrail->comment = "";
+                            $auditTrail->user_id = Auth::user()->id;
+                            $auditTrail->user_name = Auth::user()->name;
+                            $auditTrail->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditTrail->origin_state = $data->status;
+                            $auditTrail->change_to = "Not Applicable";
+                            $auditTrail->change_from = $data->status;
+                            $auditTrail->action_name = 'Create'; // Since this is a create operation
+                            $auditTrail->save();
+                        }
+                    }
+                    $index++; // Increment the counter after each new auditor entry
+                }
+            }
+        }
 
 
 
@@ -1634,7 +1634,7 @@ class AuditProgramController extends Controller
                             ->exists();
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Department code';
+            $history->activity_type = 'Initiator Department code';
             $history->previous =  $lastDocument->initiator_group_code;
             $history->current = $data->initiator_group_code;
             $history->comment = $request->initiator_group_code_comment;
@@ -2130,13 +2130,13 @@ class AuditProgramController extends Controller
         // if($AuditProgramGrid->end_date){
         //     $enddate = unserialize($AuditProgramGrid->end_date);
         // }
-        $client = new Client();
-        $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
-        $data->stateArr = json_decode($stateList->getBody(), true);
-        $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
-        $data->cityArr = json_decode($cityList->getBody(), true); 
-        $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
-        $data->countryArr = json_decode($countryList->getBody(), true);
+        // $client = new Client();
+        // $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
+        // $data->stateArr = json_decode($stateList->getBody(), true);
+        // $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
+        // $data->cityArr = json_decode($cityList->getBody(), true); 
+        // $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
+        // $data->countryArr = json_decode($countryList->getBody(), true);
             $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');

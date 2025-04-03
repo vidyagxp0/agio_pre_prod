@@ -326,7 +326,7 @@
                        
                     </tr>
                     <tr>
-                        <th class="w-20">Details Of Nature Market Complaint</th>
+                        <th class="w-20">Details of Nature of Market Complaint</th>
                         <td class="w-80" colspan='5'>{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
                     </tr>
 
@@ -622,19 +622,19 @@
                         <td class="w-80">{!! $data->retention_sample_review_observation_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Stability Study Data Review</th>
+                        <th class="w-20">Stablity Study Data Review</th>
                         <td class="w-80">{!! $data->stability_study_data_review_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QMS Events If Any Review Observation</th>
+                        <th class="w-20">QMS Events(if Any) Review Observation</th>
                         <td class="w-80">{!! $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Repeated Complaints Queries For Product</th>
+                        <th class="w-20">Repeated Complaints/Queries For Product</th>
                         <td class="w-80">{!! $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Interpretation on Complaint Sample If Received</th>
+                        <th class="w-20">Interpretation on Complaint sample(if recieved)</th>
                         <td class="w-80">{!! $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
@@ -882,11 +882,11 @@
                         <td class="w-80">{!! $data->review_of_training_record_of_concern_persons_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Review Of Equipment/Instrument Qualification & Calibration Record</th>
+                        <th class="w-20">Review of Equipment/Instrument qualification/Calibration Record</th>
                         <td class="w-80">{!! $data->rev_eq_inst_qual_calib_record_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Review Of Equipment Breakdown And Maintenance Record</th>
+                        <th class="w-20">Review of Equipment Break-down and Maintenance Record</th>
                         <td class="w-80">{!! $data->review_of_equipment_break_down_and_maintainance_record_gi ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>

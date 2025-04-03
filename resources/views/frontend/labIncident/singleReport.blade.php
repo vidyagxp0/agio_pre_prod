@@ -637,7 +637,7 @@
 
             <div class="border-table">
                     <div class="block-head">
-                    Inv Attachment
+                        Attachment
                     </div>
                     <table>
 

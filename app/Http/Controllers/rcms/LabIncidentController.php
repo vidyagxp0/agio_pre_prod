@@ -1540,7 +1540,7 @@ class LabIncidentController extends Controller
         if (!empty($data->QC_headhod_secondery_Attachment)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QC Head/HOD Secondary Review Attachment';
+            $history->activity_type = 'QC Head/HOD Secondary Review Attachments';
             $history->previous = "Null";
             $history->current = $data->QC_headhod_secondery_Attachment;
             $history->comment = "Not Applicable";
@@ -1653,7 +1653,7 @@ class LabIncidentController extends Controller
         if (!empty($data->attachments_ia)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Immidiate Action Attachments';
+            $history->activity_type = 'immediate Action Attachments';
             $history->previous = "Null";
             $history->current = $data->attachments_ia;
             $history->comment = "Not Applicable";
@@ -4024,7 +4024,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Immidiate Action Attachments';
+            $history->activity_type = 'immediate Action Attachments';
             $history->previous = $lastDocument->attachments_ia;
             $history->current = $data->attachments_ia;
             $history->comment = $request->attachments_ia_comment;
@@ -4430,7 +4430,7 @@ if (!empty($request->closure_attachment_c) || !empty($request->deleted_closure_a
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QC Head/HOD Secondary Review Attachment';
+            $history->activity_type = 'QC Head/HOD Secondary Review Attachments';
             $history->previous = $lastDocument->QC_headhod_secondery_Attachment;
             $history->current = $data->QC_headhod_secondery_Attachment;
             $history->comment = $request->QA_Review_Comments_comment;
