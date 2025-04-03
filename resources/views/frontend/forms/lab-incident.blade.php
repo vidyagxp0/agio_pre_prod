@@ -1176,18 +1176,18 @@
                         <div class="inner-block-content">
                             <div class="row">
                             <div class="col-12 sub-head" style="font-size: 16px">
-                                    Submit
+                            Submitted
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit By">Submit By</label>
+                                        <label for="Submit By">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit On">Submit On</label>
+                                        <label for="Submit On">Submitted On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1195,13 +1195,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Submit Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static" ></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                QC Head/HOD Initial Review Complete
+                                QC Head/HOD Initial Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1215,17 +1215,38 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                {{-- @foreach($detail as $d) --}}
+                               
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QC Head/HOD Initial Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 {{-- @endforeach --}}
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Initial Review Complete
+                                    QA Initial Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1241,14 +1262,37 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QA Initial Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+                                
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                Pending Initiator Update Complete
+                                Pending Initiator Update 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1266,14 +1310,37 @@
                                 {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Pending Initiator Update Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+                                
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QC Head/HOD Secondary Review Complete
+                                    QC Head/HOD Secondary Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1289,14 +1356,37 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QC Head/HOD Secondary Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+                                
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Secondary Review Complete
+                                    QA Secondary Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1312,13 +1402,37 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QA Secondry Review Complete Comment</label>
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+
+                                
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    Approved
+                                   QAH Approved
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -1334,7 +1448,31 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Approved Comment</label>
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+
+                                
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1344,19 +1482,19 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancel By</label>
+                                        <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancel On</label>
+                                        <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Cancel Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

@@ -884,20 +884,20 @@
                     Activity Log
                 </div>
                 <div class="block-head">
-                    Submit
+                Submitted
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submit By</th>
+                        <th class="w-20">Submitted By</th>
                         <td class="w-30">@if($data->submitted_by){{ $data->submitted_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Submit On</th>
+                        <th class="w-20">Submitted On</th>
                         <td class="w-30">@if($data->submitted_on){{ $data->submitted_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">Submit Comment</th>
+                        <th class="w-20">Comment</th>
                         <td class="w-30">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
                     <div class="block-head">
-                    QC Head/HOD Initial Review Complete
+                    QC Head/HOD Initial Review 
                 </div>
                 <table>
                     <tr>
@@ -905,13 +905,22 @@
                         <td class="w-30">@if($data->review_completed_by){{ $data->review_completed_by }}@else Not Applicable @endif</td>
                         <th class="w-20">QC Head/HOD Initial Review Complete On</th>
                         <td class="w-30">@if($data->review_completed_on){{ $data->review_completed_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">QC Head/HOD Initial Review Complete Comment</th>
+                        <th class="w-20">Comment</th>
                         <td class="w-30">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">@if($data->more_info_req_1_by){{ $data->more_info_req_1_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">@if($data->more_info_req_1_on){{ $data->more_info_req_1_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">@if($data->more_info_req_1_comment){{ $data->more_info_req_1_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
 
                     <div class="block-head">
-                    QA Initial Review Complete
+                    QA Initial Review 
                 </div>
                 <table>
                     <tr>
@@ -919,13 +928,23 @@
                         <td class="w-30">@if($data->preliminary_completed_by){{ $data->preliminary_completed_by }}@else Not Applicable @endif</td>
                         <th class="w-20">QA Initial Review Complete On</th>
                         <td class="w-30">@if($data->preliminary_completed_on){{ $data->preliminary_completed_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">QA Initial Review Complete Comment</th>
+                        <th class="w-20"> Comment</th>
                         <td class="w-30">@if($data->preliminary_completed_comment){{ $data->preliminary_completed_comment }}@else Not Applicable @endif</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">@if($data->more_info_req_2_by){{ $data->more_info_req_2_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">@if($data->more_info_req_2_on){{ $data->more_info_req_2_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">@if($data->more_info_req_2_comment){{ $data->more_info_req_2_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
 
                     <div class="block-head">
-                    Pending Initiator Update Complete
+                    Pending Initiator Update 
                 </div>
                 <table>
                     <tr>
@@ -933,13 +952,22 @@
                         <td class="w-30">@if($data->all_activities_completed_by){{ $data->all_activities_completed_by }}@else Not Applicable @endif</td>
                         <th class="w-20">Pending Initiator Update Complete On</th>
                         <td class="w-30">@if($data->all_activities_completed_on){{ $data->all_activities_completed_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">Pending Initiator Update Complete Comment</th>
+                        <th class="w-20">Comment</th>
                         <td class="w-30">@if($data->all_activities_completed_comment){{ $data->all_activities_completed_comment }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">@if($data->more_info_req_3_by){{ $data->more_info_req_3_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">@if($data->more_info_req_3_on){{ $data->more_info_req_3_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">@if($data->more_info_req_3_comment){{ $data->more_info_req_3_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
 
                     <div class="block-head">
-                    QC Head/HOD Secondary Review Complete
+                    QC Head/HOD Secondary Review 
                 </div>
                 <table>
                     <tr>
@@ -947,13 +975,22 @@
                         <td class="w-30">@if($data->review_completed_by){{ $data->review_completed_by }}@else Not Applicable @endif</td>
                         <th class="w-20">QC Head/HOD Secondary Review Complete On</th>
                         <td class="w-30">@if($data->review_completed_on){{ $data->review_completed_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">QC Head/HOD Secondary Review Complete Comment</th>
+                        <th class="w-20">Comment</th>
                         <td class="w-30">@if($data->solution_validation_comment){{ $data->solution_validation_comment }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">@if($data->more_info_req_4_by){{ $data->more_info_req_4_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">@if($data->more_info_req_4_on){{ $data->more_info_req_4_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">@if($data->more_info_req_4_comment){{ $data->more_info_req_4_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
 
                     <div class="block-head">
-                    QA Secondary Review Complete
+                    QA Secondary Review 
                 </div>
                 <table>
                     <tr>
@@ -961,13 +998,23 @@
                         <td class="w-30">@if($data->extended_inv_complete_by){{ $data->extended_inv_complete_by }}@else Not Applicable @endif</td>
                         <th class="w-20">QA Secondary Review Complete On</th>
                         <td class="w-30">@if($data->extended_inv_complete_on){{ $data->extended_inv_complete_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">QA Secondary Review Complete Comment</th>
+                        <th class="w-20"> Comment</th>
                         <td class="w-30">@if($data->extended_inv_comment){{ $data->extended_inv_comment }}@else Not Applicable @endif</td>
+                    </tr>
+
+
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">@if($data->more_info_req_5_by){{ $data->more_info_req_5_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">@if($data->more_info_req_5_on){{ $data->more_info_req_5_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">@if($data->more_info_req_5_comment){{ $data->more_info_req_5_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
 
                     <div class="block-head">
-                    Approved
+                     QAH Approved
                 </div>
                 <table>
                     <tr>
@@ -975,8 +1022,19 @@
                         <td class="w-30">@if($data->no_assignable_cause_by){{ $data->no_assignable_cause_by }}@else Not Applicable @endif</td>
                         <th class="w-20">Approved On</th>
                         <td class="w-30">@if($data->no_assignable_cause_on){{ $data->no_assignable_cause_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">Approved Comment</th>
+                        <th class="w-20">Comment</th>
                         <td class="w-30">@if($data->no_assignable_cause_comment){{ $data->no_assignable_cause_comment }}@else Not Applicable @endif</td>
+                    </tr>
+
+
+
+                    <tr>
+                        <th class="w-20">More Info Required By</th>
+                        <td class="w-30">@if($data->more_info_req_6_by){{ $data->more_info_req_6_by }}@else Not Applicable @endif</td>
+                        <th class="w-20">More Info Required On</th>
+                        <td class="w-30">@if($data->more_info_req_6_on){{ $data->more_info_req_6_on }}@else Not Applicable @endif</td>
+                        <th class="w-20">Comment</th>
+                        <td class="w-30">@if($data->more_info_req_6_comment){{ $data->more_info_req_6_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>
 
@@ -985,11 +1043,11 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Cancel By</th>
+                        <th class="w-20">Cancelled By</th>
                         <td class="w-30">@if($data->cancelled_by){{ $data->cancelled_by }}@else Not Applicable @endif</td>
-                        <th class="w-20">Cancel On</th>
+                        <th class="w-20">Cancelled On</th>
                         <td class="w-30">@if($data->cancelled_on){{ $data->cancelled_on }}@else Not Applicable @endif</td>
-                        <th class="w-20">Cancel Comment</th>
+                        <th class="w-20">Comment</th>
                         <td class="w-30">@if($data->cancell_comment){{ $data->cancell_comment }}@else Not Applicable @endif</td>
                     </tr>
                     </table>

@@ -130,6 +130,12 @@
             margin-bottom: 11px;
         }
     </style>
+    <style>
+        #fr-logo {
+            display: none;
+        }
+
+    </style>
 
 
  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1869,12 +1875,19 @@
                 <textarea name="corrective_and_preventive_action_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
             </div>
         </div>
+
+
         <div class="col-12">
             <div class="group-input">
-                <label for="CAPA Number">CAPA Number  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
-            <input type="text" name="capa_number_im" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }} value="{{$data->capa_number_im}}">
+                <label for="CAPA Number">CAPA Number  
+                    @if($data->stage == 4)
+                        <span class="text-danger">*</span> 
+                    @endif 
+                </label>
+                <textarea name="capa_number_im" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required" : "") }}>{{ $data->capa_number_im }}</textarea>
+            </div>
         </div>
-         </div>
+
 
          <div class="col-12">
             <div class="group-input">
@@ -2562,18 +2575,18 @@
                             <div class="row">
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Submit
+                                Submitted
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit By">Submit By</label>
+                                        <label for="Submit By">Submitted By</label>
                                         <div class="static">{{ $data->submitted_by }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit On">Submit On</label>
+                                        <label for="Submit On">Submitted On</label>
                                         <div class="Date">{{ $data->submitted_on }}</div>
                                     </div>
                                 </div>
@@ -2581,13 +2594,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Submit Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static" >{{$data->comment}}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                QC Head/HOD Initial Review Complete
+                                QC Head/HOD Initial Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2604,14 +2617,37 @@
                                 {{-- @foreach($detail as $d) --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QC Head/HOD Initial Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->verification_complete_comment}}</div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_1_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_1_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_1_comment}}</div>
                                     </div>
                                 </div>
 
                                 {{-- @endforeach --}}
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Initial Review Complete
+                                    QA Initial Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2627,14 +2663,36 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QA Initial Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->preliminary_completed_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_2_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_2_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_2_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                Pending Initiator Update Complete
+                                Pending Initiator Update 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2652,14 +2710,38 @@
                                 {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Pending Initiator Update Complete Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static">{{$data->all_activities_completed_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_3_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_3_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_3_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QC Head/HOD Secondary Review Complete
+                                    QC Head/HOD Secondary Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2675,14 +2757,38 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QC Head/HOD Secondary Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->solution_validation_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_4_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_4_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_4_comment}}</div>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Secondary Review Complete
+                                    QA Secondary Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2698,14 +2804,37 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QA Secondry Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->extended_inv_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_5_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_5_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_5_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    Approved
+                                QAH Approved
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2721,8 +2850,30 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Approved Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->no_assignable_cause_comment}}</div>
+                                    </div>
+                                </div>
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_6_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_6_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_6_comment}}</div>
                                     </div>
                                 </div>
 
@@ -2732,22 +2883,26 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancel By</label>
+                                        <label for="Cancelled By">Cancelled By</label>
                                         <div class="static">{{ $data->cancelled_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancel On</label>
+                                        <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date">{{ $data->cancelled_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Cancel Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static">{{$data->cancell_comment}}</div>
                                     </div>
                                 </div>
+
+
+
+                                
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
