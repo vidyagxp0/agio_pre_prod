@@ -1141,7 +1141,7 @@
                                                             $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                                         @endphp
                                                         <select name="root_cause_methodology[]" multiple
-                                                        {{  $data->stage == 1 ? '' : 'disabled' }}
+                                                        {{  $data->stage == 1 ? '' : 'readonly' }}
                                                             id="root-cause-methodology">
                                                             <option value="Why-Why Chart"
                                                                 @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart

@@ -2276,12 +2276,12 @@ if (is_array($request->action) && !empty($request->action)) {
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
-                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
+                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) || empty($changestage->comments) || empty($changestage->actual_end_date) || empty($changestage->actual_end_date) || empty($changestage->action_taken) || empty($changestage->response_summary))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'Response and CAPA Tab is yet to be filled'
+                            'message' => 'Response and CAPA , Summary Tab is yet to be filled'
                         ]);
 
                         return redirect()->back();
@@ -2379,12 +2379,12 @@ if (is_array($request->action) && !empty($request->action)) {
                 }
             } else {
                 if ($changestage->stage == 2) {
-                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']))
+                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) || empty($changestage->comments) || empty($changestage->actual_end_date) || empty($changestage->actual_end_date) || empty($changestage->action_taken) || empty($changestage->response_summary))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'Response and CAPA Tab is yet to be filled'
+                            'message' => 'Response and CAPA Tab , Summary is yet to be filled'
                         ]);
 
                         return redirect()->back();

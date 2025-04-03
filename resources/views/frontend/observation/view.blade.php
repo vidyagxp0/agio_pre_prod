@@ -901,9 +901,9 @@
                                                                          '<option value="major">major</option>' +
                                                                          '<option value="minor">minor</option>' +
                                                                          '<option value="critical">critical</option>' +
-                                                                    '</select></td>'
+                                                                    '</select></td>' +
 
-                                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                                                                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
 
                                                                     '</tr>';
 
@@ -1089,7 +1089,9 @@
 
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                <div class="sub-head">Corrective Actions
+                                                <div class="sub-head">Corrective Actions @if ($data->stage == 2)
+                                                       <span class="text-danger">*</span>
+                                                      @endif
                                                     <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
@@ -1167,7 +1169,9 @@
 
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
-                                                <div class="sub-head">Preventive Action
+                                                <div class="sub-head">Preventive Action @if ($data->stage == 2)
+                                                    <span class="text-danger">*</span>
+                                                    @endif
                                                     <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
@@ -1308,7 +1312,7 @@
                                                                         name="responsible[]"
                                                                          {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
 
-                                                                        <option value="">-Select-</option>
+                                                                        <option value="">Select a value</option>
                                                                         @foreach ($users as $value)
                                                                             <option
                                                                                 @if ($griddata && unserialize($griddata->responsible)[$key]) {{ unserialize($griddata->responsible)[$key] == $value->id ? 'selected' : '' }} @endif
@@ -1374,7 +1378,11 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="comments">Comments</label>
+                                                <label for="comments">Comments
+                                                    @if ($data->stage == 2)
+                                                      <span class="text-danger">*</span>
+                                                    @endif
+                                                </label>
                                                 <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
@@ -1429,7 +1437,11 @@
 
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="actual_start_date">Actual Action Start Date</label>
+                                                <label for="actual_start_date">Actual Action Start Date @if ($data->stage == 2)
+                                                    <span class="text-danger">*</span>
+                                                    @endif
+
+                                                </label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="actual_start_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
@@ -1444,7 +1456,10 @@
                                         </div>
                                         <div class="col-lg-6  new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="actual_end_date">Actual Action End Date</lable>
+                                                <label for="actual_end_date">Actual Action End Date @if ($data->stage == 2)
+                                                        <span class="text-danger">*</span>
+                                                        @endif
+                                                </label>
                                                     <div class="calenderauditee">
                                                         <input type="text" id="actual_end_date"
                                                             placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_end_date) }}" />
@@ -1461,16 +1476,26 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="action_taken">Action Taken</label>
-                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
+                                                <label for="action_taken">Action Taken @if ($data->stage == 2)
+                                                    <span class="text-danger">*</span>
+                                                    @endif
+
+                                                </label>
+                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 4 ? 'readonly' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
+
+                                        
                                         <div class="col-12">
                                             <div class="sub-head">Response Summary</div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="response_summary">Response Summary</label>
+                                                <label for="response_summary">Response Summary @if ($data->stage == 2)
+                                                    <span class="text-danger">*</span>
+                                                    @endif
+
+                                                </label>
                                                 <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->response_summary }}</textarea>
                                             </div>
                                         </div>
@@ -1512,7 +1537,11 @@
                                 </div> --}}
                                 <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Attachments">Response and Summary Attachment</label>
+                                                <label for="Attachments">Response and Summary Attachment @if ($data->stage == 2)
+                                                    <span class="text-danger">*</span>
+                                                    @endif
+
+                                                </label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="impact_analysis">

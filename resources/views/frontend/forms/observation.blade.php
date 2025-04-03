@@ -226,6 +226,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
+                                
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Observation Report Due Date</label>
@@ -522,15 +523,15 @@
                                                         '"></td>' +
                                                         '<td><input type="text" name="observation[' + serialNumber +
                                                         '][non_compliance]"></td>' +
-
-                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
-
+                                                        
                                                         '<td><select name="observation[' + serialNumber + '][category]" class="category">' +
-                                                            '<option value="select"></option>' +
+                                                            '<option value="select">Select Category</option>' +
                                                             '<option value="major">Major</option>' +
                                                             '<option value="minor">Minor</option>' +
                                                             '<option value="critical">Critical</option>' +
                                                         '</select></td>' +
+
+                                                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
 
                                                         '</tr>';
 
