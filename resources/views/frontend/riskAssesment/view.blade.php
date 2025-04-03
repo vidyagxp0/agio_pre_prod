@@ -1,5 +1,9 @@
 @extends('frontend.layout.main')
 @section('container')
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function addFishBone(top, bottom) {
@@ -72,6 +76,122 @@
             }
         }
     </script>
+
+
+
+   <style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+        .note-editable p {
+            font-weight: normal !important;
+        }
+        
+        .note-editable th,
+        .note-editable td {
+            border: 1px solid black !important;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .fr-quick-insert {
+            left: 150px !important;
+        }
+
+        
+    </style>
 
 
     <script>
@@ -161,6 +281,7 @@
             scale: 0.8 !important;
         }
     </style>
+
 
     @php
         $users = DB::table('users')->get();
@@ -600,7 +721,7 @@
                                                 <span id="rchars">255</span> characters remaining
                                                 <input name="short_description" id="docname" type="text"
                                                     maxlength="255" required value="{{ $data->short_description }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>
                                             </div>
                                             @error('short_description')
                                                 <div class="text-danger">{{ $message }}</div>
@@ -611,7 +732,7 @@
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="search">Source of Risk/Opportunity</label>
-                                                <select name="source_of_risk" id="source_of_risk" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <select name="source_of_risk" id="source_of_risk" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->source_of_risk == 'Audit' ? 'selected' : '' }} value="Audit">Audit</option>
                                                     <option {{ $data->source_of_risk == 'Complaint' ? 'selected' : '' }} value="Complaint">Complaint</option>
@@ -629,7 +750,7 @@
                                                     <span class="text-danger">*</span>
                                             </label>
                                          
-                                            <textarea name="other_source_of_risk" class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_source_of_risk }}</textarea>
+                                            <textarea name="other_source_of_risk" class="form-control" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>{{ $data->other_source_of_risk }}</textarea>
                                             <span class="text-danger" id="error_other_source_of_risk" style="display: none;">This field is required.</span>
                                     
                                         </div>
@@ -676,7 +797,7 @@
                                         <div class="group-input">
                                             <label for="Type..">Type</label>
                                             <select name="type" id="type"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>
                                                 <option value="">Enter Your Selection Here</option>
 
                                                 <option {{ $data->type == 'Business Risk' ? 'selected' : '' }} value="Business Risk">Business Risk</option>
@@ -694,7 +815,7 @@
                                         <label for="otherFieldsUser">Other(Type)
                                               <span class="text-danger">*</span>
                                         </label>
-                                         <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->other_type }}</textarea>
+                                         <textarea name="other_type"  class="form-control" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>{{ $data->other_type }}</textarea>
                                          <span class="text-danger" id="error_other_type" style="display: none;">This field is required.</span>
                                        
                                     </div>
@@ -741,7 +862,7 @@
                                             <div class="group-input">
                                                 <label for="Priority Level">Priority Level</label>
                                                 <select name="priority_level" id="priority_level"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                     {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->priority_level == 'High' ? 'selected' : '' }}
                                                         value="High">High</option>
@@ -773,7 +894,7 @@
                                                   <span class="text-danger">*</span>  
                                                  @endif
                                                 </label>
-                                                <textarea name="purpose" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="comments">{{ $data->purpose }}</textarea>
+                                                <textarea name="purpose" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }} id="comments">{{ $data->purpose }}</textarea>
                                             </div>
                                         </div>
 
@@ -785,7 +906,7 @@
                                                   <span class="text-danger">*</span>  
                                                  @endif
                                                 </label>
-                                                <textarea name="scope" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->scope }}</textarea>
+                                                <textarea name="scope" id="comments" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>{{ $data->scope }}</textarea>
                                             </div>
                                         </div>
 
@@ -794,7 +915,7 @@
                                                 <label for="Comments">Reason for Revision @if ($data->stage == 1)  
                                                   <span class="text-danger">*</span>  
                                                  @endif</label>
-                                                <textarea name="reason_for_revision" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->reason_for_revision }}</textarea>
+                                                <textarea name="reason_for_revision" id="comments" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>{{ $data->reason_for_revision }}</textarea>
                                             </div>
                                         </div>
 
@@ -812,13 +933,11 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Brief_description">Brief Description / Procedure 
-                                                 @if ($data->stage == 1)  
-                                                    <span class="text-danger">*</span>  
-                                                 @endif</label>
-                                                <div class="relative-container">
-                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="tiny">{{ $data->Brief_description }}</textarea>
-                                               
-                                                </div>
+                                                    @if ($data->stage == 1)  
+                                                        <span class="text-danger">*</span>  
+                                                    @endif
+                                                </label>
+                                                <textarea name="Brief_description" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }} class="summernote-1">{{ $data->Brief_description }}</textarea>
                                             </div>
                                         </div>
 
@@ -834,7 +953,7 @@
                                                 @if ($data->stage == 1)  
                                                   <span class="text-danger">*</span>  
                                                  @endif</label>
-                                                <textarea name="document_used_risk" id="comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->document_used_risk }}</textarea>
+                                                <textarea name="document_used_risk" id="comments" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }}>{{ $data->document_used_risk }}</textarea>
                                             </div>
                                         </div>
 
@@ -874,7 +993,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'disabled' : '' }}
                                                             type="file" id="myfile" name="risk_attachment[]"
                                                             oninput="addMultipleFiles(this, 'reference')" multiple>
                                                     </div>
@@ -1014,7 +1133,7 @@
                                                     <div class="group-input">
                                                         <label for="root-cause-methodology">
                                                             Root Cause Methodology
-                                                            @if ($data->stage == 2)  
+                                                            @if ($data->stage == 1)  
                                                                 <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
                                                             @endif
                                                         </label>
@@ -1022,7 +1141,7 @@
                                                             $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                                         @endphp
                                                         <select name="root_cause_methodology[]" multiple
-                                                        {{ ($data->stage == 1 || $data->stage == 2) ? '' : 'disabled' }}
+                                                        {{  $data->stage == 1 ? '' : 'disabled' }}
                                                             id="root-cause-methodology">
                                                             <option value="Why-Why Chart"
                                                                 @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
@@ -1487,17 +1606,19 @@
                                         <div class="group-input">
                                             <label for="investigation_summary">Risk Assessment Summary<span
                                                     class="text-danger">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'reaonly' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
+
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Risk Assessment Conclusion
                                                   <span class="text-danger">*</span>
                                             </label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="r_a_conclussion"> {{ $data->r_a_conclussion }}</textarea>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'readonly' : '' }} name="r_a_conclussion"> {{ $data->r_a_conclussion }}</textarea>
                                         </div>
                                     </div>
+                                    
                                     {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Other</label>
@@ -9853,7 +9974,7 @@
             });
         </script>
 
-        <script>
+        <!-- <script>
             $(document).ready(function() {
                 $('.summernote').summernote({
                     toolbar: [
@@ -9867,7 +9988,24 @@
                     ]
                 });
             });
-        </script>
+        </script> -->
+    <script>
+         var editor = new FroalaEditor('.summernote-1', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+
+         });
+         
+        $(".summernote-1-disabled").FroalaEditor("edit.off");
+    </script>
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
@@ -10062,9 +10200,7 @@
 
 
          <!-- Correct Order -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>
+
 
 
     @endsection

@@ -619,16 +619,16 @@
                         @endphp
 
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @else
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                             @endif
                     @else
                         
                             @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-00
                             @else
-                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                {{$document->tds_name_code}}TDS/{{ str_pad($data->record_spec, 4, '0', STR_PAD_LEFT) }}-00
                             @endif
                     @endif
                     </span>

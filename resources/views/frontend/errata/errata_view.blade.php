@@ -3510,7 +3510,7 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Reviewed by">Approval Complete By</label>
-                                        <div class="">{{ $showdata->approved_on ?? 'Not Applicable' }}</div>
+                                        <div class="">{{ $showdata->approved_by ?? 'Not Applicable' }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">

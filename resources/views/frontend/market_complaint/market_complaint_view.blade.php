@@ -725,7 +725,7 @@
                             </div>
                             
 
-                       
+                        {{--
                          
                             <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
@@ -767,8 +767,105 @@
                                         }
                                     }
                                 </script>
-
+                        --}}
                                
+                        {{--
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Due Date">Due Date datat
+                                     @if($data->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
+                                    </label>
+
+                                    <div class="calenderauditee">
+                                        @php
+                                            // Set formattedDate to an empty string if due_date is not set
+                                            $formattedDate = str_contains(
+                                                'NaN-undefined-NaN',
+                                                $data->due_date_gi,
+                                            )
+                                                ? ''
+                                                : $data->due_date_gi;
+                                        @endphp
+
+                                        <input
+                                            type="text" {{ $data->stage == 1 ? '' : 'readonly' }}
+                                            id="due_date_gi" name="due_date_gi"
+                                            placeholder="Select Due Date"
+                                            value="{{ Helpers::getdateFormat($formattedDate) }}" readonly />
+                                    </div>
+                                    <script>
+                                        $(document).ready(function() {
+                                            $("#due_date_gi").datepicker({
+                                                dateFormat: "dd-M-yy",
+                                                onClose: function(dateText, inst) {
+                                                    if (!dateText) {
+                                                        $(this).val(''); 
+                                                     }
+                                                }
+                                            });
+
+                                            $("#due_date_gi").on('keydown', function(e) {
+                                                e.preventDefault();
+                                            });
+                                        });
+                                    </script>
+                                </div>
+                            </div>
+                         --}}
+                          
+
+
+   
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Due Date<span
+                                        class="text-danger">*</span></label>
+                                         <div class="calenderauditee">
+                                            <input type="text"  id="due_dateq"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date_gi) }}"
+                                                {{$data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'readonly' : '' }}/>
+                                            <input type="date" id="due_dateq" name="due_date_gi"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage !=1 ? 'readonly' : '' }} value="{{ $data->due_date_gi }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_dateq');checkDate('due_dateq')" required/>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <script>
+                                    function handleDateInput(input, targetId) {
+                                                    var dateInput = document.getElementById(targetId);
+                                                    var originalValue = dateInput.getAttribute('data-original-value');
+
+                                                    if (input.value !== originalValue) {
+                                                        dateInput.value = input.value; // Update only if different from the original value
+                                                    } else {
+                                                        input.value = dateInput.value; // Preserve the existing value if no change
+                                                    }
+                                                }
+                                </script>
+
+                                <script>
+                                    function handleDateInput(dateInput, displayId) {
+                                        const date = new Date(dateInput.value);
+                                        const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                        document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                                    }
+
+                                    // Call this function initially to ensure the correct format is shown on page load
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        const dateInput = document.querySelector('input[name="due_date"]');
+                                        handleDateInput(dateInput, 'due_date_display');
+                                    });
+                                    </script>
+
+                                    <style>
+                                    .hide-input {
+                                        display: none;
+                                    }
+                                    </style>
+
 
 
                             {{-- <div class="col-lg-6">
@@ -791,6 +888,7 @@
                                     <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                 </div>
                             </div>
+                            
 
                             <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
@@ -1173,11 +1271,11 @@
                                          @endif
                                         <button type="button" id="Details"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        <!-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal-Market_complaint"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
-                                        </span>
+                                        </span> -->
                                     </label>
                                     <table class="table table-bordered" id="ProductsDetails" style="width: 100%;">
                                         <thead>
@@ -1402,11 +1500,11 @@
                                          @endif
                                         <button type="button" id="traceblity_add"
                                             {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        <!-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal-Market_Complaint_Traceability"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
-                                        </span>
+                                        </span> -->
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="traceblity" style="width: 100%;">
@@ -2139,11 +2237,11 @@
                                          @endif
                                         <button type="button" id="promate_add"
                                         {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        <!-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
-                                        </span>
+                                        </span> -->
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
@@ -2745,7 +2843,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="csr2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2777,7 +2875,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="afc2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2809,7 +2907,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="acs2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" required required>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2841,7 +2939,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="qrm2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -2873,7 +2971,7 @@
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }} name="oth2"
-                                                                style="border-radius: 7px; border: 1.5px solid black;" required>{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
+                                                                style="border-radius: 7px; border: 1.5px solid black;" {{ $data->stage == 1 ? '' : 'readonly' }} required>{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -3331,136 +3429,136 @@
                         <div class="row">
                             <div class="sub-head col-12"> Investigation</div>
                             <div class="col-12">
-    <div class="group-input">
-        <label for="root_cause">
-            Investigation Team
-            <button type="button" id="investigation_team_add" {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
-            <span class="text-primary" data-bs-toggle="modal"
-                data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
-                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                (Launch Instruction)
-            </span>
-        </label>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="Investing_team" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th style="width: 100px;">Sr. No.</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Remarks</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @php
-                        $investingTeamIndex = 1;
-                    @endphp
-                    @if (!empty($investing_team) && is_array($investing_team->data))
-                        @foreach ($investing_team->data as $index => $inves)
-                            <tr>
-                                <td>
-                                    <input disabled type="text" name="Investing_team[{{ $index }}][serial]"
-                                        value="{{ $investingTeamIndex++ }}">
-                                </td>
-                                <td>
-                                    <select class="selectUserDropdown" name="Investing_team[{{ $index }}][name_inv_tem]">
-                                        <option value="">-Select-</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}" 
-                                                data-department-id="{{ $user->departmentid ?? '' }}"
-                                                {{ isset($inves['name_inv_tem']) && $inves['name_inv_tem'] == $user->id ? 'selected' : '' }}>
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                            <div class="group-input">
+                                <label for="root_cause">
+                                    Investigation Team
+                                    <button type="button" id="investigation_team_add" {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
+                                    <!-- <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span> -->
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="Investing_team" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 100px;">Sr. No.</th>
+                                                <th>Name</th>
+                                                <th>Department</th>
+                                                <th>Remarks</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php
+                                                $investingTeamIndex = 1;
+                                            @endphp
+                                            @if (!empty($investing_team) && is_array($investing_team->data))
+                                                @foreach ($investing_team->data as $index => $inves)
+                                                    <tr>
+                                                        <td>
+                                                            <input disabled type="text" name="Investing_team[{{ $index }}][serial]"
+                                                                value="{{ $investingTeamIndex++ }}">
+                                                        </td>
+                                                        <td>
+                                                            <select class="selectUserDropdown" name="Investing_team[{{ $index }}][name_inv_tem]">
+                                                                <option value="">-Select-</option>
+                                                                @foreach ($users as $user)
+                                                                    <option value="{{ $user->id }}" 
+                                                                        data-department-id="{{ $user->departmentid ?? '' }}"
+                                                                        {{ isset($inves['name_inv_tem']) && $inves['name_inv_tem'] == $user->id ? 'selected' : '' }}>
+                                                                        {{ $user->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </td>
 
-                                 <td>
-                                    <input type="text" class="departmentInput"
-                                        name="Investing_team[{{ $index }}][department_inv_tem]"
-                                        value="{{ $inves['department_inv_tem'] ?? '' }}" readonly>
-                                </td>
-                                <td>
-                                    <input type="text" name="Investing_team[{{ $index }}][remarks_inv_tem]"
-                                        value="{{ $inves['remarks_inv_tem'] ?? '' }}">
-                                </td>
-                                <td>
-                                    <button type="button" class="removeRowBtn">Remove</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <td colspan="5">No data found</td>
-                        </tr>
-                    @endif
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                                                        <td>
+                                                            <input type="text" class="departmentInput"
+                                                                name="Investing_team[{{ $index }}][department_inv_tem]"
+                                                                value="{{ $inves['department_inv_tem'] ?? '' }}" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="Investing_team[{{ $index }}][remarks_inv_tem]"
+                                                                value="{{ $inves['remarks_inv_tem'] ?? '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" class="removeRowBtn">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="5">No data found</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-<script>
-$(document).ready(function() {
-    // Add new row to the table
-    $('#investigation_team_add').click(function(e) {
-        e.preventDefault();
+                        <script>
+                        $(document).ready(function() {
+                            // Add new row to the table
+                            $('#investigation_team_add').click(function(e) {
+                                e.preventDefault();
 
-        function generateTableRow(serialNumber) {
-            var users = @json($users);
+                                function generateTableRow(serialNumber) {
+                                    var users = @json($users);
 
-            var selectOptions = '<option value="">-Select-</option>';
-            users.forEach(function(user) {
-                selectOptions += '<option value="' + user.id + '" data-department-id="' + (user.departmentid || '') + '">' + user.name + '</option>';
-            });
+                                    var selectOptions = '<option value="">-Select-</option>';
+                                    users.forEach(function(user) {
+                                        selectOptions += '<option value="' + user.id + '" data-department-id="' + (user.departmentid || '') + '">' + user.name + '</option>';
+                                    });
 
-            var html = '<tr>' +
-                '<td><input disabled type="text" name="Investing_team[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                '<td>' +
-                    '<select class="selectUserDropdown" name="Investing_team[' + serialNumber + '][name_inv_tem]" required>' +
-                        selectOptions +
-                    '</select>' +
-                '</td>' +
-                '<td><input type="text" class="departmentInput" name="Investing_team[' + serialNumber + '][department_inv_tem]" readonly></td>' +
-                '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
-                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                '</tr>';
-            return html;
-        }
+                                    var html = '<tr>' +
+                                        '<td><input disabled type="text" name="Investing_team[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                        '<td>' +
+                                            '<select class="selectUserDropdown" name="Investing_team[' + serialNumber + '][name_inv_tem]" required>' +
+                                                selectOptions +
+                                            '</select>' +
+                                        '</td>' +
+                                        '<td><input type="text" class="departmentInput" name="Investing_team[' + serialNumber + '][department_inv_tem]" readonly></td>' +
+                                        '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
+                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+                                    return html;
+                                }
 
-        var tableBody = $('#Investing_team tbody');
-        var rowCount = tableBody.children('tr').length;
-        var newRow = generateTableRow(rowCount);
-        tableBody.append(newRow);
-    });
+                                var tableBody = $('#Investing_team tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount);
+                                tableBody.append(newRow);
+                            });
 
-    // Remove row from the table
-    $(document).on('click', '.removeRowBtn', function() {
-        $(this).closest('tr').remove();
-    });
+                            // Remove row from the table
+                            $(document).on('click', '.removeRowBtn', function() {
+                                $(this).closest('tr').remove();
+                            });
 
-    // Fetch department name dynamically when a user is selected
-    $(document).on("change", ".selectUserDropdown", function () {
-        let selectedOption = $(this).find(":selected");
-        let departmentId = selectedOption.data("department-id");
-        let departmentInput = $(this).closest("tr").find(".departmentInput");
+                            // Fetch department name dynamically when a user is selected
+                            $(document).on("change", ".selectUserDropdown", function () {
+                                let selectedOption = $(this).find(":selected");
+                                let departmentId = selectedOption.data("department-id");
+                                let departmentInput = $(this).closest("tr").find(".departmentInput");
 
-        if (departmentId) {
-            fetch(`/get-department-name/${departmentId}`)
-                .then(response => response.json())
-                .then(data => {
-                    departmentInput.val(data.department_name || "N/A");
-                })
-                .catch(error => {
-                    console.error("Error fetching department name:", error);
-                });
-        } else {
-            departmentInput.val("N/A");
-        }
-    });
-});
-</script>
+                                if (departmentId) {
+                                    fetch(`/get-department-name/${departmentId}`)
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            departmentInput.val(data.department_name || "N/A");
+                                        })
+                                        .catch(error => {
+                                            console.error("Error fetching department name:", error);
+                                        });
+                                } else {
+                                    departmentInput.val("N/A");
+                                }
+                            });
+                        });
+                        </script>
 
 
                             
@@ -4226,7 +4324,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{-- <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
                                                 NA</option> --}}
-                                                <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>
+                                                <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -4400,7 +4498,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{-- <option @if ($data1->Production_Table_Review == 'na') selected @endif value='na'>
                                                 NA</option> --}}
-                                            <option @if ($data1->Production_Table_Review == 'na' || empty($data1->Production_Table_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Production_Table_Review == 'NA' || empty($data1->Production_Table_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -4580,7 +4678,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Production_Injection_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>
                                         </select>
 
                                     </div>
@@ -4758,7 +4856,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Production_Injection_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                                <option @if ($data1->Production_Injection_Review == 'na' || empty($data1->Production_Injection_Review)) selected @endif value='na'>NA</option>
+                                                <option @if ($data1->Production_Injection_Review == 'NA' || empty($data1->Production_Injection_Review)) selected @endif value='NA'>NA</option>
                                         </select>
 
                                     </div>
@@ -4948,7 +5046,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                                <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
+                                                <option @if ($data1->ResearchDevelopment_Review == 'NA' || empty($data1->ResearchDevelopment_Review)) selected @endif value='NA'>NA</option>
                                         </select>
 
                                     </div>
@@ -5121,7 +5219,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->ResearchDevelopment_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->ResearchDevelopment_Review == 'na' || empty($data1->ResearchDevelopment_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->ResearchDevelopment_Review == 'NA' || empty($data1->ResearchDevelopment_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -5294,7 +5392,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Human_Resource_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -5452,7 +5550,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Human_Resource_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -5622,7 +5720,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->CorporateQualityAssurance_Review == 'NA' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -5795,7 +5893,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->CorporateQualityAssurance_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                                <option @if ($data1->CorporateQualityAssurance_Review == 'na' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='na'>NA</option>
+                                                <option @if ($data1->CorporateQualityAssurance_Review == 'NA' || empty($data1->CorporateQualityAssurance_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -5975,7 +6073,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Store_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Store_Review == 'NA' || empty($data1->Store_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -6129,7 +6227,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Store_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Store_Review == 'na' || empty($data1->Store_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Store_Review == 'NA' || empty($data1->Store_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -6290,7 +6388,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Engineering_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Engineering_review == 'NA' || empty($data1->Engineering_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -6445,7 +6543,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Engineering_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Engineering_review == 'na' || empty($data1->Engineering_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Engineering_review == 'NA' || empty($data1->Engineering_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -6610,7 +6708,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->RegulatoryAffair_Review == 'NA' || empty($data1->RegulatoryAffair_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -6783,7 +6881,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->RegulatoryAffair_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->RegulatoryAffair_Review == 'na' || empty($data1->RegulatoryAffair_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->RegulatoryAffair_Review == 'NA' || empty($data1->RegulatoryAffair_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -6957,7 +7055,7 @@ $(document).ready(function() {
                                             {{--<option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
                                                 NA
                                             </option>--}}
-                                            <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
                                         @if ($data->stage != 3)
@@ -7119,7 +7217,7 @@ $(document).ready(function() {
                                             {{--<option @if ($data1->Quality_Assurance_Review == 'na') selected @endif value="na">
                                                 NA
                                             </option>--}}
-                                            <option @if ($data1->Quality_Assurance_Review == 'na' || empty($data1->Quality_Assurance_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
                                         @if ($data->stage != 3)
@@ -7309,7 +7407,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->ProductionLiquid_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -7472,7 +7570,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->ProductionLiquid_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->ProductionLiquid_Review == 'na' || empty($data1->ProductionLiquid_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->ProductionLiquid_Review == 'NA' || empty($data1->ProductionLiquid_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -7643,7 +7741,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Quality_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Quality_review == 'NA' || empty($data1->Quality_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -7809,7 +7907,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Quality_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Quality_review == 'na' || empty($data1->Quality_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Quality_review == 'NA' || empty($data1->Quality_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -7980,7 +8078,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Microbiology_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -8139,7 +8237,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Microbiology_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Microbiology_Review == 'na' || empty($data1->Microbiology_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Microbiology_Review == 'NA' || empty($data1->Microbiology_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -8312,7 +8410,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Environment_Health_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -8483,7 +8581,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->Environment_Health_review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->Environment_Health_review == 'na' || empty($data1->Environment_Health_review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->Environment_Health_review == 'NA' || empty($data1->Environment_Health_review)) selected @endif value='NA'>NA</option>
 
                                         </select>
 
@@ -8668,9 +8766,9 @@ $(document).ready(function() {
                                                 Yes</option>
                                             <option @if ($data1->ContractGiver_Review == 'no') selected @endif value='no'>
                                                 No</option>
-                                            {{--<option @if ($data1->ContractGiver_Review == 'na') selected @endif value='na'>
+                                            {{--<option @if ($data1->ContractGiver_Review == 'NA') selected @endif value='NA'>
                                                 NA</option>--}}
-                                            <option @if ($data1->ContractGiver_Review == 'na' || empty($data1->ContractGiver_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->ContractGiver_Review == 'NA' || empty($data1->ContractGiver_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
                                     </div>
@@ -8789,7 +8887,7 @@ $(document).ready(function() {
                                                 No</option>
                                             {{--<option @if ($data1->ContractGiver_Review == 'na') selected @endif value='na'>
                                                 NA</option>--}}
-                                            <option @if ($data1->ContractGiver_Review == 'na' || empty($data1->ContractGiver_Review)) selected @endif value='na'>NA</option>
+                                            <option @if ($data1->ContractGiver_Review == 'NA' || empty($data1->ContractGiver_Review)) selected @endif value='NA'>NA</option>
 
                                         </select>
                                     </div>
@@ -8912,7 +9010,7 @@ $(document).ready(function() {
                                         <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
                                         {{-- <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option> --}}
-                                        <option @if ($data1->Other1_review == 'na' || empty($data1->Other1_review)) selected @endif value='na'>NA</option>
+                                        <option @if ($data1->Other1_review == 'NA' || empty($data1->Other1_review)) selected @endif value='NA'>NA</option>
                                     </select>
                                 </div>
                             </div>
@@ -9093,7 +9191,7 @@ $(document).ready(function() {
                                         <option value="">-- Select --</option>
                                         <option value="yes" @if ($data1->Other1_review == 'yes') selected @endif>Yes</option>
                                         <option value="no" @if ($data1->Other1_review == 'no') selected @endif>No</option>
-                                        <option value="na" @if ($data1->Other1_review == 'na') selected @endif>NA</option>
+                                        <option value="NA" @if ($data1->Other1_review == 'NA') selected @endif>NA</option>
                                     </select>
                                 </div>
                             </div>
@@ -9188,7 +9286,7 @@ $(document).ready(function() {
                                     <option value="yes" @if ($data1->Other2_review == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($data1->Other2_review == 'no') selected @endif>No</option>
                                     {{-- <option value="na" @if ($data1->Other2_review == 'na') selected @endif>NA</option> --}}
-                                    <option @if ($data1->Other2_review == 'na' || empty($data1->Other2_review)) selected @endif value='na'>NA</option>
+                                    <option @if ($data1->Other2_review == 'NA' || empty($data1->Other2_review)) selected @endif value='NA'>NA</option>
 
                                 </select>
                             </div>
@@ -9366,7 +9464,7 @@ $(document).ready(function() {
                                     <option value="yes" @if ($data1->Other3_review == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($data1->Other3_review == 'no') selected @endif>No</option>
                                     {{-- <option value="na" @if ($data1->Other3_review == 'na') selected @endif>NA</option> --}}
-                                    <option @if ($data1->Other3_review == 'na' || empty($data1->Other3_review)) selected @endif value='na'>NA</option>
+                                    <option @if ($data1->Other3_review == 'NA' || empty($data1->Other3_review)) selected @endif value='NA'>NA</option>
 
                                 </select>
                             </div>
@@ -9544,7 +9642,7 @@ $(document).ready(function() {
                                     <option value="yes" @if ($data1->Other4_review == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($data1->Other4_review == 'no') selected @endif>No</option>
                                     {{-- <option value="na" @if ($data1->Other4_review == 'na') selected @endif>NA</option> --}}
-                                    <option @if ($data1->Other4_review == 'na' || empty($data1->Other4_review)) selected @endif value='na'>NA</option>
+                                    <option @if ($data1->Other4_review == 'NA' || empty($data1->Other4_review)) selected @endif value='NA'>NA</option>
 
                                 </select>
                             </div>
@@ -9726,7 +9824,7 @@ $(document).ready(function() {
                                     <option value="yes" @if ($data1->Other5_review == 'yes') selected @endif>Yes</option>
                                     <option value="no" @if ($data1->Other5_review == 'no') selected @endif>No</option>
                                     {{-- <option value="na" @if ($data1->Other5_review == 'na') selected @endif>NA</option> --}}
-                                    <option @if ($data1->Other5_review == 'na' || empty($data1->Other5_review)) selected @endif value='na'>NA</option>
+                                    <option @if ($data1->Other5_review == 'NA' || empty($data1->Other5_review)) selected @endif value='NA'>NA</option>
 
                                 </select>
                             </div>
@@ -10279,9 +10377,9 @@ $(document).ready(function() {
                             {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/alltabmarketComplain',$data->id) }}">Report
+                        <button type="button"><a class="text-white" href="{{ url('rcms/alltabmarketComplain',$data->id) }}">Report
                         </a> </button>
-                        <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                        <button type="button"><a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                             </a> </button>
                     </div>
                 </div>
@@ -11022,9 +11120,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
 
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
-                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                    <button>Close</button>
-                                                                </div> -->
+                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                            <button>Close</button>
+                        </div> -->
                     <div class="modal-footer">
                         <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
@@ -11080,7 +11178,7 @@ document.getElementById('initiator_group').addEventListener('change', function()
             </div>
         </div>
     </div>
-    {{-- ==================================capa and  Action child=============================================== --}}
+    {{-- ================================== Capa and  Action child =============================================== --}}
 
 
     <div class="modal fade" id="child-modal">
@@ -11174,6 +11272,9 @@ document.getElementById('initiator_group').addEventListener('change', function()
             </div>
         </div>
     </div>
+
+
+
     {{-- ==================================Regulatory  Reporting  and Effectiveness  Check child=============================================== --}}
 
     <div class="modal fade" id="child-modal3">
@@ -11191,11 +11292,11 @@ document.getElementById('initiator_group').addEventListener('change', function()
                         <!-- Modal body -->
                         <div class="modal-body">
                             {{-- <div class="group-input">
-            <label style=" display: flex;     gap: 16px; width: 60px;" for="capa-child">
-                <input type="radio" name="revision" id="rca-child" value="regulatory-child">
-                Regulatory Reporting
-            </label>
-        </div> --}}
+                                    <label style=" display: flex; gap: 16px; width: 60px;" for="capa-child">
+                                        <input type="radio" name="revision" id="rca-child" value="regulatory-child">
+                                        Regulatory Reporting
+                                    </label>
+                                </div> --}}
                             <div class="group-input">
                                 <label style="  display: flex;     gap: 18px; width: 60px;"for="root-item">
                                     <input type="radio" name="revision" id="root-item"
@@ -11217,6 +11318,8 @@ document.getElementById('initiator_group').addEventListener('change', function()
             </div>
         </div>
     </div>
+
+
     {{-- ==========================single regulatory ======================= --}}
     <div class="modal fade" id="child-modal4">
         <div class="modal-dialog modal-dialog-centered">

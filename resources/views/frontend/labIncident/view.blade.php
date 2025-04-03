@@ -1,5 +1,121 @@
 @extends('frontend.layout.main')
 @section('container')
+
+<link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
+
+
+<style>
+        
+        /*Main Table Styling */
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        /* First column adjusts to its content */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        /* Second column takes remaining space */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 700px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block; /* Remove extra space below the image */
+            margin: 5px auto; /* Add spacing and center align */
+        }
+
+        /* If you want larger images */
+        #isPasted td img {
+            max-width: 400px !important; /* Adjust this to your preferred maximum width */
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed; /* Enable horsizontal scrolling */
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable table {
+            border-collapse: collapse !important;
+            width: 100%;
+        }
+        .note-editable p {
+            font-weight: normal !important;
+        }
+        
+        .note-editable th,
+        .note-editable td {
+            border: 1px solid black !important;
+            padding: 8px;
+            text-align: left;
+        }
+        
+    </style>
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -14,6 +130,14 @@
             margin-bottom: 11px;
         }
     </style>
+    <style>
+        #fr-logo {
+            display: none;
+        }
+
+    </style>
+
+
  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
      integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
@@ -505,8 +629,14 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        <label for="Short Description">Short Description
+                                        @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                        @endif
+                                         </label><span id="rchars">255</span>
                                         characters remaining
 
                                         <!-- <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : "" }}>{{ $data->short_desc }}</textarea> -->
@@ -529,8 +659,14 @@
                                             <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal-LabIncident"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span><span
-                                            class="text-danger">*</span>
+                                            </span> 
+                                            
+                                            @if($data->stage == 1)    
+                                            <span
+                                                    class="text-danger">*
+                                            </span>
+
+                                            @endif
                                         </label>
 
                                         <table class="table table-bordered" id="onservation-incident-table">
@@ -664,8 +800,14 @@
                         {{-- New Added --}}
                         <div class="col-lg-12">
                             <div class="group-input" id="incident_involved_others_gi">
-                                <label for="incident_involved_others_gi">Instrument Involved<span
-                                        class="text-danger">*</span></label>
+                                <label for="incident_involved_others_gi">Instrument 
+                                    @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif 
+                                </label>
                                 <textarea  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} name="incident_involved_others_gi">{{ $data->incident_involved_others_gi }}</textarea>
                             </div>
 
@@ -673,8 +815,14 @@
 
                         <div class="col-lg-4">
                             <div class="group-input" id="stage_stage_gi">
-                                <label for="stage_stage_gi">Stage<span
-                                        class="text-danger">*</span></label>
+                                <label for="stage_stage_gi">Stage
+                                @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                @endif 
+                                </label>
                                 <input type="text"  name="stage_stage_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} value="{{ $data->stage_stage_gi }}">
                             </div>
 
@@ -682,8 +830,13 @@
 
                         <div class="col-lg-4">
                             <div class="group-input" id="incident_stability_cond_gi">
-                                <label for="incident_stability_cond_gi">Stability Condition (If Applicable)<span
-                                        class="text-danger">*</span></label>
+                                <label for="incident_stability_cond_gi">Stability Condition (If Applicable)
+                                    @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+                                    @endif     
+                                </label>
                                 <input type="text"  name="incident_stability_cond_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} value="{{ $data->incident_stability_cond_gi }}">
                             </div>
 
@@ -691,8 +844,14 @@
 
                         <div class="col-lg-4">
                             <div class="group-input" id="incident_interval_others_gi">
-                                <label for="incident_interval_others_gi">Interval (If Applicable)<span
-                                        class="text-danger">*</span></label>
+                                <label for="incident_interval_others_gi">Interval (If Applicable)
+                                    @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif         
+                            </label>
                                 <input type="text" name="incident_interval_others_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"")}} value="{{ $data->incident_interval_others_gi }}">
                             </div>
 
@@ -700,8 +859,13 @@
 
                         <div class="col-lg-6">
                             <div class="group-input" id="test_gi">
-                                <label for="test_gi">Test<span
-                                        class="text-danger">*</span></label>
+                                <label for="test_gi">Test
+                                @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                @endif </label>
                                 <input type="text" name="test_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} value="{{ $data->test_gi }}" >
                             </div>
 
@@ -729,8 +893,14 @@
 
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due"> Date Of Analysis<span
-                                    class="text-danger">*</span></label>
+                                <label for="Date Due"> Date Of Analysis
+                                @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                 @endif 
+                                </label>
 
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_analysis_gi" readonly
@@ -746,16 +916,29 @@
 
                         <div class="col-lg-6">
                             <div class="group-input" id="incident_specification_no_gi">
-                                <label for="Incident_specification_no">Specification Number<span
-                                        class="text-danger">*</span></label>
+                                <label for="Incident_specification_no">Specification Number
+                                    
+                                    @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif 
+                               </label>
                                 <input type="text" name="incident_specification_no_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} value="{{ $data->incident_specification_no_gi }}">
                             </div>
 
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input" id="incident_stp_no_gi">
-                                <label for="incident_stp_no_gi">STP Number<span
-                                        class="text-danger">*</span></label>
+                                <label for="incident_stp_no_gi">STP Number
+                                @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif
+                                </label>
                                 <input type="text" name="incident_stp_no_gi"  {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }} value="{{ $data->incident_stp_no_gi }}">
                             </div>
 
@@ -763,8 +946,14 @@
 
                         {{-- <div class="col-lg-6">
                             <div class="group-input" id="Incident_name_analyst_no_gi">
-                                <label for="Incident_name_analyst_no">Name Of Analyst<span
-                                        class="text-danger d-none">*</span></label>
+                                <label for="Incident_name_analyst_no">Name Of Analyst
+                                @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif        
+                            </label>
                                 <input type="text" name="Incident_name_analyst_no_gi" value="{{ $data->Incident_name_analyst_no_gi }}">
                             </div>
 
@@ -781,8 +970,14 @@
 
                         <div class="col-lg-12 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Date Due">Date of Incidence<span
-                                    class="text-danger">*</span></label>
+                                <label for="Date Due">Date of Incidence
+                                @if($data->stage == 1)    
+                                    <span
+                                            class="text-danger">*
+                                    </span>
+
+                                @endif 
+                                </label>
 
                                 <div class="calenderauditee">
                                     <input type="text" id="incident_date_incidence_gi" readonly
@@ -797,17 +992,28 @@
 
                         <div class="col-lg-12">
                             <div class="group-input" id="description_incidence_gi">
-                                <label for="Description_incidence"> Description Of Incidence<span
-                                        class="text-danger">*</span></label>
-                                <textarea name="description_incidence_gi" class="tiny" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"")}}>{{ $data->description_incidence_gi }}</textarea>
+                                <label for="Description_incidence"> Description Of Incidence
+                                @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif 
+                                </label>
+                                <textarea name="description_incidence_gi" class="summernote" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"")}}>{{ $data->description_incidence_gi }}</textarea>
                             </div>
 
                         </div>
                         <div class="col-md-6">
                             <div class="group-input">
                                 <label for="search">
-                                    Reported By<span
-                                    class="text-danger">*</span>
+                                    Reported By
+                                    @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif 
                                 </label>
                                 <textarea name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }}>{{ $data->analyst_sign_date_gi }}</textarea>
                                 <!-- <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi" {{ $data->stage == 0 || $data->stage >= 2 ? 'disabled' : '' }}>
@@ -842,8 +1048,13 @@
                         <div class="col-md-6">
                             <div class="group-input">
                                 <label for="search">
-                                    QC Head/HOD Person <span
-                                    class="text-danger">*</span>
+                                    QC Head/HOD Person 
+                                    @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                    @endif 
                                 </label>
 
                                 <!-- <textarea name="investigator_qc">{{ $data->investigator_qc }}</textarea> -->
@@ -918,8 +1129,15 @@
 
                                 <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req1">
-                                                <label for="Incident_Category_others">Others<span
-                                                        class="text-danger">*</span></label>
+                                                <label for="Incident_Category_others">Others
+                                                    
+                                                @if($data->stage == 1)    
+                                                    <span
+                                                            class="text-danger">*
+                                                    </span>
+
+                                                @endif 
+                                           </label>
                                                 <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }}>{{ $data->Incident_Category_others }}</textarea>
                                             </div>
                                         </div>
@@ -1013,8 +1231,14 @@
                                 {{-- ====kkkk? --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Immediate_action">Immediate Action<span
-                                            class="text-danger">*</span></label>
+                                        <label for="Immediate_action">Immediate Action
+                                        @if($data->stage == 1)    
+                                                    <span
+                                                            class="text-danger">*
+                                                    </span>
+
+                                         @endif     
+                                       </label>
                                         <textarea name="immediate_action_ia" {{ $data->stage == 0 || $data->stage >= 2 ? "readonly" : ($data->stage == 1 ? "required":"") }}>{{$data->immediate_action_ia}}</textarea>
                                     </div>
                                 </div>
@@ -1081,8 +1305,14 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="search">
-                                        QA Reviewer <span
-                                        class="text-danger">*</span>
+                                        QA Reviewer 
+
+                                        @if($data->stage == 1)    
+                                        <span
+                                                class="text-danger">*
+                                        </span>
+
+                                        @endif
                                     </label>
                                     <select id="select-state" placeholder="Select..." name="qc_review_to" {{ $data->stage == 0 || $data->stage >= 2 ? "disabled" : ($data->stage == 1 ? "required":"") }}>
                                         <option value="">Select a value</option>
@@ -1527,20 +1757,20 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span>
-                                            @endif</label>
-                                        <textarea name="Investigation_Details" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Investigation_Details }}</textarea>
+                                        <label for="Investigation Details ">Investigation Details @if($data->stage==4)<span class="text-danger">*</span> @endif
+                                           </label>
+                                        <textarea name="Investigation_Details" class="summernote" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : "" }}>{{ $data->Investigation_Details }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Action Taken">Action Taken<span class="text-danger">*</span></label>
+                                        <label for="Action Taken">Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                                         <textarea name="Action_Taken" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->Action_Taken }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Root Cause">Root Cause<span class="text-danger">*</span></label>
+                                        <label for="Root Cause">Root Cause  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                                         <textarea name="Root_Cause" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->Root_Cause }}</textarea>
                                     </div>
                                 </div>
@@ -1549,7 +1779,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments"> Attachment</label>
+                                        <label for="Inv Attachments">Inv. Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Inv_Attachment">
@@ -1608,13 +1838,13 @@
 
                                 <div class="col-12">
                                 <div class="group-input">
-                                    <label for="detail investigation ">Detail Investigation / Probable Root Cause<span class="text-danger">*</span></label>
+                                    <label for="detail investigation ">Detail Investigation / Probable Root Cause   @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                                 <textarea name="details_investigation_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->details_investigation_ia}}</textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
-                                <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken<span class="text-danger">*</span></label>
+                                <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                             <textarea name="proposed_correctivei_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->proposed_correctivei_ia}}</textarea>
                         </div>
                      </div>
@@ -1622,7 +1852,7 @@
 
                      <div class="col-12">
                         <div class="group-input">
-                            <label for="Repeat Analysis Plan ">Repeat Analysis Plan<span class="text-danger">*</span></label>
+                            <label for="Repeat Analysis Plan ">Repeat Analysis Plan  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                         <textarea name="repeat_analysis_plan_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->repeat_analysis_plan_ia}}</textarea>
                       </div>
                          </div>
@@ -1635,26 +1865,33 @@
                 {{-- selection field --}}
                 <div class="col-12">
                     <div class="group-input">
-                        <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis<span class="text-danger">*</span></label>
+                        <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                     <textarea name="result_of_repeat_analysis_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->result_of_repeat_analysis_ia}}</textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Corrective and Preventive Action">Corrective and Preventive Action<span class="text-danger">*</span></label>
+                    <label for="Corrective and Preventive Action">Corrective and Preventive Action  @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
                 <textarea name="corrective_and_preventive_action_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->corrective_and_preventive_action_ia}}</textarea>
             </div>
         </div>
+
+
         <div class="col-12">
             <div class="group-input">
-                <label for="CAPA Number">CAPA Number<span class="text-danger">*</span></label>
-            <input type="text" name="capa_number_im" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }} value="{{$data->capa_number_im}}">
+                <label for="CAPA Number">CAPA Number  
+                    @if($data->stage == 4)
+                        <span class="text-danger">*</span> 
+                    @endif 
+                </label>
+                <textarea name="capa_number_im" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required" : "") }}>{{ $data->capa_number_im }}</textarea>
+            </div>
         </div>
-         </div>
+
 
          <div class="col-12">
             <div class="group-input">
-                <label for="Investigation Summary">Investigation Summary<span class="text-danger">*</span></label>
+                <label for="Investigation Summary">Investigation Summary @if($data->stage==4)<span class="text-danger">*</span> @endif </label>
             <textarea name="investigation_summary_ia" class="tiny" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{$data->investigation_summary_ia}}</textarea>
         </div>
     </div>
@@ -1747,7 +1984,7 @@
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
-                            QC Investigator<span class="text-danger">*</span>
+                            QC Investigator @if($data->stage==4)<span class="text-danger">*</span> @endif
                         </label>
                             <textarea name="investigator_data" class="tiny" id="" {{ $data->stage <= 3 || $data->stage >= 5 ? "readonly" : ($data->stage == 4 ? "required":"") }}>{{ $data->investigator_data }}</textarea>
                     </div>
@@ -1756,7 +1993,7 @@
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
-                            QC Review<span class="text-danger">*</span>
+                            QC Review @if($data->stage==4)<span class="text-danger">*</span> @endif
                         </label>
                         <select id="select-state" placeholder="Select..." name="qc_review_data" {{ $data->stage <= 3 || $data->stage >= 5 ? "disabled" : ($data->stage == 4 ? "required":"") }}>
                             <option value="">Select a value</option>
@@ -2338,18 +2575,18 @@
                             <div class="row">
 
                                 <div class="col-12 sub-head" style="font-size: 16px">
-                                    Submit
+                                Submitted
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit By">Submit By</label>
+                                        <label for="Submit By">Submitted By</label>
                                         <div class="static">{{ $data->submitted_by }}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Submit On">Submit On</label>
+                                        <label for="Submit On">Submitted On</label>
                                         <div class="Date">{{ $data->submitted_on }}</div>
                                     </div>
                                 </div>
@@ -2357,13 +2594,13 @@
 
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Submit Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static" >{{$data->comment}}</div>
                                     </div>
                                 </div>
 
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                QC Head/HOD Initial Review Complete
+                                QC Head/HOD Initial Review
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2380,14 +2617,37 @@
                                 {{-- @foreach($detail as $d) --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QC Head/HOD Initial Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->verification_complete_comment}}</div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_1_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_1_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_1_comment}}</div>
                                     </div>
                                 </div>
 
                                 {{-- @endforeach --}}
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Initial Review Complete
+                                    QA Initial Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2403,14 +2663,36 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QA Initial Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->preliminary_completed_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_2_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_2_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_2_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                Pending Initiator Update Complete
+                                Pending Initiator Update 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2428,14 +2710,38 @@
                                 {{-- <div class="col-lg-6"> --}}
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Pending Initiator Update Complete Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static">{{$data->all_activities_completed_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_3_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_3_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_3_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QC Head/HOD Secondary Review Complete
+                                    QC Head/HOD Secondary Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2451,14 +2757,38 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QC Head/HOD Secondary Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->solution_validation_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_4_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_4_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_4_comment}}</div>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    QA Secondary Review Complete
+                                    QA Secondary Review 
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2474,14 +2804,37 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">QA Secondry Review Complete Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->extended_inv_comment}}</div>
                                     </div>
                                 </div>
 
 
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_5_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_5_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_5_comment}}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-12 sub-head"  style="font-size: 16px">
-                                    Approved
+                                QAH Approved
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
@@ -2497,8 +2850,30 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Approved Comment</label>
+                                        <label for="Comment"> Comment</label>
                                         <div class="static">{{$data->no_assignable_cause_comment}}</div>
+                                    </div>
+                                </div>
+
+
+                                
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Verification Complete">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_req_6_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Incident Review Completed On">More Info Required On</label>
+                                        <div class="Date">{{ $data->more_info_req_6_on }}</div>
+                                    </div>
+                                </div>
+                              
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment"> Comment</label>
+                                        <div class="static">{{$data->more_info_req_6_comment}}</div>
                                     </div>
                                 </div>
 
@@ -2508,22 +2883,26 @@
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled By">Cancel By</label>
+                                        <label for="Cancelled By">Cancelled By</label>
                                         <div class="static">{{ $data->cancelled_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Cancelled On">Cancel On</label>
+                                        <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date">{{ $data->cancelled_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Comment">Cancel Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static">{{$data->cancell_comment}}</div>
                                     </div>
                                 </div>
+
+
+
+                                
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
@@ -3673,4 +4052,23 @@ document.getElementById('initiator_group').addEventListener('change', function()
 });
 
 </script>
+
+
+<script>
+         var editor = new FroalaEditor('.summernote', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ secure_url('api/upload-files') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ secure_url('api/upload-files')}}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ secure_url('api/upload-files') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+         });
+         
+        $(".summernote-disabled").FroalaEditor("edit.off");
+    </script>
+
 @endsection

@@ -569,6 +569,12 @@ class DocumentController extends Controller
            $document->reference_cvs = $request->reference_cvs;
            $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
+           $document->record_spec = $request->record_spec;
+           $document->record_spec1 = $request->record_spec1;
+           $document->record_spec2 = $request->record_spec2;
+           $document->record_spec3 = $request->record_spec3;
+
+
            //Inprocess Validation specification
            $document->product_name_inps = $request->product_name_inps;
            $document->generic_name_inps = $request->generic_name_inps;
@@ -2760,6 +2766,7 @@ class DocumentController extends Controller
      */
     public function edit($id)
     {
+        
         $users = User::all();
         if (!empty($users)) {
             foreach ($users as $data) {
@@ -2906,7 +2913,6 @@ class DocumentController extends Controller
         $RevisionGridpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
         $RevisionGridmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
         $RevisionGridmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
-
 
 
         $ProductSpecification = DocumentGrid::where('document_type_id', $id)->where('identifier', "ProductSpecification")->first();
@@ -7131,12 +7137,12 @@ class DocumentController extends Controller
             ->first();
     
 
-            $GtpData = [];
-            if (!empty($RevisionGridrawmstpData) && isset($RevisionGridrawmstpData->data)) {
-                $GtpData = is_string($RevisionGridrawmstpData->data) 
-                    ? json_decode($RevisionGridrawmstpData->data, true) 
-                    : (is_array($RevisionGridrawmstpData->data) ? $RevisionGridrawmstpData->data : []);
-            }
+        $GtpData = [];
+        if (!empty($RevisionGridrawmstpData) && isset($RevisionGridrawmstpData->data)) {
+            $GtpData = is_string($RevisionGridrawmstpData->data) 
+                ? json_decode($RevisionGridrawmstpData->data, true) 
+                : (is_array($RevisionGridrawmstpData->data) ? $RevisionGridrawmstpData->data : []);
+        }
     
         $rwmstphistoryData = [];
         foreach ($rawmstprevisionHistory as $index => $doc) {
@@ -7162,34 +7168,40 @@ class DocumentController extends Controller
     public function getFPStpRevisionHistory(Request $request)
     {
         $documentId = $request->query('document_id');
-    
+
         // Get the current document
         $currentDocument = Document::find($documentId);
         if (!$currentDocument) {
             return response()->json(['error' => 'Document not found'], 404);
         }
-    
+
         // Get past revisions from Document table
         $revisionHistory = Document::where('record', $currentDocument->record)
             ->where('revised_doc', '<=', $currentDocument->revised_doc)
             ->orderBy('revised_doc', 'asc')
             ->get();
-    
-        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+
+        // 🛠 Fetch related data from DocumentGrid table
         $RevisionGridfpstpData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_fpstp_data")
             ->first();
-    
-    
+
+        // Decode JSON data (Fix undefined $GtpData)
+        $GtpData = [];
+        if ($RevisionGridfpstpData && !empty($RevisionGridfpstpData->data)) {
+            $GtpData = json_decode($RevisionGridfpstpData->data, true) ?? [];
+        }
+
+        // Prepare history data
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
             // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
             
-            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+            // Ensure corresponding index exists in $GtpData
             $cc_no = $GtpData[$index]['change_ctrl_fpstp_no'] ?? 'No Data';
             $reason_of_revision = $GtpData[$index]['rev_reason_fpstp'] ?? 'No Data';
-    
+
             $historyData[] = [
                 'rev_fpstp_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
                 'eff_date_fpstp' => $shouldShowEffectiveDate ? $doc->effective_date : null,
@@ -7197,9 +7209,10 @@ class DocumentController extends Controller
                 'rev_reason_fpstp' => $reason_of_revision
             ];
         }
-    
+
         return response()->json(['revision_fpstp_data' => $historyData]);
     }
+
 
     public function getINPStpRevisionHistory(Request $request)
     {
@@ -7211,17 +7224,19 @@ class DocumentController extends Controller
             return response()->json(['error' => 'Document not found'], 404);
         }
     
-        // Get past revisions from Document table
         $revisionHistory = Document::where('record', $currentDocument->record)
             ->where('revised_doc', '<=', $currentDocument->revised_doc)
             ->orderBy('revised_doc', 'asc')
             ->get();
     
-        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
         $RevisionGridinpstpData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_inpstp_data")
             ->first();
-    
+
+        $GtpData = [];
+        if ($RevisionGridinpstpData && !empty($RevisionGridinpstpData->data)) {
+            $GtpData = json_decode($RevisionGridinpstpData->data, true) ?? [];
+        }    
     
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
@@ -7259,18 +7274,20 @@ class DocumentController extends Controller
             ->orderBy('revised_doc', 'asc')
             ->get();
     
-        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
         $RevisionGridcvstpData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_cvstp_data")
             ->first();
-    
+
+        $GtpData = [];
+        if ($RevisionGridcvstpData && !empty($RevisionGridcvstpData->data)) {
+            $GtpData = json_decode($RevisionGridcvstpData->data, true) ?? [];
+        }    
     
         $historyData = [];
         foreach ($revisionHistory as $index => $doc) {
             // Stage-based effective date logic
             $shouldShowEffectiveDate = ($doc->stage >= 11);
             
-            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
             $cc_no = $GtpData[$index]['change_ctrl_cvstp_no'] ?? 'No Data';
             $reason_of_revision = $GtpData[$index]['rev_reason_cvstp'] ?? 'No Data';
     
@@ -7305,6 +7322,11 @@ class DocumentController extends Controller
         $RevisionGridpamsData = DocumentGrid::where('document_type_id', $documentId)
             ->where('identifier', "revision_pams_data")
             ->first();
+        
+        $GtpData = [];
+        if ($RevisionGridpamsData && !empty($RevisionGridpamsData->data)) {
+            $GtpData = json_decode($RevisionGridpamsData->data, true) ?? [];
+        }    
     
     
         $historyData = [];

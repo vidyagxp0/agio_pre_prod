@@ -408,15 +408,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                   IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                   IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                   IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                   IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -454,7 +454,7 @@
                             @php
                                 $revisionNumber = str_pad($document->revised_doc - 1, 2, '0', STR_PAD_LEFT);
                             @endphp
-                            IPSTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                            IPSTP/{{ str_pad($data->record_spec2, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                         @else                        
                             Nil
                         @endif

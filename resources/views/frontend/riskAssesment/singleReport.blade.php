@@ -225,6 +225,103 @@
     color: gray;
 }
     </style>
+
+<style>
+        
+        #isPasted {
+            width: 690px !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap; 
+            width: 1%;
+            vertical-align: top;
+        }
+
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+
+        }
+
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p {
+            text-align: justify;
+            text-justify: inter-word;
+            margin: 0;
+            max-width: 680px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted td > p span {
+            display: inline-block;
+            width: 650px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted img {
+            max-width: 500px !important;
+            height: 100%;
+            display: block;
+            margin: 5px auto;
+        }
+
+        #isPasted td img {
+            max-width: 400px !important;
+            height: 300px;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 690px;
+            overflow-x: fixed;
+        }
+
+    
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            max-width: 500px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .note-editable p {
+            font-weight: normal !important;
+        }
+        
+    </style>
 </head>
 
 <body>
@@ -416,14 +513,40 @@
                     @endif
                 </div>
 
-                <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
-                <div class="div-data">
+                <!-- <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label> -->
+                <!-- <div class="div-data">
                     @if ($data->Brief_description)
-                        {{ $data->Brief_description }}
+                        {{ strip_tags($data->Brief_description) }}
                     @else
                         Not Applicable
                     @endif
+                </div> -->
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Brief Description / Procedure</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->Brief_description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
 
                 <label class="head-number" for="Documents Used For Risk Management">Documents Used For Risk
                     Management</label>

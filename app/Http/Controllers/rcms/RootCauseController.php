@@ -3592,6 +3592,7 @@ class RootCauseController extends Controller
                     $history->previous = $lastDocument->submitted_by . ' , ' . $lastDocument->submitted_on;
                 }
                 $history->current = $root->submitted_by . ' , ' . $root->submitted_on;
+
                 if (is_null($lastDocument->submitted_by) || $lastDocument->submitted_by === '') {
                     $history->action_name = 'New';
                 } else {
@@ -3921,7 +3922,6 @@ class RootCauseController extends Controller
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'QAH/CQAH Closure By,QAH/CQAH Closure On';
-                $history->previous = $lastDocument->submitted_by;
                 $history->current = $root->evaluation_complete_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
