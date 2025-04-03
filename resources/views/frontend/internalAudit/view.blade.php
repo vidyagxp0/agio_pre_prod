@@ -956,13 +956,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Initiator Department</b></label>
                                                 <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1158,7 +1158,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea {{ $data->stage == 1 ? '' : 'disabled' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                                <textarea {{ $data->stage == 1 ? '' : 'readonly' }} name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1257,7 +1257,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         {{-- <td><input type="text" name="AuditorNew[{{ $loop->index }}][regulatoryagency]" value="{{ $audditor['regulatoryagency'] }}"@if ($data->stage != 1) readonly @endif></td> --}}
 
                                                                        <td>
-                                                                         <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][regulatoryagency]" @if ($data->stage != 1) disabled @endif>
+                                                                         <select id="select-state" placeholder="Select..." name="AuditorNew[{{ $loop->index }}][regulatoryagency]" @if ($data->stage != 1) readonly @endif>
                                                                             <option value="">-Select a value-</option>
                                                                             @php
                                                                                 $options = [
@@ -1767,7 +1767,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 <table class="table table-bordered" id="audit-agenda-grid">
                                                     <thead>
                                                         <tr>
-                                                            <th>Sr. no. </th>
+                                                            <th>Sr. No. </th>
                                                             <th>Area of Audit</th>
                                                             <th>Scheduled Start Date</th>
                                                             <th>Scheduled Start Time</th>
@@ -2223,7 +2223,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date <span class="text-danger">*</span></label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="audit_start_date" readonly
+                                                    <input type="text" id="audit_start_date" disabled
                                                         placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                          />
@@ -2239,7 +2239,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date <span class="text-danger">*</span></label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="audit_end_date" readonly
+                                                    <input type="text" id="audit_end_date" disabled
                                                         placeholder="DD-MM-YYYY"
                                                         value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                          />
@@ -2266,7 +2266,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <table class="table table-bordered" id="editSamplePlanningTable">
                                                         <thead>
                                                             <tr>
-                                                                <th>Sr.no.</th>
+                                                                <th>Sr.No.</th>
                                                                 <th>Area of Audit</th>
                                                                 <th>Scheduled Start Date</th>
                                                                 <th>Scheduled Start Time</th>
@@ -2319,7 +2319,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         <td><input type="time" name="auditAgendaData[{{ $key }}][scheduleEndTime]" value="{{ $row['scheduleEndTime'] }}"></td>
                                                                         <td>
                                                                             <select name="auditAgendaData[{{ $key }}][auditors]" multiple id="auditorsData"
-                                                                                 @if($data->stage != 3) disabled @endif>
+                                                                                 @if($data->stage != 3) readonly @endif>
                                                                                 @if(!empty($users))
                                                                                     @foreach($users as $item)
                                                                                         <option {{ in_array($item->id, $selectedAuditor) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->name }}</option>
@@ -2329,7 +2329,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         </td>
                                                                         <td>
                                                                             <select name="auditAgendaData[{{ $key }}][auditee]" multiple id="auditeeData"
-                                                                                @if($data->stage != 3) disabled @endif>
+                                                                                @if($data->stage != 3) readonly @endif>
                                                                                 @if(!empty($users))
                                                                                     @foreach($users as $item)
                                                                                         <option {{ in_array($item->id, $selectedAuditee) ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->name }}</option>
@@ -2555,7 +2555,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                                     // dd($selectedDepartments);
                                                 @endphp
-                                                <select multiple id="checklists" class="abc" name="checklists[]" {{ $data->stage != 3 ? 'disabled' : 'required' }}>
+                                                <select multiple id="checklists" class="abc" name="checklists[]" {{ $data->stage != 3 ? 'readonly' : 'required' }}>
                                                     <option value="1"
                                                         @if (in_array('1', $selectedChecklist)) selected @endif>Checklist - Production (Tablet Dispensing & Tablet Granulation)</option>
                                                     <option value="2"
@@ -2613,7 +2613,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Comments <span class="text-danger">*</span></label>
-                                                <textarea name="Comments" {{ $data->stage != 3 ? 'disabled' : 'required' }}>{{ $data->Comments }}</textarea>
+                                                <textarea name="Comments" {{ $data->stage != 3 ? 'readonly' : 'required' }}>{{ $data->Comments }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -3087,7 +3087,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                                                 <td>
                                                                     {{-- <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"> --}}
-                                                                    <textarea name="observations[{{ $loop->index }}][remarks]" {{ $data->stage == 3 ? "" : 'disabled' }}>{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
+                                                                    <textarea name="observations[{{ $loop->index }}][remarks]" {{ $data->stage == 3 ? "" : 'readonly' }}>{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
 
                                                                 </td>
                                                                 <td>
@@ -3213,7 +3213,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
-                                            <select {{ $data->stage != 4 ? 'disabled' : '' }}
+                                            <select {{ $data->stage != 4 ? 'readonly' : '' }}
                                                 multiple id="reference_record" name="refrence_record[]" id="">
 
                                             @if (!empty($old_record))

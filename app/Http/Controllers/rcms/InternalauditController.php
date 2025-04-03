@@ -5066,23 +5066,23 @@ if ($areIniAttachmentsSame2 != true) {
             }
             if ($changeControl->stage == 4) {
 
-                if (!isset($changeControl->Initial) || empty($changeControl->Initial['observation']))
-                {
-                    Session::flash('swal', [
-                        'type' => 'warning',
-                        'title' => 'Mandatory Fields!',
-                        'message' => 'Response  Tab is yet to be filled'
-                    ]);
+                // if (!isset($changeControl->Initial))
+                // {
+                //     Session::flash('swal', [
+                //         'type' => 'warning',
+                //         'title' => 'Mandatory Fields!',
+                //         'message' => 'Response  Tab is yet to be filled'
+                //     ]);
 
-                    return redirect()->back();
-                }
-                 else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for Closed -Done'
-                    ]);
-                }
+                //     return redirect()->back();
+                // }
+                //  else {
+                //     Session::flash('swal', [
+                //         'type' => 'success',
+                //         'title' => 'Success',
+                //         'message' => 'Sent for Closed -Done'
+                //     ]);
+                // }
                 $changeControl->stage = "5";
                 $changeControl->status = "Response Verification";
                 $changeControl->audit_observation_submitted_by = Auth::user()->name;
