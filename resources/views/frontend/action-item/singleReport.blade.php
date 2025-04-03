@@ -155,6 +155,93 @@
     }
 </style>
 
+<style>
+    
+    #isPasted {
+        width: 690px !important;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    #isPasted td:first-child,
+    #isPasted th:first-child {
+        white-space: nowrap; 
+        width: 1%;
+        vertical-align: top;
+    }
+
+    #isPasted td:last-child,
+    #isPasted th:last-child {
+        width: auto;
+        vertical-align: top;
+
+    }
+
+    #isPasted th,
+    #isPasted td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted td > p {
+        text-align: justify;
+        text-justify: inter-word;
+        margin: 0;
+        max-width: 700px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted img {
+        max-width: 500px !important;
+        height: 100%;
+        display: block;
+        margin: 5px auto;
+    }
+
+    #isPasted td img {
+        max-width: 400px !important;
+        height: 300px;
+        margin: 5px auto;
+    }
+
+    .table-containers {
+        width: 690px;
+        font-size: 14px;
+        overflow-x: fixed;
+    }
+
+
+    #isPasted table {
+        width: 100% !important;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+
+    #isPasted table th,
+    #isPasted table td {
+        border: 1px solid #000 !important;
+        padding: 8px;
+        text-align: left;
+        max-width: 500px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    #isPasted table img {
+        max-width: 100% !important;
+        height: auto;
+        display: block;
+        margin: 5px auto;
+    }
+    
+</style>
+
 <body>
 
     <header>
@@ -288,20 +375,57 @@
 
 
                         </tr>
+                    </table>
+                </div>
+                
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Description</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="block">
+                    <table>     
                         <tr>
                             <th class="w-20">Action Item Related Records</th>
-                        <td class="w-80">
-                            @if ($data->related_records)
-                                {{ str_replace(',', ', ', $data->related_records) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
+                            <td class="w-80">
+                                @if ($data->related_records)
+                                    {{ str_replace(',', ', ', $data->related_records) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
                         </tr>
-                        
-                        
+
+                        {{-- <tr>
+                            <th class="w-20">HOD Persons</th>
+                            <td class="w-80">
+                                @if ($data->hod_preson)
+                                    {{ $data->hod_preson }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr> --}}
 
 
                         <tr>
@@ -313,22 +437,6 @@
                                     Not Applicable
                                 @endif
                             </td>
-                           
-
-                        </tr>
-
-                        <tr>
-                            <th class="w-20">Description</th>
-                            <td class="w-80">
-                                @if ($data->description)
-                                    {{ strip_tags($data->description) }}
-                                @else
-                                    Not Applicable
-                                @endif
-                            </td>
-                        </tr>
-
-                        <tr>
                             <th class="w-20">Responsible Department</th>
                             <td class="w-80">
                                 @if ($data->departments)
@@ -342,13 +450,13 @@
                     </table>
                 </div>
                 <div class="block-head">
-                    File Attachments
+                    File Attachment
                 </div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
                             <th class="w-20"> Sr.No.</th>
-                            <th class="w-60">attachment </th>
+                            <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->file_attach)
                             @php $files = json_decode($data->file_attach); @endphp
@@ -378,22 +486,7 @@
 
             </div>
 
-            <!-- <div class="block">
-                <div class="head">
 
-                    <table>
-                        <tr>
-                            <th class="w-20">CAPA Related Records</th>
-                            {{-- <td class="w-80">@if ($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td> --}}
-                        </tr>
-
-
-                        </table>
-                      </div>
-                    </table>
-
-                </div>
-            </div> -->
 
             <div class="block-head">
                 Acknowledge
@@ -421,7 +514,7 @@
                 <table>
                     <tr class="table_bg">
                         <th class="w-20"> Sr.No.</th>
-                        <th class="w-60">attachment </th>
+                        <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->acknowledge_attach)
                         @php $files = json_decode($data->acknowledge_attach); @endphp
@@ -512,7 +605,7 @@
                 <table>
                     <tr class="table_bg">
                         <th class="w-20"> Sr.No.</th>
-                        <th class="w-60">attachment </th>
+                        <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->Support_doc)
                         @php $files = json_decode($data->Support_doc); @endphp
@@ -560,13 +653,13 @@
 
 
             <div class="block-head">
-            QA/CQA Verification Attachments
+            QA/CQA Verification Attachment
             </div>
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
                         <th class="w-20"> Sr.No.</th>
-                        <th class="w-60">attachment </th>
+                        <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->final_attach)
                         @php $files = json_decode($data->final_attach); @endphp
