@@ -550,7 +550,7 @@ class DeviationController extends Controller
         $data3->save();
         $fieldNames = [
             'facility_name' => 'Related to',
-            'IDnumber' => 'Document Name',
+            'IDnumber' => 'Name & ID Number',
             'Remarks' => 'Remarks'
         ];
 
@@ -1320,6 +1320,23 @@ class DeviationController extends Controller
             $history->save();
         }
 
+        if (!empty ($request->Initiator_Group)){
+            $history = new DeviationAuditTrail();
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Initiation Department Code';
+            $history->previous = "Null";
+            $history->current = $deviation->initiator_group_code;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $deviation->status;
+            $history->change_to =   "Opened";
+            $history->change_from = "Initiator";
+            $history->action_name = 'Create';
+            $history->save();
+        }
+
         if (!empty ($request->short_description)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
@@ -1519,7 +1536,7 @@ class DeviationController extends Controller
         if (!empty ($request->Document_Details_Required)){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Document Details Required';
+            $history->activity_type = 'Document Details Required?';
             $history->previous = "Null";
             $history->current = $deviation->Document_Details_Required;
             $history->comment = "Not Applicable";
@@ -1699,7 +1716,7 @@ if (is_array($request->Description_Deviation) && array_key_exists(0, $request->D
         if (is_array($request->initial_file) && array_key_exists(0, $request->initial_file) && $request->initial_file[0] !== null){
             $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
-            $history->activity_type = 'Initial Attachment';
+            $history->activity_type = 'Initial Attachments';
             $history->previous = "Null";
             $history->current = $deviation->initial_file;
             $history->comment = "Not Applicable";
@@ -4360,7 +4377,7 @@ $newDataGridFishbone->save();
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Document Details Required';
+            $history->activity_type = 'Document Details Required?';
              $history->previous = $lastDeviation->Document_Details_Required;
             $history->current = $deviation->Document_Details_Required;
             $history->comment = $deviation->submit_comment;
@@ -4438,7 +4455,7 @@ $newDataGridFishbone->save();
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Approve Person';
+            $history->activity_type = 'Approver Person';
              $history->previous = $lastDeviation->Approver_to;
             $history->current = $deviation->Approver_to;
             $history->comment = $deviation->submit_comment;
@@ -4496,7 +4513,7 @@ $newDataGridFishbone->save();
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Immediate Action';
+            $history->activity_type = 'Immediate Action (if any)';
              $history->previous = $lastDeviation->Immediate_Action;
             $history->current = $deviation->Immediate_Action;
             $history->comment = $deviation->submit_comment;
@@ -4847,11 +4864,11 @@ $newDataGridFishbone->save();
         }
         if ($lastDeviation->Initial_attachment != $deviation->Initial_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA/CQA Implementation Verification Attachments')
+                            ->where('activity_type', 'QA/CQA initial Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA/CQA Implementation Verification Attachments';
+            $history->activity_type = 'QA/CQA initial Attachments';
              $history->previous = $lastDeviation->Initial_attachment;
             $history->current = $deviation->Initial_attachment;
             $history->comment = $deviation->submit_comment;
@@ -4866,11 +4883,11 @@ $newDataGridFishbone->save();
         }
          if ($lastDeviation->QA_attachments != $deviation->QA_attachments || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'QA Attachments')
+                            ->where('activity_type', 'QA/CQA Implementation Verification Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'QA Attachments';
+            $history->activity_type = 'QA/CQA Implementation Verification Attachments';
              $history->previous = $lastDeviation->QA_attachments;
             $history->current = $deviation->QA_attachments;
             $history->comment = $deviation->submit_comment;
@@ -4949,7 +4966,7 @@ $newDataGridFishbone->save();
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Immediate Action';
+            $history->activity_type = 'Immediate Action (if any)';
              $history->previous = $lastDeviation->imidiate_action;
             $history->current = $deviation->imidiate_action;
             $history->comment = $deviation->submit_comment;
@@ -5511,17 +5528,17 @@ $newDataGridFishbone->save();
 
         if ($lastDeviation->Post_Categorization != $deviation->Post_Categorization || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
-                            ->where('activity_type', 'Post Categorization')
+                            ->where('activity_type', 'Post Categorization Of Deviation')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
-            $history->activity_type = 'Post Categorization';
+            $history->activity_type = 'Post Categorization Of Deviation';
              $history->previous = $lastDeviation->Post_Categorization;
             $history->current = $deviation->Post_Categorization;
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->user_role = RoleGroup::where('id', Aut6h::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
