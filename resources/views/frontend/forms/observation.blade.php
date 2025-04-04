@@ -578,7 +578,7 @@
                                     <div class="group-input">
                                     <label for="audit-agenda-grid">
                                     Response Details
-                                        <button type="button" name="details" id="Details-add1">+</button>
+                                        <button type="button" name="details" id="Details-add1" disabled>+</button>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table2">
@@ -591,8 +591,8 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="response[0][serial]" value="1" style="flex-grow: 1; width: 100%;"></td>
-                                                <td><textarea name="response[0][response_detail]" style="flex-grow: 1; width: 100%;"></textarea></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><textarea disabled name="response[0][response_detail]" style="flex-grow: 1; width: 100%;"></textarea></td>
+                                                <td><button type="text" class="removeRowBtn" disabled>Remove</button></td>
                                             </tbody>
 
                                         </table>
@@ -634,7 +634,7 @@
                                          <div class="group-input">
                                     <label for="audit-agenda-grid">
                                     Corrective Actions
-                                        <button type="button" name="details" id="Details-add3">+</button>
+                                        <button type="button" name="details" id="Details-add3" disabled>+</button>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table3">
@@ -648,8 +648,8 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="corrective[0][serial]" value="1" style="flex-grow: 1; width: 100%;"></td>
-                                                <td><textarea type="text" name="corrective[0][corrective_action]" style="flex-grow: 1; width: 100%;"></textarea> </td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><textarea disabled type="text" name="corrective[0][corrective_action]" style="flex-grow: 1; width: 100%;"></textarea> </td>
+                                                <td><button type="text" class="removeRowBtn" disabled>Remove</button></td>
                                             </tbody>
 
                                         </table>
@@ -688,7 +688,7 @@
                                         <div class="group-input">
                                     <label for="audit-agenda-grid">
                                     Preventive Action
-                                        <button type="button" name="details" id="Details-add4">+</button>
+                                        <button type="button" name="details" id="Details-add4" disabled>+</button>
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="Details-table4">
@@ -701,8 +701,8 @@
                                             </thead>
                                             <tbody>
                                                 <td><input disabled type="text" name="preventive[0][serial]"  value="1" style="flex-grow: 1; width: 100%;"></td>
-                                                <td><textarea type="text" name="preventive[0][preventive_action]" style="flex-grow: 1; width: 100%;"> </textarea></td>
-                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                <td><textarea disabled type="text" name="preventive[0][preventive_action]" style="flex-grow: 1; width: 100%;"> </textarea></td>
+                                                <td><button type="text" class="removeRowBtn" disabled>Remove</button></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -734,7 +734,7 @@
                                     <div class="group-input">
                                         <label for="action-plan-grid">
                                             Action Plan<button type="button" name="action-plan-grid"
-                                                id="observation_table">+</button>
+                                                id="observation_table" disabled>+</button>
                                         </label>
                                         <table class="table table-bordered" id="observation">
                                             <thead>
@@ -750,9 +750,9 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
-                                                <td><input type="text" name="action[]"></td>
+                                                <td><input  type="text" name="action[]"></td>
                                                 {{-- <td><input type="text" name="responsible[]"></td> --}}
-                                                <td> <select id="select-state" placeholder="Select..."
+                                                <td> <select  id="select-state" placeholder="Select..."
                                                         name="responsible[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
@@ -765,9 +765,9 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
-                                                                <input type="text" id="deadline' + serialNumber +'"
+                                                                <input  type="text" id="deadline' + serialNumber +'"
                                                                     readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"
+                                                                <input  type="date"
                                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]"
                                                                     class="hide-input"
                                                                     oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
@@ -775,7 +775,7 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><input type="text" name="item_status[]"></td>
+                                                <td><input  type="text" name="item_status[]"></td>
                                                 <td><button type="text"
                                                     class="removeRowBtn">Remove</button></td>
                                             </tbody>
@@ -785,7 +785,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
-                                        <textarea name="comments"></textarea>
+                                        <textarea name="comments" disabled></textarea>
                                     </div>
                                 </div>
 
@@ -799,7 +799,7 @@
                                             <div class="file-attachment-list" id="response_capa_attach"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="response_capa_attach" name="response_capa_attach[]"
+                                                <input disabled type="file" id="response_capa_attach" name="response_capa_attach[]"
                                                     oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
                                             </div>
                                         </div>
@@ -835,9 +835,9 @@
                                     <div class="group-input input-date">
                                         <label for="actual_start_date">Actual Action Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="actual_start_date" readonly
+                                            <input disabled type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"
+                                            <input disabled type="date"
                                                 id="actual_start_date_checkdate" name="actual_start_date"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
@@ -848,8 +848,8 @@
                                     <div class="group-input input-date">
                                         <label for="actual_end_date">Actual Action End Date</lable>
                                             <div class="calenderauditee">
-                                                <input type="text" id="actual_end_date" placeholder="DD-MMM-YYYY" />
-                                                <input type="date"
+                                                <input disabled type="text" id="actual_end_date" placeholder="DD-MMM-YYYY" />
+                                                <input disabled type="date"
                                                     id="actual_end_date_checkdate" name="actual_end_date"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
@@ -861,7 +861,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
-                                        <textarea name="action_taken" class="summernote"></textarea>
+                                        <textarea disabled name="action_taken" class="summernote"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -870,7 +870,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="response_summary">Response Summary</label>
-                                        <textarea name="response_summary" class="summernote"></textarea>
+                                        <textarea disabled name="response_summary" class="summernote"></textarea>
                                     </div>
                                 </div>
 
@@ -883,7 +883,7 @@
                                             <div class="file-attachment-list" id="impact_analysis"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="impact_analysis[]"
+                                                <input disabled type="file" id="myfile" name="impact_analysis[]"
                                                     oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
                                             </div>
                                         </div>
@@ -912,7 +912,7 @@
                             <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact">Response Verification Comment</label>
-                                                <textarea name="impact"></textarea>
+                                                <textarea disabled name="impact"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -924,7 +924,7 @@
                                             <div class="file-attachment-list" id="attach_files2"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="attach_files2[]"
+                                                <input disabled type="file" id="myfile" name="attach_files2[]"
                                                     oninput="addMultipleFiles(this, 'attach_files2')" multiple>
                                             </div>
                                         </div>

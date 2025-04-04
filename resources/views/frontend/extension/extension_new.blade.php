@@ -177,12 +177,12 @@ $userDetails = DB::table('users')->whereIn('id', $userIds)->select('id', 'name')
                 <div class="col-md-6">
                     <div class="group-input">
                         <label for="Extension Number">
-                            Extension Number <span class="text-danger">*</span>
+                            Extension Number
                         </label>
                         @if(!empty($countData))
                         <input id="docname" type="text" value="{{ $countData }}" readonly>
                         @else
-                        <select name="data_number" id="countSelect" required>
+                        <select name="data_number" id="countSelect">
                             <option value="">--Select Extension Number--</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
