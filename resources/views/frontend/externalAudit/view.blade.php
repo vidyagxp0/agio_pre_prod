@@ -941,9 +941,7 @@
                                                                 </tr>
                                                             @endforeach
                                                         @else
-                                                            <!-- <tr>
-                                                                    <td colspan="6">No auditors available.</td>
-                                                                </tr> -->
+                                                            
                                                         @endif
                                                     </tbody>
                                                 </table>
@@ -2034,67 +2032,6 @@
                                                 });
                                             });
                                         </script>
-
-
-
-
-                                        <!-- New Grid Added  -->
-
-                                        <!-- <div class="col-12">
-                                                    <div class="group-input">
-                                                        <label for="Remarks">Remarks @if ($data->stage == 2)
-                                                                <span class="text-danger">*</span>
-                                                                @endif
-                                                                    </label>
-                                                                    <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                                                                                                </div>
-                                                                                                            </div> -->
-
-                                                                                                    <!-- <div class="col-lg-12">
-                                                                                                                <div class="group-input">
-                                                                                                                    <label for="Reference Recores">Reference Record</label>
-                                                                                                                    <select {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
-                                                                                                                        {{-- <option value="">--Select---</option> --}}
-                                                                                                                        @foreach ($old_record as $new)
-                                                                <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
-                                                                                                                                {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                                                                                            </option>
-                                                                @endforeach
-                                                                                                                    </select>
-                                                                                                                </div>
-                                                                                                            </div> -->
-                                                                                                    <!-- <div class="col-lg-12">
-                                                                                                                <div class="group-input">
-                                                                                                                    <label for="Report Attachments">Report Attachments</label>
-                                                                                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                                                                                    {{-- <input type="file" id="myfile" name="report_file"
-                                                                                                                {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}> --}}
-                                                                                                                        <div class="file-attachment-field">
-                                                                                                                            <div class="file-attachment-list" id="report_attachment">
-                                                                                                                                @if ($data->report_file)
-                                                                @foreach (json_decode($data->report_file) as $file)
-                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                                                                                                    <b>{{ $file }}</b>
-                                                                                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                                                                                                </h6>
-                                                                @endforeach
-                                                                @endif
-                                                                </div>
-                                                                <div class="add-btn">
-                                                                    <div>Add</div>
-                                                                    <input  {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} type="file" id="myfile" name="report_file[]"
-                                                                        oninput="addMultipleFiles(this, 'report_attachment')" multiple>
-                                                                </div>
-                                                            </div>
-                                                    </div>
-                                                </div> -->
-
-
-
-
-
-
 
 
                                         <!-- @php

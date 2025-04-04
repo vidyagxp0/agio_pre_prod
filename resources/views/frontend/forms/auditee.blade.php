@@ -662,11 +662,11 @@
                                             Auditors
                                             <button type="button" name="audit-incident-grid"
                                                 id="IncidentAddAuditor">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
+                                            <!-- <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span>
+                                            </span> -->
                                         </label>
 
                                         <table class="table table-bordered" id="onservation-incident-tableAuditor">
@@ -1309,100 +1309,61 @@
                                 <div class="sub-head">
                                     Summary Response
                                 </div>
-                                <!-- <div class="col-12">
-                                                <div class="group-input">
-                                                    <label for="Remarks">Remarks</label>
-                                                    <textarea name="Remarks"></textarea>
-                                                </div>
-                                            </div> -->
-                                <!-- <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Reference Recores">Reference Record</label>
-                                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                                        {{-- <option value="">--Select---</option> --}}
-                                                        @foreach ($old_record as $new)
-    <option value="{{ $new->id }}">
-                                                                {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                            </option>
-    @endforeach
-                                                    </select>
-                                                </div>
-                                            </div> -->
-                                <!-- <div class="col-lg-12">
-                                                <div class="group-input">
-                                                    <label for="Report Attachments">Report Attachments</label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                                            documents</small></div>
-                                                    {{-- <input type="file" id="myfile" name="report_file[]" multiple> --}}
-                                                    {{-- <div class="file-attachment-field">
-                                            <div id="Audit_file_attachment"></div>
-                                            <input type="file" id="myfile" name="report_file[]"
-                                            oninput="addMultipleFiles(this, 'Audit_file_attachment')" multiple>
-                                        </div> --}}
-                                                    <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="report_attachment"></div>
-                                                        <div class="add-btn">
-                                                            <div>Add</div>
-                                                            <input type="file" id="myfile" name="report_file[]"
-                                                                oninput="addMultipleFiles(this, 'report_attachment')" multiple>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                              
 
 
-                                {{-- grid added new --}}
+                               
 
                                 <div class="col-12">
-    <div class="group-input" id="IncidentRow">
-        <label for="root_cause">
-            Summary Response
-            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
-            <span class="text-primary" data-bs-toggle="modal"
-                data-bs-target="#observation-field-instruction-modal"
-                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                (Launch Instruction)
-            </span>
-        </label>
+                                    <div class="group-input" id="IncidentRow">
+                                        <label for="root_cause">
+                                            Summary Response
+                                            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+                                            <!-- <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#observation-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span> -->
+                                        </label>
 
-        <table class="table table-bordered" id="onservation-incident-table">
-            <thead>
-                <tr>
-                    <th>Sr.No.</th>
-                    <th>Observation</th>
-                    <th>Response</th>
-                    <th>CAPA / Child action Reference If Any</th>
-                    <th>Status</th>
-                    <th>Category</th>
-                    <th>Remarks</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @php
-                    $serialNumber = 1;
-                @endphp
-                <tr>
-                    <td><input disabled type="text" style="width:40px" value="{{ $serialNumber++ }}"></td>
-                    <td><textarea name="SummaryResponse[0][observation]"></textarea></td>
-                    <td><textarea name="SummaryResponse[0][response]"></textarea></td>
-                    <td><textarea name="SummaryResponse[0][reference_id]"></textarea></td>
-                    <td><textarea name="SummaryResponse[0][status]"></textarea></td>
-                    <td>
-                        <select name="SummaryResponse[0][category]" class="form-select">
-                            <option value="">--Select--</option>
-                            <option value="Major">Major</option>
-                            <option value="Minor">Minor</option>
-                            <option value="Critical">Critical</option>
-                        </select>
-                    </td>
-                    <td><textarea name="SummaryResponse[0][remarks]"></textarea></td>
-                    <td><button type="button" class="removeRowBtn">Remove</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+                                        <table class="table table-bordered" id="onservation-incident-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr.No.</th>
+                                                    <th>Observation</th>
+                                                    <th>Response</th>
+                                                    <th>CAPA / Child action Reference If Any</th>
+                                                    <th>Status</th>
+                                                    <th>Category</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $serialNumber = 1;
+                                                @endphp
+                                                <tr>
+                                                    <td><input disabled type="text" style="width:40px" value="{{ $serialNumber++ }}"></td>
+                                                    <td><textarea name="SummaryResponse[0][observation]"></textarea></td>
+                                                    <td><textarea name="SummaryResponse[0][response]"></textarea></td>
+                                                    <td><textarea name="SummaryResponse[0][reference_id]"></textarea></td>
+                                                    <td><textarea name="SummaryResponse[0][status]"></textarea></td>
+                                                    <td>
+                                                        <select name="SummaryResponse[0][category]" class="form-select">
+                                                            <option value="">--Select--</option>
+                                                            <option value="Major">Major</option>
+                                                            <option value="Minor">Minor</option>
+                                                            <option value="Critical">Critical</option>
+                                                        </select>
+                                                    </td>
+                                                    <td><textarea name="SummaryResponse[0][remarks]"></textarea></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
 
 
                                 <script>
