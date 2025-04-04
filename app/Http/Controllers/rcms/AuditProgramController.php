@@ -2137,15 +2137,13 @@ class AuditProgramController extends Controller
         // $data->cityArr = json_decode($cityList->getBody(), true); 
         // $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
         // $data->countryArr = json_decode($countryList->getBody(), true);
-            $currentDate = Carbon::now();
+        $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $audit_program_id = $data->id;
         $grid_Data4 = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection' ])->first();
         $grid_Data2 = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'Self_Inspection_circular' ])->first();
         $grid_Data3 = AuditProgramGrid::where(['ci_id' => $audit_program_id, 'identifier' => 'audit_program' ])->first();
-
-
 
         return view('frontend.audit-program.view', compact('data', 'due_date','audit_program_id', 'AuditProgramGrid','grid_Data4','grid_Data3','grid_Data2'));
     }
@@ -2160,7 +2158,7 @@ class AuditProgramController extends Controller
             if ($changeControl->stage == 1) {
 
                 $mandatoryFields = [
-                     'assign_to','short_description', 'type', 'year', 'comments'
+                     'assign_to','short_description', 'type', 'year', 'comments', 'comment'
                 ];
                 
                 foreach ($mandatoryFields as $field) {
@@ -2168,9 +2166,9 @@ class AuditProgramController extends Controller
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => "Please fill all required fields before proceeding. Missing: $field"
+                            'message' => "Please fill all required fields of GI and Self Inspection Circular tabs before proceeding. Missing: $field"
                         ]);
-                        return redirect()->back();
+                        return redirect()->back()->with('error', 'fill required fields of GI and Self Inspection Circular tabs');
                     }
                 }
                 
@@ -2357,12 +2355,14 @@ class AuditProgramController extends Controller
                 $history->AuditProgram_id = $id;
                 $history->activity_type = 'Audit Completed On , Audit Completed By ';
                 $history->action ='Audit Completed';
+
                 if (is_null($lastDocument->Audit_Completed_By) || $lastDocument->Audit_Completed_By === '') {
                     $history->previous = "Null";
-                    } else {
+                } else {
                     $history->previous = $lastDocument->Audit_Completed_By . ' , ' . $lastDocument->Audit_Completed_On;
-                    }
-                    $history->current = $changeControl->Audit_Completed_By . ' , ' . $changeControl->Audit_Completed_On;
+                }
+
+                $history->current = $changeControl->Audit_Completed_By . ' , ' . $changeControl->Audit_Completed_On;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
