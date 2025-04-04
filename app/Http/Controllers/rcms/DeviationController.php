@@ -5538,7 +5538,7 @@ $newDataGridFishbone->save();
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Aut6h::user()->role)->value('name');
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
