@@ -709,10 +709,13 @@
                                         <label for="Scheduled Start Date">Due Date <span class="text-danger">*</span></label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"
-                                                value="" />
+                                                value=""  required/>
                                             <input type="date" id="due_date_checkdate" value="" name="due_date"
                                                 min="" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date');" />
+                                                @error('due_date')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -802,7 +805,7 @@
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator"><b>Initiation Department</b></label>
+                                        <label for="Initiator"><b>Initiator Department</b></label>
                                         <input readonly type="text" name="Initiator_Group" id="initiator_group" 
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
@@ -857,7 +860,7 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group Code">Initiation Department Code</label>
+                                            <label for="Initiator Group Code">Initiator Department Code</label>
                                             <input type="text" name="initiator_group_code" id="initiator_group_code"
                                                 value="" readonly>
                                         </div>
@@ -954,32 +957,60 @@
                                 </div>
 
                                 <div class="col-lg-6 new-time-data-field">
-                                    <div class="group-input input-time">
-                                        <label for="deviation_time">Deviation Observed On (Time)</label>
-                                        <input type="text" name="deviation_time" id="deviation_time"
-                                            placeholder="HH:MM">
-                                    </div>
-                                    @error('Deviation_date')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
+    <div class="group-input input-time">
+        <label for="deviation_time">Deviation Observed On (Time)</label>
+        <input type="text" name="deviation_time" id="deviation_time" placeholder="HH:MM">
+    </div>
+</div>
 
-                                <div class="col-lg-6 new-time-data-field">
-                                    <div class="group-input input-time delayJustificationBlock">
-                                        <label for="deviation_time">Delay Justification</label>
-                                        <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
-                                    </div>
-                                </div>
+<div class="col-lg-6 new-time-data-field">
+    <div class="group-input input-time delayJustificationBlock" style="display: none;">
+        <label for="Delay_Justification">Delay Justification <span style="color: red">*</span></label>
+        <textarea id="Delay_Justification" name="Delay_Justification"></textarea>
+        <div class="text-danger" id="delayError" style="display: none;">This field is required due to delay.</div>
+    </div>
+</div>
 
-                                <script>
-                                    flatpickr("#deviation_time", {
-                                        enableTime: true,
-                                        noCalendar: true,
-                                        dateFormat: "H:i", // 24-hour format with date and time
-                                        time_24hr: true, // Enable 24-hour time format
-                                        minuteIncrement: 1 // Set minute increment to 1
-                                    });
-                                </script>
+<script>
+    const delayBlock = document.querySelector('.delayJustificationBlock');
+    const justificationField = document.getElementById('Delay_Justification');
+    const delayError = document.getElementById('delayError');
+
+    flatpickr("#deviation_time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 1,
+        onChange: function (selectedDates, dateStr, instance) {
+            const [hour, minute] = dateStr.split(':').map(Number);
+            const selectedMinutes = hour * 60 + minute;
+            const thresholdMinutes = 24 * 60; // 10:00 AM
+
+            if (selectedMinutes > thresholdMinutes) {
+                delayBlock.style.display = 'block';
+                justificationField.setAttribute('required', 'required');
+            } else {
+                delayBlock.style.display = 'none';
+                justificationField.removeAttribute('required');
+                justificationField.value = '';
+                delayError.style.display = 'none';
+            }
+        }
+    });
+
+    // Optional: Validate on submit
+    document.querySelector("form").addEventListener("submit", function (e) {
+        if (justificationField.hasAttribute('required') && justificationField.value.trim() === "") {
+            e.preventDefault();
+            delayError.style.display = 'block';
+            justificationField.focus();
+        } else {
+            delayError.style.display = 'none';
+        }
+    });
+</script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">

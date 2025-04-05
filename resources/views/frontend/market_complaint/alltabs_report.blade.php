@@ -162,7 +162,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    General Information & Complaint Acknowledgement Report
+                    Market Complaint Investigation Report
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
