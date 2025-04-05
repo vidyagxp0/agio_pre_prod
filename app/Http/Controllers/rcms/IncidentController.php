@@ -8559,7 +8559,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('Investigation' . $id . '.pdf');
+            return $pdf->stream('Incident' . $id . '.pdf');
         }
     }
 
