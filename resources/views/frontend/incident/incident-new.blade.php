@@ -863,7 +863,7 @@ dd($pre);
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator Department</b></label>
-                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                             </div>
                         </div>
@@ -896,7 +896,7 @@ dd($pre);
                                         "Human Resource": "HR",
                                         "Banking": "BNK",
                                         "Marketing": "MRKT",
-                                        
+
                                     };
 
                                     // Get the Initiator Department input
@@ -1099,13 +1099,45 @@ dd($pre);
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {
                                         var selectField = document.getElementById('short_description_required');
+                                        var repeatBlock = document.getElementById('nature_of_repeat_block');
+                                        var repeatInputs = document.getElementsByClassName('nature_of_repeat');
+                                        var asteriskIcon = document.getElementById('asteriskInviRecurring');
+
+                                        function toggleRepeatField() {
+                                            var isRequired = selectField.value === 'Yes';
+
+                                            // Show/hide the block
+                                            repeatBlock.style.display = isRequired ? 'block' : 'none';
+
+                                            // Set required attribute
+                                            for (var i = 0; i < repeatInputs.length; i++) {
+                                                repeatInputs[i].required = isRequired;
+                                            }
+
+                                            // Show/hide asterisk
+                                            if (asteriskIcon) {
+                                                asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                            }
+                                        }
+
+                                        // Handle change event
+                                        selectField.addEventListener('change', toggleRepeatField);
+
+                                        // Initial check in case form reloads with old input
+                                        toggleRepeatField();
+                                    });
+                                </script>
+
+                                {{-- <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        var selectField = document.getElementById('short_description_required');
                                         var inputsToToggle = [];
 
                                         // Add elements with class 'facility-name' to inputsToToggle
                                         var facilityNameInputs = document.getElementsByClassName('nature_of_repeat');
 
                                         for (var i = 0; i < facilityNameInputs.length; i++) {
-                                            inputsToToggle.push(facility--NameInputs[i]);
+                                            inputsToToggle.push(facilityNameInputs--NameInputs[i]);
                                         }
 
                                         selectField.addEventListener('change', function() {
@@ -1126,7 +1158,7 @@ dd($pre);
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });
-                                </script>
+                                </script> --}}
 
 
                                 <div class="col-lg-6 new-date-data-field">

@@ -2086,7 +2086,7 @@
                                             </div>
 
 
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Description of Incident <span
                                                             class="text-danger">*</span></label>
@@ -2098,7 +2098,34 @@
                                                 @error('Description_incident')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
+                                            </div> --}}
+                                            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="Description Incident">Description of Incident <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea   name="Description_incident"
+                                                        id="editor" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
+                                                </div>
+                                                @error('Description_incident')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
+                                            <style>
+                                                .ck.ck-editor_editable_inline[dir=ltr]{
+                                                    height: 350px;
+                                                }
+                                            </style>
+                                            <script>
+                                                ClassicEditor
+                                                    .create(document.querySelector('#editor'))
+                                                    .catch(error => {
+                                                        console.error(error);
+                                                    });
+                                            </script>
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Investigation <span
