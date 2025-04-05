@@ -1028,11 +1028,11 @@
                                                                     <td><input disabled type="text" name="response[{{ $loop->index }}][serial]"  value="{{ $loop->index + 1 }}">
                                                                     </td>
                                                                     <td>
-                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]"> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
+                                                                        <textarea  name="response[{{ $loop->index }}][response_detail]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}> {{ isset($datas['response_detail']) ? $datas['response_detail'] : '' }}</textarea>
                                                                     </td>
 
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" >Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} >Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1092,7 +1092,7 @@
                                                 <div class="sub-head">Corrective Actions @if ($data->stage == 2)
                                                        <span class="text-danger">*</span>
                                                       @endif
-                                                    <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="details" id="Details-add4" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1114,11 +1114,11 @@
                                                                             name="corrective[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><textarea  name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</textarea>
+                                                                    <td><textarea  name="corrective[{{ $loop->index }}][corrective_action]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>{{ isset($datas['corrective_action']) ? $datas['corrective_action'] : '' }}</textarea>
 
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1172,7 +1172,7 @@
                                                 <div class="sub-head">Preventive Action @if ($data->stage == 2)
                                                     <span class="text-danger">*</span>
                                                     @endif
-                                                    <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
+                                                    <button type="button" name="details" id="Details-add5" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
                                             </label>
                                             <div class="table-responsive">
@@ -1194,10 +1194,10 @@
                                                                             name="preventive[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><textarea name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} >{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
+                                                                    <td><textarea name="preventive[{{ $loop->index }}][preventive_action]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} >{{ isset($datas['preventive_action']) ? $datas['preventive_action'] : '' }}</textarea>
                                                                     </td>
                                                                     <td><button type="text"
-                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Remove</button></td>
+                                                                            class="removeRowBtn" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>Remove</button></td>
                                                                 </tr>
                                                             @endforeach
                                                         @endif
@@ -1383,7 +1383,7 @@
                                                       <span class="text-danger">*</span>
                                                     @endif
                                                 </label>
-                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                                                <textarea name="comments"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}>{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
 
@@ -1406,7 +1406,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="response_capa_attach[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
+                                                        <input type="file" id="myfile" name="response_capa_attach[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'response_capa_attach')" multiple>
                                                     </div>
                                         </div>
                                     </div>
@@ -1443,12 +1443,12 @@
 
                                                 </label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="actual_start_date" readonly
+                                                    <input type="text" id="actual_start_date"
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
                                                     <input type="date"
                                                         value="{{ $data->actual_start_date }}"
                                                         id="actual_start_date_checkdate"
-                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                        {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                         name="actual_start_date" class="hide-input"
                                                         oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                                 </div>
@@ -1466,7 +1466,7 @@
                                                         <input type="date"
                                                             value="{{ $data->actual_end_date }}"
                                                             id="actual_end_date_checkdate"
-                                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }}
                                                             name="actual_end_date" class="hide-input"
                                                             oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                                     </div>
@@ -1481,7 +1481,7 @@
                                                     @endif
 
                                                 </label>
-                                                <textarea name="action_taken"  {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 4 ? 'readonly' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
+                                                <textarea name="action_taken" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote">{{ $data->action_taken }}</textarea>
                                             </div>
                                         </div>
 
@@ -1496,7 +1496,7 @@
                                                     @endif
 
                                                 </label>
-                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} class="summernote">{{ $data->response_summary }}</textarea>
+                                                <textarea name="response_summary"  {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'readonly' : '' }} class="summernote">{{ $data->response_summary }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6 new-date-data-field">
@@ -1558,7 +1558,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
+                                                        <input type="file" id="myfile" name="impact_analysis[]" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 ? 'disabled' : '' }} oninput="addMultipleFiles(this, 'impact_analysis')" multiple>
                                                     </div>
                                         </div>
                                     </div>
@@ -1833,7 +1833,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact">Response Verification Comment  @if($data->stage == 3)<span class="text-danger">*</span>@endif</label>
-                                                <textarea name="impact" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact }}</textarea>
+                                                <textarea name="impact" {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->impact }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1862,7 +1862,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                         {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 2 || $data->stage == 4 ? 'disabled' : '' }}
                                                             value="{{ $data->attach_files2 }}" type="file"
                                                             id="myfile" name="attach_files2[]"
                                                             oninput="addMultipleFiles(this, 'attach_files2')" multiple>

@@ -364,7 +364,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
 
                 @if ($extensionNew->data_number == 3)
-                <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
+                   <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @elseif($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
@@ -1174,6 +1174,7 @@
                                 </div>
                             </div>
 
+                        @if($extensionNew->count == 3)
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By"> CQA Approval Complete By</label>
@@ -1192,6 +1193,7 @@
                                     <div class="static">{{ $extensionNew->cqa_approval_comment }}</div>
                                 </div>
                             </div>
+                        @endif
 
                         </div>
                         {{-- <div class="button-block">

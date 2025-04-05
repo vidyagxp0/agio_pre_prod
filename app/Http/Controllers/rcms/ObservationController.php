@@ -2162,6 +2162,8 @@ if (is_array($request->action) && !empty($request->action)) {
             $lastDocument = Observation::find($id);
             $observation_id = $id;
             $grid_Data2 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'response'])->firstOrCreate();
+            $grid_Data3 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'corrective'])->firstOrCreate();
+            $grid_Data4 = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'preventive'])->firstOrCreate();
             $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
 
             $capaRequired = $request->capaNotReq;
@@ -2276,23 +2278,34 @@ if (is_array($request->action) && !empty($request->action)) {
 
             if($capaRequired == "Yes"){
                 if ($changestage->stage == 2) {
-                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) || empty($changestage->comments) || empty($changestage->actual_end_date) || empty($changestage->actual_end_date) || empty($changestage->action_taken) || empty($changestage->response_summary))
-                    {
+                    
+                    if (
+                        empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) ||
+                        empty($grid_Data3->data) || !is_array($grid_Data3->data) || empty($grid_Data3->data[0]['corrective_action']) ||
+                        empty($grid_Data4->data) || !is_array($grid_Data4->data) || empty($grid_Data4->data[0]['preventive_action']) ||
+                        empty($changestage->comments) ||
+                        empty($changestage->actual_start_date) ||
+                        empty($changestage->actual_end_date) ||
+                        empty($changestage->action_taken) ||
+                        empty($changestage->response_summary)
+                    ) {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
-                            'message' => 'Response and CAPA , Summary Tab is yet to be filled'
+                            'message' => 'Response and CAPA,Summary Tab are yet to be filled'
                         ]);
-
+                    
                         return redirect()->back();
                     }
-                     else {
+                    else {
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
                             'message' => 'Sent for Response Verification state'
                         ]);
                     }
+                    
+                    
                     $changestage->stage = "3";
                     $changestage->status = "Response Verification";
                     $changestage->complete_By = Auth::user()->name;
@@ -2379,7 +2392,16 @@ if (is_array($request->action) && !empty($request->action)) {
                 }
             } else {
                 if ($changestage->stage == 2) {
-                    if (empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) || empty($changestage->comments) || empty($changestage->actual_end_date) || empty($changestage->actual_end_date) || empty($changestage->action_taken) || empty($changestage->response_summary))
+                    if (
+                        empty($grid_Data2->data) || !is_array($grid_Data2->data) || empty($grid_Data2->data[0]['response_detail']) ||
+                        empty($grid_Data3->data) || !is_array($grid_Data3->data) || empty($grid_Data3->data[0]['corrective_action']) ||
+                        empty($grid_Data4->data) || !is_array($grid_Data4->data) || empty($grid_Data4->data[0]['preventive_action']) ||
+                        empty($changestage->comments) ||
+                        empty($changestage->actual_start_date) ||
+                        empty($changestage->actual_end_date) ||
+                        empty($changestage->action_taken) ||
+                        empty($changestage->response_summary)
+                    )
                     {
                         Session::flash('swal', [
                             'type' => 'warning',

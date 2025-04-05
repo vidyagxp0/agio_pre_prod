@@ -3047,7 +3047,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="audit-agenda-grid">
                                                 Internal Audit (Observations/Discrepancy) <span class="text-danger">*</span>
-                                                <button type="button" name="audit-agenda-grid" id="internalaudit-observation" {{ $data->stage == 3 ? "required" : 'disabled' }}>+</button>
+                                                <button type="button" name="audit-agenda-grid" id="internalaudit-observation" {{ $data->stage !=3 ? 'disabled' : ''  }}>+</button>
                                             </label>
                                             <table class="table table-bordered" id="internalaudit-odtable">
                                                 <thead>
@@ -3067,28 +3067,18 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                     <input disabled type="text" name="observations[{{ $loop->index }}][serial_number]" value="{{ $loop->index + 1 }}">
                                                                 </td>
                                                                 <td>
-                                                                    {{-- <input type="text" name="observations[{{ $loop->index }}][observation]" value="{{ isset($item['observation']) ? $item['observation'] : '' }}"> --}}
                                                                      <textarea name="observations[{{ $loop->index }}][observation]" {{ $data->stage == 3 ? "required" : 'readonly' }}>{{ isset($item['observation']) ? $item['observation'] : '' }}</textarea>
                                                                 </td>
-                                                                {{-- <td> --}}
-                                                                    {{-- <input type="text" name="observations[{{ $loop->index }}][category]" value="{{ isset($item['category']) ? $item['category'] : '' }}"> --}}
-                                                                    {{-- <textarea name="observations[{{ $loop->index }}][category]">{{ isset($item['category']) ? $item['category'] : '' }}</textarea> --}}
-
-                                                                {{-- </td> --}}
                                                                 <td>
-                                                                    <select name="observations[{{ $loop->index }}][category]" {{ $data->stage == 3 ? "" : 'readonly' }} class="form-select">
+                                                                    <select name="observations[{{ $loop->index }}][category]" {{$data->stage == 3 ? 'required' : 'readonly'}} class="form-select">
                                                                         <option value="">-- Select Category --</option>
                                                                         <option value="Major" {{ isset($item['category']) && $item['category'] == 'Major' ? 'selected' : '' }}>Major</option>
                                                                         <option value="Minor" {{ isset($item['category']) && $item['category'] == 'Minor' ? 'selected' : '' }}>Minor</option>
                                                                         <option value="Critical" {{ isset($item['category']) && $item['category'] == 'Critical' ? 'selected' : '' }}>Critical</option>
                                                                     </select>
                                                                 </td>
-
-
-                                                                <td>
-                                                                    {{-- <input type="text" name="observations[{{ $loop->index }}][remarks]" value="{{ isset($item['remarks']) ? $item['remarks'] : '' }}"> --}}
-                                                                    <textarea name="observations[{{ $loop->index }}][remarks]" {{ $data->stage == 3 ? "" : 'readonly' }}>{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
-
+                                                                <td> 
+                                                                    <textarea name="observations[{{ $loop->index }}][remarks]" {{$data->stage == 3 ? 'required' : 'readonly'}}>{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="removeRowBtn">Remove</button>
@@ -3201,15 +3191,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <div class="sub-head">
                                         Audit Response
                                     </div>  
-                                    {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Remarks">Remarks</label>
-                                                <textarea name="Remarks" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Remarks }}</textarea>
-                                            </div>
-                                        </div> --}}
-
-
-
                                         <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>

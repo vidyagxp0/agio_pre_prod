@@ -204,7 +204,7 @@
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
-                <div class="block-head">Extension Details</div>
+                <div class="block-head">General Information</div>
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
@@ -372,8 +372,8 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-80">File</th>
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-80">Attachment</th>
                         </tr>
                         @if ($data->file_attachment_extension)
                             @foreach (json_decode($data->file_attachment_extension) as $key => $file)
@@ -423,8 +423,8 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-80">File</th>
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-80">Attachment</th>
                         </tr>
                         @if ($data->file_attachment_reviewer)
                             @foreach (json_decode($data->file_attachment_reviewer) as $key => $file)
@@ -475,8 +475,8 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-80">File</th>
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-80">Attachment</th>
                         </tr>
                         @if ($data->file_attachment_approver)
                             @foreach (json_decode($data->file_attachment_approver) as $key => $file)
@@ -627,14 +627,16 @@
                         <th class="w-20">Approved Comment</th>
                         <td class="w-80">@if ($data->submit_comment_approved) {{ $data->submit_comment_approved }} @else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">CQA Approval Complete By</th>
-                        <td class="w-80">@if ($data->cqa_approval_by) {{ $data->cqa_approval_by }} @else Not Applicable @endif</td>
-                        <th class="w-20">CQA Approval Complete On</th>
-                        <td class="w-80">@if ($data->cqa_approval_on) {{ $data->cqa_approval_on }} @else Not Applicable @endif</td>
-                        <th class="w-20">CQA Approval Complete Comment</th>
-                        <td class="w-80">@if ($data->cqa_approval_comment) {{ $data->cqa_approval_comment }} @else Not Applicable @endif</td>
-                    </tr>
+                    @if($data->count == 3)
+                        <tr>
+                            <th class="w-20">CQA Approval Complete By</th>
+                            <td class="w-80">@if ($data->cqa_approval_by) {{ $data->cqa_approval_by }} @else Not Applicable @endif</td>
+                            <th class="w-20">CQA Approval Complete On</th>
+                            <td class="w-80">@if ($data->cqa_approval_on) {{ $data->cqa_approval_on }} @else Not Applicable @endif</td>
+                            <th class="w-20">CQA Approval Complete Comment</th>
+                            <td class="w-80">@if ($data->cqa_approval_comment) {{ $data->cqa_approval_comment }} @else Not Applicable @endif</td>
+                        </tr>
+                    @endif
 
                 </table>
             </div>

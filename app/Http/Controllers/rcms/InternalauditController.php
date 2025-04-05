@@ -4830,6 +4830,8 @@ if ($areIniAttachmentsSame2 != true) {
 
         return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','checklist14','checklist15','checklist16','checklist17','old_record','grid_data','grid_data1', 'auditAssessmentChecklist','auditPersonnelChecklist','auditfacilityChecklist','auditMachinesChecklist','auditProductionChecklist','auditMaterialsChecklist','auditQualityControlChecklist','auditQualityAssuranceChecklist','auditPackagingChecklist','auditSheChecklist','gridcomment','grid_Data3','grid_Data4','grid_Data5','auditorview','auditAgendaData','json'));
     }
+
+
     public function InternalAuditStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -5008,7 +5010,7 @@ if ($areIniAttachmentsSame2 != true) {
                     Session::flash('swal', [
                         'type' => 'success',
                         'title' => 'Success',
-                        'message' => 'Sent for Closed -Done'
+                        'message' => 'Sent for Response'
                     ]);
                 }
 
@@ -5623,6 +5625,7 @@ if ($areIniAttachmentsSame2 != true) {
             $parent_id = $id;
             $old_records = InternalAudit::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -5635,7 +5638,7 @@ if ($areIniAttachmentsSame2 != true) {
 
                 $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
             $parent_type = "action_item";
-                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','record', 'data_record','data'));
+                return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id','record', 'data_record','data'));
             }
             if($request->child_type == 'r_c_a'){
                 $parent_type = "r_c_a";
