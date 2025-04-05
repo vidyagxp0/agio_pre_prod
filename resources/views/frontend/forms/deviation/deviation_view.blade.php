@@ -766,6 +766,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Final Assessment Complete
                             </button>
+                            @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+                            @endif
                         @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Deviation', 43))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
@@ -1325,7 +1330,7 @@
 
                                     <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Initiator"><b>Initiation Department</b></label>
+                                                    <label for="Initiator"><b>Initiator Department </b></label>
                                                     <input disabled type="text" name="Initiator_Group" id="initiator_group"
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
@@ -1333,7 +1338,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                                    <label for="Initiation Group Code">Initiator Department Code</label>
                                                     <input type="text" name="initiator_group_code"
                                                         value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                         readonly>
@@ -1436,15 +1441,14 @@
     });
 </script>
 
-
-                                <div class="col-6 new-date-data-field">
+<div class="col-6 new-date-data-field">
     <div class="group-input input-date">
-        <label for="severity-level">Deviation Observed On <span class="text-danger">*</span></label>
+        <label for="Deviation_date">Deviation Observed On <span class="text-danger">*</span></label>
         <div class="calenderauditee">
-            <input type="text"    id="Deviation_date"  placeholder="DD-MMM-YYYY"
+            <input type="text" id="Deviation_date" placeholder="DD-MMM-YYYY"
                 value="{{ Helpers::getdateFormat($data->Deviation_date) }}" />
             <input type="date" name="Deviation_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                   value="{{ $data->Deviation_date }}"
+                value="{{ $data->Deviation_date }}"
                 class="hide-input" oninput="handleDateInput(this, 'Deviation_date')" />
         </div>
         @error('Deviation_date')
@@ -1453,21 +1457,24 @@
     </div>
 </div>
 
+{{-- Deviation Observed On (Time) --}}
 <div class="col-lg-6 new-time-data-field">
     <div class="group-input input-time">
         <label for="deviation_time">Deviation Observed On (Time) <span class="text-danger">*</span></label>
-        <input type="text" name="deviation_time"   {{ $data->stage == 1 ? '' : 'readonly' }} id="deviation_time"
-            value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
+        <input type="text" name="deviation_time" id="deviation_time"
+            value="{{ old('deviation_time') ?? $data->deviation_time }}"
+            {{ $data->stage == 1 ? '' : 'readonly' }}>
         @error('deviation_time')
             <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>
 </div>
 
-<div class="col-lg-6 new-time-data-field">
+<div class="col-lg-6 new-time-data-field" id="delayJustificationContainer" style="display: none;">
     <div class="group-input input-time delayJustificationBlock">
-        <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
-        <textarea id="Delay_Justification" name="Delay_Justification"  {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
+        <label for="Delay_Justification">Delay Justification <span class="text-danger">*</span></label>
+        <textarea id="Delay_Justification" name="Delay_Justification"
+            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Delay_Justification }}</textarea>
     </div>
     @error('Delay_Justification')
         <div class="text-danger">{{ $message }}</div>
@@ -1483,26 +1490,6 @@
         minuteIncrement: 1 // Set minute increment to 1
     });
 </script>
-<!--
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="Facility">Deviation Observed By</label>
-
-        <select name="Facility[]" id="Facility" multiple
-        {{ $data->stage == 1 ? '' : 'disabled' }}>
-            <option value="">Select a value</option>
-            @if ($users->isNotEmpty())
-                @foreach ($users as $value)
-                    <option
-                        {{ in_array($value->name, (array) old('Facility', explode(',', $data->Facility))) ? 'selected' : '' }}
-                        value="{{ $value->name }}">
-                        {{ $value->name }}
-                    </option>
-                @endforeach
-            @endif
-        </select>
-    </div>
-</div> -->
 
 
                                     <div class="col-lg-6">
@@ -1517,15 +1504,15 @@
 
                                     </div>
 
-
+                                    {{-- Deviation Reported On (Date + optional time) --}}
 <div class="col-6 new-date-data-field">
     <div class="group-input input-date">
-        <label for="Initiator Group">Deviation Reported On <span class="text-danger">*</span></label>
+        <label for="Deviation_reported_date">Deviation Reported On <span class="text-danger">*</span></label>
         <div class="calenderauditee">
-            <input type="text"   id="Deviation_reported_date"  placeholder="DD-MMM-YYYY"
+            <input type="text" id="Deviation_reported_date" placeholder="DD-MMM-YYYY"
                 value="{{ Helpers::getdateFormat($data->Deviation_reported_date) }}" />
             <input type="date" name="Deviation_reported_date" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                   value="{{ $data->Deviation_reported_date }}"
+                value="{{ $data->Deviation_reported_date }}"
                 class="hide-input" oninput="handleDateInput(this, 'Deviation_reported_date')" />
         </div>
         @error('Deviation_reported_date')
@@ -1533,44 +1520,53 @@
         @enderror
     </div>
 </div>
-
 <script>
-    $(document).ready(function() {
-        // Hide the delayJustificationBlock initially
-        $('.delayJustificationBlock').hide();
-
-        // Check the condition on page load
-        checkDateDifference();
+    flatpickr("#deviation_time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true,
+        minuteIncrement: 1
     });
+</script>
 
-    function checkDateDifference() {
-        let deviationDate = $('input[name=Deviation_date]').val();
-        let reportedDate = $('input[name=Deviation_reported_date]').val();
-        let deviationTime = $('#deviation_time').val();
+{{-- Main Logic --}}
+<script>
+    $(document).ready(function () {
+        $('#delayJustificationContainer').hide();
 
-        if (!deviationDate || !reportedDate || !deviationTime) {
-            console.error('Deviation date, reported date, or deviation time is missing.');
-            return;
+        // On change of any related fields
+        $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function () {
+            checkDelayJustification();
+        });
+
+        function checkDelayJustification() {
+            let deviationDate = $('input[name=Deviation_date]').val();
+            let reportedDate = $('input[name=Deviation_reported_date]').val();
+            let deviationTime = $('#deviation_time').val();
+
+            if (!deviationDate || !reportedDate || !deviationTime) {
+                $('#delayJustificationContainer').hide();
+                $('#Delay_Justification').removeAttr('required');
+                return;
+            }
+
+            let deviationDateTime = moment(`${deviationDate} ${deviationTime}`, 'YYYY-MM-DD HH:mm');
+            let reportedDateTime = moment(`${reportedDate} 23:59`, 'YYYY-MM-DD HH:mm'); // assume end of day report
+
+            let diffHours = reportedDateTime.diff(deviationDateTime, 'hours', true); // true = decimal
+
+            if (diffHours > 24) {
+                $('#delayJustificationContainer').show();
+                $('#Delay_Justification').attr('required', true);
+            } else {
+                $('#delayJustificationContainer').hide();
+                $('#Delay_Justification').removeAttr('required').val('');
+            }
         }
 
-        // Combine date and time for accurate difference calculation
-        let deviationDateTime = moment(deviationDate + ' ' + deviationTime, 'YYYY-MM-DD HH:mm');
-        let reportedDateTime = moment(reportedDate + ' ' + moment().format('HH:mm'), 'YYYY-MM-DD HH:mm');
-
-        let diffInHours = reportedDateTime.diff(deviationDateTime, 'hours');
-        let diffInDays = reportedDateTime.diff(deviationDateTime, 'days');
-
-        // Show delay justification if the difference is 24 hours or more OR if more than 2 days
-        if (diffInHours > = 24 || diffInDays >= 2) {
-            $('.delayJustificationBlock').show();
-        } else {
-            $('.delayJustificationBlock').hide();
-        }
-    }
-
-    // Call checkDateDifference whenever the values are changed
-    $('input[name=Deviation_date], input[name=Deviation_reported_date], #deviation_time').on('change', function() {
-        checkDateDifference();
+        // Initial check
+        checkDelayJustification();
     });
 </script>
 
@@ -1679,7 +1675,7 @@
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%">Row#</th>
+                                                        <th style="width: 5%">Sr.No.</th>
                                                         <th style="width: 12%">Related to</th>
                                                         <th style="width: 16%">Name & ID Number</th>
                                                         <th style="width: 15%">Remarks</th>
@@ -1829,7 +1825,7 @@
                                                 style="width: 100%;">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 4%">Row#</th>
+                                                        <th style="width: 4%">Sr.No.</th>
                                                         <th style="width: 12%">Document Name</th>
 
                                                         <th style="width: 16%"> Document Number</th>
@@ -1961,7 +1957,7 @@
                                                         style="width: 100%;">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 4%">Row#</th>
+                                                                <th style="width: 4%">Sr.No.</th>
                                                                 <th style="width: 12%">Product /Material</th>
                                                                 <th style="width: 16%"> Stage</th>
                                                                 <th style="width: 16%">Batch No /A.R.No.</th>
@@ -8462,7 +8458,7 @@
                                         </label>
 
                                         <input type="text" name="Other1_Department_person" id="Other1_Department_person"
-                                            value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                          value="{{ old('Other1_Department_person', $data1->Other1_Department_person ?: '') }}"
                                             @if ($data->stage != 3) readonly @endif>
                                     </div>
                                 </div>
@@ -8555,6 +8551,9 @@
                                         });
                                     });
                                 </script>
+
+
+
 {{--
                             @else
                                 <div class="sub-head">
@@ -8716,8 +8715,8 @@
                                     <div class="group-input">
                                         <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
 
-                                        <input type="text" name="Other2_Department_person" id="Other2_Department_person"
-                                                value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                        <input type="text" name="Other2_Department_person" id="Other2_Department_person" 
+                                                value="{{ old('Other2_Department_person', $data1->Other2_Department_person ? : '') }}"
                                                 @if ($data->stage != 2) readonly @endif>
                                     </div>
                             </div>
@@ -8876,7 +8875,7 @@
                                         <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
 
                                         <input type="text" name="Other3_Department_person" id="Other3_Department_person"
-                                                value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                                value="{{ old('Other3_Department_person', $data1->Other3_Department_person  ? : '' ) }}"
                                                 @if ($data->stage != 2) readonly @endif>
                                     </div>
                             </div>
@@ -9038,7 +9037,7 @@
                                         <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
 
                                         <input type="text" name="Other4_Department_person" id="Other4_Department_person"
-                                                value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                                value="{{ old('Other4_Department_person', $data1->Other4_Department_person ? : '') }}"
                                             @if ($data->stage != 2) readonly @endif>
 
                                     </div>
@@ -9204,7 +9203,7 @@
                                     <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
 
                                     <input type="text" name="Other5_Department_person" id="Other5_Department_person"
-                                            value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                            value="{{ old('Other5_Department_person', $data1->Other5_Department_person ? :'') }}"
                                             @if ($data->stage != 2) readonly @endif>
                                 </div>
                             </div>
@@ -9782,7 +9781,7 @@
                                         style="width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th style="width: 4%">Row#</th>
+                                                <th style="width: 4%">Sr.No.</th>
                                                 <th style="width: 12%">Investigation Team</th>
                                                 <th style="width: 16%">Designation & Department</th>
                                                 <th style="width: 16%">Responsibility</th>
@@ -10036,7 +10035,7 @@
                                         <th colspan="4" style="text-align:center;"></th>
                                     </tr>
                                     <tr>
-                                        <th>Row #</th>
+                                        <th>Sr.No.</th>
                                         <th>Activity</th>
                                         <th>Possible Risk/Failure (Identified Risk)</th>
                                         <th>Consequences of Risk/Potential Causes</th>
@@ -10556,7 +10555,7 @@
                                     <table class="table table-bordered" id="Inference">
                                         <thead>
                                             <tr>
-                                                <th style="width:5%">Row #</th>
+                                                <th style="width:5%">Sr.No.</th>
                                                 <th>Type</th>
                                                 <th>Remarks</th>
                                                 <th>Action</th>
@@ -10883,7 +10882,7 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th style="width:7%;">Row #</th>
+                                                    <th style="width:7%;">Sr.No.</th>
                                                     <th style="width:15%;">Gap Category</th>
 
                                                     <th>Issues</th>
@@ -11082,7 +11081,7 @@
                                 <table class="table table-bordered" id="rootCauseAddTable" style="width: 100%;">
                                     <thead>
                                         <tr>
-                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 4%">Sr.No.</th>
                                             <th style="width: 12%"> Root Cause Category</th>
                                             <th style="width: 16%">Root Cause Sub-Category</th>
                                             <th style="width: 16%">If Others</th>
@@ -12157,7 +12156,7 @@
                     </tr>
                     <!-- Second Row: Actual Column Headers -->
                     <tr>
-                        <th style="text-align:center;">Row #</th>
+                        <th style="text-align:center;">Sr.No.</th>
                         <th style="text-align:center;">Activity</th>
                         <th style="text-align:center;">Possible Risk/Failure (Identified Risk)</th>
                         <th style="text-align:center;">Consequences of Risk/Potential Causes</th>

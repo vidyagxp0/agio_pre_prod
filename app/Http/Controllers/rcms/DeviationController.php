@@ -58,7 +58,8 @@ class DeviationController extends Controller
         if ($request->form_name == 'general')
         {
             $validator = Validator::make($request->all(), [
-                'short_description' => 'required'
+                'short_description' => 'required',
+                'due_date'=>'required'
 
             ], [
                 'short_description_required.required' => 'Nature of repeat field required!'
@@ -10644,23 +10645,23 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                 if ($deviation->stage == 4) {
 
                     // CFT review state update form_progress
-                    if ($deviation->form_progress !== 'cft')
-                    {
-                        Session::flash('swal', [
-                            'type' => 'warning',
-                            'title' => 'Mandatory Fields!',
-                            'message' => 'CFT Tab is yet to be filled'
-                        ]);
+                    // if ($deviation->form_progress !== 'cft')
+                    // {
+                    //     Session::flash('swal', [
+                    //         'type' => 'warning',
+                    //         'title' => 'Mandatory Fields!',
+                    //         'message' => 'CFT Tab is yet to be filled'
+                    //     ]);
 
-                        return redirect()->back();
-                    }
-                     else {
-                        Session::flash('swal', [
-                            'type' => 'success',
-                            'title' => 'Success',
-                            'message' => 'Sent to QA/CQA Final Assessment review state'
-                        ]);
-                    }
+                    //     return redirect()->back();
+                    // }
+                    //  else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent to CFT Review State'
+                    //     ]);
+                    // }
 
 
                     $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
@@ -10676,75 +10677,75 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
                        if ($index == 0 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->Quality_Control_by = Auth::user()->name;
-    $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
+                            $updateCFT->Quality_Control_by = Auth::user()->name;
+                            $updateCFT->Quality_Control_on = Carbon::now()->format('Y-m-d');
 
-    $history = new DeviationAuditTrail();
-    $history->deviation_id = $id;
-    $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
+                            $history = new DeviationAuditTrail();
+                            $history->deviation_id = $id;
+                            $history->activity_type = 'Quality Control Completed By, Quality Control Completed On';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->Quality_Control_by . ' , ' . $lastDocument->Quality_Control_on;
+                            }
 
-    $history->action = 'CFT Review Complete';
+                            $history->action = 'CFT Review Complete';
 
-    // Make sure you're using the updated $updateCFT object here
-    $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
+                            // Make sure you're using the updated $updateCFT object here
+                            $history->current = $updateCFT->Quality_Control_by . ', ' . $updateCFT->Quality_Control_on;
 
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->name;
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->name;
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->Quality_Control_by) || $lastDocument->Quality_Control_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-}
+                            $history->save();
+                        }
 
-                     if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
-    $updateCFT->QualityAssurance_by = Auth::user()->name;
-    $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
+                                            if ($index == 1 && $cftUsers->$column == Auth::user()->name) {
+                            $updateCFT->QualityAssurance_by = Auth::user()->name;
+                            $updateCFT->QualityAssurance_on = Carbon::now()->format('Y-m-d'); // Corrected line
 
-    $history = new DeviationAuditTrail();
-    $history->deviation_id = $id;
-    $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
+                            $history = new DeviationAuditTrail();
+                            $history->deviation_id = $id;
+                            $history->activity_type = 'Quality Assurance Completed By, Quality Assurance Completed On';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->previous = "";
-    } else {
-        $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->previous = "";
+                            } else {
+                                $history->previous = $lastDocument->QualityAssurance_by . ' ,' .Helpers::getdateFormat ($lastDocument->QualityAssurance_on);
+                            }
 
-    $history->action = 'CFT Review Complete';
-    $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
-    $history->comment = $request->comment;
-    $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
-    $history->user_name = Auth::user()->name;
-    $history->change_to = "Not Applicable";
-    $history->change_from = $lastDocument->status;
-    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    $history->origin_state = $lastDocument->status;
-    $history->stage = 'CFT Review';
+                            $history->action = 'CFT Review Complete';
+                            $history->current = $updateCFT->QualityAssurance_by . ',' .Helpers::getdateFormat ($updateCFT->QualityAssurance_on);
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id; // Use `id` instead of `name` for `user_id`
+                            $history->user_name = Auth::user()->name;
+                            $history->change_to = "Not Applicable";
+                            $history->change_from = $lastDocument->status;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'CFT Review';
 
-    if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
-        $history->action_name = 'New';
-    } else {
-        $history->action_name = 'Update';
-    }
+                            if (is_null($lastDocument->QualityAssurance_by) || $lastDocument->QualityAssurance_on == '') {
+                                $history->action_name = 'New';
+                            } else {
+                                $history->action_name = 'Update';
+                            }
 
-    $history->save();
-}
+                            $history->save();
+                        }
 
                         if($index == 2 && $cftUsers->$column == Auth::user()->name){
                             $updateCFT->Engineering_by = Auth::user()->name;
