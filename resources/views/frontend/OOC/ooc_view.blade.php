@@ -1178,7 +1178,21 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date
-                                            
+
+                                        @if($ooc->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
+                                        </label>
+                                        <p class="text-primary">Last date this record should be closed by</p>
+
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY"
+                                                value="{{ Helpers::getdateFormat($ooc->due_date) }}"
+                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }}  />
+                                            <input type="date" id="due_date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                value="{{ $ooc-
                                         @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif
@@ -1217,8 +1231,8 @@
                                 </script>
 
 
-                            {{-- 
-                                
+                            {{--
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="initiator-group">Initiation Department</label>
@@ -1287,7 +1301,7 @@
                                         <label for="Initiation Group Code">Initiation Department</label>
                                         <input type="text" name="initiator_group_code"
                                             value="{{ $ooc->Initiator_Group }}" id="initiator_group_code" readonly>
-                                        
+
                                     </div>
                                 </div>
 
@@ -1297,7 +1311,7 @@
                                         document.getElementById('initiator_group_code').value = selectedValue;
                                     });
                                 </script>
-                            
+
                             --}}
 
 
@@ -1305,7 +1319,7 @@
                                 <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Initiator Department</b></label>
-                                                <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
                                 </div>
@@ -1324,8 +1338,8 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="last_calibration_date">Last Calibration Date 
-                                            
+                                        <label for="last_calibration_date">Last Calibration Date
+
                                         @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif
@@ -1370,8 +1384,8 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Description">Short Description 
-                                            
+                                        <label for="Description">Short Description
+
                                         @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                         @endif
@@ -1394,7 +1408,7 @@
                                     @endif
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="details_of_ooc" id="repeat_nature_textarea" 
+                                    <textarea class="summernote" name="details_of_ooc" id="repeat_nature_textarea"
                                         {{ in_array($ooc->stage, [0, 9, 14]) ? 'disabled' : '' }}>{{ $ooc->details_of_ooc }}</textarea>
                                 </div>
                             </div>
@@ -1406,7 +1420,7 @@
                                     @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                     @endif
- 
+
                                     </label>
                                     <div><small class="text-primary">Please select related information</small></div>
                                     <select name="initiated_through" id="initiated_through"
@@ -1437,7 +1451,7 @@
                                     @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                     @endif
- 
+
                                     </b></label>
                                     <select id="is_repeat_ooc" name="is_repeat_ooc"
                                         class="stage-control" data-stage="{{ $ooc->stage }}" onchange="toggleRepeatNature()">
@@ -1525,7 +1539,7 @@
 
 
 
-                           
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -1567,7 +1581,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            HOD Person 
+                                            HOD Person
                                             @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                             @endif
@@ -1591,11 +1605,11 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            QA Person 
+                                            QA Person
                                          @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif
- 
+
                                         </label>
                                         <select id="qa_person" name="qa_assign_person"
                                             class="stage-control"
@@ -1616,7 +1630,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            OOC Logged by 
+                                            OOC Logged by
                                             @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif
@@ -1689,13 +1703,13 @@
 
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="ooc_due_date">OOC Logged On 
+                                        <label for="ooc_due_date">OOC Logged On
                                         @if($ooc->stage ==1)
                                             <span class="text-danger">*</span>
                                          @endif
 
                                         </label>
-                                      
+
                                         <div class="calenderauditee">
                                             <input type="text" id="ooc_due_date_display" readonly
                                                 placeholder="DD-MM-YYYY"
@@ -1705,7 +1719,7 @@
                                             <input type="date" id="ooc_due_date" name="ooc_due_date"
                                                 class="hide-input"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }} 
+                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }}
                                                 value="{{ $ooc->ooc_due_date }}"
                                                 oninput="handleDateInput(this, 'ooc_due_date_display')" />
                                         </div>
@@ -1745,7 +1759,7 @@
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                               
+
                                             </span>
                                         </label>
 
@@ -1812,7 +1826,7 @@
                                                     </tr>
                                                 @endforeach
                                             @else
-                                                
+
                                             @endif
 
                                             </tbody>
@@ -2220,10 +2234,10 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Analyst Remarks">Analyst Interview
-                                            
+
                                         @if($ooc->stage ==4)
                                             <span class="text-danger">*</span>
-                                         @endif   
+                                         @endif
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if
                                                 it does not require completion</small></div>
@@ -2264,7 +2278,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Root Cause identified 
+                                        <label for="Initiator Group">Root Cause identified
                                         @if($ooc->stage ==4)
                                             <span class="text-danger">*</span>
                                          @endif
@@ -2503,7 +2517,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 
+                                                            {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9
                                                                 ? 'disabled' : '' }}
                                                             type="file" id="attachments_stage_ooc"
                                                             name="attachments_stage_ooc[]"
@@ -2588,8 +2602,8 @@
                                                     id="summernote-1">{{ $ooc->initiated_through_capa_prevent_ooc }}</textarea>
                                             </div>
                                         </div>
-                                     
-                                       {{-- 
+
+                                       {{--
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
                                                 <label for="Corrective & Preventive Action">Corrective and Preventive
@@ -2605,7 +2619,7 @@
                                         --}}
                                         <div class="col-md-12 mb-3">
                                             <div class="group-input">
-                                                <label for="Cause for failure"> Phase IA Summary 
+                                                <label for="Cause for failure"> Phase IA Summary
                                                 @if($ooc->stage ==4)
                                                     <span class="text-danger">*</span>
                                                 @endif
@@ -2691,7 +2705,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 4 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 
+                                                <input {{ $ooc->stage == 0 || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 4 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9
                                                     || $ooc->stage == 14 ? 'disabled' : '' }}
                                                     type="file" id="attachments_hodIAHODPRIMARYREVIEW_ooc"
                                                     name="attachments_hodIAHODPRIMARYREVIEW_ooc[]"
@@ -2997,9 +3011,9 @@
                                                                                         </div>
                                                                                 </div>
                                                                             </div>
-                                                                            
-                                                                            
-                                                                            
+
+
+
 
 
 
@@ -3051,7 +3065,7 @@
                             @endif
                         </label>
 
-                        <select name="is_repeat_stageii_ooc" 
+                        <select name="is_repeat_stageii_ooc"
                             id="is_repeat_stageii_ooc"
                             class="form-control {{ $errors->has('is_repeat_stageii_ooc') ? 'is-invalid' : '' }}"
                             {{ $ooc->stage == 10 ? 'required' : '' }}>
@@ -3071,7 +3085,7 @@
                 <div class="col-lg-6">
                     <div class="group-input">
                         <label for="is_repeat_stage_instrument_ooc">Instrument is Out of Order</label>
-                        <select name="is_repeat_stage_instrument_ooc" 
+                        <select name="is_repeat_stage_instrument_ooc"
                             id="is_repeat_stage_instrument_ooc">
                             <option value=" ">-- Select --</option>
                             <option value="Yes" {{ $ooc->is_repeat_stage_instrument_ooc == 'Yes' ? 'selected' : '' }}>Yes</option>
@@ -3083,10 +3097,10 @@
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
                         let stage = {{ $ooc->stage }};
-                        
+
                         let serviceEngineerField = document.getElementById("is_repeat_stageii_ooc");
                         let instrumentField = document.getElementById("is_repeat_stage_instrument_ooc");
-                           
+
                         if (![10].includes(stage)) {  // Editable only in stage 10
                             serviceEngineerField.addEventListener("mousedown", function (event) {
                                 event.preventDefault();
@@ -3134,7 +3148,7 @@
 
                     <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="is_repeat_compiled_stageii_ooc">Proposed By 
+                            <label for="is_repeat_compiled_stageii_ooc">Proposed By
                                 @if ($ooc->stage == 10)
                                     <span class="text-danger">*</span>
                                 @endif
@@ -3189,10 +3203,10 @@
                         </div>
                     </div>
 
-                   
+
                         <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="compiled_by">Complied By 
+                                <label for="compiled_by">Complied By
                                     @if ($ooc->stage == 10)
                                         <span class="text-danger">*</span>
                                     @endif
@@ -3214,7 +3228,7 @@
                         <script>
                             document.addEventListener("DOMContentLoaded", function () {
                                 let stage = {{ $ooc->stage }};
-                                
+
                                 let proposedByField = document.getElementById("proposed_by");
                                 let compliedByField = document.getElementById("compiled_by");
 
@@ -3607,7 +3621,7 @@
 
                 <div class="col-lg-12">
                     <div class="group-input">
-                        <label for="is_repeat_realease_stageii_ooc">Release of Instrument for Usage 
+                        <label for="is_repeat_realease_stageii_ooc">Release of Instrument for Usage
                             @if ($ooc->stage == 13)
                                 <span class="text-danger">*</span>
                             @endif
@@ -3694,7 +3708,7 @@
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input {{ $ooc->stage == 0  || $ooc->stage == 1 || $ooc->stage == 2 || $ooc->stage == 3 || $ooc->stage == 5 || $ooc->stage == 6 || $ooc->stage == 7|| $ooc->stage == 9 || $ooc->stage == 11 || $ooc->stage == 12 ? 'disabled' : '' }} ||
-                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file" 
+                                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} type="file"
                                         id="Pib_attachements" name="Pib_attachements[]"
                                         oninput="addMultipleFiles(this, 'Pib_attachements')" multiple>
                                 </div>
@@ -3739,7 +3753,7 @@
 
                         <div class="group-input">
                             <label for="Initiator Group">Submit By : </label>
-                             <div class="date"> @if( $ooc->submitted_by ) {{$ooc->submitted_by }}  @else Not Applicable @endif </div> 
+                             <div class="date"> @if( $ooc->submitted_by ) {{$ooc->submitted_by }}  @else Not Applicable @endif </div>
                         </div>
                     </div>
 
@@ -3940,7 +3954,7 @@
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Assignable Cause Not Found Comment : </label>
                             <div class="date">@if( $ooc->correction_r_ncompleted_comment ) {{$ooc->correction_r_ncompleted_comment }} @else Not Applicable @endif</div>
-                            
+
                         </div>
                     </div>
                     <div class="sub-head col-lg-12">
@@ -3968,7 +3982,7 @@
 
                         </div>
                     </div>
-                    
+
 
                     <div class="sub-head col-lg-12">
                         Phase IB HOD Review Complete
@@ -4020,100 +4034,8 @@
                     <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IB QA Review Complete Comment : </label>
-                            <div class="date">@if( $ooc->Phase_IB_QA_Review_Complete_12_comment ) {{$ooc->Phase_IB_QA_Review_Complete_12_comment }}  @else Not Applicable @endif</div> 
-
-                        </div>
-                    </div>
-
-                    <div class="sub-head col-lg-12">
-                        Approved
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="group-input">
-                            <label for="Initiator Group">Approved By : </label>
-                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_by ) {{$ooc->P_IB_Assignable_Cause_Found_by }}  @else Not Applicable @endif</div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-4 new-date-data-field">
-                        <div class="group-input input-date">
-                            <label for="OOC Logged On">Approved On : </label>
-                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_on ) {{$ooc->P_IB_Assignable_Cause_Found_on }}  @else Not Applicable @endif</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 new-date-data-field">
-                        <div class="group-input input-date">
-                            <label for="closure_ooc_comment">Approved Comment : </label>
-                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_comment ) {{$ooc->P_IB_Assignable_Cause_Found_comment }}  @else Not Applicable @endif</div>
-
-                        </div>
-                    </div>
-                    <div class="sub-head col-lg-12">
-                        Cancel
-                    </div>
-                    <div class="col-lg-4">
-
-                        <div class="group-input">
-                            <label for="Initiator Group">Cancel By : </label>
-                            <div class="date">@if( $ooc->cancelled_by ) {{$ooc->cancelled_by }}  @else Not Applicable @endif </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 new-date-data-field">
-                        <div class="group-input input-date">
-                            <label for="OOC Logged On">Cancel On : </label>
-                            <div class="date">@if( $ooc->cancelled_on ) {{$ooc->cancelled_on }}  @else Not Applicable @endif </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 new-date-data-field">
-                        <div class="group-input input-date">
-                            <label for="comment">Cancel Comment : </label>
-                            <div class="date"> @if( $ooc->cancell_comment ) {{$ooc->cancell_comment }}  @else Not Applicable @endif </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="button-block">
-                    <button type="submit" class="saveButton"
-                        {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-
-                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
-                        </a> </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
-
-    </div>
-    </div>
-
-    <style>
-        #step-form>div {
-            display: none
-        }
-
-        #step-form>div:nth-child(1) {
-            display: block;
-        }
-    </style>
-
-    <script>
-        VirtualSelect.init({
-            ele: '#related_records, #hod'
-        });
-
-        function openCity(evt, cityName) {
-            var i, cctabcontent, cctablinks;
-            cctabcontent = document.getElementsByClassName("cctabcontent");
-            for (i = 0; i < cctabcontent.length; i++) {
-                cctabcontent[i].style.display = "none";
-            }
-            cctablinks = document.getElementsByClassName("cctablinks");
-            for (i = 0; i < cctablinks.length; i++) {
+                            <div class="date">@if( $ooc->Phase_IB_QA_Review_Complete_12_comment ) {{$ooc->Phase_IB_QA_Review_Complete_12_comment }}  @else Not Applicable @endif</div>
+; i < cctablinks.length; i++) {
                 cctablinks[i].className = cctablinks[i].className.replace(" active", "");
             }
             document.getElementById(cityName).style.display = "block";

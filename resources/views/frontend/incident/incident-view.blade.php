@@ -1117,7 +1117,7 @@
                                                 // Set the formatted due date value to the input field
                                                 document.getElementById('due_date').value = dueDateFormatted;
                                             </script>
-                                            
+
 
                                                 {{-- <div class="col-lg-6">
                                                     <div class="group-input">
@@ -1180,7 +1180,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="group-input">
                                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                                        <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                     </div>
                                                 </div>
@@ -1285,7 +1285,7 @@
     <div class="group-input input-date">
         <label for="short_description_required">Repeat Incident?<span class="text-danger">*</span></label>
         <select name="short_description_required"
-                id="short_description_required" 
+                id="short_description_required"
                 onchange="checkRecurring(this)"
                 {{-- value="{{ $data->short_description_required }}"  --}}
                 {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
@@ -1302,13 +1302,13 @@
 <div class="col-lg-6" id="nature_of_repeat_block"
     @if ($data->short_description_required != 'Yes') style="display: none" @endif>
     <div class="group-input">
-        <label for="nature_of_repeat">Repeat Nature 
-            <span id="asteriskInviRecurring" 
-                  style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}" 
+        <label for="nature_of_repeat">Repeat Nature
+            <span id="asteriskInviRecurring"
+                  style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
                   class="text-danger">*</span>
         </label>
         <textarea class="nature_of_repeat"
-                  name="nature_of_repeat" 
+                  name="nature_of_repeat"
                   id="nature_of_repeat"
                   {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->nature_of_repeat }}</textarea>
     </div>
