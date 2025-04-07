@@ -3143,7 +3143,7 @@
 
                             <tr>
                                 <th class="w-20">QA/CQA Final Assessment Comment </th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->qa_final_assement)
                                         {{ strip_tags($data->qa_final_assement) }}
                                     @else
@@ -3194,7 +3194,7 @@
 
                             <tr>
                                 <th class="w-20">QA/CQA Head/Designee Approval comment </th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->qa_head_designe_comment)
                                         {{ strip_tags($data->qa_head_designe_comment) }}
                                     @else
@@ -3234,31 +3234,7 @@
                             </table>
                         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- **************************INVESTIGATION TAB START******************************* -->
+                   <!-- **************************INVESTIGATION TAB START******************************* -->
 
                     <div class="block">
                         <div class="head">
@@ -3328,6 +3304,52 @@
                                     @endif
                                 </span>
                             </div>
+
+
+                            <div class="border-table" style="margin-bottom: 15px;">
+                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">Investigation
+                                    Team
+                                    And Responsibilities</div>
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-20">Sr.No.</th>
+                                        <th class="w-60">Investigation Team</th>
+                                         <th class="w-60">Designation & Department  </th>
+                                        <th class="w-60">Responsibility</th>
+                                        <th class="w-60">Remarks</th>
+
+                                    </tr>
+                                    <tbody>
+                                        @if ($investigation_data && is_array($investigation_data))
+                                            @php
+                                                $serialNumber = 1;
+                                                // Get all users and map them by id
+                                                $users = DB::table('users')->pluck('name', 'id')->all();
+                                            @endphp
+                                            @foreach ($investigation_data as $investigation_item)
+                                                <tr>
+                                                    <td class="w-20">{{ $serialNumber++ }}</td>
+                                                    <td class="w-20">
+                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : '' }}
+                                                    </td>
+
+                                                    <td class="w-20">{{ $investigation_item['desination_dept'] }}
+                                                    </td>
+
+                                                    <td class="w-20">{{ $investigation_item['responsibility'] }}
+                                                    </td>
+                                                    <td class="w-20">{{ $investigation_item['remarks'] }}</td>
+                                                 </tr>
+                                            @endforeach
+                                        @else
+                                        <tr>
+                                                                <td colspan="5">No  data available.</td>
+                                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+
                             {{-- <tr>
                                     <th class="w-20">Description of Event
                                     </th>
@@ -3494,63 +3516,8 @@
                                     @endif
                                 </span>
                             </div> --}}
-                            <div class="inner-block">
-                                <label class="Summer"
-                                    style="font-weight: bold; font-size: 13px; display: inline; width:5%">
-                                    Investigation Summary </label>
-                                <span style="font-size: 0.8rem; margin-left: 60px;">
-                                    @if ($data->Detail_Of_Root_Cause)
-                                        {{ $data->Detail_Of_Root_Cause }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </span>
-                            </div>
-
-                            <div class="border-table" style="margin-bottom: 15px;">
-                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">Investigation
-                                    Team
-                                    And Responsibilities</div>
-                                <table>
-                                    <tr class="table_bg">
-                                        <th class="w-20">Sr.No.</th>
-                                        <th class="w-60">Investigation Team</th>
-                                         <th class="w-60">Designation & Department  </th>
-                                        <th class="w-60">Responsibility</th>
-                                        <th class="w-60">Remarks</th>
-
-                                    </tr>
-                                    <tbody>
-                                        @if ($investigation_data && is_array($investigation_data))
-                                            @php
-                                                $serialNumber = 1;
-                                                // Get all users and map them by id
-                                                $users = DB::table('users')->pluck('name', 'id')->all();
-                                            @endphp
-                                            @foreach ($investigation_data as $investigation_item)
-                                                <tr>
-                                                    <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">
-                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : '' }}
-                                                    </td>
-
-                                                    <td class="w-20">{{ $investigation_item['desination_dept'] }}
-                                                    </td>
-
-                                                    <td class="w-20">{{ $investigation_item['responsibility'] }}
-                                                    </td>
-                                                    <td class="w-20">{{ $investigation_item['remarks'] }}</td>
-                                                 </tr>
-                                            @endforeach
-                                        @else
-                                        <tr>
-                                                                <td colspan="5">No  data available.</td>
-                                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-
+                           
+                           
                             {{-- <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Root Cause
@@ -4501,6 +4468,23 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div class="block-head">
+                        Root Cause
+                            </div>
+                        <div class="inner-block">
+                                <label class="Summer"
+                                    style="font-weight: bold; font-size: 13px; display: inline; width:5%">
+                                    Investigation Summary </label>
+                                <span style="font-size: 0.8rem; margin-left: 60px;">
+                                    @if ($data->Detail_Of_Root_Cause)
+                                        {{ $data->Detail_Of_Root_Cause }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </span>
+                            </div>
+
                         <div class="border-table">
                             <div class="block-head">
                                 Investigation Attachment
