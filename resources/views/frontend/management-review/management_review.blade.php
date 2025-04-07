@@ -544,7 +544,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" 
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select"
                                             @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Period</option>
                                             <option @if ($data->review_period_six_monthly == 'January to June') selected @endif value="January to June">
@@ -1083,12 +1083,13 @@
                       <div class="col-lg-12">
                         <div class="group-input">
                             <label for="assign_to">Invite Person Notify
-                            <span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span>
+                                @if($data->stage==2)
+                            <span class="text-danger ">*</span> @endif
                             </label>
 
                             <!-- Disabled select for stages not equal to 1 -->
-                            <select id="assign_to" name="assign_to[]" @if ($data->stage != 2) disabled @endif required multiple>
-                                <option value="">Select a value</option>
+                            <select id="assign_to" name="assign_to[]" @if ($data->stage != 2) disabled @endif  multiple>
+                                {{-- <option value="">Select a value</option> --}}
                                 @foreach ($users as $user)
                                     <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
                                         {{ $user->name }}
@@ -1407,7 +1408,7 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <h3 style="font-size: 15px; color: #333; margin-bottom: 20px">
                             <span style="font-weight: bold; color: red;">Note: </span>
-                            <span> Note: Please fill up both Meeting and summary Tab and CFT Tab value to save the form</span>
+                            <span> Please fill up both Meeting and summary Tab and CFT Tab value to save the form</span>
                         </h3>
                         <div class="inner-block-content">
                             <div class="row">
@@ -1536,7 +1537,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%">Sr.No.</th>
-                                                <th>Name of  Person</th>
+                                                <th>Name of Person</th>
                                                 <th>Designation</th>
                                                 <th>Department</th>
                                                 <th>Remarks</th>
@@ -1796,7 +1797,7 @@
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Production Tablet">Hod Production Tablet/Capsule/Powder Action Required ?
+                                            <label for="Production Tablet">Production Tablet/Capsule/Powder Action Required ?
                                                 <span class="text-danger">*</span></label>
                                             <select name="Production_Table_Review" id="Production_Table_Review"
                                                 @if ($data->stage == 4) disabled @endif>
@@ -1891,7 +1892,7 @@
                                     </div>
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet attachment">HOD Production Tablet/Capsule/Powder
+                                            <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
                                                 Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -1927,7 +1928,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">HOd Production Tablet/Capsule/Powder Action
+                                            <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Action
                                                 Completed
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
@@ -1958,7 +1959,7 @@
                                     </div> --}}
                                     <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">HOD Production Tablet/Capsule/Powder Action
+                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Action
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
@@ -5093,7 +5094,7 @@
                                 </div>
                                 <div class="col-lg-6 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Quality Assurance Person">HOD Quality Assurance Person <span
+                                        <label for="Quality Assurance Person">Quality Assurance HOD Person <span
                                                 id="asteriskQQA"
                                                 style="display: {{ $data1->Quality_Assurance_Review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
@@ -6896,7 +6897,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 other1_reviews">
+                                {{-- <div class="col-lg-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Department1">Other's 1 Department <span id="asteriskod1" class="text-danger">*</span></label>
                                         <select name="Other1_Department_person" id="Other1_Department_person" @if ($data->stage != 3) disabled @endif>
@@ -6912,6 +6913,17 @@
                                         @error('Other1_Department_person')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-12 other1_reviews">
+                                    <div class="group-input">
+                                        <label for="Department1">Other's 1 Department
+                                            <span id="asteriskod1" style="display: {{ $data1->Other1_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="text" name="Other1_Department_person" id="Other1_Department_person"
+                                          value="{{ old('Other1_Department_person', $data1->Other1_Department_person ?: '') }}"
+                                            @if ($data->stage != 3) readonly @endif>
                                     </div>
                                 </div>
 
@@ -7061,7 +7073,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other2_reviews">
+                                    {{-- <div class="col-lg-12 Other2_reviews">
                                         <div class="group-input">
                                             <label for="Department2">Other's 2 Department <span id="asteriskod2" class="text-danger">*</span></label>
                                             <select name="Other2_Department_person" id="Other2_Department_person" @if ($data->stage != 3) disabled @endif>
@@ -7075,8 +7087,16 @@
                                                 <input type="hidden" name="Other2_Department_person" value="{{ $data1->Other2_Department_person }}">
                                             @endif
                                         </div>
-                                    </div>
-
+                                    </div> --}}
+                                    <div class="col-lg-12 Other2_reviews">
+                                        <div class="group-input">
+                                            <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+    
+                                            <input type="text" name="Other2_Department_person" id="Other2_Department_person" 
+                                                    value="{{ old('Other2_Department_person', $data1->Other2_Department_person ? : '') }}"
+                                                    @if ($data->stage != 2) readonly @endif>
+                                        </div>
+                                </div>
                                     <div class="col-md-12 mb-3 Other2_reviews">
                                         <div class="group-input">
                                             <label for="Description of Action Item13">Description of Action Item (By Other's 2)</label>
@@ -7218,7 +7238,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other3_reviews">
+                                    {{-- <div class="col-lg-12 Other3_reviews">
                                         <div class="group-input">
                                             <label for="Department3">Other's 3 Department <span id="asteriskod3" class="text-danger">*</span></label>
                                             <select name="Other3_Department_person" id="Other3_Department_person" @if ($data->stage != 3) disabled @endif>
@@ -7231,6 +7251,16 @@
                                                 <!-- Hidden field to retain the value if select is disabled -->
                                                 <input type="hidden" name="Other3_Department_person" value="{{ $data1->Other3_Department_person }}">
                                             @endif
+                                        </div>
+                                    </div> --}}
+
+                                    <div class="col-lg-12 Other3_reviews">
+                                        <div class="group-input">
+                                            <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+    
+                                            <input type="text" name="Other3_Department_person" id="Other3_Department_person"
+                                                    value="{{ old('Other3_Department_person', $data1->Other3_Department_person  ? : '' ) }}"
+                                                    @if ($data->stage != 2) readonly @endif>
                                         </div>
                                     </div>
 
@@ -7375,7 +7405,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other4_reviews">
+                                    {{-- <div class="col-lg-12 Other4_reviews">
                                         <div class="group-input">
                                             <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
                                             <select name="Other4_Department_person" id="Other4_Department_person" @if ($data->stage != 3) disabled @endif>
@@ -7389,7 +7419,17 @@
                                                 <input type="hidden" name="Other4_Department_person" value="{{ $data1->Other4_Department_person }}">
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> --}}
+                                    <div class="col-lg-12 Other4_reviews">
+                                        <div class="group-input">
+                                             <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
+     
+                                             <input type="text" name="Other4_Department_person" id="Other4_Department_person"
+                                                     value="{{ old('Other4_Department_person', $data1->Other4_Department_person ? : '') }}"
+                                                 @if ($data->stage != 2) readonly @endif>
+     
+                                         </div>
+                                     </div>
 
                                     <div class="col-md-12 mb-3 Other4_reviews">
                                         <div class="group-input">
@@ -7532,7 +7572,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12 Other5_reviews">
+                                    {{-- <div class="col-lg-12 Other5_reviews">
                                         <div class="group-input">
                                             <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
                                             <select name="Other5_Department_person" id="Other5_Department_person" @if ($data->stage != 3) disabled @endif>
@@ -7546,7 +7586,17 @@
                                                 <input type="hidden" name="Other5_Department_person" value="{{ $data1->Other5_Department_person }}">
                                             @endif
                                         </div>
+                                    </div> --}}
+                                    <div class="col-lg-12 Other5_reviews">
+                                        <div class="group-input">
+                                            <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
+        
+                                            <input type="text" name="Other5_Department_person" id="Other5_Department_person"
+                                                    value="{{ old('Other5_Department_person', $data1->Other5_Department_person ? :'') }}"
+                                                    @if ($data->stage != 2) readonly @endif>
+                                        </div>
                                     </div>
+        
 
                                     <div class="col-md-12 mb-3 Other5_reviews">
                                         <div class="group-input">
@@ -7678,7 +7728,7 @@
 
                                 <div class="col-md-12 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet feedback">Production Tablet/Capsule/Powder HOD Person <span id="asteriskPT2"
+                                        <label for="Production Tablet feedback">HOD Production Tablet/Capsule/ Powder Review Comments <span id="asteriskPT2"
                                                 style="display: {{ $data1->Production_Table_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
@@ -7727,7 +7777,7 @@
 
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">HOD Production Tablet/Capsule Powder Review Completed By</label>
+                                        <label for="Production Tablet Completed By">HOD Production Tablet/Capsule/ Powder Review Completed By</label>
                                         <input readonly type="text" value="{{ $data5->hod_Production_Table_By }}"
                                             name="hod_Production_Table_By"{{ $data->stage == 0 || $data->stage == 7 ? 'readonly' : '' }}
                                             id="hod_Production_Table_By">
@@ -7737,8 +7787,7 @@
                                 </div>
                                 <div class="col-6 mb-3 productionTable new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Production Tablet Completed On">HOD Production Tablet/Capsule Powder Review
-                                            Completed On</label>
+                                        <label for="Production Tablet Completed On">HOD Production Tablet/Capsule/ Powder Review Completed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="hod_Production_Table_On" readonly
                                                 placeholder="DD-MMM-YYYY"
@@ -8202,8 +8251,7 @@
 
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development Status of Action Item">Research & Development HOD Person
-                                            Comments <span id="asteriskPT2"
+                                        <label for="Research Development Status of Action Item">Research & Development HOD Comments <span id="asteriskPT2"
                                                 style="display: {{ $data5->hod_ResearchDevelopment_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -13314,6 +13362,35 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
+        });
+    </script>
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            function setupPersonToDepartmentMapping(personSelectId, departmentInputId, usersData) {
+                let personSelect = document.getElementById(personSelectId);
+                let departmentInput = document.getElementById(departmentInputId);
+    
+                if (personSelect && departmentInput) {
+                    personSelect.addEventListener("change", function () {
+                        let selectedPerson = personSelect.value;
+                        departmentInput.value = usersData[selectedPerson] || ""; // Assign department or clear field
+                    });
+                }
+            }
+    
+            // Store user department data
+            let userDepartments = {
+                @foreach ($users as $user)
+                    "{{ $user->name }}": "{{ Helpers::getUsersDepartmentName($user->departmentid) }}",
+                @endforeach
+            };
+    
+            // Apply function to "Other's 1 Person" and "Other's 1 Department"
+            setupPersonToDepartmentMapping("Other1_person", "Other1_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other2_person", "Other2_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other3_person", "Other3_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other4_person", "Other4_Department_person", userDepartments);
+            setupPersonToDepartmentMapping("Other5_person", "Other5_Department_person", userDepartments);
         });
     </script>
 @endsection
