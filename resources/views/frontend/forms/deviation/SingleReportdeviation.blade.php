@@ -278,7 +278,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Initiation Department</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
                                 {{ $data->Initiator_Group }}
@@ -289,7 +289,7 @@
 
                     </tr>
                     <tr>
-                    <th class="w-20">Initiation Department Code</th>
+                    <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
@@ -419,6 +419,8 @@
                                 Not Applicable
                             @endif
                         </td>
+                        </tr>
+                        <tr>
                         <th class="w-20">Facility/ Equipment/ Instrument/ System Details Required?</th>
                         <td class="w-30">
                             @if ($data->Facility_Equipment)
@@ -429,6 +431,56 @@
                         </td>
 
                     </tr>
+
+                    </table>
+
+                   
+                            <div class="block">
+                            <div class="block-head">
+                                Facility/ Equipment/ Instrument/ System Details
+                            </div>
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-10">Sr. No.</th>
+                                        <th class="w-25">Related to</th>
+                                        <th class="w-25">Name & ID Number</th>
+                                        <th class="w-25">Remarks</th>
+                                    </tr>
+                                    @php
+                                        $idNumbers = !empty($grid_data->IDnumber) ? @unserialize($grid_data->IDnumber) : false;
+                                        $facilityNames = !empty($grid_data->facility_name) ? @unserialize($grid_data->facility_name) : false;
+                                        $remarks = !empty($grid_data->Remarks) ? @unserialize($grid_data->Remarks) : false;
+                                    @endphp
+                                    @if ($idNumbers && $facilityNames && $remarks)
+                                        @foreach ($idNumbers as $key => $dataDemo)
+                                            <tr>
+                                                <td class="w-15">{{ $loop->index + 1 }}</td>
+                                                <td class="w-15">
+                                                    {{ $facilityNames[$key] ?? 'Not Applicable' }}
+                                                </td>
+                                                <td class="w-15">
+                                                    {{ $idNumbers[$key] ?? 'Not Applicable' }}
+                                                </td>
+                                                <td class="w-15">
+                                                    {{ $remarks[$key] ?? 'Not Applicable' }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                            <td>Not Applicable</td>
+                                        </tr>
+                                    @endif
+                                </table>
+                            </div>
+                        </div>
+
+
+                    <table>
                     <tr>
 
                         <th class="w-20">Document Details Required?</th>
@@ -439,6 +491,52 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>  
+                    </table>
+
+                        <div class="block">
+                        <div class="block-head">
+                            Document Details
+                        </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-10">Sr. No.</th>
+                                    <th class="w-25">Document Name</th>
+                                    <th class="w-25">Document Number</th>
+                                    <th class="w-25">Remarks</th>
+
+                                </tr>
+                                @if (!empty($grid_data1->Number))
+                                    @foreach (unserialize($grid_data1->Number) as $key => $dataDemo)
+                                        <tr>
+                                            <td class="w-15">{{ $loop->index + 1 }}</td>
+                                            <td class="w-15">
+                                                {{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : 'Not Applicable' }}
+                                            </td>
+                                            <td class="w-15">
+                                                {{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : 'Not Applicable' }}
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+
+                                    </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div>
+                    <table>
+                    <tr>  
                         <th class="w-20">Product / Material Batch Details Required</th>
                         <td class="w-30">
                             @if ($data->Product_Details_Required)
@@ -450,6 +548,50 @@
 
 
                     </tr>
+
+                    </table>
+                    
+                        <div class="block">
+                        <div class="block-head">
+                        Product/ Material Batch Details 
+                        </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th class="w-10">Sr. No.</th>
+                                    <th class="w-25">Product /Material</th>
+                                    <th class="w-25">Stage</th>
+                                    <th class="w-25">Batch No /A.R.No.</th>
+
+                                </tr>
+                                @if (!empty($grid_data2->product_name))
+                                    @foreach (unserialize($grid_data2->product_name) as $key => $dataDemo)
+                                        <tr>
+                                            <td>
+                                                {{ $key + 1 }}</td>
+                                            <td>{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}
+                                            </td>
+                                            <td>
+                                                {{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}
+                                            </td>
+                                            <td>{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}
+                                            </td>
+
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+
+                                    </tr>
+                                @endif
+                            </table>
+                        </div>
+                    </div>
+                    <table>
                     <tr>
                     <th class="w-20"> Description of Deviation</th>
                         <td class="w-30" colspan="3">
@@ -650,133 +792,11 @@
 
 
 
-                <div class="block">
-                    <div class="block-head">
-                        Facility/ Equipment/ Instrument/ System Details
-                    </div>
-                    <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Related to</th>
-                                <th class="w-25">Name & ID Number</th>
-                                <th class="w-25">Remarks</th>
-                            </tr>
-                            @php
-                                $idNumbers = !empty($grid_data->IDnumber) ? @unserialize($grid_data->IDnumber) : false;
-                                $facilityNames = !empty($grid_data->facility_name) ? @unserialize($grid_data->facility_name) : false;
-                                $remarks = !empty($grid_data->Remarks) ? @unserialize($grid_data->Remarks) : false;
-                            @endphp
-                            @if ($idNumbers && $facilityNames && $remarks)
-                                @foreach ($idNumbers as $key => $dataDemo)
-                                    <tr>
-                                        <td class="w-15">{{ $loop->index + 1 }}</td>
-                                        <td class="w-15">
-                                            {{ $facilityNames[$key] ?? 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ $idNumbers[$key] ?? 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ $remarks[$key] ?? 'Not Applicable' }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
-                </div>
+              
 
-
-                <div class="block">
-                    <div class="block-head">
-                        Document Details
-                    </div>
-                    <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Document Name</th>
-                                <th class="w-25">Document Number</th>
-                                <th class="w-25">Remarks</th>
-
-                            </tr>
-                            @if (!empty($grid_data1->Number))
-                                @foreach (unserialize($grid_data1->Number) as $key => $dataDemo)
-                                    <tr>
-                                        <td class="w-15">{{ $loop->index + 1 }}</td>
-                                        <td class="w-15">
-                                            {{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : 'Not Applicable' }}
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
-                </div>
+                
                 {{-- ==================================new Added=================== --}}
-                <div class="block">
-                    <div class="block-head">
-                    Product/ Material Batch Details 
-                    </div>
-                    <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-10">Sr. No.</th>
-                                <th class="w-25">Product /Material</th>
-                                <th class="w-25">Stage</th>
-                                <th class="w-25">Batch No /A.R.No.</th>
-
-                            </tr>
-                            @if (!empty($grid_data2->product_name))
-                                @foreach (unserialize($grid_data2->product_name) as $key => $dataDemo)
-                                    <tr>
-                                        <td>
-                                            {{ $key + 1 }}</td>
-                                        <td>{{ isset(unserialize($grid_data2->product_name)[$key]) ? unserialize($grid_data2->product_name)[$key] : '' }}
-                                        </td>
-                                        <td>
-                                            {{ isset(unserialize($grid_data2->product_stage)[$key]) ? unserialize($grid_data2->product_stage)[$key] : '' }}
-                                        </td>
-                                        <td>{{ isset(unserialize($grid_data2->batch_no)[$key]) ? unserialize($grid_data2->batch_no)[$key] : '' }}
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
-                </div>
+                
 
                 <div class="border-table">
                     <div class="block-head">
@@ -785,7 +805,7 @@
                     <table>
 
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
                         @if ($data->initial_file)
@@ -831,11 +851,11 @@
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
-                            @if ($data->Audit_file)
-                                @foreach (json_decode($data->Audit_file) as $key => $file)
+                            @if ($data->hod_file_attachment)
+                                @foreach (json_decode($data->hod_file_attachment) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -964,7 +984,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Initial_attachment)
@@ -1078,7 +1098,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Production_Table_Attachment)
@@ -1190,7 +1210,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Production_Injection_Attachment)
@@ -1298,7 +1318,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->ResearchDevelopment_attachment)
@@ -1406,7 +1426,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Human_Resource_attachment)
@@ -1515,7 +1535,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->CorporateQualityAssurance_attachment)
@@ -1624,7 +1644,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Store_attachment)
@@ -1733,7 +1753,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Engineering_attachment)
@@ -1841,7 +1861,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->RegulatoryAffair_attachment)
@@ -1876,8 +1896,8 @@
                                     </th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Quality_Assurance)
-                                                {{ Ucfirst($data1->Quality_Assurance) }}
+                                            @if ($data1->Quality_Assurance_Review)
+                                                {{ Ucfirst($data1->Quality_Assurance_Review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -1950,7 +1970,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Quality_Assurance_attachment)
@@ -2059,7 +2079,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->ProductionLiquid_attachment)
@@ -2117,8 +2137,8 @@
                                     <th class="w-20">Impact Assessment (By Quality Control)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Quality_Control_attachment)
-                                                {{ $data1->Quality_Control_attachment }}
+                                            @if ($data1->Quality_Control_assessment)
+                                                {{ $data1->Quality_Control_assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2167,7 +2187,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Quality_Control_attachment)
@@ -2279,7 +2299,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Microbiology_attachment)
@@ -2389,7 +2409,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Environment_Health_Safety_attachment)
@@ -2499,7 +2519,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->ContractGiver_attachment)
@@ -2619,7 +2639,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Other1_attachment)
@@ -2737,7 +2757,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Other2_attachment)
@@ -2855,7 +2875,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Other3_attachment)
@@ -2973,7 +2993,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Other4_attachment)
@@ -3091,7 +3111,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data1->Other5_attachment)
@@ -3123,7 +3143,7 @@
 
                             <tr>
                                 <th class="w-20">QA/CQA Final Assessment Comment </th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->qa_final_assement)
                                         {{ strip_tags($data->qa_final_assement) }}
                                     @else
@@ -3141,7 +3161,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->qa_final_assement_attach)
@@ -3168,13 +3188,13 @@
 
                         <div class="block">
                         <div class="block-head">
-                        QA/CQA Head/Designee Approval comment
+                        QA/CQA Head/Designee Approval
                         </div>
                         <table>
 
                             <tr>
                                 <th class="w-20">QA/CQA Head/Designee Approval comment </th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     @if ($data->qa_head_designe_comment)
                                         {{ strip_tags($data->qa_head_designe_comment) }}
                                     @else
@@ -3193,7 +3213,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->qa_head_designee_attach)
@@ -3214,31 +3234,7 @@
                             </table>
                         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- **************************INVESTIGATION TAB START******************************* -->
+                   <!-- **************************INVESTIGATION TAB START******************************* -->
 
                     <div class="block">
                         <div class="head">
@@ -3308,6 +3304,52 @@
                                     @endif
                                 </span>
                             </div>
+
+
+                            <div class="border-table" style="margin-bottom: 15px;">
+                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">Investigation
+                                    Team
+                                    And Responsibilities</div>
+                                <table>
+                                    <tr class="table_bg">
+                                        <th class="w-20">Sr.No.</th>
+                                        <th class="w-60">Investigation Team</th>
+                                         <th class="w-60">Designation & Department  </th>
+                                        <th class="w-60">Responsibility</th>
+                                        <th class="w-60">Remarks</th>
+
+                                    </tr>
+                                    <tbody>
+                                        @if ($investigation_data && is_array($investigation_data))
+                                            @php
+                                                $serialNumber = 1;
+                                                // Get all users and map them by id
+                                                $users = DB::table('users')->pluck('name', 'id')->all();
+                                            @endphp
+                                            @foreach ($investigation_data as $investigation_item)
+                                                <tr>
+                                                    <td class="w-20">{{ $serialNumber++ }}</td>
+                                                    <td class="w-20">
+                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : '' }}
+                                                    </td>
+
+                                                    <td class="w-20">{{ $investigation_item['desination_dept'] }}
+                                                    </td>
+
+                                                    <td class="w-20">{{ $investigation_item['responsibility'] }}
+                                                    </td>
+                                                    <td class="w-20">{{ $investigation_item['remarks'] }}</td>
+                                                 </tr>
+                                            @endforeach
+                                        @else
+                                        <tr>
+                                                                <td colspan="5">No  data available.</td>
+                                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+
                             {{-- <tr>
                                     <th class="w-20">Description of Event
                                     </th>
@@ -3433,6 +3475,35 @@
 
                                 </tr>
                             </table>
+
+
+                            <div class="border-table">
+                            <div class="block-head">
+                            Other attachment
+                            </div>
+                            <table>
+
+                                <tr class="table_bg">
+                                    <th class="w-20">Sr.No.</th>
+                                    <th class="w-60">Attachment</th>
+                                </tr>
+                                @if ($data->other_attachment)
+                                    @foreach (json_decode($data->other_attachment) as $key => $file)
+                                        <tr>
+                                            <td class="w-20">{{ $key + 1 }}</td>
+                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td class="w-20">1</td>
+                                        <td class="w-20">Not Applicable</td>
+                                    </tr>
+                                @endif
+
+                            </table>
+                        </div>
                             {{-- <div class="inner-block">
                                 <label class="Summer"
                                     style="font-weight: bold; font-size: 13px; display: inline; width:5%">QA
@@ -3445,70 +3516,15 @@
                                     @endif
                                 </span>
                             </div> --}}
-                            <div class="inner-block">
-                                <label class="Summer"
-                                    style="font-weight: bold; font-size: 13px; display: inline; width:5%">
-                                    Investigation Summary </label>
-                                <span style="font-size: 0.8rem; margin-left: 60px;">
-                                    @if ($data->Detail_Of_Root_Cause)
-                                        {{ $data->Detail_Of_Root_Cause }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </span>
-                            </div>
-
-                            <div class="border-table" style="margin-bottom: 15px;">
-                                <div class="block-head" style="margin-bottom:5px; font-weight:bold;">Investigation
-                                    Team
-                                    And Responsibilities</div>
-                                <table>
-                                    <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
-                                        <th class="w-60">Investigation Team</th>
-                                         <th class="w-60">Designation & Department  </th>
-                                        <th class="w-60">Responsibility</th>
-                                        <th class="w-60">Remarks</th>
-
-                                    </tr>
-                                    <tbody>
-                                        @if ($investigation_data && is_array($investigation_data))
-                                            @php
-                                                $serialNumber = 1;
-                                                // Get all users and map them by id
-                                                $users = DB::table('users')->pluck('name', 'id')->all();
-                                            @endphp
-                                            @foreach ($investigation_data as $investigation_item)
-                                                <tr>
-                                                    <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">
-                                                        {{ isset($users[$investigation_item['teamMember']]) ? $users[$investigation_item['teamMember']] : '' }}
-                                                    </td>
-
-                                                    <td class="w-20">{{ $investigation_item['desination_dept'] }}
-                                                    </td>
-
-                                                    <td class="w-20">{{ $investigation_item['responsibility'] }}
-                                                    </td>
-                                                    <td class="w-20">{{ $investigation_item['remarks'] }}</td>
-                                                 </tr>
-                                            @endforeach
-                                        @else
-                                        <tr>
-                                                                <td colspan="5">No  data available.</td>
-                                                            </tr>
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-
+                           
+                           
                             {{-- <div class="border-table" style="margin-bottom: 15px;">
                                 <div class="block-head" style="margin-bottom:5px; font-weight:bold;">
                                     Root Cause
                                 </div>
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Root Cause Category</th>
                                         <th class="w-60">Root Cause Sub-Category</th>
                                         <th class="w-60">Others</th>
@@ -3557,7 +3573,7 @@
                                                 <table class="table table-bordered" id="risk-acceptance">
                                                     <thead>
                                                         <tr class="table_bg">
-                                                            <th style="width: 5%;">Row #</th>
+                                                            <th style="width: 5%;">Sr.No.</th>
                                                             <th style="width: 30%;">Type</th>
                                                             <th>Remarks</th>
                                                         </tr>
@@ -3778,33 +3794,7 @@
 
 
 
-                        <div class="border-table">
-                            <div class="block-head">
-                            Other attachment
-                            </div>
-                            <table>
-
-                                <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
-                                    <th class="w-60">Attachment</th>
-                                </tr>
-                                @if ($data->other_attachment)
-                                    @foreach (json_decode($data->other_attachment) as $key => $file)
-                                        <tr>
-                                            <td class="w-20">{{ $key + 1 }}</td>
-                                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                                    target="_blank"><b>{{ $file }}</b></a> </td>
-                                        </tr>
-                                    @endforeach
-                                @else
-                                    <tr>
-                                        <td class="w-20">1</td>
-                                        <td class="w-20">Not Applicable</td>
-                                    </tr>
-                                @endif
-
-                            </table>
-                        </div>
+                      
 
 
                             <div class="block-head">Failure Mode And Effect Analysis</div>
@@ -3812,7 +3802,7 @@
                             <table class="tableFMEA">
                                 <thead>
                                     <tr class="table_bg" style="text-align: center; vertical-align: middle; padding: 20px;">
-                                        <th class="thFMEA" rowspan="2">Row #</th>
+                                        <th class="thFMEA" rowspan="2">Sr.No</th>
                                         <th class="thFMEA" colspan="2">Risk Identification</th>
                                         <th class="thFMEA">Risk Analysis</th>
                                         <th class="thFMEA" colspan="4">Risk Evaluation</th>
@@ -3827,13 +3817,13 @@
                                     </tr>
                                     <tr class="table_bg">
                                         <th class="thFMEA">Activity</th>
-                                        <th class="thFMEA">Possible Risk/Failure</th>
+                                        <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
                                         <th class="thFMEA">Consequences of Risk/Potential Causes</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
                                         <th class="thFMEA">Risk Level(RPN)</th>
-                                        <th class="thFMEA">Control Measures</th>
+                                        <th class="thFMEA">	Control Measures recommended/ Risk mitigation proposed</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
@@ -4070,7 +4060,7 @@
 
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
@@ -4134,7 +4124,7 @@
                                 
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
@@ -4163,7 +4153,7 @@
                                 </div>
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
@@ -4192,7 +4182,7 @@
                                 </div>
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
@@ -4221,7 +4211,7 @@
                                 </div>
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
@@ -4249,7 +4239,7 @@
                                 </div>
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
@@ -4282,7 +4272,7 @@
                                 
                                 <table>
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Description</th>
                             </tr>
                             <tbody>
@@ -4376,7 +4366,7 @@
                                 </div>
                                 <table>
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Gap Category</th>
                                         <th class="w-60">Issues</th>
                                         <th class="w-60">Actions</th>
@@ -4478,6 +4468,23 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div class="block-head">
+                        Root Cause
+                            </div>
+                        <div class="inner-block">
+                                <label class="Summer"
+                                    style="font-weight: bold; font-size: 13px; display: inline; width:5%">
+                                    Investigation Summary </label>
+                                <span style="font-size: 0.8rem; margin-left: 60px;">
+                                    @if ($data->Detail_Of_Root_Cause)
+                                        {{ $data->Detail_Of_Root_Cause }}
+                                    @else
+                                        Not Applicable
+                                    @endif
+                                </span>
+                            </div>
+
                         <div class="border-table">
                             <div class="block-head">
                                 Investigation Attachment
@@ -4485,7 +4492,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->Investigation_attachment)
@@ -4512,7 +4519,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->Capa_attachment)
@@ -4540,18 +4547,7 @@
                                 QRM
                             </div>
 
-                            <table>
-                                <th class="w-20">Conclusion</th>
-                                <td class="w-30">
-                                    <div>
-                                        @if ($data->Conclusion)
-                                            {{ $data->Conclusion }}
-                                        @else
-                                            Not Applicable
-                                        @endif
-                                    </div>
-                                </td>
-                            </table>
+                            
                             {{-- <table>
                                 <tr>
                                     <th class="w-20">Proposed Due Date
@@ -4646,7 +4642,7 @@
                                 <table>
 
                                     <tr class="table_bg">
-                                        <th class="w-20">S.N.</th>
+                                        <th class="w-20">Sr.No.</th>
                                         <th class="w-60">Risk Assessment</th>
                                         <th class="w-60">Review Schedule</th>
                                         <th class="w-60">Actual Reviewed On</th>
@@ -4686,21 +4682,24 @@
                             <table class="tableFMEA">
                                 <thead>
                                     <tr class="table_bg">
-                                        <th class="thFMEA" rowspan="2">Row #</th>
+                                        <th class="thFMEA" rowspan="2">Sr.No.</th>
                                         <th class="thFMEA" colspan="2">Risk Identification</th>
-                                        <th class="thFMEA" rowspan="2">Risk Analysis</th>
-                                        <th class="thFMEA" colspan="3">Risk Evaluation</th>
-                                        <th class="thFMEA" rowspan="2">RPN</th>
-                                        <th class="thFMEA" colspan="2">Risk Control</th>
-                                        <th class="thFMEA" colspan="6">Risk Evaluation</th>
+                                        <th class="thFMEA" rowspan="1">Risk Analysis</th>
+                                        <th class="thFMEA" colspan="4">Risk Evaluation</th>
+                                        <!-- <th class="thFMEA" rowspan="2">RPN</th> -->
+                                        <th class="thFMEA" colspan="1">Risk Control</th>
+                                        <th class="thFMEA" colspan="7">Risk Evaluation</th>
                                         
                                     </tr>
                                     <tr class="table_bg">
                                         <th class="thFMEA">Activity</th>
-                                        <th class="thFMEA">Possible Risk/Failure</th>
+                                        <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
+                                        <th class="thFMEA">SConsequences of Risk/Potential Causes</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
+                                        <th class="thFMEA">Risk Level (RPN)</th>
+                                        
                                         <th class="thFMEA">Control Measures</th>
                                         <th class="thFMEA">Risk Level(RPN)</th>
                                         <th class="thFMEA">Severity (S)</th>
@@ -4744,7 +4743,18 @@
                         </div>
                         
                         
-                        
+                        <table>
+                                <th class="w-20">Conclusion</th>
+                                <td class="w-80">
+                                    <div>
+                                        @if ($data->Conclusion)
+                                            {{ $data->Conclusion }}
+                                        @else
+                                            Not Applicable
+                                        @endif
+                                    </div>
+                                </td>
+                         </table>
                         
                         
                         
@@ -4832,7 +4842,7 @@
                                     <table>
         
                                         <tr class="table_bg">
-                                            <th class="w-20">S.N.</th>
+                                            <th class="w-20">Sr.No.</th>
                                             <th class="w-60">Attachment</th>
                                         </tr>
                                         @if ($data->CAPA_Closure_attachment)
@@ -4971,7 +4981,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->Investigation_attachment)
@@ -4998,7 +5008,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->Capa_attachment)
@@ -5044,7 +5054,7 @@
                             <table>
 
                                 <tr class="table_bg">
-                                    <th class="w-20">S.N.</th>
+                                    <th class="w-20">Sr.No.</th>
                                     <th class="w-60">Attachment</th>
                                 </tr>
                                 @if ($data->QA_attachments)
@@ -5090,7 +5100,7 @@
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data->pending_attachment)
@@ -5135,7 +5145,7 @@
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data->hod_final_attachment)
@@ -5184,7 +5194,7 @@
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data->QA_attachments)
@@ -5204,7 +5214,7 @@
 
                         </table>
                     </div>
-                    <br>QA/CQA Implementation Verification
+                    <br>
                     <div class="block">
                         <div class="block-head">
                         Head QA/CQA / Designee Closure Approval
@@ -5271,7 +5281,7 @@
                         <table>
 
                             <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
+                                <th class="w-20">Sr.No.</th>
                                 <th class="w-60">Attachment</th>
                             </tr>
                             @if ($data->closure_attachment)
@@ -5372,13 +5382,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
-                        <td class="w-30">{{ $data->Approved_By ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->QA_head_approved_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Approved On</th>
-                        <td class="w-30">{{ $data->Approved_On ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->QA_head_approved_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved Comment</th>
-                        <td class="w-30">{{ $data->Approved_Comments ?? 'Not Applicable' }}</td>
+                        <td class="w-30">{{ $data->QA_head_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Update Completed By</th>
@@ -5390,15 +5400,27 @@
                         <th class="w-20">Initiator Update Completed Comment</th>
                         <td class="w-30">{{ $data->pending_initiator_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
+
+
                     <tr>
-                        <th class="w-20">Implementation Verification Complete By</th>
+                        <th class="w-20">HOD Final Review Complete By</th>
                         <td class="w-30">{{ $data->Hod_final_by ?? 'Not Applicable' }}</td>
-                        <th class="w-20">Implementation Verification Complete On</th>
+                        <th class="w-20">HOD Final Review Complete On</th>
                         <td class="w-30">{{ $data->Hod_final_on ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Implementation Verification Complete Comment</th>
+                        <th class="w-20">HOD Final Review Complete Comment</th>
                         <td class="w-30">{{ $data->Hod_final_comment ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Implementation Verification Complete By</th>
+                        <td class="w-30">{{ $data->QA_final_approved_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Implementation Verification Complete On</th>
+                        <td class="w-30">{{ $data->QA_final_approved_on ?? 'Not Applicable' }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Implementation Verification Complete Comment</th>
+                        <td class="w-30">{{ $data->QA_final_approved_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Closure Approved By</th>
