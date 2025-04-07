@@ -2427,7 +2427,7 @@
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Audit_file">
+                                                    <div disabled class="file-attachment-list" id="hod_file_attachment">
                                                         @if ($data->Audit_file)
                                                             @foreach (json_decode($data->Audit_file) as $file)
                                                                 <h6 class="file-container text-dark"
@@ -2450,7 +2450,7 @@
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             type="file" id="HOD_Attachments"
                                                             name="Audit_file[]"{{ $data->stage == 2 ? '' : 'disabled' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                            oninput="addMultipleFiles(this, 'hod_file_attachment')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2460,7 +2460,7 @@
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="Audit_file">
+                                                    <div disabled class="file-attachment-list" id="hod_file_attachment">
                                                         @if ($data->Audit_file)
                                                             @foreach (json_decode($data->Audit_file) as $file)
                                                                 <h6 class="file-container text-dark"
@@ -2483,7 +2483,7 @@
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             type="file" id="HOD_Attachments"
                                                             name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                            oninput="addMultipleFiles(this, 'Audit_file')" multiple>
+                                                            oninput="addMultipleFiles(this, 'hod_file_attachment')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
