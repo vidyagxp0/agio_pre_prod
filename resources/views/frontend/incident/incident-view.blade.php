@@ -1117,7 +1117,7 @@
                                                 // Set the formatted due date value to the input field
                                                 document.getElementById('due_date').value = dueDateFormatted;
                                             </script>
-                                            
+
 
                                                 {{-- <div class="col-lg-6">
                                                     <div class="group-input">
@@ -1180,7 +1180,7 @@
                                                 <div class="col-lg-6">
                                                     <div class="group-input">
                                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                                        <input readonly type="text" name="Initiator_Group" id="initiator_group" 
+                                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                     </div>
                                                 </div>
@@ -1285,7 +1285,7 @@
     <div class="group-input input-date">
         <label for="short_description_required">Repeat Incident?<span class="text-danger">*</span></label>
         <select name="short_description_required"
-                id="short_description_required" 
+                id="short_description_required"
                 onchange="checkRecurring(this)"
                 {{-- value="{{ $data->short_description_required }}"  --}}
                 {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>
@@ -1302,13 +1302,13 @@
 <div class="col-lg-6" id="nature_of_repeat_block"
     @if ($data->short_description_required != 'Yes') style="display: none" @endif>
     <div class="group-input">
-        <label for="nature_of_repeat">Repeat Nature 
-            <span id="asteriskInviRecurring" 
-                  style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}" 
+        <label for="nature_of_repeat">Repeat Nature
+            <span id="asteriskInviRecurring"
+                  style="display: {{ $data->short_description_required == 'Yes' ? 'inline' : 'none' }}"
                   class="text-danger">*</span>
         </label>
         <textarea class="nature_of_repeat"
-                  name="nature_of_repeat" 
+                  name="nature_of_repeat"
                   id="nature_of_repeat"
                   {{ $data->stage == 0 || $data->stage == 9 ? 'readonly' : '' }}>{{ $data->nature_of_repeat }}</textarea>
     </div>
@@ -2086,7 +2086,7 @@
                                             </div>
 
 
-                                            <div class="col-md-12">
+                                            {{-- <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Description of Incident <span
                                                             class="text-danger">*</span></label>
@@ -2098,7 +2098,34 @@
                                                 @error('Description_incident')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
+                                            </div> --}}
+                                            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="Description Incident">Description of Incident <span
+                                                            class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                            does not require completion</small></div>
+                                                    <textarea   name="Description_incident"
+                                                        id="editor" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
+                                                </div>
+                                                @error('Description_incident')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
+                                            <style>
+                                                .ck.ck-editor_editable_inline[dir=ltr]{
+                                                    height: 350px;
+                                                }
+                                            </style>
+                                            <script>
+                                                ClassicEditor
+                                                    .create(document.querySelector('#editor'))
+                                                    .catch(error => {
+                                                        console.error(error);
+                                                    });
+                                            </script>
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Investigation <span

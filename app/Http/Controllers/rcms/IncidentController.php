@@ -2394,7 +2394,7 @@ class IncidentController extends Controller
             $validator = Validator::make($request->all(), [
                 'Initiator_Group' => 'required',
                 'short_description' => 'required',
-              
+
                 'incident_date' => 'required',
                 'incident_time' => 'required',
                 'incident_reported_date' => 'required',
@@ -2501,7 +2501,7 @@ class IncidentController extends Controller
                 //     },
                 // ],
             ], [
-                
+
                 'audit_type' => 'Incident related to field required!'
             ]);
 
@@ -6798,8 +6798,8 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                 if ($incident->stage == 1) {
 
 
-                    
-                if (empty($incident->short_description) || empty($incident->short_description_required) || empty($incident->incident_date) || empty($incident->incident_time) || empty($incident->Facility) || empty($incident->incident_reported_date) || 
+
+                if (empty($incident->short_description) || empty($incident->short_description_required) || empty($incident->incident_date) || empty($incident->incident_time) || empty($incident->Facility) || empty($incident->incident_reported_date) ||
                     empty($incident->audit_type) || empty($incident->Facility_Equipment) || empty($incident->Document_Details_Required) || empty($incident->Product_Details_Required) || empty($incident->Description_incident) || empty($incident->investigation) || empty($incident->immediate_correction)) {
                         // Flash message for warning (field not filled)
                         Session::flash('swal', [
@@ -6807,7 +6807,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'message' => 'Mandatory Fields! to be filled!',
                             'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         // Flash message for success (when the form is filled correctly)
@@ -6911,7 +6911,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'message' => 'Mandatory Fields! to be filled!',
                             'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         // Flash message for success (when the form is filled correctly)
@@ -6921,7 +6921,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'type' => 'success',
                         ]);
                     }
-                    
+
 
 
 
@@ -7022,7 +7022,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'message' => 'Mandatory Fields! to be filled!',
                             'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         // Flash message for success (when the form is filled correctly)
@@ -7251,7 +7251,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'message' => 'Mandatory Fields! to be filled!',
                             'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         // Flash message for success (when the form is filled correctly)
@@ -7262,7 +7262,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                         ]);
                     }
 
-                    
+
 
 
 
@@ -7801,7 +7801,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                             'message' => 'Mandatory Fields! to be filled!',
                             'type' => 'warning',  // Type can be success, error, warning, info, etc.
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         // Flash message for success (when the form is filled correctly)
@@ -7813,7 +7813,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
                     }
 
 
-                    
+
 
 
                     $extension = Extension::where('parent_id', $incident->id)->first();
@@ -8559,7 +8559,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('Failure Investigation' . $id . '.pdf');
+            return $pdf->stream('Incident' . $id . '.pdf');
         }
     }
 
