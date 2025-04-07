@@ -457,8 +457,8 @@
                             'selected' : '' }}>Packing Material</option>
                         <option value="Finished Product"{{ $data->sample_type_gi == 'Finished Product' ?
                             'selected' : '' }}>Finished Product</option>
-                        <option value="Satbility Sample"{{ $data->sample_type_gi == 'Satbility Sample' ?
-                            'selected' : '' }}>Satbility Sample</option>
+                        <option value="Stability Sample"{{ $data->sample_type_gi == 'Stability Sample' ?
+                            'selected' : '' }}>Stability Sample</option>
                         <option value="Others"{{ $data->sample_type_gi == 'Others' ?
                             'selected' : '' }}>Others</option>
                     </select>
