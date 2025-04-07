@@ -1192,20 +1192,6 @@
                                                 {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }}  />
                                             <input type="date" id="due_date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                value="{{ $ooc-
-                                        @if($ooc->stage ==1)
-                                            <span class="text-danger">*</span>
-                                         @endif
-                                        </label>
-                                        <p class="text-primary">Last date this record should be closed by</p>
-
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date_display" readonly placeholder="DD-MM-YYYY"
-                                                value="{{ Helpers::getdateFormat($ooc->due_date) }}"
-                                                {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
-                                                {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }} {{ $ooc->stage == 1 ? '' : 'readonly' }}  />
-                                            <input type="date" id="due_date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 value="{{ $ooc->due_date }}"
                                                 oninput="handleDateInput(this, 'due_date_display')"
                                                 {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
@@ -4035,7 +4021,99 @@
                         <div class="group-input input-date">
                             <label for="closure_ooc_comment">Phase IB QA Review Complete Comment : </label>
                             <div class="date">@if( $ooc->Phase_IB_QA_Review_Complete_12_comment ) {{$ooc->Phase_IB_QA_Review_Complete_12_comment }}  @else Not Applicable @endif</div>
-; i < cctablinks.length; i++) {
+
+                        </div>
+                    </div>
+
+                    <div class="sub-head col-lg-12">
+                        Approved
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Initiator Group">Approved By : </label>
+                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_by ) {{$ooc->P_IB_Assignable_Cause_Found_by }}  @else Not Applicable @endif</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="OOC Logged On">Approved On : </label>
+                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_on ) {{$ooc->P_IB_Assignable_Cause_Found_on }}  @else Not Applicable @endif</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="closure_ooc_comment">Approved Comment : </label>
+                            <div class="date">@if( $ooc->P_IB_Assignable_Cause_Found_comment ) {{$ooc->P_IB_Assignable_Cause_Found_comment }}  @else Not Applicable @endif</div>
+
+                        </div>
+                    </div>
+                    <div class="sub-head col-lg-12">
+                        Cancel
+                    </div>
+                    <div class="col-lg-4">
+
+                        <div class="group-input">
+                            <label for="Initiator Group">Cancel By : </label>
+                            <div class="date">@if( $ooc->cancelled_by ) {{$ooc->cancelled_by }}  @else Not Applicable @endif </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="OOC Logged On">Cancel On : </label>
+                            <div class="date">@if( $ooc->cancelled_on ) {{$ooc->cancelled_on }}  @else Not Applicable @endif </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="comment">Cancel Comment : </label>
+                            <div class="date"> @if( $ooc->cancell_comment ) {{$ooc->cancell_comment }}  @else Not Applicable @endif </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="button-block">
+                    <button type="submit" class="saveButton"
+                        {{ $ooc->stage == 0 || $ooc->stage == 9 ? 'disabled' : '' }} ||
+                        {{ $ooc->stage == 0 || $ooc->stage == 14 ? 'disabled' : '' }}>Save</button>
+                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+
+                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                        </a> </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+
+    </div>
+    </div>
+
+    <style>
+        #step-form>div {
+            display: none
+        }
+
+        #step-form>div:nth-child(1) {
+            display: block;
+        }
+    </style>
+
+    <script>
+        VirtualSelect.init({
+            ele: '#related_records, #hod'
+        });
+
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
                 cctablinks[i].className = cctablinks[i].className.replace(" active", "");
             }
             document.getElementById(cityName).style.display = "block";
