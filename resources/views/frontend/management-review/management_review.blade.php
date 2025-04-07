@@ -544,7 +544,7 @@
                                                 <span class="text-danger">*</span>
                                             @endif
                                         </label>
-                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select" 
+                                        <select name="review_period_six_monthly" id="review_period_six_monthly_select"
                                             @if ($data->stage != 1) disabled @endif>
                                             <option value="">Select Period</option>
                                             <option @if ($data->review_period_six_monthly == 'January to June') selected @endif value="January to June">
@@ -1083,12 +1083,13 @@
                       <div class="col-lg-12">
                         <div class="group-input">
                             <label for="assign_to">Invite Person Notify
-                            <span class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span>
+                                @if($data->stage==2)
+                            <span class="text-danger ">*</span> @endif
                             </label>
 
                             <!-- Disabled select for stages not equal to 1 -->
-                            <select id="assign_to" name="assign_to[]" @if ($data->stage != 2) disabled @endif required multiple>
-                                <option value="">Select a value</option>
+                            <select id="assign_to" name="assign_to[]" @if ($data->stage != 2) disabled @endif  multiple>
+                                {{-- <option value="">Select a value</option> --}}
                                 @foreach ($users as $user)
                                     <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
                                         {{ $user->name }}
@@ -1407,7 +1408,7 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <h3 style="font-size: 15px; color: #333; margin-bottom: 20px">
                             <span style="font-weight: bold; color: red;">Note: </span>
-                            <span> Note: Please fill up both Meeting and summary Tab and CFT Tab value to save the form</span>
+                            <span> Please fill up both Meeting and summary Tab and CFT Tab value to save the form</span>
                         </h3>
                         <div class="inner-block-content">
                             <div class="row">
@@ -1536,7 +1537,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width:5%">Sr.No.</th>
-                                                <th>Name of  Person</th>
+                                                <th>Name of Person</th>
                                                 <th>Designation</th>
                                                 <th>Department</th>
                                                 <th>Remarks</th>
@@ -1796,7 +1797,7 @@
                                 @if ($data->stage == 3 || $data->stage == 4)
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Production Tablet">Hod Production Tablet/Capsule/Powder Action Required ?
+                                            <label for="Production Tablet">Production Tablet/Capsule/Powder Action Required ?
                                                 <span class="text-danger">*</span></label>
                                             <select name="Production_Table_Review" id="Production_Table_Review"
                                                 @if ($data->stage == 4) disabled @endif>
@@ -1891,7 +1892,7 @@
                                     </div>
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet attachment">HOD Production Tablet/Capsule/Powder
+                                            <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
                                                 Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -1927,7 +1928,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">HOd Production Tablet/Capsule/Powder Action
+                                            <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Action
                                                 Completed
                                                 By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
@@ -1958,7 +1959,7 @@
                                     </div> --}}
                                     <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">HOD Production Tablet/Capsule/Powder Action
+                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Action
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
@@ -5093,7 +5094,7 @@
                                 </div>
                                 <div class="col-lg-6 quality_assurance">
                                     <div class="group-input">
-                                        <label for="Quality Assurance Person">HOD Quality Assurance Person <span
+                                        <label for="Quality Assurance Person">Quality Assurance HOD Person <span
                                                 id="asteriskQQA"
                                                 style="display: {{ $data1->Quality_Assurance_Review == 'Yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
