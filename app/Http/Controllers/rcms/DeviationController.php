@@ -334,18 +334,18 @@ class DeviationController extends Controller
                                                             }
                                                         }
 
-        if (!empty ($request->Audit_file)) {
+        if (!empty ($request->hod_file_attachment)) {
             $files = [];
-            if ($request->hasfile('Audit_file')) {
-                foreach ($request->file('Audit_file') as $file) {
-                    $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('hod_file_attachment')) {
+                foreach ($request->file('hod_file_attachment') as $file) {
+                    $name = $request->name . 'hod_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
 
 
-            $deviation->Audit_file = json_encode($files);
+            $deviation->hod_file_attachment = json_encode($files);
         }
          if (!empty ($request->pending_attachment)) {
             $files = [];
@@ -3086,26 +3086,26 @@ $data8->save();
 }
 
 
-        if (!empty ($request->Audit_file)) {
+        if (!empty ($request->hod_file_attachment)) {
 
             $files = [];
 
-            if ($deviation->Audit_file) {
-                $existingFiles = json_decode($deviation->Audit_file, true); // Convert to associative array
+            if ($deviation->hod_file_attachment) {
+                $existingFiles = json_decode($deviation->hod_file_attachment, true); // Convert to associative array
                 if (is_array($existingFiles)) {
                     $files = $existingFiles;
                 }
-                // $files = is_array(json_decode($deviation->Audit_file)) ? $deviation->Audit_file : [];
+                // $files = is_array(json_decode($deviation->hod_file_attachment)) ? $deviation->hod_file_attachment : [];
             }
 
-            if ($request->hasfile('Audit_file')) {
-                foreach ($request->file('Audit_file') as $file) {
-                    $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('hod_file_attachment')) {
+                foreach ($request->file('hod_file_attachment') as $file) {
+                    $name = $request->name . 'hod_file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $deviation->Audit_file = json_encode($files);
+            $deviation->hod_file_attachment = json_encode($files);
         }
           if (!empty ($request->pending_attachment)) {
 
@@ -4586,15 +4586,15 @@ $newDataGridFishbone->save();
             $history->action_name=$lastDeviationAuditTrail ? "Update" : "New";
             $history->save();
         }
-           if ($lastDeviation->Audit_file != $deviation->Audit_file || !empty ($request->comment)) {
+           if ($lastDeviation->hod_file_attachment != $deviation->hod_file_attachment || !empty ($request->comment)) {
             $lastDeviationAuditTrail = DeviationAuditTrail::where('deviation_id', $deviation->id)
                             ->where('activity_type', 'HOD Attachments')
                             ->exists();
             $history = new DeviationAuditTrail;
             $history->deviation_id = $id;
             $history->activity_type = 'HOD Attachments';
-             $history->previous = $lastDeviation->Audit_file;
-            $history->current = $deviation->Audit_file;
+             $history->previous = $lastDeviation->hod_file_attachment;
+            $history->current = $deviation->hod_file_attachment;
             $history->comment = $deviation->submit_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
