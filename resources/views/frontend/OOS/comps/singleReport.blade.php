@@ -281,10 +281,10 @@
                     <div class="block">
                     <table>
                     <tr>
-                        <th class="w-20">Initiation Department Group</th>
+                        <th class="w-20">Initiator Department</th>
                         <td class="w-30">
-                            @if(Helpers::getFullDepartmentName($data->initiator_group))
-                                {{ Helpers::getFullDepartmentName($data->initiator_group) }}
+                            @if($data->initiator_group)
+                                {{ $data->initiator_group }}
                             @else
                                 Not Applicable
                             @endif
@@ -774,10 +774,17 @@
            <!-- Preliminary Lab. Investigation TapII -->
             <div class="block">
                 <div class="block-head">Phase IA Investigation</div>
-                <div class = "inner-block">
+                <div class="inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Workbench Evaluation</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->Comments_plidata ){{ $data->Comments_plidata }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        @if($data->Comments_plidata)
+                            {{ strip_tags($data->Comments_plidata) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </span>
                 </div>
+
 
 
                 <div class="inner-block">
@@ -1206,7 +1213,13 @@
 
                 <div class = "inner-block">
                     <label class="summer" style="font-weight: bold; font-size:13px; display:inline;">Proposal For Phase IB hypothesis</label>
-                    <span style="font-size:0.8rem; margin-left:10px">@if($data->proposal_for_hypothesis_IB ){{ $data->proposal_for_hypothesis_IB }} @else Not Applicable @endif</span>
+                    <span style="font-size:0.8rem; margin-left:10px">
+                        @if($data->proposal_for_hypothesis_IB)
+                            {{ is_array($data->proposal_for_hypothesis_IB) ? implode(', ', $data->proposal_for_hypothesis_IB) : $data->proposal_for_hypothesis_IB }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </span>
                 </div>
 
 
