@@ -1080,34 +1080,50 @@
                             @php
                             $assignedUsers = !empty($data->assign_to) ? explode(',', $data->assign_to) : [];
                         @endphp
-                      <div class="col-lg-12">
-                        <div class="group-input">
-                            <label for="assign_to">Invite Person Notify
-                                    <span class="text-danger">*</span>
-                            </label>
 
-                            <!-- Disabled select for stages not equal to 1 -->
-                            <select id="assign_to" name="assign_to[]" @if ($data->stage != 2) disabled @endif required multiple>
-                                <option value="">Select a value</option>
-                                @foreach ($users as $user)
-                                    <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
-                                        {{ $user->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="assign_to">Invite Person Notify <span class="text-danger">*</span></label>
 
-                            @if ($data->stage != 2)
-                                <!-- Hidden fields to retain selected values when select is disabled -->
-                                @foreach ($assignedUsers as $assignedUser)
-                                    <input type="hidden" name="assign_to[]" value="{{ $assignedUser }}">
-                                @endforeach
-                            @endif
+                                <select id="assign_to" name="assign_to[]"
+                                    @if ($data->stage == 2) @else disabled @endif
+                                    multiple class="form-control">
+                                    <option value="">Select a value</option>
+                                    @foreach ($users as $user)
+                                        <option value="{{ $user->name }}" {{ in_array($user->name, $assignedUsers) ? 'selected' : '' }}>
+                                            {{ $user->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
 
-                            @error('assign_to')
-                                <p class="text-danger">{{ $message }}</p>
-                            @enderror
+                                @if ($data->stage != 2)
+                                    @foreach ($assignedUsers as $assignedUser)
+                                        <input type="hidden" name="assign_to[]" value="{{ $assignedUser }}">
+                                    @endforeach
+                                @endif
+                            </div>
                         </div>
-                    </div>
+
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                const form = document.getElementById('assignForm');
+                                const select = document.getElementById('assign_to');
+
+                                form.addEventListener('submit', function (e) {
+                                    if (!select.disabled) {
+                                        const selected = [...select.options].filter(option => option.selected);
+                                        if (selected.length === 0) {
+                                            e.preventDefault();
+                                            alert('Please select at least one person to notify.');
+                                        }
+                                    }
+                                });
+                            });
+                        </script>
+
+
+
 
                             {{-- <div class="col-12">
                                 <div class="group-input">
