@@ -317,7 +317,7 @@
 
                     <tr>
 
-                        <th class="w-20">Complaint</th>
+                        <th class="w-20">Complainant</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
                        
                         <th class="w-20">Complaint Reported On</th>
@@ -334,18 +334,23 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Product Details Part 1
+                    Product Details 
                 </div>
 
 
                
                 <table>
                     <tr class="table_bg">
-                        <th class="w-10">Row #</th>
+                        <th class="w-10">Sr.No.</th>
                         <th class="w-20">Product Name</th>
                         <th class="w-10">Batch No.</th>
                         <th class="w-10">Mfg. Date</th>
                         <th class="w-10">Exp. Date</th>
+
+                        <th class="w-10">Batch Size</th>
+                        <th class="w-10">Pack Size</th>
+                        <th class="w-10">Dispatch Quantity</th>
+                        <th class="w-10">Remarks</th>
                     </tr>
 
                     <tbody>
@@ -373,6 +378,20 @@
                                     </td>
 
 
+                                    <td class="w-20">
+                                        {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }}
+                                    </td>
+
+                                    <td class="w-20">
+                                        {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }}
+                                    </td>
+
+                                    <td class="w-20">
+                                        {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }}
+                                    </td>
                                     {{-- <td class="w-15">{{ $data->detail && unserialize($data->detail->info_product_name)[$key] ?  unserialize($data->detail->info_product_name)[$key]: "Not Applicable"}}</td>
                                        <td class="w-15">{{ $data->detail && unserialize($data->detail->info_batch_no)[$key] ?  unserialize($data->detail->info_batch_no)[$key]: "Not Applicable"}}</td>
                                        <td class="w-15">{{ $data->detail && unserialize($data->detail->info_mfg_date)[$key] ?  unserialize($data->detail->info_mfg_date)[$key]: "Not Applicable"}}</td>
@@ -381,13 +400,9 @@
                                 </tr>
                             @endforeach
                         @else
-                            <tr>
+                        <tr>
                                 <td>1</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-
+                                <td colspan="8">Not Applicable</td>
                             </tr>
                         @endif
                     </tbody>
@@ -404,7 +419,7 @@
 
                 <table>
                     <tr class="table_bg">
-                        <th>Row #</th>
+                        <th>Sr.No.</th>
                         <th class="w-10">Product Name</th>
                         <th class="w-20">Batch No.</th>
                         <th class="10">Manufacturing Location</th>
@@ -461,12 +476,12 @@
                     
                         
                     <th class="w-20">Is Repeat</th>
-                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ ucfirst($data->is_repeat_gi ?? 'Not Applicable') }}</td>
 
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-80" colspan="5">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
                     </tr>
                    
 
@@ -542,49 +557,50 @@
             
             <div class="border-table">
                 <div class="block-head">
-                    Product Details Part 2
+                    Product Details 
                 </div>
 
                 <table>
                     <tr class="table_bg">
-                        <th>Row #</th>
+                        <th>Sr. No.</th>
+                        <th class="w-10">Product Name</th>
+                        <th class="w-10">Batch No.</th>
+                        <th class="w-10">Mfg. Date</th>
+                        <th class="w-10">Exp. Date</th>
                         <th class="w-10">Batch Size</th>
-                        <th class="w-20">Pack Size</th>
-                        <th class="10">Dispatch Quantity</th>
-                        <th class="w-5">Remarks</th>
-                        {{-- <th class="w-5">Action</th> --}}
+                        <th class="w-10">Pack Size</th>
+                        <th class="w-10">Dispatch Quantity</th>
+                        <th class="w-10">Remarks</th>
                     </tr>
 
                     <tbody>
                         @php $productsdetails = 1; @endphp
-                        @if (!empty($prductgigrid) && is_array($prductgigrid->data))
 
-                            @foreach ($prductgigrid->data as $index => $detail)
+                        @if (!empty($marketrproducts) && is_array($marketrproducts->data))
+                            @foreach ($marketrproducts->data as $index => $detaildata)
                                 <tr>
                                     <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }} </td>
-                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+                                    <td class="w-20">{{ $detaildata['product_name_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['batch_no_pmd_ca'] ?? '' }}</td>
 
+                                    <td class="w-20">
+                                        {{ !empty($detaildata['mfg_date_pmd_ca_text']) ? \Carbon\Carbon::parse($detaildata['mfg_date_pmd_ca_text'])->format('j M Y') : '' }}
+                                    </td>
+
+                                    <td class="w-20">
+                                        {{ !empty($detaildata['expiry_date_pmd_ca_text']) ? \Carbon\Carbon::parse($detaildata['expiry_date_pmd_ca_text'])->format('j M Y') : '' }}
+                                    </td>
+
+                                    <td class="w-20">{{ $detaildata['batch_size_pmd_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['pack_profile_pmd_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['released_quantity_pmd_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['remarks_ca'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td>1</td>
-
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                {{-- <td>Not Applicable</td> --}}
-
+                                <td colspan="8">Not Applicable</td>
                             </tr>
                         @endif
                     </tbody>
@@ -668,35 +684,35 @@
                             <tr>
                                 <td class="text-center">1</td>
                                 <td>Complaint Sample Required</td>
-                                <td>{{ $proposalData['Complaint sample Required']['csr3'] ?? 'N/A' }}</td>
+                                <td>{{ucfirst( $proposalData['Complaint sample Required']['csr3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Complaint sample Required']['csr2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">2</td>
                                 <td>Additional Info. From Complaint</td>
-                                <td>{{ $proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A' }}</td>
+                                <td>{{ ucfirst($proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">3</td>
                                 <td>Analysis of Complaint Sample</td>
-                                <td>{{ $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A' }}</td>
+                                <td>{{ucfirst( $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">4</td>
                                 <td>QRM Approach</td>
-                                <td>{{ $proposalData['QRM Approach']['qrm3'] ?? 'N/A' }}</td>
+                                <td>{{ ucfirst( $proposalData['QRM Approach']['qrm3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['QRM Approach']['qrm2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">5</td>
                                 <td>Others</td>
-                                <td>{{ $proposalData['Others']['oth3'] ?? 'N/A' }}</td>
+                                <td>{{ ucfirst($proposalData['Others']['oth3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Others']['oth2'] ?? 'N/A' }}</td>
                             </tr>
@@ -807,7 +823,7 @@
 
                     <table>
                         <tr class="table_bg">
-                            <th class="w-3">Row #</th>
+                            <th class="w-3">Sr.No.</th>
                             <th class="w-10">Name</th>
                             <th class="w-20">Department</th>
                             <th class="w-5">Remarks</th>
@@ -904,7 +920,7 @@
 
                 <table>
                     <tr class="table_bg">
-                        <th>Row #</th>
+                        <th>Sr.No.</th>
                         <th class="w-10">Possibility</th>
                         <th class="w-20">Facts/Controls</th>
                         <th class="w-20">Probable Cause</th>
@@ -991,34 +1007,34 @@
             
             <div class="border-table">
 
-<div class="border-table">
-    <div class="block-head">
-        QA/CQA Head Attachment
-    </div>
-    <table>
-        <tr class="table_bg">
-            <th class="w-20">Sr.No.</th>
-            <th class="w-60">attachment</th>
-        </tr>
-        @if ($data->qa_cqa_he_attach)
-            @foreach (json_decode($data->qa_cqa_he_attach) as $key => $file)
-                <tr>
-                    <td class="w-20">{{ $key + 1 }}</td>
-                    <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
-                            target="_blank"><b>{{ $file }}</b></a></td>
-                </tr>
-            @endforeach
-        @else
-            <tr>
-                <td class="w-20">1</td>
-                <td class="w-60">Not Applicable</td>
-            </tr>
-        @endif
-    </table>
-</div>
-</table>
-</div>
-</div>
+            <div class="border-table">
+                <div class="block-head">
+                Investigation attachment
+                </div>
+                <table>
+                    <tr class="table_bg">
+                        <th class="w-20">Sr.No.</th>
+                        <th class="w-60">attachment</th>
+                    </tr>
+                    @if ($data->investigation_attach)
+                        @foreach (json_decode($data->investigation_attach) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                        target="_blank"><b>{{ $file }}</b></a></td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-60">Not Applicable</td>
+                        </tr>
+                    @endif
+                </table>
+            </div>
+            </table>
+            </div>
+            </div>
 
             
 <!-- 
@@ -1332,8 +1348,8 @@
                     <tr>
                         <th class="w-20">Production Tablet/Capsule/Powder Review Required?</th>
                         <td class="w-30">
-                            @if ($data1->Production_Review)
-                                {{ $data1->Production_Table_Review }}
+                            @if ($data1->Production_Table_Review)
+                                {{ucfirst($data1->Production_Table_Review )}}
                             @else
                                 Not Applicable
                             @endif
@@ -1421,7 +1437,7 @@
                         <th class="w-20">Production Injection Review Required?</th>
                         <td class="w-30">
                             @if ($data1->Production_Injection_Review)
-                                {{ $data1->Production_Injection_Review }}
+                                {{ ucfirst($data1->Production_Injection_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1464,7 +1480,7 @@
                         <th class="w-20">Production Injection Review Completed by</th>
                         <td class="w-30">
                             @if ($data1->Production_Injection_By)
-                                {{ $data1->Production_Injection_By }}
+                                {{ ucfirst($data1->Production_Injection_By) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1482,7 +1498,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                        Production Tablet/Capsule/Powder Attachments
+                        Production Injection Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1516,7 +1532,7 @@
                         <th class="w-20">Research & Development Review Required?</th>
                         <td class="w-30">
                             @if ($data1->ResearchDevelopment_Review)
-                                {{ $data1->ResearchDevelopment_Review }}
+                                {{ ucfirst($data1->ResearchDevelopment_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1558,7 +1574,7 @@
                         <th class="w-20">Research & Development Review Completed By</th>
                         <td class="w-30">
                             @if ($data1->ResearchDevelopment_by)
-                                {{ $data1->ResearchDevelopment_by }}
+                                {{ucfirst( $data1->ResearchDevelopment_by) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1610,7 +1626,7 @@
                         <th class="w-20">Human Resource Review Required?</th>
                         <td class="w-30">
                             @if ($data1->Human_Resource_review)
-                                {{ $data1->Human_Resource_review }}
+                                {{ ucfirst($data1->Human_Resource_review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1704,7 +1720,7 @@
                         <th class="w-20">Corporate Quality Assurance Review Required?</th>
                         <td class="w-30">
                             @if ($data1->CorporateQualityAssurance_Review)
-                                {{ $data1->CorporateQualityAssurance_Review }}
+                                {{ ucfirst($data1->CorporateQualityAssurance_Review )}}
                             @else
                                 Not Applicable
                             @endif
@@ -1797,7 +1813,7 @@
                         <th class="w-20">Stores Review Required?</th>
                         <td class="w-30">
                             @if ($data1->Store_Review)
-                                {{ $data1->Store_Review }}
+                                {{ ucfirst($data1->Store_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -1890,7 +1906,7 @@
                         <th class="w-20">Engineering Review Required ?</th>
                         <td class="w-30">
                             @if ($data1->Engineering_review)
-                                {{ $data1->Engineering_review }}
+                                {{ucfirst( $data1->Engineering_review )}}
                             @else
                                 Not Applicable
                             @endif
@@ -1983,7 +1999,7 @@
                         <th class="w-20">Regulatory Affair Review Required?</th>
                         <td class="w-30">
                             @if ($data1->RegulatoryAffair_Review)
-                                {{ $data1->RegulatoryAffair_Review }}
+                                {{ ucfirst($data1->RegulatoryAffair_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2076,7 +2092,7 @@
                         <th class="w-20">Quality Assurance Review Required ?</th>
                         <td class="w-30">
                             @if ($data1->Quality_Assurance_Review)
-                                {{ $data1->Quality_Assurance_Review }}
+                                {{ ucfirst($data1->Quality_Assurance_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2169,7 +2185,7 @@
                         <th class="w-20">Production Liquid/Ointment Review Required?</th>
                         <td class="w-30">
                             @if ($data1->ProductionLiquid_Review)
-                                {{ $data1->ProductionLiquid_Review }}
+                                {{ ucfirst($data1->ProductionLiquid_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2262,7 +2278,7 @@
                         <th class="w-20">Quality Control Review Required ?</th>
                         <td class="w-30">
                             @if ($data1->Quality_review)
-                                {{ $data1->Quality_review }}
+                                {{ ucfirst($data1->Quality_review )}}
                             @else
                                 Not Applicable
                             @endif
@@ -2355,7 +2371,7 @@
                         <th class="w-20">Microbiology Review  Required?</th>
                         <td class="w-30">
                             @if ($data1->Microbiology_Review)
-                                {{ $data1->Microbiology_Review }}
+                                {{ ucfirst($data1->Microbiology_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2448,7 +2464,7 @@
                         <th class="w-20">Safety Review Required ?</th>
                         <td class="w-30">
                             @if ($data1->Environment_Health_review)
-                                {{ $data1->Environment_Health_review }}
+                                {{ ucfirst($data1->Environment_Health_review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2541,7 +2557,7 @@
                         <th class="w-20">Contract Giver Review Required?</th>
                         <td class="w-30">
                             @if ($data1->ContractGiver_Review)
-                                {{ $data1->ContractGiver_Review }}
+                                {{ ucfirst($data1->ContractGiver_Review) }}
                             @else
                                 Not Applicable
                             @endif
@@ -2642,7 +2658,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other1_review)
-                                                {{ $data1->Other1_review }}
+                                                {{ ucfirst($data1->Other1_review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2766,7 +2782,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other2_review)
-                                                {{ $data1->Other2_review }}
+                                                {{ ucfirst($data1->Other2_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2891,7 +2907,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other3_review)
-                                                {{ $data1->Other3_review }}
+                                                {{ ucfirst($data1->Other3_review) }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3016,7 +3032,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other4_review)
-                                                {{ $data1->Other4_review }}
+                                                {{ ucfirst($data1->Other4_review )}}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3139,7 +3155,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other5_review)
-                                                {{ $data1->Other5_review }}
+                                                {{ ucfirst($data1->Other5_review) }}
                                             @else
                                                 Not Applicable
                                             @endif

@@ -10014,7 +10014,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         // dd($data1)
         $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
         $gitracebilty = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Traceability'])->first();
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Product_MaterialDetails'])->first();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'product_materialDetails'])->first();
+        // dd($marketrproducts);
         $giinvesting = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Investing_team'])->first();
         $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
         $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
@@ -10085,11 +10086,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 ]);
             $pdf->setPaper('A4');
             $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            // $canvas = $pdf->getDomPDF()->getCanvas();
+            // $height = $canvas->get_height();
+            // $width = $canvas->get_width();
+            // $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            // $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('MarketComplainta' . $id . '.pdf');
         }
 
@@ -10133,11 +10134,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 ]);
             $pdf->setPaper('A4');
             $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            // $canvas = $pdf->getDomPDF()->getCanvas();
+            // $height = $canvas->get_height();
+            // $width = $canvas->get_width();
+            // $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            // $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('MarketComplainta' . $id . '.pdf');
         }
 
