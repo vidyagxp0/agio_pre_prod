@@ -479,7 +479,7 @@
                                 </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" placeholder="Initiator Group Code"
                                             value="" readonly>
                                     </div>
@@ -987,7 +987,9 @@
 
                                 <div class="col-md-12 mb-3" id="repeat_nature_div" style="display: none;">
                                     <div class="group-input">
-                                        <label for="repeat_nature_gi">Repeat Nature</label>
+                                        <label for="repeat_nature_gi">Repeat Nature
+                                        <span class="text-danger">*</span>
+                                        </label>
                                         <div>
                                             <small class="text-primary">Please insert "NA" in the data field if it does not
                                                 require completion</small>
@@ -1835,20 +1837,20 @@
                                     </div>
                                 </div> --}}
 
-                                {{-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Support_doc">Supporting Documents</label>
+                                        <label for="Support_doc">Investigation attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="Support_doc"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Support_doc[]"
-                                                    oninput="addMultipleFiles(this, 'Support_doc')" multiple>
+                                                    oninput="addMultipleFiles(this, 'Support_doc')" multiple disabled>
                                             </div>
                                         </div>
 
                                     </div>
-                                </div> --}}
+                                </div> 
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton on-submit-disable-button">Save</button>

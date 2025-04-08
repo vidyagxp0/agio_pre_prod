@@ -433,6 +433,8 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
                 Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
+                Route::post('marketCompalinExtensionChild/{id}', [MarketComplaintController::class, 'MarketCompalinExtensionChild'])->name('marketCompalinExtensionChild');
+               
                 Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
                 Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
                 Route::get('acknoledgment_report/{id}',[MarketComplaintController::class,'AcknoledgmentReport'])->name('acknoledgment_report');
