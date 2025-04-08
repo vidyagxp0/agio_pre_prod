@@ -8356,10 +8356,12 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi||
+                        !$marketstat->review_of_raw_materials_used_in_batch_manufacturing_gi || !$marketstat->review_of_Batch_Packing_record_bpr_gi || !$marketstat->review_of_packing_materials_used_in_batch_packing_gi|| !$marketstat->review_of_analytical_data_gi|| !$marketstat->review_of_complaint_sample_if|| !$marketstat->review_of_training_record_of_concern_persons_gi|| !$marketstat->rev_eq_inst_qual_calib_record_gi|| !$marketstat->review_of_equipment_break_down_and_maintainance_record_gi|| !$marketstat->review_of_past_history_of_product_gi || !$marketstat->conclusion_pi || !$marketstat->conclusion_hodsr|| !$marketstat->root_cause_analysis_hodsr|| !$marketstat->the_probable_root || !$marketstat->impact_assessment_hodsr|| !$marketstat->corrective_action_hodsr|| !$marketstat->preventive_action_hodsr|| !$marketstat->summary_and_conclusion_hodsr
+                        ) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
-                                'message' => 'Preliminary Investigation Tab is yet to be filled!',
+                                'message' => 'Investigation CAPA And Root Cause Analysis Tab is yet to be filled!',
                                 'type' => 'warning',
                             ]);
 
@@ -9827,6 +9829,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=MarketComplaint::find($id);
+            $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
+            $parent_due_date = MarketComplaint::where('id', $id)->value('due_date_gi');
                 $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
                     
 

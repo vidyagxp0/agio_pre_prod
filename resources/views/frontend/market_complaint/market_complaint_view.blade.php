@@ -3451,7 +3451,8 @@
                             <div class="col-12">
                             <div class="group-input">
                                 <label for="root_cause">
-                                    Investigation Team
+                                    Investigation Team  <span
+                                    class="text-danger">*</span>
                                     <button type="button" id="investigation_team_add" {{ $data->stage == 3 ? '' : 'disabled' }}>+</button>
                                     <!-- <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#observation-field-instruction-modal-Market_Complaint_InvestigationTeam"
@@ -3591,7 +3592,7 @@
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does
                                         not require completion</small></div>
                                 <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1"
-                                    {{ $data->stage == 3 ? '' : 'disabled' }}  required>{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
+                                required  {{ $data->stage == 3 ? '' : 'disabled' }}  >{{ $data->review_of_batch_manufacturing_record_BMR_gi }}</textarea>
                             </div>
                         </div> --}}
                             <div class="col-md-12">
@@ -3639,7 +3640,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" readonly name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1"
-                                        required  {{ $data->stage == 3 ? '' : 'readonly' }} >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
+                                          {{ $data->stage == 3 ? '' : 'readonly' }} >{{ $data->review_of_raw_materials_used_in_batch_manufacturing_gi }}</textarea>
                                     </div>
                                 @endif
 
@@ -3663,7 +3664,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1"
-                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}  </textarea>
+                                         {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_Batch_Packing_record_bpr_gi }}  </textarea>
                                     </div>
                                 @endif
 
@@ -3679,7 +3680,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
+                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_packing_materials_used_in_batch_packing_gi }}</textarea>
                                     </div>
                                 @else
                                     <div class="group-input">
@@ -3704,7 +3705,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
+                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_analytical_data_gi }}
                                        </textarea>
                                     </div>
                                 @else
@@ -3727,7 +3728,7 @@
                                         <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                     </div>
                                     <textarea class="summernote" name="review_of_complaint_sample_if" id="summernote-1"
-                                        {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_complaint_sample_if }}</textarea>
+                                    required    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_complaint_sample_if }}</textarea>
                                 </div>
                             </div>
 
@@ -3742,7 +3743,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
+                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_training_record_of_concern_persons_gi }}
                                         </textarea>
                                     </div>
                                 @else
@@ -3770,7 +3771,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
+                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->rev_eq_inst_qual_calib_record_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3797,7 +3798,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
+                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_equipment_break_down_and_maintainance_record_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -3823,7 +3824,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_past_history_of_product_gi }}
+                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->review_of_past_history_of_product_gi }}
                     </textarea>
                                     </div>
                                 @else
@@ -4002,7 +4003,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="conclusion_pi" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_pi }}
+                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_pi }}
                      </textarea>
                                     </div>
                                 @else
@@ -4027,7 +4028,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
+                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -4050,7 +4051,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->root_cause_analysis_hodsr }}
+                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->root_cause_analysis_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -4075,7 +4076,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="the_probable_root" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->the_probable_root }}
+                                        required    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->the_probable_root }}
                     </textarea>
                                     </div>
                                 @else
@@ -4130,7 +4131,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->impact_assessment_hodsr }}
+                                        required   {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->impact_assessment_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -4156,7 +4157,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->corrective_action_hodsr }}
+                                        required  {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->corrective_action_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -4181,7 +4182,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->preventive_action_hodsr }}
+                                          {{ $data->stage == 3 ? '' : 'readonly' }} required>{{ $data->preventive_action_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -4190,7 +4191,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="preventive_action_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->preventive_action_hodsr }}
+                                          {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->preventive_action_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
@@ -4205,7 +4206,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
+                                        required {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @else
@@ -4214,7 +4215,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea readonly class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1"
-                                            {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
+                                        required    {{ $data->stage == 3 ? '' : 'readonly' }}>{{ $data->summary_and_conclusion_hodsr }}
                     </textarea>
                                     </div>
                                 @endif
