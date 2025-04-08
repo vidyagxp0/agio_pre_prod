@@ -189,6 +189,21 @@ use Carbon\Carbon;
             </tr>
         </table>
     </header>
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -499,6 +514,21 @@ use Carbon\Carbon;
                 @else
                 Not Applicable
                 @endif
+                <table>
+                    <tr>
+                        <th class="w-20">Invite Person Notify</th>
+                        <td class="w-30">
+                            @if ($managementReview->assign_to)
+                            {{ $managementReview->assign_to }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    
+                </table>
+                
+                
 
         </div>
 
@@ -734,14 +764,14 @@ use Carbon\Carbon;
 
     <div class="block">
         <div class="block-head">
-            Management Review Participants Part-1
+            Management Review Participants 
         </div>
         <div class="border-table">
             <table style="margin-top: 20px; width:100%;table-layout:fixed;">
                 <thead>
                     <tr class="table_bg">
                         <th style="width: 8%">Sr.No.</th>
-                        <th>Invited Person</th>
+                        <th>Name of Person</th>
                         <th>Designation</th>
                         <th>Department</th>
                         <th>Remarks</th>
@@ -870,7 +900,7 @@ use Carbon\Carbon;
     <div class="block">
         <div class="head">
             <div class="block-head">
-                CFT
+                CFT Actions
             </div>
             <div class="head">
                 <div class="block-head">
@@ -919,7 +949,7 @@ use Carbon\Carbon;
                     </tr>
                     <tr>
 
-                        <th class="w-20">Description of Action Item (By Production Tablet/Capsule Powder)</th>
+                        <th class="w-20">Description of Action Item (By Production Tablet/Capsule/Powder)</th>
                         <td class="w-30">
                             <div>
                                 @if ($data1->Production_Table_Assessment)
@@ -1544,7 +1574,7 @@ use Carbon\Carbon;
                                     @endif
                                 </div>
                             </td>
-                            <th class="w-20">Stores feedback Status of Action Item</th>
+                            <th class="w-20">Stores Status of Action Item</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data1->Store_feedback)
@@ -1764,7 +1794,7 @@ use Carbon\Carbon;
 
                         <tr>
 
-                            <th class="w-20">HOD Regulatory Affair Person</th>
+                            <th class="w-20">Regulatory Affair HOD Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_RegulatoryAffair_person)
@@ -2010,7 +2040,7 @@ use Carbon\Carbon;
                         <tr>
 
 
-                            <th class="w-20">HOD Production Liquid/Ointment Person</th>
+                            <th class="w-20">Production Liquid/Ointment HOD Person</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_ProductionLiquid_person)
@@ -2970,7 +3000,7 @@ use Carbon\Carbon;
                 @endforeach
                 @else
                 <tr>
-                    <td class="w-20">4</td>
+                    <td class="w-20">1</td>
                     <td class="w-20">Not Applicable</td>
                 </tr>
                 @endif
@@ -3257,7 +3287,7 @@ use Carbon\Carbon;
 
                     <tr>
 
-                        <th class="w-20">HOD Production Tablet/Capsule Powder Review Comments</th>
+                        <th class="w-20">HOD Production Tablet/Capsule/Powder Review Comments</th>
                         <td class="w-30">
                             <div>
                                 @if ($data5->hod_Production_Table_Feedback)
@@ -3270,7 +3300,7 @@ use Carbon\Carbon;
                     </tr>
                     <tr>
 
-                        <th class="w-20">HOD Production Tablet/Capsule Powder Review Completed By</th>
+                        <th class="w-20">HOD Production Tablet/Capsule/Powder Review Completed By</th>
                         <td class="w-30">
                             <div>
                                 @if ($data5->hod_Production_Table_By)
@@ -3280,7 +3310,7 @@ use Carbon\Carbon;
                                 @endif
                             </div>
                         </td>
-                        <th class="w-20">HOD Production Tablet/Capsule Powder Review Completed On</th>
+                        <th class="w-20">HOD Production Tablet/Capsule/Powder Review Completed On</th>
                         <td class="w-30">
                             <div>
                                 @if ($data5->hod_Production_Table_On)
@@ -3297,7 +3327,7 @@ use Carbon\Carbon;
             <div class="border-table">
                 <div class="head">
                     <div class="block-head">
-                        HOD Production Tablet/Capsule Powder Attachments
+                        HOD Production Tablet/Capsule/Powder Attachments
                     </div>
                     <table>
 
@@ -3335,7 +3365,8 @@ use Carbon\Carbon;
 
                         <tr>
 
-                            <th class="w-20">HOD Production Injection Comments</th>
+                            <th class="w-20">HOD Production Injection Review Comments
+                            </th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Production_Injection_Feedback)
@@ -3411,7 +3442,7 @@ use Carbon\Carbon;
 
                         <tr>
 
-                            <th class="w-20">HOD Research & Development Review Comments</th>
+                            <th class="w-20">Research & Development Action Required ?</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_ResearchDevelopment_feedback)
@@ -3485,7 +3516,7 @@ use Carbon\Carbon;
 
                         <tr>
 
-                            <th class="w-20">Human Resource Review Comments</th>
+                            <th class="w-20">HOD Human Resource Review Comment</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Human_Resource_feedback)
@@ -3562,7 +3593,7 @@ use Carbon\Carbon;
                         <tr>
 
 
-                            <th class="w-20">Corporate Quality Assurance Review Comments</th>
+                            <th class="w-20">HOD Corporate Quality Assurance Review Comments</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_CorporateQualityAssurance_feedback)
@@ -3638,7 +3669,7 @@ use Carbon\Carbon;
                         <tr>
 
 
-                            <th class="w-20">Stores feedback Review Comments</th>
+                            <th class="w-20">HOD Stores Review Comments</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Store_feedback)
@@ -3714,7 +3745,7 @@ use Carbon\Carbon;
 
                         <tr>
 
-                            <th class="w-20">HOD Engineering Comments</th>
+                            <th class="w-20">HOD Engineering Review Comments</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Engineering_feedback)
@@ -3866,7 +3897,7 @@ use Carbon\Carbon;
 
                         <tr>
 
-                            <th class="w-20">HOD Quality Assurance Status of action item</th>
+                            <th class="w-20">HOD Quality Assurance Review Comments</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_Quality_Assurance_feedback)
@@ -4530,7 +4561,7 @@ use Carbon\Carbon;
                 @endforeach
                 @else
                 <tr>
-                    <td class="w-20">4</td>
+                    <td class="w-20">1</td>
                     <td class="w-20">Not Applicable</td>
                 </tr>
                 @endif
@@ -5104,21 +5135,7 @@ use Carbon\Carbon;
 
 
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 

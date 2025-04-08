@@ -957,7 +957,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
-                                                     {{ $data->stage != 1 ? 'readonly' : '' }}
+                                                     {{ $data->stage == 1 ? '' : 'disabled' }}
                                                     oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
@@ -1521,7 +1521,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="management_review_participants">
                                         Management Review Participants
@@ -1529,9 +1529,7 @@
                                             onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                     </label>
                                     <div class="instruction">
-                                        {{-- <small class="text-primary">
-                                            Refer Attached Performance Evaluation Grid
-                                        </small> --}}
+                                      
                                     </div>
                                     <table class="table table-bordered" id="management_review_participants">
                                         <thead>
@@ -1579,7 +1577,163 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
+                                    @php
+                                        $usersList = $users->pluck('name', 'id'); // Laravel collection helper
+                                        $users = DB::table('users')->get();
+
+                                    $departments = DB::table('departments')->get();
+
+                                    @endphp
+
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="management_review_participants">
+                                                Management Review Participants
+                                                <button type="button" {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                    onclick="addManagementReviewParticipants('management_review_participants')">+</button>
+                                            </label>
+                                            <div class="instruction"></div>
+                                            <table class="table table-bordered" id="management_review_participants">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:5%">Sr.No.</th>
+                                                        <th>Name of Person</th>
+                                                        <th>Designation</th>
+                                                        <th>Department</th>
+                                                        <th>Remarks</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="serial_number[]" value="{{ $key + 1 }}"></td>
+
+                                                             {{-- Name of Person Dropdown --}}
+                                                            <td>
+                                                                <select name="invited_Person[]" class="form-control user-select" data-row="{{ $key }}" {{ $data->stage != 3 ? 'disabled' : '' }}>
+                                                                    <option value="">-- Select User --</option>
+                                                                    @foreach ($users as $user)
+                                                                        <option value="{{ $user->name }}"
+                                                                            data-department-id="{{ $user->departmentid }}"
+                                                                            {{ $user->name == unserialize($management_review_participants->invited_Person)[$key] ? 'selected' : '' }}>
+                                                                            {{ $user->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td><input type="text" name="designee[]" {{ $data->stage != 3 ? 'readonly' : '' }}
+                                                                    value="{{ unserialize($management_review_participants->designee)[$key] ?? '' }}">
+                                                            </td>
+
+                                                            
+                                                             {{-- Department Dropdown --}}
+                                                            <td>
+                                                                <select name="department[]" class="form-control department-select" {{ $data->stage != 3 ? 'disabled' : '' }}>
+                                                                    <option value="">-- Select Department --</option>
+                                                                    @foreach ($departments as $dept)
+                                                                        <option value="{{ $dept->id }}"
+                                                                            {{ $dept->id == unserialize($management_review_participants->department)[$key] ? 'selected' : '' }}>
+                                                                            {{ $dept->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+
+                                                            <td><input type="text" name="remarks[]" {{ $data->stage != 3 ? 'readonly' : '' }}
+                                                                    value="{{ unserialize($management_review_participants->remarks)[$key] ?? '' }}">
+                                                            </td>
+
+                                                            <td>
+                                                                <button type="button" {{ $data->stage != 3 ? 'disabled' : '' }}
+                                                                    class="removeBtnaid">remove</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        $(document).ready(function () {
+                                            $(document).on('change', '.user-select', function () {
+                                                let selectedDeptId = $(this).find(':selected').data('department-id');
+                                                let $row = $(this).closest('tr');
+                                                $row.find('.department-select').val(selectedDeptId);
+                                            });
+                                        });
+                                    </script>
+                                    <script>    
+                                    const users = @json($users);
+                                    const departments = @json($departments);
+
+                                    function addManagementReviewParticipants(tableId) {
+                                        let table = document.getElementById(tableId);
+                                        let currentRowCount = table.rows.length;
+                                        let newRow = table.insertRow(currentRowCount);
+                                        newRow.setAttribute("id", "row" + currentRowCount);
+
+                                        // Sr.No
+                                        let cell1 = newRow.insertCell(0);
+                                        cell1.innerHTML = currentRowCount;
+
+                                        // Name of Person dropdown
+                                        let cell2 = newRow.insertCell(1);
+                                        let userSelect = `<select name="invited_Person[]" class="form-control user-select" data-row="${currentRowCount}">`;
+                                        userSelect += `<option value="">-- Select User --</option>`;
+                                        users.forEach(user => {
+                                            userSelect += `<option value="${user.name}" data-department-id="${user.departmentid}">${user.name}</option>`;
+                                        });
+                                        userSelect += `</select>`;
+                                        cell2.innerHTML = userSelect;
+
+                                        // Designation input
+                                        let cell3 = newRow.insertCell(2);
+                                        cell3.innerHTML = `<input type='text' name='designee[]'>`;
+
+                                        // Department dropdown
+                                        let cell4 = newRow.insertCell(3);
+                                        let deptSelect = `<select name="department[]" class="form-control department-select">`;
+                                        deptSelect += `<option value="">-- Select Department --</option>`;
+                                        departments.forEach(dept => {
+                                            deptSelect += `<option value="${dept.id}">${dept.name}</option>`;
+                                        });
+                                        deptSelect += `</select>`;
+                                        cell4.innerHTML = deptSelect;
+
+                                        // Remarks input
+                                        let cell5 = newRow.insertCell(4);
+                                        cell5.innerHTML = `<input type='text' name='remarks[]'>`;
+
+                                        // Remove button
+                                        let cell6 = newRow.insertCell(5);
+                                        cell6.innerHTML = `<button type='button' class='removeRowBtn'>Remove</button>`;
+                                    }
+
+                                    // Auto update department when user is selected
+                                    $(document).on('change', '.user-select', function () {
+                                        let selectedDeptId = $(this).find(':selected').data('department-id');
+                                        let $row = $(this).closest('tr');
+                                        $row.find('.department-select').val(selectedDeptId);
+                                    });
+
+                                    // Remove dynamic row
+                                    $(document).on('click', '.removeRowBtn', function () {
+                                        $(this).closest('tr').remove();
+                                        updateRowNumbers();
+                                    });
+
+                                    // Update row numbers after removal
+                                    function updateRowNumbers() {
+                                        $('#management_review_participants tbody tr').each(function (index) {
+                                            $(this).find('td:first').text(index + 1);
+                                        });
+                                    }
+
+                                    </script>
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -2064,7 +2218,7 @@
                                     </div>
                                     <div class="col-lg-6 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet notification">HOD Production Tablet/Capsule/Powder Person <span id="asteriskInvi11" style="display: none"
+                                            <label for="Production Tablet notification">Production Tablet/Capsule/Powder HOD Person <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_Production_Table_Person" disabled
                                                 id="hod_Production_Table_Person">
@@ -2140,7 +2294,7 @@
                                     @endif
                                     <div class="col-12 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet attachment">HOD Production Tablet/Capsule/Powder
+                                            <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
                                                 Attachments</label>
                                             <div><small class="text-primary">Please Attach all relevant or supporting
                                                     documents</small></div>
@@ -2177,7 +2331,7 @@
                                     </div>
                                     <div class="col-md-6 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet Completed By">HOD Production Tablet/Capsule/Powder Action Completed By</label>
+                                            <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Action Completed By</label>
                                             <input readonly type="text" value="{{ $data1->Production_Table_By }}"
                                                 name="Production_Table_By" id="Production_Table_By">
 
@@ -2186,8 +2340,7 @@
                                     </div>
                                     <div class="col-6 mb-3 productionTable new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Tablet Completed On">HOD Production Tablet/Capsule/Powder Action
-                                                Completed On</label>
+                                            <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Action Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Table_On" readonly
                                                     placeholder="DD-MMM-YYYY"
@@ -2485,7 +2638,7 @@
                                     </div>
                                     <div class="col-lg-6 productionInjection">
                                         <div class="group-input">
-                                            <label for="Production Injection notification">HOD Production Injection Person
+                                            <label for="Production Injection notification">Production Injection HOD Person
                                                 <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
                                             <select name="hod_Production_Injection_Person" disabled
@@ -2608,7 +2761,7 @@
                                     </div>
                                     <div class="col-6 productionInjection new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Production Injection Completed On">Production Injection
+                                            <label for="Production Injection Completed On">Production Injection Action
                                                 Completed On</label>
                                             <div class="calenderauditee">
                                                 <input type="text" id="Production_Injection_On" readonly
@@ -2724,9 +2877,7 @@
 
                                     <div class="col-md-12 mb-3 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development assessment">Description of Action Item (By
-                                                Research &
-                                                Development) <span id="asteriskPT1"
+                                            <label for="Research Development assessment">Description of Action Item (By Research & Development) <span id="asteriskPT1"
                                                     style="display: {{ $data1->ResearchDevelopment_Review == 'Yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
@@ -2898,7 +3049,7 @@
                                     </div>
                                     <div class="col-lg-6 researchDevelopment">
                                         <div class="group-input">
-                                            <label for="Research Development notification">HOD Research & Development
+                                            <label for="Research Development notification">Research & Development HOD
                                                 Person
                                                 <span id="asteriskInvi11" style="display: none"
                                                     class="text-danger">*</span></label>
@@ -7855,7 +8006,7 @@
                                 @else
                                     <div class="col-md-12 mb-3 productionTable">
                                         <div class="group-input">
-                                            <label for="Production Tablet feedback">HOD Production Tablet/Capsule Powder Review
+                                            <label for="Production Tablet feedback">HOD Production Tablet/Capsule/Powder Review
                                                 Comments
                                                 <!-- <span
                                                                                                                                                                                                                                                                                                                                                                                                                                                         id="asteriskInvi22" style="display: none"
@@ -7870,7 +8021,7 @@
                                 @endif
                                 <div class="col-12 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet attachment">Production Tablet/Capsule Powder
+                                        <label for="Production Tablet attachment">Production Tablet/Capsule/Powder
                                             Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
@@ -7907,7 +8058,7 @@
                                 </div>
                                 <div class="col-md-6 mb-3 productionTable">
                                     <div class="group-input">
-                                        <label for="Production Tablet Completed By">Production Tablet/Capsule Powder Review
+                                        <label for="Production Tablet Completed By">Production Tablet/Capsule/Powder Review
                                             Completed
                                             By</label>
                                         <input readonly type="text" value="{{ $data5->hod_Production_Table_By }}"
@@ -7918,7 +8069,7 @@
                                 </div>
                                 <div class="col-6 mb-3 productionTable new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Production Tablet Completed On">Production Tablet/Capsule Powder Review
+                                        <label for="Production Tablet Completed On">Production Tablet/Capsule/Powder Review
                                             Completed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="hod_Production_Table_On" readonly
@@ -8251,7 +8402,7 @@
 
                                 <div class="col-md-12 mb-3 researchDevelopment">
                                     <div class="group-input">
-                                        <label for="Research Development Status of Action Item">Research & Development HOD Comments <span id="asteriskPT2"
+                                        <label for="Research Development Status of Action Item">HOD Research & Development Review Comments <span id="asteriskPT2"
                                                 style="display: {{ $data5->hod_ResearchDevelopment_Review == 'yes' && $data->stage == 5 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
