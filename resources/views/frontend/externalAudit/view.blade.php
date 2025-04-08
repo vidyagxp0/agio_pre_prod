@@ -1011,7 +1011,11 @@
 
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Audit Schedule Start Date">Start Date of Audit</label>
+                                                <label for="Audit Schedule Start Date">Start Date of Audit     
+                                                    @if($data->stage == 1)
+                                                      <span style="color: red;">*</span>
+                                                    @endif
+                                                </label>
                                                 {{-- <div class="calenderauditee">
                                     <input type="text"
                                         id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
@@ -1034,7 +1038,11 @@
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Audit Schedule End Date">End Date of Audit</label>
+                                                <label for="Audit Schedule End Date">End Date of Audit
+                                                    @if($data->stage == 1)
+                                                      <span style="color: red;">*</span>
+                                                    @endif
+                                                </label>
                                                 {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
                                                 {{-- <div class="calenderauditee">
                                     <input type="text"

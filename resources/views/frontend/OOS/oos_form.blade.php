@@ -675,7 +675,9 @@ $users = DB::table('users')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <p id="docnameError" style="color:red">**Short Description is required</p>
+
                         {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiation Department Group  <span class="text-danger"></span></label>
@@ -706,6 +708,7 @@ $users = DB::table('users')
                                     </select>
                             </div>
                         </div> --}}
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"><b>Initiator Department</b></label>
@@ -714,52 +717,53 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                            <script>
-                                document.addEventListener("DOMContentLoaded", function () {
-                                    // Define department name to code mapping
-                                    const departmentMapping = {
-                                        "Calibration Lab": "CLB",
-                                        "Engineering": "ENG",
-                                        "Facilities": "FAC",
-                                        "LAB": "LAB",
-                                        "Labeling": "LABL",
-                                        "Manufacturing": "MANU",
-                                        "Quality Assurance": "QA",
-                                        "Quality Control": "QC",
-                                        "Ragulatory Affairs": "RA",
-                                        "Security": "SCR",
-                                        "Training": "TR",
-                                        "IT": "IT",
-                                        "Application Engineering": "AE",
-                                        "Trading": "TRD",
-                                        "Research": "RSCH",
-                                        "Sales": "SAL",
-                                        "Finance": "FIN",
-                                        "Systems": "SYS",
-                                        "Administrative": "ADM",
-                                        "M&A": "M&A",
-                                        "R&D": "R&D",
-                                        "Human Resource": "HR",
-                                        "Banking": "BNK",
-                                        "Marketing": "MRKT",
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                // Define department name to code mapping
+                                const departmentMapping = {
+                                    "Calibration Lab": "CLB",
+                                    "Engineering": "ENG",
+                                    "Facilities": "FAC",
+                                    "LAB": "LAB",
+                                    "Labeling": "LABL",
+                                    "Manufacturing": "MANU",
+                                    "Quality Assurance": "QA",
+                                    "Quality Control": "QC",
+                                    "Ragulatory Affairs": "RA",
+                                    "Security": "SCR",
+                                    "Training": "TR",
+                                    "IT": "IT",
+                                    "Application Engineering": "AE",
+                                    "Trading": "TRD",
+                                    "Research": "RSCH",
+                                    "Sales": "SAL",
+                                    "Finance": "FIN",
+                                    "Systems": "SYS",
+                                    "Administrative": "ADM",
+                                    "M&A": "M&A",
+                                    "R&D": "R&D",
+                                    "Human Resource": "HR",
+                                    "Banking": "BNK",
+                                    "Marketing": "MRKT",
 
-                                    };
+                                };
 
-                                    // Get the Initiator Department input
-                                    let initiatorGroupInput = document.getElementById("initiator_group");
-                                    let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
+                                // Get the Initiator Department input
+                                let initiatorGroupInput = document.getElementById("initiator_group");
+                                let initiatorGroupCodeInput = document.getElementById("initiator_group_code");
 
-                                    // Get the department name from the input field
-                                    let departmentName = initiatorGroupInput.value.trim();
+                                // Get the department name from the input field
+                                let departmentName = initiatorGroupInput.value.trim();
 
-                                    // Auto-generate the department code based on the mapping
-                                    if (departmentName in departmentMapping) {
-                                        initiatorGroupCodeInput.value = departmentMapping[departmentName];
-                                    } else {
-                                        initiatorGroupCodeInput.value = "N/A"; // Default if not found
-                                    }
-                                });
-                            </script>
+                                // Auto-generate the department code based on the mapping
+                                if (departmentName in departmentMapping) {
+                                    initiatorGroupCodeInput.value = departmentMapping[departmentName];
+                                } else {
+                                    initiatorGroupCodeInput.value = "N/A"; // Default if not found
+                                }
+                            });
+                        </script>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiation Department Code <span class="text-danger"></span></label>
@@ -973,7 +977,7 @@ $users = DB::table('users')
                                     <option value="Raw Material">Raw Material</option>
                                     <option value="Packing Material">Packing Material</option>
                                     <option value="Finished Product">Finished Product</option>
-                                    <option value="Satbility Sample">Satbility Sample</option>
+                                    <option value="Stability Sample">Stability Sample</option>
                                     <option value="Others">Others</option>
                                 </select>
                             </div>
