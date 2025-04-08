@@ -146,7 +146,7 @@ class ManagementReviewController extends Controller
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'GI Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2903,7 +2903,7 @@ class ManagementReviewController extends Controller
     $newFiles = [];
     if ($request->hasFile('inv_attachment')) {
         foreach ($request->file('inv_attachment') as $file) {
-            $name = $request->name . 'inv_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'GI Attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
