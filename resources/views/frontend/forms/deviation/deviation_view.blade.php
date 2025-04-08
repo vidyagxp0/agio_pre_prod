@@ -134,20 +134,6 @@
         }
     </script>
 
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-    const dateInput = document.getElementById('Production_Table_On');
-    const dateDisplayInput = document.getElementById('Production_Table_On_Display');
-
-
-    dateDisplayInput.addEventListener('change', function () {
-        const formattedDate = new Date(dateDisplayInput.value);
-        const isoDate = formattedDate.toISOString().split('T')[0];
-        dateInput.value = isoDate;
-    });
-});
-<script/> --}}
-
 
 
     <script>
@@ -336,8 +322,6 @@
                         '<td> <input type="text" name="product_stage[]" id=""></td>' +
                         '<td><input type="text" name="batch_no[]"></td>' +
                         '<td><button class="removeRowBtn">Remove</button></td>' +
-
-
 
                         '</tr>';
 
@@ -554,34 +538,6 @@
     </script> --}}
 
 
-
-    {{-- <script>
-        function calculateRiskAnalysisScript(selectElement) {
-            let row = selectElement.closest('tr');
-
-            let R = parseFloat(document.getElementById('analysisRScript').value) || 0;
-            let P = parseFloat(document.getElementById('analysisPScript').value) || 0;
-            let N = parseFloat(document.getElementById('analysisNScript').value) || 0;
-
-            let result = R * P * N;
-
-            document.getElementById('analysisRPNScript').value = result;
-        }
-    </script>
-
-    <script>
-        function calculateRiskAnalysisScriptNew(selectElement) {
-            let row = selectElement.closest('tr');
-
-            let R = parseFloat(document.getElementById('analysisRScriptNew').value) || 0;
-            let P = parseFloat(document.getElementById('analysisPScriptNew').value) || 0;
-            let N = parseFloat(document.getElementById('analysisNScriptNew').value) || 0;
-
-            let result = R * P * N;
-
-            document.getElementById('analysisRPNScriptNew').value = result;
-        }
-    </script> --}}
 
 
     <script>
@@ -979,7 +935,6 @@
             </div>
         </div>
         <script>
-            console.log('Script working')
 
             $(document).ready(function() {
 
@@ -9812,7 +9767,6 @@
                                                             </select>
                                                         </td>
 
-
                                                         <td>
                                                                 <textarea {{ $data->stage == 7 ? '' : 'disabled' }} class="desination_dept" name="investigationTeam[{{ $loop->index }}][desination_dept]">{{ isset($investigation_data['desination_dept']) ? $investigation_data['desination_dept'] : '' }}</textarea>
                                                             </td>
@@ -9867,25 +9821,31 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="audit type">Investigation Approach <span class="text-danger">*</span></label>
-                                <select multiple name="investigation_approach[]" id="investigation_approach"   data-stage="{{$data->stage}}">
+                                <select multiple id="investigation_approach" name="investigation_approach[]"   data-stage="{{$data->stage}}">
                                     <option value="Why-Why Chart"
                                         {{ strpos($data->investigation_approach, 'Why-Why Chart') !== false ? 'selected' : '' }}>
-                                        Why-Why Chart</option>
+                                        Why-Why Chart
+                                    </option>
                                     <option value="Category Of Human Error"
                                         {{ strpos($data->investigation_approach, 'Category Of Human Error') !== false ? 'selected' : '' }}>
-                                        Category Of Human Error </option>
+                                        Category Of Human Error 
+                                    </option>
                                     <option value="Fishbone or Ishikawa Diagram"
                                         {{ strpos($data->investigation_approach, 'Fishbone or Ishikawa Diagram') !== false ? 'selected' : '' }}>
-                                        Fishbone or Ishikawa Diagram</option>
+                                        Fishbone or Ishikawa Diagram
+                                    </option>
                                     <option value="Is/Is Not Analysis"
                                         {{ strpos($data->investigation_approach, 'Is/Is Not Analysis') !== false ? 'selected' : '' }}>
-                                        Is/Is Not Analysis</option>
-                                        <option value="Failure Mode and Effect Analysis"
+                                        Is/Is Not Analysis
+                                    </option>
+                                    <option value="Failure Mode and Effect Analysis"
                                         {{ strpos($data->investigation_approach, 'Failure Mode and Effect Analysis') !== false ? 'selected' : '' }}>
-                                        Failure Mode and Effect Analysis</option>
-                                        <option value="Others"
-                                            {{ strpos($data->investigation_approach, 'Others') !== false ? 'selected' : '' }}>
-                                            Others</option>
+                                        Failure Mode and Effect Analysis
+                                    </option>
+                                    <option value="Others"
+                                        {{ strpos($data->investigation_approach, 'Others') !== false ? 'selected' : '' }}>
+                                        Others
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -9907,12 +9867,12 @@
                         <div class="col-lg-12 others-section" style="display: none;">
                         <div class="group-input">
                             <label for="other_specify">Others <span class="text-danger">*</span></label>
-                            <textarea {{ $data->stage == 7 ?  '' : 'readonly'  }} name="others_data" id="other_specify" class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
+                            <textarea id="other_specify" {{ $data->stage == 7 ?  '' : 'readonly'  }} name="others_data"  class="form-control" rows="3" placeholder="Please specify...">{{ $data->others_data }}</textarea>
                         </div>
                     </div>
 
 
-                    <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="other_attachment">Other attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -10015,7 +9975,9 @@
                     <div class="group-input failure">
                         <label for="agenda">
                             Failure Mode and Effect Analysis
+                            <span id="fmea-required" class="text-danger" style="display: none;">*</span>
                             <button type="button" name="agenda" onclick="addRiskAssessmentdata_1('risk-assessment-risk-management_2')" {{ $data->stage == 7 ?  '' : 'disabled'  }}>+</button>
+                            
                             <span class="text-primary" data-bs-toggle="modal"
                             data-bs-target="#observation-field-instruction-modalInferenceFMEA"
                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -10116,7 +10078,7 @@
                                     </textarea>
                                 </td>
 
-                <!-- Repeat for other fields as needed -->
+                       <!-- Repeat for other fields as needed -->
 
 
                          <td>
@@ -10208,13 +10170,11 @@
                                 </select>
                             </td>
 
-
                             <td>
                                 <textarea name="mitigation_proposal_1[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
                                     {{ unserialize($riskEffectAnalysis->mitigation_proposal_1)[$key] ?? null }}
                                 </textarea>
                             </td>
-
 
                             <!-- <td>
                                 <textarea name="conclusion[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
@@ -10258,9 +10218,9 @@
                                 <button type="button" class="btn btn-dark" onclick="removeRow(this)" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>Remove</button>
                             </td>
                         </tr>
-        @endforeach
-    @endif
-</tbody>
+                        @endforeach
+                    @endif
+                </tbody>
 
             </table>
         </div>
@@ -10409,7 +10369,6 @@
             });
         }
         </script>
-
                         <!-- Fishbone or Ishikawa Diagram Section -->
                         <div class="col-12 sub-head"></div>
                         <div class="col-12 fishbone-section" style="display: none;">
@@ -10630,71 +10589,114 @@
 
                         <!-- jQuery Script -->
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        function toggleSections() {
-            // Get selected values as an array
-            var selectedValues = $('#investigation_approach').val();
+                
 
-            // Toggle Fishbone section
-            if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
-                $('.fishbone-section').show();
-                // $('.fishbone-required').attr('required', true);
-            } else {
-                $('.fishbone-section').hide();
-                // $('.fishbone-required').removeAttr('required');
-            }
+                        <script>
+                            $(document).ready(function () {
 
-            // Toggle Why-Why Chart section
-            if (selectedValues.includes('Why-Why Chart')) {
-                $('.why-why-chart').show();
-            } else {
-                $('.why-why-chart').hide();
-            }
+                                function toggleSections() {
+                                    var selectedValues = $('#investigation_approach').val();
 
-            // Toggle Is/Is Not Analysis section
-            if (selectedValues.includes('Is/Is Not Analysis')) {
-                $('.Is-not').show();
-            } else {
-                $('.Is-not').hide();
-            }
+                                    // === Fishbone ===
+                                    if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
+                                        $('.fishbone-section').show();
+                                        $('.fishbone-required').attr('required', true);
+                                        $('#fishbone-required').show();
+                                    } else {
+                                        $('.fishbone-section').hide();
+                                        $('.fishbone-required').removeAttr('required');
+                                        $('#fishbone-required').hide();
+                                    }
 
-            // Toggle Category Of Human Error section
-            if (selectedValues.includes('Category Of Human Error')) {
-                $('.Category-human').show();
-            } else {
-                $('.Category-human').hide();
-            }
-
-            // Toggle Failure Mode and Effect Analysis section
-            if (selectedValues.includes('Failure Mode and Effect Analysis')) {
-                $('.failure').show();
-            } else {
-                $('.failure').hide();
-            }
+                                    // === Why-Why Chart ===
+                                    if (selectedValues.includes('Why-Why Chart')) {
+                                        $('.why-why-chart').show();
+                                        $('textarea[name="why_problem_statement"]').attr('required', true);
+                                        $('textarea[name="why_questions[]"]').attr('required', true);
+                                        $('textarea[name="why_answers[]"]').attr('required', true);
+                                        $('textarea[name="why_root_cause"]').prop('required', true);
+                                        $('#why-why-required').show();
+                                    } else {
+                                        $('.why-why-chart').hide();
+                                        $('textarea[name="why_problem_statement"]').removeAttr('required');
+                                        $('textarea[name="why_questions[]"]').removeAttr('required');
+                                        $('textarea[name="why_answers[]"]').removeAttr('required');
+                                        $('textarea[name="why_root_cause"]').prop('required', false);
+                                        $('#why-why-required').hide();
+                                    }
 
 
-            // Toggle Others input field
-        if (selectedValues.includes('Others')) {
-            $('.others-section').show();
-            $('#other_specify').attr('required', true);
-        } else {
-            $('.others-section').hide();
-            $('#other_specify').removeAttr('required');
-        }
+                                    // === FMEA ===
+                                    if (selectedValues.includes('Failure Mode and Effect Analysis')) {
+                                        $('.failure').show();
+                                        $('.failure textarea').attr('required', true);
+                                        $('#fmea-required').show();
+                                    } else {
+                                        $('.failure').hide();
+                                        $('.failure textarea').removeAttr('required');
+                                        $('#fmea-required').hide();
+                                    }
 
+                                    // === Category of Human Error ===
+                                    if (selectedValues.includes('Category Of Human Error')) {
+                                        $('.Category-human').show();
+                                        $('.Category-human textarea').attr('required', true);
+                                        $('#category-human-required').show();
+                                    } else {
+                                        $('.Category-human').hide();
+                                        $('.Category-human textarea').removeAttr('required');
+                                        $('#category-human-required').hide();
+                                    }
 
-        }
+                                    // === Is/Is Not Analysis ===
+                                    if (selectedValues.includes('Is/Is Not Analysis')) {
+                                        $('.Is-not').show();
+                                        $('.Is-not textarea').attr('required', true);
+                                        $('#is-not-required').show();
+                                    } else {
+                                        $('.Is-not').hide();
+                                        $('.Is-not textarea').removeAttr('required');
+                                        $('#is-not-required').hide();
+                                    }
 
-        // Initial check on page load
-        toggleSections();
+                                    // === Others
+                                    if (selectedValues.includes('Others')) {
+                                        $('.others-section').show();
+                                        $('#other_specify').attr('required', true);
+                                        $('#others-required').show();
+                                    } else {
+                                        $('.others-section').hide();
+                                        $('#other_specify').removeAttr('required');
+                                        $('#others-required').hide();
+                                    }
+                                }
 
-        // Check on change
-        $('#investigation_approach').on('change', function() {
-            toggleSections();
-        });
-    });
-</script>
+                                toggleSections();
+                                $('#investigation_approach').on('change', toggleSections);
+
+                                // ====== FORM SUBMIT VALIDATION ======
+                                $('#auditForm').on('submit', function (e) {
+
+                                    let isValid = true;
+
+                                    // Check each visible required field
+                                    $(this).find(':input[required]:visible').each(function () {
+                                        if ($(this).val().trim() === '') {
+                                            alert('Please fill all required fields.');
+                                            $(this).focus();
+                                            isValid = false;
+                                            return false; // break .each loop
+                                        }
+                                    });
+
+                                    if (!isValid) {
+                                        e.preventDefault(); // Stop form submission
+                                    }
+                                });
+
+                            });
+                        </script>
+
 
                         <script>
                             function addInference(tableId) {
@@ -10723,17 +10725,15 @@
                                 }
                             }
                         </script>
-                        </script>
+
+                    
                         <script>
                             $(document).ready(function() {
                                 $('#investigation_approach').on('change', function() {
                                     var selectedValues = $(this).val() || [];
 
                                     // Hide all sections initially
-
                                     $('#HideInference').hide();
-
-
 
                                     // Show sections based on the selected values
                                     selectedValues.forEach(function(value) {
@@ -10752,12 +10752,11 @@
                         </script>
 
 
-                        <div class="col-12 sub-head"></div>
-
-                        <div class="col-12 why-why-chart" style="display: none;">
+                                <div class="col-12 why-why-chart" style="display: none;">
                                     <div class="group-input">
                                         <label for="why-why-chart">
                                             Why-Why Chart
+                                            <span id="why-why-required" class="text-danger" style="display: none;">*</span>
                                             <span class="text-primary add-why-question" style="font-size: 1rem; font-weight: 600; cursor: pointer; margin-left: 10px;">+</span>
                                         </label>
 
@@ -10864,13 +10863,13 @@
                                 </script>
 
 
-                        <div class="sub-head"></div>
 
                         <div class="col-12 Category-human" style="display: none;">
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Category-human">
                                         Category Of Human Error
+                                        <span id="category-human-required" class="text-danger" style="display: none;">*</span>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#is_is_not-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400;">
@@ -10979,6 +10978,7 @@
                                 <div class="group-input">
                                     <label for="Is-not">
                                         Is/Is Not Analysis
+                                        <span id="is-not-required" class="text-danger" style="display: none;">*</span>
                                         <span class="text-danger" data-bs-toggle="modal"
                                             data-bs-target="#is_is_not-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 4+600;">
@@ -12134,12 +12134,12 @@
                     <div class="row">
 
 
-                    <div class="col-12 mb-4" id="fmea-section">
+            <div class="col-12 mb-4" id="fmea-section">
             <div class="group-input">
                 <label for="agenda">
-                    Failure Mode and Effect Analysis <span class="text-danger">*</span>
+                    Failure Mode and Effect Analysis <span  id="fmea-required" class="text-danger" style="display: none;">*</span>
                     <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 7 ? '' : 'disabled' }}>+</button>
-                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modalInferenceFMEA" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">(Launch Instruction)</span>
+    
                 </label>
                 <div class="table-responsive">
                     <table class="table table-bordered" style="width: 200%" id="risk-assessment-risk-management">
