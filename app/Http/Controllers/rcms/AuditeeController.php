@@ -6777,7 +6777,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
             if ($changeControl->stage == 1) {
 
-                if (empty($changeControl->initiated_through)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies))
+                if (empty($changeControl->initiated_through)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',
