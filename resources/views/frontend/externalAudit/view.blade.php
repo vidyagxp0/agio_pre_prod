@@ -1,7 +1,7 @@
 @extends('frontend.layout.main')
 @section('container')
     @php
-
+       
         $users = DB::table('users')->select('id', 'name')->get();
 
     @endphp
@@ -445,7 +445,7 @@
 
             {{-- ======================================
                     DATA FIELDS
-    ======================================= --}}
+                ======================================= --}}
 
             @php
                 $users = DB::table('users')->get();

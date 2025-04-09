@@ -161,11 +161,12 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   External Audit  Report
+                   External Audit Response Summary Report
                 </td>
-                 <td class="w-30">
-                    <div class="logo">
-                    <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
+                <td class="w-30">
+                    <div class="logo" style="text-align: center;">
+                        <img src="https://agio.mydemosoftware.com/user/images/agio-removebg-preview.png"
+                        style="max-height: 55px; max-width: 40px;">
                     </div>
                 </td>
             </tr>
@@ -198,11 +199,11 @@
     @if (!empty($oocgrid->data) && count($oocgrid->data) > 0)
         <table>
             <tr class="table_bg">
-                <th class="w-20">Obs.N.</th>
+                <th class="w-20">Sr.No.</th>
                 <th class="w-60">Observation</th>
                 <th class="w-60">Category</th>
                 <th class="w-60">Response</th>
-                <th class="w-60">CAPA / ACTION Child Reference If Any</th>
+                <th class="w-60">CAPA / Child action Reference If Any</th>
                 <th class="w-60">Status</th>
                
                 <th class="w-60">Remarks</th>
@@ -269,7 +270,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
-                            <th class="w-60">attachment</th>
+                            <th class="w-60">Attachment</th>
                         </tr>
                             @if($data->myfile)
                             @foreach(json_decode($data->myfile) as $key => $file)

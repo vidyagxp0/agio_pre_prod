@@ -542,7 +542,7 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-20">S No.</th>
+                                <th class="w-15">S No.</th>
                                 <th>Area of Audit</th>
                                 <th>Scheduled Start Date</th>
                                 <th>Scheduled Start Time</th>
@@ -560,12 +560,12 @@
                             <tr>
                                 <td>{{ $srNo++ }}</td>
                                 <td>{{ $row['auditArea'] ?? 'N/A' }}</td>
-                                <td>{{ $row['scheduleStartDate'] ?? 'N/A' }}</td>
+                                <td>{{ isset($row['scheduleStartDate']) ? Helpers::getdateformat($row['scheduleStartDate']) : 'N/A' }}</td>
                                 <td>{{ $row['scheduleStartTime'] ?? 'N/A' }}</td>
-                                <td>{{ $row['scheduleEndDate'] ?? 'N/A' }}</td>
+                                <td>{{ isset($row['scheduleEndDate']) ? Helpers::getdateformat($row['scheduleEndDate']) : 'N/A' }}</td>
                                 <td>{{ $row['scheduleEndTime'] ?? 'N/A' }}</td>
-                                <td>{{ $row['auditors'] ?? 'N/A' }}</td>
-                                <td>{{ $row['auditee'] ?? 'N/A' }}</td>
+                                <td>{{ isset($row['auditors']) ? Helpers::getInitiatorName($row['auditors']) : 'N/A' }}</td>
+                                <td>{{ isset($row['auditee']) ? Helpers::getInitiatorName($row['auditee']) : 'N/A' }}</td>
                                 <td>{{ $row['auditComment'] ?? 'N/A' }}</td>
                             </tr>
                             @endif
@@ -587,10 +587,10 @@
 
             <table>
 
-                <tr>
+                <!-- <tr>
                     <th class="w-20">Audit Comments</th>
                     <td class="w-80"> @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif</td>
-                </tr>
+                </tr> -->
                 <tr>
                     <th class="w-20">Comments</th>
                     <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
@@ -2961,7 +2961,7 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">SR no.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th>Observations/Discrepancy</th>
                         <th>Category</th>
                         <th>Remarks</th>
@@ -3019,7 +3019,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">SR no.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th>Observation</th>
                             <th>Response with impact assesment & CAPA (If Applicable)</th>
                             <th>Responsibility</th>
@@ -3036,8 +3036,8 @@
                                 <td>{{$item['observation'] ?? 'Not Applicable'}}</td>
                                 <td>{{$item['impact_assesment'] ?? 'Not Applicable'}}</td>
                                 <td>{{$item['responsiblity'] ?? 'Not Applicable'}}</td>
-                                <td>{{$item['closure_date'] ?? 'Not Applicable'}}</td>
-                                <td>{{$item['Actual_date'] ?? 'Not Applicable'}}</td>
+                                <td>{{ isset($item['closure_date']) ? Helpers::getdateformat($item['closure_date']) : 'Not Applicable' }}</td>
+                                <td>{{ isset($item['Actual_date']) ? Helpers::getdateformat($item['Actual_date']) : 'Not Applicable' }}</td>
                             </tr>
                             @endforeach
                             @else
