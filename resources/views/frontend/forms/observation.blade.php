@@ -498,7 +498,10 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="observation[0][serial]"
                                                         value="1"></td>
-                                                <td><input type="text" name="observation[0][non_compliance]"></td>
+                                                <td>
+                                                    <textarea name="observation[0][non_compliance]" rows="3" cols="40"></textarea>
+                                                </td>
+
                                                 <td>
                                                 <select name="observation[0][category]" class="category">
                                                     <option value="select">Select Category</option>
@@ -521,8 +524,8 @@
                                                     html += '<tr>' +
                                                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                         '"></td>' +
-                                                        '<td><input type="text" name="observation[' + serialNumber +
-                                                        '][non_compliance]"></td>' +
+                                                        '<td><textarea name="observation[' + serialNumber + '][non_compliance]" rows="3" cols="40"></textarea></td>'
+                                                        +
                                                         
                                                         '<td><select name="observation[' + serialNumber + '][category]" class="category">' +
                                                             '<option value="select">Select Category</option>' +
