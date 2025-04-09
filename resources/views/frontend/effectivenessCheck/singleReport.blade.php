@@ -239,6 +239,8 @@
                         </td>
 
                     </tr>
+                    </table>
+                    <table>
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">
@@ -273,7 +275,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
+                            <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment </th>
                         </tr>
                         @if ($data->Attachments)
@@ -319,7 +321,7 @@
             <div class="border-table">
                 <table>
                     <tr class="table_bg">
-                        <th class="w-20">S.N.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment </th>
                     </tr>
                     @if ($data->acknowledge_Attachment)
@@ -366,7 +368,7 @@
         <div class="border-table">
             <table>
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->Effectiveness_check_Attachment)
@@ -428,7 +430,7 @@
         <div class="border-table">
             <table>
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->Attachment)
@@ -472,7 +474,7 @@
         <div class="border-table">
             <table>
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->qa_cqa_review_Attachment)
@@ -516,7 +518,7 @@
         <div class="border-table">
             <table>
                 <tr class="table_bg">
-                    <th class="w-20">S.N.</th>
+                    <th class="w-20">Sr.No.</th>
                     <th class="w-60">Attachment </th>
                 </tr>
                 @if ($data->qa_cqa_approval_Attachment)

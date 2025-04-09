@@ -6042,6 +6042,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $parent_id = $id;
                $parent_type = "Lab Incident";
                $old_records = Capa::select('id', 'division_id', 'record')->get();
+               $parent_division_id = LabIncident::where('id', $id)->value('division_id');
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
                $currentDate = Carbon::now();
@@ -6052,6 +6053,8 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
                $parent_initiator_id = $id;
                $changeControl = OpenStage::find(1);
+               $parent_due_date=LabIncident::where('id', $id)->value('due_date');
+
 
 
                if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
@@ -6073,7 +6076,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
                 //    dd($countData);
                 // return $data;
-                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record', 'data'));
+                   return view('frontend.action-item.action-item', compact('expectedParenRecord','record','record_number',  'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id','old_record', 'data_record', 'data','parent_division_id'));
 
                }
 
@@ -6091,7 +6094,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 $relatedRecords = Helpers::getAllRelatedRecords();
                 $data_record = Helpers::getDivisionName($data->division_id ) . '/' . 'LI' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-                return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record'));
+                return view('frontend.extension.extension_new', compact('relatedRecords','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data_record','parent_due_date','parent_division_id'));
 
             }
 
