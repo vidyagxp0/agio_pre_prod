@@ -211,19 +211,19 @@
                 </div>
                 <table>
                 <tr>
-                        <th class="w-20">Record Number</th>
-                        <td class="w-30">
-                            @if ($data->record)
-                                {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                    <th class="w-20">Record Number</th>
+                    <td class="w-30">
+                        @if ($data->record)
+                            {{ Helpers::divisionNameForQMS($data->division_id) }}/MC/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
 
-                        {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Site / Location</th>
-                        {{-- <td class="w-30"> {{ Helpers::getDivisionName(id()->get('division')) }}</td> --}}
-                        <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
+                    {{ $data->created_at }} added by {{ $data->originator }}
+                    <th class="w-20">Site / Location</th>
+                    {{-- <td class="w-30"> {{ Helpers::getDivisionName(id()->get('division')) }}</td> --}}
+                    <td class="w-30"> {{ Helpers::getDivisionName($data->division_id) }}</td>
 
                     </tr>
                     <tr>
@@ -317,7 +317,7 @@
 
                     <tr>
 
-                        <th class="w-20">Complaint</th>
+                        <th class="w-20">Complainant</th>
                         <td class="w-80">{{ $data->complainant_gi ?? 'Not Applicable' }}</td>
                        
                         <th class="w-20">Complaint Reported On</th>
@@ -326,7 +326,7 @@
                        
                     </tr>
                     <tr>
-                        <th class="w-20">Details Of Nature Market Complaint</th>
+                        <th class="w-20">Details of Nature of Market Complaint</th>
                         <td class="w-80" colspan='5'>{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
                     </tr>
 
@@ -334,18 +334,23 @@
 
             <div class="border-table">
                 <div class="block-head">
-                    Product Details Part 1
+                    Product Details 
                 </div>
 
 
                
                 <table>
                     <tr class="table_bg">
-                        <th class="w-10">Row #</th>
+                        <th class="w-10">Sr.No.</th>
                         <th class="w-20">Product Name</th>
                         <th class="w-10">Batch No.</th>
                         <th class="w-10">Mfg. Date</th>
                         <th class="w-10">Exp. Date</th>
+
+                        <th class="w-10">Batch Size</th>
+                        <th class="w-10">Pack Size</th>
+                        <th class="w-10">Dispatch Quantity</th>
+                        <th class="w-10">Remarks</th>
                     </tr>
 
                     <tbody>
@@ -373,6 +378,20 @@
                                     </td>
 
 
+                                    <td class="w-20">
+                                        {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }}
+                                    </td>
+
+                                    <td class="w-20">
+                                        {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }}
+                                    </td>
+                                    <td class="w-20">
+                                        {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }}
+                                    </td>
+
+                                    <td class="w-20">
+                                        {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }}
+                                    </td>
                                     {{-- <td class="w-15">{{ $data->detail && unserialize($data->detail->info_product_name)[$key] ?  unserialize($data->detail->info_product_name)[$key]: "Not Applicable"}}</td>
                                        <td class="w-15">{{ $data->detail && unserialize($data->detail->info_batch_no)[$key] ?  unserialize($data->detail->info_batch_no)[$key]: "Not Applicable"}}</td>
                                        <td class="w-15">{{ $data->detail && unserialize($data->detail->info_mfg_date)[$key] ?  unserialize($data->detail->info_mfg_date)[$key]: "Not Applicable"}}</td>
@@ -381,13 +400,9 @@
                                 </tr>
                             @endforeach
                         @else
-                            <tr>
+                        <tr>
                                 <td>1</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-
+                                <td colspan="8">Not Applicable</td>
                             </tr>
                         @endif
                     </tbody>
@@ -404,7 +419,7 @@
 
                 <table>
                     <tr class="table_bg">
-                        <th>Row #</th>
+                        <th>Sr.No.</th>
                         <th class="w-10">Product Name</th>
                         <th class="w-20">Batch No.</th>
                         <th class="10">Manufacturing Location</th>
@@ -461,12 +476,12 @@
                     
                         
                     <th class="w-20">Is Repeat</th>
-                        <td class="w-80">{{ $data->is_repeat_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-80">{{ ucfirst($data->is_repeat_gi ?? 'Not Applicable') }}</td>
 
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
+                        <td class="w-80" colspan="5">{{ $data->repeat_nature_gi ?? 'Not Applicable' }}</td>
                     </tr>
                    
 
@@ -542,49 +557,50 @@
             
             <div class="border-table">
                 <div class="block-head">
-                    Product Details Part 2
+                    Product Details 
                 </div>
 
                 <table>
                     <tr class="table_bg">
-                        <th>Row #</th>
+                        <th>Sr. No.</th>
+                        <th class="w-10">Product Name</th>
+                        <th class="w-10">Batch No.</th>
+                        <th class="w-10">Mfg. Date</th>
+                        <th class="w-10">Exp. Date</th>
                         <th class="w-10">Batch Size</th>
-                        <th class="w-20">Pack Size</th>
-                        <th class="10">Dispatch Quantity</th>
-                        <th class="w-5">Remarks</th>
-                        {{-- <th class="w-5">Action</th> --}}
+                        <th class="w-10">Pack Size</th>
+                        <th class="w-10">Dispatch Quantity</th>
+                        <th class="w-10">Remarks</th>
                     </tr>
 
                     <tbody>
                         @php $productsdetails = 1; @endphp
-                        @if (!empty($prductgigrid) && is_array($prductgigrid->data))
 
-                            @foreach ($prductgigrid->data as $index => $detail)
+                        @if (!empty($marketrproducts) && is_array($marketrproducts->data))
+                            @foreach ($marketrproducts->data as $index => $detaildata)
                                 <tr>
                                     <td>{{ $productsdetails++ }}</td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_batch_size']) ? $detail['info_batch_size'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_pack_size']) ? $detail['info_pack_size'] : '' }} </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_dispatch_quantity']) ? $detail['info_dispatch_quantity'] : '' }}
-                                    </td>
-                                    <td class="w-20">
-                                        {{ isset($detail['info_remarks']) ? $detail['info_remarks'] : '' }} </td>
-                                    {{-- <td class="w-20"> {{ isset($detail['Action']) ? $detail['Action'] : '' }} </td> --}}
+                                    <td class="w-20">{{ $detaildata['product_name_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['batch_no_pmd_ca'] ?? '' }}</td>
 
+                                    <td class="w-20">
+                                        {{ !empty($detaildata['mfg_date_pmd_ca_text']) ? \Carbon\Carbon::parse($detaildata['mfg_date_pmd_ca_text'])->format('j M Y') : '' }}
+                                    </td>
+
+                                    <td class="w-20">
+                                        {{ !empty($detaildata['expiry_date_pmd_ca_text']) ? \Carbon\Carbon::parse($detaildata['expiry_date_pmd_ca_text'])->format('j M Y') : '' }}
+                                    </td>
+
+                                    <td class="w-20">{{ $detaildata['batch_size_pmd_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['pack_profile_pmd_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['released_quantity_pmd_ca'] ?? '' }}</td>
+                                    <td class="w-20">{{ $detaildata['remarks_ca'] ?? '' }}</td>
                                 </tr>
                             @endforeach
                         @else
                             <tr>
                                 <td>1</td>
-
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                {{-- <td>Not Applicable</td> --}}
-
+                                <td colspan="8">Not Applicable</td>
                             </tr>
                         @endif
                     </tbody>
@@ -622,19 +638,19 @@
                         <td class="w-80">{!! $data->retention_sample_review_observation_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Stability Study Data Review</th>
+                        <th class="w-20">Stablity Study Data Review</th>
                         <td class="w-80">{!! $data->stability_study_data_review_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QMS Events If Any Review Observation</th>
+                        <th class="w-20">QMS Events(if Any) Review Observation</th>
                         <td class="w-80">{!! $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Repeated Complaints Queries For Product</th>
+                        <th class="w-20">Repeated Complaints/Queries For Product</th>
                         <td class="w-80">{!! $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Interpretation on Complaint Sample If Received</th>
+                        <th class="w-20">Interpretation on Complaint sample(if recieved)</th>
                         <td class="w-80">{!! $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' !!}</td>
                     </tr>
                     <tr>
@@ -668,35 +684,35 @@
                             <tr>
                                 <td class="text-center">1</td>
                                 <td>Complaint Sample Required</td>
-                                <td>{{ $proposalData['Complaint sample Required']['csr3'] ?? 'N/A' }}</td>
+                                <td>{{ucfirst( $proposalData['Complaint sample Required']['csr3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Complaint sample Required']['csr1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Complaint sample Required']['csr2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">2</td>
                                 <td>Additional Info. From Complaint</td>
-                                <td>{{ $proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A' }}</td>
+                                <td>{{ ucfirst($proposalData['Additional info. From Complainant']['afc3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Additional info. From Complainant']['afc1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Additional info. From Complainant']['afc2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">3</td>
                                 <td>Analysis of Complaint Sample</td>
-                                <td>{{ $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A' }}</td>
+                                <td>{{ucfirst( $proposalData['Analysis of complaint Sample']['acs3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">4</td>
                                 <td>QRM Approach</td>
-                                <td>{{ $proposalData['QRM Approach']['qrm3'] ?? 'N/A' }}</td>
+                                <td>{{ ucfirst( $proposalData['QRM Approach']['qrm3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['QRM Approach']['qrm1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['QRM Approach']['qrm2'] ?? 'N/A' }}</td>
                             </tr>
                             <tr>
                                 <td class="text-center">5</td>
                                 <td>Others</td>
-                                <td>{{ $proposalData['Others']['oth3'] ?? 'N/A' }}</td>
+                                <td>{{ ucfirst($proposalData['Others']['oth3'] ?? 'N/A') }}</td>
                                 {{-- <td>{{ $proposalData['Others']['oth1'] ?? 'N/A' }}</td> --}}
                                 <td>{{ $proposalData['Others']['oth2'] ?? 'N/A' }}</td>
                             </tr>
@@ -745,7 +761,6 @@
                             @endif
                         </table>
                     </div>
-
                 </table>
 
                 <br>

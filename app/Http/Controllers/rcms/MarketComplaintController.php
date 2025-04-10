@@ -113,7 +113,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->corrective_action_hodsr = $request->corrective_action_hodsr;
         $marketComplaint->preventive_action_hodsr = $request->preventive_action_hodsr;
         $marketComplaint->summary_and_conclusion_hodsr = $request->summary_and_conclusion_hodsr;
-        // $marketComplaint->initial_attachment_hodsr = $request->initial_attachment_hodsr;
+        // $marketComplaint->investigation_attach = $request->investigation_attach;
         $marketComplaint->comments_if_any_hodsr = $request->comments_if_any_hodsr;
 
         $marketComplaint->manufacturer_name_address_ca = $request->manufacturer_name_address_ca;
@@ -175,16 +175,16 @@ class MarketComplaintController extends Controller
         }
 
 
-        if (!empty($request->initial_attachment_hodsr)) {
+        if (!empty($request->investigation_attach)) {
             $files = [];
-            if ($request->hasfile('initial_attachment_hodsr')) {
-                foreach ($request->file('initial_attachment_hodsr') as $file) {
-                    $name = $request->name . 'initial_attachment_hodsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('investigation_attach')) {
+                foreach ($request->file('investigation_attach') as $file) {
+                    $name = $request->name . 'investigation_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $marketComplaint->initial_attachment_hodsr = json_encode($files);
+            $marketComplaint->investigation_attach = json_encode($files);
         }
 
         if (!empty($request->initial_attachment_ca)) {
@@ -1585,12 +1585,12 @@ class MarketComplaintController extends Controller
             $history->save();
         }
 
-        if (!empty($marketComplaint->initial_attachment_hodsr)) {
+        if (!empty($marketComplaint->investigation_attach)) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'HOD Attachment';
+            $history->activity_type = 'Investigation attachment';
             $history->previous = "Null";
-            $history->current = $marketComplaint->initial_attachment_hodsr;
+            $history->current = $marketComplaint->investigation_attach;
             $history->comment = "Not Applicable";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2477,7 +2477,7 @@ class MarketComplaintController extends Controller
         $marketComplaint->corrective_action_hodsr = $request->corrective_action_hodsr;
         $marketComplaint->preventive_action_hodsr = $request->preventive_action_hodsr;
         $marketComplaint->summary_and_conclusion_hodsr = $request->summary_and_conclusion_hodsr;
-        // $marketComplaint->initial_attachment_hodsr = $request->initial_attachment_hodsr;
+        // $marketComplaint->investigation_attach = $request->investigation_attach;
         $marketComplaint->comments_if_any_hodsr = $request->comments_if_any_hodsr;
 
         $marketComplaint->manufacturer_name_address_ca = $request->manufacturer_name_address_ca;
@@ -3114,16 +3114,16 @@ class MarketComplaintController extends Controller
             $marketComplaint->initial_attachment_gi = json_encode($allFiles);
         }
 
-        if ($request->hasFile('initial_attachment_hodsr')) {
+        if ($request->hasFile('investigation_attach')) {
             $files = [];
-            foreach ($request->file('initial_attachment_hodsr') as $file) {
-                $name = $request->name . '_initial_attachment_hodsr_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            foreach ($request->file('investigation_attach') as $file) {
+                $name = $request->name . '_investigation_attach_' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
-            $marketComplaint->initial_attachment_hodsr = json_encode($files);
+            $marketComplaint->investigation_attach = json_encode($files);
         }
-        $marketComplaint->fill($request->except('initial_attachment_hodsr'));
+        $marketComplaint->fill($request->except('investigation_attach'));
 
 
         if (!empty($request->initial_attachment_ca) || !empty($request->deleted_initial_attachment_ca)) {
@@ -4365,20 +4365,20 @@ class MarketComplaintController extends Controller
             }
             $history->save();
         }
-        if ($lastmarketComplaint->initial_attachment_hodsr != $marketComplaint->initial_attachment_hodsr) {
+        if ($lastmarketComplaint->investigation_attach != $marketComplaint->investigation_attach) {
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $marketComplaint->id;
-            $history->activity_type = 'HOD Attachment';
-            $history->previous = str_replace(',', ', ', $lastmarketComplaint->initial_attachment_hodsr);
-            $history->current = str_replace(',', ', ', $marketComplaint->initial_attachment_hodsr);
-            $history->comment = $request->initial_attachment_hodsr_comment;
+            $history->activity_type = 'Investigation attachment';
+            $history->previous = str_replace(',', ', ', $lastmarketComplaint->investigation_attach);
+            $history->current = str_replace(',', ', ', $marketComplaint->investigation_attach);
+            $history->comment = $request->investigation_attach_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastmarketComplaint->status;
             $history->change_to = "Not Applicable";
             $history->change_from = $lastmarketComplaint->status;
-            if (is_null($lastmarketComplaint->initial_attachment_hodsr) || $lastmarketComplaint->initial_attachment_hodsr === '') {
+            if (is_null($lastmarketComplaint->investigation_attach) || $lastmarketComplaint->investigation_attach === '') {
                 $history->action_name = "New";
             } else {
                 $history->action_name = "Update";
@@ -8356,10 +8356,12 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
                     if ($marketstat->stage == 3) {
 
-                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi) {
+                        if (!$marketstat->review_of_batch_manufacturing_record_BMR_gi||
+                        !$marketstat->review_of_raw_materials_used_in_batch_manufacturing_gi || !$marketstat->review_of_Batch_Packing_record_bpr_gi || !$marketstat->review_of_packing_materials_used_in_batch_packing_gi|| !$marketstat->review_of_analytical_data_gi|| !$marketstat->review_of_complaint_sample_if|| !$marketstat->review_of_training_record_of_concern_persons_gi|| !$marketstat->rev_eq_inst_qual_calib_record_gi|| !$marketstat->review_of_equipment_break_down_and_maintainance_record_gi|| !$marketstat->review_of_past_history_of_product_gi || !$marketstat->conclusion_pi || !$marketstat->conclusion_hodsr|| !$marketstat->root_cause_analysis_hodsr|| !$marketstat->the_probable_root || !$marketstat->impact_assessment_hodsr|| !$marketstat->corrective_action_hodsr|| !$marketstat->preventive_action_hodsr|| !$marketstat->summary_and_conclusion_hodsr
+                        ) {
                             Session::flash('swal', [
                                 'title' => 'Mandatory Fields Required!',
-                                'message' => 'Preliminary Investigation Tab is yet to be filled!',
+                                'message' => 'Investigation CAPA And Root Cause Analysis Tab is yet to be filled!',
                                 'type' => 'warning',
                             ]);
 
@@ -9777,11 +9779,12 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     public function MarketComplaintCapa_ActionChild(Request $request, $id)
     {
         // dd($request->revision);
-
+       
         $cc = MarketComplaint::find($id);
         $cft = [];
 
         $parent_type = "Market Complaint";
+        $parent_name = "Market Complaint";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         // $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = $cc->record;
@@ -9796,6 +9799,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_initiator_id = $id;
+        $parent_short_description = MarketComplaint::where('id', $id)->value('description_gi');
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -9803,7 +9807,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $relatedRecords = Helpers::getAllRelatedRecords();
             $Capachild = MarketComplaint::find($id);
             //    dd($Capachild->division_id);
-               $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
+            $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
 
             return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id', 'cft', 'relatedRecords','reference_record'));
         } elseif ($request->revision == "Action-Item") {
@@ -9820,6 +9824,65 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.root-cause-analysis', compact('record_number', 'record', 'due_date', 'parent_id', 'old_records', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id'));
         }
+
+        elseif ($request->revision == "extension") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            $data=MarketComplaint::find($id);
+            $parent_division_id  = MarketComplaint::where('id', $id)->value('division_id');
+            $parent_due_date = MarketComplaint::where('id', $id)->value('due_date_gi');
+                $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                    
+
+                $count = Helpers::getChildData($id, $parent_type);
+                $countData = $count + 1; 
+                return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
+            }
+    }
+
+
+
+
+
+    public function MarketCompalinExtensionChild(Request $request, $id)
+    {
+      
+        $cc = MarketComplaint::find($id);
+        $cft = [];
+
+        $parent_type = "Market Complaint";
+        $parent_name = "Market Complaint";
+        $old_records = MarketComplaint::select('id', 'division_id', 'record')->get();
+        // $record = ((RecordNumber::first()->value('counter')) + 1);
+        $record = $cc->record;
+        $record = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $record_number = $cc->record;
+        $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
+        $parent_id = $record;
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $parent_intiation_date = MarketComplaint::where('id', $id)->value('intiation_date');
+        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_initiator_id = $id;
+        $parent_short_description = MarketComplaint::where('id', $id)->value('description_gi');
+        $parent_division_id = MarketComplaint::where('id', $id)->value('division_id');
+        $parent_due_date = MarketComplaint::where('id', $id)->value('due_date_gi');
+       
+       
+        if ($request->revision == "extension") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            $data=MarketComplaint::find($id);
+                $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'MC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                    
+
+                $count = Helpers::getChildData($id, $parent_type);
+                $countData = $count + 1; 
+                return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
+            }
+           
     }
 
 
@@ -9951,7 +10014,8 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         // dd($data1)
         $prductgigrid = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'ProductDetails'])->first();
         $gitracebilty = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Traceability'])->first();
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Product_MaterialDetails'])->first();
+        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'product_materialDetails'])->first();
+        // dd($marketrproducts);
         $giinvesting = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Investing_team'])->first();
         $brain = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'brain_stroming_details'])->first();
         $hodteammembers = MarketComplaintGrids::where(['mc_id' => $id, 'identifer' => 'Team_Members'])->first();
@@ -10022,11 +10086,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 ]);
             $pdf->setPaper('A4');
             $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            // $canvas = $pdf->getDomPDF()->getCanvas();
+            // $height = $canvas->get_height();
+            // $width = $canvas->get_width();
+            // $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            // $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('MarketComplainta' . $id . '.pdf');
         }
 
@@ -10070,11 +10134,11 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
                 ]);
             $pdf->setPaper('A4');
             $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            // $canvas = $pdf->getDomPDF()->getCanvas();
+            // $height = $canvas->get_height();
+            // $width = $canvas->get_width();
+            // $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            // $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('MarketComplainta' . $id . '.pdf');
         }
 

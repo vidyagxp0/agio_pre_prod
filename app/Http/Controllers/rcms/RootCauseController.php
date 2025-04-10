@@ -4605,6 +4605,8 @@ class RootCauseController extends Controller
     {
         $parent_id = $id;
         $parent_initiator_id = RootCauseAnalysis::where('id', $id)->value('initiator_id');
+        $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
+
         $parent_type = "Action-Item";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -4619,7 +4621,7 @@ class RootCauseController extends Controller
         $data->due_date = $p_record->due_date;  // Assuming $p_record has a due_date field
         $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
         $record = $record_number;
-        return view('frontend.action-item.action-item', compact('parent_intiation_date', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record', 'data'));
+        return view('frontend.action-item.action-item', compact('parent_intiation_date','parent_division_id', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record', 'data'));
     }
     public function RCAChildRoot(Request $request, $id)
     {
@@ -4634,6 +4636,8 @@ class RootCauseController extends Controller
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+        $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
+
         $parent_initiator_id = $id;
 
 
@@ -4662,7 +4666,7 @@ class RootCauseController extends Controller
             $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);    
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-            return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record', 'data'));
+            return view('frontend.action-item.action-item', compact('record_number','parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record', 'data'));
         }
     }
 

@@ -2009,7 +2009,7 @@ for ($i = 1; $i <= 50; $i++)
     $Checklist_Capsule->$string = $request->$string;
 }
 // dd($checklistTabletCompression->tablet_compress_remark_1)
-//$Checklist_Capsule->Description_Deviation_capsule = $request->Description_Deviation_capsule;
+$Checklist_Capsule->Description_Deviation_capsule = $request->Description_Deviation_capsule;
 $Checklist_Capsule->save();
 
 //=========================================================================================
@@ -2663,6 +2663,20 @@ $Checklist_Capsule->save();
 
 
             $internalAudit->file_attach = json_encode($files);
+        }
+
+        if (!empty($request->file_attach_capsule)) {
+            $files = [];
+            if ($request->hasfile('file_attach_capsule')) {
+                foreach ($request->file('file_attach_capsule') as $file) {
+                    $name = $request->name . 'file_attach_capsule' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->file_attach_capsule = json_encode($files);
         }
 
         $auditorsNew = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'Audit Agenda'])->firstOrCreate();

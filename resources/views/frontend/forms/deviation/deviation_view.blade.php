@@ -8431,6 +8431,7 @@
                                         <textarea class="tiny" name="Other1_feedback" id="summernote-42" @if ($data->stage != 4 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_feedback }}</textarea>
                                     </div>
                                 </div> --}}
+
                                 <div class="col-12 other1_reviews">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Other's 1 Attachments</label>
@@ -8457,6 +8458,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                
 
                                 <div class="col-md-6 mb-3 other1_reviews">
                                     <div class="group-input">

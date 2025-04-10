@@ -429,10 +429,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
+
                         @if (Auth::user()->id == $data->assign_to)
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Acknowledgement
-                        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                              Acknowledgement
+                            </button>
                         @endif
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
@@ -3268,8 +3269,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <tr>
                                                         @if ($grid_Data5 && is_array($grid_Data5->data))
                                                             @foreach ($grid_Data5->data as $item)
-                                                                <td><input disabled type="text"
-                                                                        name="Initial[0][serial_number]" value="1">
+                                                                <td><input disabled type="text" name="Initial[{{ $loop->index }}][serial_number]" value="{{ $loop->iteration }}">
+
                                                                 </td>
                                                                 <td>
                                                                     <textarea name="Initial[{{ $loop->index }}][observation]" {{ $data->stage == 4 ? 'required' : 'readonly' }}>{{ isset($item['observation']) ? $item['observation'] : '' }} </textarea>
@@ -5759,7 +5760,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments"> Supporting Attachment </label>
+                                        <label for="Audit Attachments">Supporting Attachment </label>
                                         <small class="text-primary">
                                             Please Attach all relevant or supporting documents
                                         </small>
@@ -11779,6 +11780,40 @@ document.addEventListener("DOMContentLoaded", function () {
                                     </div>
                                 </div>
 
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments">Supporting Attachment</label>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="file_attach_capsule1">
+                                                @if ($data->file_attach_capsule)
+                                                @foreach (json_decode($data->file_attach_capsule) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif
+                                            </div>
+
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="file_attach_capsule[]"
+                                                    oninput="addMultipleFiles(this, 'file_attach_capsule1')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
@@ -12016,7 +12051,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     <tbody>
                                                         @foreach ($documentationQuestions as $index => $question)
                                                             <tr>
-                                                                <td class="flex text-center">2.{{ $index + 1 }}</td>
+                                                                <td class="flex text-center">3.{{ $index + 1 }}</td>
                                                                 <td>{{ $question }}</td>
                                                                 <td>
                                                                     @php
@@ -14357,7 +14392,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="sub-head">
-                                        STAGE 1 : Powder Manufacturing and Packing
+                                        STAGE 1 : Powder Manufacturing & Filling
                                     </div>
 
                                     <div class="col-12">

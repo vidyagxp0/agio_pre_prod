@@ -324,8 +324,8 @@
                                 '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                                 '"></td>' +
-                                '<td><input type="text" name="action[]"></td>' +
-                                '<td><select name="responsible[]">' +
+                                '<td><textarea name="action[]"></textarea></td>' +
+                                 '<td><select name="responsible[]">' +
                                 '<option value="">Select a value</option>';
 
                             for (var i = 0; i < users.length; i++) {
@@ -848,7 +848,6 @@
                                                             <th style="width:40%">Observation</th>
                                                             <th style="width: 40%">Category</th>
                                                             <th style="width: 12%">Action</th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -860,10 +859,10 @@
                                                                             name="observation[{{ $loop->index }}][serial]"
                                                                             value="{{ $loop->index + 1 }}">
                                                                     </td>
-                                                                    <td><input type="text"
-                                                                            name="observation[{{ $loop->index }}][non_compliance]" 
-                                                                            value="{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}">
+                                                                    <td>
+                                                                        <textarea name="observation[{{ $loop->index }}][non_compliance]" rows="3" cols="40">{{ isset($datas['non_compliance']) ? $datas['non_compliance'] : '' }}</textarea>
                                                                     </td>
+
                                                                     <td>
                                                                      <select name="observation[{{ $loop->index }}][category]" >
                                                                       <option value="">Select Category</option>
@@ -894,8 +893,8 @@
                                                                 html += '<tr>' +
                                                                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                                                                     '"></td>' +
-                                                                    '<td><input type="text" name="observation[' + serialNumber +
-                                                                    '][non_compliance]"></td>' +
+                                                                    '<td><textarea name="observation[' + serialNumber + '][non_compliance]" rows="3" cols="40"></textarea></td>'
+                                                                     +
                                                                     '<td><select name="observation[' + serialNumber + '][category]">' +
                                                                         '<option value="">Select Category</option>' +
                                                                          '<option value="major">major</option>' +
@@ -1288,7 +1287,7 @@
                                                 <table class="table table-bordered" id="observation">
                                                     <thead>
                                                         <tr>
-                                                            <th style="width: 20px;">S.No.</th>
+                                                            <th style="width: 20px;">Sr.No.</th>
                                                             <th>Action</th>
                                                             <th>Responsible</th>
                                                             <th>Target Completion Date</th>
@@ -1303,10 +1302,11 @@
                                                                 <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}">
                                                                 </td>
-                                                                <td><input type="text" name="action[]"
-                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : '' }}">
+                                                                <td>
+                                                                    <textarea name="action[]" 
+                                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ unserialize($griddata->action)[$key] ?? '' }}</textarea>
                                                                 </td>
+
                                                                 {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
                                                                 <td> <select id="select-state" placeholder="Select..."
                                                                         name="responsible[]"
