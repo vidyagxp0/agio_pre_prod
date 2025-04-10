@@ -9321,8 +9321,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     public function deviation_child_1(Request $request, $id)
     {
 
-
-
         $cft = [];
         $parent_id = $id;
         $parent_type = "Deviation";
@@ -11535,8 +11533,6 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                  }
 
 
-
-
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
                     $deviation->QA_head_approved_by = Auth::user()->name;
@@ -11620,17 +11616,57 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //     return redirect()->back();
                     // }
 
-                    // return "PAUSE";
-                    if ((empty($deviation->Discription_Event) && empty($changeControl->objective)
-                    && empty($deviation->scope) &&  empty($deviation->imidiate_action) &&  empty($deviation->Detail_Of_Root_Cause)
-                    )){
-                       Session::flash('swal', [
-                           'title' => 'Mandatory Fields Required!',
-                           'message' => 'Investingation tab is yet to be filled!',
-                           'type' => 'warning',
-                       ]);
+                    // working code ;
+                    // if ((empty($deviation->Discription_Event) && empty($changeControl->objective)
+                    // && empty($deviation->scope) &&  empty($deviation->imidiate_action) &&  empty($deviation->Detail_Of_Root_Cause) &&
+                    // empty($deviation->Detail_Of_Root_Cause))){
+                    //    Session::flash('swal', [
+                    //        'title' => 'Mandatory Fields Required!',
+                    //        'message' => 'Investingation tab is yet to be filled!',
+                    //        'type' => 'warning',
+                    //    ]);
 
-                       return redirect()->back();
+                    //    return redirect()->back();
+
+                    $selectedApproaches = explode(',', $deviation->investigation_approach);
+                            $errors = [];
+
+                            if (in_array('Why-Why Chart', $selectedApproaches) && empty($deviation->why_problem_statement)) {
+                                $errors[] = 'Why-Why Chart requires Root Cause details.';
+                            }
+                            // if (in_array('Category Of Human Error', $selectedApproaches) && empty($deviation->human_error_category)) {
+                            //     $errors[] = 'Human Error Category is required.';
+                            // }
+                            // if (in_array('Fishbone or Ishikawa Diagram', $selectedApproaches) && empty($deviation->fishbone_details)) {
+                            //     $errors[] = 'Fishbone details are required.';
+                            // }
+                            // if (in_array('Is/Is Not Analysis', $selectedApproaches) && empty($deviation->is_is_not)) {
+                            //     $errors[] = 'Is/Is Not Analysis details are required.';
+                            // }
+
+                            // if (in_array('Failure Mode and Effect Analysis', $selectedApproaches)
+                            //     && (!is_array($request->risk_factor_1) || count(array_filter($request->risk_factor_1)) === 0)
+                            // ) {
+                            //     $errors[] = 'FMEA details are required.';
+                            // }
+                            
+                            
+                            if (in_array('Others', $selectedApproaches) && empty($deviation->others_data)) {
+                                $errors[] = 'Please specify details for "Others" Investigation Approach.';
+                            }
+
+                            if (
+                                (empty($deviation->Discription_Event) && empty($changeControl->objective)
+                                && empty($deviation->scope) && empty($deviation->imidiate_action)
+                                && empty($deviation->Detail_Of_Root_Cause)) || !empty($errors)
+                            ) {
+                                Session::flash('swal', [
+                                    'title' => 'Mandatory Fields Required!',
+                                    'message' => !empty($errors) ? implode("\n", $errors) : 'Investigation tab is yet to be filled!',
+                                    'type' => 'warning',
+                                ]);
+                                return redirect()->back();
+                            
                    } else {
                        Session::flash('swal', [
                            'type' => 'success',
@@ -11640,7 +11676,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                    }
 
                    $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
-                //  dd($riskEffectAnalysis->risk_factor);
+                
                    if (empty($riskEffectAnalysis->risk_factor)) {
 
                       Session::flash('swal', [
