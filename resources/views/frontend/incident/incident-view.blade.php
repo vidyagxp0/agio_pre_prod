@@ -2108,7 +2108,7 @@
                                                     <div><small class="text-primary">Please insert "NA" in the data field if it
                                                             does not require completion</small></div>
                                                     <textarea   name="Description_incident"
-                                                        id="editor" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
+                                                        id="editor" {{ $data->stage == 1 ? '' : 'readonly' }}>{!! $data->Description_incident !!}</textarea>
                                                 </div>
                                                 @error('Description_incident')
                                                     <div class="text-danger">{{ $message }}</div>

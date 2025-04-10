@@ -357,7 +357,7 @@ use Carbon\Carbon;
                         Not Applicable
                         @endif
                         </td> --}}
-                       
+
                         <th class="w-20">Review Period</th>
                         <td class="w-30">
                             @if ($managementReview->review_period_monthly)
@@ -505,7 +505,7 @@ use Carbon\Carbon;
 
 
         <div class="inner-block">
-            <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA Head Review comment
+            {{-- <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline;">QA Head Review comment
             </label>
             <span style="font-size: 0.8rem; margin-left: 70px;">
 
@@ -513,8 +513,20 @@ use Carbon\Carbon;
                 {{ $managementReview->Operations }}
                 @else
                 Not Applicable
-                @endif
+                @endif --}}
                 <table>
+                    <tr>
+                        <th class="w-20">QA Head Review commen</th>
+                        <td class="w-30">
+                            @if ($managementReview->Operations)
+                            {{ $managementReview->Operations }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+
                     <tr>
                         <th class="w-20">Invite Person Notify</th>
                         <td class="w-30">
@@ -525,10 +537,10 @@ use Carbon\Carbon;
                             @endif
                         </td>
                     </tr>
-                    
+
                 </table>
-                
-                
+
+
 
         </div>
 
@@ -764,7 +776,7 @@ use Carbon\Carbon;
 
     <div class="block">
         <div class="block-head">
-            Management Review Participants 
+            Management Review Participants
         </div>
         <div class="border-table">
             <table style="margin-top: 20px; width:100%;table-layout:fixed;">
@@ -2930,6 +2942,16 @@ use Carbon\Carbon;
                             @endif
                         </div>
                     </td>
+                    <th class="w-20">Other's 3 Department</th>
+                    <td class="w-30">
+                        <div>
+                            @if ($data1->Other3_Department_person)
+                            {{ $data1->Other3_Department_person }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </div>
+                    </td>
                 </tr>
 
                 <tr>
@@ -4984,7 +5006,7 @@ use Carbon\Carbon;
     </div>
     </div>
     --}}
-   
+
     {{-- <div class="block">
             <div class="block-head">
                 Performance Evaluation
