@@ -1147,21 +1147,21 @@
 
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
-                        <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
+                        <label for="Effective Approval Complete By"><b>Effective Approval Completed By</b></label>
                         @if( $data->effective_approval_complete_by ) {{ $data->effective_approval_complete_by }}  @else Not Applicable @endif
                         {{-- <div class="static">{{ $data->effective_approval_complete_by }}</div> --}}
                     </div>
                 </div>
                 <div class="col-lg-4 new-head">
                     <div class="group-input">
-                        <label for="Effective Approval Complete On"><b>Effective Approval Complete On</b></label>
+                        <label for="Effective Approval Complete On"><b>Effective Approval Completed On</b></label>
                         @if( $data->effective_approval_complete_on ) {{ $data->effective_approval_complete_on }}  @else Not Applicable @endif
                         {{-- <div class="static">{{ $data->effective_approval_complete_on }}</div> --}}
                     </div>
                 </div>
                 <div class="col-lg-3 new-head">
                     <div class="group-input">
-                        <label for="Effective Approval Complete On"><b>Effective Approval Complete Comment</b></label>
+                        <label for="Effective Approval Complete On"><b>Effective Approval Completed Comment</b></label>
                         @if( $data->effective_approval_complete_comment ) {{ $data->effective_approval_complete_comment }}  @else Not Applicable @endif
                         {{-- <div class="static">{{ $data->effective_approval_complete_comment }}</div> --}}
                     </div>

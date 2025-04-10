@@ -10706,7 +10706,25 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $lastDocument = CC::find($id);
             $evaluation = Evaluation::where('cc_id', $id)->first();
             $updateCFT = CcCft::where('cc_id', $id)->latest()->first();
+        
             if ($changeControl->stage == 5) {
+                    if (empty($updateCFT->RA_data_person) || empty($updateCFT->QA_CQA_person) || empty($updateCFT->qa_final_comments)) {
+                        // Agar koi bhi field empty hai, to warning do
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'QA/CQA Final Review Tab is yet to be filled'
+                        ]);
+                
+                        return redirect()->back();
+                    } else {
+                        // Sab fields filled hai, to success
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Document Sent'
+                        ]);
+                    }
                     $changeControl->stage = "7";
                     $changeControl->status = "QA/CQA Head / Designee Approval";
                     $changeControl->QA_final_review_by = Auth::user()->name;
