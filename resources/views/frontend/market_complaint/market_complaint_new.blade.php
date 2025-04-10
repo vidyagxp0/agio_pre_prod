@@ -694,11 +694,11 @@
                                         <label for="root_cause">
                                             Product Details
                                             <button type="button" id="product_details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
+                                            <!-- <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal-Market_complaint"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span>
+                                            </span> -->
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="product_details_details"
@@ -884,11 +884,11 @@
                                         <label for="root_cause">
                                             Traceability
                                             <button type="button" id="traceblity_add">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
+                                            <!-- <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal-Market_Complaint_Traceability"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span>
+                                            </span> -->
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="traceblity" style="width: 100%;">
@@ -1884,13 +1884,13 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="root_cause">
-                                        Product Details
+                                        Product Details 
                                         <button type="button" id="promate_add">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
+                                        <!-- <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal-Market_Complaint_Material"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
-                                        </span>
+                                        </span> -->
                                     </label>
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
