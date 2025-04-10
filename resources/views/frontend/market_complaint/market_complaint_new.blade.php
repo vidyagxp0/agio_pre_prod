@@ -762,7 +762,7 @@
                                                                         <input type="date"
                                                                             name="serial_number_gi[0][info_expiry_date]"
                                                                             value=""
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                           
                                                                             id="date_0_expiry_date_input"
                                                                             class="hide-input show_date"
                                                                             style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -791,63 +791,75 @@
                                 </div>
 
                                 <script>
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
+    $(document).on('click', '.removeRowBtn', function () {
+        $(this).closest('tr').remove();
+    });
 
-                                    $(document).ready(function() {
-                                        $('#product_details').click(function(e) {
-                                            e.preventDefault();
+    $(document).ready(function () {
+        $('#product_details').click(function (e) {
+            e.preventDefault();
 
-                                            function generateTableRow(serialNumber) {
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][info_product_name]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][info_batch_no]"></td>' +
-                                                    // '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY"></td>' +
-                                                    // '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY"></td>' +
-                                                    '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                    serialNumber + '_info_mfg_date" type="text" readonly name="serial_number_gi[' +
-                                                    serialNumber +
-                                                    '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
-                                                    serialNumber +
-                                                    '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" id="date_' +
-                                                    serialNumber +
-                                                    '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                    serialNumber + '_info_mfg_date\')" /> </div></div></div> </td>' +
-                                                    '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_' +
-                                                    serialNumber + '_info_expiry_date" type="text" name="serial_number_gi[' +
-                                                    serialNumber +
-                                                    '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' +
-                                                    serialNumber +
-                                                    '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="" id="date_' +
-                                                    serialNumber +
-                                                    '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                    serialNumber + '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][info_batch_size]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][info_pack_size]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][info_dispatch_quantity]"></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber +
-                                                    '][info_remarks]"></td>' +
-                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                    '</tr>';
-                                                return html;
-                                            }
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber +
+                    '][serial]" value="' + (serialNumber + 1) + '"></td>' +
 
-                                            var tableBody = $('#product_details_details tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script>
+                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
+                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
+
+                    // MFG Date
+                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                    '<input id="date_' + serialNumber + '_info_mfg_date_display" type="text" readonly ' +
+                    'name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" ' +
+                    'onclick="document.getElementById(\'date_' + serialNumber + '_info_mfg_date_input\').click();" />' +
+
+                    '<input type="date" value="" id="date_' + serialNumber + '_info_mfg_date_input" ' +
+                    'class="hide-input show_date" ' +
+                    'style="position: absolute; top: 0; left: 0; opacity: 0;" ' +
+                    'oninput="handleDateInput(this, \'date_' + serialNumber + '_info_mfg_date_display\')" />' +
+                    '</div></div></div></td>' +
+
+                    // Expiry Date
+                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                    '<input id="date_' + serialNumber + '_info_expiry_date_display" type="text" readonly ' +
+                    'name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" ' +
+                    'onclick="document.getElementById(\'date_' + serialNumber + '_info_expiry_date_input\').click();" />' +
+
+                    '<input type="date" value="" id="date_' + serialNumber + '_info_expiry_date_input" ' +
+                    'class="hide-input show_date" ' +
+                    'style="position: absolute; top: 0; left: 0; opacity: 0;" ' +
+                    'oninput="handleDateInput(this, \'date_' + serialNumber + '_info_expiry_date_display\')" />' +
+                    '</div></div></div></td>' +
+
+                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
+                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
+                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
+                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#product_details_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount);
+            tableBody.append(newRow);
+        });
+    });
+
+    // Converts date from YYYY-MM-DD to DD-MMM-YYYY
+    function handleDateInput(dateInput, textInputId) {
+        const selectedDate = new Date(dateInput.value);
+        const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        }).replace(/ /g, '-');
+        document.getElementById(textInputId).value = formattedDate;
+    }
+</script>
 
                                 <script>
                                     function handleDateInput(dateInput, textInputId) {
@@ -1944,7 +1956,6 @@
                                                                         placeholder="DD-MMM-YYYY" />
                                                                     <input type="date"
                                                                         name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
-                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                                         id="date_0_expiry_date_pmd_ca"
                                                                         class="hide-input show_date"
                                                                         style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -1971,66 +1982,87 @@
                             </div>
 
                             <script>
-                                $(document).on('click', '.removeRowBtn', function() {
-                                    $(this).closest('tr').remove();
-                                });
+    $(document).on('click', '.removeRowBtn', function () {
+        $(this).closest('tr').remove();
+    });
 
-                                $(document).ready(function() {
-                                    // Set a JavaScript variable with the current date from Blade
-                                    var currentDate = '{{ \Carbon\Carbon::now()->format('Y-m-d') }}';
+    $(document).ready(function () {
+        $('#promate_add').click(function (e) {
+            e.preventDefault();
 
-                                    $('#promate_add').click(function(e) {
-                                        e.preventDefault();
+            function generateTableRow(productserialno) {
+                var html = '<tr>' +
+                    '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][serial]" value="' + (productserialno + 1) + '"></td>' +
 
-                                        function generateTableRow(productserialno) {
-                                            var html = '<tr>' +
-                                                '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][serial]" value="' + (productserialno + 1) + '"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][batch_no_pmd_ca]"></td>' +
-                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                                                '<input id="date_' + productserialno +
-                                                '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno +
-                                                '][mfg_date_pmd_ca]" min="{{ today()->subDays(1000)->format('Y-m-d') }}"  id="date_' +
-                                                productserialno +
-                                                '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                productserialno + '_mfg_date_pmd_ca\')"/>' +
-                                                '</div></div></div></td>' +
+                    '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][product_name_ca]"></td>' +
 
-                                                '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
-                                                '<input id="date_' + productserialno +
-                                                '_expiry_date_pmd_ca" type="text" readonly name="Product_MaterialDetails[' +
-                                                productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" />' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno +
-                                                '][expiry_date_pmd_ca]" min="' + currentDate + '" id="date_' + productserialno +
-                                                '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_' +
-                                                productserialno + '_expiry_date_pmd_ca\')"/>' +
-                                                '</div></div></div></td>' +
+                    '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][batch_no_pmd_ca]"></td>' +
 
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
-                                                '][remarks_ca]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
+                    // MFG Date
+                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                    '<input id="text_date_' + productserialno +
+                    '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' +
+                    productserialno + '_mfg_date_pmd_ca\').click();" />' +
 
-                                        var tableBody = $('#prod_mate_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
-                                });
-                            </script>
+                    '<input type="date" name="Product_MaterialDetails[' + productserialno +
+                    '][mfg_date_pmd_ca]" id="date_' + productserialno +
+                    '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;"' +
+                    ' oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\')" />' +
+                    '</div></div></div></td>' +
+
+                    // Expiry Date (Fixed: No min value)
+                    '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                    '<input id="text_date_' + productserialno +
+                    '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' +
+                    productserialno + '_expiry_date_pmd_ca\').click();" />' +
+
+                    '<input type="date" name="Product_MaterialDetails[' + productserialno +
+                    '][expiry_date_pmd_ca]" id="date_' + productserialno +
+                    '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;"' +
+                    ' oninput="handleDateInput(this, \'text_date_' + productserialno + '_expiry_date_pmd_ca\')" />' +
+                    '</div></div></div></td>' +
+
+                    '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][batch_size_pmd_ca]"></td>' +
+
+                    '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][pack_profile_pmd_ca]"></td>' +
+
+                    '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][released_quantity_pmd_ca]"></td>' +
+
+                    '<td><input type="text" name="Product_MaterialDetails[' + productserialno +
+                    '][remarks_ca]"></td>' +
+
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                return html;
+            }
+
+            var tableBody = $('#prod_mate_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount);
+            tableBody.append(newRow);
+        });
+    });
+
+    // Function to show selected date in text input in 'DD-MMM-YYYY' format
+    function handleDateInput(dateInput, textInputId) {
+        const selectedDate = new Date(dateInput.value);
+        const formattedDate = selectedDate.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        }).replace(/ /g, '-');
+        document.getElementById(textInputId).value = formattedDate;
+    }
+</script>
 
 
                             <div class="col-lg-12">

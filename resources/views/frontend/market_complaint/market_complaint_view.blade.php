@@ -2289,124 +2289,60 @@
                                                                     value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+    <div class="new-date-data-field">
+        <div class="group-input input-date">
+            <div class="calenderauditee">
+                <input
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    class="click_date"
+                    id="text_date_{{ $index }}_mfg_date_pmd_ca"
+                    type="text"
+                    name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+                    placeholder="DD-MMM-YYYY"
+                    value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                    readonly
+                    onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
 
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
+                <input type="date"
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                    value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                    id="date_{{ $index }}_mfg_date_pmd_ca"
+                    class="hide-input show_date"
+                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca');" />
+            </div>
+        </div>
+    </div>
+</td>
 
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+<td>
+    <div class="new-date-data-field">
+        <div class="group-input input-date">
+            <div class="calenderauditee">
+                <input
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    class="click_date"
+                    id="text_date_{{ $index }}_expiry_date_pmd_ca"
+                    type="text"
+                    name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
+                    placeholder="DD-MMM-YYYY"
+                    value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                    readonly
+                    onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
 
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca');" />
-                                                                                {{--updateExpiryMinDate('{{ $index }}');"--}}
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
-
-
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-
-
-
-                                                            {{-- <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td> --}}
-                                                            {{-- <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td> --}}
+                <input type="date"
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                    value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                    id="date_{{ $index }}_expiry_date_pmd_ca"
+                    class="hide-input show_date"
+                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
+            </div>
+        </div>
+    </div>
+</td>
 
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
@@ -2450,48 +2386,54 @@
                             </div>
 
                             <script>
-                                $(document).ready(function() {
-                                    let indexMaetDetails = {{ $product_materialDetails && is_array($product_materialDetails->data) ? count($product_materialDetails->data) : 0 }};
+                                $('#promate_add').click(function (e) {
+                                e.preventDefault();
 
-                                    $('#promate_add').click(function(e) {
-                                        e.preventDefault();
+                                function generateTableRow(productserialno) {
+                                    var html =
+                                        '<tr>' +
+                                        '<td>' + (productserialno + 1) + '</td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
+                                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                        '<input id="text_date_' + productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_mfg_date_pmd_ca\').click();"/>' +
+                                        '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" value="" id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\')"/>' +
+                                        '</div></div></div></td>' +
+                                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                        '<input id="text_date_' + productserialno + '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_expiry_date_pmd_ca\').click();"/>' +
+                                        '<input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" value="" id="date_' + productserialno + '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
+                                        '</div></div></div></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
+                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+                                    return html;
+                                }
 
-                                        function generateTableRow(productserialno) {
-                                            var currentDate = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
-                                            var html =
-                                                '<tr>' +
-                                                '<td>' + (productserialno + 1) + '</td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field">' +
-                                                '<div class="group-input input-date">' +
-                                                '<div class="calenderauditee">' +
-                                                '<input id="text_date_' + productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_mfg_date_pmd_ca\').click();"/>' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="' + currentDate + '" value="' + currentDate + '" id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\')" onchange="handleStartDateChange(this, \'date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
-                                                '</div></div></div></td>' +
-                                                '<td> <div class="new-date-data-field">' +
-                                                '<div class="group-input input-date">' +
-                                                '<div class="calenderauditee">' +
-                                                '<input id="text_date_' + productserialno + '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_expiry_date_pmd_ca\').click();"/>' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="' + currentDate + '" value="' + currentDate + '" id="date_' + productserialno + '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
-                                                '</div></div></div></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#prod_mate_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                        indexMaetDetails++;
-                                    });
-                                });
+                                var tableBody = $('#prod_mate_details tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount);
+                                tableBody.append(newRow);
+                                indexMaetDetails++;
+                            });
                             </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                             {{--<script>

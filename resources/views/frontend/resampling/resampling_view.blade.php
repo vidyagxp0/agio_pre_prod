@@ -855,7 +855,7 @@
                                     @endif
                                     <div class="col-12">
                                     <div class="group-input">
-                                        <label for="qa_head">QA Attachment</label>
+                                        <label for="qa_head">QA/CQA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_head">

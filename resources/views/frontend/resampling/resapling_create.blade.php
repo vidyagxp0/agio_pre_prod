@@ -365,7 +365,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Support_doc">QA Attachment</label>
+                                        <label for="Support_doc">QA/CQA Attachment</label>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_head"></div>
                                             <div class="add-btn">
