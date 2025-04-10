@@ -559,7 +559,8 @@
 
                                 <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                     <div class="group-input">
-                                        <label for="other_specify">Please specify</label>
+                                        <label for="other_specify">Please specify <span
+                                        class="text-danger">*</span></label>
                                         <input type="text" name="Occurance" id="other_specify" value="{{ property_exists($data ?? (object)[], 'Occurance') }}" placeholder="Specify if Other is selected">
 
                                     </div>

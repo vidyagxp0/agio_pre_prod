@@ -521,8 +521,8 @@
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
                         </tr>
-                        @if ($cc_cfts->change_details_attachments)
-                            @foreach (json_decode($cc_cfts->change_details_attachments) as $key => $file)
+                        @if ($data->risk_assessment_atch)
+                            @foreach (json_decode($data->risk_assessment_atch) as $key => $file)
                                 <tr>
                                     <td class="w-20">{{ $key + 1 }}</td>
                                     <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -622,6 +622,38 @@ Not Applicable
                     </tr>
                 </table>
             </div>
+
+            <div class="border-table">
+                        <div class="block-head">
+                        Change Details Attachments
+                        </div>
+                        <table>
+
+                            <tr class="table_bg">
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
+                            @if ($cc_cfts->change_details_attachments)
+                                @foreach (json_decode($cc_cfts->change_details_attachments) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
 
 
             <div class="block">
@@ -2384,7 +2416,7 @@ Not Applicable
                                         @endif
                                     </div>
                                 </td>
-                                <th class="w-20">Contract Giver Person</th>
+                                <th class="w-20">Contract Giver comment update by</th>
                                 <td class="w-30">
                                     <div>
                                         @if ($cftData->ContractGiver_person)
@@ -3354,7 +3386,7 @@ Not Applicable
 
                             <tr class="table_bg">
                                 <th class="w-20">Sr.No.</th>
-                                <th class="w-60">Initiator Update Attachments</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cc_cfts->intial_update_attach)
                                 @foreach (json_decode($cc_cfts->intial_update_attach) as $key => $file)
@@ -3407,7 +3439,7 @@ Not Applicable
 
                             <tr class="table_bg">
                                 <th class="w-20">Sr.No.</th>
-                                <th class="w-60">HOD Final Review Attachments</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($cc_cfts->hod_final_review_attach)
                                 @foreach (json_decode($cc_cfts->hod_final_review_attach) as $key => $file)
@@ -3470,7 +3502,7 @@ Not Applicable
 
                             <tr class="table_bg">
                                 <th class="w-20">Sr.No.</th>
-                                <th class="w-60">Implementation Verification Attachments</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($QaApprovalComments->tran_attach)
                                 @foreach (json_decode($QaApprovalComments->tran_attach) as $key => $file)
@@ -3539,7 +3571,7 @@ Not Applicable
 
                             <tr class="table_bg">
                                 <th class="w-20">Sr.No.</th>
-                                <th class="w-60">List Of Attachments</th>
+                                <th class="w-60">Attachment</th>
                             </tr>
                             @if ($closure->attach_list)
                                 @foreach (json_decode($closure->attach_list) as $key => $file)

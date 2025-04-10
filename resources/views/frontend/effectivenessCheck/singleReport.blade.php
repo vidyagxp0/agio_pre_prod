@@ -634,14 +634,14 @@
 
 
             <tr>
-                <th class="w-20">Effective Approval Complete By
+                <th class="w-20">Effective Approval Completed By
                 </th>
                 <td class="w-30">@if($data->effective_apprival_complete_by){{ $data->effective_approval_complete_by }} @else Not Applicable @endif</td>
                 <th class="w-20">
-                    Effective Approval Complete On</th>
+                    Effective Approval Completed On</th>
                 <td class="w-30">@if($data->effective_approval_complete_on) {{ $data->effective_approval_complete_on }} @else Not Applicable @endif</td>
                 <th class="w-20">
-                    Effective Approval Complete Comment</th>
+                    Effective Approval Completed Comment</th>
                 <td class="w-30">@if($data->effective_approval_complete_comment) {{ $data->effective_approval_complete_comment }} @else Not Applicable @endif</td>
             </tr>
 

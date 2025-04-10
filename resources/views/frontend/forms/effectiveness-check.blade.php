@@ -663,21 +663,21 @@
 
                                 <div class="col-lg-4 new-head">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete By"><b>Effective Approval Complete
+                                        <label for="Effective Approval Complete By"><b>Effective Approval Completed
                                                 By</b></label>
                                         <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 new-head">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete
+                                        <label for="Effective Approval Complete On"><b>Effective Approval Completed
                                                 On</b></label>
                                         <div class="date">Not Applicable</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 new-head">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete
+                                        <label for="Effective Approval Complete On"><b>Effective Approval Completed
                                                 Comment</b></label>
                                         <div class="date">Not Applicable</div>
                                     </div>

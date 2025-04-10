@@ -444,7 +444,7 @@
 
                                     </tr>
                                 @endforeach
-                
+
                                     {{-- @if (!empty($remarks))
                                         @foreach ($remarks as $key => $remark)
                                             <tr>
@@ -462,7 +462,7 @@
                         </div>
                     </div>
                 {{-- @endif --}}
-                
+
                 <table>
                     <tr>
                         <th class="w-20">Document Details Required?</th>
@@ -509,7 +509,7 @@
                                     </tr>
                                 @endforeach
 
-                
+
                                     {{-- @if (!empty($document_names))
                                         @foreach ($document_names as $key => $doc_name)
                                             <tr>
@@ -527,7 +527,7 @@
                         </div>
                     </div>
                 {{-- @endif --}}
-                
+
 
                 <table>
                     <tr>
@@ -592,14 +592,14 @@
                         </div>
                     </div>
                 {{-- @endif --}}
-                
+
 
                 <table>
                     <tr>
                         <th class="w-20">Description of Incident</th>
                         <td class="w-80">
                             @if ($data->Description_incident)
-                                {{ $data->Description_incident }}
+                                {!! $data->Description_incident  !!}
                             @else
                                 Not Applicable
                             @endif
