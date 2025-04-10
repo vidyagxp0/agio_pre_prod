@@ -430,11 +430,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
 
-                        @if (Auth::user()->id == $data->assign_to)
+                    
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                               Acknowledgement
                             </button>
-                        @endif
+                    
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
@@ -1209,11 +1209,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         Auditors
                                                         <button type="button" name="audit-incident-grid"@if ($data->stage != 1) disabled @endif
                                                             id="IncidentAddAuditor">+</button>
-                                                        <span class="text-primary" data-bs-toggle="modal"
-                                                            data-bs-target="#observation-field-instruction-modal"
-                                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                            (Launch Instruction)
-                                                        </span>
                                                         <span class="text-danger">*</span>
                                                     </label>
 
@@ -1535,6 +1530,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                     class="text-white"> Exit </a> </button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -2258,7 +2254,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                             <div class="group-input">
                                                 <label style="display: flex; justify-content:space-between" for="audit-agenda-grid">
                                                 <div>
-                                                    Audit Agenda <span class="text-danger">*</span>
+                                                    Audit Agenda<span class="text-danger">*</span>
                                                     <button type="button" id="addSamplePlanning" {{ $data->stage !=3 ? 'disabled' : ''  }}>+</button>
                                                 </div>
                                                 </label>
@@ -3551,19 +3547,19 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Acknowledement
+                                        Acknowledgment
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Preparation Completed On">Acknowledement
+                                            <label for="Audit Preparation Completed On">Acknowledgment
                                                 By</label>
                                             <div class="static">{{ $data->audit_preparation_completed_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Acknowledement On">Acknowledement
+                                            <label for="Acknowledement On">Acknowledgment
                                                 On</label>
                                             <div class="static">{{ $data->audit_preparation_completed_on }}</div>
                                         </div>
@@ -3571,7 +3567,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On"> Acknowledement Comment</label>
+                                            <label for="Audit Schedule On">Acknowledgment Comment</label>
                                             <div class="static">{{ $data->acknowledge_commnet }}</div>
                                         </div>
                                     </div>

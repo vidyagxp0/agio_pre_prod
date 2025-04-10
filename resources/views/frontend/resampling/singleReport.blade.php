@@ -672,14 +672,14 @@ Not Applicable
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Submit By</th>
+                        <th class="w-20">Submitted By</th>
                         <td class="w-30">
                             @if ($data->acknowledgement_by){{ $data->acknowledgement_by}}
                             @else
                             Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Submit On</th>
+                        <th class="w-20">Submitted On</th>
                         <td class="w-30">
 
                             @if ($data->acknowledgement_on){{ $data->acknowledgement_on}}
@@ -689,7 +689,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20"> Submit comment</th>
+                        <th class="w-20">Submitted Comment</th>
                         <td class="w-80">@if ($data->acknowledgement_comment )
                             {{ $data->acknowledgement_comment }}
                             @else
@@ -777,7 +777,7 @@ Not Applicable
 
                     </tr>
                     <tr>
-                        <th class="w-20">Cancel By </th>
+                        <th class="w-20">Cancelled By</th>
                         <td class="w-30">
                             @if ( $data->cancelled_by)
                             {{ $data->cancelled_by }}
@@ -786,7 +786,7 @@ Not Applicable
                         @endif
                        </td>
                         <th class="w-20">
-                            Cancel On</th>
+                            Cancelled On</th>
                         <td class="w-30">
                             @if ( $data->cancelled_on)
                             {{ $data->cancelled_on }}
@@ -796,7 +796,7 @@ Not Applicable
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20"> Cancel Comment</th>
+                        <th class="w-20">Cancelled Comment</th>
                         <td class="w-80">
                             @if ( $data->cancelled_on)
                             {{ $data->cancelled_on }}

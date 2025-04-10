@@ -507,27 +507,23 @@
                 <label for="audit-agenda-grid">
                     Info. On Product/ Material
                     <button type="button" name="audit-agenda-grid" id="info_product_material" {{ $data->stage == 1 ? 'required' : 'readonly' }}>+</button>
-                    <span class="text-primary" data-bs-toggle="modal"
-                        data-bs-target="#document-details-field-instruction-modal"
-                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                        (Launch Instruction)
-                    </span><span class="text-danger">*</span>
+                    <span class="text-danger">*</span>
                 </label>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="info_product_material_details"
                         style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 2%">Row#</th>
+                                <th style="width: 2%">Sr.No.</th>
                                 <th style="width: 6%">Item/Product Code</th>
-                                <th style="width: 8%"> Batch No*.</th>
-                                <th style="width: 18%"> Mfg.Date</th>
+                                <th style="width: 8%">Batch No.</th>
+                                <th style="width: 18%">Mfg.Date</th>
                                 <th style="width: 18%">Expiry Date</th>
-                                <th style="width: 8%"> Label Claim.</th>
+                                <th style="width: 8%">Label Claim.</th>
                                 <th style="width: 8%">Pack Size</th>
                                 <th style="width: 8%">Analyst Name</th>
                                 <th style="width: 10%">Others (Specify)</th>
-                                <th style="width: 10%"> In- Process Sample Stage.</th>
+                                <th style="width: 10%">In- Process Sample Stage.</th>
                                 <th style="width: 10% pt-3">Packing Material Type</th>
                                 <th style="width: 16% pt-2"> Stability for</th>
                                 <th style="width: 16% pt-2"> Action </th>
@@ -608,17 +604,13 @@
                 <label for="audit-agenda-grid">
                     Details of Stability Study
                     <button type="button" name="audit-agenda-grid" id="details_stability" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                    <span class="text-primary" data-bs-toggle="modal"
-                        data-bs-target="#document-details-field-instruction-modal"
-                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                        (Launch Instruction)
-                    </span> <span class="text-danger">*</span>
+                    <span class="text-danger">*</span>
                 </label>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 4%">Row#</th>
+                                <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 8%">AR Number</th>
                                 <th style="width: 12%">Condition: Temperature & RH</th>
                                 <th style="width: 12%">Interval</th>
@@ -653,17 +645,13 @@
                 <label for="audit-agenda-grid">
                     OOS/OOT Details
                     <button type="button" name="audit-agenda-grid" id="oos_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                    <span class="text-primary" data-bs-toggle="modal"
-                        data-bs-target="#document-details-field-instruction-modal"
-                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                        (Launch Instruction)
-                    </span> <span class="text-danger">*</span>
+                    <span class="text-danger">*</span>
                 </label>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 4%">Row#</th>
+                                <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 8%">AR Number.</th>
                                 <th style="width: 8%">Test Name of OOS/OOT</th>
                                 <th style="width: 12%">Results Obtained</th>
@@ -728,17 +716,13 @@
                 <label for="audit-agenda-grid">
                     Product Details
                     <button type="button" name="audit-agenda-grid" id="products_details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                    <span class="text-primary" data-bs-toggle="modal"
-                        data-bs-target="#document-details-field-instruction-modal"
-                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                        (Launch Instruction)
-                    </span><span class="text-danger">*</span>
+                    <span class="text-danger">*</span>
                 </label>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="products_details_details" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 4%">Row#</th>
+                                <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 8%"> Name of Product</th>
                                 <th style="width: 8%"> A.R.No </th>
                                 <th style="width: 8%"> Sampled On </th>
@@ -805,17 +789,13 @@
                 <label for="audit-agenda-grid">
                     Instrument Details
                     <button type="button" name="audit-agenda-grid" id="instrument_detail" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
-                    <span class="text-primary" data-bs-toggle="modal"
-                        data-bs-target="#document-details-field-instruction-modal"
-                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                        (Launch Instruction)
-                    </span> <span class="text-danger">*</span>
+                    <span class="text-danger">*</span>
                 </label>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="instrument_details_details" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 4%">Row#</th>
+                                <th style="width: 4%">Sr.No.</th>
                                 <th style="width: 8%"> Name of instrument</th>
                                 <th style="width: 8%"> Instrument Id Number</th>
                                 <th style="width: 8%"> Calibrated On</th>

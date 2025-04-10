@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Audit Observation Report
+                    Internal Audit Report
                 </td>
                 <td class="w-30">
                     <div class="logo" style="text-align: center;">
@@ -3209,11 +3209,11 @@
                         <td class="w-30">{{ $data->cancel_2_comment }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Acknowledement by</th>
+                        <th class="w-20">Acknowledgment by</th>
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Acknowledement On</th>
+                        <th class="w-20">Acknowledgment On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
-                        <th class="w-20"> Acknowledement Comment</th>
+                        <th class="w-20"> Acknowledgment Comment</th>
                         <td class="w-30">{{ $data->acknowledge_commnet }}</td>
                     </tr>
 

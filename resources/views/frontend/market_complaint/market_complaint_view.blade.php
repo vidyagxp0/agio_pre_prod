@@ -1298,188 +1298,178 @@
                                         </span> -->
                                     </label>
                                     <table class="table table-bordered" id="ProductsDetails" style="width: 100%;">
-                                        <thead>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 100px;">Sr. No.</th>
+                                        <th>Product Name</th>
+                                        <th>Batch No.</th>
+                                        <th>Mfg. Date</th>
+                                        <th>Exp. Date</th>
+                                        <th>Batch Size</th>
+                                        <th>Pack Size</th>
+                                        <th>Dispatch Quantity</th>
+                                        <th>Remarks</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php $productsdetails = 1; @endphp
+                                    @if (!empty($productsgi) && is_array($productsgi->data))
+                                        @foreach ($productsgi->data as $index => $detail)
                                             <tr>
-                                                <th style="width: 100px;">Sr. No.</th>
-                                                <th>Product Name</th>
-                                                <th>Batch No.</th>
-                                                <th>Mfg. Date</th>
-                                                <th>Exp. Date</th>
-                                                <th>Batch Size</th>
-                                                <th>Pack Size</th>
-                                                <th>Dispatch Quantity</th>
-                                                <th>Remarks</th>
-                                                <th>Action</th>
+                                                <td>{{ $productsdetails++ }}</td>
+                                                <td><input type="text"
+                                                        name="serial_number_gi[{{ $index }}][info_product_name]"
+                                                        value="{{ $detail['info_product_name'] ?? '' }}"
+                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                <td><input type="text"
+                                                        name="serial_number_gi[{{ $index }}][info_batch_no]"
+                                                        value="{{ $detail['info_batch_no'] ?? '' }}"
+                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                <td>
+                                                    <div class="new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderauditee">
+                                                                <input
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    class="click_date"
+                                                                    id="text_date_{{ $index }}_info_mfg_date"
+                                                                    type="text"
+                                                                    name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                    placeholder="DD-MMM-YYYY"
+                                                                    value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
+                                                                    readonly
+                                                                    onclick="document.getElementById('date_{{ $index }}_info_mfg_date').click();" />
+                                                                <input type="date"
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    name="serial_number_gi[{{ $index }}][info_mfg_date]"
+                                                                    value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
+                                                                    id="date_{{ $index }}_info_mfg_date"
+                                                                    class="hide-input show_date"
+                                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                    onchange="handleDateInput(this, 'text_date_{{ $index }}_info_mfg_date')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderauditee">
+                                                                <input
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    class="click_date"
+                                                                    id="text_date_{{ $index }}_info_expiry_date"
+                                                                    type="text"
+                                                                    name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                                                                    placeholder="DD-MMM-YYYY"
+                                                                    value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"
+                                                                    readonly
+                                                                    onclick="document.getElementById('date_{{ $index }}_info_expiry_date').click();" />
+                                                                <input type="date"
+                                                                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                                                                    name="serial_number_gi[{{ $index }}][info_expiry_date]"
+                                                                    value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
+                                                                    id="date_{{ $index }}_info_expiry_date"
+                                                                    class="hide-input show_date"
+                                                                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                    onchange="handleDateInput(this, 'text_date_{{ $index }}_info_expiry_date')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><input type="text"
+                                                        name="serial_number_gi[{{ $index }}][info_batch_size]"
+                                                        value="{{ $detail['info_batch_size'] ?? '' }}"
+                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                <td><input type="text"
+                                                        name="serial_number_gi[{{ $index }}][info_pack_size]"
+                                                        value="{{ $detail['info_pack_size'] ?? '' }}"
+                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                <td><input type="text"
+                                                        name="serial_number_gi[{{ $index }}][info_dispatch_quantity]"
+                                                        value="{{ $detail['info_dispatch_quantity'] ?? '' }}"
+                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                <td><input type="text"
+                                                        name="serial_number_gi[{{ $index }}][info_remarks]"
+                                                        value="{{ $detail['info_remarks'] ?? '' }}"
+                                                        {{ $data->stage == 1 ? '' : 'readonly' }} required></td>
+                                                <td><button type="button" class="removeRowBtn" {{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button></td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php $productsdetails = 1; @endphp
-                                            @if (!empty($productsgi) && is_array($productsgi->data))
-                                                @foreach ($productsgi->data as $index => $detail)
-                                                    <tr>
-                                                        <td>{{ $productsdetails++ }}</td>
-                                                        <td><input type="text"
-                                                                name="serial_number_gi[{{ $index }}][info_product_name]"
-                                                                value="{{ array_key_exists('info_product_name', $detail) ? $detail['info_product_name'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
-                                                        </td>
-                                                        <td><input type="text"
-                                                                name="serial_number_gi[{{ $index }}][info_batch_no]"
-                                                                value="{{ array_key_exists('info_batch_no', $detail) ? $detail['info_batch_no'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
-                                                        </td>
-
-
-                                                        <td>
-                                                            <div class="new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                            class="click_date"
-                                                                            id="text_date_{{ $index }}_info_mfg_date"
-                                                                            type="text"
-                                                                            name="serial_number_gi[{{ $index }}][info_mfg_date]"
-
-                                                                            placeholder="DD-MMM-YYYY"
-                                                                            value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('d-M-Y') : '' }}"
-                                                                            readonly
-                                                                            onclick="document.getElementById('date_{{ $index }}_info_mfg_date').click();" />
-                                                                        <input type="date"
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                            name="serial_number_gi[{{ $index }}][info_mfg_date]"
-
-                                                                            value="{{ !empty($detail['info_mfg_date']) ? \Carbon\Carbon::parse($detail['info_mfg_date'])->format('Y-m-d') : '' }}"
-                                                                            id="date_{{ $index }}_info_mfg_date"
-                                                                            class="hide-input show_date"
-                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                            onchange="handleDateInput(this, 'text_date_{{ $index }}_info_mfg_date')" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="new-date-data-field">
-                                                                <div class="group-input input-date">
-                                                                    <div class="calenderauditee">
-                                                                        <input
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                            class="click_date"
-                                                                            id="text_date_{{ $index }}_info_expiry_date"
-                                                                            type="text"
-                                                                            name="serial_number_gi[{{ $index }}][info_expiry_date]"
-                                                                            placeholder="DD-MMM-YYYY"
-                                                                            value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('d-M-Y') : '' }}"
-                                                                            readonly
-                                                                            onclick="document.getElementById('date_{{ $index }}_info_expiry_date').click();" />
-                                                                        <input type="date"
-                                                                            {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                            name="serial_number_gi[{{ $index }}][info_expiry_date]"
-                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                            value="{{ !empty($detail['info_expiry_date']) ? \Carbon\Carbon::parse($detail['info_expiry_date'])->format('Y-m-d') : '' }}"
-                                                                            id="date_{{ $index }}_info_expiry_date"
-                                                                            class="hide-input show_date"
-                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                            onchange="handleDateInput(this, 'text_date_{{ $index }}_info_expiry_date')" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td><input type="text"
-                                                                name="serial_number_gi[{{ $index }}][info_batch_size]"
-                                                                value="{{ array_key_exists('info_batch_size', $detail) ? $detail['info_batch_size'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
-                                                        </td>
-                                                        <td><input type="text"
-                                                                name="serial_number_gi[{{ $index }}][info_pack_size]"
-                                                                value="{{ array_key_exists('info_pack_size', $detail) ? $detail['info_pack_size'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
-                                                        </td>
-                                                        <td><input type="text"
-                                                                name="serial_number_gi[{{ $index }}][info_dispatch_quantity]"
-                                                                value="{{ array_key_exists('info_dispatch_quantity', $detail) ? $detail['info_dispatch_quantity'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
-                                                        </td>
-                                                        <td><input type="text"
-                                                                name="serial_number_gi[{{ $index }}][info_remarks]"
-                                                                value="{{ array_key_exists('info_remarks', $detail) ? $detail['info_remarks'] : '' }}"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }} required>
-                                                        </td>
-                                                        <td><button type="button" class="removeRowBtn"
-                                                                {{ $data->stage == 1 ? '' : 'readonly' }}>Remove</button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="9">No product details found</td>
-                                                </tr>
-                                            @endif
-                                        </tbody>
-                                    </table>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="10">No product details found</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
                                 </div>
                             </div>
 
                             <script>
-                                $(document).ready(function() {
-                                    let indexDetail = {{ $productsgi && is_array($productsgi->data) ? count($productsgi->data) : 0 }};
+                            $(document).ready(function () {
+                                let indexDetail = {{ $productsgi && is_array($productsgi->data) ? count($productsgi->data) : 0 }};
 
-                                    $('#Details').click(function(e) {
-                                        e.preventDefault();
+                                $('#Details').click(function (e) {
+                                    e.preventDefault();
 
-                                        function generateTableRow(serialNumber) {
-                                            var html =
-                                                '<tr>' +
-                                                '<td>' + (serialNumber + 1) + '</td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_product_name]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_batch_no]"></td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="text_date_' +
-                                                indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' +
-                                                indexDetail + '_info_mfg_date\')" onchange="handleStartDateChange(this, \'date_' +
-                                                indexDetail +
-                                                '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                '<td> <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="text_date_' +
-                                                indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" placeholder="DD-MMM-YYYY" readonly/> <input type="date" name="serial_number_gi[' +
-                                                indexDetail +
-                                                '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_' +
-                                                indexDetail +
-                                                '_info_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' +
-                                                indexDetail + '_info_expiry_date\')" /> </div></div></div> </td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_batch_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_pack_size]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_dispatch_quantity]"></td>' +
-                                                '<td><input type="text" name="serial_number_gi[' + indexDetail +
-                                                '][info_remarks]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            indexDetail++;
-                                            return html;
-                                        }
+                                    function generateTableRow(serialNumber) {
+                                        let html =
+                                            '<tr>' +
+                                            '<td>' + (serialNumber + 1) + '</td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_product_name]"></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_no]"></td>' +
+                                            '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                            '<input id="text_date_' + indexDetail + '_info_mfg_date" type="text" name="serial_number_gi[' + indexDetail +
+                                            '][info_mfg_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
+                                            '_info_mfg_date\').click();" />' +
+                                            '<input type="date" name="serial_number_gi[' + indexDetail + '][info_mfg_date]"' +
+                                            ' id="date_' + indexDetail + '_info_mfg_date" class="hide-input show_date"' +
+                                            ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
+                                            ' onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_mfg_date\')" />' +
+                                            '</div></div></div></td>' +
+                                            '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                            '<input id="text_date_' + indexDetail + '_info_expiry_date" type="text" name="serial_number_gi[' + indexDetail +
+                                            '][info_expiry_date]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + indexDetail +
+                                            '_info_expiry_date\').click();" />' +
+                                            '<input type="date" name="serial_number_gi[' + indexDetail + '][info_expiry_date]"' +
+                                            ' id="date_' + indexDetail + '_info_expiry_date" class="hide-input show_date"' +
+                                            ' style="position: absolute; top: 0; left: 0; opacity: 0;"' +
+                                            ' onchange="handleDateInput(this, \'text_date_' + indexDetail + '_info_expiry_date\')" />' +
+                                            '</div></div></div></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_batch_size]"></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
+                                            '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                            '</tr>';
 
-                                        var tableBody = $('#ProductsDetails tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                    });
+                                        indexDetail++;
+                                        return html;
+                                    }
 
-                                    $(document).on('click', '.removeRowBtn', function() {
-                                        $(this).closest('tr').remove();
-                                    });
+                                    const tableBody = $('#ProductsDetails tbody');
+                                    const rowCount = tableBody.children('tr').length;
+                                    const newRow = generateTableRow(rowCount);
+                                    tableBody.append(newRow);
                                 });
-                            </script>
 
+                                $(document).on('click', '.removeRowBtn', function () {
+                                    $(this).closest('tr').remove();
+                                });
+                            });
+
+                            function handleDateInput(dateInput, textInputId) {
+                                const date = new Date(dateInput.value);
+                                const formattedDate = date.toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric'
+                                }).replace(/ /g, '-');
+                                document.getElementById(textInputId).value = formattedDate;
+                            }
+                        </script>
 
 
                             <script>
@@ -2299,124 +2289,60 @@
                                                                     value="{{ array_key_exists('batch_no_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['batch_no_pmd_ca'] : '' }}" required>
                                                             </td>
                                                             <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+    <div class="new-date-data-field">
+        <div class="group-input input-date">
+            <div class="calenderauditee">
+                <input
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    class="click_date"
+                    id="text_date_{{ $index }}_mfg_date_pmd_ca"
+                    type="text"
+                    name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
+                    placeholder="DD-MMM-YYYY"
+                    value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                    readonly
+                    onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
 
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
+                <input type="date"
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+                    value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                    id="date_{{ $index }}_mfg_date_pmd_ca"
+                    class="hide-input show_date"
+                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca');" />
+            </div>
+        </div>
+    </div>
+</td>
 
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
+<td>
+    <div class="new-date-data-field">
+        <div class="group-input input-date">
+            <div class="calenderauditee">
+                <input
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    class="click_date"
+                    id="text_date_{{ $index }}_expiry_date_pmd_ca"
+                    type="text"
+                    name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
+                    placeholder="DD-MMM-YYYY"
+                    value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
+                    readonly
+                    onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
 
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca');" />
-                                                                                {{--updateExpiryMinDate('{{ $index }}');"--}}
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
-
-
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-
-
-
-
-                                                            {{-- <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_mfg_date_pmd_ca').click();" />
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['mfg_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['mfg_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_mfg_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_mfg_date_pmd_ca')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td> --}}
-                                                            {{-- <td>
-                                                                <div class="new-date-data-field">
-                                                                    <div class="group-input input-date">
-                                                                        <div class="calenderauditee">
-                                                                            <input
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                class="click_date"
-                                                                                id="text_date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                type="text"
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca_text]"
-                                                                                placeholder="DD-MMM-YYYY"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('d-M-Y') : '' }}"
-                                                                                readonly
-                                                                                onclick="document.getElementById('date_{{ $index }}_expiry_date_pmd_ca').click();" />
-                                                                            <input type="date"
-                                                                                {{ $data->stage == 1 ? '' : 'readonly' }}
-                                                                                name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
-                                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
-                                                                                id="date_{{ $index }}_expiry_date_pmd_ca"
-                                                                                class="hide-input show_date"
-                                                                                style="position: absolute; top: 0; left: 0; opacity: 0;"
-                                                                                onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td> --}}
+                <input type="date"
+                    {{ $data->stage == 1 ? '' : 'readonly' }}
+                    name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]"
+                    value="{{ !empty($Prodmateriyal['expiry_date_pmd_ca']) ? \Carbon\Carbon::parse($Prodmateriyal['expiry_date_pmd_ca'])->format('Y-m-d') : '' }}"
+                    id="date_{{ $index }}_expiry_date_pmd_ca"
+                    class="hide-input show_date"
+                    style="position: absolute; top: 0; left: 0; opacity: 0;"
+                    onchange="handleDateInput(this, 'text_date_{{ $index }}_expiry_date_pmd_ca')" />
+            </div>
+        </div>
+    </div>
+</td>
 
                                                             <td><input
                                                                     {{ $data->stage == 1 ? '' : 'readonly' }}
@@ -2460,48 +2386,54 @@
                             </div>
 
                             <script>
-                                $(document).ready(function() {
-                                    let indexMaetDetails = {{ $product_materialDetails && is_array($product_materialDetails->data) ? count($product_materialDetails->data) : 0 }};
+                                $('#promate_add').click(function (e) {
+                                e.preventDefault();
 
-                                    $('#promate_add').click(function(e) {
-                                        e.preventDefault();
+                                function generateTableRow(productserialno) {
+                                    var html =
+                                        '<tr>' +
+                                        '<td>' + (productserialno + 1) + '</td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
+                                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                        '<input id="text_date_' + productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_mfg_date_pmd_ca\').click();"/>' +
+                                        '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" value="" id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\')"/>' +
+                                        '</div></div></div></td>' +
+                                        '<td><div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee">' +
+                                        '<input id="text_date_' + productserialno + '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_expiry_date_pmd_ca\').click();"/>' +
+                                        '<input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" value="" id="date_' + productserialno + '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
+                                        '</div></div></div></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
+                                        '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
+                                        '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                        '</tr>';
+                                    return html;
+                                }
 
-                                        function generateTableRow(productserialno) {
-                                            var currentDate = "{{ \Carbon\Carbon::now()->format('Y-m-d') }}";
-                                            var html =
-                                                '<tr>' +
-                                                '<td>' + (productserialno + 1) + '</td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td> <div class="new-date-data-field">' +
-                                                '<div class="group-input input-date">' +
-                                                '<div class="calenderauditee">' +
-                                                '<input id="text_date_' + productserialno + '_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_mfg_date_pmd_ca\').click();"/>' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="' + currentDate + '" value="' + currentDate + '" id="date_' + productserialno + '_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_mfg_date_pmd_ca\')" onchange="handleStartDateChange(this, \'date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
-                                                '</div></div></div></td>' +
-                                                '<td> <div class="new-date-data-field">' +
-                                                '<div class="group-input input-date">' +
-                                                '<div class="calenderauditee">' +
-                                                '<input id="text_date_' + productserialno + '_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca_text]" placeholder="DD-MMM-YYYY" readonly onclick="document.getElementById(\'date_' + productserialno + '_expiry_date_pmd_ca\').click();"/>' +
-                                                '<input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="' + currentDate + '" value="' + currentDate + '" id="date_' + productserialno + '_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'text_date_' + productserialno + '_expiry_date_pmd_ca\')"/>' +
-                                                '</div></div></div></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
-                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
-                                                '</tr>';
-                                            return html;
-                                        }
-
-                                        var tableBody = $('#prod_mate_details tbody');
-                                        var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount);
-                                        tableBody.append(newRow);
-                                        indexMaetDetails++;
-                                    });
-                                });
+                                var tableBody = $('#prod_mate_details tbody');
+                                var rowCount = tableBody.children('tr').length;
+                                var newRow = generateTableRow(rowCount);
+                                tableBody.append(newRow);
+                                indexMaetDetails++;
+                            });
                             </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                             {{--<script>
