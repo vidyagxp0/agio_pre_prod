@@ -414,7 +414,7 @@
                         <tr class="table_bg">
                             <th style="width: 4%">Sr.No.</th>
                             <th style="width: 10%">Item/Product Code</th>
-                            <th style="width: 8%"> Batch No*.</th>
+                            <th style="width: 8%"> Batch No</th>
                             <th style="width: 8%"> Mfg.Date</th>
                             <th style="width: 8%">Expiry Date</th>
                             <th style="width: 8%"> Label Claim.</th>

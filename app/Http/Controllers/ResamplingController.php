@@ -2059,7 +2059,7 @@ foreach ($pre as $processName => $modelClass) {
             if ($changeControl->stage == 4) {
 
 
-                if (empty($changeControl->qa_comments) || empty($changeControl->final_attach) )
+                if (empty($changeControl->qa_comments))
                 {
                     Session::flash('swal', [
                         'type' => 'warning',
@@ -2761,7 +2761,7 @@ public static function singleReport($id)
         $width = $canvas->get_width();
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-        return $pdf->stream('ActionItem' . $id . '.pdf');
+        return $pdf->stream('Resampling' . $id . '.pdf');
     }
 }
 
