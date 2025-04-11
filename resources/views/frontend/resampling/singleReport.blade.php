@@ -270,16 +270,7 @@ Not Applicable
 
                    </tr> -->
                     <tr>
-                        <th class="w-20">HOD Person</th>
 
-
-                        <td class="w-80">
-                            @if ($data->hod_preson)
-                                {{ Helpers::getInitiatorName($data->hod_preson) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
 
                         <!-- <td class="w-80">
                         @if ($data->hod_preson)
@@ -337,6 +328,19 @@ Not Applicable
                             Not Applicable
                         @endif
                     </div>
+
+                    <table>
+                        <tr>
+                            <th class="w-20">HOD Person</th>
+                            <td class="w-80">
+                                @if ($data->hod_preson)
+                                    {{ Helpers::getInitiatorName($data->hod_preson) }}
+                                @else
+                                    Not Applicable
+                                @endif
+                            </td>
+                        </tr>
+                    </table>
 
                     <table>
 
@@ -455,7 +459,7 @@ Not Applicable
             </table>
 
             <div class="block-head">
-                QA Attachment
+               QA/CQA Attachment
             </div>
             <div class="border-table">
                 <table>

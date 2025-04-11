@@ -9932,7 +9932,7 @@
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="other_attachment[]" class="other-attachment-input"
-                                        {{ $data->stage == 7 ?  '' : 'disabled'  }} multiple>
+                                     oninput="addMultipleFiles(this, 'other_attachment')" multiple>
                                 </div>
                             </div>
                         </div>
