@@ -87,7 +87,7 @@ class InternalauditController extends Controller
         $internalAudit->Auditor_comment = $request->Auditor_comment;
         $internalAudit->Auditee_comment = $request->Auditee_comment;
         $internalAudit->auditee_department = $request->auditee_department;
-//dd($request->auditee_department);
+        //dd($request->auditee_department);
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
         // dd($internalAudit->Audit_Category);

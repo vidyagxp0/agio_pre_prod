@@ -771,7 +771,7 @@
                                                         </tr>
                                                         <tr>
 
-                                                            <th>Row </th>
+                                                            <th>Sr. No. </th>
                                                             <th>Activity</th>
                                                             {{--  <th>Activity</th>  --}}
                                                             <th>Possible Risk/Failure (Identified Risk)</th>

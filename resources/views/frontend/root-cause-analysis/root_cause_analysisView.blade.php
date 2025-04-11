@@ -1045,23 +1045,7 @@
                                         @php
                                             $selectedMethodologies = explode(',', $data->root_cause_methodology);
                                         @endphp
-                                        {{-- <select name="root_cause_methodology[]" multiple
-                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "disabled" : "" }}
-                                            id="root-cause-methodology">
-                                            <option value="Why-Why Chart"
-                                                @if (in_array('Why-Why Chart', $selectedMethodologies)) selected @endif>Why-Why Chart
-                                            </option>
-                                            <option value="Failure Mode and Effect Analysis"
-                                                @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and Effect Analysis</option>
-                                            <option value="Fishbone or Ishikawa Diagram"
-                                                @if (in_array('Fishbone or Ishikawa Diagram', $selectedMethodologies)) selected @endif>Fishbone or Ishikawa Diagram</option>
-                                            <option value="Is/Is Not Analysis"
-                                                @if (in_array('Is/Is Not Analysis', $selectedMethodologies)) selected @endif>Is/Is Not Analysis
-                                            </option>
-                                            <option value="Rootcauseothers"
-                                                @if (in_array('Rootcauseothers', $selectedMethodologies)) selected @endif>Others
-                                            </option>
-                                        </select> --}}
+                                   
 
                                         <select name="root_cause_methodology[]" multiple id="root-cause-methodology"
                                             {{ in_array($data->stage, [0,1,2,3,5,6,7,8]) ? "disabled" : "" }}>
@@ -1686,15 +1670,14 @@
 
                                 <div class="col-md-12" id="root-cause-others"style="display:none;">
                                     <div class="group-input">
-                                        <label for="root_cause_Others">Others @if ($data->stage == 4) <span class="text-danger">*</span> @endif</label>
+                                        <label for="root_cause_Others">Others @if ($data->stage == 4)@endif</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <textarea class="summernote" {{$data->stage == 4 ? 'required' : ''}} name="root_cause_Others" id="summernote" {{$data->stage == 4 ? 'required' : ''}}>{{ $data->root_cause_Others}} </textarea>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Other Attachment <span class="text-danger">*</span></label>
+                                    <div class="col-12" id="otherAttachmentField" style="display: {{ $data->reason == 'Rootcauseothers' ? 'block' : 'none' }};">                                    <div class="group-input">
+                                        <label for="Inv Attachments">Other Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -2936,33 +2919,125 @@
     </script>
 
 
-    {{--  <script>
-    $(document).ready(function() {
-        $('#root-cause-methodology').on('change', function() {
-            var selectedValues = $(this).val();
-            $('#why-why-chart-section').hide();
-            $('#fmea-section').hide();
-            $('#fishbone-section').hide();
-            $('#is-is-not-section').hide();
+<script>
+    $(document).ready(function () {
+        function toggleRequiredFields(value, show) {
+            switch (value) {
+                case 'Failure Mode and Effect Analysis':
+                    if (show) {
+                        $('#fmea-section').find('input, select, textarea').attr('required', true);
+                        $('#fmea-section label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    } else {
+                        $('#fmea-section').find('input, select, textarea').removeAttr('required');
+                        $('#fmea-section .req-asterisk').remove();
+                    }
+                    break;
+                case 'Fishbone or Ishikawa Diagram':
+                    if (show) {
+                        $('#fishbone-section').find('input, select, textarea').attr('required', true);
+                        $('#fishbone-section label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    } else {
+                        $('#fishbone-section').find('input, select, textarea').removeAttr('required');
+                        $('#fishbone-section .req-asterisk').remove();
+                    }
+                    break;
+                case 'Is/Is Not Analysis':
+                    if (show) {
+                        $('#is-is-not-section').find('input, select, textarea').attr('required', true);
+                        $('#is-is-not-section label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    } else {
+                        $('#is-is-not-section').find('input, select, textarea').removeAttr('required');
+                        $('#is-is-not-section .req-asterisk').remove();
+                    }
+                    break;
+                case 'Rootcauseothers':
+                    if (show) {
+                        $('#root-cause-others').find('input, select, textarea').attr('required', true);
+                        $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
 
-            if (selectedValues.includes('Why-Why Chart')) {
-                $('#why-why-chart-section').show();
+                        // Show Other Attachment field
+                        $('#otherAttachmentField').show();
+                        $('#otherAttachmentField input[type="file"]').attr('required', true);
+                        $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    } else {
+                        $('#root-cause-others').find('input, select, textarea').removeAttr('required');
+                        $('#root-cause-others .req-asterisk').remove();
+
+                        // Hide Other Attachment field
+                        $('#otherAttachmentField').hide();
+                        $('#otherAttachmentField input[type="file"]').removeAttr('required');
+                        $('#otherAttachmentField .req-asterisk').remove();
+                    }
+                    break;
+                case 'Why-Why Chart':
+                    if (show) {
+                        $('#why-why-chart-section').find('input, select, textarea').attr('required', true);
+                        $('#why-why-chart-section label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    } else {
+                        $('#why-why-chart-section').find('input, select, textarea').removeAttr('required');
+                        $('#why-why-chart-section .req-asterisk').remove();
+                    }
+                    break;
             }
-            if (selectedValues.includes('Failure Mode and Effect Analysis')) {
-                $('#fmea-section').show();
-            }
-            if (selectedValues.includes('Fishbone or Ishikawa Diagram')) {
-                $('#fishbone-section').show();
-            }
-            if (selectedValues.includes('Is/Is Not Analysis')) {
-                $('#is-is-not-section').show();
-            }
+        }
+
+        $('#root-cause-methodology').on('change', function () {
+            var selectedValues = $(this).val() || [];
+
+            // Hide all and reset requirements
+            ['Why-Why Chart', 'Failure Mode and Effect Analysis', 'Fishbone or Ishikawa Diagram', 'Is/Is Not Analysis', 'Rootcauseothers'].forEach(function (value) {
+                toggleRequiredFields(value, false);
+                switch (value) {
+                    case 'Why-Why Chart':
+                        $('#why-why-chart-section').hide();
+                        break;
+                    case 'Failure Mode and Effect Analysis':
+                        $('#fmea-section').hide();
+                        break;
+                    case 'Fishbone or Ishikawa Diagram':
+                        $('#fishbone-section').hide();
+                        $('#HideInference').hide();
+                        break;
+                    case 'Is/Is Not Analysis':
+                        $('#is-is-not-section').hide();
+                        break;
+                    case 'Rootcauseothers':
+                        $('#root-cause-others').hide();
+                        $('#otherAttachmentField').hide();
+                        break;
+                }
+            });
+
+            // Show and set required only for selected
+            selectedValues.forEach(function (value) {
+                toggleRequiredFields(value, true);
+                if (value === 'Why-Why Chart') {
+                    $('#why-why-chart-section').show();
+                }
+                if (value === 'Failure Mode and Effect Analysis') {
+                    $('#fmea-section').show();
+                }
+                if (value === 'Fishbone or Ishikawa Diagram') {
+                    $('#fishbone-section').show();
+                    $('#HideInference').show();
+                }
+                if (value === 'Is/Is Not Analysis') {
+                    $('#is-is-not-section').show();
+                }
+                if (value === 'Rootcauseothers') {
+                    $('#root-cause-others').show();
+                }
+            });
         });
+
+        // Trigger on page load
+        $('#root-cause-methodology').trigger('change');
     });
-</script>    --}}
+</script>
 
 
-    <script>
+
+    {{-- <script>
         $(document).ready(function() {
             $('#root-cause-methodology').on('change', function() {
                 var selectedValues = $(this).val() || [];
@@ -3000,7 +3075,8 @@
             // Trigger the change event on page load to show the correct sections based on initial values
             $('#root-cause-methodology').trigger('change');
         });
-    </script>
+    </script> --}}
+
     <script>
 //     $('#summernote').summernote({
 //       toolbar: [

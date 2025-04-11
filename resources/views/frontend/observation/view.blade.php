@@ -339,7 +339,7 @@
                                 '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' +
                     serialNumber + '`)" /></div></div></div></td>' +
 
-                                '<td><input type="text" name="item_status[]"></td>' +
+                                '<td><textarea name="item_status[]" row></textarea></td>' +
                                 '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                                 '</tr>';
 
@@ -1279,7 +1279,9 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="action-plan-grid">
-                                                <div class="sub-head">Action Plan
+                                                <div class="sub-head">Action Plan @if ($data->stage == 2)
+                                                    <span class="text-danger">*</span>
+                                                    @endif
                                                     <button type="button" name="action-plan-grid"
                                                         id="observation_table" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>+</button>
                                                 </div>
@@ -1355,10 +1357,11 @@
                                                             </td>  -->
                                                                 {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                                 {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
-                                                                <td><input type="text" name="item_status[]"
-                                                                         {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : '' }}">
+                                                                <td>
+                                                                    <textarea name="item_status[]"
+                                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ unserialize($griddata->item_status)[$key] ?? '' }}</textarea>
                                                                 </td>
+
 
                                                                 {{-- <td>
                                                                 @php

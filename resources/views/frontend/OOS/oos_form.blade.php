@@ -1023,12 +1023,6 @@ $users = DB::table('users')
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
                                 <button type="button" name="audit-agenda-grid" id="info_product_material">+</button>
-
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="info_product_material_details" style="width: 100%;">
@@ -1125,12 +1119,7 @@ $users = DB::table('users')
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Details Of Stability Study
-                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
+                                <button type="button" name="audit-agenda-grid" id="details_stability">+</button> 
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="details_stability_details" style="width: 100%;">
@@ -1222,11 +1211,6 @@ $users = DB::table('users')
                             <label for="audit-agenda-grid">
                                 OOS/OOT Details
                                 <button type="button" name="audit-agenda-grid" id="oos_details">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="oos_details_details" style="width: 100%;">
@@ -1276,13 +1260,8 @@ $users = DB::table('users')
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
-                            Products Details
+                                Products Details
                                 <button type="button" name="audit-agenda-grid" id="products_details">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="products_details_details" style="width: 100%;">
@@ -1346,13 +1325,8 @@ $users = DB::table('users')
 
                          <div class="group-input">
                             <label for="audit-agenda-grid">
-                            Instrument details
+                                Instrument details
                                 <button type="button" name="audit-agenda-grid" id="instrument_detail">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="instrument_details_details" style="width: 100%;">

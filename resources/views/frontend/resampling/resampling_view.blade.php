@@ -114,7 +114,7 @@
                             @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 66)|| Helpers::check_roles($data->division_id, 'Resampling', 18)))
                          
                            <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                           Varification  Complete
+                             Verification  Complete
                             </button></a>
                             <a href="#more-info-required-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
@@ -1040,7 +1040,7 @@
             if (startDate) {
                 // Set the minimum date to one day after the start date
                 var minEndDate = new Date(startDate);
-                minEndDate.setDate(minEndDate.getDate() + 1);
+                minEndDate.setDate(minEndDate.getDate());
 
                 // Format the date to match the input type date format (yyyy-mm-dd)
 
@@ -1048,10 +1048,10 @@
                 endDateInput.setAttribute('min', formattedMinEndDate);
 
                 // Ensure the next audit date is after the last audit date
-                if (endDateInput.value && endDateInput.value <= startDate) {
-                    endDateInput.value = '';
-                    // alert("The next audit date must be after the last audit date.");
-                }
+                // if (endDateInput.value && endDateInput.value <= startDate) {
+                //     endDateInput.value = '';
+                //     // alert("The next audit date must be after the last audit date.");
+                // }
             }
         }
 
@@ -1274,7 +1274,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="final_attach">
-                                            QA/CQA Verification Attachment <span class="text-danger">{{ $data->stage == 4 ? '*' : '' }}</span>
+                                            QA/CQA Verification Attachment 
                                         </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
@@ -1392,7 +1392,7 @@
                                 <div class="row">
                                     <div class="col-lg-4" style="margin-bottom: 1rem" >
                                         <div class="group-input">
-                                            <label for="submitted by">Submit By</label>
+                                            <label for="submitted by">Submitted By</label>
                                             <div class="Date">@if ( $data->acknowledgement_by )
                                                 {{ $data->acknowledgement_by }}
                                              @else   Not Applicable
@@ -1402,7 +1402,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input"  style="margin-bottom: 1rem" >
-                                            <label for="submitted on">Submit On</label>
+                                            <label for="submitted on">Submitted On</label>
                                             <div class="Date">
                                                 @if ($data->acknowledgement_on)
                                                 {{ $data->acknowledgement_on }}
@@ -1412,7 +1412,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input"  style="margin-bottom: 1rem">
-                                            <label for="submitted on">Submit Comment</label>
+                                            <label for="submitted on">Submitted Comment</label>
                                             <div class="Date">
                                                 @if ($data->cancelacknowledgement_commentled_by)
                                                 {{ $data->cancelled_by }}
@@ -1542,7 +1542,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input" style="margin-bottom: 1rem">
-                                            <label for="cancelled by">Cancel By</label>
+                                            <label for="cancelled by">Cancelled By</label>
                                             <div class="Date">
                                                 @if ($data->cancelled_by)
                                                 {{ $data->cancelled_by }}
@@ -1552,7 +1552,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input" style="margin-bottom: 1rem">
-                                            <label for="cancelled on">Cancel On</label>
+                                            <label for="cancelled on">Cancelled On</label>
                                             <div class="Date">
                                                 @if ($data->cancelled_on)
                                                 {{ $data->cancelled_on }}
@@ -1563,7 +1563,7 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input" style="margin-bottom: 1rem">
-                                            <label for="submitted on">Cancel Comment</label>
+                                            <label for="submitted on">Cancelled Comment</label>
                                             <div class="Date">
                                                 @if ($data->cancelled_comment)
                                                 {{ $data->cancelled_comment }}
