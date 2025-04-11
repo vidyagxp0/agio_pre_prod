@@ -665,7 +665,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Initiator"><b>Initiator Department</b></label>
+                                                    <label for="Initiator"><b>Initiation Department</b></label>
                                                     <input aria-readonly="$_ENV" type="text" name="Initiator_Group" id="initiator_group" 
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
@@ -857,7 +857,7 @@
                                                 <div class="group-input">
                                                     <label for="Justification">Justification <span class="text-danger">*</span></label>
                                                     <textarea name="risk_identification" id="justification" rows="4" placeholder="Provide justification if risk assessment is not required." 
-                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>{{ $data->risk_identification ?? '' }}</textarea>
+                                                        {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{$data->stage == 1 ? '' : 'readonly'}}>{{ $data->risk_identification ?? '' }}</textarea>
                                                     <span id="justification_error" class="text-danger" style="display: none;">This field is required.</span>
                                                 </div>
                                             </div>
@@ -936,7 +936,7 @@
                                             <div class="col-lg-6" id="other_specify_div" style="display:none;">
                                                 <div class="group-input">
                                                     <label for="other_specify">Please specify<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span></label>
-                                                    <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected">
+                                                    <input type="text" name="Occurance" id="other_specify" value="{{ $data->Occurance ?? '' }}" placeholder="Specify if Other is selected" {{ $data->stage == 1 ? '' : 'readonly' }}>
                                                     <!-- @error('other_specify')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror -->
@@ -1010,7 +1010,7 @@
                                                 <div class="group-input" id="initiated_through_div" style="display: none;">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger">*</span></label>
-                                                    <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
+                                                    <textarea name="initiated_through_req" {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->initiated_through_req }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1076,7 +1076,7 @@
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    <select name="doc_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                    <select name="doc_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{$data->stage == 1 ? 'required': 'readonly'}}>
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
@@ -1091,7 +1091,7 @@
                                                 <div class="group-input">
                                                     <label for="others">If Others<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="others" {{ $data->stage == 1 ? 'required' : '' }}>{{ $data->If_Others }}</textarea>
+                                                    <textarea name="others" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $data->If_Others }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1101,7 +1101,7 @@
                                                     <label for="others">Description of Change
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="bd_domestic" {{ $data->stage == 1 ? 'required' : '' }}>{{ $data->bd_domestic }}</textarea>
+                                                    <textarea name="bd_domestic" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $data->bd_domestic }}</textarea>
                                                 </div>
                                             </div>
 
@@ -1323,7 +1323,7 @@
                                                     <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
                                                     <textarea name="migration_action" id="migration_action"
-                                                     {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                     {{ $data->stage == 1  ? '' : 'readonly' }}
                                                       
                                                      >{{ $data->migration_action }}</textarea>
                                                 </div>
@@ -1360,7 +1360,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile" name="risk_assessment_atch[]"
-                                                            oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple>
+                                                            oninput="addMultipleFiles(this, 'risk_assessment_atch')"  {{ $data->stage == 1  ? '' : 'disabled' }} multiple>
                                                     </div>
                                                  
 
@@ -1392,7 +1392,7 @@
                                                     <label for="current-practice">Current Practice
                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->current_practice }}</textarea>
+                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1400,7 +1400,7 @@
                                                     <label for="proposed_change">Proposed Change
                                                          <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->proposed_change }}</textarea>
+                                                    <textarea name="proposed_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->proposed_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1408,7 +1408,7 @@
                                                     <label for="reason_change">Reason for Change
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->reason_change }}</textarea>
+                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->reason_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1416,7 +1416,7 @@
                                                     <label for="other_comment">Any Other Comments
                                                          <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>{{ $docdetail->other_comment }}</textarea>
+                                                    <textarea name="other_comment"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->other_comment }}</textarea>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-12">
@@ -1451,7 +1451,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="change_details_attachments[]"
-                                                                {{ $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
+                                                                {{ $data->stage == 2 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}
                                                                 oninput="addMultipleFiles(this, 'change_details_attachments')" multiple>
                                                         </div>
                                                     </div>
@@ -1548,7 +1548,7 @@
                                             <label for="qa-eval-comments">HOD Assessment Comments  @if($data->stage == 2) <span class="text-danger">*</span>@endif
                                         </label>
                                     
-                                            <textarea name="hod_assessment_comments" {{ $data->stage == 1 || $data->stage == 3 ||$data->stage == 4 ||$data->stage == 5 || $data->stage == 6 ||$data->stage == 7 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 12 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }} {{ $data->stage == 2 ? 'required' : '' }}>{{$cc_cfts->hod_assessment_comments}}</textarea>
+                                            <textarea name="hod_assessment_comments"  {{ $data->stage == 2 ? 'required' : 'readonly' }}>{{$cc_cfts->hod_assessment_comments}}</textarea>
                                         </div>
 
 
@@ -1876,7 +1876,7 @@
                                                         seriousness, guiding priority for corrective actions. Ranging from
                                                         low to high, they ensure quality standards and mitigate critical
                                                         risks.</span> -->
-                                                    <select name="severity_level1" {{  $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 3  ? 'required' : '' }} >
+                                                    <select name="severity_level1" {{  $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 3  ? 'required' : 'readonly' }} >
                                                         <option value="">-- Select --</option>
                                                         <option @if ($data->severity_level1 == 'minor') selected @endif
                                                             value="minor">Minor</option>
@@ -1891,7 +1891,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
-                                                    <textarea name="qa_review_comments" {{ $data->stage == 3  ? 'required' : '' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
+                                                    <textarea name="qa_review_comments" {{ $data->stage == 3  ? 'required' : 'readonly' }} {{ $data->stage == 0 || $data->stage == 8 || $data->stage == 13 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
 

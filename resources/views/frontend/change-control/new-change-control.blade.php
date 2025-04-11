@@ -316,8 +316,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input disabled type="text" name="Initiator_Group" id="initiator_group"
+                                        <label for="Initiator"><b>Initiation Department</b></label>
+                                        <input readonly type="text" name="Initiator_Group" id="initiator_group"
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
