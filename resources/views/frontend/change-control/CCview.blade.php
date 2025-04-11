@@ -666,7 +666,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator"><b>Initiation Department</b></label>
-                                                    <input aria-readonly="$_ENV" type="text" name="Initiator_Group" id="initiator_group" 
+                                                    <input aria-readonly="$_ENV"  disabled type="text" name="Initiator_Group" id="initiator_group" 
                                                         value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                                 </div>
                                             </div>
@@ -831,20 +831,28 @@
                                                     });
                                                 </script>
 
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Risk Assessment Required">Risk Assessment Required?<span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
-                                                </label>
-                                                    <select name="risk_assessment_required" id="risk_assessment_required" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data->risk_assessment_required == 'yes') selected @endif value='yes'>Yes</option>
-                                                        <option @if ($data->risk_assessment_required == 'no') selected @endif value='no'>No</option>
-                                                    </select>
-                                                    <!-- @error('capa_required')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror -->
+                                                <div class="col-lg-6">
+                                                    <div class="group-input">
+                                                        <label for="risk_assessment_required">Risk Assessment Required?
+                                                            <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                        </label>
+
+                                                        @if($data->stage == 1)
+                                                            <select name="risk_assessment_required" id="risk_assessment_required" required>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
+                                                            </select>
+                                                        @else
+                                                            <select name="risk_assessment_required_display" id="risk_assessment_required" disabled>
+                                                                <option value="">-- Select --</option>
+                                                                <option value="yes" {{ $data->risk_assessment_required == 'yes' ? 'selected' : '' }}>Yes</option>
+                                                                <option value="no" {{ $data->risk_assessment_required == 'no' ? 'selected' : '' }}>No</option>
+                                                            </select>
+                                                            <input type="hidden" name="risk_assessment_required" value="{{ $data->risk_assessment_required }}">
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
 
                                             <!-- <div class="col-lg-12">
                                                 <div class="group-input">
@@ -878,16 +886,34 @@
                                                     <label for="hod_person">HOD Person
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <select name="hod_person" id="hod_person" {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
-                                                        <option value="">Select HOD Persion</option>
-                                                        @if($users)
-                                                            @foreach($users as $user)
-                                                                <option value="{{ $user->id }}" @if ($user->id == $data->hod_person) selected @endif>{{ $user->name }}</option>
-                                                            @endforeach
-                                                        @endif
-                                                    </select>
+
+                                                    @if($data->stage == 1)
+                                                        <select name="hod_person" id="hod_person" required>
+                                                            <option value="">Select HOD Person</option>
+                                                            @if($users)
+                                                                @foreach($users as $user)
+                                                                    <option value="{{ $user->id }}" {{ $user->id == $data->hod_person ? 'selected' : '' }}>
+                                                                        {{ $user->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    @else
+                                                        <select name="hod_person_display" id="hod_person" disabled>
+                                                            <option value="">Select HOD Person</option>
+                                                            @if($users)
+                                                                @foreach($users as $user)
+                                                                    <option value="{{ $user->id }}" {{ $user->id == $data->hod_person ? 'selected' : '' }}>
+                                                                        {{ $user->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                        <input type="hidden" name="hod_person" value="{{ $data->hod_person }}">
+                                                    @endif
                                                 </div>
                                             </div>
+
 
 
                                             {{-- <div class="col-12">
@@ -913,22 +939,38 @@
 
 
 
-                                             <div class="col-lg-6">
+                                            <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="change_related_to">Change Related To
-                                                    @if($data->stage == 1) <span class="text-danger">*</span>@endif</label>
-                                                    <select name="severity" id="change_related_to"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : '' }}>
-                                                        <option value="">-- Select --</option>
-                                                        <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
-                                                        <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
-                                                        <option value="utility" {{ old('severity', $data->severity ?? '') == 'utility' ? 'selected' : '' }}>Utility</option>
-                                                        <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
-                                                        <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
-                                                        <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
-                                                    </select>
-                                                    <!-- @error('severity')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror -->
+                                                        @if($data->stage == 1)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
+                                                    </label>
+
+                                                    @if($data->stage == 1)
+                                                        <select name="severity" id="change_related_to" required>
+                                                            <option value="">-- Select --</option>
+                                                            <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
+                                                            <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
+                                                            <option value="utility" {{ old('severity', $data->severity ?? '') == 'utility' ? 'selected' : '' }}>Utility</option>
+                                                            <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+                                                            <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
+                                                            <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                                        </select>
+                                                    @else
+                                                        <select name="severity_display" id="change_related_to" disabled>
+                                                            <option value="">-- Select --</option>
+                                                            <option value="process" {{ old('severity', $data->severity ?? '') == 'process' ? 'selected' : '' }}>Process</option>
+                                                            <option value="facility" {{ old('severity', $data->severity ?? '') == 'facility' ? 'selected' : '' }}>Facility</option>
+                                                            <option value="utility" {{ old('severity', $data->severity ?? '') == 'utility' ? 'selected' : '' }}>Utility</option>
+                                                            <option value="equipment" {{ old('severity', $data->severity ?? '') == 'equipment' ? 'selected' : '' }}>Equipment</option>
+                                                            <option value="document" {{ old('severity', $data->severity ?? '') == 'document' ? 'selected' : '' }}>Document</option>
+                                                            <option value="other" {{ old('severity', $data->severity ?? '') == 'other' ? 'selected' : '' }}>Other</option>
+                                                        </select>
+                                                        <input type="hidden" name="severity" value="{{ $data->severity }}">
+                                                    @endif
+
+                                                    
                                                 </div>
                                             </div>
 
@@ -978,33 +1020,42 @@
 
 
 
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="Initiator Group">Initiated Through
-                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
-                                                    </label>
-                                                    <div><small class="text-primary">Please select related information</small></div>
-                                                    <select name="initiated_through" id="initiated_through"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{ $data->stage == 1 ? 'required' : '' }}>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="initiated_through">Initiated Through
+                                                    <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                </label>
+                                                <div><small class="text-primary">Please select related information</small></div>
+
+                                                @if($data->stage == 1)
+                                                    <select name="initiated_through" id="initiated_through" required>
                                                         <option value="">Enter Your Selection Here</option>
-                                                        <option @if ($data->initiated_through == 'recall') selected @endif
-                                                            value="recall">Recall</option>
-                                                        <option @if ($data->initiated_through == 'return') selected @endif
-                                                            value="return">Return</option>
-                                                        <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                            value="deviation">Deviation</option>
-                                                        <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                            value="complaint">Complaint</option>
-                                                        <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                            value="regulatory">Regulatory</option>
-                                                        <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                            value="lab-incident">Lab Incident</option>
-                                                        <option @if ($data->initiated_through == 'Continuous_improvement') selected @endif
-                                                            value="Continuous_improvement">Continuous Improvement</option>
-                                                        <option @if ($data->initiated_through == 'others') selected @endif
-                                                            value="others">Others</option>
+                                                        <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
+                                                        <option value="return" {{ $data->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
+                                                        <option value="deviation" {{ $data->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                                        <option value="complaint" {{ $data->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                                        <option value="regulatory" {{ $data->initiated_through == 'regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                        <option value="lab-incident" {{ $data->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                        <option value="Continuous_improvement" {{ $data->initiated_through == 'Continuous_improvement' ? 'selected' : '' }}>Continuous Improvement</option>
+                                                        <option value="others" {{ $data->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
                                                     </select>
-                                                </div>
+                                                @else
+                                                    <select name="initiated_through_display" id="initiated_through" disabled>
+                                                        <option value="">Enter Your Selection Here</option>
+                                                        <option value="recall" {{ $data->initiated_through == 'recall' ? 'selected' : '' }}>Recall</option>
+                                                        <option value="return" {{ $data->initiated_through == 'return' ? 'selected' : '' }}>Return</option>
+                                                        <option value="deviation" {{ $data->initiated_through == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                                        <option value="complaint" {{ $data->initiated_through == 'complaint' ? 'selected' : '' }}>Complaint</option>
+                                                        <option value="regulatory" {{ $data->initiated_through == 'regulatory' ? 'selected' : '' }}>Regulatory</option>
+                                                        <option value="lab-incident" {{ $data->initiated_through == 'lab-incident' ? 'selected' : '' }}>Lab Incident</option>
+                                                        <option value="Continuous_improvement" {{ $data->initiated_through == 'Continuous_improvement' ? 'selected' : '' }}>Continuous Improvement</option>
+                                                        <option value="others" {{ $data->initiated_through == 'others' ? 'selected' : '' }}>Others</option>
+                                                    </select>
+                                                    <input type="hidden" name="initiated_through" value="{{ $data->initiated_through }}">
+                                                @endif
                                             </div>
+                                        </div>
+
 
                                             <div class="col-lg-6">
                                                 <div class="group-input" id="initiated_through_div" style="display: none;">
@@ -1076,15 +1127,20 @@
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    <select name="doc_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} {{$data->stage == 1 ? 'required': 'readonly'}}>
-                                                        <option value="">-- Select --</option>
-                                                        <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
-                                                            value="Temporary">Temporary
-                                                        </option>
-                                                        <option {{ $data->doc_change == 'Permanent' ? 'selected' : '' }}
-                                                            value="Permanent">Permanent
-                                                        </option>
-                                                    </select>
+                                                    @if($data->stage == 1)
+                                                        <select name="doc_change" required>
+                                                            <option value="">-- Select --</option>
+                                                            <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }} value="Temporary">Temporary</option>
+                                                            <option {{ $data->doc_change == 'Permanent' ? 'selected' : '' }} value="Permanent">Permanent</option>
+                                                        </select>
+                                                    @else
+                                                        <select name="doc_change_show" disabled>
+                                                            <option value="">-- Select --</option>
+                                                            <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }} value="Temporary">Temporary</option>
+                                                            <option {{ $data->doc_change == 'Permanent' ? 'selected' : '' }} value="Permanent">Permanent</option>
+                                                        </select>
+                                                        <input type="hidden" name="doc_change" value="{{ $data->doc_change }}">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
@@ -1281,39 +1337,50 @@
 
 
                                         <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Related Records">Related Records
-                                          <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span> 
-                                        </label>
-                                        <select {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }} multiple
-                                            id="risk_assessment_related_record" name="risk_assessment_related_record[]"
-                                            placeholder="Select Reference Records">
+                                            <div class="group-input">
+                                                <label for="risk_assessment_related_record">Related Records
+                                                    <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                </label>
 
-                                            @if (!empty($preRiskAssessment))
-                                                @foreach ($preRiskAssessment as $new)
-                                                    @php
-                                                        $recordValue =
-                                                            Helpers::getDivisionName($new->division_id) .
-                                                            '/Risk-Assessment/' .
-                                                            date('Y') .
-                                                            '/' .
-                                                            Helpers::recordFormat($new->record);
-                                                        $selected = in_array(
-                                                            $recordValue,
-                                                            explode(',', $data->risk_assessment_related_record),
-                                                        )
-                                                            ? 'selected'
-                                                            : '';
-                                                    @endphp
-                                                    <option value="{{ $recordValue }}" {{ $selected }}>
-                                                        {{ $recordValue }}
-                                                    </option>
-                                                @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
+                                                @php
+                                                    $selectedRecords = explode(',', $data->risk_assessment_related_record);
+                                                @endphp
 
-                                </div>
+                                                @if ($data->stage == 1)
+                                                    <select multiple id="risk_assessment_related_record" name="risk_assessment_related_record[]">
+                                                        @if (!empty($preRiskAssessment))
+                                                            @foreach ($preRiskAssessment as $new)
+                                                                @php
+                                                                    $recordValue = Helpers::getDivisionName($new->division_id) . '/Risk-Assessment/' . date('Y') . '/' . Helpers::recordFormat($new->record);
+                                                                @endphp
+                                                                <option value="{{ $recordValue }}" {{ in_array($recordValue, $selectedRecords) ? 'selected' : '' }}>
+                                                                    {{ $recordValue }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                @else
+                                                    <select multiple id="risk_assessment_related_record" name="risk_assessment_related_record_display[]" disabled>
+                                                        @if (!empty($preRiskAssessment))
+                                                            @foreach ($preRiskAssessment as $new)
+                                                                @php
+                                                                    $recordValue = Helpers::getDivisionName($new->division_id) . '/Risk-Assessment/' . date('Y') . '/' . Helpers::recordFormat($new->record);
+                                                                @endphp
+                                                                <option value="{{ $recordValue }}" {{ in_array($recordValue, $selectedRecords) ? 'selected' : '' }}>
+                                                                    {{ $recordValue }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+
+                                                    {{-- Hidden inputs to submit the selected values --}}
+                                                    @foreach ($selectedRecords as $record)
+                                                        <input type="hidden" name="risk_assessment_related_record[]" value="{{ $record }}">
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>
+
 
 
 
@@ -1872,22 +1939,25 @@
                                                     <label for="severity-level">Classification of Change
                                                         @if($data->stage == 3) <span class="text-danger">*</span>@endif
                                                     </label>
-                                                    <!-- <span class="text-primary">Severity levels in a QMS record gauge issue
-                                                        seriousness, guiding priority for corrective actions. Ranging from
-                                                        low to high, they ensure quality standards and mitigate critical
-                                                        risks.</span> -->
-                                                    <select name="severity_level1" {{  $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 3  ? 'required' : 'readonly' }} >
-                                                        <option value="">-- Select --</option>
-                                                        <option @if ($data->severity_level1 == 'minor') selected @endif
-                                                            value="minor">Minor</option>
-                                                        <option @if ($data->severity_level1 == 'major') selected @endif
-                                                            value="major">Major</option>
-                                                        <option @if ($data->severity_level1 == 'critical') selected @endif
-                                                            value="critical">Critical</option>
-                                                    </select>
+
+                                                    @if($data->stage == 3)
+                                                        <select name="severity_level1" required>
+                                                            <option value="">-- Select --</option>
+                                                            <option value="minor" {{ $data->severity_level1 == 'minor' ? 'selected' : '' }}>Minor</option>
+                                                            <option value="major" {{ $data->severity_level1 == 'major' ? 'selected' : '' }}>Major</option>
+                                                            <option value="critical" {{ $data->severity_level1 == 'critical' ? 'selected' : '' }}>Critical</option>
+                                                        </select>
+                                                    @else
+                                                        <select name="severity_level1_display" disabled>
+                                                            <option value="">-- Select --</option>
+                                                            <option value="minor" {{ $data->severity_level1 == 'minor' ? 'selected' : '' }}>Minor</option>
+                                                            <option value="major" {{ $data->severity_level1 == 'major' ? 'selected' : '' }}>Major</option>
+                                                            <option value="critical" {{ $data->severity_level1 == 'critical' ? 'selected' : '' }}>Critical</option>
+                                                        </select>
+                                                        <input type="hidden" name="severity_level1" value="{{ $data->severity_level1 }}">
+                                                    @endif
                                                 </div>
                                             </div>
-
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="qa_comments">QA/CQA Initial Review Comments @if($data->stage == 3) <span class="text-danger">*</span>@endif</label>
@@ -8009,20 +8079,50 @@
                                             <div class="sub-head">
                                                 QA/CQA Final Review
                                             </div>
+                                         {{--
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="RA notification">RA Approval required
+                                                        @if($data->stage==5) <span class="text-danger">*</span>@endif
+                                                    </label>
+                                                    <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
+                                                            {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
+                                                        <option value="">--Select--</option>
+                                                        <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
+                                                        <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
+                                                    </select>
+                                                 </div>
+                                            </div>
+                                           --}}
+
 
                                             <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="RA notification">RA Approval required
-                                                @if($data->stage==5) <span class="text-danger">*</span>@endif
-                                            </label>
-                                            <select name="RA_data_person" class="RA_data_person" id="RA_head_required"
-                                                    {{ $data->stage == 8 || $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}>
-                                                <option value="">--Select--</option>
-                                                <option @if ($cc_cfts->RA_data_person == 'Yes') selected @endif value="Yes">Yes</option>
-                                                <option @if ($cc_cfts->RA_data_person == 'No') selected @endif value="No">No</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                                <div class="group-input">
+                                                    <label for="RA_head_required">RA Approval required
+                                                        @if($data->stage == 5)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
+                                                    </label>
+
+                                                    @if($data->stage == 5)
+                                                        <select name="RA_data_person" class="RA_data_person" id="RA_head_required" {{ $data->stage == 5 ? 'required' : '' }}>
+                                                            <option value="">--Select--</option>
+                                                            <option value="Yes" {{ $cc_cfts->RA_data_person == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $cc_cfts->RA_data_person == 'No' ? 'selected' : '' }}>No</option>
+                                                        </select>
+                                                       
+                                                    @else
+
+                                                    <select name="RA_data_person_display" class="RA_data_person" id="RA_head_required" disabled>
+                                                            <option value="">--Select--</option>
+                                                            <option value="Yes" {{ $cc_cfts->RA_data_person == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $cc_cfts->RA_data_person == 'No' ? 'selected' : '' }}>No</option>
+                                                        </select>
+                                                        <input type="hidden" name="RA_data_person" value="{{ $cc_cfts->RA_data_person }}">
+                                                        
+                                                    @endif
+                                                </div>
+                                            </div>
                                         <script>
                                         $(document).ready(function () {
                                             // Initially check dropdown and textarea
@@ -8058,7 +8158,8 @@
                                             }
                                         });
                                         </script>
-                                            <div class="col-lg-6">
+                                        {{--   
+                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RA notification">QA/CQA Head Approval Person
                                                     @if($data->stage==5) <span class="text-danger">*</span>@endif
@@ -8072,6 +8173,49 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                         --}}
+
+
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="QA_CQA_person">QA/CQA Head Approval Person
+                                                        @if($data->stage == 5)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
+                                                    </label>
+
+                                                    @if($data->stage == 5)
+                                                        <select name="QA_CQA_person" class="QA_CQA_person" id="QA_CQA_person" {{ $data->stage == 5 ? 'required' : '' }}>
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->name }}" {{ $user->name == $cc_cfts->QA_CQA_person ? 'selected' : '' }}>
+                                                                    {{ $user->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    
+                                                    @else
+
+                                                    <select name="QA_CQA_person_display" class="QA_CQA_person" id="QA_CQA_person" disabled>
+                                                            <option value="">-- Select --</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->name }}" {{ $user->name == $cc_cfts->QA_CQA_person ? 'selected' : '' }}>
+                                                                    {{ $user->name }}
+                                                                </option>
+                                                            @endforeach
+                                                    </select>
+                                                    <input type="hidden" name="QA_CQA_person" value="{{ $cc_cfts->QA_CQA_person }}">
+                                                    
+                                                       
+                                                    @endif
+                                                </div>
+                                            </div>
+
+
+
+
+                                            
 
                                         <div class="group-input">
                                             <label for="qa-eval-comments">QA/CQA Final Review Comments
@@ -8954,13 +9098,27 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="effect_check">Effectiveness check required @if($data->stage == 12) <span class="text-danger">*</span>@endif</label>
-                                        <select name="effect_check" class="effect_check" id="effect_check"
-                                            {{ $data->stage == 1 || $data->stage == 2 ||$data->stage == 3 ||$data->stage == 4 || $data->stage == 5 ||$data->stage == 6 || $data->stage == 8  || $data->stage == 9 || $data->stage == 10 || $data->stage == 11 || $data->stage == 0 || $data->stage == 13 ? 'readonly' : '' }}>
-                                            <option value="">--Select--</option>
-                                            <option @if ($cc_cfts->effect_check == 'Yes') selected @endif value="Yes">Yes</option>
-                                            <option @if ($cc_cfts->effect_check == 'No') selected @endif value="No">No</option>
-                                        </select>
+                                        <label for="effect_check">
+                                            Effectiveness check required
+                                            @if($data->stage == 12)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+
+                                        @if($data->stage == 12)
+                                            <select name="effect_check" class="effect_check" id="effect_check" required>
+                                                <option value="">--Select--</option>
+                                                <option value="Yes" {{ $cc_cfts->effect_check == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                <option value="No" {{ $cc_cfts->effect_check == 'No' ? 'selected' : '' }}>No</option>
+                                            </select>
+                                        @else
+                                            <select name="effect_check_display" class="effect_check" id="effect_check" disabled>
+                                                <option value="">--Select--</option>
+                                                <option value="Yes" {{ $cc_cfts->effect_check == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                <option value="No" {{ $cc_cfts->effect_check == 'No' ? 'selected' : '' }}>No</option>
+                                            </select>
+                                            <input type="hidden" name="effect_check" value="{{ $cc_cfts->effect_check }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-12">
