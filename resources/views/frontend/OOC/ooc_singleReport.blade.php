@@ -1544,17 +1544,37 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Phase IB HOD Primary Attachment</th>
-                        <td class="w-80" colspan="3">
-                            @if (!empty($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc))
-                                {{-- {!! $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc !!} --}}
-                                {{ str_replace(',', ', ', $data->attachments_hodIBBBHODPRIMARYREVIEW_ooc) }}
+                  
+
+
+
+                    </table>
+                   <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                        Phase IB HOD Primary Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
+                            @if ($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc)
+                                @foreach (json_decode($data->attachments_hodIBBBHODPRIMARYREVIEW_ooc) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Applicable
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
                             @endif
-                        </td>
-                    </tr>
+                        </table>
+                    </div>
                     {{-- <tr>
                     <th class="w-20">Preventive Action</th>
                     <td class="w-80">
@@ -1624,17 +1644,37 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Phase IB QA Attachment</th>
-                        <td class="w-80" colspan="3">
-                            @if (!empty($data->attachments_QAIBBBREVIEW_ooc))
-                                {{-- {{ $data->attachments_QAIBBBREVIEW_ooc }} --}}
-                                {{ str_replace(',', ', ', $data->attachments_QAIBBBREVIEW_ooc) }}
+                    
+
+
+                    
+                    </table>
+                   <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                        Phase IB QA Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
+                            @if ($data->attachments_QAIBBBREVIEW_ooc)
+                                @foreach (json_decode($data->attachments_QAIBBBREVIEW_ooc) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Applicable
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
                             @endif
-                        </td>
-                    </tr>
+                        </table>
+                    </div>
                     {{-- <tr>
                     <th class="w-20">Document Code</th>
                     <td class="w-80">
@@ -1693,17 +1733,35 @@
                             @endif
                         </td>
                     </tr>
-                    <tr>
-                        <th class="w-20">P-IB QAH Attachment</th>
-                        <td class="w-80" colspan="3">
+                   
+
+                    </table>
+                   <table>
+                    <div class="border-table">
+                        <div class="block-head">
+                        P-IB QAH Attachment
+                        </div>
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr.No.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
                             @if ($data->Pib_attachements)
-                                {{-- {!! $data->Pib_attachements !!} --}}
-                                {{ str_replace(',', ', ', $data->Pib_attachements) }}
+                                @foreach (json_decode($data->Pib_attachements) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a></td>
+                                    </tr>
+                                @endforeach
                             @else
-                                Not Applicable
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-60">Not Applicable</td>
+                                </tr>
                             @endif
-                        </td>
-                    </tr>
+                        </table>
+                    </div>
 
                     {{-- <th class="w-20">Impact Assessment</th>
                     <td class="w-80">
