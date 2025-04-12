@@ -328,7 +328,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                             placeholder="Initiator Group Code" value="" readonly>
                                     </div>
@@ -348,7 +348,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator"><b>Initiation Department</b></label>
+                                        <label for="Initiator"><b> Initiator Department</b></label>
                                         <input readonly type="text" name="Initiator_Group" id="initiator_group" 
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
@@ -404,7 +404,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiation Department Code</label>
+                                        <label for="Initiator Group Code">Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" placeholder="Initiator Group Code"
                                             value="" readonly>
                                     </div>

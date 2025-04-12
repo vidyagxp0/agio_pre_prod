@@ -1309,9 +1309,11 @@
                                                     value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                             </div>
                                 </div>
+
+                              
                                 <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiation Group Code">Initiation Department Code</label>
+                                            <label for="Initiation Group Code">Initiator Department Code</label>
                                             <input type="text" name="initiator_group_code"
                                                 value="{{ $ooc->initiator_group_code }}" id="initiator_group_code"
                                                 readonly>
