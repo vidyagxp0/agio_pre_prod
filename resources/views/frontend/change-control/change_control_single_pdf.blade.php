@@ -237,7 +237,7 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30">
                             @if ($data->due_date)
-                                {{ $data->due_date }}
+                                {{ Helpers::getDateFormat($data->due_date) }}
                             @else
                                 Not Applicable
                             @endif
@@ -271,37 +271,16 @@
                         </td>
                     </tr>
                     <tr>
-
-                    <th class="w-20">Justification</th>
-                    <td class="w-30">
-                        @if ($data->risk_identification)
-                            {{ $data->risk_identification }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
+                        <th class="w-20">Justification</th>
+                        <td class="w-30">
+                            @if ($data->risk_identification)
+                                {{ $data->risk_identification }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
-                    <tr>
-                    <th class="w-20">Change Related To</th>
-                    <td class="w-30">
-                        @if ($data->severity)
-                            {{ucfirst($data->severity) }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
-                </tr>
 
-              <tr>
-                <th class="w-20">Please specify</th>
-                <td class="w-30">
-                    @if ($data->Occurance)
-                        {{ $data->Occurance }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            </tr>
                     <tr>
                         <th class="w-20">HOD Person</th>
                         <td class="w-30">
@@ -311,17 +290,49 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
 
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->short_description)
+                                {{ $data->short_description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Change Related To</th>
+                        <td class="w-30">
+                            @if ($data->severity)
+                                {{ucfirst($data->severity) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Please specify</th>
+                        <td class="w-30">
+                            @if ($data->Occurance)
+                                {{ $data->Occurance }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Initiated Through</th>
-                        <td class="w-30" colspan="3">
+                        <td class="w-30">
                             @if ($data->initiated_through)
                                 {{ucfirst($data->initiated_through) }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
-                    <tr>
+
                         <th class="w-20">Others</th>
                         <td class="w-30">
                             @if ($data->initiated_through_req)
@@ -340,6 +351,7 @@
                             @endif
                         </td> --}}
                     </tr>
+
                     <tr>
                         {{-- <th class="w-20">Repeat Nature</th>
                         <td class="w-30">
@@ -360,16 +372,7 @@
                         </td> -->
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->short_description)
-                                {{ $data->short_description }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
+
                     <tr>
                         <th class="w-20">Nature of Change</th>
                         <td class="w-30">
@@ -649,13 +652,11 @@ Not Applicable
                             @endif
 
                         </table>
-                    </div>
-                </div>
             </div>
 
 
 
-
+        
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -1055,7 +1056,7 @@ Not Applicable
                             </tr>
                             <tr>
                                 <th class="w-20">Impact Assessment(By Production (Tablet/Capsule/Powder))</th>
-                                <td class="w-30">
+                                <td class="w-30" colspan="3">
                                     <div>
                                         @if ($cftData->Production_Table_Assessment)
                                             {{ $cftData->Production_Table_Assessment }}
@@ -1819,7 +1820,7 @@ Not Applicable
                                     <td class="w-30">
                                         <div>
                                             @if ($cftData->Human_Resource_by)
-                                                {{ $cftData->Human_Resource_on }}
+                                                {{ $cftData->Human_Resource_by }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3141,7 +3142,7 @@ Not Applicable
                             </tr>
                             <tr>
                                 <th class="w-20">QA/CQA Final Review Comments</th>
-                                <td class="w-80">
+                                <td class="w-80" colspan="3">
                                     <div>
                                         @if ($cftData->qa_final_comments)
                                             {{ $cftData->qa_final_comments }}
@@ -3198,7 +3199,7 @@ Not Applicable
                               <tr>
                                
                                 <th class="w-20">RA Approval Comment</th>
-                                <td class="w-30">
+                                <td class="w-80">
                                     <div>
                                         @if ($cc_cfts->ra_tab_comments)
                                             {{ $cc_cfts->ra_tab_comments }}
