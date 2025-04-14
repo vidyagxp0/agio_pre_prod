@@ -17,8 +17,16 @@
         min-height: 100vh;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
     .w-10 {
         width: 10%;
+    }
+
+    .w-15 {
+        width: 15%;
     }
 
     .w-20 {
@@ -153,6 +161,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -260,7 +273,14 @@
 
                     <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }}@else Not Applicable @endif</td>
+                        <td class="w-30" colspan="3">
+                            @if($data->initial_comments)
+                                {{ $data->initial_comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         {{-- <th class="w-20">Type of Audit</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
                         <th class="w-20">Audit start date</th> --}}
@@ -542,15 +562,15 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th class="w-15">S No.</th>
-                                <th>Area of Audit</th>
-                                <th>Scheduled Start Date</th>
-                                <th>Scheduled Start Time</th>
-                                <th>Scheduled End Date</th>
-                                <th>Scheduled End Time</th>
-                                <th>Auditor</th>
-                                <th>Auditee</th>
-                                <th>Remarks</th>
+                                <th style="width: 5%;">S No.</th>
+                                <th style="width: 15%;">Area of Audit</th>
+                                <th style="width: 10%;">Start Date</th>
+                                <th style="width: 10%;">Start Time</th>
+                                <th style="width: 10%;">End Date</th>
+                                <th style="width: 10%;">End Time</th>
+                                <th style="width: 15%;">Auditor</th>
+                                <th style="width: 15%;">Auditee</th>
+                                <th style="width: 10%;">Remarks</th>
                             </tr>
 
                             @if (!empty($json) && is_array($json))
@@ -577,6 +597,7 @@
                             @endif
                         </table>
                     </div>
+
                     <table>
 
                         <tr style="display: none;">

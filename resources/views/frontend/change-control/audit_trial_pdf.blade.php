@@ -179,7 +179,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Change Control Review No.</strong>
+                    <strong> Change Control No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::getDivisionName($doc->division_id) }}/ CC

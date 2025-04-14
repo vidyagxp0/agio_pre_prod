@@ -1459,7 +1459,7 @@
                                                     <label for="current-practice">Current Practice
                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="current_practice"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->current_practice }}</textarea>
+                                                    <textarea name="current_practice" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->current_practice }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -1475,7 +1475,7 @@
                                                     <label for="reason_change">Reason for Change
                                                         <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
                                                     </label>
-                                                    <textarea name="reason_change"  {{ $data->stage == 0 || $data->stage == 13 ? 'disabled' : '' }}{{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->reason_change }}</textarea>
+                                                    <textarea name="reason_change" {{ $data->stage == 1 ? 'required' : 'readonly' }}>{{ $docdetail->reason_change }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
