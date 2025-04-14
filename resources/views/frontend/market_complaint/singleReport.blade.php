@@ -154,6 +154,23 @@
     .table_bg {
         background: #4274da57;
     }
+
+
+
+    .summernote-content table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+    }
+    .summernote-content table td,
+    .summernote-content table th {
+        border: 1px solid #ddd !important;
+        padding: 8px !important;
+        vertical-align: top !important;
+        text-align: left !important;
+    }
+    .summernote-content table th {
+        background-color: #f2f2f2 !important;
+    }
 </style>
 
 <body>
@@ -325,10 +342,26 @@
                             {{ Helpers::getdateFormat($data->complaint_reported_on_gi) ?? 'Not Applicable' }}</td>
                        
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Details of Nature of Market Complaint</th>
                         <td class="w-80" colspan='5'>{!! $data->details_of_nature_market_complaint_gi ?? 'Not Applicable' !!}</td>
+                    </tr> -->
+
+
+                    <tr>
+                        <th class="w-20 align-top">Phase IB Summary</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->details_of_nature_market_complaint_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->details_of_nature_market_complaint_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
 
                     </table>
 
@@ -497,44 +530,117 @@
 
 
                 <table>
+
+                <tr>
+                        <th class="w-20 align-top">Review Of Complaint Sample</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_complaint_sample_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_complaint_sample_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                     <tr>
-                        <th class="w-20">Review Of Complaint Sample</th>
-                        <td class="w-80">{!! $data->review_of_complaint_sample_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review Of Control Sample</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_control_sample_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_control_sample_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Review Of Control Sample</th>
-                        <td class="w-80">{!! $data->review_of_control_sample_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
+                    
 
                     
                 </table>
                 <table>
+                    
                     <tr>
-                        <th class="w-20">Review of Stability Study Program and Samples</th>
-                        <td class="w-80">{!! $data->review_of_stability_study_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review of Stability Study Program and Samples</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_stability_study_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_stability_study_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+
+
                     <tr>
-                        <th class="w-20">Review of Product Manufacturing and Analytical Process</th>
-                        <td class="w-80">{!! $data->review_of_product_manu_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review of Product Manufacturing and Analytical Process</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_product_manu_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_product_manu_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    
+                </table>
+                <table>
+                    
+
+                    <tr>
+                        <th class="w-20 align-top">Additional Information if Require</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->additional_inform)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->additional_inform !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                   
+
+                    <tr>
+                        <th class="w-20 align-top">Type of Market Complaints</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->probable_root_causes_complaint_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->probable_root_causes_complaint_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
                 <table>
                     <tr>
-                        <th class="w-20">Additional Information if Require</th>
-                        <td class="w-80">{!! $data->additional_inform ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Type of Market Complaints</th>
-                        <td class="w-80">{!! $data->probable_root_causes_complaint_hodsr ?? 'Not Applicable' !!}</td>
-                    </tr>
-                </table>
-                <table>
-                    <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80">{!! $data->in_case_Invalide_com ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Comments</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->in_case_Invalide_com)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->in_case_Invalide_com !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -549,9 +655,20 @@
             </div>
               
             <table>
+                    
+
                     <tr>
-                        <th class="w-20">Manufacturer Name & Address</th>
-                        <td class="w-80">{!! $data->manufacturer_name_address_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Manufacturer Name & Address</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->manufacturer_name_address_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->manufacturer_name_address_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
             </table>
             
@@ -617,45 +734,156 @@
                         <th class="w-20">Complaint Sample Required</th>
                         <td class="w-80">{!! $data->complaint_sample_required_ca ?? 'Not Applicable' !!}</td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Complaint Sample Status</th>
-                        <td class="w-80">{!! $data->complaint_sample_status_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Complaint Sample Status</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->complaint_sample_status_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->complaint_sample_status_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
+
                     <tr>
-                        <th class="w-20">Brief Description of Complaint</th>
-                        <td class="w-80">{!! $data->brief_description_of_complaint_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Brief Description of Complaint</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->brief_description_of_complaint_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->brief_description_of_complaint_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
+                    
                     <tr>
-                        <th class="w-20">Batch Record Review Observation</th>
-                        <td class="w-80">{!! $data->batch_record_review_observation_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Batch Record Review Observation</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->batch_record_review_observation_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->batch_record_review_observation_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+                    
                     <tr>
-                        <th class="w-20">Analytical Data Review Observation</th>
-                        <td class="w-80">{!! $data->analytical_data_review_observation_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Analytical Data Review Observation</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->analytical_data_review_observation_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->analytical_data_review_observation_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Retention Sample Review Observation</th>
-                        <td class="w-80">{!! $data->retention_sample_review_observation_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Retention Sample Review Observation</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->retention_sample_review_observation_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->retention_sample_review_observation_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
                     <tr>
-                        <th class="w-20">Stablity Study Data Review</th>
-                        <td class="w-80">{!! $data->stability_study_data_review_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Stablity Study Data Review</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->stability_study_data_review_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->stability_study_data_review_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                  
                     <tr>
-                        <th class="w-20">QMS Events(if Any) Review Observation</th>
-                        <td class="w-80">{!! $data->qms_events_ifany_review_observation_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">QMS Events(if Any) Review Observation</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->qms_events_ifany_review_observation_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->qms_events_ifany_review_observation_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Repeated Complaints/Queries For Product</th>
-                        <td class="w-80">{!! $data->repeated_complaints_queries_for_product_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Repeated Complaints/Queries For Product</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->repeated_complaints_queries_for_product_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->repeated_complaints_queries_for_product_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Interpretation on Complaint sample(if recieved)</th>
-                        <td class="w-80">{!! $data->interpretation_on_complaint_sample_ifrecieved_ca ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Interpretation on Complaint sample(if recieved)</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->interpretation_on_complaint_sample_ifrecieved_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->interpretation_on_complaint_sample_ifrecieved_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Comments (if any)</th>
                         <td class="w-80">{!! $data->comments_ifany_ca ?? 'Not Applicable' !!}</td>
+                    </tr> -->
+
+                    <tr>
+                        <th class="w-20 align-top">Comments (if any)</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->comments_ifany_ca)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->comments_ifany_ca !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
            
@@ -869,47 +1097,158 @@
                 </div>
 
                 <table>
+                    
+
                     <tr>
-                        <th class="w-20">Review Of Batch Manufacturing Record (BMR)</th>
-                        <td class="w-80">{!! $data->review_of_batch_manufacturing_record_BMR_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review Of Batch Manufacturing Record (BMR)</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_batch_manufacturing_record_BMR_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_batch_manufacturing_record_BMR_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Review Of Raw Materials Used In Batch Manufacturing</th>
-                        <td class="w-80">{!! $data->review_of_raw_materials_used_in_batch_manufacturing_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review Of Raw Materials Used In Batch Manufacturing</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_raw_materials_used_in_batch_manufacturing_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_raw_materials_used_in_batch_manufacturing_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
                     <tr>
-                        <th class="w-20">Review Of Batch Packing Record (BPR)</th>
-                        <td class="w-80">{!! $data->review_of_Batch_Packing_record_bpr_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review Of Batch Packing Record (BPR)</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_Batch_Packing_record_bpr_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_Batch_Packing_record_bpr_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Review Of Packing Materials Used In Batch Packing</th>
-                        <td class="w-80">{!! $data->review_of_packing_materials_used_in_batch_packing_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review Of Packing Materials Used In Batch Packing</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_packing_materials_used_in_batch_packing_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_packing_materials_used_in_batch_packing_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                  
+
                     <tr>
-                        <th class="w-20">Review Of Analytical Data</th>
-                        <td class="w-80">{!! $data->review_of_analytical_data_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review Of Analytical Data</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_analytical_data_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_analytical_data_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Review of Complaint Sample (if applicable)</th>
-                        <td class="w-80">{!! $data->review_of_complaint_sample_if ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Review Of Training Record Of Concern Persons</th>
-                        <td class="w-80">{!! $data->review_of_training_record_of_concern_persons_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Review of Equipment/Instrument qualification/Calibration Record</th>
-                        <td class="w-80">{!! $data->rev_eq_inst_qual_calib_record_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Review of Equipment Break-down and Maintenance Record</th>
-                        <td class="w-80">{!! $data->review_of_equipment_break_down_and_maintainance_record_gi ?? 'Not Applicable' !!}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Review Of Past History Of Product</th>
-                        <td class="w-80">{!! $data->review_of_past_history_of_product_gi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Review of Complaint Sample (if applicable)</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_complaint_sample_if)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_complaint_sample_if !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
 
+
+                   
+
+                    <tr>
+                        <th class="w-20 align-top">Review Of Training Record Of Concern Persons</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_training_record_of_concern_persons_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_training_record_of_concern_persons_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                  
+
+                    <tr>
+                        <th class="w-20 align-top">>Review of Equipment/Instrument qualification/Calibration Record</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->rev_eq_inst_qual_calib_record_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->rev_eq_inst_qual_calib_record_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                   
+
+                    <tr>
+                        <th class="w-20 align-top">Review of Equipment Break-down and Maintenance Record</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_equipment_break_down_and_maintainance_record_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_equipment_break_down_and_maintainance_record_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    
+
+
+                    <tr>
+                        <th class="w-20 align-top">Review Of Past History Of Product</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->review_of_past_history_of_product_gi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->review_of_past_history_of_product_gi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -967,38 +1306,126 @@
 
             </div>
              <table>
+                   
+
                     <tr>
-                        <th class="w-20">Conclusion</th>
-                        <td class="w-80">{!! $data->conclusion_pi ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Conclusion</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->conclusion_pi)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->conclusion_pi !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                     
+                    
+
                     <tr>
-                        <th class="w-20">Root Cause Analysis</th>
-                        <td class="w-80">{!! $data->conclusion_hodsr ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Root Cause Analysis</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->conclusion_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->conclusion_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">Other Methodology</th>
-                        <td class="w-80">{!! $data->root_cause_analysis_hodsr ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Other Methodology</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->root_cause_analysis_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->root_cause_analysis_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
+
                     <tr>
-                        <th class="w-20">The Probable Root Causes or Root Cause</th>
-                        <td class="w-80">{!! $data->the_probable_root ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">The Probable Root Causes or Root Cause</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->the_probable_root)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->the_probable_root !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
+
                     <tr>
-                        <th class="w-20">Impact Assessment</th>
-                        <td class="w-80">{!! $data->impact_assessment_hodsr ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Impact Assessment</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->impact_assessment_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->impact_assessment_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                   
                     <tr>
-                        <th class="w-20">Corrective Action</th>
-                        <td class="w-80">{!! $data->corrective_action_hodsr ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Corrective Action</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->corrective_action_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->corrective_action_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
+
                     <tr>
-                        <th class="w-20">Preventive Action</th>
-                        <td class="w-80">{!! $data->preventive_action_hodsr ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Preventive Action</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->preventive_action_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->preventive_action_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
+                    
+
+
                     <tr>
-                        <th class="w-20">Summary and Conclusion</th>
-                        <td class="w-80">{!! $data->summary_and_conclusion_hodsr ?? 'Not Applicable' !!}</td>
+                        <th class="w-20 align-top">Summary and Conclusion</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->summary_and_conclusion_hodsr)
+                                <div class="summernote-content table-responsive" style="overflow-x: auto;">
+                                    
+                                    {!! $data->summary_and_conclusion_hodsr !!}
+                                </div>
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
                 </table>
             </div>
