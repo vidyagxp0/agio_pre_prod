@@ -549,7 +549,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="HOD Initial Comment">HOD Initial Comment</label>
-                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-16"></textarea>
+                                        <textarea disabled class="summernote" name="HOD_Remarks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -563,7 +563,7 @@
                                             <div class="file-attachment-list" id="HOD_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments" name="HOD_Attachments[]"
+                                                <input disabled type="file" id="HOD_Attachments" name="HOD_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -1810,7 +1810,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="QA Initial Comment">QA/CQA Initial Comment</label>
-                                        <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"></textarea>
+                                        <textarea disabled class="summernote" name="QA_Feedbacks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -1824,7 +1824,7 @@
                                             <div class="file-attachment-list" id="QA_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="QA_Attachments" name="QA_Attachments[]"
+                                                <input disabled type="file" id="QA_Attachments" name="QA_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
                                             </div>
                                         </div>
@@ -1855,7 +1855,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Approval Comment">Approval Comment</label>
-                                        <textarea class="summernote" name="Approval_Comment" id="summernote-16"></textarea>
+                                        <textarea disabled class="summernote" name="Approval_Comment" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -1869,7 +1869,7 @@
                                             <div class="file-attachment-list" id="Approval_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Approval_Attachments"
+                                                <input disabled type="file" id="Approval_Attachments"
                                                     name="Approval_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'Approval_Attachments')" multiple>
                                             </div>
@@ -1973,9 +1973,9 @@
                                         <label for="Date Due">Date Of Correction of document</label>
                                        
                                         <div class="calenderauditee">
-                                            <input type="text" id="Date_and_time_of_correction" readonly
+                                            <input disabled type="text" id="Date_and_time_of_correction" readonly
                                                 placeholder="DD-MMM-YYYY" value="" />
-                                            <input type="date" name="Date_and_time_of_correction" class="hide-input"
+                                            <input disabled type="date" name="Date_and_time_of_correction" class="hide-input"
                                                 oninput="handleDateInput(this, 'Date_and_time_of_correction')" />
                                         </div>
                                     </div>
@@ -1986,7 +1986,7 @@
                                         <label for="search">
                                             All Impacting Documents Corrected <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..."
+                                        <select disabled id="select-state" placeholder="Select..."
                                             name="All_Impacting_Documents_Corrected">
                                             <option value="">Select a value</option>
                                             <option value="Yes">Yes</option>
@@ -1998,7 +1998,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments"> Remarks</label>
-                                        <textarea class="summernote" name="Remarks" id="summernote-16"></textarea>
+                                        <textarea disabled class="summernote" name="Remarks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -2012,7 +2012,7 @@
                                             <div class="file-attachment-list" id="Initiator_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Initiator_Attachments"
+                                                <input disabled type="file" id="Initiator_Attachments"
                                                     name="Initiator_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'Initiator_Attachments')" multiple>
                                             </div>
@@ -2044,7 +2044,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="HOD Comment">HOD final review Comment</label>
-                                        <textarea class="summernote" name="HOD_Comment1" id="summernote-16"></textarea>
+                                        <textarea disabled class="summernote" name="HOD_Comment1" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -2058,7 +2058,7 @@
                                             <div class="file-attachment-list" id="HOD_Attachments1"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
+                                                <input disabled type="file" id="HOD_Attachments1" name="HOD_Attachments1[]"
                                                     oninput="addMultipleFiles(this, 'HOD_Attachments1')" multiple>
                                             </div>
                                         </div>
@@ -2136,7 +2136,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Closure Comments</label>
-                                        <textarea class="summernote" name="Closure_Comments" id="summernote-16"></textarea>
+                                        <textarea disabled class="summernote" name="Closure_Comments" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -2150,7 +2150,7 @@
                                             <div class="file-attachment-list" id="Closure_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="Closure_Attachments"
+                                                <input disabled type="file" id="Closure_Attachments"
                                                     name="Closure_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
                                             </div>

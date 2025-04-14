@@ -7372,7 +7372,7 @@
                                         </label>
 
                                         <input type="text" name="Other1_Department_person" id="Other1_Department_person"
-                                            value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                            value="{{ old('Other1_Department_person', $data1->Other1_Department_person ?: '') }}"
                                             @if ($data->stage != 2) readonly @endif>
                                     </div>
                                 </div>
@@ -7662,7 +7662,7 @@
                                     <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
 
                                     <input type="text" name="Other2_Department_person" id="Other2_Department_person"
-                                            value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                            value="{{ old('Other2_Department_person', $data1->Other2_Department_person ?: '') }}"
                                             @if ($data->stage != 2) readonly @endif>
                                 </div>
                             </div>
@@ -7804,7 +7804,7 @@
                                     <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                       
                                     <input type="text" name="Other3_Department_person" id="Other3_Department_person"
-                                            value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                            value="{{ old('Other3_Department_person', $data1->Other3_Department_person ?: '') }}"
                                             @if ($data->stage != 2) readonly @endif>
                                 </div>
                             </div>
@@ -7950,7 +7950,7 @@
                                     <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
 
                                     <input type="text" name="Other4_Department_person" id="Other4_Department_person"
-                                            value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                            value="{{ old('Other4_Department_person', $data1->Other4_Department_person ?: '') }}"
                                             @if ($data->stage != 2) readonly @endif>
 
                                 </div>
@@ -8115,7 +8115,7 @@
                                     <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
 
                                     <input type="text" name="Other5_Department_person" id="Other5_Department_person"
-                                            value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                            value="{{ old('Other5_Department_person', $data1->Other5_Department_person ?: '') }}"
                                             @if ($data->stage != 3) readonly @endif>
                                 </div>
                             </div>

@@ -21,6 +21,10 @@
         width: 10%;
     }
 
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -86,7 +90,7 @@
 
     th,
     td {
-        padding: 10px;
+        padding: 5px;
         text-align: left;
     }
 
@@ -186,6 +190,22 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                <strong>Page :</strong> 1 of 1
+            </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -459,76 +479,60 @@
                 <div class="block-head">
                     Summary Response
                 </div>
-
-
-
-
-
-                <!-- <table>
-                    <tr>
-                        <th class="w-20">CFT review selection</th>
-                        <td class="w-80">
-                            @if ($data->reviewer_person_value)
-                                {{ $data->reviewer_person_value }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table> -->
+                
                 <div class="border-table">
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-20">Sr.No.</th>
-                            <th>Observation</th>
-                            <th>category</th>
-                            <th>Response</th>
-                            <th>CAPA / Child action Reference If Any </th>
-                            <th>Status</th>
-                           
-                            <th>Remarks</th>
-
-                        </tr>
-                        @if ($grid_Data_2 && is_array($grid_Data_2->data))
-                            @foreach ($grid_Data_2->data as $grid_Data_2)
-                                <tr>
-                                    <td class="w-20">{{ $loop->index + 1 }}</td>
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['observation']) ? $grid_Data_2['observation'] : '' }}
-                                    </td>
-                                   
-                                    
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['category']) ? $grid_Data_2['category'] : '' }}</td>
-                                 
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['response']) ? $grid_Data_2['response'] : '' }}</td>
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['reference_id']) ? $grid_Data_2['reference_id'] : '' }}
-                                    </td>
-
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['status']) ? $grid_Data_2['status'] : '' }}</td>
-                                    
-                                    <td class="w-20">
-                                        {{ isset($grid_Data_2['remarks']) ? $grid_Data_2['remarks'] : '' }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
-                                <td>Not Applicable</td>
+                    <table style="width: 500px !important;">
+                        <thead>
+                            <tr class="table_bg" >
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 15%;">Observation</th>
+                                <th style="width: 15%;">Category</th>
+                                <th style="width: 15%;">Response</th>
+                                <th style="width: 20%;">CAPA / Child Action Reference If Any</th>
+                                <th style="width: 10%;">Status</th>
+                                <th style="width: 20%;">Remarks</th>
                             </tr>
-                        @endif
+                        </thead>
+                        <tbody>
+                            @if ($grid_Data_2 && is_array($grid_Data_2->data))
+                                @foreach ($grid_Data_2->data as $grid_Data_2)
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td>
+                                            {{ isset($grid_Data_2['observation']) ? $grid_Data_2['observation'] : '' }}
+                                        </td>
+                                        
+                                        <td>
+                                            {{ isset($grid_Data_2['category']) ? $grid_Data_2['category'] : '' }}</td>
+                                    
+                                        <td>
+                                            {{ isset($grid_Data_2['response']) ? $grid_Data_2['response'] : '' }}</td>
+                                        <td>
+                                            {{ isset($grid_Data_2['reference_id']) ? $grid_Data_2['reference_id'] : '' }}
+                                        </td>
+
+                                        <td>
+                                            {{ isset($grid_Data_2['status']) ? $grid_Data_2['status'] : '' }}</td>
+                                        
+                                        <td>
+                                            {{ isset($grid_Data_2['remarks']) ? $grid_Data_2['remarks'] : '' }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                            @endif
+                        </tbody>
                     </table>
                 </div>
             </div>
-        </div>
 
         <div class="border-table">
             <div class="block-head">
@@ -1118,7 +1122,7 @@ Not Applicable
                             <tr>
 
                                 <th class="w-20">Review comment (By Store)</th>
-                                <td class="w-30">
+                                <td class="w-30" colspan="3">
                                     <div>
                                         @if ($data1->Store_assessment)
                                             {{ $data1->Store_assessment }}
@@ -2697,21 +2701,7 @@ Not Applicable
             </div>
         </div>
 
-        <footer>
-            <table>
-                <tr>
-                    <td class="w-30">
-                        <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                    </td>
-                    <td class="w-40">
-                        <strong>Printed By :</strong> {{ Auth::user()->name }}
-                    </td>
-                    {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-                </tr>
-            </table>
-        </footer>
+
 
 </body>
 
