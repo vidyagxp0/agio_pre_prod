@@ -2707,8 +2707,8 @@
                                     <th class="w-20">Impact Assessment (By Other's 2)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Other2_assessment)
-                                                {{ $data1->Other2_assessment }}
+                                            @if ($data1->Other2_Assessment)
+                                                {{ $data1->Other2_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2825,8 +2825,8 @@
                                     <th class="w-20">Impact Assessment (By Other's 3)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Other3_assessment)
-                                                {{ $data1->Other3_assessment }}
+                                            @if ($data1->Other3_Assessment)
+                                                {{ $data1->Other3_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -2943,8 +2943,8 @@
                                     <th class="w-20">Impact Assessment (By Other's 4)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Other4_assessment)
-                                                {{ $data1->Other4_assessment }}
+                                            @if ($data1->Other4_Assessment)
+                                                {{ $data1->Other4_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
@@ -3061,8 +3061,8 @@
                                     <th class="w-20">Impact Assessment (By Other's 5)</th>
                                     <td class="w-30">
                                         <div>
-                                            @if ($data1->Other5_assessment)
-                                                {{ $data1->Other5_assessment }}
+                                            @if ($data1->Other5_Assessment)
+                                                {{ $data1->Other5_Assessment }}
                                             @else
                                                 Not Applicable
                                             @endif
