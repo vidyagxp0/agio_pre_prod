@@ -107,7 +107,7 @@ class DeviationController extends Controller
         //  $deviation->record_number = $request->record_number;
         $deviation->division_id = $request->division_id;
         $deviation->assign_to = $request->assign_to;
-        //$deviation->Facility = $request->Facility;
+        $deviation->Facility = $request->Facility;
         if (is_array($request->Facility)) {
             $deviation->Facility = implode(',', $request->Facility);
         }

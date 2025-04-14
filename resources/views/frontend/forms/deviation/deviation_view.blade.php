@@ -13486,9 +13486,8 @@
                                             </a> --}}
                             @endif
                             <!-- <a type="button" class="button  launch_extension" data-bs-toggle="modal"
-                                                                                                                                                                                                                                                                                                        data-bs-target="#effectivenss_extension">
-                                                                                                                                                                                                                                                                                                        Launch Effectiveness Check
-                                                                                                                                                                                                                                                                                                    </a> -->
+                        data-bs-target="#effectivenss_extension">
+                        Launch Effectiveness Check </a> -->
                         </div>
                     </div>
                 </div>
@@ -14183,7 +14182,7 @@
 
         </div>
         </form>
-        <div class="sticky-buttons">
+        <!-- <div class="sticky-buttons">
             <div>
                 <a type="button" class="" data-toggle="modal" data-target="#myModal3">
 
@@ -14193,7 +14192,7 @@
                     </svg>
                 </a>
             </div>
-        </div>
+        </div> -->
     </div>
     </div>
 
