@@ -86,7 +86,7 @@
 
     th,
     td {
-        padding: 10px;
+        padding: 5px;
         text-align: left;
     }
 
@@ -185,6 +185,24 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
+
+
     <div class="inner-block">
 
 <div class="content-table">
@@ -199,14 +217,13 @@
     @if (!empty($oocgrid->data) && count($oocgrid->data) > 0)
         <table>
             <tr class="table_bg">
-                <th class="w-20">Sr.No.</th>
-                <th class="w-60">Observation</th>
-                <th class="w-60">Category</th>
-                <th class="w-60">Response</th>
-                <th class="w-60">CAPA / Child action Reference If Any</th>
-                <th class="w-60">Status</th>
-               
-                <th class="w-60">Remarks</th>
+                <th class="w-10">Sr.No.</th>
+                <th class="w-20">Observation</th>
+                <th class="w-20">Category</th>
+                <th class="w-20">Response</th>
+                <th class="w-20">CAPA / Child action Reference If Any</th>
+                <th class="w-20">Status</th>
+                <th class="w-20">Remarks</th>
             </tr>
 
             @php
@@ -295,21 +312,7 @@
 
 
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 
