@@ -669,7 +669,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Review Of Incident And Verification Of Effectiveness Of Corrcetion</th>
+                        <th class="w-20">Review Of Incident And Verification Of Effectiveness Of Correction</th>
                         <td class="w-80">
                             @if ($data->review_of_verific)
                                 {{ $data->review_of_verific }}
