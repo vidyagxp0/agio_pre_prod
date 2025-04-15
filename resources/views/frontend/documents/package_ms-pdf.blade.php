@@ -131,10 +131,10 @@
         }
 
         body {
-            margin-top: 260px;
-            margin-bottom: 170px;
-            /* padding-top: 30px;
-            padding-bottom: 50px;  */
+            margin-top: 250px;
+            margin-bottom: 150px;
+            padding-top: 30px;
+            padding-bottom: 50px;
         }
 
         footer {
@@ -636,7 +636,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="text-left">
+                    <th class="text-center">
                         <div class="bold">SPECIFICATION</div>
                     </th>
                 </tr>
@@ -656,12 +656,13 @@
             </div>
         </div>
     </div>
+    
 
     <table>
         <thead>
             <tr>
-                <th class="text-left">
-                    <div class="bold">REVISION HISTORY:</div>
+                <th class="text-center">
+                    <div class="bold">REVISION HISTORY</div>
                 </th>
             </tr>
         </thead>
