@@ -4071,4 +4071,12 @@ document.getElementById('initiator_group').addEventListener('change', function()
         $(".summernote-disabled").FroalaEditor("edit.off");
     </script>
 
+
+        <style>
+            #isPasted td:first-child, #isPasted th:first-child{
+            
+            width: 33%;
+        
+            }
+        </style>
 @endsection
