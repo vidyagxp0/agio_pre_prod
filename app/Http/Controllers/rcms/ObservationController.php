@@ -3150,6 +3150,8 @@ if (is_array($request->action) && !empty($request->action)) {
 
     public function ObservationSingleReport($id){
         $data = Observation::find($id);
+
+        // dd($data);
         $observation_id = $id;
         $griddata = ObservationGrid::where('observation_id',$data->id)->first();
         $grid_Data = ObseravtionSingleGrid::where(['obs_id' => $observation_id, 'identifier' => 'observation'])->firstOrCreate();
