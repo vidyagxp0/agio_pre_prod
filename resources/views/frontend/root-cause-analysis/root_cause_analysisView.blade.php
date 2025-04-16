@@ -15,6 +15,12 @@
     </style>
 
     <style>
+        #fr-logo {
+            display: none;
+        }
+    </style>
+
+    <style>
         
         /*Main Table Styling */
         #isPasted {
@@ -528,7 +534,7 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/RCA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                         </div>
                                     </div>
 
@@ -1112,17 +1118,14 @@
                                                         @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                                             <tr>
                                                                 <td>{{ $key + 1 }}</td>
-                                                                <td><input name="risk_factor[]" type="text"
-                                                                        value="{{ $riskFactor }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="risk_factor[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
                                                                 </td>
-                                                                <td><input name="risk_element[]"type="text"
-                                                                    value="{{ unserialize($data->risk_element)[$key] ?? null }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="risk_element[]"
+                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->risk_element)[$key] ?? null }}</textarea>
                                                             </td>
-                                                                <td><input name="problem_cause[]" type="text"
-                                                                        value="{{ unserialize($data->problem_cause)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="problem_cause[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->problem_cause)[$key] ?? null }}</textarea>
                                                                 </td>
 
                                                                 <td>
@@ -1294,9 +1297,8 @@
                                                                             Y</option>
                                                                     </select>
                                                                 </td>
-                                                                <td><input name="mitigation_proposal[]" type="text"
-                                                                        value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="mitigation_proposal[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->mitigation_proposal)[$key] ?? null }}</textarea>
                                                                 </td>
                                                                 <td> <button class=" btn-dark removeRowBtn"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button>
@@ -1440,21 +1442,20 @@
                                                                         <option value="Methods"
                                                                             {{ $inference_type == 'Methods' ? 'selected' : '' }}>
                                                                             Methods</option>
-                                                                        <option value=" Mother Environment"
-                                                                            {{ $inference_type == ' Mother Environment' ? 'selected' : '' }}>
+                                                                        <option value="Mother Environment"
+                                                                            {{ $inference_type == 'Mother Environment' ? 'selected' : '' }}>
                                                                              Mother Environment</option>
                                                                         <option value="Man"
-                                                                            {{ $inference_type == 'Manp' ? 'selected' : '' }}>
-                                                                            Manp</option>
+                                                                            {{ $inference_type == 'Man' ? 'selected' : '' }}>
+                                                                            Man</option>
                                                                         <option value="Machine"
                                                                             {{ $inference_type == 'Machine' ? 'selected' : '' }}>
                                                                             Machine</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="inference_remarks[]"
-                                                                        value="{{ $inference_remarks[$key] ?? '' }}"
-                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                    <textarea name="inference_remarks[]"
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $inference_remarks[$key] ?? '' }}</textarea>
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="removeRowBtn"
@@ -1705,10 +1706,18 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
 
+                                                @php
+                                                    $isReadonly = in_array($data->stage, [0,1,2,3,5,6,7,8]);
+                                                    $isRequired = ($data->reason == 'Rootcauseothers' && empty($data->investigation_attachment) && $data->stage == 4);
+                                                @endphp
+
                                                 <input type="file" id="myfile"
-                                                    name="investigation_attachment[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{!$data->stage == 4 ? 'required' : ''}}
+                                                    name="investigation_attachment[]"
+                                                    {{ $isReadonly ? 'readonly' : '' }}
+                                                    {{ $isRequired ? 'required' : '' }}
                                                     oninput="addMultipleFiles(this, 'investigation_attachment')"
                                                     multiple>
+
                                             </div>
                                         </div>
                                     </div>
@@ -2640,13 +2649,13 @@
         cell1.innerHTML = currentRowCount + 1;
 
         var cell2 = newRow.insertCell(1);
-        cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+        cell2.innerHTML = "<textarea name='risk_factor[]' type='text'>";
 
         var cell3 = newRow.insertCell(2);
-        cell3.innerHTML = "<input name='risk_element[]' type='text'>";
+        cell3.innerHTML = "<textarea name='risk_element[]' type='text'>";
 
         var cell4 = newRow.insertCell(3);
-        cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+        cell4.innerHTML = "<textarea name='problem_cause[]' type='text'>";
 
         // var cell5 = newRow.insertCell(4);
         // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
@@ -2673,7 +2682,7 @@
         //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
         var cell19 = newRow.insertCell(8);
-        cell19.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+        cell19.innerHTML = "<textarea name='risk_control_measure[]' type='text'>";
 
         var cell10 = newRow.insertCell(9);
         cell10.innerHTML =
@@ -2703,7 +2712,7 @@
             "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
         var cell16 = newRow.insertCell(15);
-        cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+        cell16.innerHTML = "<textarea name='mitigation_proposal[]' type='text'>";
 
         var cell17 = newRow.insertCell(16);
         cell17.innerHTML = "<button type='text'  class='removeRowBtn  btn-dark' name='Action[]' readonly>Remove</button>";
@@ -2728,7 +2737,7 @@
             "<select name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Mother Environment'>Mother Environment</option><option value='Man'>Man</option><option value='Machine'>Machine</option></select>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = "<input type='text'  name='inference_remarks[]'>";
+            cell3.innerHTML = "<textarea type='text'  name='inference_remarks[]'>";
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
@@ -2951,23 +2960,46 @@
                     }
                     break;
                 case 'Rootcauseothers':
+                    // if (show) {
+                    //     $('#root-cause-others').find('input, select, textarea').attr('required', true);
+                    //     $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
+
+                    //     // Show Other Attachment field
+                    //     $('#otherAttachmentField').show();
+                    //     $('#otherAttachmentField input[type="file"]').attr('required', true);
+                    //     $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    // } else {
+                    //     $('#root-cause-others').find('input, select, textarea').removeAttr('required');
+                    //     $('#root-cause-others .req-asterisk').remove();
+
+                    //     // Hide Other Attachment field
+                    //     $('#otherAttachmentField').hide();
+                    //     $('#otherAttachmentField input[type="file"]').removeAttr('required');
+                    //     $('#otherAttachmentField .req-asterisk').remove();
+                    // }
+
+                    const existingFiles = {!! json_encode(json_decode($data->investigation_attachment)) !!};
+
                     if (show) {
                         $('#root-cause-others').find('input, select, textarea').attr('required', true);
                         $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
 
-                        // Show Other Attachment field
                         $('#otherAttachmentField').show();
-                        $('#otherAttachmentField input[type="file"]').attr('required', true);
-                        $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+
+                        // File required only if no file is already uploaded
+                        if (!existingFiles || existingFiles.length === 0) {
+                            $('#otherAttachmentField input[type="file"]').attr('required', true);
+                            $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                        }
                     } else {
                         $('#root-cause-others').find('input, select, textarea').removeAttr('required');
                         $('#root-cause-others .req-asterisk').remove();
 
-                        // Hide Other Attachment field
                         $('#otherAttachmentField').hide();
                         $('#otherAttachmentField input[type="file"]').removeAttr('required');
                         $('#otherAttachmentField .req-asterisk').remove();
                     }
+
                     break;
                 case 'Why-Why Chart':
                     if (show) {
