@@ -6790,7 +6790,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
-                            'message' => 'Sent for CFT review state'
+                            'message' => 'Sent for Summary and Response state'
                         ]);
                     }
                 $changeControl->stage = "2";

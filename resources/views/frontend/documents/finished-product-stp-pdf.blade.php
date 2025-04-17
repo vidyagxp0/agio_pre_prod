@@ -362,7 +362,7 @@
 
         #isPasted td > p span {
             display: inline-block;
-            width: 650px;
+            width: 640px;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
