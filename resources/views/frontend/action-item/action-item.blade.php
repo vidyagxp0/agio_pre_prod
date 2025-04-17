@@ -13,6 +13,11 @@
             display: none;
         }
     </style>
+    <style>
+        #fr-logo {
+            display: none;
+        }
+    </style>
 
     <div class="form-field-head">
         {{-- <div class="pr-id">

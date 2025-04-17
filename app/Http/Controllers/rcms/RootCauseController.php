@@ -1793,7 +1793,7 @@ class RootCauseController extends Controller
 
 
         // $root->investigators = json_encode($request->investigators);
-        $root->submitted_by = $request->submitted_by;
+        // $root->submitted_by = $request->submitted_by;
 
         $root->comments = $request->comments;
         $root->lab_inv_concl = $request->lab_inv_concl;

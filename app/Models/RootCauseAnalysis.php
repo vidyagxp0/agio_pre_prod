@@ -9,6 +9,10 @@ class RootCauseAnalysis extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'investigation_team' => 'array',
+    ];
+
 
     public function record_initiator()
     {

@@ -142,21 +142,21 @@
             topField.className = 'grid-field fields top-field'
 
             let measurement = document.createElement('div')
-            let measurementInput = document.createElement('input')
+            let measurementInput = document.createElement('textarea')
             measurementInput.setAttribute('type', 'text')
             measurementInput.setAttribute('name', 'measurement[]')
             measurement.append(measurementInput)
             topField.append(measurement)
 
             let materials = document.createElement('div')
-            let materialsInput = document.createElement('input')
+            let materialsInput = document.createElement('textarea')
             materialsInput.setAttribute('type', 'text')
             materialsInput.setAttribute('name', 'materials[]')
             materials.append(materialsInput)
             topField.append(materials)
 
             let methods = document.createElement('div')
-            let methodsInput = document.createElement('input')
+            let methodsInput = document.createElement('textarea')
             methodsInput.setAttribute('type', 'text')
             methodsInput.setAttribute('name', 'methods[]')
             methods.append(methodsInput)
@@ -168,21 +168,21 @@
             bottomField.className = 'grid-field fields bottom-field'
 
             let environment = document.createElement('div')
-            let environmentInput = document.createElement('input')
+            let environmentInput = document.createElement('textarea')
             environmentInput.setAttribute('type', 'text')
             environmentInput.setAttribute('name', 'environment[]')
             environment.append(environmentInput)
             bottomField.append(environment)
 
             let manpower = document.createElement('div')
-            let manpowerInput = document.createElement('input')
+            let manpowerInput = document.createElement('textarea')
             manpowerInput.setAttribute('type', 'text')
             manpowerInput.setAttribute('name', 'manpower[]')
             manpower.append(manpowerInput)
             bottomField.append(manpower)
 
             let machine = document.createElement('div')
-            let machineInput = document.createElement('input')
+            let machineInput = document.createElement('textarea')
             machineInput.setAttribute('type', 'text')
             machineInput.setAttribute('name', 'machine[]')
             machine.append(machineInput)
@@ -564,8 +564,6 @@
                                         </div>
                                     </div>
 
-
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator Department</b></label>
@@ -573,8 +571,6 @@
                                                 value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                         </div>
                                     </div>
-
-  
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1026,12 +1022,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
                                         <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]"  {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} {{$data->stage ==4 ? 'required' : ''}}>
                                           
-                                         @foreach ($users as $key => $value)
+                                        @foreach ($users as $key => $value)
                                             <option value="{{ $value->id }}"
                                                 {{old('investigation_team', $data->investigation_team) == $value->id ? 'selected' : '' }}>
                                                 {{ $value->name }}
@@ -1044,7 +1040,34 @@
                                         @endif  
 
                                     </div>
-                                </div>
+                                </div> --}}
+
+                        @php
+                            $selectedTeam = old('investigation_team', is_array($data->investigation_team) ? $data->investigation_team : explode(',', $data->investigation_team));
+                        @endphp
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
+                                <select multiple id="investigation_team" name="investigation_team[]" 
+                                    {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} 
+                                    {{ $data->stage == 4 ? 'required' : '' }}>
+                                    
+                                    @foreach ($users as $key => $value)
+                                        <option value="{{ $value->id }}"
+                                            {{ in_array($value->id, $selectedTeam) ? 'selected' : '' }}>
+                                            {{ $value->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                @if(in_array($data->stage, [0,1,2,3,5,6,7,8]))
+                                    @foreach($selectedTeam as $id)
+                                        <input type="hidden" name="investigation_team[]" value="{{ $id }}">
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root-cause-methodology">Root Cause Methodology @if ($data->stage == 4)  <span class="text-danger">*</span>@endif</label>
@@ -1338,17 +1361,15 @@
                                                     <div class="grid-field fields top-field">
                                                         @if (!empty($data->measurement))
                                                             @foreach (unserialize($data->measurement) as $key => $measure)
-                                                                <div><input type="text"
-                                                                        value="{{ $measure }}"
-                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        value=""
+                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $measure }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}"
-                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->methods)[$key] ?? null }}"
-                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->methods)[$key] ?? null }}</textarea>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -1359,17 +1380,14 @@
                                                     <div class="grid-field fields bottom-field">
                                                         @if (!empty($data->environment))
                                                             @foreach (unserialize($data->environment) as $key => $measure)
-                                                                <div><input type="text"
-                                                                        value="{{ $measure }}"
-                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea 
+                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $measure }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}"
-                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea 
+                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}"
-                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}</textarea>
                                                                 </div>
                                                             @endforeach
                                                         @endif
