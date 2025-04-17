@@ -153,6 +153,33 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .summernote-scroll-wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+        }
+
+        .summernote-content table {
+            min-width: 100%;
+            border-collapse: collapse !important;
+            table-layout: auto !important;
+        }
+
+        .summernote-content table td,
+        .summernote-content table th {
+            border: 1px solid #ccc !important;
+            padding: 8px !important;
+            vertical-align: top !important;
+            text-align: left !important;
+            word-wrap: break-word;
+        }
+
+        .summernote-content table th {
+            background-color: #f9f9f9 !important;
+            font-weight: bold;
+        }
+
+    
 </style>
 
 <style>
@@ -657,6 +684,22 @@
                     </td>
 
                 </tr>
+
+
+                <tr>
+                    <th class="w-20 align-top">Action Taken</th>
+                    <td class="w-80" colspan="3">
+                        @if ($data->action_taken)
+                            <div class="summernote-scroll-wrapper" style="overflow-x: auto; max-width: 100%;">
+                                <div class="summernote-content">
+                                    {!! $data->action_taken !!}
+                                </div>
+                            </div>
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
             </table>
 
             <!-- <label class="head-number" for="Observation (+)">Action Taken</label>
@@ -668,7 +711,7 @@
                     @endif
                 </div> -->
 
-                <div class="other-container ">
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -684,14 +727,14 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         <div class="table-containers">
-                                            {!! strip_tags($data->action_taken, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        {!! strip_tags($data->action_taken, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <br>
 
             <div class="block-head">
@@ -699,7 +742,7 @@
             </div>
 
 
-                <div class="other-container ">
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -722,8 +765,24 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
             <table>
+                <tr>
+                    <th class="w-20 align-top">Response Summary</th>
+                    <td class="w-80" colspan="3">
+                        @if ($data->response_summary)
+                            <div class="summernote-scroll-wrapper" style="overflow-x: auto; max-width: 100%;">
+                                <div class="summernote-content">
+                                    {!! $data->response_summary !!}
+                                </div>
+                            </div>
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+          
 
 
             </table>
