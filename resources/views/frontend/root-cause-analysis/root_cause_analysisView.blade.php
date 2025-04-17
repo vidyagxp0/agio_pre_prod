@@ -2112,10 +2112,11 @@
                                         <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
                                         <div class="">
                                             @if ($data->HOD_Review_Complete_By )
-                                            {{ $data->HOD_Review_Complete_By }}
-                                            @else Not Applicable
+                                               {{ $data->HOD_Review_Complete_By }}
+                                            @else 
+                                               Not Applicable
                                             @endif
-                                            {{ $data->HOD_Review_Complete_By }}</div>
+                                        </div>
                                     </div>
                                 </div>
 
