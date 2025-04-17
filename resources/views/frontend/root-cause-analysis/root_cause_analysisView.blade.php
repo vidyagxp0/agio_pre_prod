@@ -15,6 +15,12 @@
     </style>
 
     <style>
+        #fr-logo {
+            display: none;
+        }
+    </style>
+
+    <style>
         
         /*Main Table Styling */
         #isPasted {
@@ -136,21 +142,21 @@
             topField.className = 'grid-field fields top-field'
 
             let measurement = document.createElement('div')
-            let measurementInput = document.createElement('input')
+            let measurementInput = document.createElement('textarea')
             measurementInput.setAttribute('type', 'text')
             measurementInput.setAttribute('name', 'measurement[]')
             measurement.append(measurementInput)
             topField.append(measurement)
 
             let materials = document.createElement('div')
-            let materialsInput = document.createElement('input')
+            let materialsInput = document.createElement('textarea')
             materialsInput.setAttribute('type', 'text')
             materialsInput.setAttribute('name', 'materials[]')
             materials.append(materialsInput)
             topField.append(materials)
 
             let methods = document.createElement('div')
-            let methodsInput = document.createElement('input')
+            let methodsInput = document.createElement('textarea')
             methodsInput.setAttribute('type', 'text')
             methodsInput.setAttribute('name', 'methods[]')
             methods.append(methodsInput)
@@ -162,21 +168,21 @@
             bottomField.className = 'grid-field fields bottom-field'
 
             let environment = document.createElement('div')
-            let environmentInput = document.createElement('input')
+            let environmentInput = document.createElement('textarea')
             environmentInput.setAttribute('type', 'text')
             environmentInput.setAttribute('name', 'environment[]')
             environment.append(environmentInput)
             bottomField.append(environment)
 
             let manpower = document.createElement('div')
-            let manpowerInput = document.createElement('input')
+            let manpowerInput = document.createElement('textarea')
             manpowerInput.setAttribute('type', 'text')
             manpowerInput.setAttribute('name', 'manpower[]')
             manpower.append(manpowerInput)
             bottomField.append(manpower)
 
             let machine = document.createElement('div')
-            let machineInput = document.createElement('input')
+            let machineInput = document.createElement('textarea')
             machineInput.setAttribute('type', 'text')
             machineInput.setAttribute('name', 'machine[]')
             machine.append(machineInput)
@@ -356,12 +362,16 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
@@ -371,6 +381,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
@@ -378,13 +393,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-
                             </button>
 
                         @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
@@ -392,6 +408,11 @@
                                 More Info Required
 
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
 
@@ -401,6 +422,11 @@
                                 More Information
                                 Required
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final QA/CQA Review Complete
                             </button>
@@ -410,6 +436,11 @@
                                 More Information
                                 Required
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QAH/CQAH Closure
                             </button>
@@ -528,7 +559,7 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/RCA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                         </div>
                                     </div>
 
@@ -558,8 +589,6 @@
                                         </div>
                                     </div>
 
-
-
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator Department</b></label>
@@ -567,8 +596,6 @@
                                                 value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                         </div>
                                     </div>
-
-  
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -1020,12 +1047,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
                                         <select multiple id="investigation_team"placeholder="Select members of the Investigation Team" name="investigation_team[]"  {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} {{$data->stage ==4 ? 'required' : ''}}>
                                           
-                                         @foreach ($users as $key => $value)
+                                        @foreach ($users as $key => $value)
                                             <option value="{{ $value->id }}"
                                                 {{old('investigation_team', $data->investigation_team) == $value->id ? 'selected' : '' }}>
                                                 {{ $value->name }}
@@ -1038,7 +1065,34 @@
                                         @endif  
 
                                     </div>
-                                </div>
+                                </div> --}}
+
+                        @php
+                            $selectedTeam = old('investigation_team', is_array($data->investigation_team) ? $data->investigation_team : explode(',', $data->investigation_team));
+                        @endphp
+                        <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="investigation_team">Investigation Team @if ($data->stage == 4) <span class="text-danger">*</span>@endif </label>
+                                <select multiple id="investigation_team" name="investigation_team[]" 
+                                    {{ in_array($data->stage,[0,1,2,3,5,6,7,8]) ? "disabled" : "" }} 
+                                    {{ $data->stage == 4 ? 'required' : '' }}>
+                                    
+                                    @foreach ($users as $key => $value)
+                                        <option value="{{ $value->id }}"
+                                            {{ in_array($value->id, $selectedTeam) ? 'selected' : '' }}>
+                                            {{ $value->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                @if(in_array($data->stage, [0,1,2,3,5,6,7,8]))
+                                    @foreach($selectedTeam as $id)
+                                        <input type="hidden" name="investigation_team[]" value="{{ $id }}">
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root-cause-methodology">Root Cause Methodology @if ($data->stage == 4)  <span class="text-danger">*</span>@endif</label>
@@ -1112,17 +1166,14 @@
                                                         @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                                             <tr>
                                                                 <td>{{ $key + 1 }}</td>
-                                                                <td><input name="risk_factor[]" type="text"
-                                                                        value="{{ $riskFactor }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="risk_factor[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $riskFactor }}</textarea>
                                                                 </td>
-                                                                <td><input name="risk_element[]"type="text"
-                                                                    value="{{ unserialize($data->risk_element)[$key] ?? null }}"
-                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="risk_element[]"
+                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->risk_element)[$key] ?? null }}</textarea>
                                                             </td>
-                                                                <td><input name="problem_cause[]" type="text"
-                                                                        value="{{ unserialize($data->problem_cause)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="problem_cause[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->problem_cause)[$key] ?? null }}</textarea>
                                                                 </td>
 
                                                                 <td>
@@ -1294,9 +1345,8 @@
                                                                             Y</option>
                                                                     </select>
                                                                 </td>
-                                                                <td><input name="mitigation_proposal[]" type="text"
-                                                                        value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <td><textarea name="mitigation_proposal[]"
+                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ unserialize($data->mitigation_proposal)[$key] ?? null }}</textarea>
                                                                 </td>
                                                                 <td> <button class=" btn-dark removeRowBtn"
                                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Remove</button>
@@ -1336,17 +1386,15 @@
                                                     <div class="grid-field fields top-field">
                                                         @if (!empty($data->measurement))
                                                             @foreach (unserialize($data->measurement) as $key => $measure)
-                                                                <div><input type="text"
-                                                                        value="{{ $measure }}"
-                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        value=""
+                                                                        name="measurement[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $measure }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}"
-                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        name="materials[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->materials)[$key] ? unserialize($data->materials)[$key] : '' }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->methods)[$key] ?? null }}"
-                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        name="methods[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->methods)[$key] ?? null }}</textarea>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -1357,17 +1405,14 @@
                                                     <div class="grid-field fields bottom-field">
                                                         @if (!empty($data->environment))
                                                             @foreach (unserialize($data->environment) as $key => $measure)
-                                                                <div><input type="text"
-                                                                        value="{{ $measure }}"
-                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea 
+                                                                        name="environment[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $measure }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}"
-                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea 
+                                                                        name="manpower[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->manpower)[$key] ? unserialize($data->manpower)[$key] : '' }}</textarea>
                                                                 </div>
-                                                                <div><input type="text"
-                                                                        value="{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}"
-                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                <div><textarea
+                                                                        name="machine[]"{{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ unserialize($data->machine)[$key] ? unserialize($data->machine)[$key] : '' }}</textarea>
                                                                 </div>
                                                             @endforeach
                                                         @endif
@@ -1440,21 +1485,20 @@
                                                                         <option value="Methods"
                                                                             {{ $inference_type == 'Methods' ? 'selected' : '' }}>
                                                                             Methods</option>
-                                                                        <option value=" Mother Environment"
-                                                                            {{ $inference_type == ' Mother Environment' ? 'selected' : '' }}>
+                                                                        <option value="Mother Environment"
+                                                                            {{ $inference_type == 'Mother Environment' ? 'selected' : '' }}>
                                                                              Mother Environment</option>
                                                                         <option value="Man"
-                                                                            {{ $inference_type == 'Manp' ? 'selected' : '' }}>
-                                                                            Manp</option>
+                                                                            {{ $inference_type == 'Man' ? 'selected' : '' }}>
+                                                                            Man</option>
                                                                         <option value="Machine"
                                                                             {{ $inference_type == 'Machine' ? 'selected' : '' }}>
                                                                             Machine</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input type="text" name="inference_remarks[]"
-                                                                        value="{{ $inference_remarks[$key] ?? '' }}"
-                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>
+                                                                    <textarea name="inference_remarks[]"
+                                                                        {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }}>{{ $inference_remarks[$key] ?? '' }}</textarea>
                                                                 </td>
                                                                 <td>
                                                                     <button type="button" class="removeRowBtn"
@@ -1705,10 +1749,18 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
 
+                                                @php
+                                                    $isReadonly = in_array($data->stage, [0,1,2,3,5,6,7,8]);
+                                                    $isRequired = ($data->reason == 'Rootcauseothers' && empty($data->investigation_attachment) && $data->stage == 4);
+                                                @endphp
+
                                                 <input type="file" id="myfile"
-                                                    name="investigation_attachment[]" {{$data->stage == 0|| $data->stage == 1 || $data->stage == 2|| $data->stage == 3 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8 ? "readonly" : "" }} {{!$data->stage == 4 ? 'required' : ''}}
+                                                    name="investigation_attachment[]"
+                                                    {{ $isReadonly ? 'readonly' : '' }}
+                                                    {{ $isRequired ? 'required' : '' }}
                                                     oninput="addMultipleFiles(this, 'investigation_attachment')"
                                                     multiple>
+
                                             </div>
                                         </div>
                                     </div>
@@ -2060,10 +2112,11 @@
                                         <label for="HOD_Review_Complete_By">HOD Review Complete By</label>
                                         <div class="">
                                             @if ($data->HOD_Review_Complete_By )
-                                            {{ $data->HOD_Review_Complete_By }}
-                                            @else Not Applicable
+                                               {{ $data->HOD_Review_Complete_By }}
+                                            @else 
+                                               Not Applicable
                                             @endif
-                                            {{ $data->HOD_Review_Complete_By }}</div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -2424,6 +2477,8 @@
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
+
+                    @if ($data->stage == 4)
                         <div class="group-input">
                             <label for="capa-child">
                                 <input type="radio" name="revision" id="capa-child" value="capa-child">
@@ -2436,6 +2491,24 @@
                                 Action Item
                             </label>
                         </div>
+                        <div class="group-input">
+                            <label for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="extension">
+                                Extension
+                            </label>
+                        </div>
+                    @else
+
+                        <div class="group-input">
+                            <label for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="extension">
+                                Extension
+                            </label>
+                        </div>
+                    
+                    @endif
+                        
+                    
                         {{-- <div class="group-input">
                         <label for="root-item">
                         <input type="radio" name="revision" id="root-item" value="effectiveness-check">
@@ -2640,13 +2713,13 @@
         cell1.innerHTML = currentRowCount + 1;
 
         var cell2 = newRow.insertCell(1);
-        cell2.innerHTML = "<input name='risk_factor[]' type='text'>";
+        cell2.innerHTML = "<textarea name='risk_factor[]' type='text'>";
 
         var cell3 = newRow.insertCell(2);
-        cell3.innerHTML = "<input name='risk_element[]' type='text'>";
+        cell3.innerHTML = "<textarea name='risk_element[]' type='text'>";
 
         var cell4 = newRow.insertCell(3);
-        cell4.innerHTML = "<input name='problem_cause[]' type='text'>";
+        cell4.innerHTML = "<textarea name='problem_cause[]' type='text'>";
 
         // var cell5 = newRow.insertCell(4);
         // cell5.innerHTML = "<input name='existing_risk_control[]' type='text'>";
@@ -2673,7 +2746,7 @@
         //     "<select name='risk_acceptance[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
         var cell19 = newRow.insertCell(8);
-        cell19.innerHTML = "<input name='risk_control_measure[]' type='text'>";
+        cell19.innerHTML = "<textarea name='risk_control_measure[]' type='text'>";
 
         var cell10 = newRow.insertCell(9);
         cell10.innerHTML =
@@ -2703,7 +2776,7 @@
             "<select name='risk_acceptance2[]'><option value=''>-- Select --</option><option value='N'>N</option><option value='Y'>Y</option></select>";
 
         var cell16 = newRow.insertCell(15);
-        cell16.innerHTML = "<input name='mitigation_proposal[]' type='text'>";
+        cell16.innerHTML = "<textarea name='mitigation_proposal[]' type='text'>";
 
         var cell17 = newRow.insertCell(16);
         cell17.innerHTML = "<button type='text'  class='removeRowBtn  btn-dark' name='Action[]' readonly>Remove</button>";
@@ -2728,7 +2801,7 @@
             "<select name='inference_type[]'><option value=''>-- Select --</option><option value='Measurement'>Measurement</option><option value='Materials'>Materials</option><option value='Methods'>Methods</option><option value='Mother Environment'>Mother Environment</option><option value='Man'>Man</option><option value='Machine'>Machine</option></select>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = "<input type='text'  name='inference_remarks[]'>";
+            cell3.innerHTML = "<textarea type='text'  name='inference_remarks[]'>";
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
@@ -2951,23 +3024,46 @@
                     }
                     break;
                 case 'Rootcauseothers':
+                    // if (show) {
+                    //     $('#root-cause-others').find('input, select, textarea').attr('required', true);
+                    //     $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
+
+                    //     // Show Other Attachment field
+                    //     $('#otherAttachmentField').show();
+                    //     $('#otherAttachmentField input[type="file"]').attr('required', true);
+                    //     $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                    // } else {
+                    //     $('#root-cause-others').find('input, select, textarea').removeAttr('required');
+                    //     $('#root-cause-others .req-asterisk').remove();
+
+                    //     // Hide Other Attachment field
+                    //     $('#otherAttachmentField').hide();
+                    //     $('#otherAttachmentField input[type="file"]').removeAttr('required');
+                    //     $('#otherAttachmentField .req-asterisk').remove();
+                    // }
+
+                    const existingFiles = {!! json_encode(json_decode($data->investigation_attachment)) !!};
+
                     if (show) {
                         $('#root-cause-others').find('input, select, textarea').attr('required', true);
                         $('#root-cause-others label:first').append('<span class="text-danger req-asterisk"> *</span>');
 
-                        // Show Other Attachment field
                         $('#otherAttachmentField').show();
-                        $('#otherAttachmentField input[type="file"]').attr('required', true);
-                        $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+
+                        // File required only if no file is already uploaded
+                        if (!existingFiles || existingFiles.length === 0) {
+                            $('#otherAttachmentField input[type="file"]').attr('required', true);
+                            $('#otherAttachmentField label:first').append('<span class="text-danger req-asterisk"> *</span>');
+                        }
                     } else {
                         $('#root-cause-others').find('input, select, textarea').removeAttr('required');
                         $('#root-cause-others .req-asterisk').remove();
 
-                        // Hide Other Attachment field
                         $('#otherAttachmentField').hide();
                         $('#otherAttachmentField input[type="file"]').removeAttr('required');
                         $('#otherAttachmentField .req-asterisk').remove();
                     }
+
                     break;
                 case 'Why-Why Chart':
                     if (show) {

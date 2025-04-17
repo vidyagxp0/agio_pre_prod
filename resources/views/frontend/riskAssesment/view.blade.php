@@ -691,7 +691,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Initiation Group Code">Initiation Department Code</label>
+                                                    <label for="Initiation Group Code">Initiator  Department Code</label>
                                                     <input type="text" name="initiator_group_code"
                                                         value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                         readonly>
@@ -806,7 +806,7 @@
                                                 <option {{ $data->type == 'Market' ? 'selected' : '' }} value="Market">Market</option>
                                                 <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }} value="Operational_Risk">Operational Risk</option>
                                                 <option {{ $data->type == 'Strategic Risk' ? 'selected' : '' }} value="Strategic Risk">Strategic Risk</option>
-                                                <option {{ $data->type == 'Other Data' ? 'selected' : '' }} value="Other Data"> Other</option>
+                                                <option {{ $data->type == 'Other' ? 'selected' : '' }} value="Other"> Other</option>
                                             </select>
                                         </div>
                                     </div>
@@ -829,7 +829,7 @@
 
                                             $('select[name=type]').change(function() {
                                                 const selectedVal = $(this).val();
-                                                if (selectedVal === 'Other Data') { // Corrected value check
+                                                if (selectedVal === 'Other') { // Corrected value check
                                                     $('#typeOfError').show();
                                                     $('textarea[name=other_type]').prop('required', true);
                                                 } else {
@@ -841,14 +841,14 @@
                                             });
 
                                             // Optionally, check the current value when the page loads in case of form errors
-                                            if ($('select[name=type]').val() === 'Other Data') { // Corrected value check
+                                            if ($('select[name=type]').val() === 'Other') { // Corrected value check
                                                 $('#typeOfError').show();
                                                 $('textarea[name=other_type]').prop('required', true);
                                             }
 
                                                     // Validate on form submission
                                             $('form').submit(function(e) {
-                                                if ($('select[name=type]').val() === 'Other Data' &&
+                                                if ($('select[name=type]').val() === 'Other' &&
                                                     $('textarea[name=other_type]').val().trim() === '') {
                                                     e.preventDefault();
                                                     $('#error_other_type').show();
@@ -1030,7 +1030,7 @@
                                     }
                                 }
                                     // Other Detail (optional)
-                                if (selectedVals.includes('Other Detail')) {
+                                if (selectedVals.includes('Other')) {
                                     // Add similar logic if needed
                                 }
 
@@ -1071,8 +1071,8 @@
                                                 @if (in_array('Failure Mode and Effect Analysis', $selectedMethodologies)) selected @endif>Failure Mode and
                                                 Effect Analysis
                                             </option>
-                                            <option value="Other Detail"
-                                                @if (in_array('Other Detail', $selectedMethodologies)) selected @endif>Other
+                                            <option value="Other"
+                                                @if (in_array('Other', $selectedMethodologies)) selected @endif>Other
                                             </option>
                                         </select>
                                     </div>
@@ -1095,7 +1095,7 @@
                                             function toggleOtherField() {
                                                 const selectedVals = $('#root-cause-methodology').val();
                                                 console.log("Selected Values:", selectedVals);
-                                                if (selectedVals && selectedVals.includes('Other Detail')) {
+                                                if (selectedVals && selectedVals.includes('Other')) {
                                                     $('#rootCause').show();
                                                     $('textarea[name=other_root_cause_methodology]').prop('required', true);
                                                         
@@ -1118,7 +1118,7 @@
 
                                             // Validate on form submission
                                             $('form').submit(function(e) {
-                                                if ($('#root-cause-methodology').val().includes('Other Detail') &&
+                                                if ($('#root-cause-methodology').val().includes('Other') &&
                                                     $('textarea[name=other_root_cause_methodology]').val().trim() === '') {
                                                     e.preventDefault();
                                                     $('#error_other_root_cause_methodology').show();
@@ -1134,7 +1134,7 @@
                                                 const selectedVals = $('#root-cause-methodology').val();
 
                                                 // Show/Hide "Other" Field
-                                                if (selectedVals && selectedVals.includes('Other Detail')) {
+                                                if (selectedVals && selectedVals.includes('Other')) {
                                                     $('#rootCause').show();
                                                     $('textarea[name=other_root_cause_methodology]').prop('required', true);
                                                 } else {
@@ -1188,7 +1188,7 @@
                                             $('form').submit(function (e) {
                                                 const selectedVals = $('#root-cause-methodology').val();
 
-                                                if (selectedVals && selectedVals.includes('Other Detail')) {
+                                                if (selectedVals && selectedVals.includes('Other')) {
                                                     if ($('textarea[name=other_root_cause_methodology]').val().trim() === '') {
                                                         e.preventDefault();
                                                         $('#error_other_root_cause_methodology').show();
@@ -1765,6 +1765,13 @@
                                     @endif
 
                                 </div>
+
+                                <h3 style="font-size: 15px; color: #333; margin-bottom: 20px">
+                                            <span style="font-weight: bold; color: red;">Note: </span>
+                                            <span>Please fill up both QA/CQA Review Tab and CFT Tab value to save the form.</span>
+                                </h3>
+
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton" id="saveButton"
                                         {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>Save</button>
@@ -6680,7 +6687,7 @@
                                             </label>
 
                                             <input type="text" name="Other1_Department_person" id="Other1_Department_person"
-                                                value="{{ old('Other1_Department_person', $data1->Other1_Department_person) }}"
+                                                value="{{ old('Other1_Department_person', $data1->Other1_Department_person ?: '') }}"
                                                 @if ($data->stage != 2) readonly @endif>
                                         </div>
                                     </div>
@@ -6943,7 +6950,7 @@
                                         <label for="Department2">Other's 2 Department <span id="asteriskod2" style="display: {{ $data1->Other2_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
 
                                         <input type="text" name="Other2_Department_person" id="Other2_Department_person"
-                                                value="{{ old('Other2_Department_person', $data1->Other2_Department_person) }}"
+                                                value="{{ old('Other2_Department_person', $data1->Other2_Department_person ?: '') }}"
                                                 @if ($data->stage != 2) readonly @endif>
                                     </div>
                                 </div>
@@ -7105,7 +7112,7 @@
                                         <label for="Department3">Other's 3 Department <span id="asteriskod3" style="display: {{ $data1->Other3_review == 'yes' ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                         
                                         <input type="text" name="Other3_Department_person" id="Other3_Department_person"
-                                                value="{{ old('Other3_Department_person', $data1->Other3_Department_person) }}"
+                                                value="{{ old('Other3_Department_person', $data1->Other3_Department_person ?: '') }}"
                                                 @if ($data->stage != 2) readonly @endif>
                                     </div>
                                 </div>
@@ -7268,7 +7275,7 @@
                                         <label for="Department4">Other's 4 Department <span id="asteriskod4" class="text-danger">*</span></label>
 
                                         <input type="text" name="Other4_Department_person" id="Other4_Department_person"
-                                                value="{{ old('Other4_Department_person', $data1->Other4_Department_person) }}"
+                                                value="{{ old('Other4_Department_person', $data1->Other4_Department_person ?: '') }}"
                                             @if ($data->stage != 2) readonly @endif>
 
                                     </div>
@@ -7435,7 +7442,7 @@
                                         <label for="Department5">Other's 5 Department <span id="asteriskod5" class="text-danger">*</span></label>
 
                                         <input type="text" name="Other5_Department_person" id="Other5_Department_person"
-                                                value="{{ old('Other5_Department_person', $data1->Other5_Department_person) }}"
+                                                value="{{ old('Other5_Department_person', $data1->Other5_Department_person ?: '') }}"
                                                 @if ($data->stage != 2) readonly @endif>
                                     </div>
                                 </div>

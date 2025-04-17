@@ -209,14 +209,14 @@
 
     .full-width-table {
         width: 100%;
-        table-layout: auto; 
+        table-layout: fixed; 
         border-collapse: collapse;
         border: 1px solid #ddd; 
     }
 
     .full-width-table th, 
     .full-width-table td {
-        padding: 6px;
+        padding: 3px;
         text-align: center;
         font-size: 10px;
         border: 1px solid #ddd;
@@ -540,7 +540,7 @@
 
                     </tr>
                         <tr>
-
+                        
                             <th class="w-20">Others</th>
                             <td class="w-80">
                                 @if ($data->initiated_if_other)
@@ -862,246 +862,34 @@
                     </div>
                 </div>
 
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Others</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->root_cause_Others, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Root Cause</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->root_cause, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Impact / Risk Assessment</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->impact_risk_assessment, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">CAPA</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->capa, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Investigation Summary</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->investigation_summary_rca, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-         <table>
-            <tr>
-                <th class="w-20">Investigation Team</th>
-                <td class="w-80">
-                    @if ($data->investigation_team)
-                        {{($investigation_teamNamesString) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-
-                <th class="w-20">Root Cause Methodology</th>
-                <td class="w-80">
-                    @if ($data->root_cause_methodology)
-                        {{ is_array($selectedMethodologies) ? implode(', ', $selectedMethodologies) : $selectedMethodologies }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
-            </tr>
-         </table>
-        <div class="border-table">
-            <div class="block-head">
-                Other Attachment
-            </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data->investigation_attachment)
-                    @foreach (json_decode($data->investigation_attachment) as $key => $file)
-                        <tr>
-                            <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                    target="_blank"><b>{{ $file }}</b></a> </td>
-                        </tr>
-                    @endforeach
-                @else
+                <table>
                     <tr>
-                        <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                        <th class="w-20">Investigation Team</th>
+                        <td class="w-80">
+                            @if ($data->investigation_team)
+                                {{($investigation_teamNamesString) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
-                @endif
-
-            </table>
-        </div>  
-        <div class="border-table">
-            <div class="block-head">
-                Investigation Attachment
-
-            </div>
-            <table>
-
-                <tr class="table_bg">
-                    <th class="w-20">Sr.No.</th>
-                    <th class="w-60">Attachment</th>
-                </tr>
-                @if ($data->root_cause_initial_attachment_rca)
-                    @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
-                        <tr>
-                            <td class="w-20">{{ $key + 1 }}</td>
-                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                    target="_blank"><b>{{ $file }}</b></a> </td>
-                        </tr>
-                    @endforeach
-                @else
-                    <tr>
-                        <td class="w-20">1</td>
-                        <td class="w-20">Not Applicable</td>
+                </table>
+                <br>
+                <table>
+                    <tr>        
+                        <th class="w-20">Root Cause Methodology</th>
+                        <td class="w-80">
+                            @if ($data->root_cause_methodology)
+                                {{ is_array($selectedMethodologies) ? implode(', ', $selectedMethodologies) : $selectedMethodologies }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
                     </tr>
-                @endif
+                </table>
 
-            </table>
-        </div>                
-</div>
-
-
-
-
-
-                <!-- <style>
-                    .table {
-                        width: 100%;
-                        font-size: 7px;
-                        /* font-weight: 100!important; */
-                    }
-            
-                    .th,
-                    .td {
-                        border: 1px solid black;
-                        padding: 1px;
-                        word-wrap: break-word;
-                        text-align: center;
-                        
-                    }
-            
-                    /* Rotate table by flipping headers and rows */
-                    .rotated-table {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: flex-start;
-                        transform: rotate(-90deg);
-                        transform-origin: left top 0;
-                    }
-            
-                    .rotated-table table {
-                        transform: rotate(90deg);
-                        /* Rotate inner table content back to normal */
-                    }
-                </style> -->
-
-
-
-            <div class="border-table  tbl-bottum">
+                <br><br>
+                <div class="border-table  tbl-bottum">
                     <div class="block-head">
                         Failure Mode and Effect Analysis
                     </div>
@@ -1110,19 +898,19 @@
                             <tr class="table_bg tr">
                                 <th class="th" style="font-size: 7px" rowspan="2">Sr.No.</th>
                                 <th class="th" style="font-size: 7px" colspan="2">Risk Identification</th>
-                                <th class="th"  style="font-size: 7px" colspan="1">Risk Analysis</th>
+                                <th class="th" style="font-size: 7px" colspan="1">Risk Analysis</th>
                                 <th class="th" style="font-size: 7px" colspan="4">Risk Evaluation</th>
-                                <th class="th"  style="font-size: 7px"colspan="1">Risk Control</th>
+                                <th class="th" style="font-size: 7px"colspan="1">Risk Control</th>
                                 <th class="th" style="font-size: 7px" colspan="6">Risk Evaluation</th>
                                 <th class="th" style="font-size: 7px"></th>
                 
                             </tr>
                             <tr class="table_bg tr">
-                                <th  style="font-size: 7px" class="th">Activity</th>
+                                <th style="font-size: 7px" class="th">Activity</th>
                                 <th style="font-size: 7px" class="th">Possible Risk/Failure (Identified Risk)</th>
                                 <th style="font-size: 7px" class="th">Consequences of Risk/Potential Causes</th>
                                 <th style="font-size: 7px" class="rotate th">Severity (S)</th>
-                                <th style="font-size: 7px" class="rotate  th">Probability (P)</th>
+                                <th style="font-size: 7px" class="rotate th">Probability (P)</th>
                                 <th style="font-size: 7px" class="rotate th">Detection (D)</th>
                                 <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
                                 <th style="font-size: 7px" class="th">Control Measures recommended/ Risk mitigation proposed</th>
@@ -1546,10 +1334,232 @@
 
                     </tr>
                 </table>
-</div>
+            </div>
 
 
- <div class="block">
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Others</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->root_cause_Others, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-table">
+                    <div class="block-head">
+                        Other Attachment
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">Sr.No.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if ($data->investigation_attachment)
+                            @foreach (json_decode($data->investigation_attachment) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>  
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Root Cause</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->root_cause, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Impact / Risk Assessment</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->impact_risk_assessment, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">CAPA</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->capa, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="text-left">
+                                    <div class="bold">Investigation Summary</div>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="custom-procedure-block">
+                        <div class="custom-container">
+                            <div class="custom-table-wrapper" id="custom-table2">
+                                <div class="custom-procedure-content">
+                                    <div class="custom-content-wrapper">
+                                        <div class="table-containers">
+                                            {!! strip_tags($data->investigation_summary_rca, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+        
+        <div class="border-table">
+            <div class="block-head">
+                Investigation Attachment
+
+            </div>
+            <table>
+
+                <tr class="table_bg">
+                    <th class="w-20">Sr.No.</th>
+                    <th class="w-60">Attachment</th>
+                </tr>
+                @if ($data->root_cause_initial_attachment_rca)
+                    @foreach (json_decode($data->root_cause_initial_attachment_rca) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                    target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                @endif
+
+            </table>
+        </div>                
+    </div><br>
+
+
+
+
+
+                <!-- <style>
+                    .table {
+                        width: 100%;
+                        font-size: 7px;
+                        /* font-weight: 100!important; */
+                    }
+            
+                    .th,
+                    .td {
+                        border: 1px solid black;
+                        padding: 1px;
+                        word-wrap: break-word;
+                        text-align: center;
+                        
+                    }
+            
+                    /* Rotate table by flipping headers and rows */
+                    .rotated-table {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-start;
+                        transform: rotate(-90deg);
+                        transform-origin: left top 0;
+                    }
+            
+                    .rotated-table table {
+                        transform: rotate(90deg);
+                        /* Rotate inner table content back to normal */
+                    }
+                </style> -->
+
+
+
+
+        <div class="block">
             <div class="block-head">
                 HOD Final Review
             </div>

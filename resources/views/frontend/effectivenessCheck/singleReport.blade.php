@@ -543,7 +543,7 @@
         </div>
         <table>
             <tr>
-                <th class="w-20">Submit by
+                <th class="w-20">Submit By
                 </th>
                 <td class="w-30">@if( $data->submit_by ) {{ $data->submit_by }}  @else Not Applicable @endif </td>
                 <th class="w-20">
@@ -566,7 +566,7 @@
             </tr>
 
             <tr>
-                <th class="w-20">Acknowledge Complete by
+                <th class="w-20">Acknowledge Complete By
                 </th>
                 <td class="w-30">@if($data->work_complition_by) {{ $data->work_complition_by }} @else Not Applicable @endif</td>
                 <th class="w-20">
@@ -576,6 +576,7 @@
                     Acknowledge Complete Comment</th>
                 <td class="w-30">@if($data->work_complition_comment){{ $data->work_complition_comment }} @else Not Applicable @endif</td>
             </tr>
+            
             <tr>
                 <th class="w-20"> Complete By
                 </th>
@@ -610,7 +611,7 @@
                 <td class="w-30">@if($data->qa_review_complete_comment) {{ $data->qa_review_complete_comment }} @else Not Applicable @endif</td>
             </tr>
             <tr>
-                <th class="w-20">Effective by
+                <th class="w-20">Effective By
                 </th>
                 <td class="w-30">@if($data->effective_by) {{ $data->effective_by }} @else Not Applicable @endif</td>
                 <th class="w-20">
@@ -636,7 +637,7 @@
             <tr>
                 <th class="w-20">Effective Approval Completed By
                 </th>
-                <td class="w-30">@if($data->effective_apprival_complete_by){{ $data->effective_approval_complete_by }} @else Not Applicable @endif</td>
+                <td class="w-30">@if($data->effective_approval_complete_by){{ $data->effective_approval_complete_by }} @else Not Applicable @endif</td>
                 <th class="w-20">
                     Effective Approval Completed On</th>
                 <td class="w-30">@if($data->effective_approval_complete_on) {{ $data->effective_approval_complete_on }} @else Not Applicable @endif</td>
