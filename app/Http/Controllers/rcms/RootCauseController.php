@@ -4637,6 +4637,7 @@ class RootCauseController extends Controller
         $currentDate = Carbon::now();
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
         $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
+        $parent_due_date=RootCauseAnalysis::where('id', $id)->value('due_date');
 
         $parent_initiator_id = $id;
 
@@ -4667,6 +4668,18 @@ class RootCauseController extends Controller
             $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
             $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
             return view('frontend.action-item.action-item', compact('record_number','parent_division_id','due_date', 'parent_id', 'parent_type', 'parent_intiation_date', 'parent_record', 'parent_initiator_id','record', 'data_record', 'data'));
+        }
+
+        if ($request->revision == "extension") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            $p_record=RootCauseAnalysis::find($id);
+            $extension_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
+            
+
+            $count = Helpers::getChildData($id, $parent_type);
+            $countData = $count + 1; 
+            return view('frontend.extension.extension_new', compact('parent_type', 'parent_id', 'record_number','extension_record','parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
         }
     }
 
