@@ -82,7 +82,7 @@ class RiskManagementController extends Controller
             $data->other_source_of_risk = null; // or handle it accordingly
         }
 
-        if ($request->input('type') == 'Other Data') {
+        if ($request->input('type') == 'Other') {
             $data->other_type = $request->input('other_type');
         } else {
             $data->other_type = null; // or handle it accordingly
@@ -2762,7 +2762,7 @@ class RiskManagementController extends Controller
             $data->other_source_of_risk = null;
         }
 
-        if ($request->input('type') == 'Other Data') {
+        if ($request->input('type') == 'Other') {
             $data->other_type = $request->input('other_type');
         } else {
             $data->other_type = null;

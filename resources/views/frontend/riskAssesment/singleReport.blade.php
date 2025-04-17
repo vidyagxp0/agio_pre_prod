@@ -355,6 +355,19 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -399,7 +412,7 @@
                             Not Applicable
                         @endif
                         </td>
-                        <th class="w-20">Initiation Department Code</th>
+                        <th class="w-20">Initiator Department Code</th>
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
@@ -440,7 +453,7 @@
                         </td>
                     </tr>
 
-                    {{--    <tr>
+                    <tr>
                         <th class="w-20">Other (Source Of Risk/Opportunity)</th>
                         <td class="w-80">
                             @if ($data->other_source_of_risk)
@@ -449,7 +462,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>  --}}
+                    </tr>
 
                     <tr>
                         <th class="w-20">Type</th>
@@ -462,7 +475,7 @@
                         </td>
                     </tr>
 
-                  {{--    <tr>
+                   <tr>
                         <th class="w-20">Other (Type)</th>
                         <td class="w-80">
                             @if ($data->other_type)
@@ -471,7 +484,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>  --}}
+                    </tr>
 
                     <tr>
                         <th class="w-20">Priority Level</th>
@@ -522,7 +535,7 @@
                     @endif
                 </div> -->
 
-                <div class="other-container ">
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -532,7 +545,7 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="custom-procedure-block">
+                    <div class="custom-procedure-block" style='padding: 10px;'>
                         <div class="custom-container">
                             <div class="custom-table-wrapper" id="custom-table2">
                                 <div class="custom-procedure-content">
@@ -545,6 +558,15 @@
                             </div>
                         </div>
                     </div>
+                </div> -->
+
+                <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
+                <div class="div-data">
+                    @if ($data->Brief_description)
+                     {!! strip_tags($data->Brief_description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                    @else
+                        Not Applicable
+                    @endif
                 </div>
 
 
@@ -1639,7 +1661,7 @@
                     </tr>--}}
 
                     <tr>
-                        <th class="w-20">Production Injection Completed By</th>
+                        <th class="w-20">Production Injection Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Production_Injection_By)
                                 {{ $data1->Production_Injection_By }}
@@ -1647,7 +1669,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Production Injection Completed On</th>
+                        <th class="w-20">Production Injection Review Completed On</th>
                         <td class="w-80">
                             @if ( $data1->Production_Injection_On)
                                 {{ Helpers::getdateFormat($data1->Production_Injection_On) }}
@@ -1689,7 +1711,7 @@
                 <div class="block-head">Research & Development</div>
                 <table>
                     <tr>
-                        <th class="w-20">Research Development Review Required? </th>
+                        <th class="w-20">Research & Development Review Required? </th>
                         <td class="w-80">
                             @if ($data1->ResearchDevelopment_Review)
                                 {{ $data1->ResearchDevelopment_Review }}
@@ -1697,7 +1719,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Reasearch & Developmemt Person</th>
+                        <th class="w-20">Research & Developmemt Person</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_person)
                                 {{ $data1->Production_Injection_Person }}
@@ -1730,7 +1752,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Reasearch & Development Review Completed By</th>
+                        <th class="w-20">Research & Development Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->ResearchDevelopment_by)
                                 {{ $data1->ResearchDevelopment_by }}
@@ -1738,7 +1760,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Reasearch & Development Review Completed On</th>
+                        <th class="w-20">Research & Development Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->ResearchDevelopment_on)
                                 {{ Helpers::getdateFormat($data1->ResearchDevelopment_on) }}
@@ -1751,7 +1773,7 @@
                 <table>
                     <div class="border-table">
                         <div class="block-head">
-                            Reasearch & Development Attachments
+                            Research & Development Attachments
                         </div>
                         <table>
                             <tr class="table_bg">
@@ -1820,7 +1842,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Human Resource Completed By</th>
+                        <th class="w-20">Human Resource Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_by)
                                 {{ $data1->Human_Resource_by }}
@@ -1828,7 +1850,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Human Resource Completed On</th>
+                        <th class="w-20">Human Resource Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Human_Resource_on)
                                 {{ Helpers::getdateFormat($data1->Human_Resource_on) }}
@@ -2000,7 +2022,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Store Completed By</th>
+                        <th class="w-20">Store Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Store_by)
                                 {{ $data1->Store_by }}
@@ -2008,7 +2030,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Store Completed On</th>
+                        <th class="w-20">Store Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Store_on)
                                 {{ Helpers::getdateFormat($data1->Store_on) }}
@@ -2049,7 +2071,7 @@
                 <div class="block-head">Quality Control</div>
                 <table>
                     <tr>
-                        <th class="w-20">Quality Control Required ?</th>
+                        <th class="w-20">Quality Control Review Required ?</th>
                         <td class="w-80">
                             @if ($data1->Quality_review)
                                 {{ $data1->Quality_review }}
@@ -2090,7 +2112,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Quality Control Completed By</th>
+                        <th class="w-20">Quality Control Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Quality_Control_by)
                                 {{ $data1->Quality_Control_by }}
@@ -2098,7 +2120,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Quality Control Completed On</th>
+                        <th class="w-20">Quality Control Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Quality_Control_on)
                                 {{ Helpers::getdateFormat($data1->Quality_Control_on) }}
@@ -2233,7 +2255,7 @@
                 <div class="block-head">Regulatory Affair</div>
                 <table>
                     <tr>
-                        <th class="w-20">Regulatory affair Review Required?</th>
+                        <th class="w-20">Regulatory Affair Review Required?</th>
                         <td class="w-80">
                             @if ($data1->RegulatoryAffair_Review)
                                 {{ $data1->RegulatoryAffair_Review }}
@@ -2325,7 +2347,7 @@
                 <div class="block-head">Production (Liquid/External  Preparation)</div>
                 <table>
                     <tr>
-                        <th class="w-20">Production Liquid/External preparation Required ?</th>
+                        <th class="w-20">Production Liquid/External preparation Review Required ?</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_Review)
                                 {{ $data1->ProductionLiquid_Review }}
@@ -2367,7 +2389,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Production Liquid/External preparation Completed By</th>
+                        <th class="w-20">Production Liquid/External preparation Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_by)
                                 {{ $data1->ProductionLiquid_by }}
@@ -2375,7 +2397,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Production Liquid/External preparation Completed On</th>
+                        <th class="w-20">Production Liquid/External preparation Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->ProductionLiquid_on)
                                 {{ Helpers::getdateFormat($data1->ProductionLiquid_on) }}
@@ -2459,7 +2481,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Microbiology Completed By</th>
+                        <th class="w-20">Microbiology Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Microbiology_by)
                                 {{ $data1->Microbiology_by }}
@@ -2467,7 +2489,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Microbiology Completed On</th>
+                        <th class="w-20">Microbiology Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Microbiology_on)
                                 {{ Helpers::getdateFormat($data1->Microbiology_on) }}
@@ -2555,7 +2577,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Engineering Completed By</th>
+                        <th class="w-20">Engineering Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Engineering_by)
                                 {{ $data1->Engineering_by }}
@@ -2563,7 +2585,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Engineering Completed On</th>
+                        <th class="w-20">Engineering Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Store_on)
                                 {{ Helpers::getdateFormat($data1->Store_on) }}
@@ -2652,7 +2674,7 @@
                     </tr> --}}
 
                     <tr>
-                        <th class="w-20">Safety Completed By</th>
+                        <th class="w-20">Safety Review Completed By</th>
                         <td class="w-80">
                             @if ($data1->Environment_Health_Safety_by)
                                 {{ $data1->Environment_Health_Safety_by }}
@@ -2660,7 +2682,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Safety Completed On</th>
+                        <th class="w-20">Safety Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Environment_Health_Safety_on)
                                 {{ helpers::getdateFormat($data1->Environment_Health_Safety_on) }}
@@ -2762,7 +2784,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Others 1 Review Completed On</th>
+                        <th class="w-20">Other's 1 Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other1_on)
                                 {{ Helpers::getdateFormat($data1->Other1_on) }}
@@ -2864,7 +2886,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Others 2 Review Completed On</th>
+                        <th class="w-20">Other's 2 Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other2_on)
                                 {{ Helpers::getdateFormat($data1->Other2_on) }}
@@ -2966,7 +2988,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Others 3 Review Completed On</th>
+                        <th class="w-20">Other's 3 Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other3_on)
                                 {{ Helpers::getdateFormat($data1->Other3_on) }}
@@ -3068,7 +3090,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Others 4 Review Completed On</th>
+                        <th class="w-20">Other's 4 Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other4_on)
                                 {{ $data1->Other4_on }}
@@ -3170,7 +3192,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Others 5 Review Completed On</th>
+                        <th class="w-20">Other's 5 Review Completed On</th>
                         <td class="w-80">
                             @if ($data1->Other5_on)
                                 {{ Helpers::getdateFormat($data1->Other5_on) }}
@@ -3399,18 +3421,7 @@
             </table>
         </div>
 
-        <footer>
-            <table>
-                <tr>
-                    <td class="w-30">
-                        <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                    </td>
-                    <td class="w-40">
-                        <strong>Printed By :</strong> {{ Auth::user()->name }}
-                    </td>
-                </tr>
-            </table>
-        </footer>
+
 
 </body>
 

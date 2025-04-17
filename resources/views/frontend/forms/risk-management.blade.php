@@ -491,7 +491,7 @@
             <option value="Market">Market</option>
             <option value="Operational Risk">Operational Risk</option>
             <option value="Strategic Risk">Strategic Risk</option>
-            <option value="Other Data">Other</option> <!-- Ensure the value matches here -->
+            <option value="Other">Other</option> <!-- Ensure the value matches here -->
         </select>
     </div>
 </div>
@@ -512,7 +512,7 @@
 
         $('select[name=type]').change(function() {
             const selectedVal = $(this).val();
-            if (selectedVal === 'Other Data') { // Match this value with the option value
+            if (selectedVal === 'Other') { // Match this value with the option value
                 $('#typeOfError').show();
             } else {
                 $('#typeOfError').hide();
@@ -520,7 +520,7 @@
         });
 
         // Optionally, check the current value when the page loads in case of form errors
-        if ($('select[name=type]').val() === 'Other Data') { // Correct the value check
+        if ($('select[name=type]').val() === 'Other') { // Correct the value check
             $('#typeOfError').show();
         }
     });
@@ -714,7 +714,7 @@
                                                 <option value="Why-Why Chart">Why-Why Chart</option>
                                                 <option value="Failure Mode and Effect Analysis">Failure Mode and Effect
                                                     Analysis</option>
-                                                <option value="Other Detail">Other</option> <!-- Ensure the value matches -->
+                                                <option value="Other">Other</option> <!-- Ensure the value matches -->
                                             </select>
                                         </div>
                                     </div>
@@ -733,7 +733,7 @@
                                             // Function to check the current value of the select and toggle the input field
                                             function toggleOtherField() {
                                                 const selectedVals = $('#root-cause-methodology').val();
-                                                if (selectedVals && selectedVals.includes('Other Detail')) { // Correct value check here
+                                                if (selectedVals && selectedVals.includes('Other')) { // Correct value check here
                                                     $('#rootCause').show();
                                                 } else {
                                                     $('#rootCause').hide();
