@@ -791,13 +791,23 @@ use Carbon\Carbon;
                 </thead>
                 <tbody>
                     @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
+                    @php
+                    $departmentId = unserialize($management_review_participants->department)[$key] ?? null;
+                    $departmentName = 'N/A';
+
+                    if ($departmentId) {
+                        $dept = \App\Models\Department::find($departmentId);
+                        $departmentName = $dept ? $dept->name : 'N/A';
+                    }
+                @endphp
                     <tr>
                         <td>{{ $key + 1 }}</td>
                         <td>{{ unserialize($management_review_participants->invited_Person)[$key] ?? 'N/A' }}
                         </td>
                         <td>{{ unserialize($management_review_participants->designee)[$key] ?? 'N/A' }}
                         </td>
-                        <td>{{ unserialize($management_review_participants->department)[$key] ?? 'N/A' }}
+                        {{-- <td>{{ unserialize($management_review_participants->department)[$key] ?? 'N/A' }} --}}
+                            <td>{{ $departmentName }}</td>
                         </td>
                         <td>{{ unserialize($management_review_participants->remarks)[$key] ?? 'N/A' }}
                         </td>
