@@ -362,12 +362,16 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
@@ -377,6 +381,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
@@ -384,13 +393,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
+
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
 
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
-
                             </button>
 
                         @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
@@ -398,6 +408,11 @@
                                 More Info Required
 
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Final Review Complete
 
@@ -407,6 +422,11 @@
                                 More Information
                                 Required
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final QA/CQA Review Complete
                             </button>
@@ -416,6 +436,11 @@
                                 More Information
                                 Required
                             </button>
+
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QAH/CQAH Closure
                             </button>
@@ -2451,6 +2476,8 @@
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
+
+                    @if ($data->stage == 4)
                         <div class="group-input">
                             <label for="capa-child">
                                 <input type="radio" name="revision" id="capa-child" value="capa-child">
@@ -2463,6 +2490,24 @@
                                 Action Item
                             </label>
                         </div>
+                        <div class="group-input">
+                            <label for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="extension">
+                                Extension
+                            </label>
+                        </div>
+                    @else
+
+                        <div class="group-input">
+                            <label for="root-item">
+                                <input type="radio" name="revision" id="root-item" value="extension">
+                                Extension
+                            </label>
+                        </div>
+                    
+                    @endif
+                        
+                    
                         {{-- <div class="group-input">
                         <label for="root-item">
                         <input type="radio" name="revision" id="root-item" value="effectiveness-check">
