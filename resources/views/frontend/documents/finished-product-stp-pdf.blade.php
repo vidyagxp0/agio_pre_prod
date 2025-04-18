@@ -253,90 +253,30 @@
         }
     </style>
 
-    {{-- <style>
 
-        /*Main Table Styling */
-        #isPasted {
-            width: 650px !important;
-            border-collapse: collapse;
-            table-layout: auto; /* Adjusts column width dynamically */
-        }
-
-        /* First column adjusts to its content */
-        #isPasted td:first-child,
-        #isPasted th:first-child {
-            white-space: nowrap; /* Prevent wrapping */
-            width: 1%; /* Shrink to fit content */
-            vertical-align: top;
-        }
-
-        /* Second column takes remaining space */
-        #isPasted td:last-child,
-        #isPasted th:last-child {
-            width: auto; /* Take remaining space */
-            vertical-align: top;
-            
-        }
-
-        /* Common Table Cell Styling */
-        #isPasted th,
-        #isPasted td {
-            border: 1px solid #000 !important;
-            padding: 8px;
-            text-align: left;
-            max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        }
-
-        /* Paragraph Styling Inside Table Cells */
-        #isPasted td > p {
-            text-align: justify;
-            text-justify: inter-word;
-            margin: 0;
-            max-width: 500px;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        }
-
-        #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-            height: 100%; /* Maintain image aspect ratio */
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
-        }
-
-        /* If you want larger images */
-        #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
-            margin: 5px auto;
-        }
-    </style> --}}
 
     <style>
-        
-        /*Main Table Styling */
+        /* Main Table Styling */
         #isPasted {
-            width: 690px !important;
+            width: 100% !important;
             border-collapse: collapse;
             table-layout: fixed;
+            font-size: 12px;
         }
 
-        /* First column adjusts to its content */
+        /* First column: Sr. No */
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
+            white-space: nowrap;
+            width: 40px; /* Fixed width for Sr. No. */
             vertical-align: top;
         }
 
-        /* Second column takes remaining space */
+        /* Second column: Main content */
         #isPasted td:last-child,
         #isPasted th:last-child {
             width: auto;
             vertical-align: top;
-
         }
 
         /* Common Table Cell Styling */
@@ -345,65 +285,59 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            vertical-align: top;
+            word-break: break-word;
         }
 
         /* Paragraph Styling Inside Table Cells */
-        #isPasted td > p {
+        #isPasted td p {
+            margin: 0;
             text-align: justify;
             text-justify: inter-word;
-            margin: 0;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
-        #isPasted td > p span {
-            display: inline-block;
-            width: 640px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+                #isPasted td > p span {
+                display: inline; /* or block */
+                width: auto;
+                word-wrap: break-word;
+            }
+
+        /* Remove inline-block spans causing PDF issues */
+        #isPasted td span {
+            display: block;
+            word-break: break-word;
+            white-space: normal;
         }
 
-        #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-            height: 100%; /* Maintain image aspect ratio */
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
-        }
-
-        /* If you want larger images */
+        /* Image Styling */
+        #isPasted img,
         #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
+            max-width: 100% !important;
+            height: auto;
+            display: block;
             margin: 5px auto;
         }
 
         .table-containers {
-            width: 650px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
+            width: 100%;
+            overflow-x: auto;
         }
 
-    
+        /* Nested Table Styling (if any inside cell) */
         #isPasted table {
             width: 100% !important;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
-
         #isPasted table th,
         #isPasted table td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            word-break: break-word;
         }
-
 
         #isPasted table img {
             max-width: 100% !important;
@@ -411,8 +345,8 @@
             display: block;
             margin: 5px auto;
         }
-        
     </style>
+
 </head>
 <body>
     <header class="">

@@ -255,7 +255,7 @@
 
 
 
-    <style>
+    {{-- <style>
         
         /*Main Table Styling */
         #isPasted {
@@ -353,6 +353,98 @@
             margin: 5px auto;
         }
         
+    </style> --}}
+
+<style>
+        /* Main Table Styling */
+        #isPasted {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 12px;
+        }
+
+        /* First column: Sr. No */
+        #isPasted td:first-child,
+        #isPasted th:first-child {
+            white-space: nowrap;
+            width: 40px; /* Fixed width for Sr. No. */
+            vertical-align: top;
+        }
+
+        /* Second column: Main content */
+        #isPasted td:last-child,
+        #isPasted th:last-child {
+            width: auto;
+            vertical-align: top;
+        }
+
+        /* Common Table Cell Styling */
+        #isPasted th,
+        #isPasted td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+            word-break: break-word;
+        }
+
+        /* Paragraph Styling Inside Table Cells */
+        #isPasted td p {
+            margin: 0;
+            text-align: justify;
+            text-justify: inter-word;
+            word-break: break-word;
+        }
+
+            #isPasted td > p span {
+            display: inline; /* or block */
+            width: auto;
+            word-wrap: break-word;
+        }
+
+        /* Remove inline-block spans causing PDF issues */
+        #isPasted td span {
+            display: block;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        /* Image Styling */
+        #isPasted img,
+        #isPasted td img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+
+        .table-containers {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        /* Nested Table Styling (if any inside cell) */
+        #isPasted table {
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        #isPasted table th,
+        #isPasted table td {
+            border: 1px solid #000 !important;
+            padding: 8px;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        #isPasted table img {
+            max-width: 100% !important;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
     </style>
 
 </head>
