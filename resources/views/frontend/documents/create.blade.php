@@ -7763,6 +7763,22 @@
                                 </div>
                             </div>
 
+                                @php
+                                    $documents_gtp = DB::table('documents')->whereIn('document_type_id', ['FPS', 'INPS', 'CVS','RAWMS'])->get();
+                                @endphp
+                            <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="comments">Select Specification</label>
+                                        <select id="documentDropdown4" name="record_spec_gtp">
+                                            <option value="">Select Document</option>
+                                            @foreach ($documents_gtp as $doc)
+                                                <option value="{{ $doc->record }}" data-type="{{ $doc->document_type_id }}">
+                                                    {{ $doc->document_type_id }}-{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
 
 
                                 <div class="col-md-12 mb-3">

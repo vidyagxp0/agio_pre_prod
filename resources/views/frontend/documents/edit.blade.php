@@ -10773,7 +10773,6 @@
                                             }
                                         });
                                     </script>
-                                    
                                 </div>
                             </div>
 
@@ -10803,7 +10802,7 @@
                                         <label for="stp">GTP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "GTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "GTP/" . str_pad($document->record_spec_gtp, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="gtp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -10851,7 +10850,7 @@
                                             <table class="table table-bordered" id="Details-table-revision">
                                                 <thead>
                                                     <tr>
-                                                        <th>Sr. No.</th>
+                                                        <th>Sr.No.</th>
                                                         <th>Revision No.</th>
                                                         <th>Change Control No.</th>
                                                         <th>Effective Date</th>
@@ -10886,8 +10885,8 @@
                                                                     value="{{ $gtphistory['effectiveDate_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="gtp[{{ $index }}][reasonRevi_gtp]" 
-                                                                    value="{{ $gtphistory['reasonRevi_gtp'] ?? '' }}">
+                                                                <textarea type="" name="gtp[{{ $index }}][reasonRevi_gtp]" 
+                                                                    value="">{{ $gtphistory['reasonRevi_gtp'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -10923,7 +10922,7 @@
                                                                         <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td>
                                                                         <td><input type="date" name="gtp[${index}][effectiveDate_gtp]" 
                                                                                 value="${gtphistory.effectiveDate_gtp || ''}" readonly></td>
-                                                                        <td><input type="text" name="gtp[${index}][reasonRevi_gtp]" value="${gtphistory.reasonRevi_gtp}"></td>
+                                                                        <td><textarea type="" name="gtp[${index}][reasonRevi_gtp]" value="">${gtphistory.reasonRevi_gtp}</textarea></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -11044,13 +11043,12 @@
                                                                     value="{{ $rmstphistory['effective_date'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="revision_rawmstp_data[{{ $index }}][rev_reason_rawmstp]" 
-                                                                    value="{{ $rmstphistory['rev_reason_rawmstp'] ?? '' }}">
+                                                                <textarea type="" name="revision_rawmstp_data[{{ $index }}][rev_reason_rawmstp]" 
+                                                                    value="">{{ $rmstphistory['rev_reason_rawmstp'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
                                                     @endif
                                                 @endforeach
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -11081,7 +11079,7 @@
                                                                     <td><input type="text" name="revision_rawmstp_data[${index}][change_ctrl_rawmstp_no]" value="${history.change_ctrl_rawmstp_no}"></td>
                                                                     <td><input type="date" name="revision_rawmstp_data[${index}][eff_date_rawmstp]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="${history.rev_reason_rawmstp}"></td>
+                                                                    <td><textarea type="text" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="">${history.rev_reason_rawmstp}</textarea></td>
                                                                 </tr>`;
                                                             
                                                             tbody.append(row);
@@ -11104,9 +11102,6 @@
                         </button>
                     </div>
                 </div>
-
-
-
 
                 <!-- Equipment Hold Time Study Protocol Tab -->
 

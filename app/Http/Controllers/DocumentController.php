@@ -570,6 +570,7 @@ class DocumentController extends Controller
            $document->sampling_instructions_cvs = $request->sampling_instructions_cvs;
 
            $document->record_spec = $request->record_spec;
+           $document->record_spec_gtp = $request->record_spec_gtp;
            $document->record_spec1 = $request->record_spec1;
            $document->record_spec2 = $request->record_spec2;
            $document->record_spec3 = $request->record_spec3;

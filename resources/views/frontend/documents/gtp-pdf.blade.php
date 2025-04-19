@@ -504,15 +504,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else                            
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
+                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
@@ -686,10 +686,10 @@
                 <table class="table table-bordered" id="distribution-list">
                     <thead>
                         <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                            <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
+                            <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -707,7 +707,6 @@
                                             {{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}
                                         @endif
                                     </td>
-                                    {{-- <td>{{ !empty($item['effectiveDate_gtp']) ? \Carbon\Carbon::parse($item['effectiveDate_gtp'])->format('d-M-Y') : '' }}</td> --}}
                                     <td>{{ $item['reasonRevi_gtp'] ?? '' }}</td>
                                 </tr>
                             @endforeach
