@@ -137,8 +137,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('/get-mfpstprevision-history', [DocumentController::class, 'getMfpstpRevisionHistory']);
     Route::get('/get-rmsrevision-history', [DocumentController::class, 'getrawmsRevisionHistory']);
     Route::get('/get-rmstprevision-history', [DocumentController::class, 'getrawmstpRevisionHistory']);
-
-
+    Route::get('/get-piasrevision-history', [DocumentController::class, 'getPIASRevisionHistory']);
+    
     Route::get('/get-revision-history-fps', [DocumentController::class, 'getFPSRevisionHistory']);
     Route::get('/get-revision-history-inps', [DocumentController::class, 'getINPSRevisionHistory']);
     Route::get('/get-revision-history-cvs', [DocumentController::class, 'getCVSRevisionHistory']);

@@ -585,6 +585,54 @@
 
     @endif
 
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center">
+                    <div class="bold">REVISION HISTORY</div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+            <div class="table-responsive retrieve-table">
+                <table class="table table-bordered" id="distribution-list">
+                    <thead>
+                        <tr>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!empty($RevisionGridpiasData))
+                            @foreach ($RevisionGridpiasData as $key => $item)
+                                <tr>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_pias_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['change_ctrl_pias_no'] ?? '' }}</td>
+                                    <td style="border: 1px solid black; width: 20%;">                                                    
+                                        @if ($data->training_required == 'yes' && $data->stage >= 11)
+                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                        @elseif ($data->training_required != 'yes' && $data->stage > 10)
+                                            {{ $data->effective_date ? \Carbon\Carbon::parse($data->effective_date)->format('d-M-Y') : '-' }}
+                                        @else
+                                            {{ !empty($item['eff_date_pias']) ? \Carbon\Carbon::parse($item['eff_date_pias'])->format('d-M-Y') : '' }}
+                                        @endif
+                                    </td>
+                                    {{-- <td style="border: 1px solid black; width: 20%;">{{ \Carbon\Carbon::parse($item['eff_date_pams'])->format('d-M-Y') ?? '' }}</td> --}}
+                                    <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_pias'] ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="4" style="text-align: center; font-weight: bold;">No Data Available</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+
 
 
 

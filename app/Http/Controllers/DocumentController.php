@@ -2482,6 +2482,12 @@ class DocumentController extends Controller
             $RevisionGridpamsData->data = $request->revision_pams_data;
             $RevisionGridpamsData->save();
 
+            $RevisionGridpiasData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_pias_data'])->firstOrNew();
+            $RevisionGridpiasData->document_type_id = $document->id;
+            $RevisionGridpiasData->identifier = 'revision_pias_data';
+            $RevisionGridpiasData->data = $request->revision_pias_data;
+            $RevisionGridpiasData->save();
+
             $RevisionGridmfpsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_mfps_data'])->firstOrNew();
             $RevisionGridmfpsData->document_type_id = $document->id;
             $RevisionGridmfpsData->identifier = 'revision_mfps_data';
@@ -2912,6 +2918,7 @@ class DocumentController extends Controller
         $RevisionGridrawmsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawms_data")->first();
         $RevisionGridrawmstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_rawmstp_data")->first();
         $RevisionGridpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
+        $RevisionGridpiasData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pias_data")->first();
         $RevisionGridmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
         $RevisionGridmfpstpData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfpstp_data")->first();
 
@@ -2976,6 +2983,7 @@ class DocumentController extends Controller
              'RevisionGridrawmsData',
              'RevisionGridrawmstpData',
              'RevisionGridpamsData',
+             'RevisionGridpiasData',
              'RevisionGridmfpsData',
              'RevisionGridmfpstpData',
              'ProductSpecification',
@@ -5735,6 +5743,12 @@ class DocumentController extends Controller
             $RevisionGridpamsData->data = $request->revision_pams_data;
             $RevisionGridpamsData->save();
 
+            $RevisionGridpiasData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_pias_data'])->firstOrNew();
+            $RevisionGridpiasData->document_type_id = $document->id;
+            $RevisionGridpiasData->identifier = 'revision_pias_data';
+            $RevisionGridpiasData->data = $request->revision_pias_data;
+            $RevisionGridpiasData->save();
+
             $RevisionGridmfpsData = DocumentGrid ::where(['document_type_id' => $document->id, 'identifier' => 'revision_mfps_data'])->firstOrNew();
             $RevisionGridmfpsData->document_type_id = $document->id;
             $RevisionGridmfpsData->identifier = 'revision_mfps_data';
@@ -6506,6 +6520,10 @@ class DocumentController extends Controller
         $RevisionpamsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pams_data")->first();
         $RevisionGridpamsData = isset($RevisionpamsData->data) && is_string($RevisionpamsData->data)
                 ? json_decode($RevisionpamsData->data, true) :(is_array($RevisionpamsData->data) ? $RevisionpamsData->data:[]);
+        
+        $RevisionpiasData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_pias_data")->first();
+        $RevisionGridpiasData = isset($RevisionpiasData->data) && is_string($RevisionpiasData->data)
+                ? json_decode($RevisionpiasData->data, true) :(is_array($RevisionpiasData->data) ? $RevisionpiasData->data:[]);
 
         $RevisionmfpsData = DocumentGrid::where('document_type_id', $id)->where('identifier', "revision_mfps_data")->first();
         $RevisionGridmfpsData = isset($RevisionmfpsData->data) && is_string($RevisionmfpsData->data)
@@ -6598,7 +6616,7 @@ class DocumentController extends Controller
         try {
             $pdf = PDF::loadview($viewName, compact('data', 'time', 'document', 'annexures', 'currentId', 'revisionNumber','documentContent','RevisionGridData','GtpGridData','PackingDataGrid','RevisionGridfpstpData',
             'RevisionGridCvsData','RevisionGridInpsData','RevisionGridinpstpData',
-            'RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridrawmstpData',
+            'RevisionGridcvstpData','RevisionGridrawmsData','RevisionGridpiasData','RevisionGridrawmstpData',
             'RevisionGridpamsData','RevisionGridmfpsData','RevisionGridmfpstpData','SummaryDataGrid','sampleReconcilationDataGrid',
             'SpecificationDataGrid','SpecificationGrid','ProductSpecificationData','MaterialSpecificationData','finishedProductSpecificationData','RevisionProductSpecificationData'))
                 ->setOptions([
@@ -7348,6 +7366,61 @@ class DocumentController extends Controller
         }
     
         return response()->json(['revision_pams_data' => $historyData]);
+    }
+
+    public function getPIASRevisionHistory(Request $request)
+    {
+        $documentId = $request->query('document_id');
+    
+        // Get the current document
+        $currentDocument = Document::find($documentId);
+        if (!$currentDocument) {
+            return response()->json(['error' => 'Document not found'], 404);
+        }
+    
+        // Get past revisions from Document table
+        $revisionHistory = Document::where('record', $currentDocument->record)
+            ->where('revised_doc', '<=', $currentDocument->revised_doc)
+            ->orderBy('revised_doc', 'asc')
+            ->get();
+    
+        // 🛠 Get cc_no & reason_of_revision from DocumentGrid table
+        $RevisionGridpiasData = DocumentGrid::where('document_type_id', $documentId)
+            ->where('identifier', "revision_pias_data")
+            ->first();
+        
+        // $GtpData = []; 
+        // if ($RevisionGridpiasData && !empty($RevisionGridpiasData->data)) {
+        //     $GtpData = json_decode($RevisionGridpiasData->data, true) ?? [];
+        // }
+        
+        $GtpData = [];
+        if (!empty($RevisionGridpiasData) && isset($RevisionGridpiasData->data)) {
+            $GtpData = is_string($RevisionGridpiasData->data) 
+                ? json_decode($RevisionGridpiasData->data, true) 
+                : (is_array($RevisionGridpiasData->data) ? $RevisionGridpiasData->data : []);
+        }
+    
+    
+    
+        $historyData = [];
+        foreach ($revisionHistory as $index => $doc) {
+            // Stage-based effective date logic
+            $shouldShowEffectiveDate = ($doc->stage >= 11);
+            
+            // 🛠 Fetch cc_no & reason_of_revision from $GtpData array
+            $cc_no = $GtpData[$index]['change_ctrl_pias_no'] ?? 'No Data';
+            $reason_of_revision = $GtpData[$index]['rev_reason_pias'] ?? 'No Data';
+    
+            $historyData[] = [
+                'rev_pias_no' => str_pad($doc->revised_doc, 2, '0', STR_PAD_LEFT),
+                'eff_date_pias' => $shouldShowEffectiveDate ? $doc->effective_date : null,
+                'change_ctrl_pias_no' => $cc_no,
+                'rev_reason_pias' => $reason_of_revision
+            ];
+        }
+    
+        return response()->json(['revision_pias_data' => $historyData]);
     }
     
     
@@ -8297,6 +8370,12 @@ class DocumentController extends Controller
             $RevisionGridpamsData->document_type_id = $newdoc->id;
             $RevisionGridpamsData->identifier = 'revision_pams_data';
             $RevisionGridpamsData->save();
+
+            $RevisionGridpiasData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_pias_data'])->first();
+            $RevisionGridpiasData = $RevisionGridpiasData->replicate();
+            $RevisionGridpiasData->document_type_id = $newdoc->id;
+            $RevisionGridpiasData->identifier = 'revision_pias_data';
+            $RevisionGridpiasData->save();
 
             $RevisionGridcvstpData = DocumentGrid::where(['document_type_id' =>$document->id, 'identifier' => 'revision_cvstp_data'])->first();
             $RevisionGridcvstpData = $RevisionGridcvstpData->replicate();

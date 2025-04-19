@@ -3368,8 +3368,8 @@
                                                                     value="{{ $mfphistory['effective_date'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="revision_mfps_data[{{ $index }}][rev_reason_mfps]" 
-                                                                    value="{{ $mfphistory['rev_reason_mfps'] ?? '' }}">
+                                                                <textarea name="revision_mfps_data[{{ $index }}][rev_reason_mfps]" 
+                                                                   >{{ $mfphistory['rev_reason_mfps'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -3404,7 +3404,7 @@
                                                                         <td><input type="text" name="revision_mfps_data[${index}][change_ctrl_mfps_no]" value="${history.change_ctrl_mfps_no}"></td>
                                                                         <td><input type="date" name="revision_mfps_data[${index}][eff_date_mfps]" 
                                                                                 value="${history.effective_date || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_mfps_data[${index}][rev_reason_mfps]" value="${history.rev_reason_mfps}"></td>
+                                                                        <td><textarea name="revision_mfps_data[${index}][rev_reason_mfps]" >${history.rev_reason_mfps}</textarea></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -3528,8 +3528,8 @@
                                                                 value="{{ $mfpstphistory['effective_date'] ?? '' }}" readonly>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="revision_mfpstp_data[{{ $index }}][rev_reason_mfpstp]" 
-                                                                value="{{ $mfpstphistory['rev_reason_mfpstp'] ?? '' }}">
+                                                            <textarea name="revision_mfpstp_data[{{ $index }}][rev_reason_mfpstp]" 
+                                                                >{{ $mfpstphistory['rev_reason_mfpstp'] ?? '' }}</textarea>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -3564,7 +3564,7 @@
                                                                     <td><input type="text" name="revision_mfpstp_data[${index}][change_ctrl_mfpstp_no]" value="${history.change_ctrl_mfpstp_no}"></td>
                                                                     <td><input type="date" name="revision_mfpstp_data[${index}][eff_date_mfpstp]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_mfpstp_data[${index}][rev_reason_mfpstp]" value="${history.rev_reason_mfpstp}"></td>
+                                                                    <td><textarea name="revision_mfpstp_data[${index}][rev_reason_mfpstp]" >${history.rev_reason_mfpstp}</textarea></td>
                                                                 </tr>`;
                                                             
                                                             tbody.append(row);
@@ -6807,8 +6807,8 @@
                                                             value="{{ $gtp_data['eff_date'] ?? '' }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="revision_data[{{ $index }}][rev_reason]" 
-                                                            value="{{ $gtp_data['rev_reason'] ?? '' }}">
+                                                        <textarea name="revision_data[{{ $index }}][rev_reason]" 
+                                                            >{{ $gtp_data['rev_reason'] ?? '' }}</textarea>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -6843,7 +6843,7 @@
                                                                 <td><input type="text" name="revision_data[${index}][change_ctrl_no]" value="${fpshistory.change_ctrl_no}"></td>
                                                                 <td><input type="date" name="revision_data[${index}][eff_date]" 
                                                                         value="${fpshistory.eff_date || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_data[${index}][rev_reason]" value="${fpshistory.rev_reason}"></td>
+                                                                <td><textarea name="revision_data[${index}][rev_reason]">${fpshistory.rev_reason}</textara></td>
                                                             </tr>`;
                                                         
                                                         tbody.append(row);
@@ -7157,8 +7157,8 @@
                                                             value="{{ $gtp_data['eff_date_cvs'] ?? '' }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="revision_cvs_data[{{ $index }}][rev_reason_cvs]" 
-                                                            value="{{ $gtp_data['rev_reason_cvs'] ?? '' }}">
+                                                        <textarea name="revision_cvs_data[{{ $index }}][rev_reason_cvs]" 
+                                                            >{{ $gtp_data['rev_reason_cvs'] ?? '' }}</textarea>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -7194,7 +7194,7 @@
                                                                 <td><input type="text" name="revision_cvs_data[${index}][change_ctrl_cvs_no]" value="${cvshistory.change_ctrl_cvs_no}"></td>
                                                                 <td><input type="date" name="revision_cvs_data[${index}][eff_date_cvs]" 
                                                                         value="${cvshistory.eff_date_cvs || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_cvs_data[${index}][rev_reason_cvs]" value="${cvshistory.rev_reason_cvs}"></td>
+                                                                <td><textarea name="revision_cvs_data[${index}][rev_reason_cvs]" >${cvshistory.rev_reason_cvs}</textarea></td>
                                                             </tr>`;
                                                         
                                                         tbody.append(row);
@@ -7409,8 +7409,8 @@
                                                             value="{{ $gtp_data['eff_date_inps'] ?? '' }}" readonly>
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="revision_inps_data[{{ $index }}][rev_reason_inps]" 
-                                                            value="{{ $gtp_data['rev_reason_inps'] ?? '' }}">
+                                                        <textarea name="revision_inps_data[{{ $index }}][rev_reason_inps]" 
+                                                            >{{ $gtp_data['rev_reason_inps'] ?? '' }}</textarea>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -7446,7 +7446,7 @@
                                                                 <td><input type="text" name="revision_inps_data[${index}][change_ctrl_inps_no]" value="${inpshistory.change_ctrl_inps_no}"></td>
                                                                 <td><input type="date" name="revision_inps_data[${index}][eff_date_inps]" 
                                                                         value="${inpshistory.eff_date_inps || ''}" readonly></td>
-                                                                <td><input type="text" name="revision_inps_data[${index}][rev_reason_inps]" value="${inpshistory.rev_reason_inps}"></td>
+                                                                <td><textarea name="revision_inps_data[${index}][rev_reason_inps]">${inpshistory.rev_reason_inps}</textarea></td>
                                                             </tr>`;
                                                         
                                                         tbody.append(row);
@@ -10885,8 +10885,8 @@
                                                                     value="{{ $gtphistory['effectiveDate_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <textarea type="" name="gtp[{{ $index }}][reasonRevi_gtp]" 
-                                                                    value="">{{ $gtphistory['reasonRevi_gtp'] ?? '' }}</textarea>
+                                                                <input type="text" name="gtp[{{ $index }}][reasonRevi_gtp]" 
+                                                                    value="{{ $gtphistory['reasonRevi_gtp'] ?? '' }}">
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -10922,7 +10922,7 @@
                                                                         <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td>
                                                                         <td><input type="date" name="gtp[${index}][effectiveDate_gtp]" 
                                                                                 value="${gtphistory.effectiveDate_gtp || ''}" readonly></td>
-                                                                        <td><textarea type="" name="gtp[${index}][reasonRevi_gtp]" value="">${gtphistory.reasonRevi_gtp}</textarea></td>
+                                                                        <td><input type="text" name="gtp[${index}][reasonRevi_gtp]" value="${gtphistory.reasonRevi_gtp}"></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -11043,8 +11043,8 @@
                                                                     value="{{ $rmstphistory['effective_date'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <textarea type="" name="revision_rawmstp_data[{{ $index }}][rev_reason_rawmstp]" 
-                                                                    value="">{{ $rmstphistory['rev_reason_rawmstp'] ?? '' }}</textarea>
+                                                                <input type="text" name="revision_rawmstp_data[{{ $index }}][rev_reason_rawmstp]" 
+                                                                    value="{{ $rmstphistory['rev_reason_rawmstp'] ?? '' }}">
                                                             </td>
                                                         </tr>
                                                     @endif
@@ -11079,7 +11079,7 @@
                                                                     <td><input type="text" name="revision_rawmstp_data[${index}][change_ctrl_rawmstp_no]" value="${history.change_ctrl_rawmstp_no}"></td>
                                                                     <td><input type="date" name="revision_rawmstp_data[${index}][eff_date_rawmstp]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
-                                                                    <td><textarea type="text" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="">${history.rev_reason_rawmstp}</textarea></td>
+                                                                    <td><input type="text" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="${history.rev_reason_rawmstp}"></td>
                                                                 </tr>`;
                                                             
                                                             tbody.append(row);
@@ -12221,8 +12221,8 @@
                                                                     value="{{ $gtp_data['eff_date_pams'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="revision_pams_data[{{ $index }}][rev_reason_pams]" 
-                                                                    value="{{ $gtp_data['rev_reason_pams'] ?? '' }}">
+                                                                <textarea name="revision_pams_data[{{ $index }}][rev_reason_pams]" 
+                                                                    >{{ $gtp_data['rev_reason_pams'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -12256,7 +12256,7 @@
                                                                         <td><input type="text" name="revision_pams_data[${index}][change_ctrl_pams_no]" value="${pamshistory.change_ctrl_pams_no}"></td>
                                                                         <td><input type="date" name="revision_pams_data[${index}][eff_date_pams]" 
                                                                                 value="${pamshistory.eff_date_pams || ''}" readonly></td>
-                                                                        <td><input type="text" name="revision_pams_data[${index}][rev_reason_pams]" value="${pamshistory.rev_reason_pams}"></td>
+                                                                        <td><textarea name="revision_pams_data[${index}][rev_reason_pams]" >${pamshistory.rev_reason_pams}</textarea></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -14205,8 +14205,8 @@
                                                                 value="{{ $rmshistory['effective_date'] ?? '' }}" readonly>
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="revision_rawms_data[{{ $index }}][rev_reason_rawms]" 
-                                                                value="{{ $rmshistory['rev_reason_rawms'] ?? '' }}">
+                                                            <textarea name="revision_rawms_data[{{ $index }}][rev_reason_rawms]" 
+                                                                >{{ $rmshistory['rev_reason_rawms'] ?? '' }}</textarea>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -14241,7 +14241,7 @@
                                                                     <td><input type="text" name="revision_rawms_data[${index}][change_ctrl_rawms_no]" value="${history.change_ctrl_rawms_no}"></td>
                                                                     <td><input type="date" name="revision_rawms_data[${index}][eff_date_rawms]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_rawms_data[${index}][rev_reason_rawms]" value="${history.rev_reason_rawms}"></td>
+                                                                    <td><textarea name="revision_rawms_data[${index}][rev_reason_rawms]" >${history.rev_reason_rawms}</textarea></td>
                                                                 </tr>`;
                                                             
                                                             tbody.append(row);
@@ -14605,6 +14605,8 @@
                             });
                         </script>
 
+
+
                         <!-- JavaScript -->
                         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
                         {{-- <script>
@@ -14672,6 +14674,94 @@
                                 $("#piaNameCode").on("change", toggleGrids);
                             });
                         </script>
+
+                                <div class="group-input">
+                                    <label for="revision-history">Revision History</label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="Details-table-revision">
+                                            <thead>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Revision No.</th>
+                                                    <th>Change Control No.</th>
+                                                    <th>Effective Date</th>
+                                                    <th>Reason of Revision</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="piasrevision-history-body">
+                                                @php
+                                                    $serialNumber = 1;
+                                                    $GtpData = [];
+
+                                                    if (!empty($RevisionGridpiasData) && isset($RevisionGridpiasData->data)) {
+                                                        $GtpData = is_string($RevisionGridpiasData->data) 
+                                                            ? json_decode($RevisionGridpiasData->data, true) 
+                                                            : (is_array($RevisionGridpiasData->data) ? $RevisionGridpiasData->data : []);
+                                                    }
+                                                @endphp
+
+                                                @foreach ($GtpData as $index => $piashistory)
+                                                    <tr>
+                                                        <td>{{ $serialNumber++ }}</td>
+                                                        <td>
+                                                            <input type="text" name="revision_pias_data[{{ $index }}][rev_pias_no]" 
+                                                                value="{{ $piashistory['rev_pias_no'] ?? '' }}" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="revision_pias_data[{{ $index }}][change_ctrl_pias_no]" 
+                                                                value="{{ $piashistory['change_ctrl_pias_no'] ?? '' }}">
+                                                        </td>
+                                                        <td>
+                                                            <input type="date" name="revision_pias_data[{{ $index }}][eff_date_pias]" 
+                                                                value="{{ $piashistory['eff_date_pias'] ?? '' }}" readonly>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="revision_pias_data[{{ $index }}][rev_reason_pias]">{{ $piashistory['rev_reason_pias'] ?? '' }}</textarea>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        fetchpiasRevisionHistory();
+
+                                        function fetchpiasRevisionHistory() {
+                                            var documentId = {{ $document->id }};
+
+                                            $.ajax({
+                                                url: '/get-piasrevision-history',
+                                                method: 'GET',
+                                                data: { document_id: documentId },
+                                                success: function (response) {
+                                                    if (response.revision_pias_data) {
+                                                        var tbody = $('#piasrevision-history-body');
+                                                        tbody.empty();
+                                                        
+                                                        response.revision_pias_data.forEach(function (history, index) {
+                                                                                
+                                                            var row = `
+                                                                <tr>
+                                                                    <td>${index + 1}</td>
+                                                                    <td><input type="text" name="revision_pias_data[${index}][rev_pias_no]" 
+                                                                            value="${history.rev_pias_no || ''}" readonly></td>
+                                                                    <td><input type="text" name="revision_pias_data[${index}][change_ctrl_pias_no]" value="${history.change_ctrl_pias_no}"></td>
+                                                                    <td><input type="date" name="revision_pias_data[${index}][eff_date_pias]" 
+                                                                            value="${history.eff_date_pias || ''}" readonly></td>
+                                                                    <td><textarea name="revision_pias_data[${index}][rev_reason_pias]" >${history.rev_reason_pias}</textarea></td>
+                                                                </tr>`;
+                                                            
+                                                            tbody.append(row);
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
+                                </script>
 
 
 
