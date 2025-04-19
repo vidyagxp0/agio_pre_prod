@@ -1071,10 +1071,10 @@
                         <table class="table table-bordered" id="distribution-list">
                             <thead>
                                 <tr>
-                                    <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
-                                    <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
+                                    <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                                 </tr>
                             </thead>
                         
