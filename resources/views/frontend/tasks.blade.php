@@ -22,28 +22,28 @@
             font-size: 1.1rem;
             text-align: center;
             padding: 12px;
-            background-color: #ca8a04;
+            background-color: #5c98e7;
             color: white;
-            border: 2px solid #eca035;
+            border: 2px solid #5c98e7;
             border-radius: 5px;
             width: 20px;
         }
         .custom-button {
             font-size: 1rem;
             font-weight: bold;
-            color: #eca035;
-            border-color: #eca035;
+            color: #0039bd;
+            border-color: #0039bd;
             background-color: transparent;
         }
         .custom-button:hover {
-            background-color: #eca035;
+            background-color: #0039bd;
             color: #fff;
-            border-color: #eca035;
+            border-color: #0039bd;
         }
         .filter-form .form-control,
         .filter-form .custom-select {
             border-radius: 5px;
-            border: 1px solid orange;
+            border: 1px solid #0039bd;
         }
     </style>
 
@@ -224,7 +224,7 @@
 
                                 @if(request('process'))
                                     <table class="table table-bordered">
-                                        <thead>
+                                        <thead style="background-color: #5c98e7">
                                             <tr>
                                                 <th>S. No.</th>
                                                 <th>Activity</th>
@@ -237,7 +237,7 @@
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $status }}</td>
                                                     <td>
-                                                        <a href="{{ url('mytaskdata') }}?process={{ request('process') }}&status={{ $status }}">
+                                                        <a href="{{ url('mytaskdata') }}?process={{ request('process') }}&status={{ $status }}" style="color: #0039bd; border-bottom:1px solid #0039bd; font-weight: bold;">
                                                             {{ $count }}
                                                         </a>
                                                     </td>
@@ -250,71 +250,73 @@
                                 @endif
                             </div>
                             <div class="record-list mt-4">
+                               <div class="inner-block">
                                 @if(request('status'))
-                                    @if(count($records) > 0)
-                                        <table class="table table-bordered custom-table">
-                                            <thead class="table-header">
-                                                <tr>
-                                                    <th style="width: 10%">Record ID</th>
-                                                    <th style="width: 10%">Initiator</th>
-                                                    <th style="width: 20%">Site/Division</th>
-                                                    <th style="width: 10%">Record No.</th>
-                                                    <th style="width: 15%">Status</th>
-                                                    <th>Short Description</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach($records as $record)
-                                                    <tr style="text-align: center; font-weight: bold;">
-                                                        <td>
-                                                            @php
-                                                                // Define route names for each process
-                                                                $routes = [
-                                                                    'ActionItem' => 'actionItem.show',
-                                                                    'AuditProgram' => 'ShowAuditProgram',
-                                                                    'Capa' => 'capashow',
-                                                                    'CC' => 'CC.show',
-                                                                    'Deviation' => 'devshow',
-                                                                    'EffectivenessCheck' => 'effectiveness.show',
-                                                                    'Errata' => 'errata.show',
-                                                                    'Extension' => 'extension_newshow',
-                                                                    'ExternalAudit' => 'showExternalAudit',
-                                                                    'Incident' => 'incident-show',
-                                                                    'InternalAudit' => 'showInternalAudit',
-                                                                    'LabIncident' => 'ShowLabIncident',
-                                                                    'ManagementReview' => 'manageshow',
-                                                                    'MarketComplaint' => 'marketcomplaint.marketcomplaint_view',
-                                                                    'Observation' => 'showobservation',
-                                                                    'OOC' => 'ShowOutofCalibration',
-                                                                    'OOSOOT' => 'oos.oos_view',
-                                                                    'Resampling' => 'resampling_view',
-                                                                    'RiskAssessment' => 'showRiskManagement',
-                                                                    'RootCauseAnalysis' => 'root_show',
-                                                                ];
-                                                                $routeName = $routes[request('process')] ?? '';
-                                                            @endphp
+                                @if(count($records) > 0)
+                                    <table class="table table-bordered custom-table">
+                                        <thead class="table-header">
+                                            <tr>
+                                                <th style="width: 10%">Record ID</th>
+                                                <th style="width: 10%">Initiator</th>
+                                                <th style="width: 20%">Site/Division</th>
+                                                <th style="width: 10%">Record No.</th>
+                                                <th style="width: 15%">Status</th>
+                                                <th>Short Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($records as $record)
+                                                <tr style="text-align: center; font-weight: bold;">
+                                                    <td>
+                                                        @php
+                                                            // Define route names for each process
+                                                            $routes = [
+                                                                'ActionItem' => 'actionItem.show',
+                                                                'AuditProgram' => 'ShowAuditProgram',
+                                                                'Capa' => 'capashow',
+                                                                'CC' => 'CC.show',
+                                                                'Deviation' => 'devshow',
+                                                                'EffectivenessCheck' => 'effectiveness.show',
+                                                                'Errata' => 'errata.show',
+                                                                'Extension' => 'extension_newshow',
+                                                                'ExternalAudit' => 'showExternalAudit',
+                                                                'Incident' => 'incident-show',
+                                                                'InternalAudit' => 'showInternalAudit',
+                                                                'LabIncident' => 'ShowLabIncident',
+                                                                'ManagementReview' => 'manageshow',
+                                                                'MarketComplaint' => 'marketcomplaint.marketcomplaint_view',
+                                                                'Observation' => 'showobservation',
+                                                                'OOC' => 'ShowOutofCalibration',
+                                                                'OOSOOT' => 'oos.oos_view',
+                                                                'Resampling' => 'resampling_view',
+                                                                'RiskAssessment' => 'showRiskManagement',
+                                                                'RootCauseAnalysis' => 'root_show',
+                                                            ];
+                                                            $routeName = $routes[request('process')] ?? '';
+                                                        @endphp
 
-                                                            @if($routeName)
-                                                                <a target="_blank" href="{{ route($routeName, $record->id) }}">
-                                                                    {{ Helpers::recordFormat($record->record) }}
-                                                                </a>
-                                                            @else
-                                                                N/A
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ Helpers::getInitiatorName($record->initiator_id) }}</td>
-                                                        <td>{{ Helpers::getDivisionName($record->division_id) }}</td>
-                                                        <td>{{ $record->record_number }}</td>
-                                                        <td>{{ $record->status }}</td>
-                                                        <td>{{ $record->short_description }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    @else
-                                        <p>No records found for this status.</p>
-                                    @endif
+                                                        @if($routeName)
+                                                            <a target="_blank" href="{{ route($routeName, $record->id) }}">
+                                                                {{ Helpers::recordFormat($record->record) }}
+                                                            </a>
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ Helpers::getInitiatorName($record->initiator_id) }}</td>
+                                                    <td>{{ Helpers::getDivisionName($record->division_id) }}</td>
+                                                    <td>{{ $record->record_number }}</td>
+                                                    <td>{{ $record->status }}</td>
+                                                    <td>{{ $record->short_description }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <p>No records found for this status.</p>
                                 @endif
+                            @endif
+                               </div>
                             </div>
 
                         </div>
