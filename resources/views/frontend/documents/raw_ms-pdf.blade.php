@@ -130,10 +130,10 @@
         }
 
         body {
-            margin-top: 180px;
+            margin-top: 260px;
             margin-bottom: 160px;
-            padding-top: 60px;
-            padding-bottom: 50px;
+            /* padding-top: 60px; */
+            /* padding-bottom: 50px; */
         }
 
         footer {
@@ -142,7 +142,7 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            height: 170px; /* Set a specific height for the footer */
+            height: 160px; /* Set a specific height for the footer */
         }
 
         .table-responsive {
@@ -238,6 +238,12 @@
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
+            page-break-inside: auto;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after:auto;
         }
 
         td, th {
@@ -258,28 +264,27 @@
     </style>
 
     <style>
-        
-        /*Main Table Styling */
+        /* Main Table Styling */
         #isPasted {
-            width: 690px !important;
-        border-collapse: collapse;
-        table-layout: fixed;
+            width: 100% !important;
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 12px;
         }
 
-        /* First column adjusts to its content */
+        /* First column: Sr. No */
         #isPasted td:first-child,
         #isPasted th:first-child {
-            white-space: nowrap; 
-            width: 1%;
+            white-space: nowrap;
+            width: 40px; /* Fixed width for Sr. No. */
             vertical-align: top;
         }
 
-        /* Second column takes remaining space */
+        /* Second column: Main content */
         #isPasted td:last-child,
         #isPasted th:last-child {
             width: auto;
             vertical-align: top;
-
         }
 
         /* Common Table Cell Styling */
@@ -288,65 +293,59 @@
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            vertical-align: top;
+            word-break: break-word;
         }
 
         /* Paragraph Styling Inside Table Cells */
-        #isPasted td > p {
+        #isPasted td p {
+            margin: 0;
             text-align: justify;
             text-justify: inter-word;
-            margin: 0;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         #isPasted td > p span {
-            display: inline-block;
-            width: 640px;
+            display: inline; /* or block */
+            width: auto;
             word-wrap: break-word;
-            overflow-wrap: break-word;
         }
 
-        #isPasted img {
-            max-width: 500px !important; /* Ensure image doesn't overflow the cell */
-            height: 100%; /* Maintain image aspect ratio */
-            display: block; /* Remove extra space below the image */
-            margin: 5px auto; /* Add spacing and center align */
+        /* Remove inline-block spans causing PDF issues */
+        #isPasted td span {
+            display: block;
+            word-break: break-word;
+            white-space: normal;
         }
 
-        /* If you want larger images */
+        /* Image Styling */
+        #isPasted img,
         #isPasted td img {
-            max-width: 400px !important; /* Adjust this to your preferred maximum width */
-            height: 300px;
+            max-width: 100% !important;
+            height: auto;
+            display: block;
             margin: 5px auto;
         }
 
         .table-containers {
-            width: 650px;
-            overflow-x: fixed; /* Enable horsizontal scrolling */
+            width: 100%;
+            overflow-x: auto;
         }
 
-    
+        /* Nested Table Styling (if any inside cell) */
         #isPasted table {
             width: 100% !important;
             border-collapse: collapse;
             table-layout: fixed;
         }
 
-
         #isPasted table th,
         #isPasted table td {
             border: 1px solid #000 !important;
             padding: 8px;
             text-align: left;
-            max-width: 500px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            word-break: break-word;
         }
-
 
         #isPasted table img {
             max-width: 100% !important;
@@ -354,7 +353,6 @@
             display: block;
             margin: 5px auto;
         }
-        
     </style>
 
 </head>
@@ -599,7 +597,7 @@
                         </thead>
                     </table>
 
-                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 15px; page-break-inside: avoid;">
+                    <table class="border" style="width: 100%; border-collapse: collapse; border: 1px solid black; font-size: 15px; ">
                         <tbody>
                             <tr>
                                 <td style="width: 50%; padding: 3px; text-align: left; border: 1px solid black; font-weight: bold;">CAS No.
@@ -682,52 +680,52 @@
 
 
 
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">SPECIFICATION</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-        
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
+            <div class="other-container ">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                <div class="bold">SPECIFICATION</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+    
+                <div class="custom-procedure-block">
+                    <div class="custom-container">
+                        <div class="custom-table-wrapper" id="custom-table2">
+                            <div class="custom-procedure-content">
+                                <div class="custom-content-wrapper">
 
-                                        <div class="table-containers">
-                                            {!! strip_tags($document->rawmaterials_specifications, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
+                                    <div class="table-containers">
+                                        {!! strip_tags($document->rawmaterials_specifications, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
 
-    <table>
-        <thead>
-            <tr>
-                <th class="text-left">
-                    <div class="bold">REVISION HISTORY:</div>
-                </th>
-            </tr>
-        </thead>
-    </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            <div class="bold">REVISION HISTORY</div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
 
             <div class="table-responsive retrieve-table">
                 <table class="table table-bordered" id="distribution-list">
                     <thead>
                         <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                            <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
+                            <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -772,5 +770,6 @@
             ');
         }
     </script>
+
 </body>
 </html>
