@@ -156,7 +156,7 @@
 </style>
 
 <style>
-    
+
     #isPasted {
         width: 690px !important;
         border-collapse: collapse;
@@ -165,7 +165,7 @@
 
     #isPasted td:first-child,
     #isPasted th:first-child {
-        white-space: nowrap; 
+        white-space: nowrap;
         width: 1%;
         vertical-align: top;
     }
@@ -239,7 +239,7 @@
         display: block;
         margin: 5px auto;
     }
-    
+
 </style>
 
 <body>
@@ -355,7 +355,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        
+
                     </tr>
 
                 </table>
@@ -377,34 +377,11 @@
                         </tr>
                     </table>
                 </div>
-                
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Description</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+
 
                 <div class="block">
-                    <table>     
+                    <table>
                         <tr>
                             <th class="w-20">Action Item Related Records</th>
                             <td class="w-80">
@@ -437,6 +414,37 @@
                                     Not Applicable
                                 @endif
                             </td>
+                        </tr>
+                    </table>
+
+                    <div class="other-container ">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="text-left">
+                                        <div class="bold">Description</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="custom-procedure-block" style="margin-left: 12px">
+                            <div class="custom-container">
+                                <div class="custom-table-wrapper" id="custom-table2">
+                                    <div class="custom-procedure-content">
+                                        <div class="custom-content-wrapper">
+                                            <div class="table-containers">
+                                                {!! strip_tags($data->description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <table>
+
+                        <tr>
                             <th class="w-20">Responsible Department</th>
                             <td class="w-80">
                                 @if ($data->departments)
@@ -448,6 +456,8 @@
                         </tr>
 
                     </table>
+
+
                 </div>
                 <div class="block-head">
                     File Attachment
@@ -581,7 +591,7 @@
             </table>
             <div class="block">
 
-               
+
                 <table>
 
                     <tr>
