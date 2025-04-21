@@ -447,7 +447,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiation Group Code">Initiation Department Code</label>
+                                        <label for="Initiation Group Code">Initiator Department Code</label>
                                         <input type="text" name="initiator_group_code"
                                             value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                             readonly>
@@ -875,7 +875,7 @@
                                 </div> --}}
                                 {{-- <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">GI Attachment</label>
+                                        <label for="Inv Attachments">GI Attachment <span class="text-danger">*</span></label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -929,7 +929,8 @@
                                 </script> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="inv_attachment">GI Attachments</label>
+                                        <label for="inv_attachment">GI Attachments <span
+                                        class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span></label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1060,7 +1061,7 @@
                                 @if ($data->stage == 2)
                                     <div class="group-input">
                                         <label for="HOD Remarks">QA Head Review Comment <span
-                                                class="text-danger {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span></label>
+                                                class="text-danger {{ $data->stage == 0 || $data->stage == 1 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}">*</span></label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it
                                                 does not require completion</small></div>
                                         <textarea class="tiny" name="Operations" id="summernote-4" required>{{ $data->Operations }}</textarea>
