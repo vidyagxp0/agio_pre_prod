@@ -10726,7 +10726,7 @@
                                                                     value="{{ $gtp_data['eff_date_cvstp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <textarea type="text" name="revision_cvstp_data[{{ $index }}][rev_reason_cvstp]" 
+                                                                <textarea type="" name="revision_cvstp_data[{{ $index }}][rev_reason_cvstp]" 
                                                                     value="">{{ $gtp_data['rev_reason_cvstp'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
@@ -10762,7 +10762,7 @@
                                                                         <td><input type="text" name="revision_cvstp_data[${index}][change_ctrl_cvstp_no]" value="${cvstphistory.change_ctrl_cvstp_no}"></td>
                                                                         <td><input type="date" name="revision_cvstp_data[${index}][eff_date_cvstp]" 
                                                                                 value="${cvstphistory.eff_date_cvstp || ''}" readonly></td>
-                                                                        <td><textarea type="text" name="revision_cvstp_data[${index}][rev_reason_cvstp]" value="">${cvstphistory.rev_reason_cvstp}</textarea></td>
+                                                                        <td><textarea type="" name="revision_cvstp_data[${index}][rev_reason_cvstp]" value="">${cvstphistory.rev_reason_cvstp}</textarea></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -14201,8 +14201,7 @@
                                                                 value="{{ $rmshistory['effective_date'] ?? '' }}" readonly>
                                                         </td>
                                                         <td>
-                                                            <textarea name="revision_rawms_data[{{ $index }}][rev_reason_rawms]" 
-                                                                >{{ $rmshistory['rev_reason_rawms'] ?? '' }}</textarea>
+                                                            <textarea name="revision_rawms_data[{{ $index }}][rev_reason_rawms]">{{ $rmshistory['rev_reason_rawms'] ?? '' }}</textarea>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -14220,7 +14219,7 @@
 
                                             $.ajax({
                                                 url: '/get-rmsrevision-history',
-                                                method: 'GET',
+                                                method: 'GET', 
                                                 data: { document_id: documentId },
                                                 success: function (response) {
                                                     if (response.revision_rawms_data) {
