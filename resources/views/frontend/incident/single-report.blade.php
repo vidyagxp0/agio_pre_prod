@@ -550,7 +550,7 @@
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 4%">Sr. No.</th>
-                                    <th style="width: 12%">Product Material</th>
+                                    <th style="width: 12%">Product / Material</th>
                                     <th style="width: 16%">Stage</th>
                                     <th style="width: 16%">A.R.No. / Batch No</th>
 
