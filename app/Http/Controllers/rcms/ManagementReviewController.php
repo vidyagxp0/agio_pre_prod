@@ -8467,8 +8467,6 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
     public function manage_send_stage(Request $request, $id)
     {
-
-
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
             $Cft = managementCft::where('ManagementReview_id', $id)->first();
@@ -8482,11 +8480,11 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
 
             if ($changeControl->stage == 1) {
-                 if (!$changeControl->short_description || !$changeControl->summary_recommendation || !$changeControl->start_date) {
+                 if (!$changeControl->short_description || !$changeControl->summary_recommendation || !$changeControl->start_date || !$changeControl->inv_attachment) {
 
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
-                            'message' => ' Short Discription and Type and Proposed Scheduled Start Date is yet to be filled!',
+                            'message' => ' Short Discription and Type and Proposed Scheduled Start Date, GI Attachments is yet to be filled!',
                             'type' => 'warning',
                         ]);
 

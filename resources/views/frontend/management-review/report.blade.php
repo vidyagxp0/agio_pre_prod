@@ -516,7 +516,7 @@ use Carbon\Carbon;
                 @endif --}}
                 <table>
                     <tr>
-                        <th class="w-20">QA Head Review commen</th>
+                        <th class="w-20">QA Head Review Comment</th>
                         <td class="w-30">
                             @if ($managementReview->Operations)
                             {{ $managementReview->Operations }}
@@ -721,16 +721,14 @@ use Carbon\Carbon;
             <div class="block-head">
                 Meetings and summary
             </div>
-
             <table>
                 <tr>
-
                     <th class="w-30">Meeting Start Date</th>
                     <td class="w-20">
                         {{-- @if ($managementReview->start_date)
                                 {{ $managementReview->start_date }}
-                        @else
-                        Not Applicable
+                            @else
+                            Not Applicable
                         @endif --}}
                         {{ Helpers::getdateFormat($managementReview->external_supplier_performance) ?? 'Not Applicable' }}
                     </td>
@@ -738,8 +736,8 @@ use Carbon\Carbon;
                     <td class="w-20">
                         {{-- @if ($managementReview->end_date)
                                     {{ $managementReview->end_date }}
-                        @else
-                        Not Applicable
+                            @else
+                            Not Applicable
                         @endif --}}
                         {{ Helpers::getdateFormat($managementReview->customer_satisfaction_level) ?? 'Not Applicable' }}
 
@@ -762,13 +760,8 @@ use Carbon\Carbon;
                         Not Applicable
                         @endif
                     </td>
-
                 </tr>
-
-
             </table>
-
-
         </div>
     </div>
 
@@ -3470,11 +3463,8 @@ use Carbon\Carbon;
                         Research & Development
                     </div>
                     <table>
-
-
                         <tr>
-
-                            <th class="w-20">Research & Development Action Required ?</th>
+                            <th class="w-20">HOD Research & Development Review Comments ?</th>
                             <td class="w-30">
                                 <div>
                                     @if ($data5->hod_ResearchDevelopment_feedback)
@@ -3850,10 +3840,7 @@ use Carbon\Carbon;
                         Regulatory Affair
                     </div>
                     <table>
-
-
                         <tr>
-
                             <th class="w-20">HOD Regulatory Affair Review Comments</th>
                             <td class="w-30">
                                 <div>
@@ -3895,7 +3882,6 @@ use Carbon\Carbon;
                         HOD Regulatory Affair Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -3925,10 +3911,7 @@ use Carbon\Carbon;
                         Quality Assurance
                     </div>
                     <table>
-
-
                         <tr>
-
                             <th class="w-20">HOD Quality Assurance Review Comments</th>
                             <td class="w-30">
                                 <div>
@@ -3941,7 +3924,6 @@ use Carbon\Carbon;
                             </td>
                         </tr>
                         <tr>
-
                             <th class="w-20">HOD Quality Assurance Review Completed By</th>
                             <td class="w-30">
                                 <div>
@@ -3970,7 +3952,6 @@ use Carbon\Carbon;
                         HOD Quality Assurance Attachments
                     </div>
                     <table>
-
                         <tr class="table_bg">
                             <th class="w-20">Sr.No.</th>
                             <th class="w-60">Attachment</th>
@@ -4000,8 +3981,6 @@ use Carbon\Carbon;
                         Production (Liquid/Ointment)
                     </div>
                     <table>
-
-
                         <th class="w-20">HOD Production (Liquid/Ointment) Review Comments</th>
                         <td class="w-30">
                             <div>
@@ -4014,7 +3993,6 @@ use Carbon\Carbon;
                         </td>
                         </tr>
                         <tr>
-
                             <th class="w-20">HOD Production (Liquid/Ointment) Review Completed By</th>
                             <td class="w-30">
                                 <div>

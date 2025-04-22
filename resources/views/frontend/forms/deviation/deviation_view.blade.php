@@ -1526,71 +1526,72 @@
 </script>
 
 
-                                   <!-- Deviation Related To Selection -->
-<div class="col-lg-6">
-    <div class="group-input">
-        <label for="audit_type">Deviation Related To <span class="text-danger">*</span></label>
-        <select multiple name="audit_type[]" id="audit_type" class="form-control"
-            {{ $data->stage == 1 ? '' : 'readonly' }}>
-            <option value="Facility" {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>Facility</option>
-            <option value="Equipment/Instrument" {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>Equipment/Instrument</option>
-            <option value="Documentationerror" {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>Documentation error</option>
-            <option value="STP/ADS_instruction" {{ strpos($data->audit_type, 'STP/ADS_instruction') !== false ? 'selected' : '' }}>STP/ADS instruction</option>
-            <option value="Packaging&Labelling" {{ strpos($data->audit_type, 'Packaging&Labelling') !== false ? 'selected' : '' }}>Packaging & Labelling</option>
-            <option value="Material_System" {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>Material System</option>
-            <option value="Laboratory_Instrument/System" {{ strpos($data->audit_type, 'Laboratory_Instrument/System') !== false ? 'selected' : '' }}>Laboratory Instrument/System</option>
-            <option value="Utility_System" {{ strpos($data->audit_type, 'Utility_System') !== false ? 'selected' : '' }}>Utility System</option>
-            <option value="Computer_System" {{ strpos($data->audit_type, 'Computer_System') !== false ? 'selected' : '' }}>Computer System</option>
-            <option value="Document" {{ strpos($data->audit_type, 'Document') !== false ? 'selected' : '' }}>Document</option>
-            <option value="Data integrity" {{ strpos($data->audit_type, 'Data integrity') !== false ? 'selected' : '' }}>Data integrity</option>
-            <option value="SOP Instruction" {{ strpos($data->audit_type, 'SOP Instruction') !== false ? 'selected' : '' }}>SOP Instruction</option>
-            <option value="BMR/ECR Instruction" {{ strpos($data->audit_type, 'BMR/ECR Instruction') !== false ? 'selected' : '' }}>BMR/ECR Instruction</option>
-            <option value="Water System" {{ strpos($data->audit_type, 'Water System') !== false ? 'selected' : '' }}>Water System</option>
-            <option value="Anyother(specify)" {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>Any other (specify)</option>
-            <option value="Process" {{ strpos($data->audit_type, 'Process') !== false ? 'selected' : '' }}>Process</option>
-        </select>
-    </div>
-    @error('audit_type')
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
-</div>
+            <!-- Deviation Related To Selection -->
+             
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="audit_type">Deviation Related To <span class="text-danger">*</span></label>
+                    <select multiple name="audit_type[]" id="audit_type" class="form-control"
+                        {{ $data->stage == 1 ? '' : 'readonly' }}>
+                        <option value="Facility" {{ strpos($data->audit_type, 'Facility') !== false ? 'selected' : '' }}>Facility</option>
+                        <option value="Equipment/Instrument" {{ strpos($data->audit_type, 'Equipment/Instrument') !== false ? 'selected' : '' }}>Equipment/Instrument</option>
+                        <option value="Documentationerror" {{ strpos($data->audit_type, 'Documentationerror') !== false ? 'selected' : '' }}>Documentation error</option>
+                        <option value="STP/ADS_instruction" {{ strpos($data->audit_type, 'STP/ADS_instruction') !== false ? 'selected' : '' }}>STP/ADS instruction</option>
+                        <option value="Packaging&Labelling" {{ strpos($data->audit_type, 'Packaging&Labelling') !== false ? 'selected' : '' }}>Packaging & Labelling</option>
+                        <option value="Material_System" {{ strpos($data->audit_type, 'Material_System') !== false ? 'selected' : '' }}>Material System</option>
+                        <option value="Laboratory_Instrument/System" {{ strpos($data->audit_type, 'Laboratory_Instrument/System') !== false ? 'selected' : '' }}>Laboratory Instrument/System</option>
+                        <option value="Utility_System" {{ strpos($data->audit_type, 'Utility_System') !== false ? 'selected' : '' }}>Utility System</option>
+                        <option value="Computer_System" {{ strpos($data->audit_type, 'Computer_System') !== false ? 'selected' : '' }}>Computer System</option>
+                        <option value="Document" {{ strpos($data->audit_type, 'Document') !== false ? 'selected' : '' }}>Document</option>
+                        <option value="Data integrity" {{ strpos($data->audit_type, 'Data integrity') !== false ? 'selected' : '' }}>Data integrity</option>
+                        <option value="SOP Instruction" {{ strpos($data->audit_type, 'SOP Instruction') !== false ? 'selected' : '' }}>SOP Instruction</option>
+                        <option value="BMR/ECR Instruction" {{ strpos($data->audit_type, 'BMR/ECR Instruction') !== false ? 'selected' : '' }}>BMR/ECR Instruction</option>
+                        <option value="Water System" {{ strpos($data->audit_type, 'Water System') !== false ? 'selected' : '' }}>Water System</option>
+                        <option value="Anyother(specify)" {{ strpos($data->audit_type, 'Anyother(specify)') !== false ? 'selected' : '' }}>Any other (specify)</option>
+                        <option value="Process" {{ strpos($data->audit_type, 'Process') !== false ? 'selected' : '' }}>Process</option>
+                    </select>
+                </div>
+                @error('audit_type')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
 
-<!-- Other Field (Initially Hidden) -->
-<div id="others_block" class="col-md-6 group-input" style="display: none;">
-    <label for="others">Others <span id="asteriskInOther" style="display: none;" class="text-danger">*</span></label>
-    <textarea class="tiny" name="others" id="others_field"
-        {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->others }}</textarea>
-</div>
+            <!-- Other Field (Initially Hidden) -->
+            <div id="others_block" class="col-md-6 group-input" style="display: none;">
+                <label for="others">Others <span id="asteriskInOther" style="display: none;" class="text-danger">*</span></label>
+                <textarea class="tiny" name="others" id="others_field"
+                    {{ $data->stage == 1 ? '' : 'disabled' }}>{{ $data->others }}</textarea>
+            </div>
 
-<!-- jQuery Library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <!-- jQuery Library -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $('#audit_type').change(function () {
-            var selectedValues = $(this).val() || []; // Get selected values as an array
-            var isOtherSelected = selectedValues.includes('Anyother(specify)');
+                                    <script>
+                                        $(document).ready(function () {
+                                            $('#audit_type').change(function () {
+                                                var selectedValues = $(this).val() || []; // Get selected values as an array
+                                                var isOtherSelected = selectedValues.includes('Anyother(specify)');
 
-            if (isOtherSelected) {
-                $('#others_block').show();
-                $('#others_field').prop('required', true);
-                $('#asteriskInOther').show();
-            } else {
-                $('#others_block').hide();
-                $('#others_field').prop('required', false);
-                $('#asteriskInOther').hide();
-            }
-        });
+                                                if (isOtherSelected) {
+                                                    $('#others_block').show();
+                                                    $('#others_field').prop('required', true);
+                                                    $('#asteriskInOther').show();
+                                                } else {
+                                                    $('#others_block').hide();
+                                                    $('#others_field').prop('required', false);
+                                                    $('#asteriskInOther').hide();
+                                                }
+                                            });
 
-        // Ensure the field remains visible if already selected on page load (useful for form errors)
-        var preSelectedValues = $('#audit_type').val() || [];
-        if (preSelectedValues.includes('Anyother(specify)')) {
-            $('#others_block').show();
-            $('#others_field').prop('required', true);
-            $('#asteriskInOther').show();
-        }
-    });
-</script>
+                                            // Ensure the field remains visible if already selected on page load (useful for form errors)
+                                            var preSelectedValues = $('#audit_type').val() || [];
+                                            if (preSelectedValues.includes('Anyother(specify)')) {
+                                                $('#others_block').show();
+                                                $('#others_field').prop('required', true);
+                                                $('#asteriskInOther').show();
+                                            }
+                                        });
+                                    </script>
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -1610,6 +1611,7 @@
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="group-input" id="facilityRow"
                                         @if ($data->Facility_Equipment == 'no') style="display: none" @endif>
                                         <label for="audit-agenda-grid">
@@ -1701,6 +1703,7 @@
 
                                         </div>
                                     </div>
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             var selectField = document.getElementById('Facility_Equipment');
@@ -1741,6 +1744,7 @@
                                             });
                                         });
                                     </script>
+
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Document Details Required">Document Details Required? <span
@@ -1760,6 +1764,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
                                     <div class="group-input" id="documentsRow"
                                         @if ($data->Document_Details_Required == 'no') style="display: none" @endif>
                                         <label for="audit-agenda-grid">
@@ -1826,6 +1831,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function() {
                                             // note-codable
@@ -1889,8 +1895,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-
+                                    
                                     <div class="col-lg-12">
                                         <div class="col-lg-12">
                                             <div class="group-input" id="productRow"
@@ -10714,24 +10719,23 @@
                                 $('#investigation_approach').on('change', toggleSections);
 
                                 // ====== FORM SUBMIT VALIDATION ======
-                                $('#auditForm').on('submit', function (e) {
+                               /* $('#auditForm').on('submit', function (e) {
 
                                     let isValid = true;
 
-                                    // Check each visible required field
                                     $(this).find(':input[required]:visible').each(function () {
                                         if ($(this).val().trim() === '') {
                                             alert('Please fill all required fields.');
                                             $(this).focus();
                                             isValid = false;
-                                            return false; // break .each loop
+                                            return false;
                                         }
                                     });
 
                                     if (!isValid) {
-                                        e.preventDefault(); // Stop form submission
+                                        e.preventDefault();
                                     }
-                                });
+                                });*/
 
                             });
                         </script>

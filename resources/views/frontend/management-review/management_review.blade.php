@@ -958,7 +958,7 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
-                                                     {{ $data->stage == 1 ? '' : 'disabled' }}
+                                                    {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7 || $data->stage == 8 ? 'd-none' : '' }}"
                                                     oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
@@ -3159,8 +3159,6 @@
                                             <input readonly type="text"
                                                 value="{{ $data1->ResearchDevelopment_by }}"
                                                 name="ResearchDevelopment_by" id="StorResearchDevelopment_by">
-
-
                                         </div>
                                     </div>
                                     <div class="col-6 researchDevelopment new-date-data-field">
