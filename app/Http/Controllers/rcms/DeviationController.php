@@ -11627,7 +11627,6 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                     //    ]);
 
                     //    return redirect()->back();
-
                     $selectedApproaches = explode(',', $deviation->investigation_approach);
                             $errors = [];
 
@@ -11694,11 +11693,12 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                       ]);
                   }
                 //   dd($deviation->capa_root_cause);
-                  if (empty($deviation->capa_root_cause) && empty($deviation->Immediate_Action_Take) ) {
+                if($deviation->capa_required == 'yes'){
+                  if (empty($deviation->capa_root_cause)) {
 
                      Session::flash('swal', [
                          'title' => 'Mandatory Fields Required!',
-                         'message' => 'QRM and CAPA tab is yet to be filled!',
+                         'message' => 'CAPA  tab is yet to be filled!',
                          'type' => 'warning',
                      ]);
 
@@ -11710,6 +11710,26 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                          'message' => 'Sent for HOD Final Review state'
                      ]);
                  }
+                }
+                    // for QRM tab 
+                    if($deviation->qrm_required == 'yes'){
+                if(empty($deviation->Immediate_Action_Take) ) {
+
+                    Session::flash('swal', [
+                        'title' => 'Mandatory Fields Required!',
+                        'message' => 'QRM tab is yet to be filled!',
+                        'type' => 'warning',
+                    ]);
+
+                    return redirect()->back();
+                } else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for HOD Final Review state'
+                    ]);
+                }
+            }
 
                     if (!$deviation->Pending_initiator_update) {
 
