@@ -550,7 +550,6 @@
                             Nil
                         @endif
 
-
                    </span>
                 
                     </td>
@@ -676,11 +675,10 @@
                 <table class="table table-bordered" id="distribution-list">
                     <thead style="width:20%">
                         <tr>
-                            <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                            <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
+                            <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
                             <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
-                            <th style="font-size: 16px; font-weight: bold; width:60%">Reason of revision</th>
-
+                            <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -698,7 +696,6 @@
                                             {{ !empty($item['eff_date_rawmstp']) ? \Carbon\Carbon::parse($item['eff_date_rawmstp'])->format('d-M-Y') : '' }}
                                         @endif
                                     </td>
-                                    {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_rawmstp']) ? \Carbon\Carbon::parse($item['eff_date_rawmstp'])->format('d-M-Y') : '' }}</td> --}}
                                     <td style="border: 1px solid black; width: 20%;">{{ $item['rev_reason_rawmstp'] ?? '' }}</td>
                                 </tr>
                             @endforeach

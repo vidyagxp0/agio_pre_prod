@@ -10840,10 +10840,6 @@
                                     </div>
                                 </div>
 
-
-
-                              
-
                                     <div class="group-input">
                                         <label for="revision-history">Revision History</label>
                                         <div class="table-responsive">
@@ -10885,8 +10881,8 @@
                                                                     value="{{ $gtphistory['effectiveDate_gtp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="gtp[{{ $index }}][reasonRevi_gtp]" 
-                                                                    value="{{ $gtphistory['reasonRevi_gtp'] ?? '' }}">
+                                                                <textarea type="" name="gtp[{{ $index }}][reasonRevi_gtp]" 
+                                                                    value="">{{ $gtphistory['reasonRevi_gtp'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -10922,7 +10918,7 @@
                                                                         <td><input type="text" name="gtp[${index}][changContNo_gtp]" value="${gtphistory.changContNo_gtp}"></td>
                                                                         <td><input type="date" name="gtp[${index}][effectiveDate_gtp]" 
                                                                                 value="${gtphistory.effectiveDate_gtp || ''}" readonly></td>
-                                                                        <td><input type="text" name="gtp[${index}][reasonRevi_gtp]" value="${gtphistory.reasonRevi_gtp}"></td>
+                                                                        <td><textarea type="" name="gtp[${index}][reasonRevi_gtp]" value="">${gtphistory.reasonRevi_gtp}</textarea></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -11043,8 +11039,8 @@
                                                                     value="{{ $rmstphistory['effective_date'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <input type="text" name="revision_rawmstp_data[{{ $index }}][rev_reason_rawmstp]" 
-                                                                    value="{{ $rmstphistory['rev_reason_rawmstp'] ?? '' }}">
+                                                                <textarea type="" name="revision_rawmstp_data[{{ $index }}][rev_reason_rawmstp]" 
+                                                                    value="">{{ $rmstphistory['rev_reason_rawmstp'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
                                                     @endif
@@ -11079,7 +11075,7 @@
                                                                     <td><input type="text" name="revision_rawmstp_data[${index}][change_ctrl_rawmstp_no]" value="${history.change_ctrl_rawmstp_no}"></td>
                                                                     <td><input type="date" name="revision_rawmstp_data[${index}][eff_date_rawmstp]" 
                                                                             value="${history.effective_date || ''}" readonly></td>
-                                                                    <td><input type="text" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="${history.rev_reason_rawmstp}"></td>
+                                                                    <td><textarea type="" name="revision_rawmstp_data[${index}][rev_reason_rawmstp]" value="">${history.rev_reason_rawmstp}</textarea></td>
                                                                 </tr>`;
                                                             
                                                             tbody.append(row);
