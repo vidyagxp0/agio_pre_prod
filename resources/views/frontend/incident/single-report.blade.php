@@ -719,7 +719,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->hod_attachments)
@@ -855,7 +855,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Initial_attachment)
@@ -905,7 +905,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_head_deginee_attachments)
@@ -1008,7 +1008,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->QA_attachments)
@@ -1056,7 +1056,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_head_attachments)
@@ -1106,7 +1106,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->qa_final_ra_attachments)
@@ -1171,7 +1171,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->closure_attachment)
