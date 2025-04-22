@@ -353,7 +353,7 @@ class IncidentController extends Controller
     $files = [];
     if ($request->hasfile('Initial_attachment')) {
         foreach ($request->file('Initial_attachment') as $file) {
-            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'QA_Initial_Review_Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
             $file->move('upload/', $name);
             $files[] = $name;
         }
@@ -3178,7 +3178,7 @@ if (!empty($request->Initial_attachment) || !empty($request->deleted_Initial_att
     $newFiles = [];
     if ($request->hasFile('Initial_attachment')) {
         foreach ($request->file('Initial_attachment') as $file) {
-            $name = $request->name . 'Initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'QA_Initial_Review_Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
