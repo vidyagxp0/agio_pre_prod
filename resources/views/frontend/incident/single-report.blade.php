@@ -641,7 +641,7 @@
                 <table>
 
                     <tr class="table_bg">
-                        <th class="w-20">SR No.</th>
+                        <th class="w-20">Sr.No.</th>
                         <th class="w-60">Attachment</th>
                     </tr>
                     @if ($data->Audit_file)
