@@ -10704,7 +10704,7 @@
                                         $('.others-section').show();
                                         $('#other_specify').attr('required', true);
                                         $('.others-attachment-section').show();
-                                        $('.other-attachment-input').attr('required', true);
+                                        // $('.other-attachment-input').attr('required', true);
                                         $('#others-required').show();
                                     } else {
                                         $('.others-section').hide();

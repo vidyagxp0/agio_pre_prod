@@ -191,6 +191,11 @@
         }
 
         
+        #fr-logo {
+            display: none;
+        }
+    
+        
     </style>
 
 

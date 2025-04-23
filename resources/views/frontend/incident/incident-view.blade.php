@@ -2103,30 +2103,47 @@
 
                                             <div class="col-md-12">
                                                 <div class="group-input">
-                                                    <label for="Description Incident">Description of Incident <span
-                                                            class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please insert "NA" in the data field if it
-                                                            does not require completion</small></div>
-                                                    <textarea   name="Description_incident"
-                                                        id="editor" {{ $data->stage == 1 ? '' : 'readonly' }}>{!! $data->Description_incident !!}</textarea>
+                                                    <label for="Description_incident">Description of Incident <span class="text-danger">*</span></label>
+                                                    <div>
+                                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                                    </div>
+                                                    <textarea name="Description_incident"
+                                                            id="editor"
+                                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{!! $data->Description_incident !!}</textarea>
                                                 </div>
                                                 @error('Description_incident')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
+
                                             <style>
-                                                .ck.ck-editor_editable_inline[dir=ltr]{
-                                                    height: 350px;
+                                                .ck.ck-editor__editable_inline[dir=ltr] {
+                                                    height: 90px;
+                                                }
+
+                                                /* Optional: Hide the "Rich Text Editor" label */
+                                                .ck.ck-label {
+                                                    display: none !important;
                                                 }
                                             </style>
+
                                             <script>
                                                 ClassicEditor
-                                                    .create(document.querySelector('#editor'))
+                                                    .create(document.querySelector('#editor'), {
+                                                        // You can set or override the label here
+                                                        ariaLabel: '', // Empty label to prevent showing "Rich Text Editor"
+                                                    })
+                                                    .then(editor => {
+                                                        // Manually remove any aria-label if it’s added
+                                                        const editable = editor.ui.getEditableElement();
+                                                        editable.removeAttribute('aria-label');
+                                                    })
                                                     .catch(error => {
                                                         console.error(error);
                                                     });
                                             </script>
-                                            <div class="col-md-12">
+
+                                            {{-- <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Investigation <span
                                                             class="text-danger">*</span></label>
@@ -2138,7 +2155,54 @@
                                                 @error('investigation')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
+                                            </div> --}}
+
+                                            <!-- CKEditor Script -->
+                                            <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+                                            <!-- Investigation Field -->
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="investigation">Investigation <span class="text-danger">*</span></label>
+                                                    <div>
+                                                        <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
+                                                    </div>
+                                                    <textarea name="investigation"
+                                                            id="editor-investigation"
+                                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->investigation }}</textarea>
+                                                </div>
+                                                @error('investigation')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
+
+                                            <!-- Optional: Custom height -->
+                                            <style>
+                                                .ck.ck-editor__editable_inline[dir=ltr] {
+                                                    height: 90px;
+                                                }
+
+                                                /* Remove any unexpected CKEditor accessibility labels */
+                                                .ck.ck-label {
+                                                    display: none !important;
+                                                }
+                                            </style>
+
+                                            <!-- CKEditor Initialization -->
+                                            <script>
+                                                ClassicEditor
+                                                    .create(document.querySelector('#editor-investigation'), {
+                                                        ariaLabel: '', // prevent default label
+                                                    })
+                                                    .then(editor => {
+                                                        const editable = editor.ui.getEditableElement();
+                                                        editable.removeAttribute('aria-label');
+                                                    })
+                                                    .catch(error => {
+                                                        console.error(error);
+                                                    });
+                                            </script>
+
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Immediate Corrective Action<span

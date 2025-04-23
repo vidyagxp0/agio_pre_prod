@@ -560,10 +560,18 @@
                     </div>
                 </div> -->
 
-                <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
+                {{-- <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
                 <div class="div-data">
                     @if ($data->Brief_description)
                      {!! strip_tags($data->Brief_description, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                    @else
+                        Not Applicable
+                    @endif
+                </div> --}}
+                <label class="head-number" for="Brief Description / Procedure">Brief Description / Procedure</label>
+                <div class="div-data">
+                    @if ($data->Brief_description)
+                        {!! $data->Brief_description !!}
                     @else
                         Not Applicable
                     @endif
@@ -1474,8 +1482,8 @@
 
 
             <div class="block">
-                {{-- <div class="block-head">HOD/Designee</div>
-                <table>
+                 <div class="block-head">HOD/Designee</div>
+               {{-- <table>
                     <tr>
                         <th class="w-20">CFT Reviewer Selection</th>
                         <td class="w-80">{!! Helpers::getInitiatorName($data->reviewer_person_value) ?? 'Not Applicable' !!}</td>
@@ -1623,7 +1631,7 @@
                             @if ($data1->Production_Injection_Review)
                                 {{ $data1->Production_Injection_Review }}
                             @else
-                                Not Applicable
+                                Not Applicable  
                             @endif
                         </td>
                         {{-- <td class="w-30"> <div> @if ($data1->Production_Review)  {{ $data1->Production_Review }} @else Not Applicable  @endif </div>  </td> --}}
