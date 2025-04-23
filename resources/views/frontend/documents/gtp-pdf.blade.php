@@ -301,17 +301,23 @@
             word-break: break-word;
         }
 
-                #isPasted td > p span {
-                display: inline; /* or block */
-                width: auto;
-                word-wrap: break-word;
-            }
+        #isPasted td > p span {
+            display: inline; /* or block */
+            width: auto;
+            word-wrap: break-word;
+        }
 
         /* Remove inline-block spans causing PDF issues */
-        #isPasted td span {
+        /* #isPasted td span {
             display: block;
             word-break: break-word;
             white-space: normal;
+        } */
+
+        #isPasted td span {
+            display: inline !important;
+            white-space: normal !important;
+            word-break: break-word !important;
         }
 
         /* Image Styling */
@@ -403,15 +409,15 @@
                             @endphp
 
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @else
-                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
+                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-{{ $revisionNumber }}
                                 @endif
                         @else                            
                                 @if(in_array($document->sop_type_short, ['EOP', 'IOP']))
-                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-00
+                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @else
-                                    PMGTP/{{ str_pad($data->record_spec_gtp, 4, '0', STR_PAD_LEFT) }}-00
+                                    PMGTP/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}-00
                                 @endif
                         @endif
                         </span>
