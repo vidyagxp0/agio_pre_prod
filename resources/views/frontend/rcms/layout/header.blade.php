@@ -242,7 +242,7 @@
                                     <a href="{{ route('documents.index') }}">Documents</a>
                                 </div>
                             @endif
-                            @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
+                            @if (Auth::user() || Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
                                 <div>
                                     <a href="{{ url('mytaskdata') }}">My Tasks</a>
                                 </div>
