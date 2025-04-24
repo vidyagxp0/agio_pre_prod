@@ -6875,7 +6875,7 @@
                     <div class="orig-head">PROTOCOL CUM REPORT
                     </div>
 
-                    <div class="col-12">
+                            <div class="col-12">
                                 <div class="group-input">
                                     <label for="File_Attachment"><b>File Attachment</b></label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -10726,7 +10726,7 @@
                                                                     value="{{ $gtp_data['eff_date_cvstp'] ?? '' }}" readonly>
                                                             </td>
                                                             <td>
-                                                                <textarea type="text" name="revision_cvstp_data[{{ $index }}][rev_reason_cvstp]" 
+                                                                <textarea type="" name="revision_cvstp_data[{{ $index }}][rev_reason_cvstp]" 
                                                                     value="">{{ $gtp_data['rev_reason_cvstp'] ?? '' }}</textarea>
                                                             </td>
                                                         </tr>
@@ -10762,7 +10762,7 @@
                                                                         <td><input type="text" name="revision_cvstp_data[${index}][change_ctrl_cvstp_no]" value="${cvstphistory.change_ctrl_cvstp_no}"></td>
                                                                         <td><input type="date" name="revision_cvstp_data[${index}][eff_date_cvstp]" 
                                                                                 value="${cvstphistory.eff_date_cvstp || ''}" readonly></td>
-                                                                        <td><textarea type="text" name="revision_cvstp_data[${index}][rev_reason_cvstp]" value="">${cvstphistory.rev_reason_cvstp}</textarea></td>
+                                                                        <td><textarea type="" name="revision_cvstp_data[${index}][rev_reason_cvstp]" value="">${cvstphistory.rev_reason_cvstp}</textarea></td>
                                                                     </tr>`;
                                                                 
                                                                 tbody.append(row);
@@ -10802,7 +10802,7 @@
                                         <label for="stp">GTP No<span class="text-danger">*</span></label>
                                         @php
                                             $revisionNumber = $document->revised == 'Yes' ? str_pad($document->revised_doc, 2, '0', STR_PAD_LEFT) : '00';
-                                            $mfpstpNumber = "GTP/" . str_pad($document->record_spec_gtp, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
+                                            $mfpstpNumber = "GTP/" . str_pad($document->record, 4, '0', STR_PAD_LEFT) . "-$revisionNumber";
                                         @endphp
                                         <input type="text" id="stp" name="gtp_no" value="{{ $mfpstpNumber }}" maxlength="255" readonly>
                                     </div>
@@ -14201,8 +14201,7 @@
                                                                 value="{{ $rmshistory['effective_date'] ?? '' }}" readonly>
                                                         </td>
                                                         <td>
-                                                            <textarea name="revision_rawms_data[{{ $index }}][rev_reason_rawms]" 
-                                                                >{{ $rmshistory['rev_reason_rawms'] ?? '' }}</textarea>
+                                                            <textarea name="revision_rawms_data[{{ $index }}][rev_reason_rawms]">{{ $rmshistory['rev_reason_rawms'] ?? '' }}</textarea>
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -14220,7 +14219,7 @@
 
                                             $.ajax({
                                                 url: '/get-rmsrevision-history',
-                                                method: 'GET',
+                                                method: 'GET', 
                                                 data: { document_id: documentId },
                                                 success: function (response) {
                                                     if (response.revision_rawms_data) {
@@ -14331,18 +14330,16 @@
                                 });
                             });
                         </script>
-
-
                             
-                            @php
-                                $serialNumber = 1;
-                                $decodedProductData = [];
-                                if (!empty($ProductSpecification) && isset($ProductSpecification->data)) {
-                                    $decodedProductData = is_string($ProductSpecification->data) 
-                                        ? json_decode($ProductSpecification->data, true) 
-                                        : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
-                                }
-                            @endphp
+                        @php
+                            $serialNumber = 1;
+                            $decodedProductData = [];
+                            if (!empty($ProductSpecification) && isset($ProductSpecification->data)) {
+                                $decodedProductData = is_string($ProductSpecification->data) 
+                                    ? json_decode($ProductSpecification->data, true) 
+                                    : (is_array($ProductSpecification->data) ? $ProductSpecification->data : []);
+                            }
+                        @endphp
 
                         <div class="group-input" id="gridTable1" style="display: none; margin-top: 20px;">
                             <label for="action-plan-grid">

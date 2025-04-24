@@ -7766,7 +7766,7 @@
                                 @php
                                     $documents_gtp = DB::table('documents')->whereIn('document_type_id', ['FPS', 'INPS', 'CVS','RAWMS'])->get();
                                 @endphp
-                            <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="comments">Select Specification</label>
                                         <select id="documentDropdown4" name="record_spec_gtp">
@@ -7778,7 +7778,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <div class="col-md-12 mb-3">

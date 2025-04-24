@@ -693,10 +693,10 @@
         <table class="table table-bordered" id="distribution-list">
             <thead>
                 <tr>
-                    <th style="font-size: 16px; font-weight: bold; width:20%">Revision No.</th>
-                    <th style="font-size: 16px; font-weight: bold; width:30%">Change Control No.</th>
-                    <th style="font-size: 16px; font-weight: bold; width:30%">Effective Date</th>
-                    <th style="font-size: 16px; font-weight: bold; width:20%">Reason of revision</th>
+                    <th style="font-size: 16px; font-weight: bold; width:10%">Revision No.</th>
+                    <th style="font-size: 16px; font-weight: bold; width:20%">Change Control No.</th>
+                    <th style="font-size: 16px; font-weight: bold; width:20%">Effective Date</th>
+                    <th style="font-size: 16px; font-weight: bold; width:50%">Reason of revision</th>
                 </tr>
             </thead>
             <tbody>
@@ -714,7 +714,6 @@
                                     {{ !empty($item['eff_date_inps']) ? \Carbon\Carbon::parse($item['eff_date_inps'])->format('d-M-Y') : '' }}
                                 @endif
                             </td>
-                            {{-- <td style="border: 1px solid black; width: 20%;">{{ !empty($item['eff_date_inps']) ? \Carbon\Carbon::parse($item['eff_date_inps'])->format('d-M-Y') : '' }}</td> --}}
                             <td style="border: 1px solid black; width: 60%;">{{ $item['rev_reason_inps'] ?? '' }}</td>
                         </tr>
                     @endforeach
