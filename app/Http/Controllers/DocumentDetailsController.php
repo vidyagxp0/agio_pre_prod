@@ -54,7 +54,6 @@ class DocumentDetailsController extends Controller
 
   function sendforstagechanage(Request $request)
   {
-    // dd($request->all());
     if ($request->username == Auth::user()->email) {
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
@@ -236,8 +235,15 @@ class DocumentDetailsController extends Controller
 
         if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
-            $document->stage = 3;
-            $document->status = "HOD Review Complete";
+            if ($document->document_type_id == "SOP") {
+                $document->stage = 3;
+                $document->status = "HOD Review Complete";
+            } else {
+                $document->stage = 1;
+                $document->status = "Draft";
+            }
+            // $document->stage = 3;
+            // $document->status = "HOD Review Complete";
             $history = new DocumentHistory();
             $history->document_id = $request->document_id;
             $history->activity_type = 'Cancel-by-Reviewer';
