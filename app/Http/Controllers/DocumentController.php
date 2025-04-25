@@ -6241,7 +6241,33 @@ class DocumentController extends Controller
             // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 
             $pdf = App::make('dompdf.wrapper');
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document','documents','currentId'))
+
+
+            $viewName = match ($data->document_type_id) {
+                'SOP' => 'frontend.documents.pdfpage',
+                'BOM' => 'frontend.documents.bom-pdf',
+                'FPS' => 'frontend.documents.finished-product-pdf',
+                'INPS' => 'frontend.documents.inprocess_s-pdf',
+                'CVS' => 'frontend.documents.cleaning_validation_s-pdf',
+                'RAWMS' => 'frontend.documents.raw_ms-pdf',
+                'PAMS' => 'frontend.documents.package_ms-pdf',
+                'PIAS' => 'frontend.documents.product_item-pdf',
+                'MFPS' => 'frontend.documents.mfps-pdf',
+                'MFPSTP' => 'frontend.documents.mfpstp-pdf',
+                'FPSTP' => 'frontend.documents.finished-product-stp-pdf',
+                'INPSTP' => 'frontend.documents.inprocess-stp-pdf',
+                'CVSTP' => 'frontend.documents.cleaning-validation-stp-pdf',
+                'RMSTP' => 'frontend.documents.raw_mstp-pdf',
+                'BMR' => 'frontend.documents.bmr-pdf',
+                'BPR' => 'frontend.documents.bpr-pdf',
+                'SPEC' => 'frontend.documents.spec-pdf',
+                'STP' => 'frontend.documents.stp-pdf',
+                'TDS' => 'frontend.documents.tds-pdf',
+                'GTP' => 'frontend.documents.gtp-pdf',
+                default => 'frontend.documents.pdfpage',
+            };
+
+            $pdf = PDF::loadview($viewName, compact('data', 'time', 'document','documents','currentId'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -7740,7 +7766,7 @@ class DocumentController extends Controller
 
     public function printPDF($id)
     {
-
+       
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
@@ -8005,6 +8031,7 @@ class DocumentController extends Controller
 
     public function printAnnexurePDF($id)
     {
+    
         $roles = explode(',', Auth::user()->role);
         $controls = PrintControl::whereIn('role_id', $roles)->first();
 
