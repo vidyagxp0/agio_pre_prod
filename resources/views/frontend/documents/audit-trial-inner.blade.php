@@ -15,7 +15,8 @@
                                 <div class="list-item">
                                     <div class="head">Site/Division/Process</div>
                                     <div>:</div>
-                                    <div>{{ $doc->division }}/{{ $doc->process }}</div>
+                                    <div> {{$doc->sop_type_short}}/{{$doc->department_id}}/000{{ $doc->id }}/R{{$doc->major}}.{{$doc->minor}}</div>
+                                    {{-- <div>{{ $doc->division }}/{{ $doc->process }}</div> --}}
                                 </div>
                                 <div class="list-item">
                                     <div class="head">Document Stage</div>
