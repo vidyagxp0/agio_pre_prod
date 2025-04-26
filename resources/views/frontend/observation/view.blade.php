@@ -2376,6 +2376,11 @@
         width: 33%;
 
         }
+        /* code for powered By Flora hidding  */
+        #fr-logo{
+            display: none;
+        }
+
     </style>
 
 

@@ -381,7 +381,7 @@
                     ele: ".analyst-dropdown",
                     multiple: true,
                     search: true,
-                    placeholder: "Select Auditors"
+                    placeholder: ""
                 });
             }
 
@@ -1665,7 +1665,7 @@
                                                         id="Self_Inspection_circular-field-instruction-modal">
                                                         <thead>
                                                             <tr>
-                                                                <th style="width: 1%">Sr. No.</th>
+                                                                <th style="width: 2%">Sr. No.</th>
                                                                 <th style="width: 12%">Department</th>
                                                                 <th style="width: 15%">Audit Date</th>
                                                                 <th style="width: 16%">Name of Auditors</th>

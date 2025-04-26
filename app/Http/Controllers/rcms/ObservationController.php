@@ -3073,10 +3073,11 @@ if (is_array($request->action) && !empty($request->action)) {
         }
         if ($request->revision == "Action-Item") {
             $data = Observation::find($id);
+            $parent_division_id = Observation::where('id', $id)->value('division_code');
             $data_record = Helpers::getDivisionName($data->division_code ) . '/' . 'OBS' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $record = $record_number;
-            return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data', 'data_record'));
+            return view('frontend.action-item.action-item', compact('record','record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id', 'data', 'data_record','parent_division_id'));
         }
         if ($request->revision == "RCA") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -3178,7 +3179,7 @@ if (is_array($request->action) && !empty($request->action)) {
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
             $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('errata' . $id . '.pdf');
+            return $pdf->stream('Observation' . $id . '.pdf');
         }
     }
 

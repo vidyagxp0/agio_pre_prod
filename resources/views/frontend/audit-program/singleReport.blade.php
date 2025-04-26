@@ -355,19 +355,7 @@ $users = DB::table('users')->select('id', 'name')->get();
                         @endif
                     </div>
                 </div> -->
-                <table>
-
-                    <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-30">
-                            @if ($data->comments)
-                            {{ $data->comments }}
-                            @else
-                            Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                </table>
+               
 
                 <div class="block">
                     <div class="block-head">
@@ -409,6 +397,21 @@ $users = DB::table('users')->select('id', 'name')->get();
                         </table>
                     </div>
                 </div>
+
+
+                <table>
+
+                    <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-80">
+                            @if ($data->comments)
+                            {{ $data->comments }}
+                            @else
+                            Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
 
         {{-- <div class="block">
                     <div class="block-head">
@@ -730,7 +733,7 @@ $users = DB::table('users')->select('id', 'name')->get();
 
         <div class="border-table">
             <div class="block-head">
-                CQA/QA Review Attached Files
+                CQA/QA Review Attachment
             </div>
             <table>
 

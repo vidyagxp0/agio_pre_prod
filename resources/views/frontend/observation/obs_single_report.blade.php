@@ -404,7 +404,43 @@
 
                 </tr>
 
-                <tr>
+               
+            </table>
+
+            <div class="block-head">
+                Attached files
+             </div>
+               <div class="border-table">
+                 <table>
+                     <tr class="table_bg">
+                         <th class="w-20">Sr.No</th>
+                         <th class="w-60">Attachment </th>
+                     </tr>
+                         @if($data->attach_files_gi)
+                         @foreach(json_decode($data->attach_files_gi) as $key => $file)
+                             <tr>
+                                 <td class="w-20">{{ $key + 1 }}</td>
+                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                             </tr>
+                         @endforeach
+                         @else
+                         <tr>
+                             <td class="w-20">1</td>
+                             <td class="w-20">Not Applicable</td>
+                         </tr>
+                     @endif
+
+                 </table>
+               </div>
+
+
+        </div>
+
+
+
+        <table>
+
+        <tr>
                     <th class="w-20">Response Due Date</th>
                     <td class="w-80">
                         @if ($data->recomendation_capa_date_due)
@@ -414,9 +450,7 @@
                         @endif
                     </td>
                 </tr>
-            </table>
-
-
+        </table>
                     <style>
                     .head-number {
                         font-weight: bold;
@@ -463,34 +497,7 @@
 
 
 
-            <div class="block-head">
-                Attached files
-             </div>
-               <div class="border-table">
-                 <table>
-                     <tr class="table_bg">
-                         <th class="w-20">Sr.No</th>
-                         <th class="w-60">Attachment </th>
-                     </tr>
-                         @if($data->attach_files_gi)
-                         @foreach(json_decode($data->attach_files_gi) as $key => $file)
-                             <tr>
-                                 <td class="w-20">{{ $key + 1 }}</td>
-                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                             </tr>
-                         @endforeach
-                         @else
-                         <tr>
-                             <td class="w-20">1</td>
-                             <td class="w-20">Not Applicable</td>
-                         </tr>
-                     @endif
-
-                 </table>
-               </div>
-
-
-        </div>
+           
 
 
            <div class="block">

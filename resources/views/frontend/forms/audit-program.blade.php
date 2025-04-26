@@ -825,11 +825,11 @@ DATA FIELDS
                             <label for="audit-agenda-grid">
                                 Audit program
                                 <button type="button" name="audit-agenda-grid" id="audit_program">+</button>
-                                <span class="text-primary" 
+                                <!-- <span class="text-primary" 
                                     data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                     (Launch Instruction)
-                                </span>
+                                </span> -->
                             </label>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="audit_program-field-instruction-modal">
