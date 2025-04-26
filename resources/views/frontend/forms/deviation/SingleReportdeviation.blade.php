@@ -236,6 +236,22 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
         <div class="content-table">
             <div class="block">
@@ -3565,70 +3581,118 @@
                                 </table>
                             </div> --}}
                             {{-- <div class="col-12" id="HideInference" style="display:none;"> --}}
-                                <div class="border-table">
-                                    <div class="col-12 mb-4" id="fmea-section-part3">
-                                        <div class="group-input">
-                                            <div class="block-head">Inference</div>
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="risk-acceptance">
-                                                    <thead>
-                                                        <tr class="table_bg">
-                                                            <th style="width: 5%;">Sr.No.</th>
-                                                            <th style="width: 30%;">Type</th>
-                                                            <th>Remarks</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @if (!empty($data->inference_type) && !empty($data->inference_remarks))
-                                                            @php
-                                                                $inference_types = unserialize($data->inference_type);
-                                                                $inference_remarks = unserialize($data->inference_remarks);
-                                                            @endphp
 
-                                                            @foreach ($inference_types as $key => $inference_type)
-                                                                <tr>
-                                                                    <td>{{ $key + 1 }}</td>
-                                                                    <td>
-                                                                        @switch($inference_type)
-                                                                            @case('Measurement')
-                                                                                Measurement
-                                                                                @break
-                                                                            @case('Materials')
-                                                                                Materials
-                                                                                @break
-                                                                            @case('Methods')
-                                                                                Methods
-                                                                                @break
-                                                                            @case('Mother Environment')
-                                                                                Mother Environment
-                                                                                @break
-                                                                            @case('Man')
-                                                                                Man
-                                                                                @break
-                                                                            @case('Machine')
-                                                                                Machine
-                                                                                @break
-                                                                            @default
-                                                                                N/A
-                                                                        @endswitch
-                                                                    </td>
-                                                                    <td>{{ $inference_remarks[$key] ?? 'No remarks provided' }}</td>
-                                                                </tr>
-                                                            @endforeach
-                                                        @else
-                                                            <tr>
-                                                                <td colspan="3">No  data available.</td>
-                                                            </tr>
-                                                        @endif
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <br>
+                            <br>
+                            <br><br><br><br><br><br><br><br><br><br><br><br>
+                            
+                        
 
-                                <br>
-                                <div class="block-head">
+
+                            <div class="block-head">
+    Fishbone or Ishikawa Diagram
+</div>
+
+@if (!empty($fishboneData))
+    @php
+        $decodedData = json_decode($fishboneData->data, true);
+    @endphp
+
+    @if ($decodedData && is_array($decodedData))
+    <div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
+
+@php
+    $measurement = $decodedData['measurement'] ?? [];
+    $materials = $decodedData['materials'] ?? [];
+    $methods = $decodedData['methods'] ?? [];
+    $maxCount = max(count((array)$measurement), count((array)$materials), count((array)$methods));
+
+    $environment = $decodedData['environment'] ?? [];
+    $manpower = $decodedData['manpower'] ?? [];
+    $machine = $decodedData['machine'] ?? [];
+    $maxCount2 = max(count((array)$environment), count((array)$manpower), count((array)$machine));
+@endphp
+
+<!-- Wrapper table to align content side by side -->
+<table style="width: 100%; border-collapse: collapse;">
+    <tr valign="top">
+        <!-- First Table -->
+        <td style="width: 70%;">
+            <table style="width: 70%; border-collapse: collapse; text-align: left;">
+                <thead>
+                    <tr style="color: #007bff;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Measurement</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Materials</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Methods</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for ($i = 0; $i < $maxCount; $i++)
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $measurement[$i] ?? 'N/A' }}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $materials[$i] ?? 'N/A' }}</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">{{ $methods[$i] ?? 'N/A' }}</td>
+                        </tr>
+                    @endfor
+                </tbody>
+            </table>
+        </td>        
+    </tr>
+</table>
+
+<table style="width: 100%; border-collapse: collapse;">
+    <tr >
+        <td style="width: 70%;">
+            <div style="width: 100%; height: 2px; background: blue; margin: 20px 0;"></div>
+        </td>
+        <td style="width: 30%;">
+            <div style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #ffffff;">
+                <strong style="color: #007bff;">Problem Statement:</strong>
+                <div style="margin-top: 10px;">
+                    {{ $decodedData['fishbone_problem_statement'] ?? 'N/A' }}
+                </div>
+            </div>
+        </td>       
+    </tr>
+</table>
+
+
+<!-- Second Table -->
+<table style="width: 70%; border-collapse: collapse; text-align: left;">
+    <thead>
+        <tr style="color: #007bff;">
+            <th style="padding: 10px; border: 1px solid #ddd;">Environment</th>
+            <th style="padding: 10px; border: 1px solid #ddd;">Manpower</th>
+            <th style="padding: 10px; border: 1px solid #ddd;">Machine</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for ($i = 0; $i < $maxCount2; $i++)
+            <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ $environment[$i] ?? 'N/A' }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ $manpower[$i] ?? 'N/A' }}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">{{ $machine[$i] ?? 'N/A' }}</td>
+            </tr>
+        @endfor
+    </tbody>
+</table>
+
+</div>
+
+
+    @else
+        <p style="text-align: center; color: red;">Invalid Fishbone data format.</p>
+    @endif
+@else
+    <p style="text-align: center; color: red;">No Fishbone data available.</p>
+@endif
+
+
+                                <br><br><br><br>
+
+
+                                
+                                <!-- <div class="block-head">
                                     Fishbone or Ishikawa Diagram
                                 </div>
 
@@ -3745,7 +3809,7 @@
                                
                                 
                             </div>
-                        @endif
+                        @endif -->
 
 
 
@@ -3792,6 +3856,70 @@
 
                             </style>
 
+                                <div class="border-table">
+                                    <div class="col-12 mb-4" id="fmea-section-part3">
+                                        <div class="group-input">
+                                            <div class="block-head">Inference</div>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="risk-acceptance">
+                                                    <thead>
+                                                        <tr class="table_bg">
+                                                            <th style="width: 5%;">Sr.No.</th>
+                                                            <th style="width: 30%;">Type</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($data->inference_type) && !empty($data->inference_remarks))
+                                                            @php
+                                                                $inference_types = unserialize($data->inference_type);
+                                                                $inference_remarks = unserialize($data->inference_remarks);
+                                                            @endphp
+
+                                                            @foreach ($inference_types as $key => $inference_type)
+                                                                <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td>
+                                                                        @switch($inference_type)
+                                                                            @case('Measurement')
+                                                                                Measurement
+                                                                                @break
+                                                                            @case('Materials')
+                                                                                Materials
+                                                                                @break
+                                                                            @case('Methods')
+                                                                                Methods
+                                                                                @break
+                                                                            @case('Mother Environment')
+                                                                                Mother Environment
+                                                                                @break
+                                                                            @case('Man')
+                                                                                Man
+                                                                                @break
+                                                                            @case('Machine')
+                                                                                Machine
+                                                                                @break
+                                                                            @default
+                                                                                N/A
+                                                                        @endswitch
+                                                                    </td>
+                                                                    <td>{{ $inference_remarks[$key] ?? 'No remarks provided' }}</td>
+                                                                </tr>
+                                                            @endforeach
+                                                        @else
+                                                            <tr>
+                                                                <td colspan="3">No  data available.</td>
+                                                            </tr>
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br>
+
 
 
                       
@@ -3827,7 +3955,7 @@
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
-                                        <th class="thFMEA">RPN</th>
+                                        <th class="thFMEA">Risk Level(RPN)</th>
                                         <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
                                         <th class="thFMEA">Risk Acceptance (Y/N)</th>
                                         <!-- <th class="thFMEA">Others</th>
@@ -4694,18 +4822,18 @@
                                     <tr class="table_bg">
                                         <th class="thFMEA">Activity</th>
                                         <th class="thFMEA">Possible Risk/Failure (Identified Risk)</th>
-                                        <th class="thFMEA">SConsequences of Risk/Potential Causes</th>
+                                        <th class="thFMEA">Consequences of Risk/Potential Causes</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
                                         <th class="thFMEA">Risk Level (RPN)</th>
                                         
-                                        <th class="thFMEA">Control Measures</th>
-                                        <th class="thFMEA">Risk Level(RPN)</th>
+                                        <th class="thFMEA">Control Measures recommended/ Risk mitigation proposed</th>
                                         <th class="thFMEA">Severity (S)</th>
                                         <th class="thFMEA">Probability (P)</th>
                                         <th class="thFMEA">Detection (D)</th>
-                                        <th class="thFMEA">Risk Level</th>
+                                        <th class="thFMEA">Risk Level(RPN)</th>
+                                        <th class="thFMEA">Category of Risk Level (Low, Medium and High)</th>
                                         <th class="thFMEA">Risk Acceptance (Y/N)</th>
                                         <th class="thFMEA">Traceability Document</th>
                                     </tr>
@@ -4724,10 +4852,11 @@
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}</td>
-                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null }}</td>
+                                                <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}</td>
+                                                
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null }}</td>
                                                 <td class="tdFMEA">{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}</td>
@@ -5449,21 +5578,7 @@
 
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 
