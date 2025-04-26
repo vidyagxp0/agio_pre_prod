@@ -2594,57 +2594,9 @@
                         <!-- QA Initial reVIEW -->
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
-                                @if ($data->stage == 3)
-                                    <!-- <div class="row">
-
-                                        <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
+                                <div class="row">
+                                     <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                             <div class="group-input input-date">
-
-                                                @if ($data->stage == 3)
-                                                    <label for="Deviation category">Initial Deviation category <span
-                                                            class="text-danger">*</span></label>
-                                                    <select id="Deviation_category"
-                                                        name="Deviation_category"  {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        value="{{ $data->Deviation_category }}"
-                                                        onchange="handleDeviationCategoryChange()" required>
-                                                        <option value="0">-- Select --</option>
-                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
-                                                            value="minor">Minor</option>
-                                                        <option @if ($data->Deviation_category == 'major') selected @endif
-                                                            value="major">Major</option>
-                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
-                                                            value="critical">Critical</option>
-                                                    </select>
-                                                @else
-                                                    <label for="Deviation category">Initial Deviation category</label>
-                                                    <select id="Deviation_category"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                        onchange="handleDeviationCategoryChange()"
-                                                        value="{{ $data->Deviation_category }}">
-                                                        <option value="0">-- Select --</option>
-                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
-                                                            value="minor">Minor</option>
-                                                        <option @if ($data->Deviation_category == 'major') selected @endif
-                                                            value="major">Major</option>
-                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
-                                                            value="critical">Critical</option>
-                                                    </select>
-                                                @endif
-
-                                                @error('Deviation_category')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div> -->
-
-
-
-
-                                        <div class="row">
-
-                                        <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
-                                            <div class="group-input input-date">
-
                                                 @if ($data->stage == 3)
                                                     <label for="Deviation category">Initial Deviation category <span
                                                             class="text-danger">*</span></label>
@@ -2681,19 +2633,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                @endif
-
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Capa Required">CAPA Required? <span class="text-danger">*</span></label>
-                                        <select name="capa_required" id="capa_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                            <option value="select">-- Select --</option>
-                                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
-                                            <option @if ($data->capa_required == 'no') selected @endif value='no'>No</option>
-                                        </select>
-                                        <input type="hidden" name="hidden_capa" id="hidden_capa" value="{{ $data->capa_required }}">
-                                    </div>
-                                </div> --}}
+                                
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function() {
                                         function toggleCapaButton() {
@@ -2714,19 +2654,21 @@
                                         document.getElementById('capa_required').addEventListener('change', toggleCapaButton);
                                     });
                                 </script>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Capa Required">CAPA Required? @if ($data->stage == 3)
-                                                    <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
-                                                   @endif</label>
-                                            <select name="capa_required" id="capa_required"  class="stage-control3" data-stage="{{$data->stage}}">
-                                                <option value="select">-- Select --</option>
-                                                <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
-                                                <option @if ($data->capa_required == 'no') selected @endif value='no'>No</option>
-                                            </select>
-                                            <input type="hidden" name="hidden_capa" id="hidden_capa" value="{{ $data->capa_required }}">
-                                        </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Capa Required">CAPA Required? @if ($data->stage == 3)
+                                                <span class="text-danger">*</span>  <!-- Show only in Stage 2 -->
+                                            @endif</label>
+                                        <select name="capa_required" id="capa_required"  class="stage-control3" data-stage="{{$data->stage}}">
+                                            <option value="select">-- Select --</option>
+                                            <option @if ($data->capa_required == 'yes') selected @endif value='yes'>Yes</option>
+                                            <option @if ($data->capa_required == 'no') selected @endif value='no'>No</option>
+                                        </select>
+                                        <input type="hidden" name="hidden_capa" id="hidden_capa" value="{{ $data->capa_required }}">
                                     </div>
+                                </div>
+
                                     <script>
                                         document.addEventListener("DOMContentLoaded", function () {
                                             let fields = document.querySelectorAll(".stage-control3"); // Get all select fields with class "stage-control"
@@ -2744,21 +2686,7 @@
                                     </script>
 
                                     <!-- The CAPA button -->
-
-
-
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="QRM Required">QRM Required? <span class="text-danger">*</span></label>
-                                        <select name="qrm_required" id="qrm_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                            <option value="select">-- Select --</option>
-                                            <option @if ($data->qrm_required == 'yes') selected @endif value='yes'>Yes</option>
-                                            <option @if ($data->qrm_required == 'no') selected @endif value='no'>No</option>
-                                        </select>
-                                        <input type="hidden" name="hidden_qrm" id="hidden_qrm" value="{{ $data->qrm_required }}">
-                                    </div>
-                                </div> --}}
-
+                                     
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function() {
                                         function toggleQrmButton() {
@@ -2801,17 +2729,7 @@
                                 <!-- The QRM button -->
 
 
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Investigation_required">Investigation Required? <span class="text-danger">*</span></label>
-                                        <select name="Investigation_required" id="Investigation_required" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}>
-                                            <option value="select">-- Select --</option>
-                                            <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>Yes</option>
-                                            <option @if ($data->Investigation_required == 'no') selected @endif value='no'>No</option>
-                                        </select>
-                                        <input type="hidden" name="hidden_investigation" id="hidden_investigation" value="{{ $data->Investigation_required }}">
-                                    </div>
-                                </div> --}}
+
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function() {
                                         // Get the select element and button element
@@ -2858,9 +2776,6 @@
                                     @enderror
                                 </div>
 
-
-                                @if ($data->stage == 3)
-
                                     @if ($data->stage == 3)
                                         <div class="col-md-12">
                                             <div class="group-input">
@@ -2880,7 +2795,7 @@
                                                     categorization</label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea class="tiny Justification_for_categorization"
+                                                <textarea class="stage-control3"
                                                     name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
                                                     id="summernote-5">{{ $data->Justification_for_categorization }}</textarea>
                                             </div>
@@ -2890,22 +2805,37 @@
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
 
-
+                                @if ($data->stage == 3)
                                     <div class="col-md-12">
                                         <div class="group-input">
                                             <label for="QAInitialRemark">QA/CQA Initial Assessment Comment<span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
-                                            <textarea @if ($data->stage == 3) required @endif class="summernote QAInitialRemark"
+                                            <textarea  required class="summernote QAInitialRemark"
                                                 name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
                                         </div>
                                         @error('QAInitialRemark')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                @else
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="QAInitialRemark">QA/CQA Initial Assessment Comment</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it
+                                                    does not require completion</small></div>
+                                            <textarea  class="stage-control3"
+                                                name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
+                                        </div>
+                                        @error('QAInitialRemark')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                @endif   
 
-                                        <div class="col-12">
+
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial_attachment">QA/CQA initial Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -3002,317 +2932,13 @@
                                         }
                                     }
                                 </script>
-                                    {{-- <div class="col-md-12">
-                                        <div class="group-input">
-                                            <label for="Immediate Action">Cancellation</label>
-
-                                            <textarea class="tiny" name="CancellationQA[]" {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                id="summernote-2">{{ $data->CancellationQA }}</textarea>
-                                        </div>
-
-                                    </div> --}}
-                            </div>
-                        @else
-                            <!-- <div class="row">
-                                <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
-                                    <div class="group-input input-date">
-                                        @if ($data->stage == 3)
-                                            <label for="Deviation category">Initial Deviation category <span
-                                                    class="text-danger">*</span></label>
-                                            <select disabled id="Deviation_category"
-                                                name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_category }}">
-                                                <option value="0">-- Select --</option>
-                                                <option @if ($data->Deviation_category == 'minor') selected @endif
-                                                    value="minor">
-                                                    Minor</option>
-                                                <option @if ($data->Deviation_category == 'major') selected @endif
-                                                    value="major">
-                                                    Major</option>
-                                                <option @if ($data->Deviation_category == 'critical') selected @endif
-                                                    value="critical">Critical</option>
-                                            </select>
-                                        @else
-                                            <div class="group-input">
-                                                <label for="Deviation category">Initial Deviation category</label>
-                                                <select disabled id="Deviation_category"
-                                                    name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_category }}">
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data->Deviation_category == 'minor') selected @endif
-                                                        value="minor">Minor</option>
-                                                    <option @if ($data->Deviation_category == 'major') selected @endif
-                                                        value="major">Major</option>
-                                                    <option @if ($data->Deviation_category == 'critical') selected @endif
-                                                        value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        @endif
-                                        @error('Deviation_category')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div> -->
-
-
-
-
-                                <div class="row">
-                                <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
-                                    <div class="group-input input-date">
-                                        @if ($data->stage == 3)
-                                            <label for="Deviation category">Initial Deviation category <span
-                                                    class="text-danger">*</span></label>
-                                            <select disabled id="Deviation_category123"
-                                                name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_category }}">
-                                                <option value="0">-- Select --</option>
-                                                <option @if ($data->Deviation_category == 'minor') selected @endif
-                                                    value="minor">
-                                                    Minor</option>
-                                                <option @if ($data->Deviation_category == 'major') selected @endif
-                                                    value="major">
-                                                    Major</option>
-                                                <option @if ($data->Deviation_category == 'critical') selected @endif
-                                                    value="critical">Critical</option>
-                                            </select>
-                                        @else
-                                            <div class="group-input">
-                                                <label for="Deviation category">Initial Deviation category</label>
-                                                <select disabled id="Deviation_category123"
-                                                    name="Deviation_category"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_category }}">
-                                                    <option value="0">-- Select --</option>
-                                                    <option @if ($data->Deviation_category == 'minor') selected @endif
-                                                        value="minor">Minor</option>
-                                                    <option @if ($data->Deviation_category == 'major') selected @endif
-                                                        value="major">Major</option>
-                                                    <option @if ($data->Deviation_category == 'critical') selected @endif
-                                                        value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        @endif
-                                        @error('Deviation_category')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Justification for  categorization">Justification for
-                                            categorization</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea disabled class="tiny"
-                                            name="Justification_for_categorization"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            id="summernote-5">{{ $data->Justification_for_categorization }}</textarea>
-                                    </div>
-                                    @error('Justification_for_categorization')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                {{-- <div class="col-lg-12">
-                                    <div class="group-input">
-                                        <label for="Investigation required">Investigation Required?</label>
-                                        <select disabled name="Investigation_required" id="Investigation_required"
-                                            value="{{ $data->Investigation_required }}">
-                                            <option value="0">-- Select --</option>
-                                            <option @if ($data->Investigation_required == 'yes') selected @endif value='yes'>Yes
-                                            </option>
-                                            <option @if ($data->Investigation_required == 'no') selected @endif value='no'>No
-                                            </option>
-                                        </select>
-                                        @error('Investigation_required')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div> --}}
-                                {{-- <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="Investigation Details">Investigation Details <span
-                                                id="asteriskInviinvestication" style="display: none"
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea disabled class="summernote Investigation_Details"
-                                            name="Investigation_Details"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                            class="Investigation_Details" id="summernote-6">{{ $data->Investigation_Details }}</textarea>
-                                        @error('Investigation_Details')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                        <script>
-                                            document.addEventListener('DOMContentLoaded', function() {
-                                                var selectField = document.getElementById('Investigation_required');
-                                                var inputsToToggle = [];
-
-                                                // Add elements with class 'facility-name' to inputsToToggle
-                                                // var facilityNameInputs = document.getElementsByClassName('Investigation_Details');
-                                                // for (var i = 0; i < facilityNameInputs.length; i++) {
-                                                //     inputsToToggle.push(facilityNameInputs[i]);
-                                                // }
-
-
-                                                selectField.addEventListener('change', function() {
-                                                    var isRequired = this.value === 'yes';
-
-                                                    // inputsToToggle.forEach(function (input) {
-                                                    //     input.required = isRequired;
-                                                    //     console.log(input.required, isRequired, 'input req');
-                                                    // });
-
-                                                    // Show or hide the asterisk icon based on the selected value
-                                                    var asteriskIcon = document.getElementById('asteriskInviinvestication');
-                                                    asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                                });
-                                            });
-                                        </script>
-                                    </div>
-                                </div> --}}
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="QAInitialRemark">QA/CQA Initial Assessment Comment</label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea readonly class="tiny"
-                                            name="QAInitialRemark"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }} id="summernote-6">{{ $data->QAInitialRemark }}</textarea>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="QA Initial Attachments">QA Initial Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div disabled class="file-attachment-list" id="Initial_attachment">
-                                                @if ($data->Initial_attachment)
-                                                    @foreach (json_decode($data->Initial_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark"
-                                                            style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                    class="fa fa-eye text-primary"
-                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
-                                                                    class="fa-solid fa-circle-xmark"
-                                                                    style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input disabled type="file" id="myfile"
-                                                    name="Initial_attachment[]"{{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                    <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Initial_attachment">QA/CQA Initial Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Initial_attachment">
-                                                @if ($data->Initial_attachment)
-                                                    @foreach(json_decode($data->Initial_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank">
-                                                                <i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>
-                                                            </a>
-                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}">
-                                                                <i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>
-                                                            </a>
-                                                            <input type="hidden" name="existing_Initial_attachment[]" value="{{ $file }}">
-                                                        </h6>
-                                                    @endforeach
-                                                @endif
-                                            </div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="Initial_attachment[]"
-                                                {{ $data->stage == 0 || $data->stage == 12 ? 'disabled' : '' }}
-                                                    oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Hidden field to keep track of files to be deleted -->
-                                {{-- <input type="hidden" id="deleted_Initial_attachment" name="deleted_Initial_attachment" value="">
-
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const removeButtons = document.querySelectorAll('.remove-file');
-
-                                        removeButtons.forEach(button => {
-                                            button.addEventListener('click', function() {
-                                                const fileName = this.getAttribute('data-file-name');
-                                                const fileContainer = this.closest('.file-container');
-
-                                                // Hide the file container
-                                                if (fileContainer) {
-                                                    fileContainer.style.display = 'none';
-                                                    // Remove hidden input associated with this file
-                                                    const hiddenInput = fileContainer.querySelector('input[type="hidden"]');
-                                                    if (hiddenInput) {
-                                                        hiddenInput.remove();
-                                                    }
-
-                                                    // Add the file name to the deleted files list
-                                                    const deletedFilesInput = document.getElementById('deleted_Initial_attachment');
-                                                    let deletedFiles = deletedFilesInput.value ? deletedFilesInput.value.split(',') : [];
-                                                    deletedFiles.push(fileName);
-                                                    deletedFilesInput.value = deletedFiles.join(',');
-                                                }
-                                            });
-                                        });
-                                    });
-
-                                    function addMultipleFiles(input, id) {
-                                        const fileListContainer = document.getElementById(id);
-                                        const files = input.files;
-
-                                        for (let i = 0; i < files.length; i++) {
-                                            const file = files[i];
-                                            const fileName = file.name;
-                                            const fileContainer = document.createElement('h6');
-                                            fileContainer.classList.add('file-container', 'text-dark');
-                                            fileContainer.style.backgroundColor = 'rgb(243, 242, 240)';
-
-                                            const fileText = document.createElement('b');
-                                            fileText.textContent = fileName;
-
-                                            const viewLink = document.createElement('a');
-                                            viewLink.href = '#'; // You might need to adjust this to handle local previews
-                                            viewLink.target = '_blank';
-                                            viewLink.innerHTML = '<i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i>';
-
-                                            const removeLink = document.createElement('a');
-                                            removeLink.classList.add('remove-file');
-                                            removeLink.dataset.fileName = fileName;
-                                            removeLink.innerHTML = '<i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i>';
-                                            removeLink.addEventListener('click', function() {
-                                                fileContainer.style.display = 'none';
-                                            });
-
-                                            fileContainer.appendChild(fileText);
-                                            fileContainer.appendChild(viewLink);
-                                            fileContainer.appendChild(removeLink);
-
-                                            fileListContainer.appendChild(fileContainer);
-                                        }
-                                    }
-                                </script> --}}
-
-
 
                             </div>
-                            @endif
+
+                            <h3 style="font-size: 15px; color: #333; margin-bottom: 20px">
+                                <span style="font-weight: bold; color: red;">Note: </span>
+                                <span>Please fill up both QA/CQA Initial Assessment Tab and CFT Review Tab value to save the form.</span>
+                            </h3>
 
                             <div class="button-block">
                                 <button style=" justify-content: center; width: 4rem; margin-left: 1px;;"
@@ -8123,7 +7749,7 @@
                                         <div class="group-input">
                                             <label for="Contract Giver assessment">Impact Assessment (By Contract Giver)
                                                 <span id="asteriskPT1" class="text-danger"
-                                                    style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"></span></label>
+                                                    style="display: {{ $data1->ContractGiver_Review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea @if ($data1->ContractGiver_Review == 'yes' && $data->stage == 4) required @endif class="summernote ContractGiver_assessment"
@@ -12180,7 +11806,7 @@
             <div class="col-12 mb-4" id="fmea-section">
             <div class="group-input">
                 <label for="agenda">
-                    Failure Mode and Effect Analysis <span  id="fmea-required" class="text-danger" style="display: none;">*</span>
+                    Failure Mode and Effect Analysis <span  id="fmea-required" class="text-danger">*</span>
                     <button type="button" name="agenda" onclick="addRiskAssessmentdata('risk-assessment-risk-management')" {{ $data->stage == 7 ? '' : 'disabled' }}>+</button>
     
                 </label>

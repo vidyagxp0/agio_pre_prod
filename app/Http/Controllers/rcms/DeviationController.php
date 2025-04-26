@@ -10559,13 +10559,13 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         'ContractGiver_person',
                         'Environment_Health_Safety_person',
                         'Human_Resource_person',
-                        'CorporateQualityAssurance_person',
+                        'CorporateQualityAssurance_person'
                     ];
 
     
                     $userIds = [];
                     foreach ($columns as $field) {
-                        if (!empty($getCftData->$field) && is_numeric($getCftData->$field)) {
+                        if (!empty($getCftData->$field)) {
                             $userIds[] = $getCftData->$field;
                         }
                     }
@@ -10689,7 +10689,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                     //     ]);
                     // }
 
-                    $userId = Auth::id();
+                    $userId = Auth::user()->name;
                     $userAssignments = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
                     $incompleteFields = [];
 
@@ -10745,8 +10745,8 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
                         $incompleteFields[] = 'Human Resourcec Assessment';
                     }
                     
-                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->Other1_assessment)) {
-                        $incompleteFields[] = 'Others assessment';
+                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
+                        $incompleteFields[] = 'ContractGiver Assessment';
                     }
                     
                     
@@ -11754,6 +11754,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                                 $errors[] = 'Please specify details for "Others" Investigation Approach.';
                             }
 
+                        if ($deviation->Investigation_required == 'Yes'){
                             if (
                                 (empty($deviation->Discription_Event) && empty($changeControl->objective)
                                 && empty($deviation->scope) && empty($deviation->imidiate_action)
@@ -11766,32 +11767,36 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                                 ]);
                                 return redirect()->back();
                             
-                   } else {
-                       Session::flash('swal', [
-                           'type' => 'success',
-                           'title' => 'Success',
-                           'message' => 'Sent for HOD Final Review state'
-                       ]);
-                   }
+                            } else {
+                                Session::flash('swal', [
+                                    'type' => 'success',
+                                    'title' => 'Success',
+                                    'message' => 'Sent for HOD Final Review state'
+                                ]);
+                            }
+                        }
 
-                   $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+                $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
+
+                if ($deviation->qrm_required == 'Yes') {
+
+                    $riskData = $riskEffectAnalysis ? unserialize($riskEffectAnalysis->initial_detectability) : [];
+                    if (empty($riskData))  {
+                        Session::flash('swal', [
+                            'title' => 'Mandatory Fields Required!',
+                            'message' => 'QRM tab is yet to be filled!',
+                            'type' => 'warning',
+                        ]);
+                        return redirect()->back();
+                    } else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for HOD Final Review state'
+                        ]);
+                    }
+                }
                 
-                   if (empty($riskEffectAnalysis->risk_factor)) {
-
-                      Session::flash('swal', [
-                          'title' => 'Mandatory Fields Required!',
-                          'message' => 'QRM tab is yet to be filled!',
-                          'type' => 'warning',
-                      ]);
-
-                      return redirect()->back();
-                  } else {
-                      Session::flash('swal', [
-                          'type' => 'success',
-                          'title' => 'Success',
-                          'message' => 'Sent for HOD Final Review state'
-                      ]);
-                  }
                 //   dd($deviation->capa_root_cause);
                 if($deviation->capa_required == 'yes'){
                   if (empty($deviation->capa_root_cause)) {
@@ -11812,24 +11817,24 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
                  }
                 }
                     // for QRM tab 
-                    if($deviation->qrm_required == 'yes'){
-                if(empty($deviation->Immediate_Action_Take) ) {
+                
+                    // if(empty($deviation->Immediate_Action_Take) ) {
 
-                    Session::flash('swal', [
-                        'title' => 'Mandatory Fields Required!',
-                        'message' => 'QRM tab is yet to be filled!',
-                        'type' => 'warning',
-                    ]);
+                    //     Session::flash('swal', [
+                    //         'title' => 'Mandatory Fields Required!',
+                    //         'message' => 'QRM tab is yet to be filled!',
+                    //         'type' => 'warning',
+                    //     ]);
 
-                    return redirect()->back();
-                } else {
-                    Session::flash('swal', [
-                        'type' => 'success',
-                        'title' => 'Success',
-                        'message' => 'Sent for HOD Final Review state'
-                    ]);
-                }
-            }
+                    //     return redirect()->back();
+                    // } else {
+                    //     Session::flash('swal', [
+                    //         'type' => 'success',
+                    //         'title' => 'Success',
+                    //         'message' => 'Sent for HOD Final Review state'
+                    //     ]);
+                    // }
+                
 
                     if (!$deviation->Pending_initiator_update) {
 
@@ -12812,10 +12817,10 @@ public function audit_trail_filter(Request $request, $id)
 
             $whyData = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
             $why_data = json_decode($whyData->data, true);
-      //  $riskEffectAnalysis_1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
+            //  $riskEffectAnalysis_1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->first();
             $riskEffectAnalysis = DeviationGrid::where('deviation_grid_id', $id)->where('type', "effect_analysis")->latest()->first();
 
-//dd($riskEffectAnalysis);
+            //dd($riskEffectAnalysis);
             $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
             $qrmExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "QRM"])->first();
             $investigationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Investigation"])->first();
@@ -12829,7 +12834,7 @@ public function audit_trail_filter(Request $request, $id)
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
 
-           //   dd($riskEffectAnalysis);
+            //   dd($riskEffectAnalysis);
             // foreach($investigation_data as $invest)
             // {
             //     return $invest;
