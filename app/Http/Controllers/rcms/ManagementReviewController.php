@@ -8823,6 +8823,77 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                     //     ]);
                     // }
 
+                    $userId = Auth::user()->name;
+                    $userAssignments = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
+                    $incompleteFields = [];
+
+                    if ($userAssignments->Production_Table_Person == $userId && empty($userAssignments->Production_Table_Assessment)) {
+                        $incompleteFields[] = 'Production Table Assessment';
+                    }
+
+                    if ($userAssignments->Production_Injection_Person == $userId && empty($userAssignments->Production_Injection_Assessment)) {
+                        $incompleteFields[] = 'Production Injection Assessment';
+                    }
+
+                    if ($userAssignments->ResearchDevelopment_person == $userId && empty($userAssignments->ResearchDevelopment_assessment)) {
+                        $incompleteFields[] = 'Research Development Assessment';
+                    }
+
+                    if ($userAssignments->Store_person == $userId && empty($userAssignments->Store_assessment)) {
+                        $incompleteFields[] = 'Store assessment';
+                    }
+
+                    if ($userAssignments->Quality_Control_Person == $userId && empty($userAssignments->Quality_Control_assessment)) {
+                        $incompleteFields[] = 'Quality Control assessment';
+                    }
+
+                    if ($userAssignments->QualityAssurance_person == $userId && empty($userAssignments->QualityAssurance_assessment)) {
+                        $incompleteFields[] = 'Quality Assurance assessment';
+                    }
+
+                    if ($userAssignments->CorporateQualityAssurance_person == $userId && empty($userAssignments->CorporateQualityAssurance_assessment)) {
+                        $incompleteFields[] = 'Corporate Quality Assurance Assessment';
+                    }
+
+                    if ($userAssignments->RegulatoryAffair_person == $userId && empty($userAssignments->RegulatoryAffair_assessment)) {
+                        $incompleteFields[] = 'RegulatoryAffair assessment';
+                    }
+
+                    if ($userAssignments->ProductionLiquid_person == $userId && empty($userAssignments->ProductionLiquid_assessment)) {
+                        $incompleteFields[] = 'ProductionLiquid assessment';
+                    }
+
+                    if ($userAssignments->Microbiology_person == $userId && empty($userAssignments->Microbiology_assessment)) {
+                        $incompleteFields[] = 'Microbiology assessment';
+                    }
+
+                    if ($userAssignments->Engineering_person == $userId && empty($userAssignments->Engineering_assessment)) {
+                        $incompleteFields[] ='Engineering assessment';
+                    }
+
+                    if ($userAssignments->Environment_Health_Safety_person == $userId && empty($userAssignments->Health_Safety_assessment)) {
+                        $incompleteFields[] = 'Health Safety assessment';
+                    }
+
+                    if ($userAssignments->Human_Resource_person == $userId && empty($userAssignments->Human_Resource_assessment)) {
+                        $incompleteFields[] = 'Human Resourcec Assessment';
+                    }
+
+                    if ($userAssignments->ContractGiver_person == $userId && empty($userAssignments->ContractGiver_assessment)) {
+                        $incompleteFields[] = 'ContractGiver Assessment';
+                    }
+
+
+                    if (!empty($incompleteFields)) {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'You must fill your assigned fields for: ' . implode(', ', $incompleteFields) . '.'
+                        ]);
+                        return redirect()->back();
+                    }
+                    else{
+                    
 
                     $IsCFTRequired = managementCft_Response::withoutTrashed()->where(['is_required' => 1, 'ManagementReview_id' => $id])->latest()->first();
                     $cftUsers = DB::table('management_cfts')->where(['ManagementReview_id' => $id])->first();
@@ -9562,8 +9633,12 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
                         $changeControl->update();
                     }
                     //toastr()->success('Document Sent');
-                    return back();
-                }
+                //     return back();
+                // }
+            }
+            toastr()->success('Document Sent');
+            return back();
+        }
 
             // if ($changeControl->stage == 4) {
             //     $changeControl->stage = "5";
