@@ -57,7 +57,7 @@ Route::group(['prefix' => 'rcms'], function () {
     // Route::middleware(['rcms'])->group(
         Route::middleware(['rcms', 'active-account'])->group(
         function () {
-            
+
             Route::post('job_trainer_send/{id}', [JobTrainingController::class, 'sendStage']);
             Route::get('traineraudittrail/{id}', [TrainerController::class, 'trainerAuditTrial'])->name('trainer.audittrail');
             Route::get('trainer_report/{id}', [TrainerController::class, 'trainerReport'])->name('trainer_report');
@@ -157,6 +157,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('internalAuditShow/{id}', [InternalauditController::class, 'internalAuditShow'])->name('showInternalAudit');
             Route::post('update/{id}', [InternalauditController::class, 'update'])->name('updateInternalAudit');
             Route::post('InternalAuditStateChange/{id}', [InternalauditController::class, 'InternalAuditStateChange'])->name('AuditStateChange');
+            Route::post('InternalAuditStateChangeLeadAuditor/{id}', [InternalauditController::class, 'InternalAuditStateChangeLeadAuditor'])->name('AuditStateChangeLeadAuditor');
             Route::get('InternalAuditTrialShow/{id}', [InternalauditController::class, 'InternalAuditTrialShow'])->name('ShowInternalAuditTrial');
             Route::get('InternalAuditTrialDetails/{id}', [InternalauditController::class, 'InternalAuditTrialDetails'])->name('showaudittrialinternalaudit');
             Route::get('internalObservationSingleReport/{id}', [InternalauditController::class, 'observationSingleReport']);
@@ -434,7 +435,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
                 Route::post('MarketComplaintC_AChild/{id}', [MarketComplaintController::class, 'MarketComplaintCapa_ActionChild'])->name('capa_action_child');
                 Route::post('marketCompalinExtensionChild/{id}', [MarketComplaintController::class, 'MarketCompalinExtensionChild'])->name('marketCompalinExtensionChild');
-               
+
                 Route::post('MarketComplaintRCA_ActionChild/{id}', [MarketComplaintController::class, 'MarketComplaintRca_actionChild'])->name('rca_action_child');
                 Route::post('MarketComplaintRegul_Effec_Child/{id}', [MarketComplaintController::class, 'MarketComplaintRegu_Effec_Child'])->name('Regu_Effec_child');
                 Route::get('acknoledgment_report/{id}',[MarketComplaintController::class,'AcknoledgmentReport'])->name('acknoledgment_report');
@@ -480,7 +481,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('LabIncidentStateCancel/{id}', [LabIncidentController::class, 'LabIncidentStateCancel'])->name('StageChangeLabcancel');
             Route::post('traning_required/{id}', [CCController::class, 'TrainingRequired'])->name('traning_required');
             Route::get('/get-training-details/{id}', [CCController::class, 'DocumentsDetails']);
-            
+
 
         }
     );

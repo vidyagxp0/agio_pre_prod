@@ -411,8 +411,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
+
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
@@ -430,40 +429,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
                             @php
-                                // Default to not editable
-                                $isCommentEditable = false;
+                            // Default to not editable
+                            $isCommentEditable = false;
 
-                                // Check all conditions
-                                if (
-                                    $data->stage == 2 &&
-                                    !empty($auditorview->data) &&
-                                    is_iterable($auditorview->data)
-                                ) {
-                                    foreach ($auditorview->data as $audditor) {
-                                        if (
-                                            isset($audditor['auditornew'], $audditor['designation']) &&
-                                            $audditor['auditornew'] == Auth::user()->id &&
-                                            $audditor['designation'] === 'Lead Auditor'
-                                        ) {
-                                            $isCommentEditable = true;
-                                            break;
-                                        }
+                            // Check stage and data
+                            if (
+                                $data->stage == 2 &&
+                                !empty($auditorview->data) &&
+                                is_iterable($auditorview->data)
+                            ) {
+                                foreach ($auditorview->data as $audditor) {
+                                    if (
+                                        isset($audditor['auditornew'], $audditor['designation']) &&
+                                        $audditor['auditornew'] == Auth::user()->id &&
+                                        $audditor['designation'] === 'Lead Auditor'
+                                    ) {
+                                        $isCommentEditable = true;
+                                        break;
                                     }
                                 }
-                                 $responseData = DB::table('internal_audit_signature_check')->where('ia_id', $data->id)->latest()->first();
-                                 dd($isCommentEditable , !$responseData , $responseData->person_role , "Lead Auditor" , $responseData->person_role , "Complete" ,Auth::user()->name == $data->assign_to , !$responseData , $responseData->person_role , "Lead Auditor" , $responseData->person_role , "Complete");
-                                 <!-- $responseData = DB::table('internal_audit_signature_check')->where('ia_id', $data->id)->latest()->first(); -->
-                            @endphp
-                            @if($isCommentEditable && (!$responseData || $responseData->person_role == "Lead Auditor" && $responseData->person_role != "Complete"))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledement by Lead Auditor
+                            }
+                            // Get latest signature data
+                            $responseData = DB::table('internal_audit_signature_check')
+                            ->where('ia_id', $data->id)
+                            ->orderBy('id', 'desc')
+                            ->first();
+
+                            // Safely extract role if exists
+                            $personRole = $responseData->person_role ?? null;
+                        @endphp
+
+                        {{-- Button for Lead Auditor --}}
+                        @if($isCommentEditable && (!$personRole || $personRole != "Lead Auditor"))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal222">
+                                Acknowledgement by Lead Auditor
                             </button>
-                            @endif
-                            @if(Auth::user()->name == $data->assign_to && (!$responseData || $responseData->person_role == "Auditee" && $responseData->person_role != "Complete"))
+                        @endif
+
+                        {{-- Button for Auditee --}}
+                        @if(Auth::user()->id == $data->assign_to && (!$personRole || $personRole != "Auditee"))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledement by Auditee
+                                Acknowledgement by Auditee
                             </button>
-                            @endif
+                        @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
                             </button>
@@ -776,7 +784,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 <div class="calenderauditee">
                                                     <input disabled type="text" id="due_date" readonly
                                                         placeholder="DD-MM-YYYY"
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 2 ? 'disabled' : '' }} required
                                                         />
                                                     <input type="date" name="due_date"
@@ -1168,7 +1176,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 <select @if ($data->stage != 1) disabled @endif required
                                                     name="initiated_through"
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')"
-                                                      
+
                                                     >
                                                     <option value="">-- select --</option>
 
@@ -1316,7 +1324,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         </select>
                                                                        </td>
                                                                         <td>
-                                                                            <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select auditor-designation" 
+                                                                            <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select auditor-designation"
                                                                                 data-index="{{ $loop->index }}"
                                                                                 @if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">--Select--</option>
@@ -1397,7 +1405,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div id="CCForm29" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        
+
 
                                         <div class="col-md-12">
                                             <div class="group-input">
@@ -3055,7 +3063,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         <option value="Critical" {{ isset($item['category']) && $item['category'] == 'Critical' ? 'selected' : '' }}>Critical</option>
                                                                     </select>
                                                                 </td>
-                                                                <td> 
+                                                                <td>
                                                                     <textarea name="observations[{{ $loop->index }}][remarks]" {{$data->stage == 3 ? 'required' : 'readonly'}}>{{ isset($item['remarks']) ? $item['remarks'] : '' }}</textarea>
                                                                 </td>
                                                                 <td>
@@ -3168,7 +3176,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <div class="row">
                                     <div class="sub-head">
                                         Audit Response
-                                    </div>  
+                                    </div>
                                         <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
@@ -15145,6 +15153,52 @@ document.addEventListener("DOMContentLoaded", function () {
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <form action="{{ route('AuditStateChange', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment </label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+
+                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                        <button>Close</button>
+                                    </div>-->
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="signature-modal222">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('AuditStateChangeLeadAuditor', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
