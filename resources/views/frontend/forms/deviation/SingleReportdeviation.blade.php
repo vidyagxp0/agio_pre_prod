@@ -3661,8 +3661,8 @@
 <table style="width: 70%; border-collapse: collapse; text-align: left;">
     <thead>
         <tr style="color: #007bff;">
-            <th style="padding: 10px; border: 1px solid #ddd;">Environment</th>
-            <th style="padding: 10px; border: 1px solid #ddd;">Manpower</th>
+            <th style="padding: 10px; border: 1px solid #ddd;">Mother Environment</th>
+            <th style="padding: 10px; border: 1px solid #ddd;">Man</th>
             <th style="padding: 10px; border: 1px solid #ddd;">Machine</th>
         </tr>
     </thead>

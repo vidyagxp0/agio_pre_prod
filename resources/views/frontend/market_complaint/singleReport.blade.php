@@ -349,7 +349,7 @@
 
 
                     <tr>
-                        <th class="w-20 align-top">Phase IB Summary</th>
+                        <th class="w-20 align-top">Details of Nature of Market Complaint</th>
                         <td class="w-80" colspan="3">
                             @if ($data->details_of_nature_market_complaint_gi)
                                 <div class="summernote-content table-responsive" style="overflow-x: auto;">
@@ -686,7 +686,7 @@
                         <th class="w-10">Exp. Date</th>
                         <th class="w-10">Batch Size</th>
                         <th class="w-10">Pack Size</th>
-                        <th class="w-10">Dispatch Quantity</th>
+                        <th class="w-10">Released Quantity</th>
                         <th class="w-10">Remarks</th>
                     </tr>
 
@@ -1206,7 +1206,7 @@
                   
 
                     <tr>
-                        <th class="w-20 align-top">>Review of Equipment/Instrument qualification/Calibration Record</th>
+                        <th class="w-20 align-top">Review of Equipment/Instrument qualification/Calibration Record</th>
                         <td class="w-80" colspan="3">
                             @if ($data->rev_eq_inst_qual_calib_record_gi)
                                 <div class="summernote-content table-responsive" style="overflow-x: auto;">

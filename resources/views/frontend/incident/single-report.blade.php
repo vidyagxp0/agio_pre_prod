@@ -484,8 +484,8 @@
                             <thead>
                                 <tr class="table_bg">
                                     <th style="width: 4%">Sr. No.</th>
-                                    <th style="width: 16%">Document Name</th>
-                                    <th style="width: 12%">Document Number</th>
+                                    <th style="width: 16%">Document Number</th>
+                                    <th style="width: 12%">Document Name</th>
                                     <th style="width: 16%">Remarks</th>
 
                                     {{-- <th style="width: 8%">Action</th> --}}
@@ -496,12 +496,12 @@
                                 @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
-                                        <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}
 
-                                        </td>
-                                        <td>{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}
+                                        <td>{{ unserialize($grid_data1->Number)[$key] ? unserialize($grid_data1->Number)[$key] : '' }}</td>
 
-                                        </td>
+
+                                        <td>{{ unserialize($grid_data1->ReferenceDocumentName)[$key] ? unserialize($grid_data1->ReferenceDocumentName)[$key] : '' }}</td>
+
                                         <td>{{ unserialize($grid_data1->Document_Remarks)[$key] ? unserialize($grid_data1->Document_Remarks)[$key] : '' }}
 
                                         </td>
@@ -599,7 +599,7 @@
                         <th class="w-20">Description of Incident</th>
                         <td class="w-80">
                             @if ($data->Description_incident)
-                                {!! $data->Description_incident  !!}
+                                {{ strip_tags($data->Description_incident) }}
                             @else
                                 Not Applicable
                             @endif
@@ -611,7 +611,7 @@
                         <th class="w-20">Investigation</th>
                         <td class="w-80">
                             @if ($data->investigation)
-                                {{ $data->investigation }}
+                                {{ strip_tags($data->investigation) }}
                             @else
                                 Not Applicable
                             @endif

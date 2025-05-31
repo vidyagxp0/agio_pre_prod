@@ -189,7 +189,7 @@
         <div class="content-table">
             <div class="block">
                 <div class="block-head">
-                    Audit Observation Report Tab
+                    Audit Observation Report 
                 </div>
 
                 <div style="font-weight: 200">Internal Audit (Observations/Discrepancy)</div>

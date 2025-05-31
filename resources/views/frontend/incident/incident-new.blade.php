@@ -1,5 +1,12 @@
 @extends('frontend.layout.main')
 @section('container')
+
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+        type='text/css' />
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+    </script>
+
+
     @php
         $users = DB::table('users')->select('id', 'name')->get();
 
@@ -17,6 +24,18 @@ dd($pre);
 
         header {
             display: none;
+        }
+
+        #fr-logo {
+            display: none;
+        }
+
+        .fr-logo {
+            display: none;
+        }
+
+        .fr-quick-insert {
+            left: 150px !important;
         }
 
         .sub-main-head {
@@ -1816,7 +1835,7 @@ dd($pre);
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Description_incident" id="summernote-1" required> </textarea>
+                                        <textarea class="froala" name="Description_incident" id="summernote-1" required> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1827,7 +1846,7 @@ dd($pre);
                                         <label for="Description Incident">Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="investigation"  > </textarea>
+                                        <textarea class="froala" name="investigation"  > </textarea>
                                     </div>
                                     @error('investigation[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -4368,5 +4387,24 @@ dd($pre);
                 });
             });
         </script>
+
+        <script>
+            var editor = new FroalaEditor('.froala', {
+                key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+                imageUploadParam: 'image_param',
+                imageUploadMethod: 'POST',
+                imageMaxSize: 20 * 1024 * 1024,
+                imageUploadURL: "{{ secure_url('api/upload-files') }}",
+                fileUploadParam: 'image_param',
+                fileUploadURL: "{{ secure_url('api/upload-files')}}",
+                videoUploadParam: 'image_param',
+                videoUploadURL: "{{ secure_url('api/upload-files') }}",
+                videoMaxSize: 500 * 1024 * 1024,
+            });
+            
+            $(".froala-disabled").FroalaEditor("edit.off");
+        </script>
+
+
 
     @endsection

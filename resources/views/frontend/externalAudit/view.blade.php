@@ -816,7 +816,7 @@
                                                 </label>
                                                 <select name="external_agencies" id="external_agencies"
                                                     onchange="toggleField(this.value, 'others_field', 'others_textarea', 'others_asterisk')"
-                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} required>
+                                                    {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     <option value="Jordan FDA" {{ $data->external_agencies == 'Jordan FDA' ? 'selected' : '' }}>Jordan FDA</option>
                                                     <option value="USFDA" {{ $data->external_agencies == 'USFDA' ? 'selected' : '' }}>USFDA</option>

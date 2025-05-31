@@ -1,5 +1,12 @@
         @extends('frontend.layout.main')
         @section('container')
+
+        <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet'
+            type='text/css' />
+        <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'>
+        </script>
+
+
             @php
                 $users = DB::table('users')->select('id', 'name')->get();
             @endphp
@@ -11,6 +18,19 @@
                 header {
                     display: none;
                 }
+
+                #fr-logo {
+                    display: none;
+                }
+
+                .fr-logo {
+                    display: none;
+                }
+
+                .fr-quick-insert {
+                    left: 150px !important;
+                }
+
             </style>
             <style>
                 .hide-input {
@@ -1981,7 +2001,9 @@
                                                     <div class="group-input" id="productRow"
                                                         @if ($data->Product_Details_Required == 'no') style="display: none" @endif>
                                                         <label for="audit-agenda-grid">
-                                                            Product / Material Details
+                                                            Product / Material Details <span id="asteriskInviprod"
+                                                                style="display: {{ $data->Product_Details_Required == 'yes' ? 'inline' : 'none' }}"
+                                                                class="text-danger">*</span>
                                                             <button type="button" name="audit-agenda-grid"
                                                                 id="Product_Details" {{ $data->stage == 1 ? '' : 'disabled' }}>+</button>
                                                             {{-- <span class="text-primary" data-bs-toggle="modal"
@@ -2078,7 +2100,7 @@
 
                                                             // Show or hide the asterisk icon based on the selected value
                                                             document.getElementById('productRow').style.display = isRequired ? 'block' : 'none';
-                                                            var asteriskIcon = document.getElementById('asteriskInvidoc');
+                                                            var asteriskIcon = document.getElementById('asteriskInviprod');
                                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                                         });
                                                     });
@@ -2108,15 +2130,15 @@
                                                         <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                                     </div>
                                                     <textarea name="Description_incident"
-                                                            id="editor"
-                                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{!! $data->Description_incident !!}</textarea>
+                                                              class="froala"
+                                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Description_incident }}</textarea>
                                                 </div>
                                                 @error('Description_incident')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
 
-                                            <style>
+                                            <!-- <style>
                                                 .ck.ck-editor__editable_inline[dir=ltr] {
                                                     height: 90px;
                                                 }
@@ -2141,7 +2163,7 @@
                                                     .catch(error => {
                                                         console.error(error);
                                                     });
-                                            </script>
+                                            </script> -->
 
                                             {{-- <div class="col-md-12">
                                                 <div class="group-input">
@@ -2168,7 +2190,7 @@
                                                         <small class="text-primary">Please insert "NA" in the data field if it does not require completion</small>
                                                     </div>
                                                     <textarea name="investigation"
-                                                            id="editor-investigation"
+                                                            class="froala"
                                                             {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->investigation }}</textarea>
                                                 </div>
                                                 @error('investigation')
@@ -2177,7 +2199,7 @@
                                             </div>
 
                                             <!-- Optional: Custom height -->
-                                            <style>
+                                            <!-- <style>
                                                 .ck.ck-editor__editable_inline[dir=ltr] {
                                                     height: 90px;
                                                 }
@@ -2186,10 +2208,13 @@
                                                 .ck.ck-label {
                                                     display: none !important;
                                                 }
-                                            </style>
+                                                .ck-powered-by{
+                                                    display: none;
+                                                }
+                                            </style> -->
 
                                             <!-- CKEditor Initialization -->
-                                            <script>
+                                            <!-- <script>
                                                 ClassicEditor
                                                     .create(document.querySelector('#editor-investigation'), {
                                                         ariaLabel: '', // prevent default label
@@ -2201,8 +2226,8 @@
                                                     .catch(error => {
                                                         console.error(error);
                                                     });
-                                            </script>
-
+                                            </script> -->
+                                                      
                                             <div class="col-md-12">
                                                 <div class="group-input">
                                                     <label for="Description Incident">Immediate Corrective Action<span
@@ -8322,6 +8347,26 @@
                     referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
                 }
             </script>
+
+                <script>
+                    var editor = new FroalaEditor('.froala', {
+                        key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+                        imageUploadParam: 'image_param',
+                        imageUploadMethod: 'POST',
+                        imageMaxSize: 20 * 1024 * 1024,
+                        imageUploadURL: "{{ secure_url('api/upload-files') }}",
+                        fileUploadParam: 'image_param',
+                        fileUploadURL: "{{ secure_url('api/upload-files')}}",
+                        videoUploadParam: 'image_param',
+                        videoUploadURL: "{{ secure_url('api/upload-files') }}",
+                        videoMaxSize: 500 * 1024 * 1024,
+                    });
+                    
+                    $(".froala-disabled").FroalaEditor("edit.off");
+                </script>
+
+
+
             <script>
                 VirtualSelect.init({
                     ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #related_records, #investigation_approach, #audit_type'

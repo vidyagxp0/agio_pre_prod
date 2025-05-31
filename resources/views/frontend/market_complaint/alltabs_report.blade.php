@@ -569,7 +569,7 @@
                         <th class="w-10">Exp. Date</th>
                         <th class="w-10">Batch Size</th>
                         <th class="w-10">Pack Size</th>
-                        <th class="w-10">Dispatch Quantity</th>
+                        <th class="w-10">Released Quantity</th>
                         <th class="w-10">Remarks</th>
                     </tr>
 

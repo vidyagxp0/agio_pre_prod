@@ -562,15 +562,15 @@
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
-                                <th style="width: 5%;">S No.</th>
-                                <th style="width: 15%;">Area of Audit</th>
-                                <th style="width: 10%;">Start Date</th>
-                                <th style="width: 10%;">Start Time</th>
-                                <th style="width: 10%;">End Date</th>
-                                <th style="width: 10%;">End Time</th>
-                                <th style="width: 15%;">Auditor</th>
-                                <th style="width: 15%;">Auditee</th>
-                                <th style="width: 10%;">Remarks</th>
+                                <th style="width: 5%; font-size: 10px; padding: 6px;">Sr. No.</th>
+                                <th style="width: 15%; font-size: 10px ; padding: 6px">Area of Audit</th>
+                                <th style="width: 10%; font-size: 10px; padding: 6px">Scheduled Start Date</th>
+                                <th style="width: 10%; font-size: 10px; padding: 6px">Scheduled Start Time</th>
+                                <th style="width: 10%; font-size: 10px; padding: 6px">Scheduled End Date</th>
+                                <th style="width: 10%; font-size: 10px; padding: 6px">Scheduled End Time</th>
+                                <th style="width: 15%; font-size: 10px; padding: 6px">Auditor</th>
+                                <th style="width: 15%; font-size: 10px; padding: 6px">Auditee</th>
+                                <th style="width: 10%; font-size: 10px; padding: 6px">Remarks</th>
                             </tr>
 
                             @if (!empty($json) && is_array($json))
@@ -578,15 +578,41 @@
                             @foreach ($json as $row)
                             @if (is_array($row)) {{-- Ensure it's a valid row --}}
                             <tr>
-                                <td>{{ $srNo++ }}</td>
-                                <td>{{ $row['auditArea'] ?? 'N/A' }}</td>
-                                <td>{{ isset($row['scheduleStartDate']) ? Helpers::getdateformat($row['scheduleStartDate']) : 'N/A' }}</td>
-                                <td>{{ $row['scheduleStartTime'] ?? 'N/A' }}</td>
-                                <td>{{ isset($row['scheduleEndDate']) ? Helpers::getdateformat($row['scheduleEndDate']) : 'N/A' }}</td>
-                                <td>{{ $row['scheduleEndTime'] ?? 'N/A' }}</td>
-                                <td>{{ isset($row['auditors']) ? Helpers::getInitiatorName($row['auditors']) : 'N/A' }}</td>
-                                <td>{{ isset($row['auditee']) ? Helpers::getInitiatorName($row['auditee']) : 'N/A' }}</td>
-                                <td>{{ $row['auditComment'] ?? 'N/A' }}</td>
+                                <td class="allow-wb">{{ $srNo++ }}</td>
+                                <td class="allow-wb">{{ $row['auditArea'] ?? 'N/A' }}</td>
+                                <td class="allow-wb">{{ isset($row['scheduleStartDate']) ? Helpers::getdateformat($row['scheduleStartDate']) : 'N/A' }}</td>
+                                <td class="allow-wb">{{ $row['scheduleStartTime'] ?? 'N/A' }}</td>
+                                <td class="allow-wb">{{ isset($row['scheduleEndDate']) ? Helpers::getdateformat($row['scheduleEndDate']) : 'N/A' }}</td>
+                                <td class="allow-wb">{{ $row['scheduleEndTime'] ?? 'N/A' }}</td>
+                                <td class="allow-wb">
+                                    @if (!empty($row['auditors']))
+                                        @php
+                                            $auditors = is_array($row['auditors']) ? $row['auditors'] : explode(',', $row['auditors']);
+                                            $auditorNames = array_map(function($id) {
+                                                return Helpers::getInitiatorName($id);
+                                            }, $auditors);
+                                            echo implode(', ', $auditorNames);
+                                        @endphp
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
+                                <td class="allow-wb">
+                                    @if (!empty($row['auditee']))
+                                        @php
+                                            $auditees = is_array($row['auditee']) ? $row['auditee'] : explode(',', $row['auditee']);
+                                            $auditeeNames = array_map(function($id) {
+                                                return Helpers::getInitiatorName($id);
+                                            }, $auditees);
+                                            echo implode(', ', $auditeeNames);
+                                        @endphp
+                                    @else
+                                        N/A
+                                    @endif
+                                </td>
+
+                                <td class="allow-wb">{{ $row['auditComment'] ?? 'N/A' }}</td>
                             </tr>
                             @endif
                             @endforeach
@@ -809,7 +835,44 @@
             <!-- </div> -->
         </div>
     </div>
+        <table>
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($data->Description_Deviation){{ $data->Description_Deviation }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+            <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->file_attach)
+        @foreach(json_decode($data->file_attach) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
     @endif
+
+
+        
+
+
+
     @php
     $questions_packing = [
     'Check for area activity record.',
@@ -913,7 +976,43 @@
             <!-- </div> -->
         </div>
     </div>
+
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist1->tablet_compress_response_final_comment){{ $checklist1->tablet_compress_response_final_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->supproting_attachment)
+        @foreach(json_decode($data->supproting_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
+
+           
 
     @php
     $questions = [
@@ -1041,8 +1140,42 @@
         </div>
     </div>
 
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist2->tablet_coating_remark_comment){{ $checklist2->tablet_coating_remark_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->tablet_coating_supporting_attachment)
+        @foreach(json_decode($data->tablet_coating_supporting_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
 
+           
     @php
     $liquidOintmentPackingQuestions = [
     'Is status labels displayed on all equipments?',
@@ -1169,8 +1302,44 @@
             <!-- </div> -->
         </div>
     </div>
+
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist3->tablet_capsule_packing_comment){{ $checklist3->tablet_capsule_packing_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->tablet_capsule_packing_attachmen)
+        @foreach(json_decode($data->tablet_capsule_packing_attachmen) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
     @endif
 
+           
 
 
     @php
@@ -1304,7 +1473,43 @@
             <!-- </div> -->
         </div>
     </div>
+
+      <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist4->Description_Deviation_capsule){{ $checklist4->Description_Deviation_capsule }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->file_attach_capsule)
+        @foreach(json_decode($data->file_attach_capsule) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
+
+          
     @php
     $liquidOintmentPacking = [
     'Is status labels displayed on all equipments?',
@@ -1434,8 +1639,43 @@
             <!-- </div> -->
         </div>
     </div>
-    @endif
 
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist6->dispensing_and_manufacturing_comment){{ $checklist6->dispensing_and_manufacturing_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->dispensing_and_manufacturing_attachment)
+        @foreach(json_decode($data->dispensing_and_manufacturing_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
+    @endif
+           
     @php
     $dispensingAndManufacturingQuestions = [
     'Is access to the facility restricted?',
@@ -1570,8 +1810,43 @@
             <!-- </div> -->
         </div>
     </div>
-    @endif
 
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist5->Description_oinments_comment){{ $checklist5->Description_oinments_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->file_attach_add_2)
+        @foreach(json_decode($data->file_attach_add_2) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
+    @endif
+           
     @php
     $qualityAssuranceQuestions = [
     'Does the QA unit have a person specifically charged with the responsibility of designing, revising and obtaining approval for production and testing procedures, forms and records?',
@@ -1688,8 +1963,44 @@
             <!-- </div> -->
         </div>
     </div>
+
+    <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist7->ointment_packing_comment){{ $checklist7->ointment_packing_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->ointment_packing_attachment)
+        @foreach(json_decode($data->ointment_packing_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
     @endif
 
+            
 
     {{-- Engineering --}}
     @php
@@ -1810,114 +2121,157 @@
             <!-- </div> -->
         </div>
     </div>
+
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist9->engineering_response_comment){{ $checklist9->engineering_response_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->auditSheChecklist_attachment_main)
+        @foreach(json_decode($data->auditSheChecklist_attachment_main) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
     @endif
 
-    @php
+       
+@php
     $checklistqualitycontrol = [
-    'Are the complete index and a complete set of applicable SOPs available in the department?',
-    'Are the index & annexure current?',
-    'Are training records of the employees working in the department up-to-date?',
-    'Is Job Description of the employees working in the department up-to-date?',
-    // "Have the employees undergone training in the following areas?",
-    'cGLP (Related: SOP for Good Laboratory Practices)',
-    'SOPs',
-    'Analytical Techniques',
-    'EU_GMP',
-    'Is Training Calendar of the employees working in the department up-to-date?',
-    'Is an up-to-date organizational chart of the Quality Control Department available?',
-    'Are all employees following the garments SOP, including where necessary masks & gloves?',
-    'Is the laboratory neat and orderly with sufficient space for equipment and operations?',
-    'Is the good housekeeping followed?',
-    'Are the laboratory instruments/equipment qualified?',
-    // "Are all reagents and solutions",
-    'Clearly labeled with their proper name?',
-    'Labeled with the date of receipt and/or expiration date?',
-    // "Are prepared solutions labeled with the",
-    'Name of the person who prepared them?',
-    'Date of preparation?',
-    'Expiration date?',
-    'Is there any written procedure available for status labeling?',
-    'Is the area qualified? Have any modification in the facility in the last 6 months?',
-    'Are the entire area log books updated?',
-    'Is there an approved preventive maintenance program for all equipment/instruments used in the laboratory?',
-    'Is there an SOP for corrective action if an instrument is found to be out of calibration?',
-    'Where standards are used to calibrate an instrument, is there a written procedure for their preparation?',
-    'Is a specific person responsible for the receipt of samples for testing?',
-    'Is there a written SOP describing sample receipt and recording (logging in)?',
-    'Where are samples stored before and after testing?',
-    'Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?',
-    'Is there a time limit on how long a sample may remain in the laboratory prior to testing?',
-    'Is the approved vendor list for all raw materials and packing materials available?',
-    'Is there any data backup policy available?',
-    'Is there any written procedure for the Audit trail?',
-    'Is there any written procedure for the management of software & creation of user ID?',
-    'Are there approved test procedures available for all tests performed in the laboratory?',
-    'Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?',
-    'Has the test method been validated for precision and reliability?',
-    'Examine the work currently being performed on the HPLCs.',
-    'Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?',
-    'Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?',
-    'Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?',
-    'Are laboratory records indicating the date of receipt of the sample and expiry date?',
-    'Are appropriate reference standards used and are they stored in a proper manner to ensure stability? Are their expiration dates adequately monitored so they are not used beyond the expiration dates?',
-    'Is reference standard kept under proper storage condition?',
-    'Are working standards prepared as per the protocol? Check for its storage condition',
-    'Is there a record of the preparation of volumetric solutions?',
-    'Are volumetric solutions freshly prepared? If stored, what expiration date is given?',
-    'Are raw data reviewed prior to release from the laboratory by a person other than the analyst who performed the test?',
-    'Check method validation for any product which is done in between two self-inspections with respect to SOP.',
-    'Is a stability study schedule available?',
-    'Are protocols for all stability study samples available?',
-    'Does the procedure for keeping stability samples available?',
-    'Are stability samples kept as per the storage requirement?',
-    'Is the stability summary available?',
-    'Are records maintained of nonconforming materials, related investigations and corrective actions?',
-    'For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?',
-    'Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list) maintained and are incoming raw materials checked against it?',
-    'Are statistical sampling plans used to assure that the samples are representative of the lot?',
-    'Are sampled containers labeled with sampler’s name and date of sampling?',
-    'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
-    'Are raw materials approved before being used in production?',
-    'Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
-    'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
-    'Is raw materials identification test performed on every batch and receipt?',
-    'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
-    'In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?',
-    'If operators perform in-process testing, have they been trained and was the training documented? Does QC periodically verify their results?',
-    'Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?',
-    'When and where is the finished product sampled for release?',
-    'Is every product batch tested and approved before shipment?',
-    'Are there complete written instructions for testing and releasing final product, including methods, equipment, operating parameters, and acceptance specifications?',
-    'If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?',
-    'Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?',
-    'Is the stability protocol available?',
-    'Are these stability chambers available to carryout stability of the product at',
-    'Do you keep both hard copy and electronic copy of temperature/Rh monitoring?',
-    'Are the stability results reviewed by a qualified, experienced person?',
-    'Is stability study in primary pack done for different products?',
-    'Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
-    'Are calibrated instruments labeled with date calibrated and date next calibration is due?',
-    'Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
-    'Are in-process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?',
-    'Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?',
-    'Are written sampling and testing procedures and acceptance criteria available for each product?',
-    'Are specific tests for foreign particles done?',
-    'Are Packing materials approved before being used in production?',
-    'Check for compliance of stability data and its summary',
-    'Check for Analytical Data Sheet',
-    'Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?',
-    'Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?',
-    'Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms? Are equipment ID numbers recorded for each analysis?',
-    'Are data and calculations checked by a second person and countersigned?',
-    'Are Material safety data sheet (MSDS) of chemical which are used is available?',
-    'Microbiological Laboratories',
-    'Are positive and negative controls used for testing? Are their results recorded?',
-    'Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?',
-    'Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?',
-    'Are isolates from microbiological testing identified if appropriate?',
-    'Is each lot of microbial ID systems checked with positive and negative controls?',
+        'Are the complete index and a complete set of applicable SOPs available in the department?',
+        'Are the index & annexure current?',
+        'Are training records of the employees working in the department up-to-date?',
+        'Is Job Description of the employees working in the department up-to-date?	',
+        ' Have the employees undergone training in the following areas? 
+
+                    <br>a)cGLP (Related: SOP for Good Laboratory Practices)
+                    <br>b)SOP’s
+                    <br>c)Analytical Techniques
+                    <br>d)EU GMP',
+        'Is Training Calendar of the employees working in the department up-to-date?',
+        'Is an up-to-date organizational chart of the Quality Control Department available?',
+        'Are all employees following the garments SOP, including where necessary masks & gloves?',
+        'Is the laboratory neat and orderly with sufficient space for equipment and operations?',
+        'Is the good housekeeping followed?',
+        'Are the laboratory instruments/equipment qualified?',
+    ' Are all reagents and solutions
+                            <br>a)	Clearly, labeled with their proper name?
+                            <br>b)Labeled with the date of receipt and/or expiration date?',
+        'Are prepared solutions labeled with the
+                            <br>a)Name of the person who prepared them?
+                            <br>b)Date of preparation?
+                            <br>c)Expiration date?',
+        'Is there any written procedure available for status labeling?',
+        'Is the area qualified? Have any modification in the facility in the last 6 months?',
+        'Are the entire area log books updated?',
+        'Is there an approved preventive maintenance program for all equipment/instruments used in the laboratory?',
+        'Is there an SOP for corrective action if an instrument is found to be out of calibration?',
+        'Where standards are used to calibrate an instrument, is there a written procedure for their preparation?',
+        'Is a specific person responsible for the receipt of samples for testing?',
+        'Is there a written SOP describing sample receipt and recording (logging in)?',
+        'Where are samples stored before and after testing?',
+        'Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?',
+        'Is there a time limit on how long a sample may remain in the laboratory prior to testing?',
+        'Is the approved vendor list for all raw materials and packing materials available?',
+        'Is there any data backup policy available?',
+        'Is there any written procedure for the Audit trail?',
+        'Is there any written procedure for the management of software & creation of user ID?',
+        'Are there approved test procedures available for all tests performed in the laboratory?',
+        'Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?',
+        'Has the test method been validated for precision and reliability?',
+        'Examine the work currently being performed on the HPLCs.',
+        'Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?',
+        'Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?',
+        'Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?',
+        'Are laboratory records indicating the date of receipt of the sample and expiry date?',
+        'Are appropriate reference standards used and are they stored in a proper manner to ensure stability? Are their expiration dates adequately monitored so they are not used beyond the expiration dates?',
+        'Is reference standard kept under proper storage condition?',
+        'Are working standards prepared as per the protocol? Check for its storage condition',
+        'Is there a record of the preparation of volumetric solutions?',
+        'Are volumetric solutions freshly prepared? If stored, what expiration date is given?',
+        'Are raw data reviewed prior to release from the laboratory by a person other than the analyst who performed the test?',
+        'Check method validation for any product which is done in between two self-inspections with respect to SOP.',
+        'Is a stability study schedule available?',
+        'Are protocols for all stability study samples available?',
+        'Does the procedure for keeping stability samples available?',
+        'Are stability samples kept as per the storage requirement?',
+        'Is the stability summary available?',
+        'Are records maintained of nonconforming materials, related investigations and corrective actions?',
+        'For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?',
+        'Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list) maintained and are incoming raw materials checked against it?',
+        'Are statistical sampling plans used to assure that the samples are representative of the lot?',
+        'Are sampled containers labeled with sampler’s name and date of sampling?',
+        'Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?',
+        'a)Are raw materials approved before being used in production?
+        <br>b)Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?',
+        'If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?',
+        'Is raw materials identification test performed on every batch and receipt?',
+        'Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?',
+        'In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?',
+        'If operators perform in-process testing, have they been trained and was the training documented? Does QC periodically verify their results?',
+        'Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?',
+        'When and where is the finished product sampled for release?',
+        'Is every product batch tested and approved before shipment?',
+        'Are there complete written instructions for testing and releasing final product, including methods, equipment, operating parameters, and acceptance specifications?',
+        'If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?',
+        'Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?',
+        'Is the stability protocol available?',
+        'Are these stability chambers available to carryout stability of the product at
+
+                            <br>a)25°C / 60% Rh
+                            <br>b)30°C / 75% Rh
+                            <br>c)40°C / 75% Rh
+                            <br>d)30°C / 65% Rh
+                            <br>e)Stand By Chamber',
+        'Do you keep both hard copy and electronic copy of temperature/Rh monitoring?',
+        'Are the stability results reviewed by a qualified, experienced person?',
+        'Is stability study in primary pack done for different products?',
+        'Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?',
+        'Are calibrated instruments labeled with date calibrated and date next calibration is due?',
+        'Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?',
+        'Are in-process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?',
+        'Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?',
+        'Are written sampling and testing procedures and acceptance criteria available for each product?',
+        'Are specific tests for foreign particles done?',
+        'Are Packing materials approved before being used in production?',
+        'Check for compliance of stability data and its summary',
+        'Check for Analytical Data Sheet',
+        'Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?',
+        'Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?',
+        'Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms? Are equipment ID numbers recorded for each analysis?',
+        'Are data and calculations checked by a second person and countersigned?',
+        'Are Material safety data sheet (MSDS) of chemical which are used is available?',
+        'Microbiological Laboratories
+
+                        <br>a)Are positive and negative controls used for testing? Are their results recorded?
+                        <br>b)Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
+                        <br>c)Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?
+                        <br>d)Are isolates from microbiological testing identified if appropriate?
+                        <br>e)Is each lot of microbial ID systems checked with positive and negative controls?',
+
     ];
-    @endphp
+@endphp
 
     @if(!empty($checklist10) && in_array('10', explode(',', $data->checklists)))
     <div class="inner-block">
@@ -1930,7 +2284,7 @@
                 @php
                 $checklists = [
                 [
-                'title' => 'Checklist for Quality Assurance',
+                'title' => 'Checklist for Quality Control',
                 'questions' => $checklistqualitycontrol,
                 'prefix' => 1
                 ],
@@ -1963,7 +2317,7 @@
                         @if($response || $remark)
                         <tr>
                             <td class="flex text-center">{{ $checklist['prefix'] . '.' . ($index + 1) }}</td>
-                            <td>{{ $question }}</td>
+                            <td>{!! $question !!}</td>
                             <td>
                                 <div style="display: flex; justify-content: center; align-items: center; margin: 5%; gap: 5px;">
                                     {{ $response }}
@@ -1984,7 +2338,43 @@
             <!-- </div> -->
         </div>
     </div>
+
+    <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist10->quality_control_response_comment){{ $checklist10->quality_control_response_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->quality_control_response_attachment)
+        @foreach(json_decode($data->quality_control_response_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
+
+            
     @php
     $questions_stores = [
     'Is there a potential for contamination or cross-contamination from any sources? If so, how it is controlled / prevented?',
@@ -2084,7 +2474,43 @@
             <!-- </div> -->
         </div>
     </div>
+
+    <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist11->checklist_stores_response_comment){{ $checklist11->checklist_stores_response_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->checklist_stores_response_attachment)
+        @foreach(json_decode($data->checklist_stores_response_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
+
+            
     @php
     $questions_hr = [
     'Do you have written procedure for material movement inside the factory premises?',
@@ -2190,8 +2616,44 @@
             <!-- </div> -->
         </div>
     </div>
+
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist12->checklist_hr_response_comment){{ $checklist12->checklist_hr_response_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->checklist_hr_response_attachment)
+        @foreach(json_decode($data->checklist_hr_response_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
     @endif
 
+           
     @php
     $questions_dispensing = [
     'Is access to the facility restricted?',
@@ -2347,7 +2809,43 @@
             <!-- </div> -->
         </div>
     </div>
+
+      <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist13->remark_documentation_name_comment){{ $checklist13->remark_documentation_name_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->remark_documentation_name_attachment)
+        @foreach(json_decode($data->remark_documentation_name_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
+
+          
     @php
     $questions_injection_packing = [
     'Is status labels displayed on all equipments/machines?',
@@ -2483,8 +2981,44 @@
             <!-- </div> -->
         </div>
     </div>
+
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist14->response_injection_packing_comment){{ $checklist14->response_injection_packing_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->remark_injection_packing_attachment)
+        @foreach(json_decode($data->remark_injection_packing_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
     @endif
 
+           
     @php
     $questions_powder_manufacturing_filling = [
     'Is status labels displayed on all equipments?',
@@ -2699,8 +3233,44 @@
             <!-- </div> -->
         </div>
     </div>
+
+    <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist15->remark_powder_manufacturing_filling_comment){{ $checklist15->remark_powder_manufacturing_filling_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->remark_powder_manufacturing_filling_attachment)
+        @foreach(json_decode($data->remark_powder_manufacturing_filling_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
+
     @endif
 
+            
     @php
     $questions_analytical_research_development = [
     'Is there an adequate system SOP for reviewing and implementing analytical development?',
@@ -2799,8 +3369,42 @@
         </div>
     </div>
 
+     <table>
+
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist16->remark_analytical_research_comment){{ $checklist16->remark_analytical_research_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
+    <div class="block-head">
+        Supporting Attachment
+    </div>
+    <table>
+
+        <tr class="table_bg">
+            <th class="w-20">S.N.</th>
+            <th class="w-60">Attachment</th>
+        </tr>
+        @if($data->remark_analytical_research_attachment)
+        @foreach(json_decode($data->remark_analytical_research_attachment) as $key => $file)
+        <tr>
+            <td class="w-20">{{ $key + 1 }}</td>
+            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+        </tr>
+        @endforeach
+        @else
+        <tr>
+            <td class="w-20">1</td>
+            <td class="w-20">Not Applicable</td>
+        </tr>
+        @endif
+
+    </table>
+
+
     @endif
 
+           
 
     @php
     $questions_formulation_research_development = [
@@ -2896,13 +3500,18 @@
         <!-- </div> -->
     </div>
 
+
+
+
+    </div>
+
     <table>
 
-        <tr>
-            <th class="w-20">Final Comments</th>
-            <td class="w-80"> @if($data->tablet_compress_response_final_comment){{ $data->tablet_compress_response_final_comment }}@else Not Applicable @endif</td>
-        </tr>
-    </table>
+            <tr>
+                <th class="w-20">Final Comments</th>
+                <td class="w-80"> @if($checklist17->remark_formulation_research_development_comment){{ $checklist17->remark_formulation_research_development_comment }}@else Not Applicable @endif</td>
+            </tr>
+        </table>
     <div class="block-head">
         Supporting Attachment
     </div>
@@ -2912,8 +3521,8 @@
             <th class="w-20">S.N.</th>
             <th class="w-60">Attachment</th>
         </tr>
-        @if($data->supproting_attachment)
-        @foreach(json_decode($data->supproting_attachment) as $key => $file)
+        @if($data->remark_formulation_research_development_attachment)
+        @foreach(json_decode($data->remark_formulation_research_development_attachment) as $key => $file)
         <tr>
             <td class="w-20">{{ $key + 1 }}</td>
             <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
@@ -2929,9 +3538,10 @@
     </table>
 
 
-    </div>
+
     @endif
 
+            
 
 
 
@@ -3019,17 +3629,27 @@
 
         <div class="block">
             <div class="block-head">
-                Pending Response
+                Audit Response
             </div>
             <table>
                 <tr>
-
                     <th class="w-20">Reference Record</th>
                     <td class="w-30">
-                        <div>
-                            @if($data->refrence_record){{ Helpers::getDivisionName( $data->refrence_record )}}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif
+                        @if ($data->refrence_record)
+                            @php
+                                $records = explode(',', $data->refrence_record);
+                            @endphp
+                            <ul>
+                                @foreach ($records as $record)
+                                    {{ $record }}
+                                @endforeach
+                            </ul>
+                        @else
+                            Not Applicable
+                        @endif
                     </td>
                 </tr>
+
             </table>
 
             <div class="block">
@@ -3046,7 +3666,6 @@
                             <th>Responsibility</th>
                             <th>Proposed Closure Date</th>
                             <th>Actual Closure Date</th>
-
                         </tr>
 
                         <tbody>
@@ -3215,75 +3834,77 @@
                 <table>
                     <tr>
                         <th class="w-20">Schedule Audit By</th>
-                        <td class="w-30">{{ $data->audit_schedule_by }}</td>
+                        <td class="w-30">{{ $data->audit_schedule_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Schedule Audit On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->audit_schedule_on)) ?: 'Not Applicable'  }}</td>
                         <th class="w-20"> Schedule Audit Comment</th>
-                        <td class="w-30">{{ $data->sheduled_audit_comment }}</td>
+                        <td class="w-30">{{ $data->sheduled_audit_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancel By</th>
-                        <td class="w-30">{{ $data->cancelled_2_by }}</td>
+                        <td class="w-30">{{ $data->cancelled_2_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Cancel On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
+                        <td class="w-30">
+                                {{ trim(Helpers::getdateFormat($data->cancelled_2_on)) ?: 'Not Applicable' }}
+                        </td>
+
                         <th class="w-20"> Cancel Comment</th>
-                        <td class="w-30">{{ $data->cancel_2_comment }}</td>
+                        <td class="w-30">{{ $data->cancel_2_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Acknowledgment by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
+                        <td class="w-30">{{ $data->audit_preparation_completed_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Acknowledgment On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->audit_preparation_completed_on)) ?: 'Not Applicable' }}</td>
                         <th class="w-20"> Acknowledgment Comment</th>
-                        <td class="w-30">{{ $data->acknowledge_commnet }}</td>
+                        <td class="w-30">{{ $data->acknowledge_commnet ?? 'Not Applicable' }}</td>
                     </tr>
 
                     {{-- <tr>
                         <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->cancelled_2_by }}</td>
+                        <td class="w-30">{{ $data->cancelled_2_by ?? 'Not Applicable' }}</td>
                     <th class="w-20">Cancelled On</th>
-                    <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_2_on) }}</td>
+                    <td class="w-30">{{ trim(Helpers::getdateFormat($data->cancelled_2_on)) ?: 'Not Applicable' }}</td>
                     <th class="w-20">Comment</th>
-                    <td class="w-30">{{ $data->cancel_2_comment }}</td>
+                    <td class="w-30">{{ $data->cancel_2_comment ?? 'Not Applicable' }}</td>
                     </tr> --}}
                     <tr>
                         <th class="w-20">Issue Report By</th>
-                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
+                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Issue Report On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on)) ?: 'Not Applicable' }}</td>
                         <th class="w-20"> Issue Report Comment</th>
-                        <td class="w-30">{{ $data->issue_report_comment }}</td>
+                        <td class="w-30">{{ $data->issue_report_comment ?? 'Not Applicable' }}</td>
                     </tr>
 
 
                     <tr>
                         <th class="w-20">CAPA Plan Proposed By</th>
-                        <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">
-                            CAPA Plan Proposed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
+                        <td class="w-30">{{ $data->audit_observation_submitted_by ?? 'Not Applicable' }}</td>
+                        <th class="w-20">CAPA Plan Proposed On</th>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->audit_observation_submitted_on)) ?: 'Not Applicable' }}</td>
                         <th class="w-20"> CAPA Plan Proposed Comment</th>
-                        <td class="w-30">{{ $data->capa_plan_comment }}</td>
+                        <td class="w-30">{{ $data->capa_plan_comment ?? 'Not Applicable' }}</td>
 
                     </tr>
                     <tr>
                         <th class="w-20">No CAPAs Required By</th>
-                        <td class="w-30">{{ $data->no_capa_plan_by }}</td>
+                        <td class="w-30">{{ $data->no_capa_plan_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">
                             No CAPAs Required On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->no_capa_plan_on) }}</td>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->no_capa_plan_on)) ?: 'Not Applicable' }}</td>
                         <th class="w-20"> No CAPAs Required Comment</th>
-                        <td class="w-30">{{ $data->no_capa_plan_required_comment }}</td>
+                        <td class="w-30">{{ $data->no_capa_plan_required_comment ?? 'Not Applicable' }}</td>
 
                     </tr>
                     <tr>
                         <th class="w-20">Response Reviewed By</th>
-                        <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
+                        <td class="w-30">{{ $data->response_feedback_verified_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">
                             Response Reviewed On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->response_feedback_verified_on)) ?: 'Not Applicable' }}</td>
                         <th class="w-20"> Response Reviewed Comment</th>
-                        <td class="w-30">{{ $data->response_reviewd_comment }}</td>
+                        <td class="w-30">{{ $data->response_reviewd_comment ?? 'Not Applicable' }}</td>
 
                     </tr>
 

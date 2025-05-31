@@ -13,7 +13,7 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
-        }
+        }  
 
         .w-10 {
             width: 10%;
@@ -226,7 +226,7 @@
 }
     </style>
 
-<style>
+    <style>
         
         #isPasted {
             width: 690px !important;
@@ -322,6 +322,7 @@
         }
         
     </style>
+    
 </head>
 
 <body>
@@ -1285,22 +1286,31 @@
             </tbody>
         </table>
     </div>
-</div>
+</diV>
 
                 
 
                 <div class="border">
-                    <table>
-                        <tr>
+                        <label class="head-number" for="Risk Assessment Summary">Risk Assessment Summary</label>
+                        <div class="div-data">
+                            @if ($data->investigation_summary)
+                                {!! $data->investigation_summary !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </div>
+                        
+                        <table>
+                        <!-- <tr>
                             <th class="w-20">Risk Assessment Summary</th>
                             <td class="w-80">
                                 @if ($data->investigation_summary)
-                                    {{ $data->investigation_summary }}
+                                    {!! $data->investigation_summary !!}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
+                        </tr> -->
 
                         <tr>
                             <th class="w-20">Risk Assessment Conclusion</th>

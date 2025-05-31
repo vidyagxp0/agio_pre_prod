@@ -424,7 +424,7 @@ class IncidentController extends Controller
             $files = [];
             if ($request->hasfile('qa_head_attachments')) {
                 foreach ($request->file('qa_head_attachments') as $file) {
-                    $name = $request->name . 'qa_head_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'hod_final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -477,7 +477,7 @@ class IncidentController extends Controller
             $files = [];
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
-                    $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initiator_update_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -3405,7 +3405,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
     $newFiles = [];
     if ($request->hasFile('qa_head_attachments')) {
         foreach ($request->file('qa_head_attachments') as $file) {
-            $name = $request->name . 'qa_head_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            $name = $request->name . 'hod_final_review_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('upload/'), $name);
             $newFiles[] = $name;
         }
@@ -3526,7 +3526,7 @@ if (!empty($request->qa_head_attachments) || !empty($request->deleted_qa_head_at
 
             if ($request->hasfile('QA_attachments')) {
                 foreach ($request->file('QA_attachments') as $file) {
-                    $name = $request->name . 'QA_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'initiator_update_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }

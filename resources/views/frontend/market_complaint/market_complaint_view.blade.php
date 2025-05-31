@@ -6674,7 +6674,7 @@
                             @if ($data->stage == 3 || $data->stage == 4)
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RegulatoryAffair"> Regulatory Affair Required ? <span
+                                        <label for="RegulatoryAffair"> Regulatory Affair Review Required ? <span
                                                 class="text-danger">*</span></label>
                                         <select name="RegulatoryAffair_Review" id="RegulatoryAffair_Review"
                                             @if ($data->stage == 4) disabled @endif>

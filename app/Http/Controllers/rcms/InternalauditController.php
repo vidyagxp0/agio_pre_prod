@@ -97,7 +97,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
                 foreach ($request->file('attach_file_rv') as $file) {
-                    $name = $request->name . 'attach_file_rv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'response_verify_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -563,7 +563,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -578,7 +578,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment')) {
                 foreach ($request->file('file_attachment') as $file) {
-                    $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledgement_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -590,7 +590,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
                 foreach ($request->file('file_attachment_guideline') as $file) {
-                    $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'auditpreparation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -632,7 +632,7 @@ class InternalauditController extends Controller
             $files = [];
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'audit_response' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2321,7 +2321,7 @@ $Checklist_Capsule->save();
         if (!empty($request->inv_attachment)) {
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
 
                     $files[] = $name;
@@ -2336,7 +2336,7 @@ $Checklist_Capsule->save();
             $files = [];
             if ($request->hasfile('attach_file_rv')) {
                 foreach ($request->file('attach_file_rv') as $file) {
-                    $name = $request->name . 'attach_file_rv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'response_verify_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2350,7 +2350,7 @@ $Checklist_Capsule->save();
             $files = [];
             if ($request->hasfile('file_attachment')) {
                 foreach ($request->file('file_attachment') as $file) {
-                    $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'acknowledgement_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2359,7 +2359,7 @@ $Checklist_Capsule->save();
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2375,7 +2375,7 @@ $Checklist_Capsule->save();
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
                 foreach ($request->file('file_attachment_guideline') as $file) {
-                    $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'auditpreparation_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -2427,11 +2427,12 @@ $Checklist_Capsule->save();
 
             $internalAudit->report_file = json_encode($files);
         }
+
         if (!empty($request->myfile)) {
             $files = [];
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'audit_response' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -4851,7 +4852,27 @@ if ($areIniAttachmentsSame2 != true) {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
             $lastDocument = InternalAudit::find($id);
+            $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
 
+
+            $isCommentEditable = false;
+
+            // Check all conditions
+                if (
+                    !empty($auditorview->data) &&
+                    is_iterable($auditorview->data)
+                ) {
+                    foreach ($auditorview->data as $audditor) {
+                        if (
+                            isset($audditor['auditornew'], $audditor['designation']) &&
+                            $audditor['auditornew'] == Auth::user()->id &&
+                            $audditor['designation'] === 'Lead Auditor'
+                        ) {
+                            $isCommentEditable = true;
+                            break;
+                        }
+                    }
+                }
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
@@ -4905,7 +4926,7 @@ if ($areIniAttachmentsSame2 != true) {
                 return back();
             }
 
-             if($changeControl->stage == 2){
+            if($changeControl->stage == 2){
                 $responseData = InternalAuditResponse::where('ia_id', $id)->latest()->first();
 
                 // if($changeControl->Auditee_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditee"){
@@ -4919,7 +4940,7 @@ if ($areIniAttachmentsSame2 != true) {
                     $stageCheck->ia_id = $id;
                     $stageCheck->user_id = Auth::user()->id;
                     $stageCheck->person_role = "Auditee";
-                    if($responseData && $responseData->person_role == "Auditor"){
+                    if($responseData && $responseData->person_role == "Lead Auditor"){
                         $stageCheck->status = 'Complete';
                     }
                     else{
@@ -4929,16 +4950,18 @@ if ($areIniAttachmentsSame2 != true) {
 
                 }
                 // if($changeControl->Auditor_comment && Auth::user()->id == $changeControl->assign_to && $responseData->person_role != "Auditor"){
+
+
                     if(
                         $changeControl->Auditor_comment &&
-                        Auth::user()->id == $changeControl->assign_to &&
-                        (!isset($responseData) || $responseData->person_role != "Auditor")
+                        $isCommentEditable &&
+                        (!isset($responseData) || $responseData->person_role != "Lead Auditor")
                     ){
                     
                     $stageCheck = new InternalAuditResponse();
                     $stageCheck->ia_id = $id;
                     $stageCheck->user_id = Auth::user()->id;
-                    $stageCheck->person_role = "Auditor";
+                    $stageCheck->person_role = "Lead Auditor";
                     if($responseData && $responseData->person_role == "Auditee"){
                         $stageCheck->status = 'Complete';
                     }
@@ -4947,9 +4970,10 @@ if ($areIniAttachmentsSame2 != true) {
                     }
                     $stageCheck->save();
                 }
-                if($responseData && $responseData->status = 'Complete'){
+
+                if($responseData && $responseData->status == 'Complete'){
                     $changeControl->stage = "3";
-                    $changeControl->status = " Audit";
+                    $changeControl->status = "Audit";
                     $changeControl->audit_preparation_completed_by = Auth::user()->name;
                     $changeControl->audit_preparation_completed_on = Carbon::now()->format('d-M-Y');
                     $changeControl->acknowledge_commnet = $request->comment;
@@ -4979,35 +5003,18 @@ if ($areIniAttachmentsSame2 != true) {
                                 }
                                 $history->save();
                     $changeControl->update();
+
                     toastr()->success('Document Sent');
                     return back();
 
                 }
                 else{
+
+                    toastr()->success('Document Sent');
                     return back();
-                    
                 }
-
-                    // if (!$changeControl->Auditee_comment || !$changeControl->Auditor_comment) {
-
-                    //             Session::flash('swal', [
-                    //                 'title' => 'Mandatory Fields Required!',
-                    //                 'message' => 'Both Auditee Comment and Auditor Comment must be filled!',
-                    //                 'type' => 'warning',
-                    //             ]);
-
-                    //             return redirect()->back();
-                    //         } else {
-                    //             Session::flash('swal', [
-                    //                 'type' => 'success',
-                    //                 'title' => 'Success',
-                    //                 'message' => 'Sent for Audit  state'
-                    //             ]);
-                    //         }
-                
-
-
             }
+            
             if ($changeControl->stage == 3) {
                 if ((empty($changeControl->checklists) || empty($changeControl->Comments))
                 && (!isset($changeControl->auditAgendaData) || empty($changeControl->auditAgendaData['auditArea'])))

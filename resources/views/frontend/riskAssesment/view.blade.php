@@ -1607,7 +1607,7 @@
                                         <div class="group-input">
                                             <label for="investigation_summary">Risk Assessment Summary<span
                                                     class="text-danger">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'reaonly' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                            <textarea class="summernote-1" {{ $data->stage == 0 || $data->stage == 2 || $data->stage == 3 || $data->stage == 4 || $data->stage == 5 || $data->stage == 6 ? 'reaonly' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
 
@@ -1773,7 +1773,7 @@
 
                                 <h3 style="font-size: 15px; color: #333; margin-bottom: 20px">
                                             <span style="font-weight: bold; color: red;">Note: </span>
-                                            <span>Please fill up both QA/CQA Review Tab and CFT Tab value to save the form.</span>
+                                            <span>Please fill up both HOD/Designee Tab and CFT Review Tab value to save the form.</span>
                                 </h3>
 
 
@@ -1867,7 +1867,7 @@
                                                         style="display: {{ $data1->Production_Table_Review == 'Yes' ? 'inline' : 'none' }}"
                                                         class="text-danger">*</span>
                                                 </label>
-                                                <select @if ($data->stage == 3)  @endif
+                                                <select @if ($data->stage == 3) disabled @endif
                                                     name="Production_Table_Person" class="Production_Table_Person"
                                                     id="Production_Table_Person">
                                                     <option value="">-- Select --</option>
@@ -9865,23 +9865,39 @@
                 });
             });
         </script> -->
-    <script>
-         var editor = new FroalaEditor('.summernote-1', {
-            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
-            imageUploadParam: 'image_param',
-            imageUploadMethod: 'POST',
-            imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ secure_url('api/upload-files') }}",
-            fileUploadParam: 'image_param',
-            fileUploadURL: "{{ secure_url('api/upload-files')}}",
-            videoUploadParam: 'image_param',
-            videoUploadURL: "{{ secure_url('api/upload-files') }}",
-            videoMaxSize: 500 * 1024 * 1024,
+<script>
+  var editor = new FroalaEditor('.summernote-1', {
+    key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+    imageUploadParam: 'image_param',
+    imageUploadMethod: 'POST',
+    imageMaxSize: 20 * 1024 * 1024,
+    imageUploadURL: "{{ secure_url('api/upload-files') }}",
+    fileUploadParam: 'image_param',
+    fileUploadURL: "{{ secure_url('api/upload-files')}}",
+    videoUploadParam: 'image_param',
+    videoUploadURL: "{{ secure_url('api/upload-files') }}",
+    videoMaxSize: 500 * 1024 * 1024,
 
-         });
-         
-        $(".summernote-1-disabled").FroalaEditor("edit.off");
-    </script>
+    // Add Events for Pasting Content
+    events: {
+      'paste.after': function () {
+        const html = this.html.get();
+
+        // Replace superscript zero (⁰) or � with &deg;
+        const cleaned = html
+          .replace(/⁰/g, '&deg;')  // Superscript zero
+          .replace(/°/g, '&deg;')  // Degree symbol
+          .replace(/�/g, '&deg;'); // Unknown char
+
+        this.html.set(cleaned);
+      }
+    }
+  });
+
+  // Disable editor (optional, as per your code)
+  $(".summernote-1-disabled").FroalaEditor("edit.off");
+</script>
+
 
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote.min.js"></script>

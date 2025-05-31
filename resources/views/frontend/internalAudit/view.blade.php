@@ -429,13 +429,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
-
-                    
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                              Acknowledgement
+                                Acknowledement
                             </button>
-                    
-
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
                             </button>
@@ -1288,7 +1286,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                         </select>
                                                                        </td>
                                                                         <td>
-                                                                            <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select"@if ($data->stage != 1) readonly @endif>
+                                                                            <select name="AuditorNew[{{ $loop->index }}][designation]" class="form-select auditor-designation" 
+                                                                                data-index="{{ $loop->index }}"
+                                                                                @if ($data->stage != 1) readonly @endif>
                                                                                 <option value="">--Select--</option>
                                                                                 <option value="Lead Auditor" {{ $audditor['designation'] == 'Lead Auditor' ? 'selected' : '' }}>
                                                                                     Lead Auditor
@@ -1456,7 +1456,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                             @endif
 
                                         </div> --}}
-                                        <div class="col-md-12">
+
+                                        {{-- <div class="col-md-12">
                                             <div class="group-input">
                                                 <label for="Production Tablet feedback">Lead Auditor Comment
                                                     @if ($data->stage == 2)
@@ -1468,13 +1469,62 @@ document.addEventListener("DOMContentLoaded", function () {
                                                         Please insert "NA" in the data field if it does not require completion
                                                     </small>
                                                 </div>
-                                                <textarea class="summernote Auditor_comment"
-                                                name="Auditor_comment" id="summernote-18"  {{ ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew']) ? '' : 'readonly' }}
-                                             {{--@if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)readonly
-                                             @endif--}}
-                                             >{{ $data->Auditor_comment}}</textarea>
+                                                    <textarea class="summernote Auditor_comment"
+                                                            name="Auditor_comment"
+                                                            id="summernote-18"
+                                                            {{ ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew']) ? '' :
+                                                                'readonly' }}
+                                                    >{{ $data->Auditor_comment }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
+
+                                        @php
+                                                // Default to not editable
+                                                $isCommentEditable = false;
+
+                                                // Check all conditions
+                                                if (
+                                                    $data->stage == 2 &&
+                                                    !empty($auditorview->data) &&
+                                                    is_iterable($auditorview->data)
+                                                ) {
+                                                    foreach ($auditorview->data as $audditor) {
+                                                        if (
+                                                            isset($audditor['auditornew'], $audditor['designation']) &&
+                                                            $audditor['auditornew'] == Auth::user()->id &&
+                                                            $audditor['designation'] === 'Lead Auditor'
+                                                        ) {
+                                                            $isCommentEditable = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+                                            @endphp
+
+                                            <div class="col-md-12">
+                                                <div class="group-input">
+                                                    <label for="Production Tablet feedback">Lead Auditor Comment
+                                                        @if ($data->stage == 2)
+                                                            <span class="text-danger">*</span>
+                                                        @endif
+                                                    </label>
+                                                    <div>
+                                                        <small class="text-primary">
+                                                            Please insert "NA" in the data field if it does not require completion
+                                                        </small>
+                                                    </div>
+
+                                                    <textarea class="summernote Auditor_comment"
+                                                        name="Auditor_comment"
+                                                        id="summernote-18"
+                                                        {{ $isCommentEditable ? '' : 'readonly' }}
+                                                    >{{ $data->Auditor_comment }}</textarea>
+                                                </div>
+                                            </div>
+
+
+
+
 
                                                 {{-- <textarea class="summernote Auditor_comment"
                                                           name="Auditor_comment " id="summernote-18"
@@ -3508,20 +3558,20 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On">Schedule Audit By</label>
-                                            <div class="static">{{ $data->audit_schedule_by }}</div>
+                                            <div class="static">{{ $data->audit_schedule_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On">Schedule Audit On</label>
-                                            <div class="static">{{ $data->audit_schedule_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->audit_schedule_on)) ?: 'Not Applicable'  }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> Schedule Audit Comment</label>
-                                            <div class="static">{{ $data->sheduled_audit_comment }}</div>
+                                            <div class="static">{{ $data->sheduled_audit_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
@@ -3530,20 +3580,20 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Cancelled By">Cancel By</label>
-                                            <div class="static">{{ $data->cancelled_2_by }}</div>
+                                            <div class="static">{{ $data->cancelled_2_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Cancel On">Cancel On</label>
-                                            <div class="static">{{ $data->cancelled_2_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->cancelled_2_on)) ?: 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> Cancelled Comment</label>
-                                            <div class="static">{{ $data->cancel_2_comment }}</div>
+                                            <div class="static">{{ $data->cancel_2_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
@@ -3554,21 +3604,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="Audit Preparation Completed On">Acknowledgment
                                                 By</label>
-                                            <div class="static">{{ $data->audit_preparation_completed_by }}</div>
+                                            <div class="static">{{ $data->audit_preparation_completed_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Acknowledement On">Acknowledgment
                                                 On</label>
-                                            <div class="static">{{ $data->audit_preparation_completed_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->audit_preparation_completed_on)) ?: 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On">Acknowledgment Comment</label>
-                                            <div class="static">{{ $data->acknowledge_commnet }}</div>
+                                            <div class="static">{{ $data->acknowledge_commnet ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
@@ -3617,21 +3667,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="Audit Observation Submitted By">Issue Report
                                                 By</label>
-                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
+                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Issue Report On">Issue Report
                                                 On</label>
-                                            <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on)) ?: 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> Issue Report Comment</label>
-                                            <div class="static">{{ $data->issue_report_comment }}</div>
+                                            <div class="static">{{ $data->issue_report_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
@@ -3680,21 +3730,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="Audit Lead More Info Reqd By">CAPA Plan Proposed
                                                 By</label>
-                                            <div class="static">{{ $data->audit_observation_submitted_by }}</div>
+                                            <div class="static">{{ $data->audit_observation_submitted_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="CAPA Plan Proposed On">CAPA Plan Proposed
                                                 On</label>
-                                            <div class="static">{{ $data->audit_observation_submitted_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->audit_observation_submitted_on)) ?: 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> CAPA Plan Proposed Comment</label>
-                                            <div class="static">{{ $data->capa_plan_comment }}</div>
+                                            <div class="static">{{ $data->capa_plan_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
@@ -3706,21 +3756,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="Audit Response Completed By">No CAPAs Required
                                                 By</label>
-                                            <div class="static">{{ $data->no_capa_plan_by }}</div>
+                                            <div class="static">{{ $data->no_capa_plan_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="No CAPAs Required On">No CAPAs Required
                                                 On</label>
-                                            <div class="static">{{ $data->no_capa_plan_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->no_capa_plan_on)) ?: 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> No CAPAs Required Comment</label>
-                                            <div class="static">{{ $data->no_capa_plan_required_comment }}</div>
+                                            <div class="static">{{ $data->no_capa_plan_required_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
@@ -3731,21 +3781,21 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="Response Feedback Verified By">Response Reviewed
                                                 By</label>
-                                            <div class="static">{{ $data->response_feedback_verified_by }}</div>
+                                            <div class="static">{{ $data->response_feedback_verified_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Response Reviewed On">Response Reviewed
                                                 On</label>
-                                            <div class="static">{{ $data->response_feedback_verified_on }}</div>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->response_feedback_verified_on)) ?: 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Schedule On"> Response Reviewed Comment</label>
-                                            <div class="static">{{ $data->response_reviewd_comment }}</div>
+                                            <div class="static">{{ $data->response_reviewd_comment ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 
@@ -14992,10 +15042,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="group-input">
                                             <label for="Description Deviation">Final Comments</label>
                                             <textarea  name="remark_formulation_research_development_comment" >
-@if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"})
-{{ $checklist17->{"remark_formulation_research_development_comment"} }}
-@endif
-</textarea>
+                                                @if ($checklist17 && $checklist17->{"remark_formulation_research_development_comment"})
+                                                {{ $checklist17->{"remark_formulation_research_development_comment"} }}
+                                                @endif
+                                            </textarea>
                                         </div>
                                     </div>
 
