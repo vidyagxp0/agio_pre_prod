@@ -3614,6 +3614,14 @@ section#pdf-page .watermark {
     margin-bottom: 20px;
 }
 
+#signature-modal222 .group-input input,
+#signature-modal222 .group-input select {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
 #modal1 .group-input input,
 #modal1 .group-input select {
     display: block;
@@ -3631,6 +3639,12 @@ section#pdf-page .watermark {
 }
 
 #signature-modal .modal-footer button {
+    color: white;
+    background: #4274da;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+#signature-modal222 .modal-footer button {
     color: white;
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);

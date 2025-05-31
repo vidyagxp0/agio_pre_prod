@@ -2324,7 +2324,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                             </select>
                                                                         </td>
                                                                         <td>
-                                                                            <textarea name="auditAgendaData[{{ $key }}][auditComment]" {{$data->stage == 3 ? '' : 'readonly'}}>{{ $row['auditComment'] }} </textarea>
+                                                                            <input type="text" name="auditAgendaData[{{ $key }}][auditComment]" value="{{ $row['auditComment'] }}" {{ $data->stage == 3 ? '' : 'readonly' }}>
                                                                         </td>
                                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                                     </tr>
@@ -2493,7 +2493,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                                 ${analystOptions}
                                                             </select>
                                                         </td>
-                                                        <td><textarea name="auditAgendaData[${rowIndex}][auditComment]"></textarea></td>
+                                                        <td><input type="text" name="auditAgendaData[${rowIndex}][auditComment]"></td>
                                                         <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                     `;
 
@@ -3536,7 +3536,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head" style="font-size: 16px">
-                                        Acknowledgment
+                                        Acknowledgment 
                                     </div>
 
                                     <div class="col-lg-4">
