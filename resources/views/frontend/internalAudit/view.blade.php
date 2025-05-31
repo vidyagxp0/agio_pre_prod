@@ -429,11 +429,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                         @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Internal Audit', 11))
-                           
+                            @php
+                                // Default to not editable
+                                $isCommentEditable = false;
+
+                                // Check all conditions
+                                if (
+                                    $data->stage == 2 &&
+                                    !empty($auditorview->data) &&
+                                    is_iterable($auditorview->data)
+                                ) {
+                                    foreach ($auditorview->data as $audditor) {
+                                        if (
+                                            isset($audditor['auditornew'], $audditor['designation']) &&
+                                            $audditor['auditornew'] == Auth::user()->id &&
+                                            $audditor['designation'] === 'Lead Auditor'
+                                        ) {
+                                            $isCommentEditable = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                 $responseData = DB::table('internal_audit_signature_check')->where('ia_id', $data->id)->latest()->first();
+                                 dd($isCommentEditable , !$responseData , $responseData->person_role , "Lead Auditor" , $responseData->person_role , "Complete" ,Auth::user()->name == $data->assign_to , !$responseData , $responseData->person_role , "Lead Auditor" , $responseData->person_role , "Complete");
+                                 <!-- $responseData = DB::table('internal_audit_signature_check')->where('ia_id', $data->id)->latest()->first(); -->
+                            @endphp
+                            @if($isCommentEditable && (!$responseData || $responseData->person_role == "Lead Auditor" && $responseData->person_role != "Complete"))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Acknowledement
+                                Acknowledement by Lead Auditor
                             </button>
-                            
+                            @endif
+                            @if(Auth::user()->name == $data->assign_to && (!$responseData || $responseData->person_role == "Auditee" && $responseData->person_role != "Complete"))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Acknowledement by Auditee
+                            </button>
+                            @endif
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More info Required
                             </button>
@@ -1367,42 +1397,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div id="CCForm29" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditor Details">Auditee Comment</label>
-                                                <textarea  name="Auditee_comment"></textarea>
-                                            </div>
-                                        </div> --}}
-                                        {{-- <div class="col-12">
-                                            @if ($data->stage == 2)
-                                                <div class="group-input">
-                                                    <label for="Auditee Comment">Auditee Comment
-                                                        @if (($data->stage == 2 && in_array(11, $userRoleIds)) || in_array(12, $userRoleIds))
-                                                            <span class="text-danger">*</span>
-                                                        @endif
-                                                    </label>
-
-                                                    <textarea name="Auditee_comment"@if ($data->stage == 2 && in_array(11, $userRoleIds)) required
-                                                            @else
-                                                                readonly @endif
-                                                        class="form-control {{ $errors->has('HOD_Remarks') ? 'is-invalid' : '' }}"
-                                                        {{ $data->stage == 0 || $data->stage == 16 || $data->stage == 14 ? 'disabled' : '' }}
-                                                        {{ $data->stage == 16 ? 'required' : '' }}>{{ $data->Auditee_comment }}</textarea>
-                                                    @if ($errors->has('Auditee_comment'))
-                                                        <div class="invalid-feedback">
-                                                            {{ $errors->first('Auditee_comment') }}
-                                                        </div>
-                                                    @endif
-                                                    </textarea>
-                                                </div>
-                                            @else
-                                                <div class="group-input">
-                                                    <label for="External Auditor Details">Auditee Comment</label>
-                                                    <textarea disabled name="Auditee_comment">{{ $data->Auditee_comment }}</textarea>
-                                                </div>
-                                            @endif
-
-                                        </div> --}}
+                                        
 
                                         <div class="col-md-12">
                                             <div class="group-input">
@@ -1418,65 +1413,11 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 </div>
 
                                                 <textarea class="summernote Auditee_comment"
-                                                    name="Auditee_comment" id="summernote-18" {{ ($data->stage == 2 && Auth::user()->id == $data->assign_to) ? '' : 'readonly' }}
-                                                    {{--@if ($data->stage != 2 || Auth::user()->name != $data->assign_to)
-                                                        readonly
-                                                    @endif--}}
-                                                    
-                                                >{{ $data->Auditee_comment }}</textarea>
+                                                    name="Auditee_comment" id="summernote-18" {{ ($data->stage == 2 && Auth::user()->id == $data->assign_to) ? '' : 'readonly' }}>{{ $data->Auditee_comment }}</textarea>
                                             </div>
                                         </div>
 
 
-                                        {{-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="External Auditor Details">Auditor Comment</label>
-                                                <textarea  name="Auditor_comment"></textarea>
-                                            </div>
-                                        </div> --}}
-
-                                        {{-- <div class="col-12">
-                                            @if ($data->stage == 2)
-                                                <div class="group-input">
-                                                    <label for="Auditee Comment">Auditor Comment
-                                                        @if (($data->stage == 2 && in_array(11, $userRoleIds)) || in_array(12, $userRoleIds))
-                                                            <span class="text-danger">*</span>
-                                                        @endif
-                                                    </label>
-                                                    <textarea name="Auditor_comment"
-                                                        @if ($data->stage == 2 && in_array(12, $userRoleIds)) required
-                                                                @else
-                                                                    readonly @endif>{{ $data->Auditor_comment }}</textarea>
-                                                </div>
-                                            @else
-                                                <div class="group-input">
-                                                    <label for="External Auditor Details">Auditor Comment</label>
-                                                    <textarea disabled name="Auditor_comment">{{ $data->Auditor_comment }}</textarea>
-                                                </div>
-                                            @endif
-
-                                        </div> --}}
-
-                                        {{-- <div class="col-md-12">
-                                            <div class="group-input">
-                                                <label for="Production Tablet feedback">Lead Auditor Comment
-                                                    @if ($data->stage == 2)
-                                                        <span class="text-danger">*</span>
-                                                    @endif
-                                                </label>
-                                                <div>
-                                                    <small class="text-primary">
-                                                        Please insert "NA" in the data field if it does not require completion
-                                                    </small>
-                                                </div>
-                                                    <textarea class="summernote Auditor_comment"
-                                                            name="Auditor_comment"
-                                                            id="summernote-18"
-                                                            {{ ($data->stage == 2 && isset($audditor['auditornew']) && Auth::user()->id == $audditor['auditornew']) ? '' :
-                                                                'readonly' }}
-                                                    >{{ $data->Auditor_comment }}</textarea>
-                                            </div>
-                                        </div> --}}
 
                                         @php
                                                 // Default to not editable
@@ -1521,16 +1462,6 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     >{{ $data->Auditor_comment }}</textarea>
                                                 </div>
                                             </div>
-
-
-
-
-
-                                                {{-- <textarea class="summernote Auditor_comment"
-                                                          name="Auditor_comment " id="summernote-18"
-                                                          {{-- @if ($data->stage != 2 || !isset($audditor['auditornew']) || $audditor['auditornew'] != Auth::user()->id)
-                                                              readonly
-                                                          @endif> -->{{ $data->Auditor_comment }}</textarea> --}}
 
 
                                         <div class="col-12">
