@@ -4042,7 +4042,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -4214,7 +4214,7 @@
 
             <!-- Hidden date input for date selection -->
             <input type="date" id="Quality_Control_on" name="Quality_Control_on"
-                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                   
                    value="{{ \Carbon\Carbon::parse($data1->Quality_Control_on)->format('Y-m-d') }}"
                    class="hide-input"
                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
