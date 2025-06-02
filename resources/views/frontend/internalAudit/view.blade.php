@@ -3542,7 +3542,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <div class="col-lg-4">
                                         <div class="group-input">
                                             <label for="Audit Preparation Completed On">Acknowledgment
-                                                By</label>
+                                                By Auditee</label>
                                             <div class="static">{{ $data->audit_preparation_completed_by ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
@@ -3556,8 +3556,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                     <div class="col-lg-4">
                                         <div class="group-input">
-                                            <label for="Audit Schedule On">Acknowledgment Comment</label>
+                                            <label for="Audit Schedule On">Acknowledgment Comment By Auditee</label>
                                             <div class="static">{{ $data->acknowledge_commnet ?? 'Not Applicable' }}</div>
+                                        </div>
+                                    </div>
+
+                                     <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Preparation Completed On">Acknowledgment By Lead Auditor</label>
+                                            <div class="static">{{ $data->audit_preparation_completed_by_lead_auditor ?? 'Not Applicable' }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Acknowledement On">Acknowledgment On </label>
+                                            <div class="static">{{ trim(Helpers::getdateFormat($data->audit_preparation_completed_on_lead_auditor)) ?: 'Not Applicable' }}</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="group-input">
+                                            <label for="Audit Schedule On">Acknowledgment Comment By Lead Auditor</label>
+                                            <div class="static">{{ $data->acknowledge_commnet_lead_auditor ?? 'Not Applicable' }}</div>
                                         </div>
                                     </div>
 

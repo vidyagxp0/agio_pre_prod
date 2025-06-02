@@ -3852,12 +3852,21 @@
                         <td class="w-30">{{ $data->cancel_2_comment ?? 'Not Applicable' }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Acknowledgment by</th>
+                        <th class="w-20">Acknowledgment by Auditee</th>
                         <td class="w-30">{{ $data->audit_preparation_completed_by ?? 'Not Applicable' }}</td>
                         <th class="w-20">Acknowledgment On</th>
                         <td class="w-30">{{ trim(Helpers::getdateFormat($data->audit_preparation_completed_on)) ?: 'Not Applicable' }}</td>
-                        <th class="w-20"> Acknowledgment Comment</th>
+                        <th class="w-20"> Acknowledgment Comment by Auditee</th>
                         <td class="w-30">{{ $data->acknowledge_commnet ?? 'Not Applicable' }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Acknowledgment by Lead Auditor</th>
+                        <td class="w-30">{{ $data->audit_preparation_completed_by_lead_auditor ?? 'Not Applicable' }}</td>
+                        <th class="w-20">Acknowledgment On</th>
+                        <td class="w-30">{{ trim(Helpers::getdateFormat($data->audit_preparation_completed_on_lead_auditor)) ?: 'Not Applicable' }}</td>
+                        <th class="w-20"> Acknowledgment Comment by Lead Auditor</th>
+                        <td class="w-30">{{ $data->acknowledge_commnet_lead_auditor ?? 'Not Applicable' }}</td>
                     </tr>
 
                     {{-- <tr>
