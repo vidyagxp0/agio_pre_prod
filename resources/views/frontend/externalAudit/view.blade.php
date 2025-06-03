@@ -539,7 +539,8 @@
 
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                <label for="due-date">Due Date <span
+                                                        class="text-danger">*</span></label>
                                                 <p class="text-primary">Last date this record should be closed by</p>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="due_date_display" readonly
@@ -550,6 +551,7 @@
                                                         class="hide-input" value="{{ $data->due_date }}"
                                                         oninput="handleDateInput(this, 'due_date_display')"
                                                         {{ $data->stage == 0 || $data->stage == 5 ? 'disabled' : '' }} {{ $data->stage == 1 ? '' : 'readonly' }}/>
+                                                        
                                                 </div>
                                             </div>
                                         </div>

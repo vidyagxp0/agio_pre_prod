@@ -371,27 +371,6 @@
                         </td>
                     </tr>
 
-                    
-                    <tr>
-                        <th class="w-20">Start Date of Audit</th>
-                        <td class="w-30">
-                            @if ($data->start_date_gi)
-                                {{  Helpers::getdateFormat($data->start_date_gi) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-
-                        <th class="w-20">End Date of Audith</th>
-                        <td class="w-30" colspan="3">
-                            @if ($data->end_date_gi)
-                                {{ Helpers::getdateFormat($data->end_date_gi) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
                 </table>
 
 
@@ -442,6 +421,27 @@
                     </div>
                 </div>
             </div>
+            <table>
+                <tr>
+                    <th class="w-20">Start Date of Audit</th>
+                    <td class="w-30">
+                        @if ($data->start_date_gi)
+                            {{  Helpers::getdateFormat($data->start_date_gi) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                    <th class="w-20">End Date of Audit</th>
+                    <td class="w-30" colspan="3">
+                        @if ($data->end_date_gi)
+                            {{ Helpers::getdateFormat($data->end_date_gi) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
 
             <div class="border-table">
                 <div class="block-head">
@@ -475,13 +475,11 @@
 
              <br>
 
-            <div class="block">
+            <div class="border-table">
                 <div class="block-head">
                     Summary Response
                 </div>
-                
-                <div class="border-table">
-                    <table style="width: 500px !important;">
+                <table>
                         <thead>
                             <tr class="table_bg" >
                                 <th style="width: 5%;">Sr.No.</th>
@@ -530,8 +528,7 @@
                                 </tr>
                             @endif
                         </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
 
         <div class="border-table">

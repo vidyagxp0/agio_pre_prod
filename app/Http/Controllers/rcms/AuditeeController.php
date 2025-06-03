@@ -145,7 +145,7 @@ class AuditeeController extends Controller
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -195,7 +195,7 @@ class AuditeeController extends Controller
             $files = [];
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'summary_response_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
@@ -1988,7 +1988,7 @@ class AuditeeController extends Controller
             $newFiles = [];
             if ($request->hasFile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
-                    $name = $request->name . 'inv_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'gi_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -2062,7 +2062,7 @@ class AuditeeController extends Controller
             $newFiles = [];
             if ($request->hasFile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
-                    $name = $request->name . 'myfile' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'summary_response_attachment' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $newFiles[] = $name;
                 }
@@ -6777,7 +6777,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
             if ($changeControl->stage == 1) {
 
-                if (empty($changeControl->initiated_through)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
+                if (empty($changeControl->due_date)|| empty($changeControl->audit_type)|| empty($changeControl->initial_comments)||empty($changeControl->external_agencies)||empty($changeControl->start_date_gi) ||empty($changeControl->end_date_gi))
                     {
                         Session::flash('swal', [
                             'type' => 'warning',

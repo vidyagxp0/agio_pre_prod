@@ -1015,7 +1015,7 @@ class ErrataController extends Controller
             // $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($ErrataControl->stage == 1) {
 
-                if (!$ErrataControl->short_description || !$ErrataControl->document_title || !$ErrataControl->type_of_error ) {
+                if (!$ErrataControl->document_type || !$ErrataControl->document_title || !$ErrataControl->type_of_error ) {
                     Session::flash('swal', [
                         'title' => 'Mandatory Fields Required!',
                         'message' => 'Pls Fill General Tab Field is yet to be filled!',

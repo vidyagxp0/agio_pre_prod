@@ -458,17 +458,19 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan 
-                                        @if($data->stage == 1)
-                                            <span class="text-danger">*</span>
-                                        @endif
+                                        <label for="Effectiveness_check_Plan"><b>Effectiveness check Plan 
+                                            @if($data->stage == 1)
+                                                <span class="text-danger">*</span>
+                                            @endif
                                         </b></label>
-                                        <input type="text" name="Effectiveness_check_Plan"
-                                            {{ $data->stage == 1 ? '' : 'readonly' }}
-                                            value="{{ $data->Effectiveness_check_Plan }}">
+                                        <textarea name="Effectiveness_check_Plan" 
+                                            class="form-control"
+                                            rows="4"
+                                            {{ $data->stage == 1 ? '' : 'readonly' }}>{{ $data->Effectiveness_check_Plan }}</textarea>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Attachment">Attachment</label>

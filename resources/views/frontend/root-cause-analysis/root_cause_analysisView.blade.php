@@ -599,7 +599,7 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiation Group Code">Initiation Department Code</label>
+                                            <label for="Initiation Group Code">Initiator department code</label>
                                             <input type="text" name="initiator_group_code"
                                                 value="{{ $data->initiator_group_code }}" id="initiator_group_code"
                                                 readonly>
@@ -723,21 +723,26 @@
 
                                     <script>
                                         function toggleOtherField() {
-                                            var selectBox = document.getElementById("initiated_through");
-                                            var otherField = document.getElementById("initiated_through_req");
+                                            const selectBox = document.getElementById("initiated_through");
+                                            const otherField = document.getElementById("initiated_through_req");
 
-                                            if (selectBox.value === "others") {
+                                            if (!selectBox || !otherField) return;
+
+                                            // Always read the value, even if the select is disabled
+                                            const selectedValue = selectBox.options[selectBox.selectedIndex].value;
+
+                                            if (selectedValue === "others") {
                                                 otherField.style.display = "block";
                                             } else {
                                                 otherField.style.display = "none";
                                             }
                                         }
 
-                                        // Call the function on page load to check the initial state
-                                        window.onload = function() {
+                                        document.addEventListener("DOMContentLoaded", function () {
                                             toggleOtherField();
-                                        };
+                                        });
                                     </script>
+
 
                                 
 

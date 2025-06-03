@@ -470,20 +470,23 @@
                                 {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="Document Type">
-                                            Document Type<span class="text-danger">*</span>
+                                            Document Type<span class="text-danger"> *</span>
                                         </label>
                                         <input type="text" name="document_type" {{ $showdata->stage != 1 ? 'readonly' : '' }}
                                             {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}
                                             value="{{ $showdata->document_type }}" required>
+                                            
                                     </div>
                                 </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="doc-type">Document Type</label>
+                                        <label for="doc-type">Document Type <span class="text-danger">*</span>
+                                    </label>
                                         <select name="document_type" id="doc-type"
                                             onchange="handleDocumentSelection(this)"
-                                            {{ Helpers::isRevised($showdata->stage) }}>
+                                            {{ Helpers::isRevised($showdata->stage) }} {{ $showdata->stage != 1 ? 'readonly' : '' }}
+                                            {{ $showdata->stage == 0 || $showdata->stage == 8 ? 'disabled' : '' }}>
 
                                             <option value="">Enter your Selection</option>
 

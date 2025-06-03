@@ -194,11 +194,12 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan">
+                                        <label for="Effectiveness_check_Plan"><b>Effectiveness check Plan</b></label>
+                                        <textarea name="Effectiveness_check_Plan" class="form-control" rows="4"></textarea>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="group-input">
                                 <label for="Attachments">Attachment</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
