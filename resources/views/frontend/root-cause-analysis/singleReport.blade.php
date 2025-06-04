@@ -363,6 +363,30 @@
             display: block;
             margin: 5px auto;
         }
+
+        .problem-statement th {
+            background: #f4bb22;
+            width: 150px;
+        }
+
+        .why-label {
+            color: #393cd4;
+            width: 150px;
+        }
+
+        .answer-label {
+            color: #393cd4;
+            width: 150px;
+        }
+
+        .root-cause th {
+            background: #0080006b;
+            width: 150px;
+        }
+
+        .text-muted {
+            color: gray;
+        }
         
     </style>
 
@@ -396,6 +420,18 @@
             </tr>
         </table>
     </header>
+     <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -581,30 +617,32 @@
                     Investigation Details
                 </div>
                 <table>
-                    <th class="w-20" style="font-size: 13px;">Description</th>
-                    <td class="w-80">
-                        @if ($data->description)
-                            {{ $data->description }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
+                    <tr>
+                        <th class="w-20" >Description</th>
+                        <td class="w-80">
+                            @if ($data->description)
+                                {{ $data->description }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
                 </table>
 
                 <table>
-                    <th class="w-20" style="font-size: 13px;">Comments</th>
-                    <td class="w-80">
-                        @if ($data->comments)
-                            {{ $data->comments }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td>
+                    <tr>
+                        <th class="w-20">Comments</th>
+                        <td class="w-80">
+                            @if ($data->comments)
+                                {{ $data->comments }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                 </table>
-
-
-
-
+                
                 <div class="border-table">
                     <div class="block-head">
                         Initial Attachment
@@ -634,27 +672,26 @@
                 </div>
             </div>
 
-
-         
-               <div class="block">
+        <div class="block">
             <div class="block-head">
-                HOD Review
+              HOD Review
             </div>
-            <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                    HOD Review Comment</label>
-                <span style="font-size: 0.8rem; margin-left: 60px;">
-                    @if ($data->hod_comments)
-                        {{ $data->hod_comments }}
-                    @else
-                        Not Applicable
-                    @endif
-                </span>
-            </div>
+            <table>
+                <tr>
+                    <th class="w-20" >HOD Review Comment</th>
+                    <td class="w-80">
+                        @if ($data->hod_comments)
+                            {{ $data->hod_comments }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+
+            </table>
             <div class="border-table">
                 <div class="block-head">
                     HOD Review Attachments
-
                 </div>
                 <table>
 
@@ -679,25 +716,26 @@
 
                 </table>
             </div>
-
         </div>
 
         <div class="block">
             <div class="block-head">
-                Initial QA/CQA Review       
+              Initial QA/CQA Review 
             </div>
-            <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                    Initial QA/CQA Review Comments
-                </label>
-                <span style="font-size: 0.8rem; margin-left: 60px;">
-                    @if ($data->cft_comments_new)
-                        {{ $data->cft_comments_new }}
-                    @else
-                        Not Applicable
-                    @endif
-                </span>
-            </div>
+            <table>
+                <tr>
+                    <th class="w-20" >Initial QA/CQA Review Comments</th>
+                    <td class="w-80">
+                        @if ($data->cft_comments_new)
+                            {{ $data->cft_comments_new }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+
+            </table>
+            
             <div class="border-table">
                 <div class="block-head">
                     Initial QA/CQA Review Attachment
@@ -725,8 +763,8 @@
 
                 </table>
             </div>
-
         </div>
+
 
 
 
@@ -737,7 +775,22 @@
                 <!-- <div class="block-head">
                     Investigation
                 </div> -->
-                <div class="other-container ">
+
+                <table>
+                    <tr>
+                        <th class="w-20">Objective</th>
+                        <td class="w-80">
+                            @if ($data->objective)
+                                {{ strip_tags($data->objective) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -753,16 +806,29 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         <div class="table-containers" style="">
-                                            {!! strip_tags($data->objective, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            {!! strip_tags($data->objective, '<table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">Scope</th>
+                        <td class="w-80">
+                            @if ($data->scope)
+                                {{ strip_tags($data->scope) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -778,16 +844,29 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         <div class="table-containers">
-                                            {!! strip_tags($data->scope, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            {!! strip_tags($data->scope, '<table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">Problem Statement</th>
+                        <td class="w-80">
+                            @if ($data->problem_statement_rca)
+                                {{ strip_tags($data->problem_statement_rca) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -803,16 +882,29 @@
                                 <div class="custom-procedure-content">
                                     <div class="custom-content-wrapper">
                                         <div class="table-containers">
-                                            {!! strip_tags($data->problem_statement_rca, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                            {!! strip_tags($data->problem_statement_rca, '<table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">Background</th>
+                        <td class="w-80">
+                            @if ($data->requirement)
+                                {{ strip_tags($data->requirement) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -835,9 +927,25 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">Immediate Action</th>
+                        <td class="w-80">
+                            @if ($data->immediate_action)
+                                {{ strip_tags($data->immediate_action) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+
+                
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -860,7 +968,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <table>
                     <tr>
@@ -955,134 +1063,100 @@
 
                 </div>
                
-
                 <div class="block-head">
                     Fishbone or Ishikawa Diagram
                 </div>
-                <table>
-                     <tr>
-                        <th class="w-20">Measurement</th>
-                        {{-- <td class="w-80">@if ($riskgrdfishbone->measurement){{ $riskgrdfishbone->measurement }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $measurement = unserialize($data->measurement);
-                            @endphp
 
-                            @if (is_array($measurement))
-                                @foreach ($measurement as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($measurement))
-                                {{ htmlspecialchars($measurement) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Materials</th>
-                        {{-- <td class="w-80">@if ($data->materials){{ $data->materials }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $materials = unserialize($data->materials);
-                            @endphp
+                @if (!empty($data))
+                    @php
+                        $measurement = !empty($data->measurement) ? unserialize($data->measurement) : [];
+                        $materials = !empty($data->materials) ? unserialize($data->materials) : [];
+                        $methods = !empty($data->methods) ? unserialize($data->methods) : [];
 
-                            @if (is_array($materials))
-                                @foreach ($materials as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($materials))
-                                {{ htmlspecialchars($materials) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
+                        $environment = !empty($data->environment) ? unserialize($data->environment) : [];
+                        $manpower = !empty($data->manpower) ? unserialize($data->manpower) : [];
+                        $machine = !empty($data->machine) ? unserialize($data->machine) : [];
 
-                    </tr>
-                    <tr>
-                        <th class="w-20">Methods</th>
-                        {{-- <td class="w-80">@if ($data->methods){{ $data->methods }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $methods = unserialize($data->methods);
-                            @endphp
+                        $problem_statement = $data->problem_statement ?? 'N/A';
 
-                            @if (is_array($methods))
-                                @foreach ($methods as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($methods))
-                                {{ htmlspecialchars($methods) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Mother Environment</th>
-                        {{-- <td class="w-80">@if ($data->environment){{ $data->environment }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $environment = unserialize($data->environment);
-                            @endphp
+                        $maxCount = max(count($measurement), count($materials), count($methods));
+                        $maxCount2 = max(count($environment), count($manpower), count($machine));
+                    @endphp
 
-                            @if (is_array($environment))
-                                @foreach ($environment as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($environment))
-                                {{ htmlspecialchars($environment) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Man</th>
-                        {{-- <td class="w-80">@if ($data->manpower){{ $data->manpower }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $manpower = unserialize($data->manpower);
-                            @endphp
+                    <div style="padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9;">
+                        <!-- Top Table -->
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr valign="top">
+                                <!-- First Table -->
+                                <td style="width: 70%;">
+                                    <table style="width: 70%; border-collapse: collapse; text-align: left;">
+                                        <thead>
+                                            <tr style="color: #007bff;">
+                                                <th style="padding: 10px; border: 1px solid #ddd;">Measurement</th>
+                                                <th style="padding: 10px; border: 1px solid #ddd;">Materials</th>
+                                                <th style="padding: 10px; border: 1px solid #ddd;">Methods</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for ($i = 0; $i < $maxCount; $i++)
+                                                <tr>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">{{ $measurement[$i] ?? 'N/A' }}</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">{{ $materials[$i] ?? 'N/A' }}</td>
+                                                    <td style="padding: 10px; border: 1px solid #ddd;">{{ $methods[$i] ?? 'N/A' }}</td>
+                                                </tr>
+                                            @endfor
+                                        </tbody>
+                                    </table>
+                                </td>        
+                            </tr>
+                        </table>
 
-                            @if (is_array($manpower))
-                                @foreach ($manpower as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($manpower))
-                                {{ htmlspecialchars($manpower) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Machine</th>
-                        {{-- <td class="w-80">@if ($data->machine){{ $data->machine }}@else Not Applicable @endif</td> --}}
-                        <td class="w-80">
-                            @php
-                                $machine = unserialize($data->machine);
-                            @endphp
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr >
+                                <td style="width: 70%;">
+                                    <div style="width: 100%; height: 2px; background: blue; margin: 20px 0;"></div>
+                                </td>
+                                <td style="width: 30%;">
+                                    <div style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #ffffff;">
+                                        <strong style="color: #007bff;">Problem Statement:</strong>
+                                        <div style="margin-top: 10px;">
+                                            {{ $data->problem_statement ?? 'N/A' }}
+                                        </div>
+                                    </div>
+                                </td>       
+                            </tr>
+                        </table>
 
-                            @if (is_array($machine))
-                                @foreach ($machine as $value)
-                                    {{ htmlspecialchars($value) }}
-                                @endforeach
-                            @elseif(is_string($machine))
-                                {{ htmlspecialchars($machine) }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
 
-                </table>
-                <div class="inner-block">
-                    <label
-                        class="Summer"style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                        Problem Statement</label>
-                    <span style="font-size: 0.8rem; margin-left: 60px;">
-                        @if ($data->problem_statement)
-                            {{ $data->problem_statement }}
-                        @else
-                            Not Applicable
-                        @endif
-                    </span>
-                </div>
+                        <!-- Second Table -->
+                        <table style="width: 70%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="color: #007bff;">
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Mother Environment</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Man</th>
+                                    <th style="padding: 10px; border: 1px solid #ddd;">Machine</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for ($i = 0; $i < $maxCount2; $i++)
+                                    <tr>
+                                        <td style="padding: 10px; border: 1px solid #ddd;">{{ $environment[$i] ?? 'N/A' }}</td>
+                                        <td style="padding: 10px; border: 1px solid #ddd;">{{ $manpower[$i] ?? 'N/A' }}</td>
+                                        <td style="padding: 10px; border: 1px solid #ddd;">{{ $machine[$i] ?? 'N/A' }}</td>
+                                    </tr>
+                                @endfor
+                            </tbody>
+                        </table>
+
+                    </div>
+                @else
+                    <p style="text-align: center; color: red;">No Fishbone data available.</p>
+                @endif
+
+
+
+                    <br><br><br><br>
+                
 
                 <div class="border-table tbl-bottum ">
                     <div class="block-head">
@@ -1337,7 +1411,7 @@
             </div>
 
 
-                <div class="other-container ">
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -1360,7 +1434,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <table>
+                    <tr>
+                        <th class="w-20">Others</th>
+                        <td class="w-80">
+                            @if ($data->root_cause_Others)
+                                {{ strip_tags($data->root_cause_Others) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
 
                 <div class="border-table">
                     <div class="block-head">
@@ -1390,7 +1477,7 @@
                     </table>
                 </div>  
 
-                <div class="other-container ">
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -1413,9 +1500,22 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">Root Cause</th>
+                        <td class="w-80">
+                            @if ($data->root_cause)
+                                {{ strip_tags($data->root_cause) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -1438,9 +1538,23 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">Impact / Risk Assessment</th>
+                        <td class="w-80">
+                            @if ($data->impact_risk_assessment)
+                                {{ strip_tags($data->impact_risk_assessment) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -1463,9 +1577,22 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="other-container ">
+                <table>
+                    <tr>
+                        <th class="w-20">CAPA</th>
+                        <td class="w-80">
+                            @if ($data->capa)
+                                {{ strip_tags($data->capa) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
@@ -1488,7 +1615,20 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
+                <table>
+                    <tr>
+                        <th class="w-20">Investigation Summary</th>
+                        <td class="w-80">
+                            @if ($data->investigation_summary_rca)
+                                {{ strip_tags($data->investigation_summary_rca) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                </table>
         
         
         <div class="border-table">
@@ -1563,17 +1703,19 @@
             <div class="block-head">
                 HOD Final Review
             </div>
-            <div class="inner-block">
-                <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-                    HOD Final Review Comments</label>
-                <span style="font-size: 0.8rem; margin-left: 60px;">
-                    @if ($data->hod_final_comments)
-                        {{ $data->hod_final_comments }}
-                    @else
-                        Not Applicable
-                    @endif
-                </span>
-            </div>
+
+            <table>
+                <tr>
+                    <th class="w-20"> HOD Final Review Comments</th>
+                    <td class="w-80">
+                        @if ($data->hod_final_comments)
+                            {{ strip_tags($data->hod_final_comments) }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+                </tr>
+            </table>
             <div class="border-table">
                 <div class="block-head">
                     HOD Final Review Attachment
@@ -1611,19 +1753,19 @@
     <div class="block-head">
         QA/CQA Final Review
     </div>
-    <div class="inner-block">
-        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-            QA/CQA Final Review Comments
-
-</label>
-        <span style="font-size: 0.8rem; margin-left: 60px;">
-            @if ($data->qa_final_comments)
-                {{ $data->qa_final_comments }}
-            @else
-                Not Applicable
-            @endif
-        </span>
-    </div>
+    <table>
+        <tr>
+            <th class="w-20">QA/CQA Final Review Comments</th>
+            <td class="w-80">
+                @if ($data->qa_final_comments)
+                    {{ strip_tags($data->qa_final_comments) }}
+                @else
+                    Not Applicable
+                @endif
+            </td>
+        </tr>
+    </table>
+    
     <div class="border-table">
         <div class="block-head">
             QA/CQA Final Review Attachment
@@ -1661,20 +1803,19 @@
     <div class="block-head">
         QAH/CQAH/Designee Final Approval
     </div>
-    
-    <div class="inner-block">
-        <label class="Summer" style="font-weight: bold; font-size: 13px; display: inline-block; width: 77px;">
-            QAH/CQAH/Designee Final Approval Comments
+    <table>
+        <tr>
+            <th class="w-20">QAH/CQAH/Designee Final Approval Comments</th>
+            <td class="w-80">
+                @if ($data->qah_final_comments)
+                    {{ strip_tags($data->qah_final_comments) }}
+                @else
+                    Not Applicable
+                @endif
+            </td>
+        </tr>
+    </table>
 
-</label>
-        <span style="font-size: 0.8rem; margin-left: 60px;">
-            @if ($data->qah_final_comments)
-                {{ $data->qah_final_comments }}
-            @else
-                Not Applicable
-            @endif
-        </span>
-    </div>
     <div class="border-table">
         <div class="block-head">
             QAH/CQAH/Designee Final Approval Attachments
@@ -2236,18 +2377,6 @@ Not Applicable
     </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-            </tr>
-        </table>
-    </footer>
 
 </body>
 
