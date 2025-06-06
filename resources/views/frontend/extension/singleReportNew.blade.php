@@ -497,11 +497,11 @@
             </div>
             @if ($data->count == 3) 
             <div class="block">
-                <div class="block-head">CQA Approval</div>
+                <div class="block-head">CQA Final Approval</div>
 
                 {{-- <table>
                     <tr>
-                        <th class="w-20">CQA Approval Comments </th>
+                        <th class="w-20">CQA Final Approval Comments </th>
                         <td class="w-80">
                             @if ($data->QAapprover_remarks)
                                 {{ $data->QAapprover_remarks }}
@@ -513,7 +513,7 @@
                 </table> --}}
 
                 
-                    <label class="Summer" for="QA/CQA Approval Comments">CQA Approval Comments</label>
+                    <label class="Summer" for="QA/CQA Approval Comments">CQA Final Approval Comments</label>
                     <div class="div-data">
                         @if (!empty($data->QAapprover_remarks))
                             {{ $data->QAapprover_remarks }}
@@ -525,7 +525,7 @@
 
             </div>
             <div class="block">
-                <div class="block-head">CQA Approval Attachments</div>
+                <div class="block-head">CQA Final Approval Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -619,14 +619,16 @@
                             <td class="w-80">@if ($data->send_cqa_comment) {{ $data->send_cqa_comment }} @else Not Applicable @endif</td>
                         </tr>
                     @endif
-                    <tr>
-                        <th class="w-20">Approved By</th>
-                        <td class="w-80">@if ($data->submit_by_approved) {{ $data->submit_by_approved }} @else Not Applicable @endif</td>
-                        <th class="w-20">Approved On</th>
-                        <td class="w-80">@if ($data->submit_on_approved) {{ $data->submit_on_approved }} @else Not Applicable @endif</td>
-                        <th class="w-20">Approved Comment</th>
-                        <td class="w-80">@if ($data->submit_comment_approved) {{ $data->submit_comment_approved }} @else Not Applicable @endif</td>
-                    </tr>
+                    @if($data->count != 3)
+                        <tr>
+                            <th class="w-20">Approved By</th>
+                            <td class="w-80">@if ($data->submit_by_approved) {{ $data->submit_by_approved }} @else Not Applicable @endif</td>
+                            <th class="w-20">Approved On</th>
+                            <td class="w-80">@if ($data->submit_on_approved) {{ $data->submit_on_approved }} @else Not Applicable @endif</td>
+                            <th class="w-20">Approved Comment</th>
+                            <td class="w-80">@if ($data->submit_comment_approved) {{ $data->submit_comment_approved }} @else Not Applicable @endif</td>
+                        </tr>
+                    @endif
                     @if($data->count == 3)
                         <tr>
                             <th class="w-20">CQA Approval Complete By</th>

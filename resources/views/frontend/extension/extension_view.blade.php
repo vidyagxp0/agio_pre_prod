@@ -136,16 +136,16 @@
                                 More Info Required
                             </button>
                         @elseif($extensionNew->stage == 3 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67))
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                               Approved
-                            </button> --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
-                                Approved
-                            </button>
+
+                           @if($extensionNew->count != 3)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
+                                    Approved
+                                </button>
+                            @endif
                             @if($extensionNew->count == 3)
-                                <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
-                                </button> -->
+                                </button>
                             @endif
                             <!-- @if (Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
@@ -281,18 +281,22 @@
                             @else
                                 <div class="">In Review</div>
                             @endif
-
+                            
                             @if ($extensionNew->stage >= 3)
                                 <div class="active">In Approved</div>
                             @else
                                 <div class="">In Approved</div>
                             @endif
 
-                            @if($extensionNew->count == 3 && $extensionNew->stage >= 5)
+                            @if ($extensionNew->count == 3)
+                                <div class="{{ $extensionNew->stage >= 5 ? 'active' : '' }}">In CQA Approval</div>
+                            @endif
+
+                           {{-- @if($extensionNew->stage >= 5)
                                 <div class="active">In CQA Approval</div>
                             @else
-                                <div class="" style="display: none;">In CQA Approval</div>
-                            @endif
+                                <div class="">In CQA Approval</div>
+                            @endif --}}
 
                             @if ($extensionNew->stage >= 6)
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
@@ -363,14 +367,15 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">HOD Review</button>
 
-                @if ($extensionNew->data_number == 3)
-                   <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
-                @elseif($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
+                {{-- @if ($extensionNew->data_number == 3)
+                   <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button> --}}
+
+                @if($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->count_data == 'number3' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->data_number == 3 || $extensionNew->count == 1 || $extensionNew->count == 2 || $extensionNew->count == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
 
                 @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Final Approval</button>
                 @endif
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
@@ -477,11 +482,11 @@
                                             Extension Number<span class="text-danger"></span>
                                         </label>
                                             @if (empty($extensionNew->parent_type) || $extensionNew->parent_type == 'number' || $extensionNew->parent_type == 'number1' || $extensionNew->parent_type == 'number2')
-                                            <select name="count_data" id="" {{$extensionNew->stage == 1 ? '' : 'disabled'}}>
-                                                <option value="">--Select Extension Number--</option>
-                                                <option value="number1" @if ($extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
-                                                <option value="number2" @if ($extensionNew->count_data == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
-                                                <option value="number" @if ($extensionNew->count_data == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
+                                                <select name="count_data" id="" {{$extensionNew->stage == 1 ? '' : 'readonly'}}>
+                                                    <option value="">--Select Extension Number--</option>
+                                                    <option value="number1" @if ($extensionNew->count_data == 'number1' || $extensionNew->data_number == '1') selected @endif>1</option>
+                                                    <option value="number2" @if ($extensionNew->count_data == 'number2' || $extensionNew->data_number == '2') selected @endif>2</option>
+                                                    <option value="number" @if ($extensionNew->count_data == 'number' || $extensionNew->data_number == '3') selected @endif>3</option>
                                                 </select>
                                             @else
                                                 <!-- <select name="count" id="" disabled>
@@ -917,139 +922,140 @@
                     </div>
                 </div>
                 <!-- Approver-->
-                @if( $extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2)
-                <div id="CCForm3" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Assigned To">QA/CQA Approval Comments @if($extensionNew->stage == 3)<span class="text-danger">*</span>@endif </label>
-                                    <textarea name="approver_remarks" id="approver_remarks" cols="30"
-                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }} required>{{ $extensionNew->approver_remarks }}</textarea>
+                @if( $extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->count_data == 'number3' || $extensionNew->data_number == 3 || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2 || $extensionNew->count == 3 )
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Assigned To">QA/CQA Approval Comments @if($extensionNew->stage == 3)<span class="text-danger">*</span>@endif </label>
+                                        <textarea name="approver_remarks" id="approver_remarks" cols="30"
+                                            {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }} required>{{ $extensionNew->approver_remarks }}</textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            @if ($extensionNew->file_attachment_approver)
-                                @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
-                                    <input id="QAREFEFile-{{ $loop->index }}" type="hidden"
-                                        name="existing_file_attachment_approver[{{ $loop->index }}]"
-                                        value="{{ $file }}">
-                                @endforeach
-                            @endif
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">QA/CQA Approval Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div disabled class="file-attachment-list" id="file_attachment_approver">
-                                            @if ($extensionNew->file_attachment_approver)
-                                                @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
-                                                    <h6 class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a class="remove-file"
-                                                            data-remove-id="QAREFEFile-{{ $loop->index }}"
-                                                            data-file-name="{{ $file }}"
-                                                            style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 6) pointer-events: none; @endif"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="HOD_Attachments" name="file_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple
-                                                {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
+                                @if ($extensionNew->file_attachment_approver)
+                                    @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
+                                        <input id="QAREFEFile-{{ $loop->index }}" type="hidden"
+                                            name="existing_file_attachment_approver[{{ $loop->index }}]"
+                                            value="{{ $file }}">
+                                    @endforeach
+                                @endif
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">QA/CQA Approval Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="file_attachment_approver">
+                                                @if ($extensionNew->file_attachment_approver)
+                                                    @foreach (json_decode($extensionNew->file_attachment_approver) as $file)
+                                                        <h6 class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a class="remove-file"
+                                                                data-remove-id="QAREFEFile-{{ $loop->index }}"
+                                                                data-file-name="{{ $file }}"
+                                                                style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 6) pointer-events: none; @endif"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="HOD_Attachments" name="file_attachment_approver[]"
+                                                    oninput="addMultipleFiles(this, 'file_attachment_approver')" multiple
+                                                    {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <div class="button-block">
+                                <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 || $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                            <button type="button">
-                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                                <button type="button">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
 
                 @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
-                <div id="CCForm5" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Assigned To">CQA Approval Comments @if($extensionNew->stage == 5)<span class="text-danger">*</span>@endif</label>
-                                    <textarea name="QAapprover_remarks" id="QAapprover_remarks" cols="30"
-                                        {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->QAapprover_remarks }}</textarea>
+                    <div id="CCForm5" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Assigned To">CQA Final Approval Comments @if($extensionNew->stage == 5)<span class="text-danger">*</span>@endif</label>
+                                        <textarea name="QAapprover_remarks" id="QAapprover_remarks" cols="30"
+                                            {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->QAapprover_remarks }}</textarea>
+                                    </div>
                                 </div>
-                            </div>
 
-                            @if ($extensionNew->QAfile_attachment_approver)
-                                @foreach (json_decode($extensionNew->QAfile_attachment_approver) as $file)
-                                    <input id="QAREFEFile-{{ $loop->index }}" type="hidden"
-                                        name="existing_QAfile_attachment_approver[{{ $loop->index }}]"
-                                        value="{{ $file }}">
-                                @endforeach
-                            @endif
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">CQA Approval Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div disabled class="file-attachment-list" id="QAfile_attachment_approver">
-                                            @if ($extensionNew->QAfile_attachment_approver)
-                                                @foreach (json_decode($extensionNew->QAfile_attachment_approver) as $file)
-                                                    <h6 class="file-container text-dark"
-                                                        style="background-color: rgb(243, 242, 240);">
-                                                        <b>{{ $file }}</b>
-                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                                                class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
-                                                        <a class="remove-file"
-                                                            data-remove-id="QAREFEFile-{{ $loop->index }}"
-                                                            data-file-name="{{ $file }}"
-                                                            style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 6) pointer-events: none; @endif"><i
-                                                                class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
-                                                    </h6>
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="HOD_Attachments" name="QAfile_attachment_approver[]"
-                                                oninput="addMultipleFiles(this, 'QAfile_attachment_approver')" multiple
-                                                {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
+                                @if ($extensionNew->QAfile_attachment_approver)
+                                    @foreach (json_decode($extensionNew->QAfile_attachment_approver) as $file)
+                                        <input id="QAREFEFile-{{ $loop->index }}" type="hidden"
+                                            name="existing_QAfile_attachment_approver[{{ $loop->index }}]"
+                                            value="{{ $file }}">
+                                    @endforeach
+                                @endif
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">CQA Final Approval Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="QAfile_attachment_approver">
+                                                @if ($extensionNew->QAfile_attachment_approver)
+                                                    @foreach (json_decode($extensionNew->QAfile_attachment_approver) as $file)
+                                                        <h6 class="file-container text-dark"
+                                                            style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                                    class="fa fa-eye text-primary"
+                                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a class="remove-file"
+                                                                data-remove-id="QAREFEFile-{{ $loop->index }}"
+                                                                data-file-name="{{ $file }}"
+                                                                style="@if ($extensionNew->stage == 0 || $extensionNew->stage == 6) pointer-events: none; @endif"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="HOD_Attachments" name="QAfile_attachment_approver[]"
+                                                    oninput="addMultipleFiles(this, 'QAfile_attachment_approver')" multiple
+                                                    {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'disabled' }}>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 ||  $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <div class="button-block">
+                                <button type="submit" id="ChangesaveButton" class="saveButton" {{ $extensionNew->stage == 0 ||  $extensionNew->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
 
-                            <button type="button">
-                                <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                                <button type="button">
+                                    <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endif
+
                 <!-- Activity Log content -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -1057,37 +1063,38 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Activated By">Submit By</label>
-                                    <div class="static">{{ $extensionNew->submit_by }}</div>
+                                    <div class="static">{{ $extensionNew->submit_by ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Activated On">Submit On</label>
-                                    <div class="static">{{ $extensionNew->submit_on }}</div>
+                                    <div class="static">{{ $extensionNew->submit_on ?? 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Activated On">Submit Comment</label>
-                                    <div class="static">{{ $extensionNew->submit_comment }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_comment) ? $extensionNew->submit_comment : 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Cancel By</label>
-                                    <div class="static">{{ $extensionNew->reject_by }}</div>
+                                    <div class="static">{{ !empty($extensionNew->reject_by) ? $extensionNew->reject_by : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Cancel On</label>
-                                    <div class="static">{{ $extensionNew->reject_on }}</div>
+                                    <div class="static">{{ !empty($extensionNew->reject_on) ? $extensionNew->reject_on : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Cancel Comment</label>
-                                    <div class="static">{{ $extensionNew->reject_comment }}</div>
+                                    <div class="static">{{ !empty($extensionNew->reject_comment) ? $extensionNew->reject_comment : 'Not Applicable' }}</div>
                                 </div>
                             </div>
 
@@ -1095,41 +1102,44 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Review By</label>
-                                    <div class="static">{{ $extensionNew->submit_by_review }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_by_review) ? $extensionNew->submit_by_review : 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Review On</label>
-                                    <div class="static">{{ $extensionNew->submit_on_review }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_on_review) ? $extensionNew->submit_on_review : 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Review Comment</label>
-                                    <div class="static">{{ $extensionNew->submit_comment_review }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_comment_review) ? $extensionNew->submit_comment_review : 'Not Applicable' }}</div>
                                 </div>
                             </div>
-
-
-
-
+                            
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Reject By</label>
-                                    <div class="static">{{ $extensionNew->submit_by_inapproved }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_by_inapproved) ? $extensionNew->submit_by_inapproved : 'Not Applicable' }}</div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Reject On</label>
-                                    <div class="static">{{ $extensionNew->submit_on_inapproved }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_on_inapproved) ? $extensionNew->submit_on_inapproved : 'Not Applicable' }}</div>
                                 </div>
                             </div>
+                            
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Reject Comment</label>
-                                    <div class="static">{{ $extensionNew->submit_commen_inapproved }}</div>
+                                    <div class="static">
+                                      {{ !empty($extensionNew->submit_commen_inapproved) ? $extensionNew->submit_commen_inapproved : 'Not Applicable' }}
+                                    </div>
                                 </div>
                             </div>
 
@@ -1138,59 +1148,62 @@
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Send for CQA By</label>
-                                    <div class="static">{{ $extensionNew->send_cqa_by }}</div>
+                                    <div class="static">{{ !empty($extensionNew->send_cqa_by) ? $extensionNew->send_cqa_by : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Send for CQA On</label>
-                                    <div class="static">{{ $extensionNew->send_cqa_on }}</div>
+                                    <div class="static">{{ !empty($extensionNew->send_cqa_on) ? $extensionNew->send_cqa_on : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Send for CQA Comment</label>
-                                    <div class="static">{{ $extensionNew->send_cqa_comment }}</div>
+                                    <div class="static">{{ !empty($extensionNew->send_cqa_comment) ? $extensionNew->send_cqa_comment : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                         @endif
 
+                        @if($extensionNew->count != 3)
+
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for=" Rejected By"> Approved By</label>
-                                    <div class="static">{{ $extensionNew->submit_by_approved }}</div>
+                                    <label for=" Rejected By">Approved By</label>
+                                    <div class="static">{{ !empty($extensionNew->submit_by_approved) ? $extensionNew->submit_by_approved : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On"> Approved On</label>
-                                    <div class="static">{{ $extensionNew->submit_on_approved }}</div>
+                                    <label for="Rejected On">Approved On</label>
+                                    <div class="static">{{ !empty($extensionNew->submit_on_approved) ? $extensionNew->submit_on_approved : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">Approved Comment</label>
-                                    <div class="static">{{ $extensionNew->submit_comment_approved }}</div>
+                                    <div class="static">{{ !empty($extensionNew->submit_comment_approved) ? $extensionNew->submit_comment_approved : 'Not Applicable' }}</div>
                                 </div>
                             </div>
+                        @endif
 
                         @if($extensionNew->count == 3)
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for=" Rejected By"> CQA Approval Complete By</label>
-                                    <div class="static">{{ $extensionNew->cqa_approval_by }}</div>
+                                    <label for=" Rejected By">CQA Approval Complete By</label>
+                                    <div class="static">{{ !empty($extensionNew->cqa_approval_by) ? $extensionNew->cqa_approval_by : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
-                                    <label for="Rejected On"> CQA Approval Complete On</label>
-                                    <div class="static">{{ $extensionNew->cqa_approval_on }}</div>
+                                    <label for="Rejected On">CQA Approval Complete On</label>
+                                    <div class="static">{{ !empty($extensionNew->cqa_approval_on) ? $extensionNew->cqa_approval_on : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Rejected On">CQA Approval Complete Comment</label>
-                                    <div class="static">{{ $extensionNew->cqa_approval_comment }}</div>
+                                    <div class="static">{{ !empty($extensionNew->cqa_approval_comment) ? $extensionNew->cqa_approval_comment : 'Not Applicable' }}</div>
                                 </div>
                             </div>
                         @endif

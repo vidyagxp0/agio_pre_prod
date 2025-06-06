@@ -1245,6 +1245,7 @@ class ExtensionNewController extends Controller
             ], 500);
         }
     }
+    
     public function moreinfoStateChange(Request $request, $id)
     {
         try {
@@ -1345,6 +1346,7 @@ class ExtensionNewController extends Controller
             ], 500);
         }
     }
+
     public function sendstage(Request $request, $id)
     {
         try {
@@ -1607,7 +1609,8 @@ class ExtensionNewController extends Controller
         }
     }
 
-    public function rejectStage(Request $request, $id){
+    public function rejectStage(Request $request, $id)
+    {
 
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -1686,17 +1689,17 @@ class ExtensionNewController extends Controller
             return back();
         }
 
-    }else {
-        toastr()->error('E-signature Not match');
-        return back();
+        }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
     }
-} catch (\Throwable $th) {
-    return response()->json([
-        'success' => false,
-        'message' => $th->getMessage()
-    ], 500);
-}
-}
 
 
     public function sendCQA(Request $request, $id)
@@ -1829,6 +1832,7 @@ class ExtensionNewController extends Controller
             ], 500);
         }
     }
+
     public static function sendApproved(Request $request, $id)
     {
         try {
@@ -1944,6 +1948,7 @@ class ExtensionNewController extends Controller
             return $pdf->stream('Extension' . $id . '.pdf');
         }
     }
+
     public function extensionNewAuditTrail($id)
     {
         $audit = ExtensionNewAuditTrail::where('extension_id', $id)->orderByDesc('id')->paginate(5);
@@ -2047,8 +2052,7 @@ class ExtensionNewController extends Controller
 
         return response()->json(['html' => $responseHtml]);
     }
-
-
+    
     public static function auditReport($id)
     {
         $doc = extension_new::find($id);

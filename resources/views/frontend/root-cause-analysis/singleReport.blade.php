@@ -1026,7 +1026,7 @@
                                 <th style="font-size: 7px" class="rotate th">Probability (P)</th>
                                 <th style="font-size: 7px" class="rotate th">Detection (D)</th>
                                 <th style="font-size: 7px" class="rotate th">Risk Level (RPN)</th>
-                                <th style="font-size: 7px">Category of Risk Level (Low, Medium, High)</th>
+                                <th style="font-size: 7px">Category of Risk Level (Low, Medium and High)</th>
                                 <th style="font-size: 7px">Risk Acceptance (Y/N)</th>
                                 <th style="font-size: 7px">Traceability Document</th>
                             </tr>
