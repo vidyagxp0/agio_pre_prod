@@ -212,8 +212,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
+
+                                        @if (!empty($parent_division_id))
+                                        <input disabled type="text" name="record"
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/MC/{{ date('Y') }}/{{ $record_number }}">                                        
+                                        @else  
                                         <input disabled type="text" name="record" id="record"
                                             value="{{ $getDiv }}/MC/{{ date('Y') }}/{{ str_pad($record, 4, '0', STR_PAD_LEFT) }}">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -221,9 +227,16 @@
                                     <div class="group-input">
                                         <label disabled for="Short Description">Site / Location<span
                                                 class="text-danger"></span></label>
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+
+                                        @if (!empty($parent_division_id))
+                                            <input readonly type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        @else  
+                                            <input disabled type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
 

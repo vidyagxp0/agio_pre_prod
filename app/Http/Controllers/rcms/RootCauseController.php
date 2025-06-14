@@ -4603,7 +4603,7 @@ class RootCauseController extends Controller
     }
     public function child_r_c_a(Request $request, $id)
     {
-        $parent_id = $id;
+        $parent_id = RootCauseAnalysis::find($id)->record;
         $parent_initiator_id = RootCauseAnalysis::where('id', $id)->value('initiator_id');
         $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
 
@@ -4623,11 +4623,12 @@ class RootCauseController extends Controller
         $record = $record_number;
         return view('frontend.action-item.action-item', compact('parent_intiation_date','parent_division_id', 'parent_initiator_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'old_record', 'data_record', 'data'));
     }
+
     public function RCAChildRoot(Request $request, $id)
     {
         $cc = RootCauseAnalysis::find($id);
         $cft = [];
-        $parent_id = $id;
+        $parent_id = RootCauseAnalysis::find($id)->record;
         $parent_type = "Capa";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);

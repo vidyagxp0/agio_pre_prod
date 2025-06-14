@@ -9791,7 +9791,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $record_number = $cc->record;
         $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
-        $parent_id = $record;
+        $parent_id = MarketComplaint::find($id)->record;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -9858,7 +9858,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $record_number = $cc->record;
         $record_number = str_pad($record, 4, '0', STR_PAD_LEFT);
-        $parent_id = $record;
+        $parent_id = MarketComplaint::find($id)->record;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');

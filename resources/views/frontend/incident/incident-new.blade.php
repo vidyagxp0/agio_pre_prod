@@ -1835,7 +1835,7 @@ dd($pre);
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="froala" name="Description_incident" id="summernote-1" required> </textarea>
+                                        <textarea class="froala" name="Description_incident" id="summernote-1"> </textarea>
                                     </div>
                                     @error('Description_incident[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1846,7 +1846,7 @@ dd($pre);
                                         <label for="Description Incident">Investigation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="froala" name="investigation"  > </textarea>
+                                        <textarea class="froala" name="investigation"> </textarea>
                                     </div>
                                     @error('investigation[]')
                                         <div class="text-danger">{{ $message }}</div>
@@ -1857,7 +1857,7 @@ dd($pre);
                                         <label for="Description Incident">Immediate corrective action</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="immediate_correction"  > </textarea>
+                                        <textarea class="tiny" name="immediate_correction"> </textarea>
                                     </div>
                                     @error('immediate_correction[]')
                                         <div class="text-danger">{{ $message }}</div>

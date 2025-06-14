@@ -13119,7 +13119,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     public function child(Request $request, $id)
     {
         $cc = CC::find($id);
-        $parent_id = $id;
+        $parent_id = cc::find($id)->record;
         $parent_name = "CC";
         $parent_type = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -13576,7 +13576,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
 
 
-            return $pdf->stream('SOP' . $id . '.pdf');
+            return $pdf->stream('change_control' . $id . '.pdf');
         }
     }
 

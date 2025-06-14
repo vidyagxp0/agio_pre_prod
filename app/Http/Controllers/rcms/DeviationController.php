@@ -9322,7 +9322,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     {
 
         $cft = [];
-        $parent_id = $id;
+        $parent_id = Deviation::find($id)->record;
         $parent_type = "Deviation";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -9340,7 +9340,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
         $hod = User::where('role', 4)->get();
         if ($request->child_type == "extension") {
             // $parent_due_date = "";
-            $parent_id = $id;
             $parent_name = $request->parent_name;
             // if ($request->due_date) {
             //     $parent_due_date = $request->due_date;
@@ -9386,7 +9385,6 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $parent_name = "Action Item";
             $actionchild = Deviation::find($id);
             $actionchild->actionchild = $record_number;
-            $parent_id = $id;
             $actionchild->save();
 
 
@@ -9399,7 +9397,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
             $effectivenesschild = Deviation::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
-        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type','parent_due_date',));
+            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type','parent_due_date',));
         }
         elseif ($request->child_type == "Change_control") {
             $parent_name = "CAPA";

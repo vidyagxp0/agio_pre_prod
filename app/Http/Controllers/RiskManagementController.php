@@ -11091,7 +11091,7 @@ class RiskManagementController extends Controller
         // return "test";
 
         $cft = [];
-        $parent_id = $id;
+        $parent_id = RiskManagement::find($id)->record;
         $parent_type = "Risk Assesment";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -11108,7 +11108,6 @@ class RiskManagementController extends Controller
         $hod = User::where('role', 4)->get();
         if ($request->child_type == "extension") {
             $parent_due_date = "";
-            $parent_id = $id;
             $parent_name = $request->parent_name;
             if ($request->due_date) {
                 $parent_due_date = $request->due_date;
@@ -11143,7 +11142,6 @@ class RiskManagementController extends Controller
             $actionchild->actionchild = $record_number;
             // $p_record = RiskManagement::find($id);
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'RA' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
-            $parent_id = $id;
             $actionchild->save();
             $parentRecord = RiskManagement::where('id', $id)->value('record');
             return view('frontend.action-item.action-item', compact('old_record','data', 'parentRecord','record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','data_record'));
@@ -11155,7 +11153,7 @@ class RiskManagementController extends Controller
             $effectivenesschild = RiskManagement::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
             $effectivenesschild->save();
-        return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         elseif ($request->child_type == "Change_control") {
             $parent_name = "risk_assessment_required";

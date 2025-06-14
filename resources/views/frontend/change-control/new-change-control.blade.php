@@ -187,16 +187,27 @@
 
                                     <div class="group-input">
                                         <label for="Record Number">Record Number</label>
+                                        @if (!empty($parent_division_id))
+                                        <input disabled type="text" name="record"
+                                            value="{{ Helpers::getDivisionName($parent_division_id) }}/CC/{{ date('Y') }}/{{ $record_number }}">                                        
+                                        @else  
                                         <input disabled type="text" name="record"
                                             value=" {{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @if (!empty($parent_division_id))
+                                            <input disabled type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @else
+                                            <input disabled type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
 

@@ -997,7 +997,7 @@ class AuditProgramController extends Controller
         }
         $lastDocument = AuditProgram::find($id);
         $data = AuditProgram::find($id);
-        $data->record = ((RecordNumber::first()->value('counter')) + 1);
+        // $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->short_description = $request->short_description;
 
@@ -2652,7 +2652,8 @@ class AuditProgramController extends Controller
     // }
     public function child_audit_program(Request $request, $id)
     {
-        $parent_id = $id;
+        $parent_id = AuditProgram::find($id)->record;
+
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -2665,7 +2666,6 @@ class AuditProgramController extends Controller
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
-            $parent_id = $id;
             $parent_name = $request->parent_name;
             if ($request->due_date) {
                 $parent_due_date = $request->due_date;

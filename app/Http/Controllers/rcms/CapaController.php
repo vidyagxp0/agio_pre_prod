@@ -5234,7 +5234,7 @@ class CapaController extends Controller
     public function child_change_control(Request $request, $id)
     {
         $cft = [];
-        $parent_id = $id;
+        $parent_id = Capa::find($id)->record;
         $parent_type = "CAPA";
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
@@ -5280,7 +5280,6 @@ class CapaController extends Controller
         if ($request->child_type == "extension") {
             $parent_name = "CAPA";
             $parent_due_date = "";
-            $parent_id = $id;
             $parent_name = $request->$parent_name;
             if ($request->due_date) {
                 $parent_due_date = $request->due_date;
@@ -5302,13 +5301,17 @@ class CapaController extends Controller
 
     public function effectiveness_check(Request $request, $id)
     {
+        $parent_record = Capa::where('id', $id)->value('record');
+        $parent_division_id = Capa::where('id', $id)->value('division_id');
+        $parent_type = "CAPA";
+        $parent_id = Capa::find($id)->record;
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         $record_number = $record;
-        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
+        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number','parent_id','parent_type','parent_division_id','parent_record'));
     }
 
 

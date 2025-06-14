@@ -57,6 +57,10 @@
             <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data" class="formSubmit">
                 @csrf
                 <div id="step-form">
+                    @if (!empty($parent_id))
+                        <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                        <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                    @endif
 
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -67,19 +71,35 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+
+                                        @if (!empty($parent_division_id))
+                                            <input disabled type="text"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                             <input type="hidden" name="record_number" id="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                                value="{{ Helpers::getDivisionName($parent_division_id)}}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        @else
+                                            <input disabled type="text"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                                <input type="hidden" name="record_number" id="record_number"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        @endif
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        {{-- <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}"> --}}
-                                        <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @if (!empty($parent_division_id))
+                                        
+                                            <input readonly type="text" name="division_id"
+                                                value="{{ Helpers::getDivisionName($parent_division_id) }}">
+                                            <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+
+                                        @else
+                                            <input readonly type="text" name="division_id"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

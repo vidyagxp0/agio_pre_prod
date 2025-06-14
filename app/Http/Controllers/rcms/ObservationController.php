@@ -226,7 +226,7 @@ if(!empty($request->attach_files2)){
         $files = [];
         if ($request->hasFile('attach_files2')) {
             foreach ($request->file('attach_files2') as $file) {
-                $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'response_verify_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -239,7 +239,7 @@ if(!empty($request->attach_files2)){
         $files = [];
         if ($request->hasFile('impact_analysis')) {
             foreach ($request->file('impact_analysis') as $file) {
-                $name = $request->name . 'impact_analysis' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'response_summary_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -1102,7 +1102,7 @@ $data->auditee_department = $user ? $user->department->name : null;
             $files = [];
             if ($request->hasFile('impact_analysis')) {
                 foreach ($request->file('impact_analysis') as $file) {
-                    $name = $request->name . 'impact_analysis' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $name = $request->name . 'response_summary_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->move(public_path('upload/'), $name);
                     $files[] = $name;
                 }
@@ -1177,17 +1177,19 @@ $data->auditee_department = $user ? $user->department->name : null;
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
-        if (!empty($request->related_observations)) {
-        $files = [];
-        if ($request->hasFile('related_observations')) {
-            foreach ($request->file('related_observations') as $file) {
-                $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
-                $file->move(public_path('upload/'), $name);
-                $files[] = $name;
+
+            if (!empty($request->related_observations)) {
+                $files = [];
+                if ($request->hasFile('related_observations')) {
+                    foreach ($request->file('related_observations') as $file) {
+                        $name = $request->name . 'related_observations' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('upload/'), $name);
+                        $files[] = $name;
+                    }
+                }
+                $data->related_observations = json_encode($files);
             }
-        }
-        $data->related_observations = json_encode($files);
-    }
+            
         // if (!empty($request->related_observations)) {
         //     $files = [];
         //     if ($request->hasfile('related_observations')) {
@@ -1212,7 +1214,7 @@ $data->auditee_department = $user ? $user->department->name : null;
         $files = [];
         if ($request->hasFile('attach_files2')) {
             foreach ($request->file('attach_files2') as $file) {
-                $name = $request->name . 'attach_files2' . uniqid() . '.' . $file->getClientOriginalExtension();
+                $name = $request->name . 'response_verify_attach' . uniqid() . '.' . $file->getClientOriginalExtension();
                 $file->move(public_path('upload/'), $name);
                 $files[] = $name;
             }
@@ -3050,7 +3052,7 @@ if (is_array($request->action) && !empty($request->action)) {
     {
         $cc = Observation::find($id);
         $cft = [];
-        $parent_id = $id;
+        $parent_id = Observation::find($id)->record;
         $parent_type = "Observation";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);

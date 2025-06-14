@@ -6010,7 +6010,7 @@ class OOCController extends Controller
     {
                $cc = OutOfCalibration::find($id);
                $cft = [];
-               $parent_id = $id;
+               $parent_id = OutOfCalibration::find($id)->record;
                $parent_type = "OOC";
                $old_record = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -6087,7 +6087,7 @@ class OOCController extends Controller
     {
         $cc = OutOfCalibration::find($id);
                $cft = [];
-               $parent_id = $id;
+               $parent_id = OutOfCalibration::find($id)->record;
                $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
@@ -6127,7 +6127,6 @@ class OOCController extends Controller
 
              if ($request->revision == "Action-child") {
                     $parent_due_date = "";
-                    $parent_id = $id;
                     $parent_name = $request->parent_name;
                     if ($request->due_date) {
                        $parent_due_date = $request->due_date;
@@ -6179,7 +6178,7 @@ class OOCController extends Controller
     {
         $cc = OutOfCalibration::find($id);
                $cft = [];
-               $parent_id = $id;
+               $parent_id = OutOfCalibration::find($id)->record;
                $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
@@ -6220,7 +6219,7 @@ class OOCController extends Controller
     {
         $cc = OutOfCalibration::find($id);
                $cft = [];
-               $parent_id = $id;
+               $parent_id = OutOfCalibration::find($id)->record;
                $parent_type = "OOC";
                $currentDate = Carbon::now();
                $formattedDate = $currentDate->addDays(30);
@@ -6253,7 +6252,6 @@ class OOCController extends Controller
             }
             if ($request->revision == "Action-child") {
                 $parent_due_date = "";
-                $parent_id = $id;
                 $parent_name = $request->parent_name;
                 if ($request->due_date) {
                $parent_due_date = $request->due_date;

@@ -5781,8 +5781,8 @@ if ($areIniAttachmentsSame2 != true) {
 
         public function internal_audit_child(Request $request, $id)
         {
-            $parent_id = $id;
-            $parent_type = "Observations";
+            $parent_id = InternalAudit::find($id)->record;
+            $parent_type = "Internal Audit";
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
@@ -5793,30 +5793,28 @@ if ($areIniAttachmentsSame2 != true) {
 
         public function multiple_child(Request $request, $id)
         {
-            $parent_id = $id;
+            
             $old_records = InternalAudit::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $record = ((RecordNumber::first()->value('counter')) + 1);
             $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $parent_id = InternalAudit::find($id)->record;
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
+            $parent_type = "Internal Audit";
             if($request->child_type == 'action_item'){
                 $p_record = InternalAudit::find($id);
                 $data = InternalAudit::find($id);
-
                 $data_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-            $parent_type = "action_item";
                 return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id','record', 'data_record','data'));
             }
             if($request->child_type == 'r_c_a'){
-                $parent_type = "r_c_a";
                 return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
             }
             if($request->child_type == 'capa'){
-                $parent_type = "capa";
                 $Capachild = InternalAudit::find($id);
                 $reference_record = Helpers::getDivisionName($Capachild->division_id ) . '/' . 'IA' .'/' . date('Y') .'/' . str_pad($Capachild->record, 4, '0', STR_PAD_LEFT);
 

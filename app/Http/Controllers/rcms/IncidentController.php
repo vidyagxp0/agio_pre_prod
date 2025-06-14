@@ -117,7 +117,7 @@ class IncidentController extends Controller
         $incident->short_description_required = $request->short_description_required;
         $incident->nature_of_repeat = $request->nature_of_repeat;
         $incident->others = $request->others;
-//  dd($incident->others);
+         //  dd($incident->others);
         $incident->Product_Batch = $request->Product_Batch;
 
         $incident->Description_incident = $request->Description_incident;
@@ -2313,7 +2313,7 @@ class IncidentController extends Controller
         $old_record = Incident::select('id', 'division_id', 'record')->get();
         $data = Incident::find($id);
 
-//dd($data);
+        //dd($data);
         $userData = User::all();
 
         $data1 = IncidentCft::where('incident_id', $id)->latest()->first();
@@ -8567,7 +8567,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
     {
 
         $cft = [];
-        $parent_id = $id;
+        $parent_id = Incident::find($id)->record;
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -8584,7 +8584,6 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
         $hod = User::where('role', 4)->get();
         if ($request->child_type == "extension") {
             $parent_due_date = "";
-            $parent_id = $id;
             $parent_type = "Incident";
             $parent_name = $request->parent_name;
 
@@ -8626,7 +8625,6 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
             $actionchild = Incident::find($id);
             $data=Incident::find($id);
             $actionchild->actionchild = $record_number;
-            $parent_id = $id;
             //$p_record = OutOfCalibration::find($id);
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'INC' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $actionchild->save();

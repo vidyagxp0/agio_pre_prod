@@ -555,6 +555,7 @@
                         <div id="CCForm1" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
@@ -569,9 +570,9 @@
                                             <input readonly type="text" name="division_code"
                                                 {{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}
                                                 value="{{ Helpers::getDivisionName($data->division_id) }}">
-                                            {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator</b></label>

@@ -8754,9 +8754,9 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
     public function child_external(Request $request, $id)
     {
-        $parent_id = $id;
-         if ($request->child_type == "Action-Item") {
-            $parent_id = $id;
+        $parent_id = Auditee::find($id)->record;
+
+        if ($request->child_type == "Action-Item") {
             $parent_division_id  = Auditee::where('id', $id)->value('division_id');
             $parentRecord = Auditee::where('id', $id)->value('record');
             $parent_type = "External Audit";
@@ -8770,17 +8770,16 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $due_date = $formattedDate->format('d-M-Y');
             return view('frontend.action-item.action-item', compact('record','parentRecord', 'due_date', 'parent_id', 'parent_type', 'data_record','data','parent_division_id'));
         }
+
         if ($request->child_type == "Observations")
-        $parent_id = $id;
-        $parent_type = "Observations";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $currentDate = Carbon::now();
-        $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
-
-
-
-
-}}
+        {
+            $parent_type = "Observations";
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->addDays(30);
+            $due_date = $formattedDate->format('d-M-Y');
+            return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+    }
+}

@@ -8523,10 +8523,12 @@
                                         <input type="radio" name="child_type" id="major" value="capa">
                                         CAPA
                                     </label>
+
                                     <label for="major">
                                         <input type="radio" name="child_type" id="major" value=" Action_Item">
                                         Action-Item
                                     </label>
+                                    
                                     @if(Helpers::getChildData($data->id, 'Incident') < 3)
                                     <label for="major">
                                         <input type="radio" name="child_type" id="major" value="extension">

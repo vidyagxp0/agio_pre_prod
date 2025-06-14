@@ -3369,7 +3369,7 @@ class OOSController extends Controller
     {
         $cft = [];
         $Form_type = OOS::where('id', $id)->value('Form_type');
-        $parent_id = $id;
+        $parent_id = OOS::find($id)->record;
         if ($Form_type === 'OOS_Chemical') {
             $parent_type = 'OOS Chemical';
         } elseif ($Form_type === 'OOS_Micro') {
@@ -3413,7 +3413,6 @@ class OOSController extends Controller
             $data_record = Helpers::getDivisionName($actionchild->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($actionchild->record, 4, '0', STR_PAD_LEFT);
             $parentRecord = OOS::where('id', $id)->value('record');
             $actionchild->actionchild = $record_number;
-            $parent_id = $id;
             $actionchild->save();
 // dd($data->due_date);
             return view('frontend.action-item.action-item', compact('parentRecord','parent_short_description','old_records','record_number', 'data_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type', 'data'));
@@ -3424,11 +3423,7 @@ class OOSController extends Controller
             $actionchild = OOS::find($id);
             $actionchild->actionchild = $record_number;
             $relatedRecords = Helpers::getAllRelatedRecords();
-            $parent_id = $id;
             $actionchild->save();
-
-
-
             return view('frontend.resampling.resapling_create', compact('relatedRecords','parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type',));
         }
         elseif ($request->child_type == "Extension")
@@ -3436,11 +3431,9 @@ class OOSController extends Controller
            $parent_name = "CAPA";
            $actionchild = OOS::find($id);
            $actionchild->actionchild = $record_number;
-           $parent_id = $id;
            $relatedRecords = Helpers::getAllRelatedRecords();
            $data=OOS::find($id);
            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'OOS/OOT' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-
            $actionchild->save();
 
            return view('frontend.extension.extension_new', compact('relatedRecords','extension_record', 'parent_short_description','old_records','record_number', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record', 'due_date', 'parent_id', 'parent_type','parent_due_date'));

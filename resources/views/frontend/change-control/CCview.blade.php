@@ -636,7 +636,9 @@
 
                                             <div class="col-lg-6 new-date-data-field">
                                                 <div class="group-input input-date">
-                                                    <label for="Due Date"> Due Date</label>
+                                                    <label for="Due Date"> Due Date
+                                                        <span class="text-danger">{{ $data->stage == 1 ? '*' : '' }}</span>
+                                                    </label>
                                                     <div>
                                                         <small class="text-primary"></small>
                                                     </div>
