@@ -324,6 +324,10 @@
                                 Summary and Response Complete
                             </button>
 
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button> --}}
@@ -8806,20 +8810,33 @@
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <div class="group-input">
-                            <label></lable>
+                        @if($data->stage == 1)
+                            <div class="group-input">
+                                <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Observations">
+                                        Observations
+                                    </label>
+                            </div>
+                        @endif
+                        @if($data->stage == 1)
+                            <div class="group-input">
+                                <label></lable>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Action-Item">
+                                        Action-Item
+                                    </label>
+                            </div>
+                        @endif
+
+                        @if($data->stage == 2 && Helpers::getChildData($data->record, 'External Audit') < 3)
+                            <div class="group-input">
                                 <label for="major">
-                                    <input type="radio" name="child_type" value="Observations">
-                                    Observations
+                                    <input type="radio" name="child_type" value="Extension">
+                                    Extension
                                 </label>
-                        </div>
-                        <div class="group-input">
-                            <label></lable>
-                                <label for="major">
-                                    <input type="radio" name="child_type" value="Action-Item">
-                                    Action-Item
-                                </label>
-                        </div>
+                            </div>
+                        @endif
 
                     </div>
 
@@ -8880,6 +8897,7 @@
             </div>
         </div>
     </div>
+
     <style>
         #step-form>div {
             display: none

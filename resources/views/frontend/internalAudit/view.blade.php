@@ -15149,6 +15149,16 @@ document.addEventListener("DOMContentLoaded", function () {
                             </label>
                         </div>
 
+                        @if($data->stage == 4 && Helpers::getChildData($data->record, 'Internal Audit') < 3)
+                            <div class="group-input">
+                                <label for="major">
+                                    <input type="radio" name="child_type" value="Extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
+
+
                     </div>
 
                     <!-- Modal footer -->

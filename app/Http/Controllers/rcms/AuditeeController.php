@@ -8773,13 +8773,29 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
         if ($request->child_type == "Observations")
         {
-            $parent_type = "Observations";
+            $parent_type = "External Audit";
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
             return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+
+        if ($request->child_type == "Extension")
+        {
+            $parent_due_date = Auditee::where('id', $id)->value('due_date');
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $parent_division_id  = Auditee::where('id', $id)->value('division_id');
+            $relatedRecords = Helpers::getAllRelatedRecords();
+            $data=Auditee::find($id);
+            $parent_type = "External Audit";
+            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $count = Helpers::getChildData($id, $parent_type);
+            $countData = $count + 1; 
+            return view('frontend.extension.extension_new', compact('parent_type','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
+
         }
     }
 }

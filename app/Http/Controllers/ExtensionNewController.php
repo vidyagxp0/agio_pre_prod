@@ -1468,6 +1468,7 @@ class ExtensionNewController extends Controller
                     $extensionNew->update();
                     return back();
                 }
+
                 if ($extensionNew->stage == 2) {
                     if (empty($extensionNew->reviewer_remarks))
                     {
@@ -1509,6 +1510,154 @@ class ExtensionNewController extends Controller
                     $history->change_to =   "In Approved";
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'In Approved';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->action_name = 'New';
+                    } else {
+                        $history->action_name = 'Update';
+                    }
+                    $history->save();
+
+                    $extensionNew->update();
+                    return back();
+                }
+                // if(($extensionNew->parent_type == 'LabIncident' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Deviation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOT' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Management Review' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CAPA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Action Item' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Resampling' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Observation' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'RCA' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Risk Assesment' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'External Audit' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Audit Program' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'CC' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'New Documnet' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Effectiveness Check' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'OOS Micro' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'OOS Chemical' && $extensionNew->count == 3) || ($extensionNew->parent_type == 'Market Complaint' && $extensionNew->count == 3)|| ($extensionNew->parent_type == 'Failure Investigation' && $extensionNew->count == 3 || $extensionNew->count_data == 'number' || $extensionNew->data_number == 3 )){
+                //     if ($extensionNew->stage == 2) {
+                //         if (empty($extensionNew->reviewer_remarks))
+                //         {
+                //             Session::flash('swal', [
+                //                 'type' => 'warning',
+                //                 'title' => 'Mandatory Fields!',
+                //                 'message' => 'HOD Review Tab is yet to be filled'
+                //             ]);
+        
+                //             return redirect()->back();
+                //         }
+                //         else {
+                //             Session::flash('swal', [
+                //                 'type' => 'success',
+                //                 'title' => 'Success',
+                //                 'message' => 'Sent for In CQA Approval state'
+                //             ]);
+                //         }
+                //         $extensionNew->stage = "5";
+                //         $extensionNew->status = "In CQA Approval";
+                //         $extensionNew->submit_by_review = Auth::user()->name;
+                //         $extensionNew->submit_on_review = Carbon::now()->format('d-M-Y');
+                //         $extensionNew->submit_comment_review = $request->comment;
+                //         $history = new ExtensionNewAuditTrail();
+                //         $history->extension_id = $id;
+                //         $history->activity_type = 'Review By, Review On';
+                //         if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                //             $history->previous = "Null";
+                //         } else {
+                //             $history->previous = $lastDocument->submit_by_review . ' , ' . $lastDocument->submit_on_review;
+                //         }
+                //         $history->current = $extensionNew->submit_by_review . ' , ' . $extensionNew->submit_on_review;
+                //         $history->comment = $request->comment;
+                //         $history->action = 'Review';
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //         $history->origin_state = $lastDocument->status;
+                //         $history->change_to =   "In In CQA Approval";
+                //         $history->change_from = $lastDocument->status;
+                //         $history->stage = 'In In CQA Approval';
+                //         if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                //             $history->action_name = 'New';
+                //         } else {
+                //             $history->action_name = 'Update';
+                //         }
+                //         $history->save();
+
+
+                //         //     $list = Helpers::getInitiatorUserList($extensionNew->division_id); // Notify CFT Person
+                //         //      foreach ($list as $u) {
+                //         //     // if($u->q_m_s_divisions_id == $extensionNew->division_id){
+                //         //         $email = Helpers::getUserEmail($u->user_id);
+                //         //             if ($email !== null) {
+                //         //             Mail::send(
+                //         //                 'mail.view-mail',
+                //         //                 ['data' => $extensionNew, 'site' => "Ext", 'history' => "Submit", 'process' => 'Extension', 'comment' => $request->comments, 'user'=> Auth::user()->name],
+                //         //                 function ($message) use ($email, $extensionNew) {
+                //         //                     $message->to($email)
+                //         //                     ->subject("Agio Notification: Extension, Record #" . str_pad($extensionNew->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit");
+                //         //                 }
+                //         //             );
+                //         //         }
+                //         //     // }
+                //         // }
+
+                //         $extensionNew->update();
+                //         toastr()->success('Document Sent');
+                //         return back();
+                //     }
+                // } else {
+                    
+                //     $extensionNew->update();
+                //     toastr()->success('Document Sent');
+                //     return back();
+                // }
+
+            } else {
+                toastr()->error('E-signature Not match');
+                return back();
+            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => $th->getMessage()
+            ], 500);
+        }
+    }
+
+    public function sendcqaapprovalstage(Request $request, $id)
+    {
+        try {
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $extensionNew = extension_new::find($id);
+                $lastDocument = extension_new::find($id);
+                
+                if ($extensionNew->stage == 2) {
+                    if (empty($extensionNew->reviewer_remarks))
+                    {
+                        Session::flash('swal', [
+                            'type' => 'warning',
+                            'title' => 'Mandatory Fields!',
+                            'message' => 'HOD Review Tab is yet to be filled'
+                        ]);            
+                        return redirect()->back();
+                    }
+                     else {
+                        Session::flash('swal', [
+                            'type' => 'success',
+                            'title' => 'Success',
+                            'message' => 'Sent for In Approved state'
+                        ]);
+                    }
+                    $extensionNew->stage = "5";
+                    $extensionNew->status = "In CQA Approval";
+                    $extensionNew->submit_by_review = Auth::user()->name;
+                    $extensionNew->submit_on_review = Carbon::now()->format('d-M-Y');
+                    $extensionNew->submit_comment_review = $request->comment;
+
+                    $history = new ExtensionNewAuditTrail();
+                    $history->extension_id = $id;
+                    $history->activity_type = 'Review By, Review On';
+                    if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
+                        $history->previous = "Null";
+                    } else {
+                        $history->previous = $lastDocument->submit_by_review . ' , ' . $lastDocument->submit_on_review;
+                    }
+                    $history->current = $extensionNew->submit_by_review . ' , ' . $extensionNew->submit_on_review;
+                    $history->comment = $request->comment;
+                    $history->action = 'Review';
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->change_to =   "In CQA Approval";
+                    $history->change_from = $lastDocument->status;
+                    $history->stage = 'In CQA Approval';
                     if (is_null($lastDocument->submit_by_review) || $lastDocument->submit_by_review === '') {
                         $history->action_name = 'New';
                     } else {

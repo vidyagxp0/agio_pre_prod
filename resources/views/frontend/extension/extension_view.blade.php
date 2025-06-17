@@ -115,12 +115,13 @@
                         ->get();
                     $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                 @endphp
+
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
 
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/audit_trailNew', $extensionNew->id) }}"> Audit Trail </a> </button>
+                                href="{{ url('rcms/audit_trailNew', $extensionNew->id) }}">Audit Trail</a> </button>
                         @if ($extensionNew->stage == 1 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -129,24 +130,32 @@
                                 Cancel
                             </button>
                         @elseif($extensionNew->stage == 2 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 4))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Review
-                            </button>
+
+                            @if($extensionNew->count == 3)
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-reviewed-modal">
+                                    Review
+                                </button>
+                            @else
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                    Review
+                                </button>
+                            @endif
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
+
                         @elseif($extensionNew->stage == 3 && Helpers::check_roles($extensionNew->site_location_code, 'Extension', 67))
 
-                           @if($extensionNew->count != 3)
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
-                                    Approved
-                                </button>
-                            @endif
-                            @if($extensionNew->count == 3)
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-approved-modal">
+                                Approved
+                            </button>
+                        
+                            <!-- @if($extensionNew->count == 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
                                 </button>
-                            @endif
+                            @endif -->
                             <!-- @if (Helpers::getChildData($extensionNew->parent_id, 'LabIncident') == 3)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-cqa-modal">
                                     Send for CQA
@@ -281,22 +290,27 @@
                             @else
                                 <div class="">In Review</div>
                             @endif
-                            
-                            @if ($extensionNew->stage >= 3)
-                                <div class="active">In Approved</div>
-                            @else
-                                <div class="">In Approved</div>
+
+                            @if($extensionNew->count != 3)
+                                @if ($extensionNew->stage >= 3)
+                                    <div class="active">In Approved</div>
+                                @else
+                                    <div class="">In Approved</div>
+                                @endif
                             @endif
 
-                            @if ($extensionNew->count == 3)
+
+                            <!-- @if ($extensionNew->count == 3)
                                 <div class="{{ $extensionNew->stage >= 5 ? 'active' : '' }}">In CQA Approval</div>
-                            @endif
+                            @endif -->
 
-                           {{-- @if($extensionNew->stage >= 5)
-                                <div class="active">In CQA Approval</div>
-                            @else
-                                <div class="">In CQA Approval</div>
-                            @endif --}}
+                            @if($extensionNew->count == 3)
+                                @if($extensionNew->stage >= 5)
+                                    <div class="active">In CQA Approval</div>
+                                @else
+                                    <div class="">In CQA Approval</div>
+                                @endif
+                            @endif
 
                             @if ($extensionNew->stage >= 6)
                                 <div class="bg-danger" style="border-radius: 0px 20px 20px 0px;">Closed - Done</div>
@@ -370,13 +384,13 @@
                 {{-- @if ($extensionNew->data_number == 3)
                    <button class="cctablinks" style="display: none;" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button> --}}
 
-                @if($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->count_data == 'number3' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->data_number == 3 || $extensionNew->count == 1 || $extensionNew->count == 2 || $extensionNew->count == 3)
+                @if($extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 1 || $extensionNew->data_number == 2 || $extensionNew->count == 1 || $extensionNew->count == 2)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA/CQA Approval</button>
                 @endif
 
-                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
+                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number3' || $extensionNew->count == 3)
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Final Approval</button>
-                @endif
+                @endif 
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
             </div>
@@ -922,7 +936,7 @@
                     </div>
                 </div>
                 <!-- Approver-->
-                @if( $extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->count_data == 'number3' || $extensionNew->data_number == 3 || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2 || $extensionNew->count == 3 )
+                @if( $extensionNew->count_data == 'number1' || $extensionNew->count_data == 'number2' || $extensionNew->data_number == 2 || $extensionNew->data_number == 1 || $extensionNew->count == 1 || $extensionNew->count == 2 )
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -989,7 +1003,7 @@
                     </div>
                 @endif
 
-                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number' || $extensionNew->count == 3)
+                @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number3' || $extensionNew->count == 3)
                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -1144,7 +1158,7 @@
                             </div>
 
 
-                        @if($extensionNew->count == 3)
+                        {{--@if($extensionNew->count == 3)
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for=" Rejected By">Send for CQA By</label>
@@ -1163,7 +1177,7 @@
                                     <div class="static">{{ !empty($extensionNew->send_cqa_comment) ? $extensionNew->send_cqa_comment : 'Not Applicable' }}</div>
                                 </div>
                             </div>
-                        @endif
+                        @endif --}}
 
                         @if($extensionNew->count != 3)
 
@@ -1275,6 +1289,52 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="signature-reviewed-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('extension_reviewed_stage', $extensionNew->id) }}" method="POST"
+                    id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <div class="modal fade" id="signature-cqa-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">

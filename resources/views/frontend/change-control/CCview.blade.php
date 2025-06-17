@@ -9892,7 +9892,8 @@
                                     RCA
                                 </label>
                             @endif    
-                                @if(Helpers::getChildData($data->id, 'CC') < 3)
+                            
+                                @if(Helpers::getChildData($data->record, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension

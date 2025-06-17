@@ -443,7 +443,7 @@
                     </table>
                 </div>
             </div>
-
+        @if ($data->count != 3)  
             <div class="block">
                 <div class="block-head">QA/CQA Approval</div>
 
@@ -495,7 +495,9 @@
                     </table>
                 </div>
             </div>
-            @if ($data->count == 3) 
+
+        @endif
+        @if ($data->count == 3)  
             <div class="block">
                 <div class="block-head">CQA Final Approval</div>
 
@@ -549,7 +551,8 @@
                     </table>
                 </div>
             </div>
-            @endif
+        @endif
+
             <div class="block">
                 <div class="block-head">Activity Log</div>
                 <table>
@@ -609,7 +612,7 @@
                         <th class="w-20">More Information Required Comment</th>
                         <td class="w-80">{{ $data->more_info_inapproved_comment }}</td>
                     </tr> --}}
-                    @if($data->count == 3)
+                    <!-- @if($data->count == 3)
                         <tr>
                             <th class="w-20">Send for CQA By</th>
                             <td class="w-80">@if ($data->send_cqa_by) {{ $data->send_cqa_by }} @else Not Applicable @endif</td>
@@ -618,7 +621,7 @@
                             <th class="w-20">Send for CQA Comment</th>
                             <td class="w-80">@if ($data->send_cqa_comment) {{ $data->send_cqa_comment }} @else Not Applicable @endif</td>
                         </tr>
-                    @endif
+                    @endif -->
                     @if($data->count != 3)
                         <tr>
                             <th class="w-20">Approved By</th>
@@ -629,6 +632,7 @@
                             <td class="w-80">@if ($data->submit_comment_approved) {{ $data->submit_comment_approved }} @else Not Applicable @endif</td>
                         </tr>
                     @endif
+
                     @if($data->count == 3)
                         <tr>
                             <th class="w-20">CQA Approval Complete By</th>

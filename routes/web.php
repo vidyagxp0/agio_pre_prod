@@ -712,6 +712,7 @@ Route::get('extension_newshow/{id}', [ExtensionNewController::class, 'show']);
 
 Route::put('extension_new/{id}', [ExtensionNewController::class, 'update'])->name('extension_new.update');
 Route::post('extension_send_stage/{id}', [ExtensionNewController::class, 'sendstage'])->name('extension_send_stage');
+Route::post('extension_reviewed_stage/{id}', [ExtensionNewController::class, 'sendcqaapprovalstage'])->name('extension_reviewed_stage');
 Route::post('extension_reject_stage/{id}', [ExtensionNewController::class, 'rejectStage'])->name('extension_reject_stage');
 Route::post('moreinfoState_extension/{id}', [ExtensionNewController::class, 'moreinfoStateChange'])->name('moreinfoState_extension');
 Route::post('RejectState_extension/{id}', [ExtensionNewController::class, 'reject'])->name('RejectState_extension');
