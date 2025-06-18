@@ -8467,7 +8467,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
 
     public function manage_send_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
             $Cft = managementCft::where('ManagementReview_id', $id)->first();
             $management = ManagementReview::find($id);
@@ -10607,7 +10607,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
     {
 
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
             $lastDocument =  ManagementReview::find($id);
             $data =  ManagementReview::find($id);
@@ -10854,7 +10854,7 @@ if (!empty($request->meeting_and_summary_attachment) || !empty($request->deleted
     }
    public function managementIsCFTRequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
             $lastDocument = ManagementReview::find($id);
             $list = Helpers::getInitiatorUserList();

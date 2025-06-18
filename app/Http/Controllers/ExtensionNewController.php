@@ -1194,7 +1194,7 @@ class ExtensionNewController extends Controller
     public function reject(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
 
@@ -1249,7 +1249,7 @@ class ExtensionNewController extends Controller
     public function moreinfoStateChange(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
 
@@ -1350,7 +1350,7 @@ class ExtensionNewController extends Controller
     public function sendstage(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
 
@@ -1613,7 +1613,7 @@ class ExtensionNewController extends Controller
     public function sendcqaapprovalstage(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
                 
@@ -1762,7 +1762,7 @@ class ExtensionNewController extends Controller
     {
 
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
 
@@ -1854,7 +1854,7 @@ class ExtensionNewController extends Controller
     public function sendCQA(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
 
@@ -1985,7 +1985,7 @@ class ExtensionNewController extends Controller
     public static function sendApproved(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $extensionNew = extension_new::find($id);
                 $lastDocument = extension_new::find($id);
 

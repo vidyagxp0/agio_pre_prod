@@ -1688,7 +1688,7 @@ class ActionItemController extends Controller
 
 //     public function stagecancel(Request $request, $id)
 // {
-//     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+//     if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
 //         $actionItem = ActionItem::find($id);
 
 //         $actionItem->status = "Closed-Cancelled";

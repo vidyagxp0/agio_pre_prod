@@ -2159,7 +2159,7 @@ if (is_array($request->action) && !empty($request->action)) {
     {
 
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
             $lastDocument = Observation::find($id);
             $observation_id = $id;
@@ -2665,7 +2665,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
     public function ObservationCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Observation::find($id);
 
             if ($changeControl->stage == 1) {
@@ -2827,7 +2827,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
     public function RejectStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Observation::find($id);
             $lastDocument = Observation::find($id);
 
@@ -2947,7 +2947,7 @@ if (is_array($request->action) && !empty($request->action)) {
 
     public function CapanotStage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Observation::find($id);
             $lastDocument = Observation::find($id);
 

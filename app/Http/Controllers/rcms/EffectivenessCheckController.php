@@ -1329,7 +1329,7 @@ class EffectivenessCheckController extends Controller
 
     public function stageChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $effective = EffectivenessCheck::find($id);
             $lastopenState = EffectivenessCheck::find($id);
             if ($effective->stage == 1) {
@@ -2032,7 +2032,7 @@ class EffectivenessCheckController extends Controller
     }
     public function closedCancelled(Request $request,$id){
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $effective = EffectivenessCheck::find($id);
                 $lastDocument = EffectivenessCheck::find($id);
 
@@ -2187,7 +2187,7 @@ class EffectivenessCheckController extends Controller
         }
     }
     public function sendToNotEffective(Request $request, $id){
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $effective = EffectivenessCheck::find($id);
             $lastopenState = EffectivenessCheck::find($id);
 
@@ -2413,7 +2413,7 @@ class EffectivenessCheckController extends Controller
 
     public function reject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $effective = EffectivenessCheck::find($id);
             $lastopenState = EffectivenessCheck::find($id);
             if ($effective->stage == 2) {
@@ -2525,7 +2525,7 @@ class EffectivenessCheckController extends Controller
     }
 
     public function cancel(Request $request, $id) {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $effective = EffectivenessCheck::find($id);
             $lastopenState = EffectivenessCheck::find($id);
 

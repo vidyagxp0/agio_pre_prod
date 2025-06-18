@@ -6157,7 +6157,7 @@ class FailureInvestigationController extends Controller
     public function failureInvestigationReject(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             // return $request;
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
@@ -6432,7 +6432,7 @@ class FailureInvestigationController extends Controller
 
     public function failureInvestigationCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
 
@@ -6495,7 +6495,7 @@ class FailureInvestigationController extends Controller
 
     public function failureInvestigationCftNotrequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -6555,7 +6555,7 @@ class FailureInvestigationController extends Controller
 
     public function failureInvestigationCheck(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
             $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
@@ -6623,7 +6623,7 @@ class FailureInvestigationController extends Controller
 
     public function failureInvestigationCheck2(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
             $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
@@ -6690,7 +6690,7 @@ class FailureInvestigationController extends Controller
 
     public function failureInvestigationCheck3(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
             $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
@@ -6757,7 +6757,7 @@ class FailureInvestigationController extends Controller
 
     public function pending_initiator_update(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
             // $cftResponse = FailureInvestigationCftResponse::withoutTrashed()->where(['failure_investigation_id' => $id])->get();
@@ -6826,7 +6826,7 @@ class FailureInvestigationController extends Controller
     public function failure_investigation_send_stage(Request $request, $id)
     { 
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $failureInvestigation = FailureInvestigation::find($id);
                 $updateCFT = FailureInvestigationCft::where('failure_investigation_id', $id)->latest()->first();
                 $lastDocument = FailureInvestigation::find($id);
@@ -8057,7 +8057,7 @@ class FailureInvestigationController extends Controller
     {
 
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
             $cftDetails = FailureInvestigationCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'failure_investigation_id' => $id])->distinct('cft_user_id')->count();
@@ -8113,7 +8113,7 @@ class FailureInvestigationController extends Controller
 
     public function failure_inv_qa_more_info(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $failureInvestigation = FailureInvestigation::find($id);
             $lastDocument = FailureInvestigation::find($id);
 

@@ -1954,7 +1954,7 @@ class EmployeeController extends Controller
     {
         try {
 
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 
                 $employee = Employee::find($id);
                 $lastEmployee = Employee::find($id);

@@ -17,7 +17,7 @@ class ChangeControlController extends Controller
 {
     public function statechange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = OpenStage::find($id);
             $originator = User::find($changeControl->initiator_id);
             if ($changeControl->stage == 1) {

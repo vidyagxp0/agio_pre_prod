@@ -1506,7 +1506,7 @@ class OOTController extends Controller
     public function oot_send_stage(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Ootc::find($id);
             $lastDocument = Ootc::find($id);
            
@@ -2258,7 +2258,7 @@ class OOTController extends Controller
 
     public function oot_reject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = Ootc::find($id);
             $lastDocument = Ootc::find($id);
             $changestage = Ootc::find($id);
@@ -2950,7 +2950,7 @@ class OOTController extends Controller
     }
     public function RejectStateChangeNew(Request $request, $id)
 {
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
         $data = Ootc::find($id);
         $lastDocument = Ootc::find($id);
 
@@ -2995,7 +2995,7 @@ class OOTController extends Controller
 
 public function stageChange(Request $request, $id){
 
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
         $changestage = Ootc::find($id);
         $lastDocument = Ootc::find($id);
             
@@ -3270,7 +3270,7 @@ public function stageChange(Request $request, $id){
 
 public function ootCancel(Request $request, $id)
 {
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
         $data = Ootc::find($id);
         $lastDocument = Ootc::find($id);
         $changestage = Ootc::find($id);

@@ -8997,7 +8997,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function stageChange(Request $request, $id)
     {
-        if($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
 
@@ -10527,7 +10527,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     public function reject(Request $request, $id)
     {
         
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
            
@@ -10699,7 +10699,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function sentToQAHeadApproval(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $comments = ChangeControlComment::where('cc_id', $id)->firstOrCreate();
 
@@ -11393,7 +11393,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function sentoPostImplementation(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $comments = ChangeControlComment::where('cc_id', $id)->firstOrCreate();
@@ -11959,7 +11959,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function stagereject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $lastdata = ChangeControlComment::where('cc_id', $id)->first();
@@ -12761,7 +12761,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function sendToInitiator(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -12843,7 +12843,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function sendToHod(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -12927,7 +12927,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function TrainingRequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);           
 
@@ -12976,7 +12976,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
 
     public function sendToInitialQA(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -13062,7 +13062,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     {
        
         
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
             $lastDocument = CC::find($id);

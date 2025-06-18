@@ -791,7 +791,7 @@ class InductionTrainingcontroller extends Controller
     {
         try {
 
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $jobTraining = Induction_training::find($id);
                 $lastjobTraining = Induction_training::find($id);
 
@@ -1000,7 +1000,7 @@ class InductionTrainingcontroller extends Controller
     }
 
     public function cancelStage(Request $request, $id){
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $jobTraining = Induction_training::find($id);
             $lastjobTraining = Induction_training::find($id);
 

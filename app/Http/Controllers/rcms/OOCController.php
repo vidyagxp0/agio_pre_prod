@@ -4370,7 +4370,7 @@ class OOCController extends Controller
 
     public function OOCStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $oocchange = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
 
@@ -5211,7 +5211,7 @@ class OOCController extends Controller
 
     public function OOCStateChangetwo(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $oocchange = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
 
@@ -5299,7 +5299,7 @@ class OOCController extends Controller
 
     public function RejectStateChangeTwo(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $ooc = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
 
@@ -5364,7 +5364,7 @@ class OOCController extends Controller
 
     public function RejectoocStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password))
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password))
          {
             $ooc = OutOfCalibration::find($id);
 
@@ -5903,7 +5903,7 @@ class OOCController extends Controller
     }
 
     public function OOCStateCancel(Request $request , $id){
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $ooc = OutOfCalibration::find($id);
             $lastDocumentOOC = OutOfCalibration::find($id);
             $oocchange = OutOfCalibration::find($id);

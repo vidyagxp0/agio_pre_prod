@@ -3279,7 +3279,7 @@ class RootCauseController extends Controller
     {
 
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
             
@@ -4028,7 +4028,7 @@ class RootCauseController extends Controller
 
     public function root_Cancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);
             $data =  RootCauseAnalysis::find($id);
@@ -4090,7 +4090,7 @@ class RootCauseController extends Controller
 
     public function root_reject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $root = RootCauseAnalysis::find($id);
             // $root = RootCauseAnalysis::find($id);
             $lastDocument =  RootCauseAnalysis::find($id);

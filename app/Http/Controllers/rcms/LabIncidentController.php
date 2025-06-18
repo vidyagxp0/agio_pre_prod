@@ -6231,7 +6231,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     }
     public function LabIncidentStateTwo(Request $request,$id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $labstate = LabIncident::find($id);
             $lastDocument =  LabIncident::find($id);
 
@@ -6273,7 +6273,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
     public function LabIncidentStateCancel(Request $request,$id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $labstate = LabIncident::find($id);
             $lastDocument =  LabIncident::find($id);
 
@@ -6338,7 +6338,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
     public function LabIncidentStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
             $lastDocument =  LabIncident::find($id);
             $data =  LabIncident::find($id);
@@ -7092,7 +7092,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
     public function RejectStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
             $lastDocument = LabIncident::find($id);
 
@@ -7496,7 +7496,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
 
     public function LabIncidentCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
             $lastDocument = LabIncident::find($id);
 

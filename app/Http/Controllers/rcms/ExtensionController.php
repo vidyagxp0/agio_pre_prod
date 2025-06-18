@@ -441,7 +441,7 @@ class ExtensionController extends Controller
     public function stageChange(Request $request, $id)
     {
         $openState = Extension::find($id);
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
             $lastDocument = Extension::find($id);
             $task = QaApproval::where('cc_id', $id)->first();
@@ -574,7 +574,7 @@ class ExtensionController extends Controller
 
     public function stagecancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
             $lastDocument = Extension::find($id);
             $openState = Extension::find($id);
@@ -663,7 +663,7 @@ class ExtensionController extends Controller
 
     public function stagereject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
             $lastDocument = Extension::find($id);
             $openState = Extension::find($id);

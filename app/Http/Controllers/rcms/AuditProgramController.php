@@ -2151,7 +2151,7 @@ class AuditProgramController extends Controller
 
     public function AuditStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
             $lastDocument = AuditProgram::find($id);
             
@@ -2404,7 +2404,7 @@ class AuditProgramController extends Controller
     }
     public function AuditRejectStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
             $lastDocument = AuditProgram::find($id);
 
@@ -2467,7 +2467,7 @@ class AuditProgramController extends Controller
 
     public function AuditProgramCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
             $lastDocument = AuditProgram::find($id);
 

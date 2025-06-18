@@ -6450,7 +6450,7 @@ class CCController extends Controller
 
     public function stageChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $evaluation = Evaluation::where('cc_id', $id)->first();
@@ -7064,7 +7064,7 @@ class CCController extends Controller
 
     public function stagereject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
 
@@ -7373,7 +7373,7 @@ class CCController extends Controller
 
     public function sendToInitiator(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -7445,7 +7445,7 @@ class CCController extends Controller
 
     public function sendToHod(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -7517,7 +7517,7 @@ class CCController extends Controller
 
     public function sendToInitialQA(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -7590,7 +7590,7 @@ class CCController extends Controller
 
     public function sendToCft(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $cftResponse = ChangeControlCftResponse::withoutTrashed()->where(['cc_id' => $id])->get();
@@ -7662,7 +7662,7 @@ class CCController extends Controller
 
     public function stageCFTnotReq(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $openState = CC::find($id);
@@ -7705,7 +7705,7 @@ class CCController extends Controller
 
     public function stagecancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $openState = CC::find($id);
 

@@ -27,10 +27,15 @@
                     @enderror
                 </div>
 
-
-
                 <div class="form-group">
-
+                    <label for="name">Code<span style="color: red">*</span></label>
+                    <input type="name" name="emp_code" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Enter Employee Code" required>
+                    @error('name')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+                <div class="form-group">
                     <label for="email">Email <span style="color: red">*</span></label>
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Enter email" required>
                     @error('email')
@@ -39,7 +44,6 @@
                 </div>
 
                 <div class="form-group">
-
                     <label for="password">Password <span style="color: red">*</span></label>
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter password" required>
                     @error('password')

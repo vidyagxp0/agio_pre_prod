@@ -69,14 +69,15 @@ class UserLoginController extends Controller
     {
         TotalLogin::userCheck();
         $request->validate([
-            'email' => ['required', 'email'],
+            'emp_code' => ['required','string'],
             'password' => ['required'],
             'timezone' => ['required']
         ]);
         // Set the timezone
-        $checkEmail = User::where('email', $request->email)->count();
+        $checkEmail = User::where('emp_code', $request->emp_code)->count();
+        
         if ($checkEmail > 0) {
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            if (Auth::attempt(['emp_code' => $request->emp_code, 'password' => $request->password])) {
                 // check user login limit
                 if (TotalLogin::ifUserExist(Auth::id())) {
                     TotalLogin::removeUser(Auth::id());
@@ -126,14 +127,14 @@ class UserLoginController extends Controller
     {
         TotalLogin::userCheck();
         $request->validate([
-            'email' => ['required', 'email'],
+            'emp_code' => ['required', 'string'],
             'password' => ['required'],
             'timezone' => ['required']
         ]);
         // Set the timezone
-        $checkEmail = User::where('email', $request->email)->count();
+        $checkEmail = User::where('emp_code', $request->emp_code)->count();
         if ($checkEmail > 0) {
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            if (Auth::attempt(['emp_code' => $request->emp_code, 'password' => $request->password])) {
                 // check user login limit
                 if (TotalLogin::ifUserExist(Auth::id())) {
                     TotalLogin::removeUser(Auth::id());
@@ -296,9 +297,9 @@ class UserLoginController extends Controller
     }
 
     public function loginapi(Request $request){
-        if($request->email){
+        if($request->emp_code){
             if($request->password){
-                $data = User::where('email',$request->email)->first();
+                $data = User::where('emp_code',$request->emp_code)->first();
                 if($data){
                     if(Hash::check($request->password,$data->password)){
                         return response()->json('user Login');

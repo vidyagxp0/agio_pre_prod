@@ -4849,7 +4849,7 @@ if ($areIniAttachmentsSame2 != true) {
 
     public function InternalAuditStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
             $lastDocument = InternalAudit::find($id);
             $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
@@ -5223,7 +5223,7 @@ if ($areIniAttachmentsSame2 != true) {
     }
     public function InternalAuditStateChangeLeadAuditor(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
             $lastDocument = InternalAudit::find($id);
             $auditorview = InternalAuditorGrid::where(['auditor_id'=>$id, 'identifier'=>'Auditors'])->first();
@@ -5357,7 +5357,7 @@ if ($areIniAttachmentsSame2 != true) {
 
     public function noCapastate(Request $request, $id){
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
             $lastDocument = InternalAudit::find($id);
 
@@ -5427,7 +5427,7 @@ if ($areIniAttachmentsSame2 != true) {
     public function RejectStateChange(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
             $lastDocument = InternalAudit::find($id);
 
@@ -5604,7 +5604,7 @@ if ($areIniAttachmentsSame2 != true) {
     }
     public function InternalAuditCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
             $lastDocument = InternalAudit::find($id);
 

@@ -5576,7 +5576,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
     public function incidentReject(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             // return $request;
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
@@ -6358,7 +6358,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function incidentCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
 
@@ -6456,7 +6456,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function incidentIsCFTRequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -6516,7 +6516,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function incidentCheck(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
             $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
@@ -6584,7 +6584,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function incidentCheck2(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
             $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
@@ -6651,7 +6651,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function incidentCheck3(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
             $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
@@ -6719,7 +6719,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function pending_initiator_update(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
             // $cftResponse = IncidentCftResponse::withoutTrashed()->where(['incident_id' => $id])->get();
@@ -6789,7 +6789,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
     public function incident_send_stage(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $incident = Incident::find($id);
                 $updateCFT = IncidentCft::where('incident_id', $id)->latest()->first();
                 $lastDocument = Incident::find($id);
@@ -8033,7 +8033,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
     public function cftnotreqired(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
             $cftDetails = IncidentCftResponse::withoutTrashed()->where(['status' => 'In-progress', 'incident_id' => $id])->distinct('cft_user_id')->count();
@@ -8085,7 +8085,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
 
     public function incident_qa_more_info(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
 

@@ -268,7 +268,7 @@
                         @csrf
                         <div class="group-input">
                             <label for="username"><i class="fa-solid fa-envelope"></i></label>
-                            <input type="text" name="email" placeholder="Enter Your E-Mail" class="black-placeholder">
+                            <input type="text" name="emp_code" placeholder="Enter Your Employee Code" class="black-placeholder">
                         </div>
                        
                         <div class="group-input">

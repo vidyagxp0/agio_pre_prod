@@ -208,7 +208,7 @@ class OOSController extends Controller
 
     public function send_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
             if ($changestage->stage == 1) {
@@ -1480,7 +1480,7 @@ class OOSController extends Controller
     public function requestmoreinfo_back_stage(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
             // if ($changestage->stage == 2) {
@@ -2497,7 +2497,7 @@ class OOSController extends Controller
 
     public function assignable_send_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
             // if ($changestage->stage == 3) {
@@ -2981,7 +2981,7 @@ class OOSController extends Controller
     }
     public function cancel_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS::find($id);
             $lastDocument = OOS::find($id);
             // $data->stage = "0";
@@ -3047,7 +3047,7 @@ class OOSController extends Controller
 
     public function Done_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS::find($id);
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
@@ -3145,7 +3145,7 @@ class OOSController extends Controller
 
     public function Done_One_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS::find($id);
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
@@ -3243,7 +3243,7 @@ class OOSController extends Controller
 
     public function Done_Two_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS::find($id);
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);

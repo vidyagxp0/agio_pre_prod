@@ -2813,7 +2813,7 @@ class NonConformaceController extends Controller
 
     public function nonConformaceReject(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             // return $request;
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
@@ -3044,7 +3044,7 @@ class NonConformaceController extends Controller
 
     public function NonConformanceCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             $NonConformance->stage = "0";
@@ -3105,7 +3105,7 @@ class NonConformaceController extends Controller
 
     public function NonConformanceCftNotrequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -3165,7 +3165,7 @@ class NonConformaceController extends Controller
 
     public function nonConformaceCheck(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
@@ -3233,7 +3233,7 @@ class NonConformaceController extends Controller
 
     public function nonConformaceCheck2(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
@@ -3300,7 +3300,7 @@ class NonConformaceController extends Controller
 
     public function nonConformaceCheck3(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
@@ -3367,7 +3367,7 @@ class NonConformaceController extends Controller
 
     public function pending_initiator_update(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             // $cftResponse = NonConformanceCFTResponse::withoutTrashed()->where(['non_conformances_id' => $id])->get();
@@ -3436,7 +3436,7 @@ class NonConformaceController extends Controller
     public function non_conformance_send_stage(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $NonConformance = NonConformance::find($id);
                 $updateCFT = NonConformanceCFTs::where('non_conformances_id', $id)->latest()->first();
                 $lastDocument = NonConformance::find($id);
@@ -4279,7 +4279,7 @@ class NonConformaceController extends Controller
     public function cftnotreqired(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
             $cftDetails = NonConformanceCFTResponse::withoutTrashed()->where(['status' => 'In-progress', 'non_conformances_id' => $id])->distinct('cft_user_id')->count();
@@ -4335,7 +4335,7 @@ class NonConformaceController extends Controller
 
     public function failure_inv_qa_more_info(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $NonConformance = NonConformance::find($id);
             $lastDocument = NonConformance::find($id);
 

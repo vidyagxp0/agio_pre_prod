@@ -57,6 +57,7 @@ class UserManagementController extends Controller
         //
         $request->validate([
             'name' => 'required|string|max:255',
+            'emp_code' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required',
             'departmentid' => 'required',
@@ -101,6 +102,7 @@ class UserManagementController extends Controller
 
         $user = new User();
         $user->name = $request->name;
+        $user->emp_code = $request->emp_code;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->departmentid = $request->departmentid;
@@ -208,6 +210,7 @@ class UserManagementController extends Controller
     {
         $user = User::with('userRoles')->find($id);    
     $user->name = $request->name;
+    $user->emp_code = $request->emp_code;
     $user->email = $request->email;
     if (!empty($request->password)) {
         $user->password = Hash::make($request->password);

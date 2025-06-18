@@ -26,6 +26,12 @@
                         id="exampleInputName1" placeholder="Enter User Name" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="exampleInputName1">Code*</label>
+                    <input type="emp_code" name="emp_code" class="form-control" value="{{ $data->emp_code }}"
+                        id="exampleInputName1" placeholder="Enter Employee Code" required>
+                </div>
+
 
 
                 <div class="form-group">

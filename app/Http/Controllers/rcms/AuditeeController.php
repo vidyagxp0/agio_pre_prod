@@ -6764,7 +6764,7 @@ $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
 
     public function ExternalAuditStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
             $Cft = ExternalAuditCFT::where('external_audit_id', $id)->first();
             $emailverification = User:: find($changeControl->initiator_id);
@@ -8050,7 +8050,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
     public function RejectStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);
@@ -8356,7 +8356,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
     {
 
         //return "hello";
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);
@@ -8456,7 +8456,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
     public function externalAuditCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Auditee::find($id);
             $lastDocument = Auditee::find($id);
             $internalAudit = Auditee::find($id);

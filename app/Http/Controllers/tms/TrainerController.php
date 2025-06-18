@@ -1059,7 +1059,7 @@ class TrainerController extends Controller
     {
         try {
 
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $trainer = TrainerQualification::find($id);
                 $lastEmployee = TrainerQualification::find($id);
 
@@ -1230,7 +1230,7 @@ class TrainerController extends Controller
     {
         try {
 
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $trainer = TrainerQualification::find($id);
                 $lastEmployee = TrainerQualification::find($id);
 

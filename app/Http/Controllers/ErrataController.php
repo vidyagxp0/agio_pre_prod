@@ -1009,7 +1009,7 @@ class ErrataController extends Controller
 
     public function stageChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $ErrataControl = errata::find($id);
             $lastDocument = errata::find($id);
             // $evaluation = Evaluation::where('cc_id', $id)->first();
@@ -1672,7 +1672,7 @@ class ErrataController extends Controller
     {
         // $ErrataControl = errata::find($id);
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $ErrataControl = errata::find($id);
             $lastDocument = errata::find($id);
             if ($ErrataControl->stage == 2) {
@@ -2011,7 +2011,7 @@ class ErrataController extends Controller
 
     public function erratacancelstage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $ErrataControl = errata::find($id);
             $lastDocument = errata::find($id);
             if ($ErrataControl->stage == 1) {

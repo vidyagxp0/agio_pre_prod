@@ -8188,7 +8188,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
     public function marketComplaintStateChange(Request $request, $id)
     { {
             try {
-                if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                     $marketstat = MarketComplaint::find($id);
                     $marketComplaint = MarketComplaint::find($id);
                     $Cft = marketComplaintCft::withoutTrashed()->where('mc_id', $id)->first();
@@ -9378,7 +9378,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
     public function marketComplaintRejectState(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $marketstat = MarketComplaint::find($id);
             $lastDocument =  MarketComplaint::find($id);
 
@@ -9685,7 +9685,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
     public function MarketComplaintCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = MarketComplaint::find($id);
             $lastDocument =  MarketComplaint::find($id);
 
@@ -10429,7 +10429,7 @@ if (!empty($request->productsgi) && is_array($request->productsgi)) {
 
     public function MarkComplaintCFTRequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $marketstat = MarketComplaint::find($id);
             $lastDocument = MarketComplaint::find($id);
             $list = Helpers::getInitiatorUserList();

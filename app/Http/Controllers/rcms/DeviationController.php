@@ -9420,7 +9420,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     public function deviation_reject(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -9741,7 +9741,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
      public function Request_Cancel(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -9860,7 +9860,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     public function deviationCancel(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -9943,7 +9943,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
     public function deviationIsCFTRequired(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -10005,7 +10005,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
     public function check(Request $request, $id)
     {
-         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -10067,7 +10067,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
     public function check2(Request $request, $id)
    {
-         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -10130,7 +10130,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
     public function check3(Request $request, $id)
     {
-         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -10217,7 +10217,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     public function pending_initiator_update(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $Cft = DeviationCft::withoutTrashed()->where('deviation_id', $id)->first();
             $lastDocument = Deviation::find($id);
@@ -10336,7 +10336,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     public function deviation_send_stage(Request $request, $id)
     {
         try {
-            if($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $deviation = Deviation::find($id);
                 $updateCFT = DeviationCft::where('deviation_id', $id)->latest()->first();
                 $lastDocument = Deviation::find($id);
@@ -12320,7 +12320,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
     public function cftnotreqired(Request $request, $id)
     {
-         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+         if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
@@ -12412,7 +12412,7 @@ $history->activity_type = 'Others 4 Completed By, Others 4 Completed On';
 
     public function deviation_qa_more_info(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
 

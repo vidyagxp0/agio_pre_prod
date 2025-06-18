@@ -2971,7 +2971,7 @@ if($lastDocument->$key != $request->$key){
 
     public function send_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS_micro::find($id);
             $lastDocument = OOS_micro::find($id);
             if ($changestage->stage == 1) {
@@ -3568,7 +3568,7 @@ if($lastDocument->$key != $request->$key){
     public function requestmoreinfo_back_stage(Request $request, $id)
     {
 
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS_MICRO::find($id);
             $lastDocument = OOS_MICRO::find($id);
             if ($changestage->stage == 2) {
@@ -4207,7 +4207,7 @@ if($lastDocument->$key != $request->$key){
 
     public function assignable_send_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS_MICRO::find($id);
             $lastDocument = OOS_MICRO::find($id);
             if ($changestage->stage == 1) {
@@ -4417,7 +4417,7 @@ if($lastDocument->$key != $request->$key){
     }
     public function cancel_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS_MICRO::find($id);
             $lastDocument = OOS_MICRO::find($id);
             $data->stage = "0";
@@ -4462,7 +4462,7 @@ if($lastDocument->$key != $request->$key){
 
     public function Done_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS_MICRO::find($id);
             $changestage = OOS_MICRO::find($id);
             $lastDocument = OOS_MICRO::find($id);
@@ -4503,7 +4503,7 @@ if($lastDocument->$key != $request->$key){
 
     public function Done_One_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS_MICRO::find($id);
             $changestage = OOS_MICRO::find($id);
             $lastDocument = OOS_MICRO::find($id);
@@ -4544,7 +4544,7 @@ if($lastDocument->$key != $request->$key){
 
     public function Done_Two_stage(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $data = OOS_MICRO::find($id);
             $changestage = OOS_MICRO::find($id);
             $lastDocument = OOS_MICRO::find($id);

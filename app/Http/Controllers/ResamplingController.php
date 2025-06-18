@@ -1618,7 +1618,7 @@ foreach ($pre as $processName => $modelClass) {
     public function stageChange(Request $request, $id)
     {
          //return "hii";
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Resampling::find($id);
             // return $changeControl;
             $lastopenState = Resampling::find($id);
@@ -2269,7 +2269,7 @@ foreach ($pre as $processName => $modelClass) {
 
 //     public function stagecancel(Request $request, $id)
 // {
-//     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+//     if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
 //         $actionItem = ActionItem::find($id);
 
 //         $actionItem->status = "Closed-Cancelled";
@@ -2295,7 +2295,7 @@ foreach ($pre as $processName => $modelClass) {
 
 public function resamplingStageCancel(Request $request, $id)
 {
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = Resampling::find($id);
         $lastopenState = Resampling::find($id);
         $openState = Resampling::find($id);
@@ -2415,7 +2415,7 @@ public function resamplingStageCancel(Request $request, $id)
 
 public function resamplingmoreinfo(Request $request, $id)
 {
-    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+    if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = Resampling::find($id);
         $lastopenState = Resampling::find($id);
         // $openState = Resampling::find($id);

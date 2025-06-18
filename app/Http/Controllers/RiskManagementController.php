@@ -9336,7 +9336,7 @@ class RiskManagementController extends Controller
     public function riskAssesmentStateChange(Request $request, $id)
     {
         try {
-            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
                 $riskAssement = RiskManagement::find($id);
                 $updateCFT = RiskManagmentCft::where('risk_id', $id)->latest()->first();
                 $lastDocument = RiskManagement::find($id);
@@ -10604,7 +10604,7 @@ class RiskManagementController extends Controller
 
     public function RejectStateChange(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $riskAssement = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
             $data =  RiskManagement::find($id);
@@ -11180,7 +11180,7 @@ class RiskManagementController extends Controller
 
     public function riskassesmentCancel(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->emp_code && Hash::check($request->password, Auth::user()->password)) {
             $riskAssement = RiskManagement::find($id);
             $lastDocument =  RiskManagement::find($id);
 
