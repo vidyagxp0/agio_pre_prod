@@ -9322,7 +9322,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
     {
 
         $cft = [];
-        $parent_id = Deviation::find($id)->record;
+        $parent_id = $id;
         $parent_type = "Deviation";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -9351,7 +9351,7 @@ if ($lastDeviation->qa_final_assement_attach != $deviation->qa_final_assement_at
 
             $Extensionchild = Deviation::find($id);
 
-            $Extensionchild->Extensionchild = $record_number;
+           $Extensionchild->Extensionchild = $record_number;
            $relatedRecords = Helpers::getAllRelatedRecords();
            $data=Deviation::find($id);
 

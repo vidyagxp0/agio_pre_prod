@@ -2652,7 +2652,7 @@ class AuditProgramController extends Controller
     // }
     public function child_audit_program(Request $request, $id)
     {
-        $parent_id = AuditProgram::find($id)->record;
+        $parent_id = $id;
 
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);

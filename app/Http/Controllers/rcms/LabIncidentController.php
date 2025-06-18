@@ -6039,7 +6039,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
            {
                $cc = LabIncident::find($id);
                $cft = [];
-               $parent_id = LabIncident::find($id)->record;
+               $parent_id = $id;
                $parent_type = "Lab Incident";
                $old_records = Capa::select('id', 'division_id', 'record')->get();
                $parent_division_id = LabIncident::where('id', $id)->value('division_id');
@@ -6121,7 +6121,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
            {
                $cc = LabIncident::find($id);
                $cft = [];
-               $parent_id = LabIncident::find($id)->record;
+               $parent_id = $id;
                $parent_type = "LabIncident";
                $old_records = Capa::select('id', 'division_id', 'record')->get();
                $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -6159,7 +6159,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     {
         $cc = LabIncident::find($id);
         $cft = [];
-        $parent_id = LabIncident::find($id)->record;
+        $parent_id =  $id;
         $parent_type = "Lab Incident";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -6203,7 +6203,7 @@ if ($lastDocument->ccf_attachments != $data->ccf_attachments) {
     {
         $cc = LabIncident::find($id);
         $cft = [];
-        $parent_id = LabIncident::find($id)->record;
+        $parent_id = $id;
         $parent_type = "Capa";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);

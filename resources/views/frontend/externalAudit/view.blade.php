@@ -8829,7 +8829,7 @@
                             </div>
                         @endif
 
-                        @if($data->stage == 2 && Helpers::getChildData($data->record, 'External Audit') < 3)
+                        @if($data->stage == 2 && Helpers::getChildData($data->id , 'External Audit') < 3)
                             <div class="group-input">
                                 <label for="major">
                                     <input type="radio" name="child_type" value="Extension">

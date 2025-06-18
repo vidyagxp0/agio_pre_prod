@@ -3052,7 +3052,7 @@ if (is_array($request->action) && !empty($request->action)) {
     {
         $cc = Observation::find($id);
         $cft = [];
-        $parent_id = Observation::find($id)->record;
+        $parent_id = $id;
         $parent_type = "Observation";
         $old_records = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);

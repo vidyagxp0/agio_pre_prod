@@ -15121,7 +15121,6 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="modal fade" id="child-modal_a">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
@@ -15148,8 +15147,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 CAPA
                             </label>
                         </div>
-
-                        @if($data->stage == 4 && Helpers::getChildData($data->record, 'Internal Audit') < 3)
+                                               
+                        @if(Helpers::getChildData($data->id, 'Internal Audit') < 3)
                             <div class="group-input">
                                 <label for="major">
                                     <input type="radio" name="child_type" value="Extension">

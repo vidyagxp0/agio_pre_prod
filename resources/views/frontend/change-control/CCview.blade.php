@@ -9893,7 +9893,7 @@
                                 </label>
                             @endif    
                             
-                                @if(Helpers::getChildData($data->record, 'CC') < 3)
+                                @if(Helpers::getChildData($data->id, 'CC') < 3)
                                 <label for="minor">
                                     <input type="radio" name="revision" id="minor" value="Extension">
                                     Extension
@@ -9957,12 +9957,12 @@
 
 
                             <div>
-                            @if(Helpers::getChildData($data->id, 'CC') < 3)
-                                <label for="minor">
-                                    <input type="radio" name="revision" id="minor" value="Extension">
-                                    Extension
-                                </label>
-                            @endif    
+                                @if(Helpers::getChildData($data->id, 'CC') < 3)
+                                    <label for="minor">
+                                        <input type="radio" name="revision" id="minor" value="Extension">
+                                        Extension
+                                    </label>
+                                @endif    
                             </div>
 
 

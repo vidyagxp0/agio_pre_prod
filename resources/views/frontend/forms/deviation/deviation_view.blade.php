@@ -14828,32 +14828,43 @@
                                 </label>
                                 @endif
 
-                        @endif
+                            @endif
 
 
                             @if ($data->stage == 3)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                               @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
+
                             @if ($data->stage == 4)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                              @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
+
                             @if ($data->stage == 5)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                               @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif   
                             @endif
+
                             @if ($data->stage == 8)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                               @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
 
                             @if ($data->stage == 7)
@@ -14861,11 +14872,12 @@
                                     <input type="radio" name="child_type" id="major" value="capa">
                                     CAPA
                                 </label>
-
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                                @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
 
                                 <label for="major">
                                     <input type="radio" name="child_type" id="major" value="rca">
@@ -14878,29 +14890,37 @@
                             @endif
 
                             @if ($data->stage == 6)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                               @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
 
                             @if ($data->stage == 9)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                               @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
                             @if ($data->stage == 10)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                              @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
                             @if ($data->stage == 11)
-                                <label for="major">
-                                    <input type="radio" name="child_type" id="major" value="extension">
-                                    Extension
-                                </label>
+                                @if ( Helpers::getChildData($data->id, 'Deviation') < 3)
+                                    <label for="major">
+                                        <input type="radio" name="child_type" id="major" value="extension">
+                                        Extension
+                                    </label>
+                                @endif
                             @endif
                         </div>
 

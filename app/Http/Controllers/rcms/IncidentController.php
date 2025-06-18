@@ -8567,7 +8567,7 @@ if (!empty($request->closure_attachment) || !empty($request->deleted_closure_att
     {
 
         $cft = [];
-        $parent_id = Incident::find($id)->record;
+        $parent_id = $id;
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);

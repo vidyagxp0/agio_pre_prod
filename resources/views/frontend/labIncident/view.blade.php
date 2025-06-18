@@ -3263,12 +3263,14 @@
                                 Effectiveness check
                             </label>
                         </div>
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Extension">
-                                Extension
-                            </label>
-                        </div>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
+                            <div class="group-input">
+                                <label for="root-item">
+                                    <input type="radio" name="revision" id="root-item" value="Extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
 
                     </div>
 
@@ -3304,12 +3306,14 @@
                                 Risk Assessment
                             </label>
                         </div>
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Extension">
-                                Extension
-                            </label>
-                        </div>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
+                            <div class="group-input">
+                                <label for="root-item">
+                                    <input type="radio" name="revision" id="root-item" value="Extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
 
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
@@ -3330,12 +3334,14 @@
                     <form action="{{ route('lab_incident_extension_child', $data->id) }}" method="POST">
                         @csrf
 
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Extension">
-                                Extension
-                            </label>
-                        </div>
+                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
+                            <div class="group-input">
+                                <label for="root-item">
+                                    <input type="radio" name="revision" id="root-item" value="Extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
 
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
@@ -3379,13 +3385,13 @@
                                 CAPA
                             </label>
                         </div>
-                        @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="Extension">
-                                Extension
-                            </label>
-                        @endif
+                            @if(Helpers::getChildData($data->id, 'LabIncident') < 3)
+                            <div class="group-input">
+                                <label for="root-item">
+                                    <input type="radio" name="revision" id="root-item" value="Extension">
+                                    Extension
+                                </label>
+                            @endif
                         </div>
 
                         <div class="modal-footer">

@@ -5234,7 +5234,7 @@ class CapaController extends Controller
     public function child_change_control(Request $request, $id)
     {
         $cft = [];
-        $parent_id = Capa::find($id)->record;
+        $parent_id = $id;
         $parent_type = "CAPA";
         $record = ((RecordNumber::first()->value('counter')) + 1);
         $record = str_pad($record, 4, '0', STR_PAD_LEFT);

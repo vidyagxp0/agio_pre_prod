@@ -8754,7 +8754,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
 
     public function child_external(Request $request, $id)
     {
-        $parent_id = Auditee::find($id)->record;
+        $parent_id = $id;
 
         if ($request->child_type == "Action-Item") {
             $parent_division_id  = Auditee::where('id', $id)->value('division_id');
@@ -8787,6 +8787,8 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $parent_due_date = Auditee::where('id', $id)->value('due_date');
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $record = ((RecordNumber::first()->value('counter')) + 1);
+            $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
             $parent_division_id  = Auditee::where('id', $id)->value('division_id');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=Auditee::find($id);
@@ -8794,7 +8796,7 @@ $history->activity_type = 'Others 4 Review Completed By,Others 4 Review Complete
             $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1; 
-            return view('frontend.extension.extension_new', compact('parent_type','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
+            return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
 
         }
     }

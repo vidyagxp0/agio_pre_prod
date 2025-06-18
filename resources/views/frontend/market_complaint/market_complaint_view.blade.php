@@ -11196,13 +11196,14 @@ document.getElementById('initiator_group').addEventListener('change', function()
                                     Action Item
                                 </label>
                             </div>
-
-                            <div class="group-input">
-                                <label style="display: flex; gap: 16px; width: 60px;" for="extension">
-                                    <input type="radio" name="revision" id="extension" value="extension">
-                                   Extension
-                                </label>
-                            </div>
+                            @if(Helpers::getChildData($data->id, 'Market Complaint') < 3) 
+                                <div class="group-input">
+                                    <label style="display: flex; gap: 16px; width: 60px;" for="extension">
+                                        <input type="radio" name="revision" id="extension" value="extension">
+                                    Extension
+                                    </label>
+                                </div>
+                            @endif
 
                         </div>
 

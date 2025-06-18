@@ -8529,11 +8529,11 @@
                                         Action-Item
                                     </label>
                                     
-                                    @if(Helpers::getChildData($data->record, 'Incident') < 3)
-                                    <label for="major">
-                                        <input type="radio" name="child_type" id="major" value="extension">
-                                            Extension
-                                    </label>
+                                    @if(Helpers::getChildData($data->id, 'Incident') < 3)
+                                        <label for="major">
+                                            <input type="radio" name="child_type" id="major" value="extension">
+                                                Extension
+                                        </label>
                                     @endif
 
                                @endif

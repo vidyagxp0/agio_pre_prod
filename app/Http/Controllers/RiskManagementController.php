@@ -11091,7 +11091,7 @@ class RiskManagementController extends Controller
         // return "test";
 
         $cft = [];
-        $parent_id = RiskManagement::find($id)->record;
+        $parent_id = $id;
         $parent_type = "Risk Assesment";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);

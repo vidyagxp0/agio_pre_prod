@@ -13119,7 +13119,7 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
     public function child(Request $request, $id)
     {
         $cc = CC::find($id);
-        $parent_id = cc::find($id)->record;
+        $parent_id = $id;
         $parent_name = "CC";
         $parent_type = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -13143,7 +13143,8 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
         $parent_due_date=CC::where('id', $id)->value('due_date');
 
 
-     //   $data =$parent_data1;
+        // $data =$parent_data1;
+
         if ($request->revision == "Action-Item") {
             $p_record = CC::find($id);
             $data = CC::find($id);
@@ -13166,12 +13167,10 @@ if ($lastCft->Other3_on != $request->Other3_on && $request->Other3_on != null) {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             $relatedRecords = Helpers::getAllRelatedRecords();
             $data=CC::find($id);
-        $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
-            
-
-         $count = Helpers::getChildData($id, $parent_type);
-         $countData = $count + 1; 
-        return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
+            $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'CC' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+            $count = Helpers::getChildData($id, $parent_type);
+            $countData = $count + 1; 
+            return view('frontend.extension.extension_new', compact('parent_name', 'parent_type', 'parent_id', 'record_number','extension_record', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));
         }
         if ($request->revision == "New Document") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');

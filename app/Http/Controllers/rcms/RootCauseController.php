@@ -4601,9 +4601,10 @@ class RootCauseController extends Controller
             return $pdf->stream('Root-cause' . $id . '.pdf');
         }
     }
+
     public function child_r_c_a(Request $request, $id)
     {
-        $parent_id = RootCauseAnalysis::find($id)->record;
+        $parent_id = $id;
         $parent_initiator_id = RootCauseAnalysis::where('id', $id)->value('initiator_id');
         $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
 
@@ -4628,7 +4629,7 @@ class RootCauseController extends Controller
     {
         $cc = RootCauseAnalysis::find($id);
         $cft = [];
-        $parent_id = RootCauseAnalysis::find($id)->record;
+        $parent_id = $id;
         $parent_type = "Capa";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -4639,7 +4640,6 @@ class RootCauseController extends Controller
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
         $parent_division_id = RootCauseAnalysis::where('id', $id)->value('division_id');
         $parent_due_date=RootCauseAnalysis::where('id', $id)->value('due_date');
-
         $parent_initiator_id = $id;
 
 
@@ -4676,8 +4676,6 @@ class RootCauseController extends Controller
             $relatedRecords = Helpers::getAllRelatedRecords();
             $p_record=RootCauseAnalysis::find($id);
             $extension_record = Helpers::getDivisionName($p_record->division_id ) . '/' . 'RCA' .'/' . date('Y') .'/' . str_pad($p_record->record, 4, '0', STR_PAD_LEFT);
-            
-
             $count = Helpers::getChildData($id, $parent_type);
             $countData = $count + 1; 
             return view('frontend.extension.extension_new', compact('parent_type', 'parent_id', 'record_number','extension_record','parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc','relatedRecords','countData','parent_due_date'));

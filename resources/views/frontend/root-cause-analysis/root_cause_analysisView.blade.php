@@ -2497,21 +2497,24 @@
                                 Action Item
                             </label>
                         </div>
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="extension">
-                                Extension
-                            </label>
-                        </div>
+                        @if(Helpers::getChildData($data->id, 'RCA') < 3)
+                            <div class="group-input">
+                                <label for="root-item">
+                                    <input type="radio" name="revision" id="root-item" value="extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
                     @else
-
-                        <div class="group-input">
-                            <label for="root-item">
-                                <input type="radio" name="revision" id="root-item" value="extension">
-                                Extension
-                            </label>
-                        </div>
-                    
+                       @if(Helpers::getChildData($data->id, 'RCA') < 3)
+                            <div class="group-input">
+                                <label for="root-item">
+                                    <input type="radio" name="revision" id="root-item" value="extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
+                        
                     @endif
                         
                     

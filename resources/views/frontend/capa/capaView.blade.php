@@ -2470,15 +2470,12 @@
 
                             <div class="modal-body">
                                 @if(Helpers::getChildData($data->id, 'CAPA') < 3)
-                                <div class="group-input">
-
-                                    <label for="major">
-                                       <input type="radio" name="child_type" value="extension">
-                                          Extension
-                                    </label>
-
-
-                                </div>
+                                    <div class="group-input">
+                                        <label for="major">
+                                        <input type="radio" name="child_type" value="extension">
+                                            Extension
+                                        </label>
+                                    </div>
                                 @endif
 
                             </div>
@@ -2535,11 +2532,11 @@
                                         </label>
                                     @endif
                                     @if ($data->stage == 5)
-                                    <label for="major">
-                                       <input type="radio" name="child_type" value="Action-item">
-                                          Action-Item
-                                    </label>
-                                @endif
+                                        <label for="major">
+                                          <input type="radio" name="child_type" value="Action-item">
+                                            Action-Item
+                                        </label>
+                                    @endif
 
                                     @if ($data->stage == 7)
                                         <label for="major">
@@ -2561,12 +2558,12 @@
                                     </label>
                                 </div>
                                 @if(Helpers::getChildData($data->id, 'CAPA') < 3)
-                                <div class="group-input">
-                                    <label for="major">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
-                                      </label>
-                                </div>
+                                    <div class="group-input">
+                                        <label for="major">
+                                            <input type="radio" name="child_type" value="extension">
+                                            Extension
+                                        </label>
+                                    </div>
                                 @endif
                             </div>
 
