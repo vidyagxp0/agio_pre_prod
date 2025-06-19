@@ -510,6 +510,9 @@ document.addEventListener("DOMContentLoaded", function () {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Response Reviewed
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal_a">
+                                Child
+                            </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -15128,37 +15131,48 @@ document.addEventListener("DOMContentLoaded", function () {
                 <form action="{{ route('multiple_child', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
-                    <div class="modal-body">
-                        <div class="group-input">
-                            <label for="major">
-                                <input type="radio" name="child_type" value="action_item">
-                                Action Item
-                            </label>
-                        </div>
-                        <div class="group-input">
-                            <label for="major">
-                                <input type="radio" name="child_type" value="r_c_a">
-                                Root Cause Analysis
-                            </label>
-                        </div>
-                        <div class="group-input">
-                            <label for="major">
-                                <input type="radio" name="child_type" value="capa">
-                                CAPA
-                            </label>
-                        </div>
-                                               
-                        @if(Helpers::getChildData($data->id, 'Internal Audit') < 3)
+                    @if($data->stage == 4)   
+                        <div class="modal-body">
                             <div class="group-input">
                                 <label for="major">
-                                    <input type="radio" name="child_type" value="Extension">
-                                    Extension
+                                    <input type="radio" name="child_type" value="action_item">
+                                    Action Item
                                 </label>
                             </div>
+                            <div class="group-input">
+                                <label for="major">
+                                    <input type="radio" name="child_type" value="r_c_a">
+                                    Root Cause Analysis
+                                </label>
+                            </div>
+                            <div class="group-input">
+                                <label for="major">
+                                    <input type="radio" name="child_type" value="capa">
+                                    CAPA
+                                </label>
+                            </div>
+                            @if(Helpers::getChildData($data->id, 'Internal Audit') < 3)
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Extension">
+                                        Extension
+                                    </label>
+                                </div>
+                            @endif
+                        </div>
+                    @elseif($data->stage == 5)
+                        @if(Helpers::getChildData($data->id, 'Internal Audit') < 3)
+                            <div class="modal-body">
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="Extension">
+                                        Extension
+                                    </label>
+                                </div>
+                            </div>
                         @endif
+                    @endif
 
-
-                    </div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
@@ -15421,18 +15435,17 @@ document.addEventListener("DOMContentLoaded", function () {
                                 Observations
                             </label>
                         </div>
+                        @if(Helpers::getChildData($data->id, 'Internal Audit') < 3)
+                            <div class="group-input">
+                                <label for="major">
+                                    <input type="radio" name="child_type" value="Extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
 
                     </div>
-                    {{-- <div class="modal-body">
-                                <div class="group-input">
-                                    <label for="major">
-                                        <input type="hidden" name="parent_name" value="Internal_audit">
-                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
-                                    </label>
-                                </div>
-                            </div> --}}
+
 
                     <!-- Modal footer -->
                     <div class="modal-footer">

@@ -5781,14 +5781,37 @@ if ($areIniAttachmentsSame2 != true) {
 
         public function internal_audit_child(Request $request, $id)
         {
-            $parent_id = $id;
-            $parent_type = "Internal Audit";
-            $record_number = ((RecordNumber::first()->value('counter')) + 1);
-            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            $currentDate = Carbon::now();
-            $formattedDate = $currentDate->addDays(30);
-            $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            
+            if($request->child_type == 'Observations'){
+
+                $parent_id = $id;
+                $parent_type = "Internal Audit";
+                $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
+                $record_number = ((RecordNumber::first()->value('counter')) + 1);
+                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                $currentDate = Carbon::now();
+                $formattedDate = $currentDate->addDays(30);
+                $due_date = $formattedDate->format('d-M-Y');
+                return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
+            }
+
+            if ($request->child_type == "Extension")
+            {
+                $parent_id = $id;
+                $parent_type = "Internal Audit";
+                $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
+                $record_number = ((RecordNumber::first()->value('counter')) + 1);
+                $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                $record = ((RecordNumber::first()->value('counter')) + 1);
+                $record = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+                $parent_due_date = InternalAudit::where('id', $id)->value('due_date');
+                $relatedRecords = Helpers::getAllRelatedRecords();
+                $data = InternalAudit::find($id);
+                $extension_record = Helpers::getDivisionName($data->division_id ) . '/' . 'EA' .'/' . date('Y') .'/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+                $count = Helpers::getChildData($id, $parent_type);
+                $countData = $count + 1; 
+                return view('frontend.extension.extension_new', compact('parent_type','record','record_number','parent_id','parent_due_date','extension_record','parent_division_id', 'relatedRecords','countData',));
+            }
 
 
         }
@@ -5814,7 +5837,7 @@ if ($areIniAttachmentsSame2 != true) {
                 return view('frontend.action-item.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id','record', 'data_record','data'));
             }
             if($request->child_type == 'r_c_a'){
-                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+                return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_division_id'));
             }
             if($request->child_type == 'capa'){
                 $Capachild = InternalAudit::find($id);
@@ -5822,7 +5845,7 @@ if ($areIniAttachmentsSame2 != true) {
 
                 $relatedRecords = Helpers::getAllRelatedRecords();
 
-                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records','relatedRecords','reference_record'));
+                return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_records','relatedRecords','reference_record','parent_division_id'));
             }
 
             if ($request->child_type == "Extension")

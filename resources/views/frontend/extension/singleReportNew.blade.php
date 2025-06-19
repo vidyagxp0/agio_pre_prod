@@ -499,11 +499,11 @@
         @endif
         @if ($data->count == 3)  
             <div class="block">
-                <div class="block-head">CQA Final Approval</div>
+                <div class="block-head">CQA Approval</div>
 
                 {{-- <table>
                     <tr>
-                        <th class="w-20">CQA Final Approval Comments </th>
+                        <th class="w-20">CQA Approval Comments </th>
                         <td class="w-80">
                             @if ($data->QAapprover_remarks)
                                 {{ $data->QAapprover_remarks }}
@@ -515,7 +515,7 @@
                 </table> --}}
 
                 
-                    <label class="Summer" for="QA/CQA Approval Comments">CQA Final Approval Comments</label>
+                    <label class="Summer" for="QA/CQA Approval Comments">CQA Approval Comments</label>
                     <div class="div-data">
                         @if (!empty($data->QAapprover_remarks))
                             {{ $data->QAapprover_remarks }}
@@ -527,7 +527,7 @@
 
             </div>
             <div class="block">
-                <div class="block-head">CQA Final Approval Attachments</div>
+                <div class="block-head">CQA Approval Attachments</div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">

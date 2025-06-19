@@ -389,7 +389,7 @@
                 @endif
 
                 @if($extensionNew->data_number == 3 || $extensionNew->count_data == 'number3' || $extensionNew->count == 3)
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Final Approval</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CQA Approval</button>
                 @endif 
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button>
@@ -1009,7 +1009,7 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Assigned To">CQA Final Approval Comments @if($extensionNew->stage == 5)<span class="text-danger">*</span>@endif</label>
+                                        <label for="Assigned To">CQA Approval Comments @if($extensionNew->stage == 5)<span class="text-danger">*</span>@endif</label>
                                         <textarea name="QAapprover_remarks" id="QAapprover_remarks" cols="30"
                                             {{ in_array($extensionNew->stage, [3, 5]) ? '' : 'readonly' }}>{{ $extensionNew->QAapprover_remarks }}</textarea>
                                     </div>
@@ -1024,7 +1024,7 @@
                                 @endif
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">CQA Final Approval Attachments</label>
+                                        <label for="Inv Attachments">CQA Approval Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">

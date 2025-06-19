@@ -847,16 +847,16 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->file_attach)
-        @foreach(json_decode($data->file_attach) as $key => $file)
-        <tr>
-            <td class="w-20">{{ $key + 1 }}</td>
-            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-        </tr>
-        @endforeach
+            @foreach(json_decode($data->file_attach) as $key => $file)
+            <tr>
+                <td class="w-20">{{ $key + 1 }}</td>
+                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+            </tr>
+            @endforeach
         @else
         <tr>
             <td class="w-20">1</td>
@@ -990,7 +990,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->supproting_attachment)
@@ -1153,7 +1153,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->tablet_coating_supporting_attachment)
@@ -1316,7 +1316,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->tablet_capsule_packing_attachmen)
@@ -1487,7 +1487,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->file_attach_capsule)
@@ -1653,7 +1653,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->dispensing_and_manufacturing_attachment)
@@ -1824,7 +1824,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->file_attach_add_2)
@@ -1977,7 +1977,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->ointment_packing_attachment)
@@ -2135,7 +2135,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->auditSheChecklist_attachment_main)
@@ -2352,7 +2352,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->quality_control_response_attachment)
@@ -2488,7 +2488,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->checklist_stores_response_attachment)
@@ -2630,7 +2630,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->checklist_hr_response_attachment)
@@ -2823,7 +2823,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->remark_documentation_name_attachment)
@@ -2995,7 +2995,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->remark_injection_packing_attachment)
@@ -3247,7 +3247,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->remark_powder_manufacturing_filling_attachment)
@@ -3382,7 +3382,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->remark_analytical_research_attachment)
@@ -3518,7 +3518,7 @@
     <table>
 
         <tr class="table_bg">
-            <th class="w-20">S.N.</th>
+            <th class="w-20">Sr.No.</th>
             <th class="w-60">Attachment</th>
         </tr>
         @if($data->remark_formulation_research_development_attachment)
