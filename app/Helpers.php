@@ -1289,76 +1289,61 @@ class Helpers
         
         switch ($departmentid) {
             case '1':
-                $full_department_name = 'Calibration Lab';
+                $full_department_name = 'Corporate Quality Assurance';
                 break;
             case '2':
-                $full_department_name = 'Engineering';
+                $full_department_name = 'Quality Control (Microbiology department)';
                 break;
             case '3':
-                $full_department_name = 'Facilities';
+                $full_department_name = 'Engineering';
                 break;
             case '4':
-                $full_department_name = 'LAB';
+                $full_department_name = 'Store';
                 break;
             case '5':
-                $full_department_name = 'Labeling';
+                $full_department_name = 'Production Injectable';
                 break;
             case '6':
-                $full_department_name = 'Manufacturing';
+                $full_department_name = 'Production External';
                 break;
             case '7':
-                $full_department_name = 'Quality Assurance';
+                $full_department_name = 'Production Tablet,Powder and Capsule';
                 break;
             case '8':
-                $full_department_name = 'Quality Control';
+                $full_department_name = 'Quality Assurance';
                 break;
             case '9':
-                $full_department_name = 'Ragulatory Affairs';
+                $full_department_name = 'Quality Control';
                 break;
             case '10':
-                $full_department_name = 'Security';
+                $full_department_name = 'Ragulatory Affairs';
                 break;
             case '11':
-                $full_department_name = 'Training';
+                $full_department_name = 'Packaging Development /Artwork';
                 break;
             case '12':
-                $full_department_name = 'IT';
+                $full_department_name = 'Artwork';
                 break;
             case '13':
-                $full_department_name = 'IT Administration';
+                $full_department_name = 'Research & Development';
                 break;
             case '14':
-                $full_department_name = 'Trading';
-                break;
-            case '15':
-                $full_department_name = 'Research';
-                break;
-            case '16':
-                $full_department_name = 'Sales';
-                break;
-            case '17':
-                $full_department_name = 'Finance';
-                break;
-            case '18':
-                $full_department_name = 'Systems';
-                break;
-            case '19':
-                $full_department_name = 'Administrative';
-                break;
-            case '20':
-                $full_department_name = 'M&A';
-                break;
-            case '21':
-                $full_department_name = 'R&D';
-                break;
-            case '22':
                 $full_department_name = 'Human Resource';
                 break;
-            case '23':
-                $full_department_name = 'Banking';
-                break;
-            case '24':
+            case '15':
                 $full_department_name = 'Marketing';
+                break;
+            case '16':
+                $full_department_name = 'Analytical research and Development Laboratory';
+                break;
+            case '17':
+                $full_department_name = 'Information Technology';
+                break;
+            case '18':
+                $full_department_name = 'Safety';
+                break;
+            case '19':
+                $full_department_name = 'Purchase Department';
                 break;
             default:
                 $full_department_name = '';
@@ -1723,6 +1708,31 @@ class Helpers
 
 
         return $count;
+    }
+
+    public static function check_roles_qms($role_id, $user_id = null, $division_id = [1,2,3,4,5,6,7,8], $process_names = ['Effective Check', 'Lab Incident', 'CAPA', 'Audit Program', 'Action Item', 'Internal Audit', 'External Audit', 'Deviation', 'Change Control', 'Risk Assessment', 'Root Cause Analysis', 'Observation', 'Extension'])
+    {
+        // Get user ID if not passed
+        $user_id = $user_id ?? Auth::id();
+
+        // Get all matching process IDs
+        $process_ids = QMSProcess::whereIn('division_id', $division_id)
+            ->whereIn('process_name', $process_names)
+            ->pluck('id');
+
+        if ($process_ids->isEmpty()) {
+            return false;
+        }
+
+        // Check if user has the role for any of the matching processes
+        $roleExists = DB::table('user_roles')
+            ->where('user_id', $user_id)
+            ->whereIn('q_m_s_divisions_id', $division_id)
+            ->whereIn('q_m_s_processes_id', $process_ids)
+            ->where('q_m_s_roles_id', $role_id)
+            ->exists();
+
+        return $roleExists;
     }
 
     public static function check_roles($division_id, $process_name, $role_id, $user_id = null)

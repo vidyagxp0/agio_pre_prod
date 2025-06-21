@@ -235,10 +235,10 @@ class UserManagementController extends Controller
             $q_m_s_roles_name = trim($roleArray[2]);
             // Assuming you have models for q_m_s_divisions and q_m_s_process
             $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
-            $process = QMSProcess::where('process_name', $q_m_s_processes_name)->first();
+            $process = QMSProcess::where('process_name', $q_m_s_processes_name)->where('division_id', $division->id)->first();
             $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
             $q_m_s_divisions_id = $division->id;
-            $q_m_s_processes_id = $process->id;
+            $q_m_s_processes_id = $process?->id;
             $q_m_s_roles_id = $qmsroles->id;
             $userRole->user_id = $user->id;
             $userRole->role_id = $roleId;

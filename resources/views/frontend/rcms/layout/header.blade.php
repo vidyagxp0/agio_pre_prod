@@ -171,10 +171,13 @@
                                 <input type="text" name="search" id="searchInput" placeholder="Search...">
                             </form>
                         </div>
+                       @if (Helpers::check_roles_qms(3, Auth::user()->id))
+
                         <div class="create">
                             <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
                                     Record</button> </a>
                         </div>
+                      @endif
                     </div>
                 </div>
             </div>

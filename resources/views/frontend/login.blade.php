@@ -278,7 +278,7 @@
                         <div class="group-input">
                             <label for="timezone"><i class="fa-solid fa-calendar-check"></i></label>
                             <select name="timezone">
-                                <option value="Pacific/Midway">
+                                <!-- <option value="Pacific/Midway">
                                     (GMT-11:00) Midway Island
                                 </option>
                                 <option value="US/Samoa">
@@ -511,11 +511,12 @@
                                 </option>
                                 <option value="Asia/Tashkent">
                                     (GMT+05:00) Tashkent
+                                </option> -->
+                                <option value="Asia/India">
+                                    (GMT+05:30) Kolkata, New Delhi, Chennai, Mumbai
+
                                 </option>
-                                <option value="Asia/Kolkata">
-                                    (GMT+05:30) Kolkata
-                                </option>
-                                <option value="Asia/Kathmandu">
+                                <!-- <option value="Asia/Kathmandu">
                                     (GMT+05:45) Kathmandu
                                 </option>
                                 <option value="Asia/Yekaterinburg">
@@ -613,7 +614,7 @@
                                 </option>
                                 <option value="Pacific/Fiji">
                                     (GMT+12:00) Fiji
-                                </option>
+                                </option> -->
                             </select>
                         </div>
                         <div>

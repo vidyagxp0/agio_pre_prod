@@ -2263,11 +2263,11 @@
                                                     <select name="Quality_Assurance_Review" id="Quality_Assurance_Review">
                                                         <option value="">-- Select --</option>
                                                        
-                                                    <option @if ($data1->Quality_Assurance_Review == 'yes' || empty($data1->Quality_Assurance_Review)) selected @endif value='yes'>Yes</option>
+                                                    <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>Yes</option>
                                                       
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value='NA'>
+                                                        <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>
                                                             NA</option>
                                                     </select>
 
@@ -2428,12 +2428,12 @@
                                                     <select name="Quality_Assurance_Review" id="Quality_Assurance_Review"  disabled>
                                                         <option value="">-- Select --</option>
 
-                                                        <option @if ($data1->Quality_Assurance_Review == 'yes' || empty($data1->Quality_Assurance_Review)) selected @endif value='yes'>Yes</option>
+                                                        <option @if ($data1->Quality_Assurance_Review == 'yes') selected @endif value='yes'>Yes</option>
                                                   
                                                       
                                                         <option @if ($data1->Quality_Assurance_Review == 'no') selected @endif value='no'>
                                                             No</option>
-                                                        <option @if ($data1->Quality_Assurance_Review == 'NA') selected @endif value='NA'>
+                                                        <option @if ($data1->Quality_Assurance_Review == 'NA' || empty($data1->Quality_Assurance_Review)) selected @endif value='NA'>
                                                             NA</option>
                                                     </select>
 

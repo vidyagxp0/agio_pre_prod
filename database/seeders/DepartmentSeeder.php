@@ -16,38 +16,44 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
+
         $department  = new Department();
-        $department->name = "Calibration Lab ";
-        $department->dc = "CLB";
+        $department->name = "Corporate Quality Assurance";
+        $department->dc = "CQA";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Engineering ";
+        $department->name = "Quality Control (Microbiology department)";
+        $department->dc = "MICROBIOLOGY";
+        $department->save();
+
+        $department  = new Department();
+        $department->name = "Engineering";
         $department->dc = "ENG";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Facilities ";
-        $department->dc = "FAC";
+        $department->name = "Store";
+        $department->dc = "STORE";
         $department->save();
 
         $department  = new Department();
-        $department->name = "LAB ";
-        $department->dc = "LAB";
+        $department->name = "Production Injectable";
+        $department->dc = "PI";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Labeling  ";
-        $department->dc = "LABL";
+        $department->name = "Production External";
+        $department->dc = "PE";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Manufacturing ";
-        $department->dc = "MANU";
+        $department->name = "Production Tablet,Powder and Capsule";
+        $department->dc = "PT";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Quality Assurance ";
+        $department->name = "Quality Assurance";
         $department->dc = "QA";
         $department->save();
 
@@ -57,83 +63,54 @@ class DepartmentSeeder extends Seeder
         $department->save();
 
         $department  = new Department();
-        $department->name = "Ragulatory Affairs ";
+        $department->name = "Ragulatory Affairs";
         $department->dc = "RA";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Security ";
-        $department->dc = "SCR";
+        $department->name = "Packaging Development /Artwork";
+        $department->dc = "PD";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Training ";
-        $department->dc = "TR";
+        $department->name = "Artwork";
+        $department->dc = "ART";
         $department->save();
 
         $department  = new Department();
-        $department->name = "IT ";
-        $department->dc = "IT";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Application Engineering ";
-        $department->dc = "AE";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Trading ";
-        $department->dc = "TRD";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Research ";
-        $department->dc = "RSCH";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Sales ";
-        $department->dc = "SAL";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Finance ";
-        $department->dc = "FIN";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Systems ";
-        $department->dc = "SYS";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "Administrative ";
-        $department->dc = "ADM";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "M&A ";
-        $department->dc = "M&A";
-        $department->save();
-
-        $department  = new Department();
-        $department->name = "R&D ";
+        $department->name = "Research & Development";
         $department->dc = "R&D";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Human Resource ";
+        $department->name = "Human Resource";
         $department->dc = "HR";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Banking ";
-        $department->dc = "BNK";
+        $department->name = "Marketing";
+        $department->dc = "MRKT";
         $department->save();
 
         $department  = new Department();
-        $department->name = "Marketing ";
-        $department->dc = "MRKT";
+        $department->name = "Analytical research and Development Laboratory";
+        $department->dc = "AR&D";
         $department->save();
+
+        $department  = new Department();
+        $department->name = "Information Technology";
+        $department->dc = "IT";
+        $department->save();
+
+        $department  = new Department();
+        $department->name = "Safety";
+        $department->dc = "SFT";
+        $department->save();
+
+        $department  = new Department();
+        $department->name = "Purchase Department";
+        $department->dc = "PD";
+        $department->save();
+    
     }
 }
