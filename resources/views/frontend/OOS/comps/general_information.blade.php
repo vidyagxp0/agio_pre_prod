@@ -208,7 +208,7 @@
                 <div class="group-input">
                     <label for="Initiator"><b>Initiator Department</b></label>
                     <input readonly type="text" name="initiator_group" id="initiator_group"
-                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                        value="{{ $data->initiator_group }}">
                 </div>
             </div>
 

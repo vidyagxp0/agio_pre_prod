@@ -992,8 +992,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator"><b>Initiator Department</b></label>
-                                                <input disabled type="text" name="Initiator_Group" id="initiator_group"
-                                                    value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                                <input readonly type="text" name="Initiator_Group" id="initiator_group"
+                                                    value="{{ $data->Initiator_Group }}">
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">

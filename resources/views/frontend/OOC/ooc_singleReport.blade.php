@@ -266,7 +266,7 @@
                             @endif
                         </td>
 
-                        @php
+                        <!-- @php
                             $department = [
                                 'CQA' => 'Corporate Quality Assurance',
                                 'QA' => 'Quality Assurance',
@@ -294,12 +294,12 @@
                             $currentInitiatorGroupFullForm = isset($department[$data->Initiator_Group])
                                 ? $department[$data->Initiator_Group]
                                 : $data->Initiator_Group;
-                        @endphp
+                        @endphp -->
 
                         <th class="w-20">Initiator Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{ $currentInitiatorGroupFullForm }}
+                                {{ $data->Initiator_Group }}
                             @else
                                 Not Applicable
                             @endif

@@ -275,11 +275,11 @@ use Carbon\Carbon;
 
 
                         <td class="w-30">
-                            @if ( Helpers::getUsersDepartmentName(Auth::user()->departmentid))
-                            {{  Helpers::getUsersDepartmentName(Auth::user()->departmentid)}}
-                        @else
-                            Not Applicable
-                        @endif
+                            @if ($managementReview->initiator_Group )
+                                {{ $managementReview->initiator_Group }}
+                            @else
+                                Not Applicable
+                            @endif
                         </td>
 
                         {{-- @if ($managementReview->initiator_Group)

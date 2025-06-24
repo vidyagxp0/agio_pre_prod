@@ -141,7 +141,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator Department</b></label>
-                                        <input disabled type="text" name="initiator_Group" id="initiator_group"
+                                        <input readonly type="text" name="initiator_Group" id="initiator_group"
                                             value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
                                     </div>
                                 </div>
@@ -150,30 +150,25 @@
                                         document.addEventListener("DOMContentLoaded", function () {
                                             // Define department name to code mapping
                                             const departmentMapping = {
-                                                "Calibration Lab": "CLB",
+                                                "Corporate Quality Assurance": "CQA",
+                                                "Quality Control (Microbiology department)": "MICROBIOLOGY",
                                                 "Engineering": "ENG",
-                                                "Facilities": "FAC",
-                                                "LAB": "LAB",
-                                                "Labeling": "LABL",
-                                                "Manufacturing": "MANU",
+                                                "Store": "STORE",
+                                                "Production Injectable": "PI",
+                                                "Production External": "PE",
+                                                "Production Tablet,Powder and Capsule": "PT",
                                                 "Quality Assurance": "QA",
                                                 "Quality Control": "QC",
                                                 "Ragulatory Affairs": "RA",
-                                                "Security": "SCR",
-                                                "Training": "TR",
-                                                "IT": "IT",
-                                                "Application Engineering": "AE",
-                                                "Trading": "TRD",
-                                                "Research": "RSCH",
-                                                "Sales": "SAL",
-                                                "Finance": "FIN",
-                                                "Systems": "SYS",
-                                                "Administrative": "ADM",
-                                                "M&A": "M&A",
-                                                "R&D": "R&D",
+                                                "Packaging Development /Artwork": "PD",
+                                                "Artwork": "ART",
+                                                "Research & Development": "R&D",
                                                 "Human Resource": "HR",
-                                                "Banking": "BNK",
                                                 "Marketing": "MRKT",
+                                                "Analytical research and Development Laboratory": "AR&D",
+                                                "Information Technology": "IT",
+                                                "Safety": "SFT",
+                                                "Purchase Department": "PD",
 
                                             };
 

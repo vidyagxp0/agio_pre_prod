@@ -240,8 +240,7 @@
                         <th class="w-20">Initiation Department</th>
                         <td class="w-30">
                             @if ($data->Initiator_Group)
-                                {{-- {{ Helpers::getFullDepartmentName($data->Initiator_Group) }} --}}
-                                {{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}
+                                {{ $data->Initiator_Group }}
                             @else
                                 Not Applicable
                             @endif

@@ -349,8 +349,8 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator"><b>Department</b></label>
-                                    <input disabled type="text" name="Department" id="Department"
-                                        value="{{ Helpers::getUsersDepartmentName(Auth::user()->departmentid) }}">
+                                    <input readonly type="text" name="Department" id="Department"
+                                        value="{{ $showdata->Department }}">
                                 </div>
                             </div>
 
