@@ -118,24 +118,24 @@
                                             // Define department name to code mapping
                                             const departmentMapping = {
                                                 "Corporate Quality Assurance": "CQA",
-                                                "Quality Control (Microbiology department)": "MICROBIOLOGY",
-                                                "Engineering": "ENG",
-                                                "Store": "STORE",
+                                                "Quality Control (Microbiology department)": "QM",
+                                                "Engineering": "EN",
+                                                "Store": "ST",
                                                 "Production Injectable": "PI",
                                                 "Production External": "PE",
                                                 "Production Tablet,Powder and Capsule": "PT",
                                                 "Quality Assurance": "QA",
                                                 "Quality Control": "QC",
-                                                "Ragulatory Affairs": "RA",
+                                                "Regulatory Affairs": "RA",
                                                 "Packaging Development /Artwork": "PD",
-                                                "Artwork": "ART",
+                                                "Artwork": "AW",
                                                 "Research & Development": "R&D",
                                                 "Human Resource": "HR",
-                                                "Marketing": "MRKT",
-                                                "Analytical research and Development Laboratory": "AR&D",
+                                                "Marketing": "MK",
+                                                "Analytical research and Development Laboratory": "AL",
                                                 "Information Technology": "IT",
-                                                "Safety": "SFT",
-                                                "Purchase Department": "PD",
+                                                "Safety": "SA",
+                                                "Purchase Department": "PU",
                                             };
 
                                             // Get the Initiator Department input

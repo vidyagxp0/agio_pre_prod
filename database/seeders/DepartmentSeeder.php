@@ -24,17 +24,17 @@ class DepartmentSeeder extends Seeder
 
         $department  = new Department();
         $department->name = "Quality Control (Microbiology department)";
-        $department->dc = "MICROBIOLOGY";
+        $department->dc = "QM";
         $department->save();
 
         $department  = new Department();
         $department->name = "Engineering";
-        $department->dc = "ENG";
+        $department->dc = "EN";
         $department->save();
 
         $department  = new Department();
         $department->name = "Store";
-        $department->dc = "STORE";
+        $department->dc = "ST";
         $department->save();
 
         $department  = new Department();
@@ -63,7 +63,7 @@ class DepartmentSeeder extends Seeder
         $department->save();
 
         $department  = new Department();
-        $department->name = "Ragulatory Affairs";
+        $department->name = "Regulatory Affairs";
         $department->dc = "RA";
         $department->save();
 
@@ -74,7 +74,7 @@ class DepartmentSeeder extends Seeder
 
         $department  = new Department();
         $department->name = "Artwork";
-        $department->dc = "ART";
+        $department->dc = "AW";
         $department->save();
 
         $department  = new Department();
@@ -89,27 +89,27 @@ class DepartmentSeeder extends Seeder
 
         $department  = new Department();
         $department->name = "Marketing";
-        $department->dc = "MRKT";
+        $department->dc = "MK";
         $department->save();
 
         $department  = new Department();
         $department->name = "Analytical research and Development Laboratory";
-        $department->dc = "AR&D";
+        $department->dc = "AL";
         $department->save();
 
-        $department  = new Department();
+        $department  = new Department(); 
         $department->name = "Information Technology";
         $department->dc = "IT";
         $department->save();
 
         $department  = new Department();
         $department->name = "Safety";
-        $department->dc = "SFT";
+        $department->dc = "SA";
         $department->save();
 
         $department  = new Department();
         $department->name = "Purchase Department";
-        $department->dc = "PD";
+        $department->dc = "PU";
         $department->save();
     
     }
