@@ -567,7 +567,7 @@
                                 Others</label>
                             <span style="font-size: 0.8rem; margin-left: 60px;">
                                 @if ($data->initiated_if_other)
-                                    {{ $data->initiated_if_other }}
+                                    {!! $data->initiated_if_other !!}
                                 @else
                                     Not Applicable
                                 @endif
@@ -580,7 +580,7 @@
                             <th class="w-20">Others</th>
                             <td class="w-80">
                                 @if ($data->initiated_if_other)
-                                    {{ $data->initiated_if_other }}
+                                    {!! $data->initiated_if_other !!}
                                 @else
                                     Not Applicable
                                 @endif
@@ -781,7 +781,7 @@
                         <th class="w-20">Objective</th>
                         <td class="w-80">
                             @if ($data->objective)
-                                {{ strip_tags($data->objective) }}
+                                {!! strip_tags($data->objective) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -790,37 +790,14 @@
                 </table>
 
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Objective</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers" style="">
-                                            {!! strip_tags($data->objective, '<table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+               
 
                 <table>
                     <tr>
                         <th class="w-20">Scope</th>
                         <td class="w-80">
                             @if ($data->scope)
-                                {{ strip_tags($data->scope) }}
+                                {!! strip_tags($data->scope) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -828,37 +805,14 @@
                     </tr>
                 </table>
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Scope</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->scope, '<table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
 
                 <table>
                     <tr>
                         <th class="w-20">Problem Statement</th>
                         <td class="w-80">
                             @if ($data->problem_statement_rca)
-                                {{ strip_tags($data->problem_statement_rca) }}
+                                {!! strip_tags($data->problem_statement_rca) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -866,37 +820,13 @@
                     </tr>
                 </table>
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Problem Statement</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->problem_statement_rca, '<table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
+               
                 <table>
                     <tr>
                         <th class="w-20">Background</th>
                         <td class="w-80">
                             @if ($data->requirement)
-                                {{ strip_tags($data->requirement) }}
+                                {!! strip_tags($data->requirement) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -904,37 +834,13 @@
                     </tr>
                 </table>
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Background</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->requirement, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
+               
                 <table>
                     <tr>
                         <th class="w-20">Immediate Action</th>
                         <td class="w-80">
                             @if ($data->immediate_action)
-                                {{ strip_tags($data->immediate_action) }}
+                                {!! strip_tags($data->immediate_action) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -945,30 +851,7 @@
 
                 
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Immediate Action</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->immediate_action, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
 
                 <table>
                     <tr>
@@ -1411,36 +1294,12 @@
             </div>
 
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Others</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->root_cause_Others, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <table>
                     <tr>
                         <th class="w-20">Others</th>
                         <td class="w-80">
                             @if ($data->root_cause_Others)
-                                {{ strip_tags($data->root_cause_Others) }}
+                                {!! strip_tags($data->root_cause_Others) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1477,37 +1336,14 @@
                     </table>
                 </div>  
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Root Cause</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->root_cause, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
 
                 <table>
                     <tr>
                         <th class="w-20">Root Cause</th>
                         <td class="w-80">
                             @if ($data->root_cause)
-                                {{ strip_tags($data->root_cause) }}
+                                {!! strip_tags($data->root_cause) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1515,37 +1351,14 @@
                     </tr>
                 </table>
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Impact / Risk Assessment</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->impact_risk_assessment, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
 
                 <table>
                     <tr>
                         <th class="w-20">Impact / Risk Assessment</th>
                         <td class="w-80">
                             @if ($data->impact_risk_assessment)
-                                {{ strip_tags($data->impact_risk_assessment) }}
+                                {!! strip_tags($data->impact_risk_assessment) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1554,37 +1367,13 @@
                 </table>
 
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">CAPA</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->capa, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
+                
                 <table>
                     <tr>
                         <th class="w-20">CAPA</th>
                         <td class="w-80">
                             @if ($data->capa)
-                                {{ strip_tags($data->capa) }}
+                                {!! strip_tags($data->capa) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1592,37 +1381,14 @@
                     </tr>
                 </table>
 
-                <!-- <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="text-left">
-                                    <div class="bold">Investigation Summary</div>
-                                </th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="custom-procedure-block">
-                        <div class="custom-container">
-                            <div class="custom-table-wrapper" id="custom-table2">
-                                <div class="custom-procedure-content">
-                                    <div class="custom-content-wrapper">
-                                        <div class="table-containers">
-                                            {!! strip_tags($data->investigation_summary_rca, '<br><table><th><td><tbody><tr><p><img><a><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
 
                 <table>
                     <tr>
                         <th class="w-20">Investigation Summary</th>
                         <td class="w-80">
                             @if ($data->investigation_summary_rca)
-                                {{ strip_tags($data->investigation_summary_rca) }}
+                                {!! strip_tags($data->investigation_summary_rca) !!}
                             @else
                                 Not Applicable
                             @endif
@@ -1665,39 +1431,7 @@
 
 
 
-                <!-- <style>
-                    .table {
-                        width: 100%;
-                        font-size: 7px;
-                        /* font-weight: 100!important; */
-                    }
-            
-                    .th,
-                    .td {
-                        border: 1px solid black;
-                        padding: 1px;
-                        word-wrap: break-word;
-                        text-align: center;
-                        
-                    }
-            
-                    /* Rotate table by flipping headers and rows */
-                    .rotated-table {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: flex-start;
-                        transform: rotate(-90deg);
-                        transform-origin: left top 0;
-                    }
-            
-                    .rotated-table table {
-                        transform: rotate(90deg);
-                        /* Rotate inner table content back to normal */
-                    }
-                </style> -->
-
-
-
+                
 
         <div class="block">
             <div class="block-head">
@@ -1709,7 +1443,7 @@
                     <th class="w-20"> HOD Final Review Comments</th>
                     <td class="w-80">
                         @if ($data->hod_final_comments)
-                            {{ strip_tags($data->hod_final_comments) }}
+                            {!! strip_tags($data->hod_final_comments) !!}
                         @else
                             Not Applicable
                         @endif

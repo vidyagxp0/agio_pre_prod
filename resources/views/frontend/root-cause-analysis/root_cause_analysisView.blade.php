@@ -581,14 +581,15 @@
                                             <input disabled type="text" value="{{ $data->initiator_name }} ">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input ">
-                                            <label for="Date Due"><b>Date of Initiation</b></label>
-                                            <input disabled type="text" value="{{ date('d-M-Y') }}"
-                                                name="intiation_date">
-                                            <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Date Due">Date of Initiation</label>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                    name="intiation_date"{{ $data->stage == 0 || $data->stage == 11 ? 'disabled' : '' }}>
+
+                                            </div>
                                         </div>
-                                    </div>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">

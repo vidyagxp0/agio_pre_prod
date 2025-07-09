@@ -708,14 +708,16 @@
                                     <input disabled type="text" value="{{ $formattedDate }}" name="intiation_date_display">
                                     <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                 </div>
-                            </div> --}}
-                            <div class="col-md-6 ">
-                                <div class="group-input ">
-                                    <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                    <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                </div>
-                            </div>
+                              </div> --}}
+                                        <div class="col-lg-6">
+                                             <div class="group-input">
+                                                <label for="Date Due">Date of Initiation</label>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                    name="intiation_date"{{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : '' }}>
+
+                                            </div>
+                                        </div>
 
                             {{-- <div class="col-lg-6">
                                 <div class="group-input">

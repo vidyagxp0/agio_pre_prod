@@ -3105,7 +3105,7 @@
                                     <td class="w-30">
                                         <div>
                                             @if ($data1->Other1_Department_person)
-                                                {{ $data1->Other1_Department_person }}
+                                                {{Helpers::getInitiatorGroups ($data1->Other1_Department_person) }}
                                             @else
                                                 Not Applicable
                                             @endif
