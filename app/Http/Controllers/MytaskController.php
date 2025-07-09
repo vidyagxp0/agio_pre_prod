@@ -257,13 +257,13 @@ class MytaskController extends Controller
                         ['id' => 5, 'status' => 'Pending Initiator Update', 'role' => 3],
                         ['id' => 6, 'status' => 'HOD Final Review', 'role' => 4],
                         ['id' => 7, 'status' => 'QA Final Review', 'role' => 48],
-                        ['id' => 8, 'status' => 'QAH Closure Approval', 'role' => 42],
+                        ['id' => 8, 'status' => 'QAH Approval', 'role' => 42],
                     ],
                     'InternalAudit' => [
                         ['id' => 1, 'status' => 'Opened', 'role' => [7, 66]],
                         ['id' => 2, 'status' => 'Acknowledgment', 'role' => 11],
-                        ['id' => 3, 'status' => 'Audit', 'role' => 12],
-                        ['id' => 4, 'status' => 'Response', 'role' => 11],
+                        ['id' => 3, 'status' => 'Pending Audit', 'role' => 12],
+                        ['id' => 4, 'status' => 'Pending Response', 'role' => 11],
                         ['id' => 5, 'status' => 'Response Verification', 'role' => 13],
                     ],
                     'LabIncident' => [

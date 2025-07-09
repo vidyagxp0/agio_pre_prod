@@ -310,7 +310,7 @@
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="internal_audit">Internal Audit</option>
+                                            {{-- <option value="internal_audit">Internal Audit</option>
                                             <option value="external_audit">External Audit</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
@@ -327,7 +327,25 @@
                                             <option value="utility_quipment_system">Utility/Equipment/System</option>
                                             <option value="oos">OOS</option>
                                             <option value="product_failure">Product Failure</option>
-                                            <option value="apqr">APQR</option>
+                                            <option value="apqr">APQR</option> --}}
+                                            <option value="Internal Audit">Internal Audit</option>
+                                            <option value="External Audit">External Audit</option>
+                                            <option value="Recall">Recall</option>
+                                            <option value="Return">Return</option>
+                                            <option value="Deviation">Deviation</option>
+                                            <option value="Complaint">Complaint</option>
+                                            <option value="Regulatory Inspection">Regulatory Inspection</option>
+                                            <option value="Lab Incident">Lab Incident</option>
+                                            <option value="Improvement">Improvement</option>
+                                            <option value="Process/Product">Process/Product</option>
+                                            <option value="Supplier">Supplier</option>
+                                            <option value="GMP Investigation">GMP Investigation</option>
+                                            <option value="Discrepancy/NC">Discrepancy/NC</option>
+                                            <option value="Change Control">Change Control</option>
+                                            <option value="Utility/Equipment/System">Utility/Equipment/System</option>
+                                            <option value="OOS">OOS</option>
+                                            <option value="Product Failure">Product Failure</option>
+                                            <option value="APQR">APQR</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>

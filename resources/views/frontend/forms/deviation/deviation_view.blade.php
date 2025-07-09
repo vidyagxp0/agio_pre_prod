@@ -784,7 +784,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Deviation', 3))
+                        @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Deviation', 43))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#pending-initiator-update">
                                 Send to Pending Initiator Update
@@ -4220,9 +4220,7 @@
                                                 <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                {{-- <option @if ($data1->Human_Resource_review == 'na') selected @endif
-                                                    value='na'>
-                                                    NA</option> --}}
+                                                
                                                     <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>
                                             </select>
 
@@ -4392,7 +4390,7 @@
                                                 <option @if ($data1->Human_Resource_review == 'no') selected @endif
                                                     value='no'>
                                                     No</option>
-                                                    <option @if ($data1->Human_Resource_review == 'na' || empty($data1->Human_Resource_review)) selected @endif value='na'>NA</option>
+                                                    <option @if ($data1->Human_Resource_review == 'NA' || empty($data1->Human_Resource_review)) selected @endif value='NA'>NA</option>
                                             </select>
 
                                         </div>

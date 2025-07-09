@@ -564,43 +564,25 @@
                                                 <div><small class="text-primary">Please select related information</small></div>
                                                 <select name="initiated_through"{{ $data->stage == 0|| $data->stage == 2 || $data->stage == 3|| $data->stage == 4 || $data->stage == 5 || $data->stage == 6 || $data->stage == 7|| $data->stage == 8|| $data->stage == 9 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')" required>
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option @if ($data->initiated_through == 'internal_audit') selected @endif
-                                                        value="internal_audit">Internal Audit</option>
-                                                        <option @if ($data->initiated_through == 'external_audit') selected @endif
-                                                        value="external_audit">External Audit</option>
-                                                    <option @if ($data->initiated_through == 'recall') selected @endif
-                                                        value="recall">Recall</option>
-                                                    <option @if ($data->initiated_through == 'return') selected @endif
-                                                        value="return">Return</option>
-                                                    <option @if ($data->initiated_through == 'deviation') selected @endif
-                                                        value="deviation">Deviation</option>
-                                                    <option @if ($data->initiated_through == 'complaint') selected @endif
-                                                        value="complaint">Complaint</option>
-                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif
-                                                        value="regulatory">Regulatory</option>
-                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
-                                                        value="lab-incident">Lab Incident</option>
-                                                    <option @if ($data->initiated_through == 'improvement') selected @endif
-                                                        value="improvement">Improvement</option>
-                                                    <option @if ($data->initiated_through == 'process_product') selected @endif
-                                                        value="process_product">Process/Product</option>
-                                                    <option @if ($data->initiated_through == 'supplier') selected @endif
-                                                         value="supplier">Supplier</option>
-                                                    <option @if ($data->initiated_through == 'gmp_invastigation') selected @endif
-                                                    value="gmp_invastigation">GMP Investigation</option>
-                                                    <option @if ($data->initiated_through == 'discreoancy_nc') selected @endif
-                                                        value="discreoancy_nc">Discrepancy/NC</option>
-                                                    <option @if ($data->initiated_through == 'change_control') selected @endif
-                                                         value="change_control">Change Control</option>
-                                                    <option @if ($data->initiated_through == 'utility_quipment_system') selected @endif
-                                                            value="utility_quipment_system">Utility/Equipment/System</option>
-                                                    <option @if ($data->initiated_through == 'oos') selected @endif
-                                                             value="oos">OOS</option>
-                                                        <option @if ($data->initiated_through == 'product_failure') selected @endif
-                                                            value="product_failure">Product Failure</option>
-                                                            <option @if ($data->initiated_through == 'apqr') selected @endif
-                                                                value="apqr">APQR</option>
+                                                    <option value="">Enter Your Selection Here</option><option @if ($data->initiated_through == 'Internal Audit') selected @endif value="Internal Audit">Internal Audit</option>
+                                                    <option @if ($data->initiated_through == 'External Audit') selected @endif value="External Audit">External Audit</option>
+                                                    <option @if ($data->initiated_through == 'Recall') selected @endif value="Recall">Recall</option>
+                                                    <option @if ($data->initiated_through == 'Return') selected @endif value="Return">Return</option>
+                                                    <option @if ($data->initiated_through == 'Deviation') selected @endif value="Deviation">Deviation</option>
+                                                    <option @if ($data->initiated_through == 'Complaint') selected @endif value="Complaint">Complaint</option>
+                                                    <option @if ($data->initiated_through == 'Regulatory Inspection') selected @endif value="Regulatory Inspection">Regulatory Inspection</option>
+                                                    <option @if ($data->initiated_through == 'Lab Incident') selected @endif value="Lab Incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'Improvement') selected @endif value="Improvement">Improvement</option>
+                                                    <option @if ($data->initiated_through == 'Process/Product') selected @endif value="Process/Product">Process/Product</option>
+                                                    <option @if ($data->initiated_through == 'Supplier') selected @endif value="Supplier">Supplier</option>
+                                                    <option @if ($data->initiated_through == 'GMP Investigation') selected @endif value="GMP Investigation">GMP Investigation</option>
+                                                    <option @if ($data->initiated_through == 'Discrepancy/NC') selected @endif value="Discrepancy/NC">Discrepancy/NC</option>
+                                                    <option @if ($data->initiated_through == 'Change Control') selected @endif value="Change Control">Change Control</option>
+                                                    <option @if ($data->initiated_through == 'Utility/Equipment/System') selected @endif value="Utility/Equipment/System">Utility/Equipment/System</option>
+                                                    <option @if ($data->initiated_through == 'OOS') selected @endif value="OOS">OOS</option>
+                                                    <option @if ($data->initiated_through == 'Product Failure') selected @endif value="Product Failure">Product Failure</option>
+                                                    <option @if ($data->initiated_through == 'APQR') selected @endif value="APQR">APQR</option>
+
                                                     <option @if ($data->initiated_through == 'others') selected @endif
                                                         value="others">Others</option>
                                                 </select>

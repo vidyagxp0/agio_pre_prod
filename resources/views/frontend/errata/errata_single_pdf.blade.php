@@ -308,6 +308,17 @@
                         </td>
 
                     </tr>
+                    <tr>
+                          <th class="w-20">Others</th>
+                        <td class="w-80">
+                            @if ($data->document_type_others)
+                                {{ $data->document_type_others }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
                 </table>
 
                 <table>
