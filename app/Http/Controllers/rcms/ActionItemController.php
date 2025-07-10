@@ -1443,14 +1443,32 @@ class ActionItemController extends Controller
     public function stageChange(Request $request, $id)
     {
         // return "hii";
-        if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
+        if (strtolower($request->username) == strtolower(Auth::user()->emp_code) && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ActionItem::find($id);
             $lastopenState = ActionItem::find($id);
             $openState = ActionItem::find($id);
             $task = Taskdetails::where('cc_id', $id)->first();
+            
 
 
             if ($changeControl->stage == 1) {
+                if (empty($changeControl->related_records) && empty($changeControl->description) )
+                {
+                    Session::flash('swal', [
+                        'type' => 'warning',
+                        'title' => 'Mandatory Fields!',
+                        'message' => 'General Information Tab Action Item Related Records and Description is yet to be filled'
+                    ]);
+
+                    return redirect()->back();
+                }
+                 else {
+                    Session::flash('swal', [
+                        'type' => 'success',
+                        'title' => 'Success',
+                        'message' => 'Sent for Acknowledge state'
+                    ]);
+                }
                 $changeControl->stage = '2';
                 $changeControl->status = 'Acknowledge';
                 $changeControl->submitted_by = Auth::user()->name;

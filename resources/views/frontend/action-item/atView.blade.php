@@ -505,7 +505,7 @@
                                 <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="HOD Persons">Action Item Related Records <span class="text-danger">*</span></label>
-                                           <input type="text" name="related_records" required value="{{ $data->related_records }}">
+                                           <input type="text" name="related_records"  value="{{ $data->related_records }}" required>
                                         </div>
                                     @error('hod_preson')
                                         <div class="text-danger">{{ $message }}</div>
