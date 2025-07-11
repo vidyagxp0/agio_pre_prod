@@ -371,6 +371,11 @@
                                 Approval Complete
                             </button>
 
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
+
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Send to Opened
                             </button>
@@ -8830,6 +8835,15 @@
                         @endif
 
                         @if($data->stage == 2 && Helpers::getChildData($data->id , 'External Audit') < 3)
+                            <div class="group-input">
+                                <label for="major">
+                                    <input type="radio" name="child_type" value="Extension">
+                                    Extension
+                                </label>
+                            </div>
+                        @endif
+
+                        @if($data->stage == 4 && Helpers::getChildData($data->id , 'External Audit') < 3)
                             <div class="group-input">
                                 <label for="major">
                                     <input type="radio" name="child_type" value="Extension">

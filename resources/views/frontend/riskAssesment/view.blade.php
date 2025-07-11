@@ -6698,11 +6698,26 @@
                                     </div>
 
                                     <div class="col-md-12 mb-3 other1_reviews">
-                                        <div class="group-input">
-                                            <label for="Impact Assessment12">Impact Assessment (By Other's 1)</label>
-                                            <textarea class="tiny" name="Other1_assessment" id="summernote-41" @if ($data->stage != 3 || Auth::user()->name != $data1->Other1_person) readonly @endif>{{ $data1->Other1_assessment }}</textarea>
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="Impact Assessment12">
+                                            Impact Assessment (By Other's 1)
+                                            @if ($data->stage == 3 && Auth::user()->name == $data1->Other1_person)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <textarea 
+                                            class="tiny" 
+                                            name="Other1_assessment" 
+                                            id="summernote-41"
+                                            @if ($data->stage != 3 || Auth::user()->name != $data1->Other1_person) 
+                                                readonly 
+                                            @else 
+                                                required 
+                                            @endif
+                                        >{{ $data1->Other1_assessment }}</textarea>
                                     </div>
+                                </div>
+
 
                                     {{-- <div class="col-md-12 mb-3 other1_reviews">
                                         <div class="group-input">
@@ -6793,6 +6808,31 @@
                                             });
                                         });
                                     </script>
+
+                                       <script>
+                                            $(document).ready(function () {
+                                                function toggleAssessmentRequired() {
+                                                    const review = $('#Other1_review').val();
+                                                    const currentUser = '{{ Auth::user()->name }}';
+                                                    const selectedPerson = $('#Other1_person').val();
+
+                                                    if (review === 'Yes' && currentUser === selectedPerson && {{ $data->stage }} === 3) {
+                                                        $('#summernote-41').prop('required', true).prop('readonly', false);
+                                                    } else {
+                                                        $('#summernote-41').prop('required', false).prop('readonly', true);
+                                                    }
+                                                }
+
+                                                // On load
+                                                toggleAssessmentRequired();
+
+                                                // On change of review or person dropdown
+                                                $('#Other1_review, #Other1_person').change(function () {
+                                                    toggleAssessmentRequired();
+                                                });
+                                            });
+                                        </script>
+
                                  {{--
                                 @else
                                     <div class="sub-head">
@@ -6864,7 +6904,7 @@
 
                                 <script>
                                     $(document).ready(function () {
-                                        // Function to toggle visibility based on "yes" value
+                                        // Function to toggle visibility of Other2 fields based on review selection
                                         function toggleFieldsBasedOnSelection(value) {
                                             if (value === 'Yes') {
                                                 $('.Other2_reviews').show();
@@ -6881,17 +6921,44 @@
                                                 $('#asterisko2').hide();
                                                 $('#asteriskod2').hide();
                                             }
+
+                                            // Also run assessment field toggle
+                                            toggleAssessmentRequirement();
+                                        }
+
+                                        // Function to toggle Impact Assessment (By Other's 2) field
+                                        function toggleAssessmentRequirement() {
+                                            const review = $('#Other2_review').val();
+                                            const currentUser = '{{ Auth::user()->name }}';
+                                            const selectedPerson = $('#Other2_person').val();
+                                            const stage = {{ $data->stage }};
+                                            const $textarea = $('#summernote-43');
+                                            const $asterisk = $('#impact2-asterisk');
+
+                                            if (review === 'Yes' && currentUser === selectedPerson && stage === 3) {
+                                                $textarea.prop('required', true).prop('readonly', false);
+                                                $asterisk.show();
+                                            } else {
+                                                $textarea.prop('required', false).prop('readonly', true);
+                                                $asterisk.hide();
+                                            }
                                         }
 
                                         // On page load
-                                        toggleFieldsBasedOnSelection($('[name="Other2_review"]').val());
+                                        toggleFieldsBasedOnSelection($('#Other2_review').val());
 
                                         // On dropdown value change
-                                        $('[name="Other2_review"]').change(function () {
+                                        $('#Other2_review').change(function () {
                                             toggleFieldsBasedOnSelection($(this).val());
+                                        });
+
+                                        // On person selection change
+                                        $('#Other2_person').change(function () {
+                                            toggleAssessmentRequirement();
                                         });
                                     });
                                 </script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -6959,12 +7026,27 @@
                                                 @if ($data->stage != 2) readonly @endif>
                                     </div>
                                 </div>
-                                <div class="col-md-12 mb-3 Other2_reviews">
+                               <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
-                                        <label for="Impact Assessment13">Impact Assessment (By Other's 2)</label>
-                                        <textarea class="tiny" name="Other2_Assessment" id="summernote-43" @if ($data->stage != 3 || Auth::user()->name != $data1->Other2_person) readonly @endif>{{ $data1->Other2_Assessment }}</textarea>
+                                        <label for="Impact Assessment13">
+                                            Impact Assessment (By Other's 2)
+                                            @if ($data->stage == 3 && Auth::user()->name == $data1->Other2_person)
+                                                <span class="text-danger">*</span>
+                                            @endif
+                                        </label>
+                                        <textarea 
+                                            class="tiny" 
+                                            name="Other2_Assessment" 
+                                            id="summernote-43" 
+                                            @if ($data->stage != 3 || Auth::user()->name != $data1->Other2_person)
+                                                readonly 
+                                            @else 
+                                                required 
+                                            @endif
+                                        >{{ $data1->Other2_Assessment }}</textarea>
                                     </div>
                                 </div>
+
 
                                 {{-- <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
@@ -7023,7 +7105,7 @@
 
                                 <script>
                                     $(document).ready(function () {
-                                        // Function to toggle visibility based on "yes" value
+                                        // Function to toggle visibility of all Other3 fields
                                         function toggleFieldsBasedOnSelection(value) {
                                             if (value === 'Yes') {
                                                 $('.Other3_reviews').show();
@@ -7040,17 +7122,43 @@
                                                 $('#asterisko3').hide();
                                                 $('#asteriskod3').hide();
                                             }
+
+                                            toggleAssessmentRequirement(); // call here as well
+                                        }
+
+                                        // Toggle required/readonly for Impact Assessment (Other3)
+                                        function toggleAssessmentRequirement() {
+                                            const review = $('#Other3_review').val();
+                                            const currentUser = '{{ Auth::user()->name }}';
+                                            const selectedPerson = $('#Other3_person').val();
+                                            const stage = {{ $data->stage }};
+                                            const $textarea = $('#summernote-45');
+                                            const $asterisk = $('#impact3-asterisk');
+
+                                            if (review === 'Yes' && currentUser === selectedPerson && stage === 3) {
+                                                $textarea.prop('required', true).prop('readonly', false);
+                                                $asterisk.show();
+                                            } else {
+                                                $textarea.prop('required', false).prop('readonly', true);
+                                                $asterisk.hide();
+                                            }
                                         }
 
                                         // On page load
-                                        toggleFieldsBasedOnSelection($('[name="Other3_review"]').val());
+                                        toggleFieldsBasedOnSelection($('#Other3_review').val());
 
                                         // On dropdown value change
-                                        $('[name="Other3_review"]').change(function () {
+                                        $('#Other3_review').change(function () {
                                             toggleFieldsBasedOnSelection($(this).val());
+                                        });
+
+                                        // On person change
+                                        $('#Other3_person').change(function () {
+                                            toggleAssessmentRequirement();
                                         });
                                     });
                                 </script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7122,11 +7230,25 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-3 Other3_reviews">
-                                    <div class="group-input">
-                                        <label for="Impact Assessment14">Impact Assessment (By Other's 3)</label>
-                                        <textarea class="tiny" name="Other3_Assessment" id="summernote-45" @if ($data->stage != 3 || Auth::user()->name != $data1->Other3_person) readonly @endif>{{ $data1->Other3_Assessment }}</textarea>
+                                        <div class="group-input">
+                                            <label for="Impact Assessment14">
+                                                Impact Assessment (By Other's 3)
+                                                <span id="impact3-asterisk" class="text-danger"
+                                                    style="display: {{ ($data->stage == 3 && Auth::user()->name == $data1->Other3_person && $data1->Other3_review == 'Yes') ? 'inline' : 'none' }}">*</span>
+                                            </label>
+                                            <textarea 
+                                                class="tiny" 
+                                                name="Other3_Assessment" 
+                                                id="summernote-45"
+                                                @if ($data->stage != 3 || Auth::user()->name != $data1->Other3_person)
+                                                    readonly 
+                                                @else 
+                                                    required 
+                                                @endif
+                                            >{{ $data1->Other3_Assessment }}</textarea>
+                                        </div>
                                     </div>
-                                </div>
+
 
                                 {{-- <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
@@ -7187,34 +7309,56 @@
 
                                 <script>
                                     $(document).ready(function () {
-                                        // Function to toggle visibility based on "yes" value
                                         function toggleOther4Fields(value) {
                                             if (value === 'Yes') {
                                                 $('.Other4_reviews').show();
                                                 $('.Other4_reviews span').show();
                                                 $('#Other4_person').prop('required', true);
-                                                // $('#hod_Other4_person').prop('required', true);
                                                 $('#Other4_Department_person').prop('required', true);
                                                 $('#asterisko4').show();
                                             } else {
                                                 $('.Other4_reviews').hide();
                                                 $('.Other4_reviews span').hide();
                                                 $('#Other4_person').prop('required', false);
-                                                // $('#hod_Other4_person').prop('required', false);
                                                 $('#Other4_Department_person').prop('required', false);
                                                 $('#asterisko4').hide();
                                             }
+
+                                            toggleOther4AssessmentRequirement(); // call inside
                                         }
 
-                                        // Initial toggle on page load
+                                        function toggleOther4AssessmentRequirement() {
+                                            const review = $('#Other4_review').val();
+                                            const currentUser = '{{ Auth::user()->name }}';
+                                            const selectedPerson = $('#Other4_person').val();
+                                            const stage = {{ $data->stage }};
+                                            const $textarea = $('#summernote-47');
+                                            const $asterisk = $('#impact4-asterisk');
+
+                                            if (review === 'Yes' && currentUser === selectedPerson && stage === 3) {
+                                                $textarea.prop('required', true).prop('readonly', false);
+                                                $asterisk.show();
+                                            } else {
+                                                $textarea.prop('required', false).prop('readonly', true);
+                                                $asterisk.hide();
+                                            }
+                                        }
+
+                                        // Initial on load
                                         toggleOther4Fields($('[name="Other4_review"]').val());
 
-                                        // Toggle on value change
+                                        // On review change
                                         $('[name="Other4_review"]').change(function () {
                                             toggleOther4Fields($(this).val());
                                         });
+
+                                        // On person change
+                                        $('#Other4_person').change(function () {
+                                            toggleOther4AssessmentRequirement();
+                                        });
                                     });
                                 </script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7287,11 +7431,21 @@
                                 </div>
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
-                                        <label for="Description of Action Item15">Impact Assessment (By Other's 4)</label>
+                                        <label for="Description of Action Item15">
+                                            Impact Assessment (By Other's 4)
+                                            <span id="impact4-asterisk" class="text-danger"
+                                                style="display: {{ ($data->stage == 3 && Auth::user()->name == $data1->Other4_person && $data1->Other4_review == 'Yes') ? 'inline' : 'none' }}">*</span>
+                                        </label>
                                         <textarea class="tiny" name="Other4_Assessment" id="summernote-47"
-                                            @if ($data->stage != 3 || Auth::user()->name != $data1->Other4_person) readonly @endif>{{ $data1->Other4_Assessment }}</textarea>
+                                            @if ($data->stage != 3 || Auth::user()->name != $data1->Other4_person)
+                                                readonly
+                                            @else
+                                                required
+                                            @endif
+                                        >{{ $data1->Other4_Assessment }}</textarea>
                                     </div>
                                 </div>
+
 
                                 {{-- <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
@@ -7353,34 +7507,59 @@
 
                                 <script>
                                     $(document).ready(function () {
-                                        // Function to toggle visibility based on "yes" value
+                                        // Function to toggle visibility of Other5 review fields
                                         function toggleOther5Fields(value) {
                                             if (value === 'Yes') {
                                                 $('.Other5_reviews').show();
                                                 $('.Other5_reviews span').show();
                                                 $('#Other5_person').prop('required', true);
-                                                // $('#hod_Other5_person').prop('required', true);
                                                 $('#Other5_Department_person').prop('required', true);
                                                 $('#asterisko5').show();
                                             } else {
                                                 $('.Other5_reviews').hide();
                                                 $('.Other5_reviews span').hide();
                                                 $('#Other5_person').prop('required', false);
-                                                // $('#hod_Other5_person').prop('required', false);
                                                 $('#Other5_Department_person').prop('required', false);
                                                 $('#asterisko5').hide();
                                             }
+
+                                            // Call assessment logic
+                                            toggleOther5AssessmentRequirement();
                                         }
 
-                                        // Initial toggle on page load
-                                        toggleOther5Fields($('[name="Other5_review"]').val());
+                                        // Toggle required/readonly for Impact Assessment (By Other's 5)
+                                        function toggleOther5AssessmentRequirement() {
+                                            const review = $('#Other5_review').val();
+                                            const currentUser = '{{ Auth::user()->name }}';
+                                            const selectedPerson = $('#Other5_person').val();
+                                            const stage = {{ $data->stage }};
+                                            const $textarea = $('#summernote-49');
+                                            const $asterisk = $('#impact5-asterisk');
 
-                                        // Toggle on value change
-                                        $('[name="Other5_review"]').change(function () {
+                                            if (review === 'Yes' && currentUser === selectedPerson && stage === 3) {
+                                                $textarea.prop('required', true).prop('readonly', false);
+                                                $asterisk.show();
+                                            } else {
+                                                $textarea.prop('required', false).prop('readonly', true);
+                                                $asterisk.hide();
+                                            }
+                                        }
+
+                                        // On page load
+                                        toggleOther5Fields($('#Other5_review').val());
+
+                                        // On dropdown change
+                                        $('#Other5_review').change(function () {
                                             toggleOther5Fields($(this).val());
+                                        });
+
+                                        // On person change
+                                        $('#Other5_person').change(function () {
+                                            toggleOther5AssessmentRequirement();
                                         });
                                     });
                                 </script>
+
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -7455,11 +7634,21 @@
 
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
-                                        <label for="Description of Action Item16">Impact Assessment (By Other's 5)</label>
+                                        <label for="Description of Action Item16">
+                                            Impact Assessment (By Other's 5)
+                                            <span id="impact5-asterisk" class="text-danger"
+                                                style="display: {{ ($data->stage == 3 && Auth::user()->name == $data1->Other5_person && $data1->Other5_review == 'Yes') ? 'inline' : 'none' }}">*</span>
+                                        </label>
                                         <textarea class="tiny" name="Other5_Assessment" id="summernote-49"
-                                        @if ($data->stage != 3 || Auth::user()->name != $data1->Other5_person) readonly @endif>{{ $data1->Other5_Assessment }}</textarea>
+                                            @if ($data->stage != 3 || Auth::user()->name != $data1->Other5_person)
+                                                readonly
+                                            @else
+                                                required
+                                            @endif
+                                        >{{ $data1->Other5_Assessment }}</textarea>
                                     </div>
                                 </div>
+
 
                                 {{-- <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">

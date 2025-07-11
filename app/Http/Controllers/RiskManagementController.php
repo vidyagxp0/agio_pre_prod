@@ -9585,7 +9585,8 @@ class RiskManagementController extends Controller
                     $IsCFTRequired = RiskAssesmentCftResponce::withoutTrashed()->where(['is_required' => 1, 'risk_id' => $id])->latest()->first();
                     $cftUsers = DB::table('risk_managment_cfts')->where(['risk_id' => $id])->first();
                     // Define the column names
-                    $columns = ['Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person','RA_person', 'Production_Table_Person','ProductionLiquid_person','Production_Injection_Person','Store_person','ResearchDevelopment_person','Microbiology_person','RegulatoryAffair_person','CorporateQualityAssurance_person','ContractGiver_person'];
+                   
+                    $columns = ['Production_Table_Person' , 'Production_Injection_Person' , 'ResearchDevelopment_person' ,'Human_Resource_person' ,'CorporateQualityAssurance_person', 'Store_person' , 'Quality_Control_Person' , 'QualityAssurance_person' ,'RegulatoryAffair_person' , 'Microbiology_person' , 'Engineering_person' , 'Environment_Health_Safety_person' , 'Other1_person', 'Other2_person', 'Other3_person', 'Other4_person', 'Other5_person' ];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
 
                     // Initialize an array to store the values
