@@ -1288,7 +1288,7 @@
                              );
                      @endphp
                      <div class="col-12">
-                             <label style="font-weight: bold; for="Audit Attachments">HPLC-GC</label>
+                             <label style="font-weight: bold; ">HPLC-GC</label>
                          <div class="group-input">
                              <div class="why-why-chart mx-auto" style="width: 100%">
                                  <table class="table table-bordered ">
@@ -1305,8 +1305,8 @@
                                              @foreach ($HPLC_GC_questions as $index => $HPLC_GC_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC_question }}">
-                                                     </td>
+                                                     {{-- <td><input type="text" readonly name="question[]" value="{{ $HPLC_GC_question }}"></td> --}}
+                                                    <td style="white-space: normal; word-wrap: break-word;">{{ $HPLC_GC_question }}</td>                                                     
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="HPLC_GC[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -1365,8 +1365,8 @@
                                  "Was chemical used within validity periods?",
                                  "Was correct chemical grade used for analysis?",
                                  "Was analyst weighed the chemical as per mentioned in STP?",
-                                 "Was analyst used correct Reagent/Volumentrick solution for analysis",
-                                 "Were analyst used Cleaned and  Dried Glassware like volumetrik flask,Pippete,separating funnel & Beaker ? ",
+                                 "Was analyst used correct Reagent/Volumentrick solution for analysis?",
+                                 "Were analyst used Cleaned and  Dried Glassware like volumetrik flask, Pippete,separating funnel & Beaker ? ",
                                  "Wheather analyst used corrected glassware's as per mentioned in STP?",
                                  "Is correct formulae used for calculation?",
                                  "Is correct response used for calculation?",
@@ -1404,7 +1404,7 @@
                              );
                      @endphp
                      <div class="col-12">
-                             <label style="font-weight: bold; for="Audit Attachments">General Checklist</label>
+                             <label style="font-weight: bold; ">General Checklist</label>
                          <div class="group-input">
                              <div class="why-why-chart mx-auto" style="width: 100%">
                                  <table class="table table-bordered ">
@@ -1421,7 +1421,7 @@
                                              @foreach ($General_Checklist_questions as $index => $General_Checklist_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $General_Checklist_question }}">
+                                                     <td style="white-space: normal; word-wrap: break-word;">{{ $General_Checklist_question }}</td>
                                                      </td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -1499,7 +1499,7 @@
                              );
                      @endphp
                      <div class="col-12">
-                             <label style="font-weight: bold; for="Audit Attachments">kF/Potentionmeter</label>
+                             <label style="font-weight: bold; ">kF/Potentionmeter</label>
                          <div class="group-input">
                              <div class="why-why-chart mx-auto" style="width: 100%">
                                  <table class="table table-bordered ">
@@ -1516,8 +1516,10 @@
                                              @foreach ($kF_Potentionmeter_questions as $index => $kF_Potentionmeter_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $kF_Potentionmeter_question }}">
-                                                     </td>
+                                                     {{-- <td><input type="text" readonly name="question[]" value="{{ $kF_Potentionmeter_question }}"> </td>--}}
+                                                      <td style="white-space: normal; word-wrap: break-word;">{{ $kF_Potentionmeter_question }}</td>
+
+                                                     
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="kF_Potentionmeter[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -1589,7 +1591,7 @@
                              );
                      @endphp
                      <div class="col-12">
-                             <label style="font-weight: bold; for="Audit Attachments">Sampling Checklist </label>
+                             <label style="font-weight: bold;">Sampling Checklist </label>
                          <div class="group-input">
                              <div class="why-why-chart mx-auto" style="width: 100%">
                                  <table class="table table-bordered ">
@@ -1606,8 +1608,8 @@
                                              @foreach ($RM_PM_questions as $index => $RM_PM_question)
                                                  <tr>
                                                      <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                     <td><input type="text" readonly name="question[]" value="{{ $RM_PM_question }}">
-                                                     </td>
+                                                     {{-- <td><input type="text" readonly name="question[]" value="{{ $RM_PM_question }}"> </td> --}}
+                                                     <td style="white-space: normal; word-wrap: break-word;">{{ $RM_PM_question }}</td>
                                                      <td>
                                                          <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                              <select name="RM_PM[{{ $loop->index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"  {{Helpers::isOOSChemical($data->stage)}}>
@@ -7870,7 +7872,7 @@
                                 );
                         @endphp
                         <div class="col-12">
-                                <label style="font-weight: bold; for="Audit Attachments">Phase IB investigation Checklist <span class="text-danger">*</span></label>
+                                <label style="font-weight: bold; ">Phase IB investigation Checklist <span class="text-danger">*</span></label>
                             <div class="group-input">
                                 <div class="why-why-chart mx-auto" style="width: 100%">
                                     <table class="table table-bordered ">
@@ -7887,8 +7889,10 @@
                                                 @foreach ($IIB_inv_questions as $index => $IIB_inv_question)
                                                     <tr>
                                                         <td class="flex text-center">{{ $loop->index + 1 }}</td>
-                                                        <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
-                                                        </td>
+                                                        {{-- <td><input type="text" readonly name="question[]" value="{{ $IIB_inv_question }}">
+                                                        </td> --}}
+                                                        <td style="white-space: normal; word-wrap: break-word;">{{ $IIB_inv_question }}</td>                                                     
+
                                                         <td>
                                                             <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
 

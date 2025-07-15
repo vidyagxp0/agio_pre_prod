@@ -1735,7 +1735,7 @@
 
                                 {{-- grid added new --}}
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input" id="IncidentRow">
                                         <label for="root_cause">
                                             Instrument Details
@@ -1822,7 +1822,7 @@
 
 
                                     </div>
-                                </div>
+                                </div> --}}
 
 
                                 <script>
@@ -1867,7 +1867,7 @@
                                 </script>
 
 
-                                <script>
+                                {{-- <script>
                                    $(document).ready(function() {
                                     let investdetails = 1;
                                     $('#IncidentAdd').click(function(e) {
@@ -1908,9 +1908,143 @@
                                     });
                                 });
 
-                                </script>
+                                </script> --}}
 
                                 {{-- grid added new --}}
+
+                                {{-- by kuldeep grid  --}}
+                                <div class="col-12 mb-3">
+                                    {{-- <div class="sub-head">Complaint Product Details</div> --}}
+                                    <div class="group-input">
+                                        <label for="Material Details">
+                                            Instrument Details 
+                                             @if($ooc->stage ==1)
+                                            <span class="text-danger">*</span>
+                                         @endif
+                                            <button type="button" id="material_add1" {{ $ooc->stage == 1 ? '' : 'disabled' }}>+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#observation-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="material_details1" style="width: 100%;">
+                                                <thead>
+                                                     <tr>
+                                                    <th>Sr.No.</th>
+                                                    <th>Instrument Name </th>
+                                                    <th>Instrument ID</th>
+                                                    <th>Remarks</th>
+                                                    <th>Calibration Parameter</th>
+                                                    <th>Acceptance Criteria</th>
+                                                    <th>Results</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                   @if (!empty($oocgrid) && is_array($oocgrid->data))
+                                                    @foreach (array_values($oocgrid->data) as $index => $sample)
+                                                        <tr>
+                                                            <td><input readonly type="text" name="instrumentdetails[{{ $index }}][serial]" value="{{ $index + 1 }}" id="ComplaintProduct_Details"></td>
+                                                            <td><input type="text" name="instrumentdetails[{{ $index }}][instrument_name]" value="{{ $sample['instrument_name'] ?? '' }}" {{ $ooc->stage == 1 ? 'required' : 'readonly' }}></td>
+                                                            <td><input type="text" name="instrumentdetails[{{ $index }}][instrument_id]" value="{{ $sample['instrument_id'] ?? '' }}" {{ $ooc->stage == 1 ? 'required' : 'readonly' }}></td>
+                                                            <td><input type="text" name="instrumentdetails[{{ $index }}][remarks]" value="{{ $sample['remarks'] ?? '' }}" {{ $ooc->stage == 1 ? 'required' : 'readonly' }}></td>
+                                                            <td><input type="text" name="instrumentdetails[{{ $index }}][calibration]" value="{{ $sample['calibration'] ?? '' }}" {{ $ooc->stage == 1 ? 'required' : 'readonly' }}></td>
+                                                            <td><input type="text" name="instrumentdetails[{{ $index }}][acceptancecriteria]" value="{{ $sample['acceptancecriteria'] ?? '' }}" {{ $ooc->stage == 1 ? 'required' : 'readonly' }}></td>
+                                                            <td><input type="text" name="instrumentdetails[{{ $index }}][results]" value="{{ $sample['results'] ?? '' }}"></td>
+                                                            <td><button type="button" class="removeRowBtn" {{ $ooc->stage == 1 ? '' : 'disabled' }}>Remove</button></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr class="no-data">
+                                                        <td colspan="9">No data found</td>
+                                                    </tr>
+                                                @endif
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                               <script>
+                                    $(document).ready(function () {
+
+                                        // Add new row on '+' button click
+                                        $('#material_add1').click(function (e) {
+                                            e.preventDefault();
+
+                                            // Count existing rows
+                                            var tableBody = $('#material_details1 tbody');
+                                            var rowCount = tableBody.children('tr').not('.no-data').length;
+
+                                            // Remove 'No data' row if present
+                                            if (rowCount === 0) {
+                                                tableBody.find('.no-data').remove();
+                                            }
+
+                                            // Create new row HTML
+                                            var isRequired = `{{ $ooc->stage == 1 ? 'required' : '' }}`;
+                                            var isDisabled = `{{ $ooc->stage == 0 || $ooc->stage == 9 || $ooc->stage == 14 ? 'disabled' : '' }}`;
+
+                                            var newRow = `
+                                                <tr>
+                                                    <td><input readonly type="text" name="instrumentdetails[${rowCount}][serial]" value="${rowCount + 1}" id="ComplaintProduct_Details"></td>
+                                                    <td><input type="text" ${isDisabled} ${isRequired} name="instrumentdetails[${rowCount}][instrument_name]"></td>
+                                                    <td><input type="text" ${isDisabled} ${isRequired} name="instrumentdetails[${rowCount}][instrument_id]"></td>
+                                                    <td><input type="text" ${isDisabled} ${isRequired} name="instrumentdetails[${rowCount}][remarks]"></td>
+                                                    <td><input type="text" ${isDisabled} ${isRequired} name="instrumentdetails[${rowCount}][calibration]"></td>
+                                                    <td><input type="text" ${isDisabled} ${isRequired} name="instrumentdetails[${rowCount}][acceptancecriteria]"></td>
+                                                    <td><input type="text" ${isDisabled} ${isRequired} name="instrumentdetails[${rowCount}][results]"></td>
+                                                    <td><button type="button" class="removeRowBtn" ${isDisabled}>Remove</button></td>
+                                                </tr>
+                                            `;
+
+                                            tableBody.append(newRow);
+                                            updateSerialNumbers();
+                                        });
+
+                                        // Remove row on Remove button click
+                                        $(document).on('click', '.removeRowBtn', function () {
+                                            $(this).closest('tr').remove();
+                                            updateSerialNumbers();
+                                        });
+
+                                        // Update serial numbers
+                                        function updateSerialNumbers() {
+                                            var tableBody = $('#material_details1 tbody');
+                                            var rows = tableBody.find('tr');
+
+                                            if (rows.length === 0) {
+                                                tableBody.append('<tr class="no-data"><td colspan="8" class="text-center">No Data Available</td></tr>');
+                                                return;
+                                            }
+
+                                            rows.each(function (index, row) {
+                                                $(row).find('input[name^="instrumentdetails"][name$="[serial]"]').val(index + 1);
+                                            });
+                                        }
+
+                                        // Optional: preview attachment logic (if needed)
+                                        $(document).on('change', '.attachmentInput', function () {
+                                            var previewId = $(this).data('preview-id');
+                                            var previewDiv = $('#' + previewId);
+                                            var file = this.files[0];
+
+                                            if (file) {
+                                                var reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    previewDiv.html('<p>File: ' + file.name + '</p>');
+                                                };
+                                                reader.readAsDataURL(file);
+                                            } else {
+                                                previewDiv.empty();
+                                            }
+                                        });
+
+                                    });
+                                </script>
+
+                                {{-- by kuldeep end  grid  --}}
+                                
 
 
 
