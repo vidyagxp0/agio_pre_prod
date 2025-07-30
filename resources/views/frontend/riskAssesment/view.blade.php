@@ -403,7 +403,7 @@
     @endif -->
 
 
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Risk Assessment', 7))
+                        @elseif($data->stage == 4 && ( Helpers::check_roles($data->division_id, 'Risk Assessment', 66) || Helpers::check_roles($data->division_id, 'Risk Assessment', 63) || Helpers::check_roles($data->division_id, 'Risk Assessment', 7) || Helpers::check_roles($data->division_id, 'Risk Assessment', 48)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             Request More Info
                         </button>
@@ -416,7 +416,7 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                             Child
                         </button>
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Risk Assessment', 42))
+                        @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Risk Assessment', 42) || Helpers::check_roles($data->division_id, 'Risk Assessment', 67) || Helpers::check_roles($data->division_id, 'Risk Assessment', 64) || Helpers::check_roles($data->division_id, 'Risk Assessment', 65) || Helpers::check_roles($data->division_id, 'Risk Assessment', 9)))
 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                             More Information Required

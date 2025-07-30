@@ -358,7 +358,7 @@
                                 href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) || Helpers::check_roles($data->division_id, 'root_cause_analysisView', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
@@ -366,7 +366,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -377,7 +377,7 @@
                                 HOD Review Complete
                             </button>
 
-                            @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
+                            @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -389,7 +389,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA/CQA Review Complete
                             </button>
-                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3) ||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -403,7 +403,7 @@
                                 Child
                             </button>
 
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 4)||  Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
 
@@ -417,7 +417,7 @@
                                 HOD Final Review Complete
 
                             </button>
-                        @elseif($data->stage == 6 && ( Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)))
+                        @elseif($data->stage == 6 && ( Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7) || Helpers::check_roles($data->division_id, 'Root Cause Analysis', 66)|| Helpers::check_roles($data->division_id, 'Root Cause Analysis', 18)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information
                                 Required
@@ -431,7 +431,7 @@
                                 Final QA/CQA Review Complete
                             </button>
                         @elseif(
-                            ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',66))))
+                            ($data->stage == 7 && (Helpers::check_roles($data->division_id, 'Root Cause Analysis', 42)|| Helpers::check_roles($data->division_id,'Root Cause Analysis',66) || Helpers::check_roles($data->division_id, 'Observation', 18))))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information
                                 Required
