@@ -133,7 +133,8 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 66))
+                           
+                        @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 66) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 7)))
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                             Effective Approval Completed
                                         </button>
@@ -146,21 +147,21 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                 Not Effective
                             </button>
-                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 43))
+                        @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective Approval Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 8 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 43))
+                        @elseif($data->stage == 8 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#not-effective-modal">
                                 Not Effective Approval Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
-                            </button>
-                        @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Effectiveness Check', 43))
+                            </button>a
+                        @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Effectiveness Check', 43) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 9) || Helpers::check_roles($data->division_id, 'Effectiveness Check', 65)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#not-effective-child-model">
                                 Child

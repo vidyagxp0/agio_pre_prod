@@ -82,7 +82,7 @@
                        <a class="button_theme1 text-white"
                                 href="{{ route('resampling-audittrialshow', $data->id) }}"> Audit Trail </a> 
 
-                         @if ($data->stage == 1 && (Helpers::check_roles($data->division_id, 'Resampling', 3)|| Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                         @if ($data->stage == 1 && ($data->initiator_id == Auth::user()->id || Helpers::check_roles($data->division_id, 'Resampling', 18)))
                       
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -91,7 +91,7 @@
                                 Cancel
                             </button></a>
 
-                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Resampling', 7) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                        @elseif($data->stage == 2 && (Helpers::check_roles($data->division_id, 'Resampling', 42) || Helpers::check_roles($data->division_id, 'Resampling', 65) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
         
                            <a > <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Information Required
@@ -102,7 +102,7 @@
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approved
                             </button></a>
-                        @elseif($data->stage == 3 && (Helpers::check_roles($data->division_id, 'Resampling', 8) || Helpers::check_roles($data->division_id, 'Resampling', 18)))
+                        @elseif($data->stage == 3 && ($data->assign_to == Auth::user()->id || Helpers::check_roles($data->division_id, 'Resampling', 18)))
 
                             <a href="#signature-modal"> <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge  Complete

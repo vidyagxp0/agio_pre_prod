@@ -96,7 +96,7 @@
                         {{-- {{ dd($data->stage);}} --}}
                         <a class="button_theme1 text-white" href="{{ url('rcms/action-item-audittrialshow', $data->id) }}">
                             Audit Trail </a>
-                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Action Item', 3))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Action Item', 3) || Helpers::check_roles($data->division_id, 'Action Item', 18))
                             <a href="#signature-modal"><button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#signature-modal">
                                     Submit
@@ -126,7 +126,7 @@
                                 More Information Required
                             </button></a> --}}
                             @endif
-                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)))
+                        @elseif($data->stage == 4 && (Helpers::check_roles($data->division_id, 'Action Item', 7) || Helpers::check_roles($data->division_id, 'Action Item', 66)) || Helpers::check_roles($data->division_id, 'Action Item', 18))
                             <a href="#last-stage-modal"> <button class="button_theme1" data-bs-toggle="modal"
                                     data-bs-target="#last-stage-modal">
                                     Verification Complete

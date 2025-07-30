@@ -1824,7 +1824,7 @@ public function lastStage(Request $request, $id){
 
 public function actionStageCancel(Request $request, $id)
 {
-    if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
+    if (strtolower($request->username) == strtolower(Auth::user()->emp_code) && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
@@ -1918,7 +1918,7 @@ public function actionStageCancel(Request $request, $id)
 
 public function actionmoreinfo(Request $request, $id)
 {
-        if (strtolower($request->username) == strtolower(Auth::user()->email) && Hash::check($request->password, Auth::user()->password)) {
+        if (strtolower($request->username) == strtolower(Auth::user()->emp_code) && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);

@@ -675,7 +675,7 @@
                                     Child
                                 </button>
                             @endif
-                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Deviation', 7))
+                        @elseif($data->stage == 3 && ( Helpers::check_roles($data->division_id, 'Deviation', 7)  || Helpers::check_roles($data->division_id, 'Deviation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
@@ -709,7 +709,7 @@
 
                             <!--
     @endif -->
-                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Deviation', 7))
+                        @elseif($data->stage == 5 && (Helpers::check_roles($data->division_id, 'Deviation', 7) || Helpers::check_roles($data->division_id, 'Deviation', 66)) )
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
                                 Send to Initiator
                             </button>
@@ -727,7 +727,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Deviation', 43))
+                        @elseif($data->stage == 6 && (Helpers::check_roles($data->division_id, 'Deviation', 43) || Helpers::check_roles($data->division_id, 'Deviation', 65) || Helpers::check_roles($data->division_id, 'Deviation', 9) || Helpers::check_roles($data->division_id, 'Deviation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
@@ -772,7 +772,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 9 && Helpers::check_roles($data->division_id, 'Deviation', 7))
+                        @elseif($data->stage == 9 && (Helpers::check_roles($data->division_id, 'Deviation', 7) || Helpers::check_roles($data->division_id, 'Deviation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
                                 Send to Pending Initiator Update
                             </button>
@@ -784,7 +784,7 @@
                                 Child
                             </button>
                             @endif
-                        @elseif($data->stage == 10 && Helpers::check_roles($data->division_id, 'Deviation', 43))
+                        @elseif($data->stage == 10 && (Helpers::check_roles($data->division_id, 'Deviation', 43) || Helpers::check_roles($data->division_id, 'Deviation', 65) || Helpers::check_roles($data->division_id, 'Deviation', 9) || Helpers::check_roles($data->division_id, 'Deviation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#pending-initiator-update">
                                 Send to Pending Initiator Update
@@ -792,7 +792,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Closure Approved
                             </button>
-                        @elseif($data->stage == 11 && Helpers::check_roles($data->division_id, 'Deviation', 7))
+                        @elseif($data->stage == 11 && (Helpers::check_roles($data->division_id, 'Deviation', 7) || Helpers::check_roles($data->division_id, 'Deviation', 65) || Helpers::check_roles($data->division_id, 'Deviation', 9) || Helpers::check_roles($data->division_id, 'Deviation', 66)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
