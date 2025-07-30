@@ -179,7 +179,7 @@
                                     Record</button> </a>
                         </div>
                       @endif --}}
-                       @if (Helpers::check_initiator_role_with_process(Auth::user()->id, [3, 7, 66], ['Internal Audit', 'External Audit']))
+                       @if (Helpers::check_initiator_role_with_process(Auth::user()->id, [3, 7, 66, 12], ['Internal Audit', 'External Audit','Observation']))
                             <div class="create">
                                 <a href="{{ url('rcms/form-division') }}">
                                     <button class="button_theme1">Create Record</button>
